@@ -1,0 +1,168 @@
+2004 Fantasy Football League Scores for 2004 Week #14
+=====================================================
+
+Weekly Scores
+--------------------------------------------
+MeggaMen        (83) Crusaders           (0)
+Bug Stompers    (22) Illuminati          (9)
+Werewolves      (35) Sacks on the Beach (11)
+Norsemen        (47) Rednecks            (0)
+Gallic Warriors (10) Whiskey Tango       (6)
+
+
+2004 Fantasy Football League Standings after 2004 Week #14
+----------------------------------------------------------
+                          Win Div   Pts Pts
+Burgandy Division  W L T  Pct W L T For  Ag
+------------------ - - - ---- - - - --- ---
+Norsemen           9 5 0 .643 6 2 0 575 427
+Werewolves         8 6 0 .571 4 4 0 453 361
+Bug Stompers       7 7 0 .500 5 3 0 423 382
+Illuminati         5 8 1 .393 3 5 0 374 425
+Sacks on the Beach 5 9 0 .357 2 6 0 464 521
+
+                          Win Div   Pts Pts
+Gold Division      W L T  Pct W L T For  Ag
+------------------ - - - ---- - - - --- ---
+Rednecks           8 5 1 .607 5 2 1 424 384
+MeggaMen           7 5 2 .571 4 3 1 483 433
+Whiskey Tango      8 6 0 .571 4 4 0 484 352
+Gallic Warriors    6 7 1 .464 3 4 1 366 498
+Crusaders          4 9 1 .321 2 5 1 260 523
+
+
+Next Week's Fantasy Schedule
+-------------------------------
+Rednecks  vs Werewolves
+Norsemen  vs MeggaMen
+Crusaders vs Sacks on the Beach
+
+
+2004 Fantasy Football League Scoring Breakdown for 2004 Week #14
+================================================================
+
+Crusaders                            MeggaMen
+--------------------------------     --------------------------------
+Pos Player              Team Pts     Pos Player              Team Pts
+--- ------------------- ---- ---     --- ------------------- ---- ---
+HC  Shanahan,Mike       DEN    3     HC  Belichick,Bill      NE     3
+QB  Brees,Drew          SD     9     QB  Griese,Brian        TB    18
+RB  James,Edgerrin      IND   12     RB  Davis,Domanick      HOU   22
+RB  Staley,Duce         PIT    2     RB  Taylor,Fred         JAX    4
+WR  Harrison,Marvin     IND    6     WR  Clayton,Michael     TB    19
+WR  Ward,Hines          PIT    0     WR  Wayne,Reggie        IND   12
+TE  Johnson,Eric        SF     1     TE  Gates,Antonio       SD     0
+K   Elam,Jason          DEN   10     K   Longwell,Ryan       GB    10
+Off Ny Giants           NYG    2     Off Denver              DEN   17
+DL  Hall,James          DET    1     DL  Coleman,Rod         ATL   17
+DL  Smith,Justin        CIN    0     DL  Little,Leonard      STL    1
+LB  Bulluck,Keith       TEN    8     LB  Brooking,Keith      ATL    7
+LB  Fletcher,London     BUF    5     LB  Edwards,Donnie      SD    31
+DB  Bellamy,Jay         NO     4     DB  Doss,Michael        IND    4
+DB  Buchanan,Ray        OAK    4     DB  Green,Michael       CHI    6
+____________________________ ___     ____________________________ ___
+          Offensive Points =  45               Offensive Points = 105
+          Defensive Points =  22               Defensive Points =  66
+       Team (Bonus) Points =   0            Team (Bonus) Points =   0
+         Total Points For =    0              Total Points For =   83
+
+Bug Stompers                         Illuminati
+--------------------------------     --------------------------------
+Pos Player              Team Pts     Pos Player              Team Pts
+--- ------------------- ---- ---     --- ------------------- ---- ---
+HC  Reid,Andy           PHI    3     HC  Cowher,Bill         PIT    4
+QB  McNabb,Donovan      PHI    7     QB  Collins,Kerry       OAK   -2
+RB  Martin,Curtis       NYJ    4     RB  Duckett,T.J.        ATL   24
+RB  Pittman,Michael     TB     4     RB  Johnson,Rudi        CIN    4
+WR  Jackson,Darrell     SEA   19     WR  Johnson,Andre       HOU    0
+WR  Kennison,Eddie      KC    12     WR  Stokley,Brandon     IND    0
+TE  Graham,Daniel       NE     0     TE  Shockey,Jeremy      NYG    4
+K   Graham,Shayne       CIN    4     K   Brown,Josh          SEA    9
+Off Ny Jets             NYJ    6     Off Indianapolis        IND    2
+DL  Freeney,Dwight      IND   11     DL  Douglas,Marques     BAL    4
+DL  Wistrom,Grant       SEA    0     DL  Henderson,John      JAX    7
+LB  Lewis,Ray           BAL    7     LB  Suggs,Terrell       BAL    2
+LB  Vilma,Jonathan      NYJ    6     LB  Washington,Marcus   WAS    9
+DB  Archuleta,Adam      STL    0     DB  Reed,Edward         BAL    8
+DB  Harrison,Rodney     NE    12     DB  Taylor,Sean         WAS    7
+____________________________ ___     ____________________________ ___
+          Offensive Points =  59               Offensive Points =  45
+          Defensive Points =  36               Defensive Points =  37
+       Team (Bonus) Points =   0            Team (Bonus) Points =   0
+         Total Points For =   22              Total Points For =    9
+
+Sacks on the Beach                   Werewolves
+--------------------------------     --------------------------------
+Pos Player              Team Pts     Pos Player              Team Pts
+--- ------------------- ---- ---     --- ------------------- ---- ---
+HC  Dungy,Tony          IND    3     HC  Vermeil,Dick        KC     4
+QB  Vick,Michael        ATL    0     QB  Favre,Brett         GB     6
+RB  McGahee,Willis      BUF   17     RB  Alexander,Shaun     SEA   12
+RB  Tomlinson,Ladainian SD    13     RB  Droughns,Reuben     DEN   -2
+WR  Bruce,Isaac         STL    0     WR  Holt,Torry          STL   17
+WR  Owens,Terrell       PHI    0     WR  Johnson,Chad        CIN   10
+TE  Wiggins,Jermaine    MIN    1     TE  Dilger,Ken          TB     2
+K   Akers,David         PHI    5     K   Vinatieri,Adam      NE     5
+Off Minnesota           MIN    5     Off Atlanta             ATL   18
+DL  Grant,Charles       NO    10     DL  Brown,Alex          CHI    1
+DL  Rucker,Mike         CAR    2     DL  Kerney,Patrick      ATL    3
+LB  Sharper,Jamie       HOU    3     LB  Farrior,James       PIT   12
+LB  Trotter,Jeremiah    PHI    9     LB  Urlacher,Brian      CHI    5
+DB  Bly,Dre'            DET    3     DB  Lucas,Ken           SEA    5
+DB  Dawkins,Brian       PHI   10     DB  Wilson,Adrian       ARI    7
+____________________________ ___     ____________________________ ___
+          Offensive Points =  44               Offensive Points =  72
+          Defensive Points =  37               Defensive Points =  33
+       Team (Bonus) Points =   0            Team (Bonus) Points =   0
+         Total Points For =   11              Total Points For =   35
+
+Norsemen                             Rednecks
+--------------------------------     --------------------------------
+Pos Player              Team Pts     Pos Player              Team Pts
+--- ------------------- ---- ---     --- ------------------- ---- ---
+HC  Gruden,Jon          TB     0     HC  Fisher,Jeff         TEN    0
+QB  Manning,Peyton      IND   16     QB  Culpepper,Daunte    MIN    9
+RB  Goings,Nick         CAR   10     RB  Jones,Thomas        CHI    3
+RB  Jones,Julius        DAL    7     RB  Lewis,Jamal         BAL    0
+WR  Moss,Randy          MIN   10     WR  McCardell,Keenan    SD     0
+WR  Muhammad,Muhsin     CAR   11     WR  Walker,Javon        GB     0
+TE  Gonzalez,Tony       KC     4     TE  Crumpler,Alge       ATL    0
+K   Kasay,John          CAR    8     K   Vanderjagt,Mike     IND   13
+Off Dallas              DAL    4     Off Green Bay           GB     4
+DL  Mathis,Robert       IND    3     DL  Ellis,Shaun         NYJ    7
+DL  Williams,Kevin      MIN    8     DL  Rogers,Shaun        DET    2
+LB  Holmes,Earl         DET    6     LB  Brooks,Derrick      TB     1
+LB  Pierce,Antonio      WAS    7     LB  Porter,Joey         PIT    3
+DB  Griffith,Robert     CLE    5     DB  Bailey,Champ        DEN    5
+DB  Parrish,Tony        SF     7     DB  Coleman,Erik        NYJ    5
+____________________________ ___     ____________________________ ___
+          Offensive Points =  70               Offensive Points =  29
+          Defensive Points =  36               Defensive Points =  23
+       Team (Bonus) Points =   0            Team (Bonus) Points =   0
+         Total Points For =   47              Total Points For =    0
+
+Gallic Warriors                      Whiskey Tango
+--------------------------------     --------------------------------
+Pos Player              Team Pts     Pos Player              Team Pts
+--- ------------------- ---- ---     --- ------------------- ---- ---
+HC  Edwards,Herman      NYJ    0     HC  Tice,Mike           MIN    0
+QB  Carr,David          HOU    4     QB  Bledsoe,Drew        BUF    2
+RB  Dillon,Corey        NE     8     RB  Barber,Tiki         NYG    2
+RB  Portis,Clinton      WAS   16     RB  Brown,Chris         TEN    6
+WR  Branch,Deion        NE     0     WR  Horn,Joe            NO     9
+WR  Smith,Rod           DEN    7     WR  Mason,Derrick       TEN    6
+TE  McMichael,Randy     MIA    2     TE  Witten,Jason        DAL    2
+K   Stover,Matt         BAL   15     K   Scobee,Josh         JAX    8
+Off New England         NE     4     Off Kansas City         KC    10
+DL  Kampman,Aaron       GB     4     DL  Griffin,Cornelius   WAS    3
+DL  Spires,Greg         TB     3     DL  Peppers,Julius      CAR    6
+LB  Briggs,Lance        CHI   14     LB  Nguyen,Dat          DAL    7
+LB  Clark,Danny         OAK    7     LB  Spikes,Takeo        BUF   15
+DB  Jones,Tebucky       NO     5     DB  Polamalu,Troy       PIT   11
+DB  Lewis,Michael       PHI    6     DB  Williams,Madieu     CIN    4
+____________________________ ___     ____________________________ ___
+          Offensive Points =  56               Offensive Points =  45
+          Defensive Points =  39               Defensive Points =  46
+       Team (Bonus) Points =   0            Team (Bonus) Points =   0
+         Total Points For =   10              Total Points For =    6
+

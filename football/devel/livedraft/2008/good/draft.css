@@ -1,0 +1,171 @@
+body {
+    color: #660000;
+    font-family: Verdana;
+    font-size: 8pt;
+    background-color: #FFFFFF;
+    border: 0px none;
+}
+
+h1, h2, h3, h4 { text-align: center; margin-bottom: 0px; }
+
+caption {
+    font-size: 120%;
+    font-weight: bold;
+}
+
+
+th {
+    background-color: #660000;
+    color: #e2a500;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 8pt;
+}
+
+
+.report,
+.playoffbracket,
+.homepagemessage {
+    margin-bottom: 1em;
+}
+
+.eventablerow {
+    background-color: #dddddd;
+}
+
+#body_ajax_ld .report {
+    width: 100%;
+}
+
+#body_ajax_ld .draft_picks_header {
+    margin-bottom: 0pt;
+    margin-left: 0px;
+    padding-right: 15px;
+    width: 95%;
+}
+
+#body_ajax_ld td .report {
+    width: 100%;
+}
+
+#body_ajax_ld .pick {
+    width: 10%;
+    text-align: center;
+    font-size: 8pt;
+    white-space: nowrap;
+}
+
+#body_ajax_ld .round {
+    width: 10%;
+    text-align: center;
+    font-size: 8pt;
+    white-space: nowrap;
+}
+#body_ajax_ld .franchise {
+    width: 35%;
+    font-size: 8pt;
+    white-space: nowrap;
+}
+#body_ajax_ld .selection {
+    width: 45%;
+    font-size: 8pt;
+    white-space: nowrap;
+}
+#body_ajax_ld .timestamp {
+    width: 15%;
+    font-size: 8pt;
+    white-space: nowrap;
+}
+
+#body_ajax_ld .pos {
+    width: 20%;
+    font-size: 8pt;
+    white-space: nowrap;
+}
+
+#body_ajax_ld .player {
+    width: 60%;
+    font-size: 8pt;
+    white-space: nowrap;
+}
+#body_ajax_ld .team {
+    width: 20%;
+    font-size: 8pt;
+    white-space: nowrap;
+}
+#body_ajax_ld {
+    font-size: 8pt;
+    white-space: nowrap;
+}
+
+.draft_picks_container {
+    height: 500px;
+    overflow: auto;
+    vertical-align: top;
+    width: 100%
+}
+
+#right_side {
+    padding: 10px;
+}
+
+
+.pickLabel {
+    font-weight: bold;
+}
+
+.clockLine {
+    font-size: 20pt;
+    font-weight: bold;
+    text-align: center;
+}
+
+
+a.tools {
+    color: #660000;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+}
+
+a.tools:hover {
+    color: #e2a500;
+}
+
+a.teamRoster {
+    color: #660000;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+}
+
+a.teamRoster:hover {
+    color: #e2a500;
+}
+
+#statusTable {
+    width: 100%;
+    border: 1px solid;
+}
+
+#logInInfo, #logOutInfo {
+    display: none;
+}
+
+#rosterTeam {
+    height: 8px;
+    border: 1px solid;
+}
+
+.rosterTeam_container {
+    overflow: auto;
+}
+
+.rosterList {
+    overflow: auto;
+}
+
+#commishRow {
+    display: none;
+}
+

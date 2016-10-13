@@ -1,0 +1,16 @@
+[03-Sep-2009 02:02:25] PHP Warning:  Division by zero in /home/joshutt/football/teams/history.php on line 51
+[04-Sep-2009 17:17:13] PHP Warning:  Division by zero in /home/joshutt/football/teams/history.php on line 51
+[07-Sep-2009 14:58:57] PHP Warning:  Division by zero in /home/joshutt/football/teams/history.php on line 51
+[08-Sep-2009 00:08:04] PHP Warning:  Division by zero in /home/joshutt/football/teams/history.php on line 51
+[08-Sep-2009 12:49:27] PHP Warning:  Division by zero in /home/joshutt/football/teams/history.php on line 51
+[09-Sep-2009 21:09:50] PHP Warning:  Division by zero in /home/joshutt/football/teams/history.php on line 51
+[10-Nov-2009 22:49:16] PHP Warning:  mysql_fetch_row(): supplied argument is not a valid MySQL result resource in /home/joshutt/football/utils/start.php on line 28
+[10-Nov-2009 22:49:16] PHP Warning:  mysql_fetch_array(): supplied argument is not a valid MySQL result resource in /home/joshutt/football/teams/indschedule.php on line 25
+[10-Nov-2009 22:54:16] PHP Warning:  mysql_fetch_row(): supplied argument is not a valid MySQL result resource in /home/joshutt/football/utils/start.php on line 28
+[10-Nov-2009 22:54:16] PHP Warning:  mysql_fetch_array(): supplied argument is not a valid MySQL result resource in /home/joshutt/football/teams/indschedule.php on line 25
+[10-Nov-2009 22:59:16] PHP Warning:  mysql_fetch_row(): supplied argument is not a valid MySQL result resource in /home/joshutt/football/utils/start.php on line 28
+[10-Nov-2009 22:59:16] PHP Warning:  mysql_fetch_array(): supplied argument is not a valid MySQL result resource in /home/joshutt/football/teams/indschedule.php on line 25
+[16-Nov-2009 00:26:05] PHP Warning:  mysql_fetch_row(): supplied argument is not a valid MySQL result resource in /home/joshutt/football/utils/start.php on line 28
+[16-Nov-2009 00:26:05] PHP Warning:  mysql_fetch_array(): supplied argument is not a valid MySQL result resource in /home/joshutt/football/teams/indschedule.php on line 25
+[07-Jan-2010 12:33:31] PHP Warning:  mysql_fetch_array(): supplied argument is not a valid MySQL result resource in /home/joshutt/football/teams/history.php on line 48
+[07-Jan-2010 12:58:24] PHP Warning:  mysql_fetch_row(): supplied argument is not a valid MySQL result resource in /home/joshutt/football/teams/roster.php on line 9

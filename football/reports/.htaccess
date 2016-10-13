@@ -1,0 +1,5 @@
+AuthType Basic
+AuthName "reports"
+AuthUserFile /home/wmffl/.htpasswds/reports/passwd
+
+require valid-user

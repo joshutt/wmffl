@@ -1,0 +1,15 @@
+<HTML>
+<HEAD>
+<TITLE>WMFFL 2004 Playoffs Newsletter</TITLE>
+</HEAD>
+
+<!--#include virtual="/base/menu.php"-->
+
+<H1 ALIGN=Center>2004 Playoffs</H1>
+<HR size = "1">
+<P>
+<PRE>
+<!--#include virtual="0415_Standings.txt"-->
+</PRE>
+
+<!--#include virtual="/base/footer.html"-->

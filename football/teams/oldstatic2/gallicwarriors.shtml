@@ -1,0 +1,82 @@
+<!--#set var="teamname" value="Gallic Warriors"-->
+
+<HTML>
+<HEAD>
+<TITLE><!--#echo var="teamname"--></TITLE>
+</HEAD>
+
+<!--#include virtual="/base/menu.php"-->
+
+<IMG SRC="gallic.jpg" ALIGN=Left ALT="<!--#echo var="teamname"-->" height="125">
+<IMG SRC="gallic.jpg" ALIGN=Right ALT="<!--#echo var="teamname"-->" height="125">
+<H1 ALIGN=Center><!--#echo var="teamname"--></H1>
+<H5 ALIGN=Center>Established 1993<br/>Owner: Chris Heywood</H5>
+<HR size = "1">
+
+<!--#include virtual="linkbar.php"-->
+
+<Center>
+<TABLE WIDTH=100% ALIGN=Center>
+
+<!--#include virtual="roster.php?teamname=$teamname"-->
+
+<TR><TD COLSPAN=2>
+<HR size = "1">
+</TD></TR>
+
+<TR><TD COLSPAN=2 ALIGN=Center>
+<A NAME="History"><H3>History</H3></A>
+<TABLE>
+<TH>Record
+<TR><TD WIDTH=20%><B>YEAR</B></TD><TD WIDTH=8%><B>W</B></TD><TD WIDTH=8%><B>L</B></TD>
+<TD WIDTH=4%><B>T</B></TD><TD WIDTH=10%><B>PCT</B></TD><TD WIDTH=50%><B>FINISH</B></TD></TR>
+<TR><TD><B>All-Time</B></TD><TD><B>59</B></TD><TD><B>102</B></TD><TD><B>5</B></TD><TD><B>.370</B></TD></TR>
+<TR><TD>2004</TD><TD>6</TD><TD>7</TD><TD>1</TD><TD>.464</TD>
+<TD>4th Place - Gold Division</TD></TR>
+<TR><TD>2003</TD><TD>3</TD><TD>9</TD><TD>2</TD><TD>.286</TD>
+<TD>Tied 4th Place - Gold Division</TD></TR>
+<TR><TD>2002</TD><TD>7</TD><TD>7</TD><TD>0</TD><TD>.500</TD>
+<TD>2nd Place - Orange Division</TD></TR>
+<TR><TD>2001</TD><TD>6</TD><TD>8</TD><TD>0</TD><TD>.429</TD>
+<TD>Tied 2nd Place - Orange Division</TD></TR>
+<TR><TD>2000</TD><TD>5</TD><TD>9</TD><TD>0</TD><TD>.357</TD>
+<TD>4th Place - Orange Division</TD></TR>
+<TR><TD>1999</TD><TD>5</TD><TD>9</TD><TD>0</TD><TD>.357</TD>
+<TD>3rd Place - Orange Division</TD></TR>
+<TR><TD>1998</TD><TD>6</TD><TD>8</TD><TD>0</TD><TD>.429</TD>
+<TD>2nd Place - Orange Division</TD></TR>
+<TR><TD>1997</TD><TD>3</TD><TD>10</TD><TD>1</TD><TD>.250</TD>
+<TD>2nd Place - Blue Division</TD></TR>
+<TR><TD>1996</TD><TD>5</TD><TD>7</TD><TD>0</TD><TD>.417</TD>
+<TD>3rd Place - Blue Division</TD></TR>
+<TR><TD>1995</TD><TD>5</TD><TD>8</TD><TD>1</TD><TD>.393</TD>
+<TD>3rd Place - Blue Division</TD></TR>
+<TR><TD>1994</TD><TD>5</TD><TD>9</TD><TD>0</TD><TD>.357</TD>
+<TD>3rd Place - Blue Division</TD></TR>
+<TR><TD>1993</TD><TD>3</TD><TD>11</TD><TD>0</TD><TD>.214</TD>
+<TD>Tied 3rd Place - Blue Division</TD></TR>
+</TABLE>
+</TD></TR>
+
+<TR><TD VALIGN=Top>
+<TABLE>
+<TH>Past Owners
+<TR><TD>1993-2003</TD><TD>Ira Frankel</TD></TR>
+<TR><TD>2004-</TD><TD>Chris Heywood</TD></TR>
+</TABLE>
+
+</TD><TD VALIGN=Top>
+
+<TABLE>
+<TH>Past Names
+<TR><TD>1993</TD><TD>Zebus</TD></TR>
+<TR><TD>1994</TD><TD>Cloakers</TD></TR>
+<TR><TD>1995-1998</TD><TD>Iradicators</TD></TR>
+<TR><TD>1999-2003</TD><TD>Green Wave</TD></TR>
+<TR><TD>2004-</TD><TD>Gallic Warriors</TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+
+<BR>
+
+<!--#include virtual="/base/footer.html"-->

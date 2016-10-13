@@ -1,0 +1,36 @@
+<HTML>
+<HEAD>
+<TITLE>2005 WMFFL Awards</TITLE>
+</HEAD>
+
+<!--#include virtual="/base/menu.php"-->
+
+<H1 ALIGN=Center>2005 Awards</H1>
+<HR size = "1"><CENTER>
+Listed are each of the Award Winners.  For a complete description and breakdown of each award follow that link.<P>
+
+<TABLE>
+<TH>2005 Awards</TH>
+<TR><TD><A HREF="breakdown.shtml#HC">Best Head Coach Unit</A></TD><TD>Sacks on the Beach</TR>
+<TR><TD><A HREF="breakdown.shtml#QB">Best Quarterback Unit</A></TD><TD>Norsemen</TR>
+<TR><TD><A HREF="breakdown.shtml#RB">Best Running Back Unit</A></TD><TD>Werewolves</TR>
+<TR><TD><A HREF="breakdown.shtml#WR">Best Wide Reciever Unit</A></TD><TD>Crusaders</TR>
+<TR><TD><A HREF="breakdown.shtml#TE">Best Tight End Unit</A></TD><TD>MeggaMen</TR>
+<TR><TD><A HREF="breakdown.shtml#K">Best Kicker Unit</A></TD><TD>MeggaMen</TR>
+<TR><TD><A HREF="breakdown.shtml#OL">Best Offensive Line Unit</A></TD><TD>Werewolves</TR>
+<TR><TD><A HREF="breakdown.shtml#DL">Best Defensive Line Unit</A></TD><TD>MeggaMen</TR>
+<TR><TD><A HREF="breakdown.shtml#LB">Best Linebackers Unit</A></TD><TD>Gallic Warriors</TR>
+<TR><TD><A HREF="breakdown.shtml#DB">Best Defensive Back Unit</A></TD><TD>Werewolves</TR>
+<TR><TD><A HREF="breakdown.shtml#OFF">Best Offense Team</A></TD><TD>Sacks on the Beach</TR>
+<TR><TD><A HREF="breakdown.shtml#DEF">Best Defense Team</A></TD><TD>Gallic Warriors</TR>
+<TR><TD><A HREF="breakdown.shtml#TOT">Most Total Points</A></TD><TD>Werewolves</TR>
+<TR><TD><A HREF="breakdown.shtml#ACT">Best Team Coordinator</A></TD><TD>Sacks on the Beach</TR>
+<TR><TD><A HREF="breakdown.shtml#GM">Best General Manager</A></TD><TD>Werewolves</TR>
+<TR><TD><A HREF="breakdown.shtml#DP">Best Defensive Player</A></TD><TD>Charles Tillman</TR>
+<TR><TD><A HREF="breakdown.shtml#MVP">Most Valuable Player</A></TD><TD>Shaun Alexander</TR>
+<TR><TD><A HREF="breakdown.shtml#MVP">Bonehead Award</A></TD><TD>Bug Stompers</TR>
+<TR><TD><A HREF="breakdown.shtml#MVP">Best Ownership Move</A></TD><TD>Werewolves</TR>
+<TR><TD><A HREF="breakdown.shtml#MVP">Owner of the Year</A></TD><TD>Bug Stompers</TR>
+</TABLE><P>
+
+<!--#include virtual="/base/footer.html"-->

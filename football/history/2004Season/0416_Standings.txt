@@ -1,0 +1,130 @@
+2004 Fantasy Football League Scoring Breakdown for 2004 Week #16
+================================================================
+
+                MeggaMen 67 - Rednecks 22
+                -------------------------
+                MVP: Denver OL
+
+MeggaMen
+Tom Marsh
+------------------------
+Pos Player           Pts
+--- ---------------- ---
+HC  Belichick,Bill     4
+        1 Win
+        16 pts
+QB  Griese,Brian      17
+        324 Yards
+        3 TDS
+        2 INT
+        1 Fumble
+RB  Davis,Domanick    19
+        5 Receptions
+        189 Total Yards
+        1 TD
+RB  Jones,Kevin       13
+        1 Reception
+        131 Yards
+        1 TD
+WR  Clayton,Michael   12
+        4 Receptions
+        66 Yards
+        2 TDs
+WR  Wayne,Reggie       0
+        3 Receptions
+        61 yards
+TE  Gates,Antonio      9
+        7 Recetions
+        49 Yards
+        1 TD
+K   Longwell,Ryan     11
+        1 40-49 yard FG
+        1 0-39 yard FG
+        4 Extra points
+Off Denver            17
+        193 Yards rush
+        2 Rush TDs
+        0 Sacks
+DL  Coleman,Rod        2
+        1 tackle
+        1 pass defense
+DL  Little,Leonard     2
+        2 tackles
+LB  Brooking,Keith    14
+        8 tackles
+        1 pass defense
+        1 int
+        27 yard return
+LB  Edwards,Donnie    16
+        5 tackles
+        2 pass defense
+        1 sack
+        1 int
+        2 return yards
+        1 forced fumble
+DB  Doss,Michael       7
+        7 tackles
+DB  Green,Michael     10
+        8 tackles
+        1 sack
+____________________ ___
+  Offensive Points = 102
+  Defensive Points =  51
+ Total Points For =   67
+
+Rednecks
+John Garner
+------------------------
+Pos Player           Pts
+--- ---------------- ---
+HC  Fisher,Jeff        0
+        -21 points
+QB  Culpepper,Daunte  23
+        306 yards
+        3 TDs
+RB  Dunn,Warrick      15
+        6 receptions
+        139 yards
+        1 TD
+RB  McAllister,Deuce   6
+        128 yards
+WR  Porter,Jerry       6
+        4 receptions
+        57 yards
+        1 TD
+WR  Walker,Javon      10
+        5 receptions
+        90 yards
+        1 TD
+TE  Smith,L.J.         0
+K   Kaeding,Nate       9
+        1 50 yard FG
+        4 Extra points
+Off Green Bay          4
+        102 rush yards
+        1 rush TD
+        1 sack allowed
+DL  Schobel,Aaron      5
+        1 tackle
+        2 pass defense
+        1 fumble recovery
+DL  Umenyiora,Osi      1
+        1 tackle
+LB  Brooks,Derrick    11
+        10 tackles
+        1 pass defense
+LB  Porter,Joey        6
+        2 pass defense
+        1 int
+        3 return yards
+DB  Milloy,Lawyer      5
+        1 pass defense
+        1 int
+        9 return yards
+DB  Robinson,Dunta     7
+        4 tackles
+        1 forced fumble
+____________________ ___
+  Offensive Points =  73
+  Defensive Points =  35
+ Total Points For =   22

@@ -1,0 +1,157 @@
+
+                                                     
+ Rd#1 Team          Pos Player               NFL Team
+----- ------------- --- -------------------- --------
+  #1: Crusaders     RB  James,Edgerrin       IND     
+  #2: Rednecks      RB  Lewis,Jamal          BAL     
+  #3: Green Wave    LB  Edwards,Donnie       SD      
+  #4: War Eagles    LB  Brooking,Keith       ATL     
+  #5: Whiskey Tango RB  Hambrick,Troy        DAL     
+  #6: Freezer Burn  TE  Heap,Todd            BAL     
+  #7: Norsemen      RB  Zereoue,Amos         PIT     
+  #8: Illuminati    QB  Favre,Brett          GB      
+  #9: MeggaMen      WR  Burress,Plaxico      PIT     
+ #10: Werewolves    LB  Maslowski,Mike       KC      
+                                                     
+ Rd#2 Team          Pos Player               NFL Team
+----- ------------- --- -------------------- --------
+  #1: Crusaders     WR  Stallworth,Donte'    NO      
+  #2: Rednecks      WR  Rogers,Charles       DET     
+  #3: Freezer Burn  LB  Fletcher,London      BUF     
+  #4: War Eagles    RB  George,Eddie         TEN     
+  #5: Whiskey Tango RB  Hearst,Garrison      SF      
+  #6: Freezer Burn  QB  Maddox,Tommy         PIT     
+  #7: Norsemen      RB  Staley,Duce          PHI     
+  #8: Illuminati    WR  Johnson,Andre        HOU     
+  #9: MeggaMen      RB  Canidate,Trung       WAS     
+ #10: War Eagles    RB  Thomas,Anthony       CHI     
+                                                     
+ Rd#3 Team          Pos Player               NFL Team
+----- ------------- --- -------------------- --------
+  #1: Crusaders     QB  McNair,Steve         TEN     
+  #2: Rednecks      RB  Smith,Onterrio       MIN     
+  #3: Freezer Burn  WR  Mason,Derrick        TEN     
+  #4: War Eagles    DL  Abraham,John         NYJ     
+  #5: Whiskey Tango LB  Gold,Ian             DEN     
+  #6: Freezer Burn  DL  Rucker,Mike          CAR     
+  #7: Norsemen      LB  Colvin,Rosevelt      NE      
+  #8: Illuminati    LB  Gildon,Jason         PIT     
+  #9: MeggaMen      QB  Green,Trent          KC      
+ #10: MeggaMen      DB  Knight,Sammy         MIA     
+                                                     
+ Rd#4 Team          Pos Player               NFL Team
+----- ------------- --- -------------------- --------
+  #1: Crusaders     LB  Cowart,Sam           NYJ     
+  #2: Rednecks      DB  O'Neal,Deltha        DEN     
+  #3: Green Wave    DL  Sapp,Warren          TB      
+  #4: War Eagles    DB  Harrison,Rodney      NE      
+  #5: Whiskey Tango DB  Darius,Donovin       JAX     
+  #6: Freezer Burn  DB  Bly,Dre'             DET     
+  #7: Norsemen      DL  Smith,Justin         CIN     
+  #8: Illuminati    DL  Wiley,Marcellus      SD      
+  #9: MeggaMen      LB  Wilson,Al            DEN     
+ #10: Werewolves    WR  Johnson,Chad         CIN     
+                                                     
+ Rd#5 Team          Pos Player               NFL Team
+----- ------------- --- -------------------- --------
+  #1: Crusaders     DL  Smith,Aaron          PIT     
+  #2: Rednecks      LB  Suggs,Terrell        BAL     
+  #3: Green Wave    RB  Dunn,Warrick         ATL     
+  #4: War Eagles    WR  Driver,Donald        GB      
+  #5: Whiskey Tango WR  Morgan,Quincy        CLE     
+  #6: Freezer Burn  RB  Mack,Stacey          HOU     
+  #7: Crusaders     DB  Archuleta,Adam       STL     
+  #8: Illuminati    K   Mare,Olindo          MIA     
+  #9: MeggaMen      DL  Gbaja-Biamila,Kabeer GB      
+ #10: Werewolves    DB  Wilson,Adrian        ARI     
+                                                     
+ Rd#6 Team          Pos Player               NFL Team
+----- ------------- --- -------------------- --------
+  #1: Crusaders     TE  Franks,Bubba         GB      
+  #2: MeggaMen      DB  Woodson,Rod          OAK     
+  #3: Green Wave    WR  Smith,Rod            DEN     
+  #4: War Eagles    DB  Schulters,Lance      TEN     
+  #5: Whiskey Tango WR  Brown,Troy           NE      
+  #6: Freezer Burn  LB  Hartwell,Edgerton    BAL     
+  #7: Norsemen      DB  Brown,Mike           CHI     
+  #8: Illuminati    DB  Newman,Terence       DAL     
+  #9: MeggaMen      TE  Pollard,Marcus       IND     
+ #10: Werewolves    WR  Smith,Jimmy          JAX     
+                                                     
+ Rd#7 Team          Pos Player               NFL Team
+----- ------------- --- -------------------- --------
+  #1: Crusaders     DB  Parrish,Tony         SF      
+  #2: Rednecks      QB  Brady,Tom            NE      
+  #3: Green Wave    LB  Boulware,Peter       BAL     
+  #4: War Eagles    RB  Buckhalter,Correll   PHI     
+  #5: Whiskey Tango QB  Johnson,Brad         TB      
+  #6: Freezer Burn  DL  Henderson,John       JAX     
+  #7: Norsemen      LB  Peterson,Julian      SF      
+  #8: Illuminati    DL  Williams,Kevin       MIN     
+  #9: MeggaMen      WR  Reed,Josh            BUF     
+ #10: Werewolves    LB  Diggs,Na'il          GB      
+                                                     
+ Rd#8 Team          Pos Player               NFL Team
+----- ------------- --- -------------------- --------
+  #1: Crusaders     DL  Wistrom,Grant        STL     
+  #2: Rednecks      LB  Biekert,Greg         MIN     
+  #3: Green Wave    DB  Glenn,Aaron          HOU     
+  #4: War Eagles    WR  Lelie,Ashley         DEN     
+  #5: Whiskey Tango DL  Hicks,Eric           KC      
+  #6: MeggaMen      WR  Rice,Jerry           OAK     
+  #7: Norsemen      QB  Brees,Drew           SD      
+  #8: Illuminati    RB  Alstott,Mike         TB      
+  #9: MeggaMen      LB  Bell,Kendrell        PIT     
+ #10: Werewolves    RB  Barlow,Kevan         SF      
+                                                     
+ Rd#9 Team          Pos Player               NFL Team
+----- ------------- --- -------------------- --------
+  #1: Crusaders     LB  Trotter,Jeremiah     WAS     
+  #2: Rednecks      DB  Taylor,Bobby         PHI     
+  #3: Green Wave    TE  Brady,Kyle           JAX     
+  #4: War Eagles    QB  Collins,Kerry        NYG     
+  #5: Whiskey Tango WR  Galloway,Joey        DAL     
+  #6: Freezer Burn  RB  Shipp,Marcel         ARI     
+  #7: Norsemen      DL  Jenkins,Kris         CAR     
+  #8: Illuminati    QB  Harrington,Joey      DET     
+  #9: MeggaMen      QB  Ramsey,Patrick       WAS     
+ #10: Werewolves    QB  Kitna,Jon            CIN     
+                                                     
+Rd#10 Team          Pos Player               NFL Team
+----- ------------- --- -------------------- --------
+  #1: Crusaders     RB  Faulk,Kevin          NE      
+  #2: Rednecks      K   Carney,John          NO      
+  #3: Green Wave    WR  Jackson,Darrell      SEA     
+  #4: War Eagles    Off San Fran             SF      
+  #5: Whiskey Tango DB  Minter,Mike          CAR     
+  #6: Freezer Burn  Off Philadelphia         PHI     
+  #7: Norsemen      DB  Wesley,Greg          KC      
+  #8: Illuminati    LB  Henderson,E.J.       MIN     
+  #9: MeggaMen      RB  Stewart,James        DET     
+ #10: Werewolves    DL  Holliday,Vonnie      KC      
+                                                     
+Rd#11 Team          Pos Player               NFL Team
+----- ------------- --- -------------------- --------
+  #1: Crusaders     WR  Ferguson,Robert      GB      
+  #2: Rednecks      TE  Jolley,Doug          OAK     
+  #3: Green Wave    WR  Conway,Curtis        NYJ     
+  #4: War Eagles    LB  Winborn,Jamie        SF      
+  #5: Whiskey Tango DB  Lassiter,Kwamie      SD      
+  #6: MeggaMen      TE  Stevens,Jerramy      SEA     
+  #7: Norsemen      DB  Williams,Tank        TEN     
+  #8: Illuminati    DB  Smoot,Fred           WAS     
+  #9: Freezer Burn  RB  Bettis,Jerome        PIT     
+ #10: Werewolves    DB  Scott,Chad           PIT     
+                                                     
+Rd#12 Team          Pos Player               NFL Team
+----- ------------- --- -------------------- --------
+  #1: Crusaders     K   Elam,Jason           DEN     
+  #2: Rednecks      DL  Glover,La' roi       DAL     
+  #3: Green Wave    DL  Coleman,Rod          OAK     
+  #4: War Eagles    DB  Thomas,Fred          NO      
+  #5: Whiskey Tango DL  Pryce,Trevor         DEN     
+  #6: Freezer Burn  DB  Bailey,Champ         WAS     
+  #7: Norsemen      RB  Duckett,T.J.         ATL     
+  #8: Illuminati    RB  Smith,Emmitt         ARI     
+  #9: Freezer Burn  WR  Northcutt,Dennis     CLE     
+ #10: Werewolves    RB  Smith,Antowain       NE      

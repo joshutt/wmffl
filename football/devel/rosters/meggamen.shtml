@@ -1,0 +1,90 @@
+<!--#set var="teamname" value="MeggaMen"-->
+
+<HTML>
+<HEAD>
+<TITLE><!--#echo var="teamname"--></TITLE>
+</HEAD>
+
+<!--#include virtual="/base/menu.html"-->
+
+<Center><IMG SRC="megga.jpg" ALT="<!--#echo var="teamname"-->"></Center>
+<H5 ALIGN=Center>Owner: Tom Marsh<BR>Member Since 2000</H5>
+<HR size = "1">
+
+<TABLE ALIGN=Left>
+<TR><TD WIDTH=5%></TD><TD><A HREF="#History"><IMG SRC="../images/football.jpg" BORDER=0></A>
+<TD><A HREF="#History">History</A></TD></TR></TABLE>
+<TABLE ALIGN=Right>
+<TR><TD><A HREF="#Roster"><IMG SRC="../images/football.jpg" BORDER=0></A></TD>
+<TD><A HREF="#Roster">Roster</A></TD><TD WIDTH=5%></TD></TR></TABLE>
+<P><BR><HR size = "1">
+
+<Center>
+<TABLE WIDTH=100% ALIGN=Center>
+
+<!--
+<A NAME="Roster"><H3>Current Roster</H3></A>
+<H5><I>As of 11/10/2000</I><BR>
+7 Transactions Remaining</H5>
+-->
+<!--#include virtual="roster.php?teamname=$teamname"-->
+
+<TR><TD COLSPAN=2><HR size = "1"></TD></TR>
+
+<TR><TD ALIGN=CENTER COLSPAN=2>
+	<A NAME="History"><H3>History</H3></A>
+	<TABLE WIDTH=75%>
+	<TH>Record
+	<TR><TD WIDTH=20%><B>YEAR</B></TD><TD WIDTH=8%><B>W</B></TD><TD WIDTH=8%><B>L</B></TD>
+	<TD WIDTH=4%><B>T</B></TD><TD WIDTH=10%><B>PCT</B></TD><TD WIDTH=50%><B>FINISH</B></TD>
+	<TR><TD><B>All-Time</B></TD><TD><B>8</B></TD><TD><B>7</B></TD><TD><B>0</B></TD>
+	<TD><B>.533</B></TD></TR>
+	<TR><TD>Playoffs</TD><TD>0</TD><TD>1</TD><TD>0</TD><TD>.000</TD></TR>
+	<TR><TD>2000</TD><TD>8</TD><TD>6</TD><TD>0</TD><TD>.571</TD>
+	<TD>2nd Place - Orange Division</TD></TR>
+	</TABLE>
+</TD></TR>
+
+
+<TR><TD ALIGN=CENTER COLSPAN=2>
+	<TABLE WIDTH=75%>
+	<TH>Playoff Results
+	<TR><TD>Playoffs 2000</TD><TD>Lost to Norsemen</TD><TD>36-69</TD></TR>
+	</TABLE>
+</TD></TR>
+
+
+<!--
+<TR><TD VALIGN=Top WIDTH=50%>
+	<TABLE ALIGN=Left>
+	<TH>Division Titles
+	<TR><TD>1993</TD><TD>Blue Division Title</TD></TR>
+	<TR><TD>1994</TD><TD>Blue Division Title</TD></TR>
+	<TR><TD>1995</TD><TD>Blue Division Title</TD></TR>
+	<TR><TD>1996</TD><TD>Blue Division Title</TD></TR>
+	</TABLE>
+</TD><TD VALIGN=Top WIDTH=50%>
+	<TABLE ALIGN=Left>
+	<TH>League Titles
+	<TR><TD>1993</TD><TD>WMFFL Champion</TD></TR>
+	<TR><TD>1994</TD><TD>WMFFL Champion</TD></TR>
+	<TR><TD>1995</TD><TD>WMFFL Champion</TD></TR>
+	</TABLE>
+</TD></TR>
+-->
+
+<TR><TD VALIGN=Top WIDTH=50%>
+	<TABLE ALIGN=Left>
+	<TH>Past Owners
+	<TR><TD>2000-</TD><TD>Tom Marsh</TD></TR>
+	</TABLE>
+</TD><TD VALIGN=Top WIDTH=50%>
+	<TABLE>
+	<TH>Past Names
+	<TR><TD>2000-</TD><TD>MeggaMen</TD></TR>
+	</TABLE>
+</TD></TR></TABLE>
+
+</CENTER><BR>
+
+<!--#include virtual="/base/footer.html"-->

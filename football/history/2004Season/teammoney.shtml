@@ -1,0 +1,186 @@
+<HTML>
+<HEAD>
+<TITLE>2004 WMFFL Financial Statements</TITLE>
+</HEAD>
+
+<!--#include virtual="/base/menu.php"-->
+
+<H1 ALIGN=Center>Team Finances</H1>
+<H5 ALIGN=Center>Last Updated 5/1/2005</H5>
+<HR size = "1">
+
+<P>These are the current balances for each team.  At the end of the
+season everyone will recieve a check for the amount they are owed.
+If you wish the amount can be rolled over to next season.  Click on
+each team to see the breakdown for their balance.  A <FONT COLOR="#FF0000">red</FONT>
+number indicates a negative balance or debit.</P>
+
+<TABLE WIDTH=50%>
+<TR><TD><B>BALANCES</B></TD></TR>
+<TR><TD><A HREF="#bugstompers">Bug Stompers</A></TD><TD ALIGN=Right>$&nbsp;157.31</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD><A HREF="#crusaders">Crusaders</A></TD><TD ALIGN=Right>$&nbsp;&nbsp;97.03</TD></TR>
+<TR><TD><A HREF="#gallicwarriors">Gallic Warriors</A></TD><TD ALIGN=Right><FONT COLOR="red">$&nbsp;&nbsp;13.90</FONT></TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD><A HREF="#illuminati">Illuminati</A></TD><TD ALIGN=Right>$&nbsp;&nbsp;&nbsp;54.57</TD></TR>
+<TR><TD><A HREF="#meggamen">MeggaMen</A></TD><TD ALIGN=Right>$&nbsp;234.99</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD><A HREF="#norsemen">Norsemen</A></TD><TD ALIGN=Right>$&nbsp;&nbsp;88.42</TD></TR>
+<TR><TD><A HREF="#rednecks">Rednecks</A></TD><TD ALIGN=Right>$&nbsp;108.58</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD><A HREF="#sacks">Sacks on the Beach</A></TD><TD ALIGN=Right><FONT COLOR="red">$&nbsp;&nbsp;12.76</FONT></TD></TR>
+<TR><TD><A HREF="#werewolves">Werewolves</A></TD><TD ALIGN=Right>$&nbsp;139.02</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD><A HREF="#whiskeytango">Whiskey Tango</A></TD><TD ALIGN=Right>$&nbsp;&nbsp;&nbsp;1.77</TD></TR>
+</TD></TR></TABLE>
+
+<A HREF="money.shtml">Back to League Finances</A>
+
+<HR size = "1">
+
+<TABLE WIDTH=100%>
+
+<TR><TD>&nbsp;</TD></TR>
+
+<TR><TD><A NAME="bugstompers"><B>Bug Stompers</B></A></TD><TD ALIGN=Right><B>Debits</B></TD><TD ALIGN=Right><B>Credits</B></TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>Last Year's Balance</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$207.58</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>Entry Fee</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$50.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>23 Extra Transactions</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$23.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>7 Wins</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$22.73</TD></TR>
+<TR BGCOLOR="#000000"><TD>&nbsp;</TD><TD>&nbsp;</TD><TD>&nbsp;</TD></TR>
+<TR BGCOLOR="#999999"><TD><B>Totals</B></TD><TD ALIGN=Right><B><FONT COLOR="#FF0000">$73.00</FONT></B></TD><TD ALIGN=Right><B>$230.31</B></TD></TR>
+
+<TR><TD>&nbsp;</TD></TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR><TD>&nbsp;</TD></TR>
+
+<TR><TD><A NAME="crusaders"><B>Crusaders</B></A></TD><TD ALIGN=Right><B>Debits</B></TD><TD ALIGN=Right><B>Credits</B></TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>Last Year's Balance</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$166.42</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>Entry Fee</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$50.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>29 Extra Transactions</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$29.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>5 Bad Activations</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$&nbsp;5.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>4 Wins</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$12.99</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>1 Tie</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$&nbsp;1.62</TD></TR>
+<TR BGCOLOR="#000000"><TD>&nbsp;</TD><TD>&nbsp;</TD><TD>&nbsp;</TD></TR>
+<TR BGCOLOR="#999999"><TD><B>Totals</B></TD><TD ALIGN=Right><B><FONT COLOR="#FF0000">$84.00</FONT></B></TD><TD ALIGN=Right><B>$181.03</B></TD></TR>
+
+<TR><TD>&nbsp;</TD></TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR><TD>&nbsp;</TD></TR>
+
+<TR><TD><A NAME="gallicwarriors"><B>Gallic Warriors</B></A></TD><TD ALIGN=Right><B>Debits</B></TD><TD ALIGN=Right><B>Credits</B></TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>Entry Fee</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$50.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>Paid Entry Fee</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$50.00</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>35 Extra Transactions</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$35.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>6 Wins</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$19.48</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>1 Tie</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$&nbsp;1.62</TD></TR>
+<TR BGCOLOR="#000000"><TD>&nbsp;</TD><TD>&nbsp;</TD><TD>&nbsp;</TD></TR>
+<TR BGCOLOR="#999999"><TD><B>Totals</B></TD><TD ALIGN=Right><B><FONT COLOR="#FF0000">$85.00</FONT></B></TD><TD ALIGN=Right><B>$71.10</B></TD></TR>
+
+<TR><TD>&nbsp;</TD></TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR><TD>&nbsp;</TD></TR>
+
+<TR><TD><A NAME="illuminati"><B>Illuminati</B></A></TD><TD ALIGN=Right><B>Debits</B></TD><TD ALIGN=Right><B>Credits</B></TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>Last Year's Balance</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$99.71</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>Entry Fee</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$50.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>13 Extra Transactions</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$13.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>5 Wins</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$16.24</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>1 Tie</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$&nbsp;1.62</TD></TR>
+<TR BGCOLOR="#000000"><TD>&nbsp;</TD><TD>&nbsp;</TD><TD>&nbsp;</TD></TR>
+<TR BGCOLOR="#999999"><TD><B>Totals</B></TD><TD ALIGN=Right><B><FONT COLOR="#FF0000">$63.00</FONT></B></TD><TD ALIGN=Right><B>$117.57</B></TD></TR>
+
+<TR><TD>&nbsp;</TD></TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR><TD>&nbsp;</TD></TR>
+
+<TR><TD><A NAME="meggamen"><B>MeggaMen</B></A></TD><TD ALIGN=Right><B>Debits</B></TD><TD ALIGN=Right><B>Credits</B></TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>Last Year's Balance</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$56.71</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>Entry Fee</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$50.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>24 Extra Transactions</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$24.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>1 Bad Activations</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$&nbsp;1.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>7 Wins</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$22.73</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>2 Ties</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$&nbsp;3.25</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>First Round Playoffs</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$45.46</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>Championship Game</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$68.19</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>League Champions</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$113.65</TD></TR>
+<TR BGCOLOR="#000000"><TD>&nbsp;</TD><TD>&nbsp;</TD><TD>&nbsp;</TD></TR>
+<TR BGCOLOR="#999999"><TD><B>Totals</B></TD><TD ALIGN=Right><B><FONT COLOR="#FF0000">$75.00</FONT></B></TD><TD ALIGN=Right><B>$309.99</B></TD></TR>
+
+<TR><TD>&nbsp;</TD></TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR><TD>&nbsp;</TD></TR>
+
+<TR><TD><A NAME="norsemen"><B>Norsemen</B></A></TD><TD ALIGN=Right><B>Debits</B></TD><TD ALIGN=Right><B>Credits</B></TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>Last Year's Balance</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$102.38</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>Entry Fee</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$50.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>48 Extra Transactions</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$48.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>2 Bad Activations</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$&nbsp;2.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>9 Wins</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$29.22</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>Burgandy Division Championship</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$11.36</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>First Round Playoffs</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$45.46</TD></TR>
+<TR BGCOLOR="#000000"><TD>&nbsp;</TD><TD>&nbsp;</TD><TD>&nbsp;</TD></TR>
+<TR BGCOLOR="#999999"><TD><B>Totals</B></TD><TD ALIGN=Right><B><FONT COLOR="#FF0000">$100.00</FONT></B></TD><TD ALIGN=Right><B>$188.42</B></TD></TR>
+
+<TR><TD>&nbsp;</TD></TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR><TD>&nbsp;</TD></TR>
+
+<TR><TD><A NAME="rednecks"><B>Rednecks</B></A></TD><TD ALIGN=Right><B>Debits</B></TD><TD ALIGN=Right><B>Credits</B></TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>Last Year's Balance</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$2.13</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>Entry Fee</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$50.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>Late Entry Fee - 1 Day</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$1.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>Late Entry Fee - 2 Days</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$5.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>Late Entry Fee - 1 Month</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$5.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>Paid Entry Fee</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$58.84</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>44 Extra Transactions</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$44.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>8 Wins</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$25.98</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>1 Tie</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$&nbsp;1.62</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>Gold Division Championship</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$11.36</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>First Round Playoffs</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$45.46</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>Championship Game</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$68.19</TD></TR>
+<TR BGCOLOR="#000000"><TD>&nbsp;</TD><TD>&nbsp;</TD><TD>&nbsp;</TD></TR>
+<TR BGCOLOR="#999999"><TD><B>Totals</B></TD><TD ALIGN=Right><B><FONT COLOR="#FF0000">$105.00</FONT></B></TD><TD ALIGN=Right><B>$213.58</B></TD></TR>
+
+<TR><TD>&nbsp;</TD></TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR><TD>&nbsp;</TD></TR>
+
+<TR><TD><A NAME="sacks"><B>Sacks on the Beach</B></A></TD><TD ALIGN=Right><B>Debits</B></TD><TD ALIGN=Right><B>Credits</B></TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>Last Year's Balance</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$32.26</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>Entry Fee</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$50.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>Late Entry Fee - 1 Day</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$1.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>Late Entry Fee - 2 Days</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$5.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>Paid Entry Fee</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$17.74</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>23 Extra Transactions</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$23.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>5 Wins</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$16.24</TD></TR>
+<TR BGCOLOR="#000000"><TD>&nbsp;</TD><TD>&nbsp;</TD><TD>&nbsp;</TD></TR>
+<TR BGCOLOR="#999999"><TD><B>Totals</B></TD><TD ALIGN=Right><B><FONT COLOR="#FF0000">$79.00</FONT></B></TD><TD ALIGN=Right><B>$66.24</B></TD></TR>
+
+<TR><TD>&nbsp;</TD></TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR><TD>&nbsp;</TD></TR>
+
+<TR><TD><A NAME="werewolves"><B>Werewolves</B></A></TD><TD ALIGN=Right><B>Debits</B></TD><TD ALIGN=Right><B>Credits</B></TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>Last Year's Balance</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$137.58</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>Entry Fee</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$50.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>20 Extra Transactions</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$20.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>8 Wins</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$25.98</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>First Round Playoffs</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$45.46</TD></TR>
+<TR BGCOLOR="#000000"><TD>&nbsp;</TD><TD>&nbsp;</TD><TD>&nbsp;</TD></TR>
+<TR BGCOLOR="#999999"><TD><B>Totals</B></TD><TD ALIGN=Right><B><FONT COLOR="#FF0000">$70.00</FONT></B></TD><TD ALIGN=Right><B>$209.02</B></TD></TR>
+
+<TR><TD>&nbsp;</TD></TR>
+<TR><TD>&nbsp;</TD></TR>
+<TR><TD>&nbsp;</TD></TR>
+
+<TR><TD><A NAME="whiskeytango"><B>Whiskey Tango</B></A></TD><TD ALIGN=Right><B>Debits</B></TD><TD ALIGN=Right><B>Credits</B></TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>Last Year's Balance</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$0.79</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>Entry Fee</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$50.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>Late Entry Fee - 1 Day</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$1.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>Late Entry Fee - 2 Days</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$5.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>Late Entry Fee - 3 Months</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$15.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>Paid Entry Fee</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$75.00</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>26 Extra Transactions</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$26.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#FFFFFF"><TD>3 Bad Activations</TD><TD ALIGN=Right><FONT COLOR="#FF0000">$&nbsp;3.00</FONT></TD><TD ALIGN=Right>&nbsp;</TD></TR>
+<TR BGCOLOR="#CCCCCC"><TD>8 Wins</TD><TD ALIGN=Right><FONT COLOR="#FF0000">&nbsp;</FONT></TD><TD ALIGN=Right>$25.98</TD></TR>
+<TR BGCOLOR="#000000"><TD>&nbsp;</TD><TD>&nbsp;</TD><TD>&nbsp;</TD></TR>
+<TR BGCOLOR="#999999"><TD><B>Totals</B></TD><TD ALIGN=Right><B><FONT COLOR="#FF0000">$100.00</FONT></B></TD><TD ALIGN=Right><B>$101.77</B></TD></TR>
+
+</TABLE>
+<!--#include virtual="/base/footer.html"-->

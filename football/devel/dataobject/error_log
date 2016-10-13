@@ -1,0 +1,9 @@
+[17-Jul-2006 20:23:57] PHP Parse error:  syntax error, unexpected T_PAAMAYIM_NEKUDOTAYIM in /home/wmffl/public_html/devel/dataobject/test.php on line 13
+[17-Jul-2006 20:26:02] PHP Warning:  parse_ini_file(): Cannot open 'myconfig.ini' for reading in /home/wmffl/public_html/devel/dataobject/test.php on line 10
+[17-Jul-2006 20:26:02] PHP Fatal error:  Call to undefined function:  get() in /home/wmffl/public_html/devel/dataobject/test.php on line 14
+[17-Jul-2006 20:40:51] PHP Fatal error:  Call to a member function on a non-object in /home/wmffl/public_html/devel/dataobject/test.php on line 26
+[17-Jul-2006 21:15:10] PHP Fatal error:  Undefined class name 'db_dataobject' in /home/wmffl/public_html/devel/dataobject/test.php on line 13
+[17-Jul-2006 21:44:52] PHP Fatal error:  Cannot instantiate non-existent class:  dataobjects_players in /home/wmffl/public_html/devel/dataobject/test.php on line 40
+[18-Jul-2006 15:51:41] PHP Fatal error:  Undefined class name 'db_dataobject' in /home/wmffl/public_html/devel/dataobject/setup.php on line 10
+[18-Jul-2006 16:05:06] PHP Warning:  main(DB/DataObject): failed to open stream: No such file or directory in /home/wmffl/public_html/devel/dataobject/setup.php on line 5
+[18-Jul-2006 16:05:06] PHP Fatal error:  main(): Failed opening required 'DB/DataObject' (include_path='/home/wmffl/pear/lib/php:/home/wmffl/lib:.:/usr/lib/php:/usr/local/lib/php') in /home/wmffl/public_html/devel/dataobject/setup.php on line 5

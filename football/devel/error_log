@@ -1,0 +1,25 @@
+[15-Dec-2005 15:05:18] PHP Warning:  Invalid argument supplied for foreach() in /home/wmffl/public_html/devel/teamcompare.php on line 51
+[15-Dec-2005 15:10:04] PHP Warning:  Invalid argument supplied for foreach() in /home/wmffl/public_html/devel/teamcompare.php on line 51
+[16-Jul-2006 16:25:03] PHP Warning:  main(Pear): failed to open stream: No such file or directory in /home/wmffl/public_html/devel/test.php on line 3
+[16-Jul-2006 16:25:03] PHP Fatal error:  main(): Failed opening required 'Pear' (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/wmffl/public_html/devel/test.php on line 3
+[16-Jul-2006 16:25:17] PHP Warning:  main(Pear.php): failed to open stream: No such file or directory in /home/wmffl/public_html/devel/test.php on line 3
+[16-Jul-2006 16:25:18] PHP Fatal error:  main(): Failed opening required 'Pear.php' (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/wmffl/public_html/devel/test.php on line 3
+[16-Jul-2006 16:26:51] PHP Warning:  main(DB/DataObject.php): failed to open stream: No such file or directory in /home/wmffl/public_html/devel/test.php on line 4
+[16-Jul-2006 16:26:51] PHP Fatal error:  main(): Failed opening required 'DB/DataObject.php' (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/wmffl/public_html/devel/test.php on line 4
+[16-Jul-2006 16:35:05] PHP Warning:  main(DB/DataObject.php): failed to open stream: No such file or directory in /home/wmffl/public_html/devel/test.php on line 8
+[16-Jul-2006 16:35:05] PHP Fatal error:  main(): Failed opening required 'DB/DataObject.php' (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/wmffl/public_html/devel/test.php on line 8
+[16-Jul-2006 16:35:32] PHP Warning:  main(DB/DataObject.php): failed to open stream: No such file or directory in /home/wmffl/public_html/devel/test.php on line 8
+[16-Jul-2006 16:35:32] PHP Fatal error:  main(): Failed opening required 'DB/DataObject.php' (include_path='/home/wmffl/pear/lib:.:/usr/lib/php:/usr/local/lib/php') in /home/wmffl/public_html/devel/test.php on line 8
+[16-Jul-2006 16:35:45] PHP Warning:  main(DB/DataObject.php): failed to open stream: No such file or directory in /home/wmffl/public_html/devel/test.php on line 8
+[16-Jul-2006 16:35:45] PHP Fatal error:  main(): Failed opening required 'DB/DataObject.php' (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/wmffl/public_html/devel/test.php on line 8
+[18-Oct-2006 14:30:21] PHP Warning:  Invalid argument supplied for foreach() in /home/wmffl/public_html/devel/teamcompare.php on line 51
+[18-Oct-2006 14:32:29] PHP Warning:  Invalid argument supplied for foreach() in /home/wmffl/public_html/devel/teamcompare.php on line 51
+[19-Nov-2006 11:05:28] PHP Warning:  Invalid argument supplied for foreach() in /home/wmffl/public_html/devel/teamcompare.php on line 51
+[24-Oct-2007 08:23:51] PHP Warning:  Invalid argument supplied for foreach() in /home/wmffl/public_html/devel/teamcompare.php on line 51
+[24-Oct-2007 08:27:58] PHP Warning:  mysql_fetch_array(): supplied argument is not a valid MySQL result resource in /home/wmffl/public_html/devel/teamcompare.php on line 24
+[24-Oct-2007 08:27:58] PHP Warning:  Invalid argument supplied for foreach() in /home/wmffl/public_html/devel/teamcompare.php on line 51
+[24-Oct-2007 08:28:00] PHP Warning:  mysql_fetch_array(): supplied argument is not a valid MySQL result resource in /home/wmffl/public_html/devel/teamcompare.php on line 24
+[24-Oct-2007 08:28:00] PHP Warning:  Invalid argument supplied for foreach() in /home/wmffl/public_html/devel/teamcompare.php on line 51
+[24-Oct-2007 08:28:02] PHP Warning:  mysql_fetch_array(): supplied argument is not a valid MySQL result resource in /home/wmffl/public_html/devel/teamcompare.php on line 24
+[24-Oct-2007 08:28:02] PHP Warning:  Invalid argument supplied for foreach() in /home/wmffl/public_html/devel/teamcompare.php on line 51
+[20-Oct-2009 13:38:47] PHP Warning:  Invalid argument supplied for foreach() in /home/joshutt/football/devel/teamcompare.php on line 51

@@ -1,0 +1,45 @@
+<HTML>
+<HEAD>
+<TITLE>Week 5 - through Sunday Games</TITLE>
+</HEAD>
+
+<!--#include virtual="/base/menu.php"-->
+
+<H1 ALIGN=Center>Scores through Sunday Games</H1>
+<H5 ALIGN=Center><I>Week 5</I></H5>
+<HR size = "1">
+
+<P>Here are the scores through the Sunday games for week 4.  Green Bay and
+Chicago play tonight.
+All scores are unoffical.</P>
+
+<P><B>MeggaMen 9 - Freezer Burn 7</B><BR>
+The MeggaMen are fighting to remain undefeated.  They have Donald Driver
+(WR-GB), Chicago Offensive Line and Mike Brown (CHI-DB) left, the Freezer
+Burn have nobody.  So there is a very good chance the MeggaMen will go 5-0.</P>
+
+<P><B>Illuminati 33 - Norsemen 19</B><BR>
+The other undefeated team is also in a struggle to remain so.  With a 14 point
+lead the Illuminati have Brett Favre (QB-GB) and Brian Urlacher (LB-CHI).  To try
+and counter that the Norsemen come with Ahman Green (RB-GB), Marty Booker (WR-CHI) 
+and Roosevelt Colvin (LB-CHI).  The Norsemen have won 6-1-1 in the last 8 meetings
+between these two teams.</P>
+
+<P><B>Werewolves 26 - War Eagles 13</B><BR>
+In another close matchup, only Anthony Thomas (RB-CHI) of the War Eagles reamins.
+The Werewolves have won 7 of the last 8 meetings.</P>
+
+<P><B>Crusaders 70 - Rednecks 3</B><BR>
+In a game that appears over, the Crusaders pick up their first win of the season.
+Ending thier 4 game losing streak.  This is only the second regular season game
+the Crusaders have won since week 10 of last year.
+</P>
+
+<P><B>Barbarians 51 - Green Wave 12</B><BR>
+The Barbarians pick up their second straight victory as the Green Wave fall to
+their 2nd straight defeat.  The Green Wave have won 6 of the last 7.  On a 
+very thinnly realted note, I took my daughter to a Pumpkinfest/Petting Zoo this 
+weekend and she got to feed a baby zebu.
+</P>
+
+<!--#include virtual="/base/footer.html"-->

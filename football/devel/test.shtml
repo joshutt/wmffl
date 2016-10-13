@@ -1,0 +1,8 @@
+<!--#set var="title" value="This is title" -->
+<!--#set var="header" value="Header" -->
+
+<!--#include virtual="header.php" -->
+
+Some text here.  This is the virtual
+
+<!--#include virtual="footer.php"-->

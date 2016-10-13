@@ -1,0 +1,18 @@
+function startClock() {
+    $.get("../stopClock.php", {"start":"start"});
+    $("#stClock").text("Stop Clock");
+}
+
+function stopClock() {
+    $.get("../stopClock.php", {"stop":"stop"});
+    $("#stClock").text("Start Clock");
+}
+
+function changeClock() {
+    lab = $("#stClock").text();
+    if (lab == "Start Clock") {
+        startClock();
+    } else {
+        stopClock();
+    }
+}

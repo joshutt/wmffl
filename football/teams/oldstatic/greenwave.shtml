@@ -1,0 +1,111 @@
+<HTML>
+<HEAD>
+<TITLE>Green Wave</TITLE>
+</HEAD>
+
+<!--#include virtual="/base/menu.html"-->
+
+<IMG SRC="greenwave.jpg" ALIGN=Left ALT="Green Wave"><IMG SRC="greenwave.jpg" ALIGN=Right ALT="Green Wave">
+<H1 ALIGN=Center>Green Wave</H1>
+<H5 ALIGN=Center>Owner: Ira Frankel<BR>Member Since 1993</H5>
+<HR size = "1">
+
+<TABLE ALIGN=Left>
+<TR><TD WIDTH=5%></TD><TD><A HREF="#History"><IMG SRC="../images/football.jpg" BORDER=0></A></TD>
+<TD><A HREF="#History">History</A></TD></TR></TABLE>
+<TABLE ALIGN=Right>
+<TR><TD><A HREF="#Roster"><IMG SRC="../images/football.jpg" BORDER=0></A></TD>
+<TD><A HREF="#Roster">Roster</A></TD><TD WIDTH=5%></TD></TR></TABLE>
+<P><BR><BR><HR size = "1">
+
+<Center>
+<A NAME="Roster"><H4>Current Roster</H4>
+<H5><I>As of 10/19/2000</I><BR>
+3 Transactions Remaining</H5>
+
+<TABLE WIDTH=100% ALIGN=Center>
+<TR><TD VALIGN=Top>
+<TABLE ALIGN=Left>
+<TR><TD>HC</TD><TD>Fisher, Jeff</TD><TD>TEN</TD></TR>
+<TR><TD>QB</TD><TD>Jacksonville QB</TD><TD>JAC</TD></TR>
+<TR><TD>QB</TD><TD>Minnesota QB</TD><TD>MIN</TD></TR>
+<TR><TD>RB</TD><TD>Allen, James</TD><TD>CHI</TD></TR>
+<TR><TD>RB</TD><TD>Faulk, Kevin</TD><TD>NE</TD></TR>
+<TR><TD>RB</TD><TD>Faulk, Marshall</TD><TD>STL</TD></TR>
+<TR><TD>RB</TD><TD>Morris, Sammy</TD><TD>BUF</TD></TR>
+<TR><TD>WR</TD><TD>Chrebet, Wayne</TD><TD>NYJ</TD></TR>
+<TR><TD>WR</TD><TD>Ismail, Qadry</TD><TD>BAL</TD></TR>
+<TR><TD>WR</TD><TD>Robinson, Marcus</TD><TD>CHI</TD></TR>
+<TR><TD>WR</TD><TD>Smith, Rod</TD><TD>DEN</TD></TR>
+<TR><TD>TE</TD><TD>Carswell, Dwayne</TD><TD>DEN</TD></TR>
+<TR><TD>TE</TD><TD>LaFleur, David</TD><TD>DAL</TD></TR>
+</TABLE>
+</TD><TD VALIGN=Top>
+<TABLE ALIGN=Right>
+<TR><TD>K</TD><TD>Baltimore K</TD><TD>BAL</TD></TR>
+<TR><TD>K</TD><TD>Buffalo K</TD><TD>BUF</TD></TR>
+<TR><TD>OL</TD><TD>Cincinnati OL</TD><TD>CIN</TD></TR>
+<TR><TD>OL</TD><TD>Dallas OL</TD><TD>DAL</TD></TR>
+<TR><TD>DL</TD><TD>Burnett, Rob</TD><TD>BAL</TD></TR>
+<TR><TD>DL</TD><TD>Pryce, Trevor</TD><TD>DEN</TD></TR>
+<TR><TD>DL</TD><TD>Swann, Eric</TD><TD>CAR</TD></TR>
+<TR><TD>LB</TD><TD>Kirkland, Levon</TD><TD>PIT</TD></TR>
+<TR><TD>LB</TD><TD>McDaniel, Ed</TD><TD>MIN</TD></TR>
+<TR><TD>LB</TD><TD>Nickerson, Hardy</TD><TD>JAC</TD></TR>
+<TR><TD>DB</TD><TD>Law, Ty</TD><TD>NE</TD></TR>
+<TR><TD>DB</TD><TD>Parrish, Tony</TD><TD>CHI</TD></TR>
+<TR><TD>DB</TD><TD>Williams, Aeneas</TD><TD>ARZ</TD></TR>
+</TABLE>
+</TD></TR>
+
+<TR><TD COLSPAN=2>
+<HR size = "1">
+</TD></TR>
+
+<TR><TD COLSPAN=2 ALIGN=Center>
+<A NAME="History"><H3>History</H3></A>
+<TABLE>
+<TH>Record
+<TR><TD WIDTH=20%><B>YEAR</B></TD><TD WIDTH=8%><B>W</B></TD><TD WIDTH=8%><B>L</B></TD>
+<TD WIDTH=4%><B>T</B></TD><TD WIDTH=10%><B>PCT</B></TD><TD WIDTH=50%><B>FINISH</B></TD></TR>
+<TR><TD><B>All-Time</B></TD><TD><B>37</B></TD><TD><B>71</B></TD>
+<TD><B>2</B></TD><TD><B>.345</B></TD></TR>
+<TR><TD>2000</TD><TD>5</TD><TD>9</TD><TD>0</TD><TD>.357</TD>
+<TD>4th Place - Orange Division</TD></TR>
+<TR><TD>1999</TD><TD>5</TD><TD>9</TD><TD>0</TD><TD>.357</TD>
+<TD>3rd Place - Orange Division</TD></TR>
+<TR><TD>1998</TD><TD>6</TD><TD>8</TD><TD>0</TD><TD>.429</TD>
+<TD>2nd Place - Orange Division</TD></TR>
+<TR><TD>1997</TD><TD>3</TD><TD>10</TD><TD>1</TD><TD>.250</TD>
+<TD>2nd Place - Blue Division</TD></TR>
+<TR><TD>1996</TD><TD>5</TD><TD>7</TD><TD>0</TD><TD>.417</TD>
+<TD>3rd Place - Blue Division</TD></TR>
+<TR><TD>1995</TD><TD>5</TD><TD>8</TD><TD>1</TD><TD>.393</TD>
+<TD>3rd Place - Blue Division</TD></TR>
+<TR><TD>1994</TD><TD>5</TD><TD>9</TD><TD>0</TD><TD>.357</TD>
+<TD>3rd Place - Blue Division</TD></TR>
+<TR><TD>1993</TD><TD>3</TD><TD>11</TD><TD>0</TD><TD>.214</TD>
+<TD>Tied 3rd Place - Blue Division</TD></TR>
+</TABLE>
+</TD></TR>
+
+<TR><TD VALIGN=Top>
+<TABLE>
+<TH>Past Owners
+<TR><TD>1993-</TD><TD>Ira Frankel</TD></TR>
+</TABLE>
+
+</TD><TD VALIGN=Top>
+
+<TABLE>
+<TH>Past Names
+<TR><TD>1993</TD><TD>Zebus</TD></TR>
+<TR><TD>1994</TD><TD>Cloakers</TD></TR>
+<TR><TD>1995-1998</TD><TD>Iradicators</TD></TR>
+<TR><TD>1999-</TD><TD>Green Wave</TD></TR>
+</TABLE>
+</TD></TR></TABLE>
+
+<BR>
+
+<!--#include virtual="/base/footer.html"-->

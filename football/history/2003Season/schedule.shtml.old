@@ -1,0 +1,186 @@
+<HTML>
+<HEAD>
+<TITLE>WMFFL Schedule</TITLE>
+</HEAD>
+
+<!--#include virtual="/base/menu.php"-->
+
+<H1 Align=Center>2003 Schedule</H1>
+<HR size = "1"><CENTER>
+
+<A HREF="#Week1">Week 1</A> | <A HREF="#Week2">Week 2</A> |
+<A HREF="#Week3">Week 3</A> | <A HREF="#Week4">Week 4</A> |
+<A HREF="#Week5">Week 5</A> | <A HREF="#Week6">Week 6</A> |
+<A HREF="#Week7">Week 7</A> | <A HREF="#Week8">Week 8</A> <BR>
+<A HREF="#Week9">Week 9</A> | <A HREF="#Week10">Week 10</A> |
+<A HREF="#Week11">Week 11</A> | <A HREF="#Week12">Week 12</A> |
+<A HREF="#Week13">Week 13</A> | <A HREF="#Week14">Week 14</A> <BR>
+<A HREF="#Playoffs">Playoffs</A> |
+<A HREF="#Championship">WMFFL Championship XII</A><HR size = "1"></CENTER>
+
+<A NAME="Week1"><H4>Week 1</H4></A>
+<H5>September 4-8 (Thursday)</H5>
+<TABLE>
+	<TR><TD>War Eagles</TD><TD>19</TD><TD> </TD><TD>Illuminati</TD><TD>10</TD></TR>
+	<TR><TD>Werewolves</TD><TD>60</TD><TD> </TD><TD>Norsemen</TD><TD>43</TD></TR>
+	<TR><TD>Freezer Burn</TD><TD>0</TD><TD> </TD><TD>Rednecks</TD><TD>0</TD></TR>
+	<TR><TD>MeggaMen</TD><TD>25</TD><TD> </TD><TD>Green Wave</TD><TD>0</TD></TR>
+	<TR><TD>Whiskey Tango</TD><TD>38</TD><TD> </TD><TD>Crusaders</TD><TD>26</TD></TR>
+</TABLE>
+<P>
+
+<P><A NAME="Week2"><H4>Week 2</H4></A>
+<H5>September 14-15</H5>
+<TABLE>
+	<TR><TD>Illuminati</TD><TD>61</TD><TD> </TD><TD>Green Wave</TD><TD>0</TD></TR>
+	<TR><TD>Crusaders</TD><TD>26</TD><TD> </TD><TD>Werewolves</TD><TD>20</TD></TR>
+	<TR><TD>Whiskey Tango</TD><TD>22</TD><TD> </TD><TD>Norsemen</TD><TD>6</TD></TR>
+	<TR><TD>War Eagles</TD><TD>16</TD><TD> </TD><TD>Freezer Burn</TD><TD>0</TD></TR>
+	<TR><TD>Rednecks</TD><TD>67</TD><TD> </TD><TD>MeggaMen</TD><TD>44</TD></TR>
+</TABLE></P>
+
+<A NAME="Week3"><H4>Week 3</H4></A>
+<H5>September 21-22<BR>NFL Byes: Carolina, Chicago, Dallas and Philadelphia</H5>
+<TABLE>
+	<TR><TD>MeggaMen</TD><TD>0</TD><TD> </TD><TD>Crusaders</TD><TD>0</TD></TR>
+	<TR><TD>Illluminati</TD><TD>24</TD><TD> </TD><TD>Norsemen</TD><TD>0</TD></TR>
+	<TR><TD>Rednecks</TD><TD>15</TD><TD> </TD><TD>Green Wave</TD><TD>11</TD></TR>
+	<TR><TD>War Eagles</TD><TD>25</TD><TD> </TD><TD>Whiskey Tango</TD><TD>12</TD></TR>
+	<TR><TD>Freezer Burn</TD><TD>30</TD><TD> </TD><TD>Werewolves</TD><TD>0</TD></TR>
+</TABLE>
+<P>
+
+<A NAME="Week4"><H4>Week 4</H4></A>
+<H5>September 28-29<BR>NFL Byes: Miami, New York Giants, Seattle and Tampa Bay</H5>
+<TABLE>
+    <TR><TD>Illuminati</TD><TD>vs</TD><TD>Freezer Burn</TD></TR>
+    <TR><TD>Werewolves</TD><TD>vs</TD><TD>MeggaMen</TD></TR>
+    <TR><TD>Norsemen</TD><TD>vs</TD><TD>Crusaders</TD></TR>
+    <TR><TD>War Eagles</TD><TD>vs</TD><TD>Green Wave</TD></TR>
+    <TR><TD>Whiskey Tango</TD><TD>vs</TD><TD>Rednecks</TD></TR>
+</TABLE>
+<P>
+
+<A NAME="Week5"><H4>Week 5</H4></A>
+<H5>October 5-6<BR>NFL Byes: Baltimore, Houston, New York Jets and St. Louis</H5>
+<TABLE>
+    <TR><TD>Illuminati</TD><TD>vs</TD><TD>Rednecks</TD></TR>
+    <TR><TD>Werewolves</TD><TD>vs</TD><TD>Whiskey Tango</TD></TR>
+    <TR><TD>Norsemen</TD><TD>vs</TD><TD>Green Wave</TD></TR>
+    <TR><TD>Freezer Burn</TD><TD>vs</TD><TD>MeggaMen</TD></TR>
+    <TR><TD>War Eagles</TD><TD>vs</TD><TD>Crusaders</TD></TR>
+</TABLE>
+<P>
+
+<A NAME="Week6"><H4>Week 6</H4></A>
+<H5>October 12-13<BR>NFL Byes: Cincinnati, Detroit, Minnesota and San Diego</H5>
+<TABLE>
+    <TR><TD>Illuminati</TD><TD>vs</TD><TD>MeggaMen</TD></TR>
+    <TR><TD>Werewolves</TD><TD>vs</TD><TD>Norsemen</TD></TR>
+    <TR><TD>Freezer Burn</TD><TD>vs</TD><TD>Green Wave</TD></TR>
+    <TR><TD>War Eagles</TD><TD>vs</TD><TD>Rednecks</TD></TR>
+    <TR><TD>Crusaders</TD><TD>vs</TD><TD>Whiskey Tango</TD></TR>
+</TABLE>
+<P>
+
+<A NAME="Week7"><H4>Week 7</H4></A>
+<H5>October 19-20<BR>NFL Byes: Arizona, Indianapolis, Jacksonville and Pittsburgh</H5>
+<TABLE>
+    <TR><TD>Illuminati</TD><TD>vs</TD><TD>War Eagles</TD></TR>
+    <TR><TD>Werewolves</TD><TD>vs</TD><TD>Green Wave</TD></TR>
+    <TR><TD>Norsemen</TD><TD>vs</TD><TD>Rednecks</TD></TR>
+    <TR><TD>Freezer Burn</TD><TD>vs</TD><TD>Crusaders</TD></TR>
+    <TR><TD>MeggaMen</TD><TD>vs</TD><TD>Whiskey Tango</TD></TR>
+</TABLE>
+<P>
+
+<A NAME="Week8"><H4>Week 8</H4></A>
+<H5>October 26-27<BR>NFL Byes: Atlanta, Green Bay, Oakland and Washington</H5>
+<TABLE>
+    <TR><TD>Illuminati</TD><TD>vs</TD><TD>Norsemen</TD></TR>
+    <TR><TD>Werewolves</TD><TD>vs</TD><TD>Freezer Burn</TD></TR>
+    <TR><TD>War Eagles</TD><TD>vs</TD><TD>MeggaMen</TD></TR>
+    <TR><TD>Green Wave</TD><TD>vs</TD><TD>Whiskey Tango</TD></TR>
+    <TR><TD>Crusaders</TD><TD>vs</TD><TD>Rednecks</TD></TR>
+</TABLE>
+<P>
+
+<A NAME="Week9"><H4>Week 9</H4></A>
+<H5>November 2-3<BR>NFL Byes: Buffalo, Cleveland, Kansas City and Tennessee</H5>
+<TABLE>
+    <TR><TD>Illuminati</TD><TD>vs</TD><TD>Whiskey Tango</TD></TR>
+    <TR><TD>Werewolves</TD><TD>vs</TD><TD>War Eagles</TD></TR>
+    <TR><TD>Freezer Burn</TD><TD>vs</TD><TD>Norsemen</TD></TR>
+    <TR><TD>MeggaMen</TD><TD>vs</TD><TD>Rednecks</TD></TR>
+    <TR><TD>Crusaders</TD><TD>vs</TD><TD>Green Wave</TD></TR>
+</TABLE>
+<P>
+
+<A NAME="Week10"><H4>Week 10</H4></A>
+<H5>November 9-10<BR>NFL Byes: Denver, New England, New Orleans and San Francisco</H5>
+<TABLE>
+    <TR><TD>Illuminati</TD><TD>vs</TD><TD>Werewolves</TD></TR>
+    <TR><TD>War Eagles</TD><TD>vs</TD><TD>Norsemen</TD></TR>
+    <TR><TD>Freezer Burn</TD><TD>vs</TD><TD>Whiskey Tango</TD></TR>
+    <TR><TD>MeggaMen</TD><TD>vs</TD><TD>Crusaders</TD></TR>
+    <TR><TD>Green Wave</TD><TD>vs</TD><TD>Rednecks</TD></TR>
+</TABLE>
+<P>
+
+<A NAME="Week11"><H4>Week 11</H4></A>
+<H5>November 16-17</H5>
+<TABLE>
+    <TR><TD>Illuminati</TD><TD>vs</TD><TD>Freezer Burn</TD></TR>
+    <TR><TD>Werewolves</TD><TD>vs</TD><TD>Green Wave</TD></TR>
+    <TR><TD>Norsemen</TD><TD>vs</TD><TD>Crusaders</TD></TR>
+    <TR><TD>War Eagles</TD><TD>vs</TD><TD>Rednecks</TD></TR>
+    <TR><TD>MeggaMen</TD><TD>vs</TD><TD>Whiskey Tango</TD></TR>
+</TABLE>
+<P>
+
+<A NAME="Week12"><H4>Week 12</H4></A>
+<H5>November 23-24</H5>
+<TABLE>
+    <TR><TD>Illuminati</TD><TD>vs</TD><TD>Crusaders</TD></TR>
+    <TR><TD>Werewolves</TD><TD>vs</TD><TD>Rednecks</TD></TR>
+    <TR><TD>Norsemen</TD><TD>vs</TD><TD>MeggaMen</TD></TR>
+    <TR><TD>Freezer Burn</TD><TD>vs</TD><TD>War Eagles</TD></TR>
+    <TR><TD>Green Wave</TD><TD>vs</TD><TD>Whiskey Tango</TD></TR>
+</TABLE>
+<P>
+
+<A NAME="Week13"><H4>Week 13</H4></A>
+<H5>November 27-December 1 (Thursday)</H5>
+<TABLE>
+    <TR><TD>Illuminati</TD><TD>vs</TD><TD>MeggaMen</TD></TR>
+    <TR><TD>Werewolves</TD><TD>vs</TD><TD>War Eagles</TD></TR>
+    <TR><TD>Norsemen</TD><TD>vs</TD><TD>Freezer Burn</TD></TR>
+    <TR><TD>Green Wave</TD><TD>vs</TD><TD>Crusaders</TD></TR>
+    <TR><TD>Rednecks</TD><TD>vs</TD><TD>Whiskey Tango</TD></TR>
+</TABLE>
+<P>
+
+<A NAME="Week14"><H4>Week 14</H4></A>
+<H5>December 7-8</H5>
+<TABLE>
+    <TR><TD>Illuminati</TD><TD>vs</TD><TD>Werewolves</TD></TR>
+    <TR><TD>Norsemen</TD><TD>vs</TD><TD>War Eagles</TD></TR>
+    <TR><TD>Freezer Burn</TD><TD>vs</TD><TD>Whiskey Tango</TD></TR>
+    <TR><TD>MeggaMen</TD><TD>vs</TD><TD>Green Wave</TD></TR>
+    <TR><TD>Crusaders</TD><TD>vs</TD><TD>Rednecks</TD></TR>
+</TABLE>
+<P>
+
+<A NAME="Playoffs"><H4><B>Playoffs</B></H4></A>
+<H5>December 14-15</H5>
+Division Winner #1 vs Wild Card #2<BR>
+Division Winner #2 vs Wild Card #1<BR>
+Toliet Bowl V: Blue Division #5 vs Orange Division #5
+<P>
+
+<A NAME="Championship"><H4><B>WMFFL Championship XII</B></H4></A>
+<H5>December 20-22 (Saturday)</H5>
+Playoff Winner #1 vs Playoff Winner #2
+<P>
+
+<!--#include virtual="/base/footer.html"-->

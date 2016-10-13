@@ -1,0 +1,14 @@
+[DB_Values]
+dbName=wmffl
+userName=root
+password=
+
+[Paths]
+libPath = /home/joshutt/co/newsite/lib
+
+[DB_DataObject]
+database = mysql://root@localhost/wmffl
+schema_location   = /home/jutterback/playground/workspace/WMFFL/lib/DataObjects
+class_location    = /home/jutterback/playground/workspace/WMFFL/lib/DataObjects
+require_prefix    = DataObjects/
+class_prefix      = DataObjects_

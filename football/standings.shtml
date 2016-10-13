@@ -1,0 +1,12 @@
+<!--#set var="title" value="WMFFL Standings"-->
+
+<!--#include virtual="/base/menu.php"-->
+
+<H1 ALIGN=Center>Standings for 2006</H1>
+<H5 ALIGN=Center><I></I></H5>
+<HR size = "1">
+
+<!--#include file="standings.php"-->
+<BR>
+
+<!--#include virtual="/base/footer.html"-->

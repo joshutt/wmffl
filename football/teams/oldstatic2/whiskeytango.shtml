@@ -1,0 +1,104 @@
+<!--#set var="teamname" value="Whiskey Tango"-->
+
+<HTML>
+<HEAD>
+<TITLE><!--#echo var="teamname"--></TITLE>
+</HEAD>
+
+<!--#include virtual="/base/menu.php"-->
+
+<H1 ALIGN=Center><!--#echo var="teamname"--></H1>
+<H5 ALIGN=Center>Owner: Warren Allen<BR>Member Since 1993</H5>
+<HR size = "1">
+
+<!--#include virtual="linkbar.php?champyear[]=1993&champyear[]=1994&champyear[]=1995"-->
+
+<Center>
+<TABLE WIDTH=100% ALIGN=Center>
+
+<!--#include virtual="roster.php?teamname=$teamname"-->
+
+<TR><TD COLSPAN=2><HR size = "1"></TD></TR>
+
+<TR><TD ALIGN=CENTER COLSPAN=2>
+	<A NAME="History"><H3>History</H3></A>
+	<TABLE WIDTH=75%>
+	<TH>Record
+	<TR><TD WIDTH=20%><B>YEAR</B></TD><TD WIDTH=8%><B>W</B></TD><TD WIDTH=8%><B>L</B></TD>
+	<TD WIDTH=4%><B>T</B></TD><TD WIDTH=10%><B>PCT</B></TD><TD WIDTH=50%><B>FINISH</B></TD>
+    <TR><TD><B>All-Time</B></TD><TD><B>89</B></TD><TD><B>84</B></TD><TD><B>3</B></TD><TD><B>.514</B></TD></TR>
+	<TR><TD>Playoffs</TD><TD>6</TD><TD>1</TD><TD>0</TD><TD>.857</TD></TR>
+	<TR><TD>PostSeason</TD><TD>7</TD><TD>3</TD><TD>0</TD><TD>.700</TD></TR>
+    <TR><TD>2004</TD><TD>8</TD><TD>6</TD><TD>0</TD><TD>.571</TD><TD>Tied 2nd Place - Gold Division</TD></TR>
+	<TR><TD>2003</TD><TD>3</TD><TD>9</TD><TD>2</TD><TD>.286</TD><TD>Toliet Bowl Loser</TD></TR>
+	<TR><TD>2002</TD><TD>5</TD><TD>9</TD><TD>0</TD><TD>.357</TD><TD>4th Place - Orange Division</TD></TR>
+	<TR><TD>2001</TD><TD>6</TD><TD>8</TD><TD>0</TD><TD>.429</TD><TD>Tied 2nd Place - Orange Division</TD></TR>
+	<TR><TD>2000</TD><TD>5</TD><TD>9</TD><TD>0</TD><TD>.357</TD>
+	<TD>Toliet Bowl Loser</TD></TR>
+	<TR><TD>1999</TD><TD>6</TD><TD>8</TD><TD>0</TD><TD>.429</TD>
+	<TD>Toliet Bowl Winner</TD></TR>
+	<TR><TD>1998</TD><TD>6</TD><TD>8</TD><TD>0</TD><TD>.429</TD>
+	<TD>4rd Place - Blue Division</TD></TR>
+	<TR><TD>1997</TD><TD>3</TD><TD>11</TD><TD>0</TD><TD>.214</TD>
+	<TD>Tied 3rd Place - Blue Division</TD></TR>
+	<TR><TD>1996</TD><TD>7</TD><TD>5</TD><TD>0</TD><TD>.583</TD>
+	<TD>Blue Division Champion</TD></TR>
+	<TR><TD>1995</TD><TD>11</TD><TD>2</TD><TD>1</TD><TD>.821</TD><TD>League Champion</TD></TR>
+	<TR><TD>1994</TD><TD>12</TD><TD>2</TD><TD>0</TD><TD>.857</TD><TD>League Champion</TD></TR>
+	<TR><TD>1993</TD><TD>10</TD><TD>4</TD><TD>0</TD><TD>.714</TD><TD>League Champion</TD></TR>
+	</TABLE>
+</TD></TR>
+
+<TR><TD ALIGN=CENTER COLSPAN=2>
+	<TABLE WIDTH=75%>
+	<TH>Playoff Results
+	<TR><TD>Playoffs 1993</TD><TD>Beat Renegades</TD><TD>94-44</TD></TR>
+	<TR><TD>Championship 1993</TD><TD>Beat Tsunami</TD><TD>85-67</TD></TR>
+	<TR><TD>Playoffs 1994</TD><TD>Beat Tsunami</TD><TD>105-63</TD></TR>
+	<TR><TD>Championship 1994</TD><TD>Beat Slayers</TD><TD>91-59</TD></TR>
+	<TR><TD>Playoffs 1995</TD><TD>Beat Norsemen</TD><TD>28-27</TD></TR>
+	<TR><TD>Championship 1995</TD><TD>Beat Tsunami</TD><TD>59-45</TD></TR>
+	<TR><TD>Playoffs 1996</TD><TD>Lost to Norsemen</TD><TD>31-42</TD></TR>
+	<TR><TD>Toliet Bowl 1999</TD><TD>Beat Archers Who Say Ni</TD><TD>2-0</TD></TR>
+	<TR><TD>Toliet Bowl 2000</TD><TD>Lost to Freezer Burn</TD><TD>12-76</TD></TR>
+	<TR><TD>Toliet Bowl 2003</TD><TD>Lost to Norsemen</TD><TD>44-67</TD></TR>
+	</TABLE>
+</TD></TR>
+
+<TR><TD VALIGN=Top WIDTH=50%>
+	<TABLE ALIGN=Left>
+	<TH>Division Titles
+	<TR><TD>1993</TD><TD>Blue Division Title</TD></TR>
+	<TR><TD>1994</TD><TD>Blue Division Title</TD></TR>
+	<TR><TD>1995</TD><TD>Blue Division Title</TD></TR>
+	<TR><TD>1996</TD><TD>Blue Division Title</TD></TR>
+	</TABLE>
+</TD><TD VALIGN=Top WIDTH=50%>
+	<TABLE ALIGN=Left>
+	<TH>League Titles
+	<TR><TD>1993</TD><TD>WMFFL Champion</TD></TR>
+	<TR><TD>1994</TD><TD>WMFFL Champion</TD></TR>
+	<TR><TD>1995</TD><TD>WMFFL Champion</TD></TR>
+	</TABLE>
+</TD></TR>
+
+<TR><TD VALIGN=Top WIDTH=50%>
+	<TABLE ALIGN=Left>
+	<TH>Past Owners
+	<TR><TD>1993-1994</TD><TD>Bobby Rainey</TD></TR>
+	<TR><TD>1995</TD><TD>Bobby Rainey and Jason Urick</TD></TR>
+	<TR><TD>1996</TD><TD>Bobby Rainey</TD></TR>
+	<TR><TD>1997-2002</TD><TD>Keppy Plitt</TD></TR>
+    <TR><TD>2003-</TD><TD>Warren Allen</TD></TR>
+	</TABLE>
+</TD><TD VALIGN=Top WIDTH=50%>
+	<TABLE>
+	<TH>Past Names
+	<TR><TD>1993-2002</TD><TD>Barbarians</TD></TR>
+    <TR><TD>2003-</TD><TD>Whiskey Tango</TD></TR>
+	</TABLE>
+</TD></TR></TABLE>
+
+</CENTER><BR>
+
+<!--#include virtual="/base/footer.html"-->

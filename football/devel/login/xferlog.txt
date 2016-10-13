@@ -1,0 +1,2 @@
+WINSOCK.DLL: WinSock 2.0
+WS_FTP Pro 6.60 2000.09.20, Copyright © 1992-2000 Ipswitch, Inc.

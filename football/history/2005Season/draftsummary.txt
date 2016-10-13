@@ -1,0 +1,158 @@
+
+
+ Rd#1 Team                     Pos Player              NFL Team
+----- ------------------------ --- ------------------- --------
+  #1: Lindbergh Baby Casserole RB  Westbrook,Brian     PHI
+  #2: Bug Stompers             WR  Burleson,Nate       MIN
+  #3: Crusaders                RB  Williams,Carnell    TB
+  #4: Sacks on the Beach       RB  Arrington,J.J.      ARI
+  #5: Gallic Warriors          QB  Green,Trent         KC
+  #6: Lindbergh Baby Casserole RB  Brown,Ronnie        MIA
+  #7: Sacks on the Beach       LB  Lewis,Ray           BAL
+  #8: Rednecks                 WR  Fitzgerald,Larry    ARI
+  #9: Norsemen                 RB  Benson,Cedric       CHI
+ #10: MeggaMen                 RB  Foster,De'shaun     CAR
+
+ Rd#2 Team                     Pos Player              NFL Team
+----- ------------------------ --- ------------------- --------
+  #1: Lindbergh Baby Casserole QB  Delhomme,Jake       CAR
+  #2: Bug Stompers             WR  Porter,Jerry        OAK
+  #3: Crusaders                WR  Smith,Steve         CAR
+  #4: Sacks on the Beach       WR  Jackson,Darrell     SEA
+  #5: Gallic Warriors          WR  Ward,Hines          PIT
+  #6: Whiskey Tango            WR  Driver,Donald       GB
+  #7: Werewolves               RB  Brown,Chris         TEN
+  #8: Rednecks                 RB  Dunn,Warrick        ATL
+  #9: Norsemen                 RB  Barlow,Kevan        SF
+ #10: MeggaMen                 QB  Brady,Tom           NE
+
+ Rd#3 Team                     Pos Player              NFL Team
+----- ------------------------ --- ------------------- --------
+  #1: Lindbergh Baby Casserole LB  Farrior,James       PIT
+  #2: Bug Stompers             RB  Johnson,Larry       KC
+  #3: Crusaders                QB  Collins,Kerry       OAK
+  #4: Sacks on the Beach       QB  Palmer,Carson       CIN
+  #5: Gallic Warriors          DB  Harrison,Rodney     NE
+  #6: Whiskey Tango            WR  Lelie,Ashley        DEN
+  #7: Werewolves               RB  Bennett,Michael     MIN
+  #8: Rednecks                 RB  Taylor,Fred         JAX
+  #9: Norsemen                 WR  Bennett,Drew        TEN
+ #10: MeggaMen                 WR  Coles,Laveranues    NYJ
+
+ Rd#4 Team                     Pos Player              NFL Team
+----- ------------------------ --- ------------------- --------
+  #1: Lindbergh Baby Casserole QB  Hasselbeck,Matt     SEA
+  #2: Bug Stompers             WR  Muhammad,Muhsin     CHI
+  #3: Crusaders                DB  Polamalu,Troy       PIT
+  #4: Sacks on the Beach       WR  Smith,Jimmy         JAX
+  #5: Gallic Warriors          WR  Bruce,Isaac         STL
+  #6: Whiskey Tango            DL  Grant,Charles       NO
+  #7: Lindbergh Baby Casserole WR  Edwards,Braylon     CLE
+  #8: Rednecks                 WR  Calico,Tyrone       TEN
+  #9: Norsemen                 WR  Williams,Mike       DET
+ #10: MeggaMen                 RB  Williams,Ricky      MIA
+
+ Rd#5 Team                     Pos Player              NFL Team
+----- ------------------------ --- ------------------- --------
+  #1: Lindbergh Baby Casserole RB  Droughns,Reuben     CLE
+  #2: Bug Stompers             LB  Washington,Marcus   WAS
+  #3: Crusaders                WR  Burress,Plaxico     NYG
+  #4: Sacks on the Beach       DL  Strahan,Michael     NYG
+  #5: Gallic Warriors          LB  Thomas,Zach         MIA
+  #6: Whiskey Tango            LB  Pierce,Antonio      NYG
+  #7: Werewolves               TE  Johnson,Eric        SF
+  #8: Rednecks                 LB  Arrington,Lavar     WAS
+  #9: Bug Stompers             RB  Shelton,Eric        CAR
+ #10: MeggaMen                 DL  Taylor,Jason        MIA
+
+ Rd#6 Team                     Pos Player              NFL Team
+----- ------------------------ --- ------------------- --------
+  #1: Lindbergh Baby Casserole TE  Cooley,Chris        WAS
+  #2: Bug Stompers             DB  Williams,Roy        DAL
+  #3: Crusaders                TE  Wiggins,Jermaine    MIN
+  #4: Sacks on the Beach       QB  Pennington,Chad     NYJ
+  #5: Gallic Warriors          LB  Brooks,Derrick      TB
+  #6: Whiskey Tango            DB  Coleman,Erik        NYJ
+  #7: Werewolves               DB  Williams,Madieu     CIN
+  #8: Rednecks                 LB  Morgan,Dan          CAR
+  #9: Norsemen                 LB  Greenwood,Morlon    HOU
+ #10: MeggaMen                 DB  Barber,Ronde        TB
+
+ Rd#7 Team                     Pos Player              NFL Team
+----- ------------------------ --- ------------------- --------
+  #1: Lindbergh Baby Casserole DL  Henderson,John      JAX
+  #2: Bug Stompers             DB  Hamlin,Ken          SEA
+  #3: Crusaders                DL  Ellis,Shaun         NYJ
+  #4: Sacks on the Beach       DB  Knight,Sammy        KC
+  #5: Gallic Warriors          WR  Mason,Derrick       BAL
+  #6: Whiskey Tango            DB  Wilson,Adrian       ARI
+  #7: Werewolves               LB  Barnett,Nick        GB
+  #8: Rednecks                 DB  Davis,Thomas        CAR
+  #9: Norsemen                 LB  Carter,Andre        SF
+ #10: MeggaMen                 LB  Witherspoon,Will    CAR
+
+ Rd#8 Team                     Pos Player              NFL Team
+----- ------------------------ --- ------------------- --------
+  #1: Lindbergh Baby Casserole LB  Merriman,Shawne     SD
+  #2: Bug Stompers             TE  Smith,L.J.          PHI
+  #3: Crusaders                DB  Scott,Bryan         ATL
+  #4: Sacks on the Beach       RB  Bettis,Jerome       PIT
+  #5: Gallic Warriors          QB  Brooks,Aaron        NO
+  #6: Whiskey Tango            LB  Spikes,Takeo        BUF
+  #7: Sacks on the Beach       RB  Suggs,Lee           CLE
+  #8: Whiskey Tango            WR  Brown,Reggie        PHI
+  #9: Norsemen                 LB  Williams,D.J.       DEN
+ #10: MeggaMen                 LB  Johnson,Derrick o.  KC
+
+ Rd#9 Team                     Pos Player              NFL Team
+----- ------------------------ --- ------------------- --------
+  #1: Lindbergh Baby Casserole DB  Rolle,Antrel        ARI
+  #2: Bug Stompers             QB  Harrington,Joey     DET
+  #3: Crusaders                WR  Houshmandzadeh,T.J. CIN
+  #4: Sacks on the Beach       PK  Elam,Jason          DEN
+  #5: Gallic Warriors          LB  Clark,Danny         OAK
+  #6: Whiskey Tango            QB  Leftwich,Byron      JAX
+  #7: Werewolves               WR  Smith,Rod           DEN
+  #8: Rednecks                 DB  Parrish,Tony        SF
+  #9: Bug Stompers             DB  Boulware,Michael    SEA
+ #10: MeggaMen                 QB  Griese,Brian        TB
+
+Rd#10 Team                     Pos Player              NFL Team
+----- ------------------------ --- ------------------- --------
+  #1: Lindbergh Baby Casserole TE  Miller,Heath        PIT
+  #2: Bug Stompers             DL  Umenyiora,Osi       NYG
+  #3: Crusaders                Off Kansas City         KC
+  #4: Sacks on the Beach       Off San Diego           SD
+  #5: Gallic Warriors          WR  Evans,Lee           BUF
+  #6: Whiskey Tango            RB  Gore,Frank          SF
+  #7: Werewolves               RB  Jones,Thomas        CHI
+  #8: Rednecks                 QB  Plummer,Jake        DEN
+  #9: Norsemen                 DB  Holt,Terrence       DET
+ #10: MeggaMen                 DL  Ellis,Greg          DAL
+
+Rd#11 Team                     Pos Player              NFL Team
+----- ------------------------ --- ------------------- --------
+  #1: Lindbergh Baby Casserole PK  Akers,David         PHI
+  #2: Bug Stompers             LB  Foley,Steve         SD
+  #3: Crusaders                DL  Smith,Justin        CIN
+  #4: Sacks on the Beach       LB  Simmons,Brian       CIN
+  #5: Gallic Warriors          DL  Berry,Bert          ARI
+  #6: Whiskey Tango            PK  Reed,Jeff           PIT
+  #7: Werewolves               QB  Carr,David          HOU
+  #8: Rednecks                 DL  Kearse,Jevon        PHI
+  #9: Norsemen                 LB  Brackett,Gary       IND
+ #10: MeggaMen                 DB  Robinson,Dunta      HOU
+
+Rd#12 Team                     Pos Player              NFL Team
+----- ------------------------ --- ------------------- --------
+  #1: Lindbergh Baby Casserole DL  Griffin,Cornelius   WAS
+  #2: Bug Stompers             Off Seattle             SEA
+  #3: Crusaders                LB  Thurman,Odell       CIN
+  #4: Sacks on the Beach       WR  Stokley,Brandon     IND
+  #5: Gallic Warriors          RB  Clarett,Maurice     DEN
+  #6: Whiskey Tango            WR  Lewis,Greg          PHI
+  #7: Werewolves               DB  Trufant,Marcus      SEA
+  #8: Rednecks                 DB  Sharper,Darren      MIN
+  #9: Norsemen                 WR  Parker,Samie        KC
+ #10: MeggaMen                 WR  Williamson,Troy     MIN
+

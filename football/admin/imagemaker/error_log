@@ -1,0 +1,2 @@
+[04-Aug-2009 22:53:57] PHP Warning:  imagejpeg() [<a href='function.imagejpeg'>function.imagejpeg</a>]: open_basedir restriction in effect. File(/home/wmffl/public_html//images/voting.jpg) is not within the allowed path(s): (/home/joshutt:/usr/lib/php:/usr/local/lib/php:/tmp) in /home/joshutt/football/admin/imagemaker/image.php on line 39
+[04-Aug-2009 22:53:57] PHP Warning:  imagejpeg() [<a href='function.imagejpeg'>function.imagejpeg</a>]: Invalid filename in /home/joshutt/football/admin/imagemaker/image.php on line 39

@@ -1,0 +1,2 @@
+<div><!--#include virtual="/base/menu.php"--></div>
+<div style="left: 180px;"><!--#include virtual="/wmfflblog/blog.shtml"--></div>

@@ -1,0 +1,35 @@
+<?php
+require_once "utils/start.php";
+?>
+
+<head>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="commish.js" type="text/javascript"></script>
+</head>
+
+<body>
+
+<?php
+$query = "select u.Name, t.name, o.primary, c.value, if(c.value > DATE_SUB(now(), INTERVAL 2 MINUTE), 'In', 'Out')
+from owners o
+join user u on o.userid=u.UserID
+join teamnames t on o.teamid=t.teamid and t.season=o.season
+left join config c on c.key=concat('draft.login.', u.userid)
+where o.season=2014
+order by t.name";
+
+$results = mysql_query($query) or die("Unable to do query: ".mysql_error());
+
+print "<table><tr><th>Name</th><th>Team</th><th>In</th></tr>";
+while ($row = mysql_fetch_array($results)) {
+    print "<tr><td>{$row[0]}</td><td>{$row[1]}</td><td>{$row[4]}</td></tr>";
+}
+print "</table>";
+
+
+?>
+
+
+<div id="stClock" onclick="changeClock();">Start Clock</div>
+
+</body>

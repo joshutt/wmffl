@@ -1,0 +1,117 @@
+<HTML>
+<HEAD>
+<TITLE>Freezer Burn</TITLE>
+</HEAD>
+
+<!--#include virtual="/base/menu.html"-->
+
+<Center><IMG SRC="freezertitle.gif" ALT="Freezer Burn"></Center>
+<H5 ALIGN=Center>Owner: Mike Atlas<BR>Member Since 2000</H5>
+<HR size = "1">
+
+<TABLE ALIGN=Left>
+<TR><TD WIDTH=5%></TD><TD><A HREF="#History"><IMG SRC="../images/football.jpg" BORDER=0></A></TD>
+<TD><A HREF="#History">History</A></TD></TR></TABLE>
+<TABLE ALIGN=Right>
+<TR><TD><A HREF="#Roster"><IMG SRC="../images/football.jpg" BORDER=0></A></TD>
+<TD><A HREF="#Roster">Roster</A></TD><TD WIDTH=5%></TD></TR></TABLE>
+<P><BR><BR><HR size = "1">
+
+<Center>
+<A NAME="Roster"><H3>Current Roster</H3></A>
+<H5><I>As of 11/8/2000</I><BR>
+13 Extra Transactions Used</H5>
+
+<TABLE WIDTH=100% ALIGN=Center>
+<TR><TD VALIGN=Top WIDTH=50%>
+	<TABLE ALIGN=Left>
+	<TR><TD>HC</TD><TD>Fassell, Jim</TD><TD>NYG</TD></TR>
+	<TR><TD>QB</TD><TD>Green Bay QB</TD><TD>GB</TD></TR>
+	<TR><TD>QB</TD><TD>Philadelphia QB</TD><TD>PHI</TD></TR>
+	<TR><TD>QB</TD><TD>Tennessee QB</TD><TD>TEN</TD></TR>
+	<TR><TD>RB</TD><TD>Martin, Curtis</TD><TD>NYJ</TD></TR>
+	<TR><TD>RB</TD><TD>Smith, Emmitt</TD><TD>DAL</TD></TR>
+	<TR><TD>RB</TD><TD>Staley, Duce</TD><TD>PHI</TD></TR>
+	<TR><TD>RB</TD><TD>Watson, Justin</TD><TD>STL</TD></TR>
+	<TR><TD>WR</TD><TD>Boston, David</TD><TD>ARZ</TD></TR>
+	<TR><TD>WR</TD><TD>Hayes, Donald</TD><TD>CAR</TD></TR>
+	<TR><TD>WR</TD><TD>Toomer, Amani</TD><TD>NYG</TD></TR>
+	<TR><TD>WR</TD><TD>Wilkins, Terrence</TD><TD>IND</TD></TR>
+	<TR><TD>TE</TD><TD>Alexander, Stephen</TD><TD>WAS</TD></TR>
+	</TABLE>
+</TD><TD VALIGN=Top WIDTH=50%>
+	<TABLE ALIGN=Left>
+	<TR><TD>TE</TD><TD>Brady, Kyle</TD><TD>JAC</TD></TR>
+	<TR><TD>K</TD><TD>Indianapolis K</TD><TD>IND</TD></TR>
+	<TR><TD>OL</TD><TD>Minnesota OL</TD><TD>MIN</TD></TR>
+	<TR><TD>DL</TD><TD>Coleman, Marco</TD><TD>WAS</TD></TR>
+	<TR><TD>DL</TD><TD>McKenzie, Keith</TD><TD>GB</TD></TR>
+	<TR><TD>DL</TD><TD>Porcher, Robert</TD><TD>DET</TD></TR>
+	<TR><TD>DL</TD><TD>Smith, Bruce</TD><TD>WAS</TD></TR>
+	<TR><TD>LB</TD><TD>Cowart, Sam</TD><TD>BUF</TD></TR>
+	<TR><TD>LB</TD><TD>Patton, Marvcus</TD><TD>KC</TD></TR>
+	<TR><TD>LB</TD><TD>Trotter, Jeremiah</TD><TD>PHI</TD></TR>
+	<TR><TD>DB</TD><TD>Abraham, Donnie</TD><TD>TB</TD></TR>
+	<TR><TD>DB</TD><TD>Dishman, Cris</TD><TD>MIN</TD></TR>
+	<TR><TD>DB</TD><TD>Hasty, James</TD><TD>KC</TD></TR>
+	</TABLE>
+</TD></TR>
+
+<TR><TD COLSPAN=2><HR size = "1"></TD></TR>
+
+<TR><TD ALIGN=CENTER COLSPAN=2>
+	<A NAME="History"><H3>History</H3></A>
+	<TABLE WIDTH=75%>
+	<TH>Record
+	<TR><TD WIDTH=20%><B>YEAR</B></TD><TD WIDTH=8%><B>W</B></TD><TD WIDTH=8%><B>L</B></TD>
+	<TD WIDTH=4%><B>T</B></TD><TD WIDTH=10%><B>PCT</B></TD><TD WIDTH=50%><B>FINISH</B></TD>
+	<TR><TD><B>All-Time</B></TD><TD><B>5</B></TD><TD><B>10</B></TD><TD><B>0</B></TD>
+	<TD><B>.333</B></TD></TR>
+	<TR><TD>PostSeason</TD><TD>1</TD><TD>0</TD><TD>0</TD><TD>1.000</TD></TR>
+	<TR><TD>2000</TD><TD>4</TD><TD>10</TD><TD>0</TD><TD>.286</TD>
+	<TD>Toliet Bowl Winner</TD></TR>
+	</TABLE>
+</TD></TR>
+
+<TR><TD ALIGN=CENTER COLSPAN=2>
+	<TABLE WIDTH=75%>
+	<TH>Playoff Results
+	<TR><TD>Toliet Bowl 2000</TD><TD>Beat Barbarians</TD><TD>76-12</TD></TR>
+	</TABLE>
+</TD></TR>
+
+
+<!--
+<TR><TD VALIGN=Top WIDTH=50%>
+	<TABLE ALIGN=Left>
+	<TH>Division Titles
+	<TR><TD>1993</TD><TD>Blue Division Title</TD></TR>
+	<TR><TD>1994</TD><TD>Blue Division Title</TD></TR>
+	<TR><TD>1995</TD><TD>Blue Division Title</TD></TR>
+	<TR><TD>1996</TD><TD>Blue Division Title</TD></TR>
+	</TABLE>
+</TD><TD VALIGN=Top WIDTH=50%>
+	<TABLE ALIGN=Left>
+	<TH>League Titles
+	<TR><TD>1993</TD><TD>WMFFL Champion</TD></TR>
+	<TR><TD>1994</TD><TD>WMFFL Champion</TD></TR>
+	<TR><TD>1995</TD><TD>WMFFL Champion</TD></TR>
+	</TABLE>
+</TD></TR>
+-->
+
+<TR><TD VALIGN=Top WIDTH=50%>
+	<TABLE ALIGN=Left>
+	<TH>Past Owners
+	<TR><TD>2000-</TD><TD>Mike Atlas</TD></TR>
+	</TABLE>
+</TD><TD VALIGN=Top WIDTH=50%>
+	<TABLE>
+	<TH>Past Names
+	<TR><TD>2000-</TD><TD>Freezer Burn</TD></TR>
+	</TABLE>
+</TD></TR></TABLE>
+
+</CENTER><BR>
+
+<!--#include virtual="/base/footer.html"-->

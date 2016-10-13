@@ -1,0 +1,74 @@
+<HTML>
+<HEAD>
+<TITLE>1993 WMFFL Season</TITLE>
+</HEAD>
+
+<!--#include virtual="/base/menu.php"-->
+
+<H1 ALIGN=CENTER>The 1993 Season</H1>
+<HR size = "1">
+<BR>
+<TABLE ALIGN=CENTER WIDTH=100%>
+<TR><TD><A HREF="1993Season/93schedule.shtml">
+<IMG SRC="../images/football.jpg" BORDER=0>1993 Schedule</A></TD>
+<TD><A HREF="1993Season/93awards.shtml">
+<IMG SRC="../images/football.jpg" BORDER=0>1993 Awards</A></TD>
+<TD><A HREF="1993Season/93newsletters.shtml">
+<IMG SRC="../images/football.jpg" BORDER=0>Newsletters</A></TD></TR>
+</TABLE><BR>
+<TABLE ALIGN=CENTER WIDTH=60%>
+<TR><TD><A HREF="#playoffs"><IMG SRC="../images/football.jpg" BORDER=0>Playoffs</A></TD>
+<TD><A HREF="#standings"><IMG SRC="../images/football.jpg" BORDER=0>Final Standings</A></TD></TR>
+</TABLE>
+<BR>
+<HR size = "1">
+<A NAME="playoffs">
+<CENTER><H4>League Champions</H4>
+<B>Barbarians</B><P>
+</CENTER>
+
+<TABLE>
+<TH>Playoffs</TH>
+<TR><TD><B>Game 1</B></TD><TD></TD><TD></TD><TD><B>Championship</B></TD></TR>
+<TR><TD>Barbarians</TD><TD>94</TD><TD WIDTH=30%></TD><TD>Barbarians</TD><TD>85</TD></TR>
+<TR><TD>Renegades</TD><TD>44</TD><TD WIDTH=30%></TD><TD>Tsunami</TD><TD>67</TD></TR>
+<TR><TD><B>Game 2</B></TD></TR>
+<TR><TD>Tsunami</TD><TD>121</TD></TR>
+<TR><TD>Slayers</TD><TD>87</TD></TR>
+</TABLE><BR>
+<HR size = "1"><BR>
+
+<A NAME="standings">
+<TABLE>
+<TH>Blue Division</TH>
+<TR><TD WIDTH=34%>Team</TD><TD WIDTH=13%>Wins</TD><TD WIDTH=13%>Losses</TD>
+<TD WIDTH=13% ALIGN=Center>Ties</TD><TD WIDTH=14%>PCT</TD><TD WIDTH=13%>PTS</TD></TR>
+<TR><TD>y-Barbarians</TD><TD ALIGN=Center>10</TD><TD ALIGN=Center>4</TD>
+<TD ALIGN=Center>0</TD><TD>.714</TD><TD>1130</TD></TR>
+<TR><TD>Archers</TD><TD ALIGN=Center>7</TD><TD ALIGN=Center>7</TD>
+<TD ALIGN=Center>0</TD><TD>.500</TD><TD>801</TD></TR>
+<TR><TD>Warriors</TD><TD ALIGN=Center>3</TD><TD ALIGN=Center>11</TD>
+<TD ALIGN=Center>0</TD><TD>.214</TD><TD>780</TD></TR>
+<TR><TD>Zebus</TD><TD ALIGN=Center>3</TD><TD ALIGN=Center>11</TD>
+<TD ALIGN=Center>0</TD><TD>.214</TD><TD>635</TD></TR>
+</TABLE><BR>
+
+
+<TABLE>
+<TH>Orange Division</TH>
+<TR><TD WIDTH=34%>Team</TD><TD WIDTH=13%>Wins</TD><TD WIDTH=13%>Losses</TD>
+<TD WIDTH=13% ALIGN=Center>Ties</TD><TD WIDTH=14%>PCT</TD><TD WIDTH=13%>PTS</TD></TR>
+<TR><TD>y-Slayers</TD><TD ALIGN=Center>10</TD><TD ALIGN=Center>4</TD>
+<TD ALIGN=Center>0</TD><TD>.714</TD><TD>1116</TD></TR>
+<TR><TD>x-Tsunami</TD><TD ALIGN=Center>10</TD><TD ALIGN=Center>4</TD>
+<TD ALIGN=Center>0</TD><TD>.714</TD><TD>946</TD></TR>
+<TR><TD>x-Renegades</TD><TD ALIGN=Center>7</TD><TD ALIGN=Center>7</TD>
+<TD ALIGN=Center>0</TD><TD>.500</TD><TD>832</TD></TR>
+<TR><TD>Pitbulls</TD><TD ALIGN=Center>6</TD><TD ALIGN=Center>8</TD>
+<TD ALIGN=Center>0</TD><TD>.429</TD><TD>717</TD></TR>
+</TABLE>
+
+<P><SUB> x - Wild Card Team<BR>
+y - Division Champion</SUB><P>
+
+<!--#include virtual="/base/footer.html"-->

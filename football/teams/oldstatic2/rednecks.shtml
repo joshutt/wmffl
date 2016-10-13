@@ -1,0 +1,94 @@
+<!--#set var="teamname" value="Rednecks"-->
+
+<HTML>
+<HEAD>
+<TITLE><!--#echo var="teamname"--></TITLE>
+</HEAD>
+
+<!--#include virtual="/base/menu.php"-->
+
+<IMG SRC="redneck.gif" ALIGN=Left ALT="<!--#echo var="teamname"-->"><IMG SRC="redneck.gif" ALIGN=Right ALT="<!--#echo var="teamname"-->">
+<H1 ALIGN=Center><!--#echo var="teamname"--></H1>
+<!--<CENTER><IMG SRC="rednecks.jpg" ALIGN=Center ALT="<!--#echo var="teamname"-->"></CENTER>-->
+<!--<CENTER><IMG SRC="redneck.gif" ALIGN=Center ALT="<!--#echo var="teamname"-->"></CENTER>-->
+<H5 ALIGN=Center>Owner: John Garner<BR>Member Since 1993</H5>
+<HR size = "1">
+
+<!--#include virtual="linkbar.php"-->
+
+<Center>
+<TABLE WIDTH=100% ALIGN=Center>
+
+<!--#include virtual="roster.php?teamname=$teamname"-->
+
+<TR><TD COLSPAN=2><HR size = "1"></TD></TR>
+
+<TR><TD ALIGN=Center COLSPAN=2>
+	<A NAME="History"><H3>History</H3></A>
+	<TABLE WIDTH=75%>
+	<TH>Record
+	<TR><TD WIDTH=20%><B>YEAR</B></TD><TD WIDTH=8%><B>W</B></TD><TD WIDTH=8%><B>L</B></TD>
+	<TD WIDTH=4%><B>T</B></TD><TD WIDTH=10%><B>PCT</B></TD><TD WIDTH=50%><B>FINISH</B></TD></TR>
+	<TR><TD><B>All-Time</B></TD><TD><B>80</B></TD><TD><B>93</B></TD><TD><B>4</B></TD><TD><B>.463</B></TD></TR>
+    <TR><TD>Playoffs</TD><TD>3</TD><TD>6</TD><TD>0</TD><TD>.333</TD></TR>
+	<TR><TD>PostSeason</TD><TD>5</TD><TD>6</TD><TD>0</TD><TD>.455</TD></TR>
+	<TR><TD>2004</TD><TD>8</TD><TD>5</TD><TD>1</TD><TD>.607</TD><TD>League Runner-Up</TD></TR>
+	<TR><TD>2003</TD><TD>5</TD><TD>6</TD><TD>3</TD><TD>.464</TD><TD>3rd Place - Gold Division</TD></TR>
+	<TR><TD>2002</TD><TD>4</TD><TD>10</TD><TD>0</TD><TD>.286</TD><TD>Toliet Bowl Winner</TD></TR>
+	<TR><TD>2001</TD><TD>3</TD><TD>11</TD><TD>0</TD><TD>.214</TD><TD>Toliet Bowl Winner</TD></TR>
+	<TR><TD>2000</TD><TD>7</TD><TD>7</TD><TD>0</TD><TD>.500</TD><TD>3rd Place - Blue Division</TD></TR>
+	<TR><TD>1999</TD><TD>9</TD><TD>5</TD><TD>0</TD><TD>.643</TD><TD>League Runner Up</TD></TR>
+	<TR><TD>1998</TD><TD>7</TD><TD>7</TD><TD>0</TD><TD>.500</TD><TD>3rd Place - Blue Division</TD></TR>
+	<TR><TD>1997</TD><TD>8</TD><TD>6</TD><TD>0</TD><TD>.571</TD><TD>Blue Division Champion</TD></TR>
+	<TR><TD>1996</TD><TD>6</TD><TD>6</TD><TD>0</TD><TD>.500</TD><TD>League Runner-Up</TD></TR>
+	<TR><TD>1995</TD><TD>3</TD><TD>11</TD><TD>0</TD><TD>.214</TD><TD>4th Place - Blue Division</TD></TR>
+	<TR><TD>1994</TD><TD>11</TD><TD>3</TD><TD>0</TD><TD>.786</TD><TD>2nd Place - Blue Division</TD></TR>
+	<TR><TD>1993</TD><TD>3</TD><TD>11</TD><TD>0</TD><TD>.214</TD><TD>Tied 3rd Place - Blue Division</TD></TR>
+	</TABLE>
+</TD></TR>
+
+<TR><TD COLSPAN=2 ALIGN=Center>
+	<TABLE WIDTH=75%>
+	<TH>Playoff Results
+	<TR><TD>Playoffs 1994</TD><TD>Lost to Slayers</TD><TD>66-130</TD></TR>
+	<TR><TD>Playoffs 1996</TD><TD>Beat Renegades</TD><TD>23-17</TD></TR>
+	<TR><TD>Championship 1996</TD><TD>Lost to Norsemen</TD><TD>0-15</TD></TR>
+	<TR><TD>Playoffs 1997</TD><TD>Lost to Crusaders</TD><TD>1-62</TD></TR>
+	<TR><TD>Playoffs 1998</TD><TD>Lost to Werewolves</TD><TD>6-46</TD></TR>
+	<TR><TD>Playoffs 1999</TD><TD>Beat Crusaders</TD><TD>49-1</TD></TR>
+	<TR><TD>Championship 1999</TD><TD>Lost to Norsemen</TD><TD>34-56 OT</TD></TR>
+	<TR><TD>Toliet Bowl 2001</TD><TD>Beat Norsemen</TD><TD>1-0</TD></TR>
+	<TR><TD>Toliet Bowl 2002</TD><TD>Beat War Eagles</TD><TD>38-15</TD></TR>
+    <tr><td>Playoffs 2004</td><td>Beat Werewolves</td><td>61-11</td></tr>
+    <tr><td>Championship 2004</td><td>Lost to MeggaMen</td><td>22-67</td></tr>
+	</TABLE>
+</TD></TR>
+
+<TR><TD COLSPAN=2 ALIGN=Center>
+	<TABLE ALIGN=Center>
+	<TH>Division Titles
+	<TR><TD>1997</TD><TD>Blue Division Title</TD></TR>
+	<TR><TD>2004</TD><TD>Gold Division Title</TD></TR>
+	</TABLE>
+</TD></TR>
+
+<TR><TD WIDTH=50% VALIGN=Top>
+	<TABLE ALIGN=Left>
+	<TH>Past Owners
+	<TR><TD>1993-2001</TD><TD>Warren Allen</TD></TR>
+	<TR><TD>2002-</TD><TD>John Garner</TD></TR>
+	</TABLE>
+</TD>
+
+<TD WIDTH=50% VALIGN=Top>
+	<TABLE>
+	<TH>Past Names
+	<TR><TD>1993-1996</TD><TD>Warriors</TD></TR>
+	<TR><TD>1997-2001</TD><TD>ZEN</TD></TR>
+	<TR><TD>2002-</TD><TD>Rednecks</TD></TR>
+	</TABLE>
+</TD></TR></TABLE>
+
+</CENTER><BR>
+
+<!--#include virtual="/base/footer.html"-->

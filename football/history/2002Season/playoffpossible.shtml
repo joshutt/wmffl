@@ -1,0 +1,47 @@
+<HTML>
+<HEAD>
+<TITLE>WMFFL 2002 Playoff Picture</TITLE>
+</HEAD>
+
+<!--#include virtual="/base/menu.php"-->
+
+<H1 ALIGN=Center>Playoff Picture</H1>
+<H4 ALIGN=Center>Through Week 13</H4>
+<HR size = "1">
+
+<P><B>Blue Division Title</B><BR>
+&nbsp;-&nbsp;&nbsp;<B>Illuminati</B> (10-3) - Have clinched Blue Division Title 
+</P>
+
+<P><B>Orange Division Title</B><BR>
+&nbsp;-&nbsp;&nbsp;<B>MeggaMen</B> (11-2) - Have clinched Orange Division Title</P>
+
+<P><B>#1 Seed</B><BR>
+&nbsp;-&nbsp;&nbsp;<B>Illuminati</B> (10-3) - Can win #1 seed with win vs Freezer Burn and MeggaMen loss to War Eagles<BR> 
+&nbsp;-&nbsp;&nbsp;<B>MeggaMen</B> (11-2) - Clinches #1 seed with win or tie vs War Eagles OR Illuminati loss or tie to Freezer Burn</P>
+
+
+<P><B>Wild Cards</B><BR>
+&nbsp;-&nbsp;&nbsp;<B>Freezer Burn</B> (6-6-1) - Can still make playoffs if all of the following happen:<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A) They win vs Illuminati AND<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B) Green Wave lose to Crusaders AND<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C) Werewolves lose to Barbarians<BR>
+&nbsp;-&nbsp;&nbsp;<B>Green Wave</B> (7-6) - Wins a tiebreaker with Werewolves can get in with:<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A) Win vs Crusaders OR<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B) Werewolves loss to Barbarians and Freezer Burn lose or tie OR<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C) Tie vs Crusaders and Werewolves tie<BR>
+
+&nbsp;-&nbsp;&nbsp;<B>Norsemen</B> (7-5-1) - Clinches playoff berth with:<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A) Win vs Rednecks OR <BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B) Werewolves loss or tie OR <BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C) Green Wave loss or tie <BR>
+&nbsp;-&nbsp;&nbsp;<B>Werewolves</B> (7-6) - Needs help from some other teams to get in:<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A) Win vs Barbarians AND<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B) Norsemen lose or Green Wave lose or tie.
+</P>
+
+<P><B>Toliet Bowl</B><BR>
+&nbsp;-&nbsp;&nbsp;<B>Rednecks</B> (3-10) - Has clinched a Toliet Bowl berth.<BR>
+&nbsp;-&nbsp;&nbsp;<B>War Eagles</B> (3-10) - Has clinched a Toliet Bowl berth.</P>
+
+<!--#include virtual="/base/footer.html"-->

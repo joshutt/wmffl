@@ -1,0 +1,158 @@
+
+
+ Rd# Franchise                  Pos Player               Team
+---- -------------------------- --- -------------------- ----
+ #1: Go Balls Deep              RB  Bush,Reggie          NO
+ #2: Gallic Warriors            QB  Delhomme,Jake        CAR
+ #3: Lindbergh Baby Casserole   RB  Addai,Joseph         IND
+ #4: Lindbergh Baby Casserole   RB  Gore,Frank           SF
+ #5: Norsemen                   RB  Barber,Marion        DAL
+ #6: Crusaders                  RB  Williams,DeAngelo    CAR
+ #7: Lindbergh Baby Casserole   WR  Houshmandzadeh,T.J.  CIN
+ #8: Whiskey Tango              WR  Walker,Javon         DEN
+ #9: Sacks on the Beach         LB  Pierce,Antonio       NYG
+#10: Gallic Warriors            RB  Foster,De'shaun      CAR
+
+ Rd# Franchise                  Pos Player               Team
+---- -------------------------- --- -------------------- ----
+ #1: Norsemen                   RB  Parker,Willie        PIT
+ #2: Gallic Warriors            TE  Crumpler,Alge        ATL
+ #3: Lindbergh Baby Casserole   LB  Tatupu,Lofa          SEA
+ #4: Go Balls Deep              RB  Bell,Mike            DEN
+ #5: Norsemen                   DL  Umenyiora,Osi        NYG
+ #6: Crusaders                  QB  Manning,Eli          NYG
+ #7: Werewolves                 QB  McNabb,Donovan       PHI
+ #8: Whiskey Tango              RB  Maroney,Laurence     NE
+ #9: Go Balls Deep              QB  Roethlisberger,Ben   PIT
+#10: MeggaMen                   LB  Fletcher,London      BUF
+
+ Rd# Franchise                  Pos Player               Team
+---- -------------------------- --- -------------------- ----
+ #1: Bitch Better Have My Money QB  Culpepper,Daunte     MIA
+ #2: Gallic Warriors            WR  Mason,Derrick        BAL
+ #3: Lindbergh Baby Casserole   DB  Vasher,Nathan        CHI
+ #4: Go Balls Deep              LB  Davis,Andra          CLE
+ #5: Norsemen                   RB  White,LenDale        TEN
+ #6: Crusaders                  LB  Barnett,Nick         GB
+ #7: Werewolves                 RB  Bell,Tatum           DEN
+ #8: Whiskey Tango              LB  Trotter,Jeremiah     PHI
+ #9: Sacks on the Beach         DL  Smith,Will           NO
+#10: MeggaMen                   WR  Jackson,Darrell      SEA
+
+ Rd# Franchise                  Pos Player               Team
+---- -------------------------- --- -------------------- ----
+ #1: Lindbergh Baby Casserole   DB  Taylor,Sean          WAS
+ #2: Gallic Warriors            LB  Brooking,Keith       ATL
+ #3: Lindbergh Baby Casserole   LB  Thomas,Adalius       BAL
+ #4: Go Balls Deep              LB  Quarles,Shelton      TB
+ #5: Norsemen                   DB  Coleman,Erik         NYJ
+ #6: Crusaders                  DB  Wilson,Gibril        NYG
+ #7: Werewolves                 DB  Barber,Ronde         TB
+ #8: Whiskey Tango              LB  Hawk,A.J.            GB
+ #9: Sacks on the Beach         RB  Jones,Thomas         CHI
+#10: MeggaMen                   DB  Williams,Madieu      CIN
+
+ Rd# Franchise                  Pos Player               Team
+---- -------------------------- --- -------------------- ----
+ #1: Bitch Better Have My Money WR  Johnson,Andre        HOU
+ #2: Gallic Warriors            WR  Galloway,Joey        TB
+ #3: Lindbergh Baby Casserole   TE  Davis,Vernon         SF
+ #4: Go Balls Deep              WR  Smith,Rod            DEN
+ #5: Norsemen                   TE  Winslow,Kellen       CLE
+ #6: Crusaders                  DL  Burgess,Derrick      OAK
+ #7: Go Balls Deep              TE  McMichael,Randy      MIA
+ #8: Lindbergh Baby Casserole   RB  Barlow,Kevan         NYJ
+ #9: Sacks on the Beach         DB  Robinson,Dunta       HOU
+#10: MeggaMen                   RB  Morency,Vernand      HOU
+
+ Rd# Franchise                  Pos Player               Team
+---- -------------------------- --- -------------------- ----
+ #1: Bitch Better Have My Money DB  Dawkins,Brian        PHI
+ #2: Gallic Warriors            DB  Lewis,Michael        PHI
+ #3: Lindbergh Baby Casserole   WR  Williams,Reggie      JAX
+ #4: Go Balls Deep              WR  Muhammad,Muhsin      CHI
+ #5: Norsemen                   LB  Morrison,Kirk        OAK
+ #6: Crusaders                  WR  Stallworth,Donte'    NO
+ #7: Werewolves                 DL  Grant,Charles        NO
+ #8: Whiskey Tango              DB  Winfield,Antoine     MIN
+ #9: Go Balls Deep              LB  Washington,Marcus    WAS
+#10: MeggaMen                   DB  Knight,Sammy         KC
+
+ Rd# Franchise                  Pos Player               Team
+---- -------------------------- --- -------------------- ----
+ #1: Bitch Better Have My Money LB  Sims,Ernie           DET
+ #2: Gallic Warriors            DL  Schobel,Aaron        BUF
+ #3: Lindbergh Baby Casserole   LB  Lewis,Ray            BAL
+ #4: Go Balls Deep              QB  Vick,Michael         ATL
+ #5: Norsemen                   LB  June,Cato            IND
+ #6: Crusaders                  TE  Stevens,Jerramy      SEA
+ #7: Werewolves                 TE  Watson,Ben           NE
+ #8: Whiskey Tango              DL  Vanden Bosch,Kyle    TEN
+ #9: Sacks on the Beach         LB  Witherspoon,Will     STL
+#10: MeggaMen                   QB  Bledsoe,Drew         DAL
+
+ Rd# Franchise                  Pos Player               Team
+---- -------------------------- --- -------------------- ----
+ #1: Bitch Better Have My Money DB  Hope,Chris           TEN
+ #2: Gallic Warriors            QB  Warner,Kurt          ARI
+ #3: Lindbergh Baby Casserole   QB  Brees,Drew           NO
+ #4: Go Balls Deep              DL  Allen,Jared          KC
+ #5: Bitch Better Have My Money DL  Williams,Mario       HOU
+ #6: Crusaders                  DL  Roye,Orpheus         CLE
+ #7: Werewolves                 DL  Mathis,Robert        IND
+ #8: Whiskey Tango              LB  Briggs,Lance         CHI
+ #9: Sacks on the Beach         QB  Plummer,Jake         DEN
+#10: MeggaMen                   LB  Dansby,Karlos        ARI
+
+ Rd# Franchise                  Pos Player               Team
+---- -------------------------- --- -------------------- ----
+ #1: Bitch Better Have My Money LB  Thurman,Odell        CIN
+ #2: Gallic Warriors            LB  Clark,Danny          OAK
+ #3: Lindbergh Baby Casserole   Off Denver               DEN
+ #4: Go Balls Deep              DL  Spears,Marcus        DAL
+ #5: Norsemen                   WR  Brown,Reggie         PHI
+ #6: Crusaders                  RB  Green,Ahman          GB
+ #7: Werewolves                 Off Atlanta              ATL
+ #8: Whiskey Tango              WR  Evans,Lee            BUF
+ #9: Sacks on the Beach         WR  Horn,Joe             NO
+#10: MeggaMen                   Off Cincinnati           CIN
+
+ Rd# Franchise                  Pos Player               Team
+---- -------------------------- --- -------------------- ----
+ #1: Bitch Better Have My Money PK  Feely,Jay            NYG
+ #2: Gallic Warriors            WR  Jones,Matt           JAX
+ #3: Lindbergh Baby Casserole   DL  Rucker,Mike          CAR
+ #4: Go Balls Deep              DB  Law,Ty               KC
+ #5: Norsemen                   DB  Rhodes,Kerry         NYJ
+ #6: Crusaders                  WR  Clayton,Michael      TB
+ #7: Werewolves                 DL  Kerney,Patrick       ATL
+ #8: Whiskey Tango              RB  Brown,Chris          TEN
+ #9: Sacks on the Beach         DB  Clements,Nate        BUF
+#10: MeggaMen                   PK  Graham,Shayne        CIN
+
+ Rd# Franchise                  Pos Player               Team
+---- -------------------------- --- -------------------- ----
+ #1: Bitch Better Have My Money QB  McNair,Steve         BAL
+ #2: Gallic Warriors            DL  Kampman,Aaron        GB
+ #3: Lindbergh Baby Casserole   WR  Clayton,Mark         BAL
+ #4: Go Balls Deep              Off Pittsburgh           PIT
+ #5: Norsemen                   WR  Holmes,Santonio      PIT
+ #6: Crusaders                  DL  Gbaja-Biamila,Kabeer GB
+ #7: Werewolves                 WR  Kennison,Eddie       KC
+ #8: Whiskey Tango              DB  Kennedy,Kenoy        DET
+ #9: Sacks on the Beach         RB  Anderson,Mike        BAL
+#10: MeggaMen                   WR  Edwards,Braylon      CLE
+
+ Rd# Franchise                  Pos Player               Team
+---- -------------------------- --- -------------------- ----
+ #1: Bitch Better Have My Money WR  Glenn,Terry          DAL
+ #2: Gallic Warriors            Off New York             NYG
+ #3: Lindbergh Baby Casserole   PK  Brown,Josh           SEA
+ #4: Go Balls Deep              DB  Hall,Deangelo        ATL
+ #5: Norsemen                   DL  Castillo,Luis        SD
+ #6: Crusaders                  RB  Pittman,Michael      TB
+ #7: Werewolves                 LB  Mitchell,Kawika      KC
+ #8: Whiskey Tango              WR  Branch,Deion         NE
+ #9: Sacks on the Beach         DL  Kearse,Jevon         PHI
+#10: MeggaMen                   QB  Brunell,Mark         WAS
+

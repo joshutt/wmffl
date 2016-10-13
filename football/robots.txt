@@ -1,0 +1,5 @@
+User-agent: * 
+Crawl-Delay: 20
+#Begin Attracta SEO Tools Sitemap. Do not remove
+sitemap: http://cdn.attracta.com/sitemap/2307999.xml.gz
+#End Attracta SEO Tools Sitemap. Do not remove

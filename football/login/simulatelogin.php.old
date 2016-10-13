@@ -1,0 +1,11 @@
+<?
+session_start();
+
+$_SESSION["isin"] = true;
+$_SESSION["teamnum"] = 3;
+$_SESSION["usernum"] = 2;
+$_SESSION["fullname"] = "Byron Williams";
+$_SESSION["message"] = "";
+$_SESSION["user"] = "byron";
+
+?>

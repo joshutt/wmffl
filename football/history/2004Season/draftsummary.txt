@@ -1,0 +1,158 @@
+
+
+ Rd#1 Team               Pos Player               NFL Team
+----- ------------------ --- -------------------- --------
+  #1: Whiskey Tango      WR  Mason,Derrick        TEN
+  #2: Rednecks           RB  Jones,Thomas         CHI
+  #3: MeggaMen           RB  Jones,Kevin          DET
+  #4: Bug Stompers       WR  Smith,Steve          CAR
+  #5: Norsemen           RB  Jones,Julius         DAL
+  #6: Werewolves         RB  Faulk,Marshall       STL
+  #7: Illuminati         TE  Winslow,Kellen       CLE
+  #8: Crusaders          RB  Griffin,Quentin      DEN
+  #9: Illuminati         DB  Taylor,Sean          WAS
+ #10: Gallic Warriors    RB  Martin,Curtis        NYJ
+
+ Rd#2 Team               Pos Player               NFL Team
+----- ------------------ --- -------------------- --------
+  #1: Gallic Warriors    WR  Jackson,Darrell      SEA
+  #2: Rednecks           WR  Fitzgerald,Larry     ARI
+  #3: MeggaMen           WR  Chambers,Chris       MIA
+  #4: Whiskey Tango      RB  Jackson,Steven       STL
+  #5: Norsemen           WR  Woods,Rashaun        SF
+  #6: Illuminati         QB  Green,Trent          KC
+  #7: Sacks on the Beach WR  Bruce,Isaac          STL
+  #8: Crusaders          WR  Robinson,Koren       SEA
+  #9: Illuminati         WR  Williams,Roy         DET
+ #10: Bug Stompers       RB  Staley,Duce          PIT
+
+ Rd#3 Team               Pos Player               NFL Team
+----- ------------------ --- -------------------- --------
+  #1: Gallic Warriors    WR  Moulds,Eric          BUF
+  #2: Illuminati         RB  Suggs,Lee            CLE
+  #3: MeggaMen           RB  Foster,De'shaun      CAR
+  #4: Whiskey Tango      QB  Bulger,Marc          STL
+  #5: Norsemen           WR  Toomer,Amani         NYG
+  #6: Werewolves         LB  Urlacher,Brian       CHI
+  #7: Sacks on the Beach LB  Barnett,Nick         GB
+  #8: Crusaders          LB  Thornton,David       IND
+  #9: Illuminati         LB  Washington,Marcus    WAS
+ #10: Bug Stompers       DL  Abraham,John         NYJ
+
+ Rd#4 Team               Pos Player               NFL Team
+----- ------------------ --- -------------------- --------
+  #1: Bug Stompers       DB  Archuleta,Adam       STL
+  #2: Rednecks           K   Vanderjagt,Mike      IND
+  #3: MeggaMen           WR  Burress,Plaxico      PIT
+  #4: Whiskey Tango      QB  Manning,Eli          NYG
+  #5: Norsemen           DB  Wesley,Greg          KC
+  #6: Werewolves         DL  Rice,Simeon          TB
+  #7: Sacks on the Beach QB  Pennington,Chad      NYJ
+  #8: Crusaders          DB  Russell,Brian        MIN
+  #9: Illuminati         QB  Harrington,Joey      DET
+ #10: Bug Stompers       RB  Dunn,Warrick         ATL
+
+ Rd#5 Team               Pos Player               NFL Team
+----- ------------------ --- -------------------- --------
+  #1: Gallic Warriors    TE  McMichael,Randy      MIA
+  #2: Rednecks           DB  Parrish,Tony         SF
+  #3: MeggaMen           DB  Harper,Nick          IND
+  #4: Whiskey Tango      WR  Williams,Reggie      JAX
+  #5: Crusaders          QB  Leftwich,Byron       JAX
+  #6: Werewolves         LB  Peterson,Mike        JAX
+  #7: Sacks on the Beach DL  Grant,Charles        NO
+  #8: Crusaders          DL  Kalu,Ndukwe          PHI
+  #9: Illuminati         RB  Duckett,T.J.         ATL
+ #10: Bug Stompers       LB  Vilma,Jonathan       NYJ
+
+ Rd#6 Team               Pos Player               NFL Team
+----- ------------------ --- -------------------- --------
+  #1: Gallic Warriors    DB  Hamlin,Ken           SEA
+  #2: Rednecks           LB  Brooks,Derrick       TB
+  #3: MeggaMen           TE  Gates,Antonio        SD
+  #4: Whiskey Tango      WR  Porter,Jerry         OAK
+  #5: Norsemen           TE  Smith,L.J.           PHI
+  #6: Werewolves         RB  Perry,Chris          CIN
+  #7: Sacks on the Beach RB  McGahee,Willis       BUF
+  #8: Crusaders          DB  Williams,Aeneas      STL
+  #9: Illuminati         LB  Bruschi,Tedy         NE
+ #10: Bug Stompers       RB  Jones,Greg           JAX
+
+ Rd#7 Team               Pos Player               NFL Team
+----- ------------------ --- -------------------- --------
+  #1: Gallic Warriors    WR  Smith,Jimmy          JAX
+  #2: Rednecks           WR  Walker,Javon         GB
+  #3: MeggaMen           QB  Garcia,Jeff          CLE
+  #4: Whiskey Tango      DL  Peppers,Julius       CAR
+  #5: Norsemen           DL  Kearse,Jevon         PHI
+  #6: Werewolves         DL  Kerney,Patrick       ATL
+  #7: MeggaMen           DL  Williams,Kevin       MIN
+  #8: Crusaders          WR  Warrick,Peter        CIN
+  #9: Illuminati         WR  McCareins,Justin     NYJ
+ #10: Bug Stompers       WR  Smith,Rod            DEN
+
+ Rd#8 Team               Pos Player               NFL Team
+----- ------------------ --- -------------------- --------
+  #1: Gallic Warriors    QB  Carr,David           HOU
+  #2: Rednecks           DL  Seymour,Richard      NE
+  #3: MeggaMen           WR  Stallworth,Donte'    NO
+  #4: Whiskey Tango      DB  Kiel,Terrance        SD
+  #5: Norsemen           DL  Udeze,Kenechi        MIN
+  #6: Werewolves         DB  Tillman,Charles      CHI
+  #7: Sacks on the Beach LB  Fujita,Scott         KC
+  #8: Crusaders          RB  Hambrick,Troy        OAK
+  #9: Illuminati         RB  Dayne,Ron            NYG
+ #10: Bug Stompers       QB  Gannon,Rich          OAK
+
+ Rd#9 Team               Pos Player               NFL Team
+----- ------------------ --- -------------------- --------
+  #1: Gallic Warriors    K   Stover,Matt          BAL
+  #2: Rednecks           WR  Price,Peerless       ATL
+  #3: MeggaMen           LB  Cowart,Sam           NYJ
+  #4: Whiskey Tango      DB  Doss,Michael         IND
+  #5: Norsemen           LB  Draft,Chris          ATL
+  #6: Werewolves         TE  Franks,Bubba         GB
+  #7: Sacks on the Beach WR  Lelie,Ashley         DEN
+  #8: Crusaders          TE  Alexander,Stephen    DET
+  #9: Illuminati         DL  Smith,Robaire        HOU
+ #10: Bug Stompers       LB  Morgan,Dan           CAR
+
+Rd#10 Team               Pos Player               NFL Team
+----- ------------------ --- -------------------- --------
+  #1: Gallic Warriors    Off Baltimore            BAL
+  #2: Rednecks           Off Green Bay            GB
+  #3: MeggaMen           K   Longwell,Ryan        GB
+  #4: Whiskey Tango      DL  Wistrom,Grant        SEA
+  #5: Norsemen           LB  Barton,Eric          NYJ
+  #6: Werewolves         K   Vinatieri,Adam       NE
+  #7: Sacks on the Beach DB  Barber,Ronde         TB
+  #8: Crusaders          Off Carolina             CAR
+  #9: Illuminati         LB  Suggs,Terrell        BAL
+ #10: Bug Stompers       Off Minnesota            MIN
+
+Rd#11 Team               Pos Player               NFL Team
+----- ------------------ --- -------------------- --------
+  #1: Gallic Warriors    RB  George,Eddie         DAL
+  #2: Rednecks           RB  Bell,Tatum           DEN
+  #3: MeggaMen           Off Denver               DEN
+  #4: Whiskey Tango      LB  Harris,Napoleon      OAK
+  #5: Norsemen           WR  Johnson,Keyshawn     DAL
+  #6: Werewolves         LB  Simmons,Anthony      SEA
+  #7: Sacks on the Beach Off New Orleans          NO
+  #8: Crusaders          LB  Jones,Dhani          PHI
+  #9: Illuminati         DB  Hall,Deangelo        ATL
+ #10: Bug Stompers       WR  Givens,David         NE
+
+Rd#12 Team               Pos Player               NFL Team
+----- ------------------ --- -------------------- --------
+  #1: Gallic Warriors    DB  Lewis,Michael        PHI
+  #2: Rednecks           QB  Palmer,Carson        CIN
+  #3: MeggaMen           WR  Wayne,Reggie         IND
+  #4: Whiskey Tango      RB  Cobbs,Cedric         NE
+  #5: Norsemen           LB  Hartwell,Edgerton    BAL
+  #6: Werewolves         DB  Scott,Bryan          ATL
+  #7: Sacks on the Beach DL  Gbaja-Biamila,Kabeer GB
+  #8: Crusaders          K   Elam,Jason           DEN
+  #9: Illuminati         Off Indianapolis         IND
+ #10: Bug Stompers       DL  Schobel,Aaron        BUF
+

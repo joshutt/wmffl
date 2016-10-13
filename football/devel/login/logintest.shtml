@@ -1,0 +1,15 @@
+<!--#include virtual="loginglob.php"-->
+
+
+<HTML> <HEAD> <TITLE>The WMFFL Fantasy Football League</TITLE> </HEAD>
+
+<!--#include virtual="/base2/menu.php"-->
+
+
+<CENTER> <IMG SRC="/images/logo2.gif" ALIGN="top" ALT="The WMFFL Fantasy Football League"> </CENTER>  <P ALIGN="center"><I><font size="2"><b>Last Updated on July 11, 2001</b></font></I></p> <HR size = "1">  <H1 ALIGN=Center>Archers Who Say Ni Ownership Changes Hands</H1> <H3 ALIGN=Center>Jim Bishop Assumes Helm</H3>  <TABLE ALIGN=Center> <TR><TD></TD><TD WIDTH="20%">&nbsp;</TD><TD></TR></TR>  <TR><TD ALIGN=Left>  <H4><A HREF="/history/2001Season/arc010711.shtml">Mike Emrey Steps Down</A> <BR>July 11, 2001</H4>  </TD><TD></TD><TD ALIGN=Left>  <H4><A HREF="/history/2001Season/schedule.shtml">2001 Schedule Released</A> <BR>July 11, 2001</H4>  </TD></TR> <TR><TD ALIGN=Left>  <H4><A HREF="/history/2001Season/letter010629.shtml">Letter from the Commissioner</A> <BR>June 29, 2001</H4>  </TD><TD></TD><TD ALIGN=Left>  <H4><A HREF="/history/2001Season/draftweight.shtml">Draft Weights</A> <BR>June 29, 2001</H4>  </TD></TR> <TR><TD ALIGN=Left>  <H4><A HREF="/history/2000Season/money.shtml">League Finances</A> <BR>June 29, 2001</H4>  </TD><TD></TD><TD ALIGN=Left>  <H4><A HREF="/history/2000Season/00awards.shtml">2000 Awards</A> <BR>June 29, 2001</H4>  </TD></TR> <TR><TD ALIGN=Left>  <H4><A HREF="/history/pastchamps.shtml">Past WMFFL Champions</A> <BR>December 19, 2000</H4>  </TD><TD></TD><TD ALIGN=Left>  <H4><A HREF="/rules/ballotsubmit.shtml">Submit Rule Proposals</A> <BR>December 4, 2000</H4>  </TD></TR></TABLE>  <CENTER> <A HREF="ftp://wmffl.com/wmffl.ff0">League File</A><BR> Mon 12/18/2000
+at
+10:57a
+
+</CENTER>
+
+<!--#include virtual="/base2/footer.html"-->

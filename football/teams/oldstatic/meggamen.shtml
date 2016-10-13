@@ -1,0 +1,118 @@
+<HTML>
+<HEAD>
+<TITLE>MeggaMen</TITLE>
+</HEAD>
+
+<!--#include virtual="/base/menu.html"-->
+
+<Center><IMG SRC="megga.jpg" ALT="MeggaMen"></Center>
+<H5 ALIGN=Center>Owner: Tom Marsh<BR>Member Since 2000</H5>
+<HR size = "1">
+
+<TABLE ALIGN=Left>
+<TR><TD WIDTH=5%></TD><TD><A HREF="#History"><IMG SRC="../images/football.jpg" BORDER=0></A>
+<TD><A HREF="#History">History</A></TD></TR></TABLE>
+<TABLE ALIGN=Right>
+<TR><TD><A HREF="#Roster"><IMG SRC="../images/football.jpg" BORDER=0></A></TD>
+<TD><A HREF="#Roster">Roster</A></TD><TD WIDTH=5%></TD></TR></TABLE>
+<P><BR><HR size = "1">
+
+<Center>
+<A NAME="Roster"><H3>Current Roster</H3></A>
+<H5><I>As of 11/10/2000</I><BR>
+7 Transactions Remaining</H5>
+
+<TABLE WIDTH=100% ALIGN=Center>
+<TR><TD VALIGN=Top WIDTH=50%>
+	<TABLE ALIGN=Left>
+	<TR><TD>HC</TD><TD>Billick, Bill</TD><TD>BAL</TD></TR>
+	<TR><TD>QB</TD><TD>Oakland QB</TD><TD>OAK</TD></TR>
+	<TR><TD>QB</TD><TD>San Francisco QB</TD><TD>SF</TD></TR>
+	<TR><TD>RB</TD><TD>Anderson, Mike</TD><TD>DEN</TD></TR>
+	<TR><TD>RB</TD><TD>Bettis, Jerome</TD><TD>PIT</TD></TR>
+	<TR><TD>RB</TD><TD>Redmond, JR</TD><TD>NE</TD></TR>
+	<TR><TD>WR</TD><TD>Crowell, Germane</TD><TD>DET</TD></TR>
+	<TR><TD>WR</TD><TD>Glenn, Terry</TD><TD>NE</TD></TR>
+	<TR><TD>WR</TD><TD>McCaffrey, Ed</TD><TD>DEN</TD></TR>
+	<TR><TD>WR</TD><TD>Rice, Jerry</TD><TD>SF</TD></TR>
+	<TR><TD>TE</TD><TD>Wycheck, Frank</TD><TD>TEN</TD></TR>
+	<TR><TD>K</TD><TD>Miami K</TD><TD>MIA</TD></TR>
+	<TR><TD>K</TD><TD>Oakland K</TD><TD>OAK</TD></TR>
+	</TABLE>
+</TD><TD VALIGN=Top WIDTH=50%>
+	<TABLE ALIGN=Left>
+	<TR><TD>OL</TD><TD>Buffalo OL</TD><TD>BUF</TD></TR>
+	<TR><TD>OL</TD><TD>St. Louis OL</TD><TD>STL</TD></TR>
+	<TR><TD>DL</TD><TD>Brackens, Tony</TD><TD>JAC</TD></TR>
+	<TR><TD>DL</TD><TD>Jones, Cedric</TD><TD>NYG</TD></TR>
+	<TR><TD>DL</TD><TD>Mamula, Mike</TD><TD>PHI</TD></TR>
+	<TR><TD>LB</TD><TD>Brooks, Derrick.</TD><TD>TB</TD></TR>
+	<TR><TD>LB</TD><TD>Edwards, Donnie</TD><TD>KC</TD></TR>
+	<TR><TD>LB</TD><TD>Fredrickson, Bob</TD><TD>ARZ</TD></TR>
+	<TR><TD>LB</TD><TD>Robinson, Eddie</TD><TD>TEN</TD></TR>
+	<TR><TD>DB</TD><TD>Beasley, Aaron</TD><TD>JAC</TD></TR>
+	<TR><TD>DB</TD><TD>Rice, Ron</TD><TD>DET</TD></TR>
+	<TR><TD>DB</TD><TD>Sehorn, Jason</TD><TD>NYG</TD></TR>
+	<TR><TD>DB</TD><TD>Tounge, Reggie</TD><TD>SEA</TD></TR>
+	</TABLE>
+</TD></TR>
+
+<TR><TD COLSPAN=2><HR size = "1"></TD></TR>
+
+<TR><TD ALIGN=CENTER COLSPAN=2>
+	<A NAME="History"><H3>History</H3></A>
+	<TABLE WIDTH=75%>
+	<TH>Record
+	<TR><TD WIDTH=20%><B>YEAR</B></TD><TD WIDTH=8%><B>W</B></TD><TD WIDTH=8%><B>L</B></TD>
+	<TD WIDTH=4%><B>T</B></TD><TD WIDTH=10%><B>PCT</B></TD><TD WIDTH=50%><B>FINISH</B></TD>
+	<TR><TD><B>All-Time</B></TD><TD><B>8</B></TD><TD><B>7</B></TD><TD><B>0</B></TD>
+	<TD><B>.533</B></TD></TR>
+	<TR><TD>Playoffs</TD><TD>0</TD><TD>1</TD><TD>0</TD><TD>.000</TD></TR>
+	<TR><TD>2000</TD><TD>8</TD><TD>6</TD><TD>0</TD><TD>.571</TD>
+	<TD>2nd Place - Orange Division</TD></TR>
+	</TABLE>
+</TD></TR>
+
+
+<TR><TD ALIGN=CENTER COLSPAN=2>
+	<TABLE WIDTH=75%>
+	<TH>Playoff Results
+	<TR><TD>Playoffs 2000</TD><TD>Lost to Norsemen</TD><TD>36-69</TD></TR>
+	</TABLE>
+</TD></TR>
+
+
+<!--
+<TR><TD VALIGN=Top WIDTH=50%>
+	<TABLE ALIGN=Left>
+	<TH>Division Titles
+	<TR><TD>1993</TD><TD>Blue Division Title</TD></TR>
+	<TR><TD>1994</TD><TD>Blue Division Title</TD></TR>
+	<TR><TD>1995</TD><TD>Blue Division Title</TD></TR>
+	<TR><TD>1996</TD><TD>Blue Division Title</TD></TR>
+	</TABLE>
+</TD><TD VALIGN=Top WIDTH=50%>
+	<TABLE ALIGN=Left>
+	<TH>League Titles
+	<TR><TD>1993</TD><TD>WMFFL Champion</TD></TR>
+	<TR><TD>1994</TD><TD>WMFFL Champion</TD></TR>
+	<TR><TD>1995</TD><TD>WMFFL Champion</TD></TR>
+	</TABLE>
+</TD></TR>
+-->
+
+<TR><TD VALIGN=Top WIDTH=50%>
+	<TABLE ALIGN=Left>
+	<TH>Past Owners
+	<TR><TD>2000-</TD><TD>Tom Marsh</TD></TR>
+	</TABLE>
+</TD><TD VALIGN=Top WIDTH=50%>
+	<TABLE>
+	<TH>Past Names
+	<TR><TD>2000-</TD><TD>MeggaMen</TD></TR>
+	</TABLE>
+</TD></TR></TABLE>
+
+</CENTER><BR>
+
+<!--#include virtual="/base/footer.html"-->

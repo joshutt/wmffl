@@ -1,0 +1,3 @@
+<?
+    print "Current Version: ".phpversion()
+?>

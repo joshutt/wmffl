@@ -1,0 +1,16 @@
+SuPHP_ConfigPath /home/joshutt/football
+
+<Files php.ini>
+order allow,deny
+deny from all
+</Files>
+
+<Files 403.shtml>
+order allow,deny
+allow from all
+</Files>
+
+SetEnv HTTP_configFile  "/home/joshutt/football/conf/wmffl.conf"
+
+deny from 162.210.198.6
+deny from 199.115.112.90

@@ -1,0 +1,67 @@
+<HTML>
+<HEAD>
+<TITLE>1994 WMFFL Awards</TITLE>
+</HEAD>
+
+<!--#include virtual="/base/menu.php"-->
+
+<H1 ALIGN=CENTER> Awards for 1994</H1><HR size = "1">
+<CENTER>
+<A HREF="#FRST"> Best First Round Pick</A> | |<A HREF="#DEF"> Best Defensive
+Player</A> | |<A HREF="#MVP"> Most Valuable Player</A><BR>
+<A HREF="#ABT"> All-Blue Team</A> | |<A HREF="#AOT"> All-Orange Team</A>
+</CENTER>
+<HR size = "1">
+
+<H4><A NAME="FRST">Best 1st First Round Pick</H4>
+San Fransico QB - Barbarians<P>
+
+<A NAME="DEF">
+<h4> Best Defensive Player</h4>
+Junior Seau - LB - Warriors<p>
+
+<a name="MVP">
+<h4> Most Valuable Player</h4>
+San Fransico QB - Barbarians<p>
+<HR size = "1">
+<a name="ABT">
+<h4> All-Blue Team</h4>
+<table width="70%">
+<tr><td width="10%">HC</TD><td width="40%">Marty Shottenhiemer</TD><td width="50%">Warriors</TD></TR>
+<tr><td> QB</TD><td>San Fransico</TD><td>Barbarians</TD></TR>
+<tr><td> RB</TD><td>Emmitt Smith</TD><td>Barbarians</TD></TR>
+<tr><td> RB</TD><td>Marshall Faulk</TD><td>Cloakers</TD></TR>
+<tr><td> WR</TD><td>Herman Moore</TD><td>Warriors</TD></TR>
+<tr><td> WR</TD><td>Cris Carter</TD><td>Archers</TD></TR>
+<tr><td> TE</TD><td>Ben Coates</TD><td>Warriors</TD></TR>
+<tr><td> K</TD><td>Minnesota</TD><td>Warriors</TD></TR>
+<tr><td> OL</TD><td>New York Giants</TD><td>Archers</TD></TR>
+<tr><td> DL</TD><td>Bruce Smith</TD><td>Cloakers</TD></TR>
+<tr><td> DL</TD><td>Clyde Simmons</TD><td>Warriors</TD></TR>
+<tr><td> LB</TD><td>Junior Seau</TD><td>Warriors</TD></TR>
+<tr><td> LB</TD><td>Hardy Nickerson</TD><td>Warriors</TD></TR>
+<tr><td> DB</TD><td>Eric Turner</TD><td>Archers</TD></TR>
+<tr><td> DB</TD><td>Rod Woodson</TD><td>Barbarians</TD></TR>
+</table><p><p>
+
+<a name="AOT"><h4> All-Orange Team</h4>
+<table width="70%">
+<tr><td width="10%">HC</TD><td width="40%">George Seyfirt</TD><td width="50%">Slayers</TD></TR>
+<tr><td> QB</TD><td>Miami</TD><td>Slayers</TD></TR>
+<tr><td> RB</TD><td>Natrone Means</TD><td>Norsemen</TD></TR>
+<tr><td> RB</TD><td>Chris Warren</TD><td>Slayers</TD></TR>
+<tr><td> WR</TD><td>Jerry Rice</TD><td>Norsemen</TD></TR>
+<tr><td> WR</TD><td>Andre Rison</TD><td>Norsemen</TD></TR>
+<tr><td> TE</TD><td>Brent Jones</TD><td>Renegades *</TD></TR>
+<tr><td> K</TD><td>Indianapolis</TD><td>Norsemen</TD></TR>
+<tr><td> OL</TD><td>Pittsburgh</TD><td>Renegades</TD></TR>
+<tr><td> DL</TD><td>Neil Smith</TD><td>Norsemen</TD></TR>
+<tr><td> DL</TD><td>Cortez Kennedy</TD><td>Tsunami</TD></TR>
+<tr><td> LB</TD><td>Chris Spielman</TD><td>Tsunami</TD></TR>
+<tr><td> LB</TD><td>Sam Mills</TD><td>Norsemen</TD></TR>
+<tr><td> DB</TD><td>Tim McDonald</TD><td>Tsunami *</TD></TR>
+<tr><td> DB</TD><td>Terry McDaniel</TD><td>Slayers</TD></TR>
+</table><P>
+* - Brent Jones played one game with the Tsunami and Tim McDonald played one game with the Renegades before being traded in week 2.
+
+<!--#include virtual="/base/footer.html"-->

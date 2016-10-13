@@ -1,0 +1,138 @@
+<HTML>
+<HEAD>
+<TITLE>Barbarians</TITLE>
+</HEAD>
+
+<!--#include virtual="/base/menu.html"-->
+
+<A HREF="Barbarians.jpg"><IMG SRC="Barbarians.jpg" ALIGN=Left ALT="Barbarians" HEIGHT=115 BORDER=0><IMG SRC="Barbarians.jpg" ALIGN=Right ALT="Barbarian" HEIGHT=115 BORDER=0></A>
+<H1 ALIGN=Center>Barbarians</H1>
+<H5 ALIGN=Center>Owner: Keppy Plitt<BR>Member Since 1993</H5>
+<HR size = "1">
+
+<TABLE ALIGN=Left>
+<TR><TD WIDTH=5%></TD><TD><A HREF="#History"><IMG SRC="../images/football.jpg" BORDER=0></A></TD>
+<TD><A HREF="#History">History</A></TD></TR></TABLE>
+<TABLE ALIGN=Right>
+<TR><TD><A HREF="#Roster"><IMG SRC="../images/football.jpg" BORDER=0></A></TD>
+<TD><A HREF="#Roster">Roster</A></TD><TD WIDTH=5%></TD></TR></TABLE>
+<P><BR><HR size = "1">
+
+<Center>
+<A NAME="Roster"><H3>Current Roster</H3></A>
+<H5><I>As of 11/12/2000</I><BR>
+3 Transactions Remaining</H5>
+
+<TABLE WIDTH=100% ALIGN=Center>
+<TR><TD VALIGN=Top WIDTH=50%>
+	<TABLE ALIGN=Left>
+	<TR><TD>HC</TD><TD>Green, Dennis</TD><TD>MIN</TD></TR>
+	<TR><TD>QB</TD><TD>Chicago QB</TD><TD>CHI</TD></TR>
+	<TR><TD>QB</TD><TD>Washington QB</TD><TD>WAS</TD></TR>
+	<TR><TD>RB</TD><TD>Alstott, Mike</TD><TD>TB</TD></TR>
+	<TR><TD>RB</TD><TD>Barber, Tiki</TD><TD>NYG</TD></TR>
+	<TR><TD>RB</TD><TD>Garner, Charlie</TD><TD>SF</TD></TR>
+	<TR><TD>RB</TD><TD>Gary, Orlandis</TD><TD>DEN</TD></TR>
+	<TR><TD>WR</TD><TD>Carter, Cris</TD><TD>MIN</TD></TR>
+	<TR><TD>WR</TD><TD>Green, Jacquez</TD><TD>TB</TD></TR>
+	<TR><TD>WR</TD><TD>Horn, Joe</TD><TD>NO</TD></TR>
+	<TR><TD>WR</TD><TD>Westbrook, Michael</TD><TD>WAS</TD></TR>
+	<TR><TD>TE</TD><TD>Sloan, David</TD><TD>DET</TD></TR>
+	<TR><TD>TE</TD><TD>Sharpe, Shannon</TD><TD>BAL</TD></TR>
+	</TABLE>
+</TD><TD VALIGN=Top WIDTH=50%>
+	<TABLE ALIGN=Left>
+	<TR><TD>K</TD><TD>Seattle K</TD><TD>SEA</TD></TR>
+	<TR><TD>K</TD><TD>Washington K</TD><TD>WAS</TD></TR>
+	<TR><TD>OL</TD><TD>New York Jets OL</TD><TD>NYJ</TD></TR>
+	<TR><TD>OL</TD><TD>Washington OL</TD><TD>WAS</TD></TR>
+	<TR><TD>DL</TD><TD>Ellis, Greg</TD><TD>DAL</TD></TR>
+	<TR><TD>DL</TD><TD>Hicks, Eric</TD><TD>KC</TD></TR>
+	<TR><TD>DL</TD><TD>Johnstone, Lance</TD><TD>OAK</TD></TR>
+	<TR><TD>LB</TD><TD>Hardy, Kevin</TD><TD>JAC</TD></TR>
+	<TR><TD>LB</TD><TD>Miller, Jamir</TD><TD>CLE</TD></TR>
+	<TR><TD>LB</TD><TD>Thomas, Zach</TD><TD>MIA</TD></TR>
+	<TR><TD>DB</TD><TD>Bellamy, Jay</TD><TD>SEA</TD></TR>
+	<TR><TD>DB</TD><TD>Buckley, Terrell</TD><TD>DEN</TD></TR>
+	<TR><TD>DB</TD><TD>Williams, Willie</TD><TD>SEA</TD></TR>
+	</TABLE>
+</TD></TR>
+
+<TR><TD COLSPAN=2><HR size = "1"></TD></TR>
+
+<TR><TD ALIGN=CENTER COLSPAN=2>
+	<A NAME="History"><H3>History</H3></A>
+	<TABLE WIDTH=75%>
+	<TH>Record
+	<TR><TD WIDTH=20%><B>YEAR</B></TD><TD WIDTH=8%><B>W</B></TD><TD WIDTH=8%><B>L</B></TD>
+	<TD WIDTH=4%><B>T</B></TD><TD WIDTH=10%><B>PCT</B></TD><TD WIDTH=50%><B>FINISH</B></TD>
+	<TR><TD><B>All-Time</B></TD><TD><B>67</B></TD><TD><B>51</B></TD><TD><B>1</B></TD>
+	<TD><B>.567</B></TD></TR>
+	<TR><TD>Playoffs</TD><TD>6</TD><TD>1</TD><TD>0</TD><TD>.857</TD></TR>
+	<TR><TD>PostSeason</TD><TD>7</TD><TD>2</TD><TD>0</TD><TD>.778</TD></TR>
+	<TR><TD>2000</TD><TD>5</TD><TD>9</TD><TD>0</TD><TD>.357</TD>
+	<TD>Toliet Bowl Loser</TD></TR>
+	<TR><TD>1999</TD><TD>6</TD><TD>8</TD><TD>0</TD><TD>.429</TD>
+	<TD>Toliet Bowl Winner</TD></TR>
+	<TR><TD>1998</TD><TD>6</TD><TD>8</TD><TD>0</TD><TD>.429</TD>
+	<TD>4rd Place - Blue Division</TD></TR>
+	<TR><TD>1997</TD><TD>3</TD><TD>11</TD><TD>0</TD><TD>.214</TD>
+	<TD>Tied 3rd Place - Blue Division</TD></TR>
+	<TR><TD>1996</TD><TD>7</TD><TD>5</TD><TD>0</TD><TD>.583</TD>
+	<TD>Blue Division Champion</TD></TR>
+	<TR><TD>1995</TD><TD>11</TD><TD>2</TD><TD>1</TD><TD>.821</TD><TD>League Champion</TD></TR>
+	<TR><TD>1994</TD><TD>12</TD><TD>2</TD><TD>0</TD><TD>.857</TD><TD>League Champion</TD></TR>
+	<TR><TD>1993</TD><TD>10</TD><TD>4</TD><TD>0</TD><TD>.714</TD><TD>League Champion</TD></TR>
+	</TABLE>
+</TD></TR>
+
+<TR><TD ALIGN=CENTER COLSPAN=2>
+	<TABLE WIDTH=75%>
+	<TH>Playoff Results
+	<TR><TD>Playoffs 1993</TD><TD>Beat Renegades</TD><TD>94-44</TD></TR>
+	<TR><TD>Championship 1993</TD><TD>Beat Tsunami</TD><TD>85-67</TD></TR>
+	<TR><TD>Playoffs 1994</TD><TD>Beat Tsunami</TD><TD>105-63</TD></TR>
+	<TR><TD>Championship 1994</TD><TD>Beat Slayers</TD><TD>91-59</TD></TR>
+	<TR><TD>Playoffs 1995</TD><TD>Beat Norsemen</TD><TD>28-27</TD></TR>
+	<TR><TD>Championship 1995</TD><TD>Beat Tsunami</TD><TD>59-45</TD></TR>
+	<TR><TD>Playoffs 1996</TD><TD>Lost to Norsemen</TD><TD>31-42</TD></TR>
+	<TR><TD>Toliet Bowl 1999</TD><TD>Beat Archers Who Say Ni</TD><TD>2-0</TD></TR>
+	<TR><TD>Toliet Bowl 2000</TD><TD>Lost to Freezer Burn</TD><TD>12-76</TD></TR>
+	</TABLE>
+</TD></TR>
+
+<TR><TD VALIGN=Top WIDTH=50%>
+	<TABLE ALIGN=Left>
+	<TH>Division Titles
+	<TR><TD>1993</TD><TD>Blue Division Title</TD></TR>
+	<TR><TD>1994</TD><TD>Blue Division Title</TD></TR>
+	<TR><TD>1995</TD><TD>Blue Division Title</TD></TR>
+	<TR><TD>1996</TD><TD>Blue Division Title</TD></TR>
+	</TABLE>
+</TD><TD VALIGN=Top WIDTH=50%>
+	<TABLE ALIGN=Left>
+	<TH>League Titles
+	<TR><TD>1993</TD><TD>WMFFL Champion</TD></TR>
+	<TR><TD>1994</TD><TD>WMFFL Champion</TD></TR>
+	<TR><TD>1995</TD><TD>WMFFL Champion</TD></TR>
+	</TABLE>
+</TD></TR>
+
+<TR><TD VALIGN=Top WIDTH=50%>
+	<TABLE ALIGN=Left>
+	<TH>Past Owners
+	<TR><TD>1993-1994</TD><TD>Bobby Rainey</TD></TR>
+	<TR><TD>1995</TD><TD>Bobby Rainey and Jason Urick</TD></TR>
+	<TR><TD>1996</TD><TD>Bobby Rainey</TD></TR>
+	<TR><TD>1997-</TD><TD>Keppy Plitt</TD></TR>
+	</TABLE>
+</TD><TD VALIGN=Top WIDTH=50%>
+	<TABLE>
+	<TH>Past Names
+	<TR><TD>1993-</TD><TD>Barbarians</TD></TR>
+	</TABLE>
+</TD></TR></TABLE>
+
+</CENTER><BR>
+
+<!--#include virtual="/base/footer.html"-->

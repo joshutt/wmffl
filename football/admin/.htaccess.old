@@ -1,0 +1,15 @@
+AuthType Basic
+AuthName "Admin"
+
+require valid-user
+AuthUserFile "/home/joshutt/.htpasswds/football/admin/passwd"
+
+#php_value register_globals on
+
+<Files 403.shtml>
+order allow,deny
+allow from all
+</Files>
+
+deny from 162.210.198.6
+deny from 199.115.112.90

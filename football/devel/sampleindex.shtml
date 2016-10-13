@@ -1,0 +1,84 @@
+<HTML>
+<HEAD>
+<TITLE>The WMFFL Fantasy Football League</TITLE>
+</HEAD>
+
+<!--#include virtual="/base/menu.php"-->
+
+<CENTER>
+<IMG SRC="/images/logo2.gif" ALIGN="top" ALT="The WMFFL Fantasy Football League">
+</CENTER>
+
+<P ALIGN="center"><I><font size="2"><b>Last Updated on August 6, 2001</b></font></I></p>
+<HR size = "1">
+
+<H1 ALIGN=Center>Draft Order Set</H1>
+<H3 ALIGN=Center>War Eagles Draw First Pick, Already Traded to ZEN</H3>
+
+<P ALIGN=center><I><font size="3" COLOR="red"><B><!--#include virtual="/base/date.php"--></B></FONT></I></P>
+
+<TABLE ALIGN=Center BORDER=0>
+<!--<TR><TD></TD><TD WIDTH="20%">&nbsp;</TD><TD></TR></TR>-->
+
+<TR><TD ALIGN=Left>
+
+<H4><A HREF="/history/2001Season/draftorder.shtml">Draft Order</A>
+<BR>August 6, 2001</H4>
+
+
+</TD><TD WIDTH="20%">&nbsp;</TD><TD ALIGN=Left>
+
+<H4><A HREF="/history/2001Season/draftdate.shtml">Draft Day Set</A>
+<BR>July 24, 2001</H4>
+
+</TD></TR>
+<TR><TD ALIGN=Left>
+
+<H4><A HREF="/rules/proposals2001.shtml">2001 Rule Proposals</A>
+<BR>July 24, 2001</H4>
+
+</TD><TD></TD><TD ALIGN=Left>
+
+<H4><A HREF="/history/2001Season/zen010719.shtml">ZEN Wheel and Deal</A>
+<BR>July 19, 2001</H4>
+
+</TD></TR>
+<TR><TD ALIGN=Left>
+
+<H4><A HREF="/history/2001Season/transactions.shtml">Recent Trades</A>
+<BR>July 19, 2001</H4>
+
+</TD><TD></TD><TD ALIGN=Left>
+
+<H4><A HREF="/history/2001Season/arc010716.shtml">Archers Become War Eagles</A>
+<BR>July 16, 2001</H4>
+
+</TD></TR>
+<TR><TD ALIGN=Left>
+
+<H4><A HREF="/history/2001Season/arc010711.shtml">Mike Emrey Steps Down</A>
+<BR>July 11, 2001</H4>
+
+</TD><TD></TD><TD ALIGN=Left>
+
+<H4><A HREF="/history/2001Season/schedule.shtml">2001 Schedule Released</A>
+<BR>July 11, 2001</H4>
+
+</TD></TR>
+<TR><TD ALIGN=Left>
+
+<H4><A HREF="/history/2000Season/money.shtml">League Finances</A>
+<BR>June 29, 2001</H4>
+
+</TD><TD></TD><TD ALIGN=Left>
+
+<H4><A HREF="/rules/ballotsubmit.shtml">Submit Rule Proposals</A>
+<BR>December 4, 2000</H4>
+
+</TD></TR></TABLE>
+
+<CENTER>
+<!--#include virtual="/base/leaguefile.inc"-->
+</CENTER>
+
+<!--#include virtual="/base/footer.html"-->

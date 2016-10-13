@@ -1,0 +1,177 @@
+2004 Fantasy Football League Scores for 2004 Week #6
+====================================================
+The Crusaders and MeggaMen each activated a player on a bye.  This 
+results in a 2 point penalty and $1 fine.
+
+
+Weekly Scores
+-------------------------------------------
+Bug Stompers    (30) Sacks on the Beach (1)
+Gallic Warriors (43) Norsemen           (8)
+Werewolves      (39) Whiskey Tango      (0)
+MeggaMen        (19) Illuminati         (5)
+Rednecks        (47) Crusaders          (4)
+
+
+2004 Fantasy Football League Standings after 2004 Week #6
+---------------------------------------------------------
+Burgandy Division         Win Div   Pts Pts
+                   W L T  Pct W L T For  Ag
+------------------ - - - ---- - - - --- ---
+Werewolves         5 1 0 .833 2 0 0 231 122
+Bug Stompers       4 2 0 .667 2 0 0 159 105
+Illuminati         3 3 0 .500 1 1 0 137  89
+Sacks on the Beach 2 4 0 .333 0 2 0 188 206
+Norsemen           1 5 0 .167 0 2 0 126 238
+
+Gold Division             Win Div   Pts Pts
+                   W L T  Pct W L T For  Ag
+------------------ - - - ---- - - - --- ---
+Rednecks           4 2 0 .667 2 0 0 249 154
+Whiskey Tango      4 2 0 .667 2 0 0 229 153
+MeggaMen           3 3 0 .500 0 1 0 132 246
+Crusaders          2 4 0 .333 1 2 0 132 209
+Gallic Warriors    2 4 0 .333 0 2 0 177 238
+
+
+Next Week's Fantasy Schedule
+-------------------------------------
+Illuminati         vs Whiskey Tango
+Crusaders          vs MeggaMen
+Bug Stompers       vs Werewolves
+Sacks on the Beach vs Norsemen
+Rednecks           vs Gallic Warriors
+
+NFL Bye Teams
+-----------------------------------------------------------
+Washington Redskins     Pittsburgh Steelers
+Houston Texans          San Francisco 49ers
+
+2004 Fantasy Football League Scoring Breakdown for 2004 Week #6
+===============================================================
+
+Bug Stompers                         Sacks on the Beach
+--------------------------------     --------------------------------
+Pos Player              Team Pts     Pos Player              Team Pts
+--- ------------------- ---- ---     --- ------------------- ---- ---
+HC  Reid,Andy           PHI    5     HC  Dungy,Tony          IND    0
+QB  McNabb,Donovan      PHI   -1     QB  Pennington,Chad     NYJ    2
+RB  Martin,Curtis       NYJ   19     RB  Tomlinson,Ladainian SD     8
+RB  McAllister,Deuce    NO    15     RB  Westbrook,Brian     PHI    9
+WR  Jackson,Darrell     SEA    0     WR  Bruce,Isaac         STL    0
+WR  Moulds,Eric         BUF    5     WR  Owens,Terrell       PHI    6
+TE  Graham,Daniel       NE     2     TE  Stevens,Jerramy     SEA    4
+K   Wilkins,Jeff        STL    4     K   Akers,David         PHI   14
+Off Ny Jets             NYJ   14     Off New Orleans         NO     9
+DL  Abraham,John        NYJ    7     DL  Grant,Charles       NO     7
+DL  Coleman,Rod         ATL    0     DL  Rucker,Mike         CAR    0
+LB  Morgan,Dan          CAR   10     LB  Barnett,Nick        GB     8
+LB  Vilma,Jonathan      NYJ    7     LB  Sharper,Jamie       HOU    7
+DB  Archuleta,Adam      STL   21     DB  Bly,Dre'            DET    3
+DB  Harrison,Rodney     NE     6     DB  Dawkins,Brian       PHI    8
+____________________________ ___     ____________________________ ___
+          Offensive Points =  63               Offensive Points =  52
+          Defensive Points =  51               Defensive Points =  33
+       Team (Bonus) Points =   0            Team (Bonus) Points =   0
+         Total Points For =   30              Total Points For =    1
+
+Norsemen                             Gallic Warriors
+--------------------------------     --------------------------------
+Pos Player              Team Pts     Pos Player              Team Pts
+--- ------------------- ---- ---     --- ------------------- ---- ---
+HC  Gruden,Jon          TB     0     HC  Fox,John            CAR    0
+QB  Rattay,Tim          SF     8     QB  Brooks,Aaron        NO    13
+RB  Barlow,Kevan        SF     8     RB  Dillon,Corey        NE    17
+RB  Green,Ahman         GB    10     RB  Portis,Clinton      WAS   12
+WR  Moss,Randy          MIN    8     WR  Givens,David        NE     0
+WR  Moss,Santana        NYJ    0     WR  Smith,Jimmy         JAX    6
+TE  Gonzalez,Tony       KC    11     TE  McMichael,Randy     MIA    1
+K   Brown,Kris          HOU   10     K   Dawson,Phil         CLE   10
+Off Seattle             SEA    2     Off New England         NE     8
+DL  Kearse,Jevon        PHI    2     DL  Spires,Greg         TB    12
+DL  Williams,Kevin      MIN    3     DL  Stroud,Marcus       JAX   13
+LB  Clark,Danny         OAK    9     LB  Foreman,Jay         HOU    4
+LB  Pierce,Antonio      WAS    4     LB  Seau,Junior         MIA    5
+DB  Chavous,Corey       MIN    4     DB  Jones,Tebucky       NO     8
+DB  Griffith,Robert     CLE    2     DB  Lewis,Michael       PHI    7
+____________________________ ___     ____________________________ ___
+          Offensive Points =  57               Offensive Points =  67
+          Defensive Points =  24               Defensive Points =  49
+       Team (Bonus) Points =   0            Team (Bonus) Points =   0
+         Total Points For =    8              Total Points For =   43
+
+Werewolves                           Whiskey Tango
+--------------------------------     --------------------------------
+Pos Player              Team Pts     Pos Player              Team Pts
+--- ------------------- ---- ---     --- ------------------- ---- ---
+HC  Vermeil,Dick        KC     0     HC  Tice,Mike           MIN    3
+QB  Brady,Tom           NE     4     QB  Bulger,Marc         STL   11
+RB  Alexander,Shaun     SEA   10     RB  Brown,Chris         TEN    0
+RB  Faulk,Marshall      STL    6     RB  Jackson,Steven      STL    1
+WR  Caldwell,Reche      SD     0     WR  Horn,Joe            NO     9
+WR  Holt,Torry          STL   20     WR  Mason,Derrick       TEN    2
+TE  Putzier,Jeb         DEN    7     TE  Witten,Jason        DAL    2
+K   Vinatieri,Adam      NE    13     K   Feely,Jay           ATL    3
+Off San Diego           SD     3     Off Kansas City         KC    -2
+DL  Kerney,Patrick      ATL    2     DL  Brayton,Tyler       OAK    2
+DL  Rice,Simeon         TB     5     DL  Peppers,Julius      CAR    5
+LB  Davis,Andra         CLE    7     LB  Nguyen,Dat          DAL    5
+LB  Peterson,Mike       JAX   11     LB  Thomas,Zach         MIA    9
+DB  Scott,Bryan         ATL    3     DB  Kiel,Terrance       SD     3
+DB  Sharper,Darren      GB    18     DB  Williams,Madieu     CIN    0
+____________________________ ___     ____________________________ ___
+          Offensive Points =  63               Offensive Points =  29
+          Defensive Points =  46               Defensive Points =  24
+       Team (Bonus) Points =   0            Team (Bonus) Points =   0
+         Total Points For =   39              Total Points For =    0
+
+Illuminati                           MeggaMen
+--------------------------------     --------------------------------
+Pos Player              Team Pts     Pos Player              Team Pts
+--- ------------------- ---- ---     --- ------------------- ---- ---
+HC  Gibbs,Joe           WAS    3     HC  Belichick,Bill      NE     4
+QB  Harrington,Joey     DET    4     QB  Hasselbeck,Matt     SEA    4
+RB  Holmes,Priest       KC    12     RB  Davis,Domanick      HOU    0
+RB  Johnson,Rudi        CIN    0     RB  Taylor,Fred         JAX   13
+WR  Johnson,Andre       HOU    0     WR  Burress,Plaxico     PIT    6
+WR  Williams,Roy        DET    0     WR  Stallworth,Donte'   NO     0
+TE  Cooley,Chris        WAS    0     TE  Gates,Antonio       SD     5
+K   Brown,Josh          SEA   13     K   Longwell,Ryan       GB    10
+Off Pittsburgh          PIT    4     Off Denver              DEN   22
+DL  Henderson,John      JAX    3     DL  Little,Leonard      STL    4
+DL  Smith,Robaire       HOU    3     DL  Taylor,Jason        MIA    0
+LB  Bruschi,Tedy        NE     6     LB  Brooking,Keith      ATL   11
+LB  Washington,Marcus   WAS    6     LB  Edwards,Donnie      SD     3
+DB  Newman,Terence      DAL   11     DB  Harper,Nick         IND    0
+DB  Taylor,Sean         WAS   14     DB  Winfield,Antoine    MIN   13
+____________________________ ___     ____________________________ ___
+          Offensive Points =  36               Offensive Points =  64
+          Defensive Points =  43               Defensive Points =  31
+       Team (Bonus) Points =   0            Team (Bonus) Points =  -2
+         Total Points For =    5              Total Points For =   19
+
+Crusaders                            Rednecks
+--------------------------------     --------------------------------
+Pos Player              Team Pts     Pos Player              Team Pts
+--- ------------------- ---- ---     --- ------------------- ---- ---
+HC  Shanahan,Mike       DEN    5     HC  Fisher,Jeff         TEN    0
+QB  McNair,Steve        TEN    0     QB  Culpepper,Daunte    MIN   36
+RB  Davis,Stephen       CAR    1     RB  Jones,Thomas        CHI    5
+RB  Staley,Duce         PIT    4     RB  Zereoue,Amos        OAK    0
+WR  Glenn,Terry         DAL   10     WR  Coles,Laveranues    WAS    0
+WR  Ward,Hines          PIT    6     WR  Walker,Javon        GB     0
+TE  Johnson,Eric        SF     2     TE  Crumpler,Alge       ATL    8
+K   Elam,Jason          DEN    7     K   Kaeding,Nate        SD    10
+Off St. Louis           STL    1     Off Green Bay           GB    12
+DL  Hall,James          DET    2     DL  Ellis,Shaun         NYJ    9
+DL  Wistrom,Grant       SEA    4     DL  Rogers,Shaun        DET    3
+LB  Fletcher,London     BUF    8     LB  Brooks,Derrick      TB    10
+LB  Thornton,David      IND    0     LB  Porter,Joey         PIT    2
+DB  Bellamy,Jay         NO     8     DB  Parrish,Tony        SF     4
+DB  Wilson,Jerry        SD     2     DB  Williams,Roy        DAL    2
+____________________________ ___     ____________________________ ___
+          Offensive Points =  36               Offensive Points =  71
+          Defensive Points =  24               Defensive Points =  30
+       Team (Bonus) Points =  -2            Team (Bonus) Points =   0
+         Total Points For =    4              Total Points For =   47
+

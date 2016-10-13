@@ -1,0 +1,4 @@
+<A HREF="ftp://wmffl.com/wmffl.ff0">League File</A><BR> 
+Mon 09/11/2000 
+at 
+ 5:36p

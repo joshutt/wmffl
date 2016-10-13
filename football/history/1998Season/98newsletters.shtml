@@ -1,0 +1,31 @@
+<HTML>
+<HEAD>
+<TITLE>1998 WMFFL Newsletters</TITLE>
+</HEAD>
+
+<!--#include virtual="/base/menu.php"-->
+
+<H1 ALIGN=Center>Newsletters</H1>
+<HR size = "1">
+<P>
+<CENTER>
+<A HREF="98wk1.shtml">Week 1 - September 8, 1998</A><BR>
+<A HREF="98wk2.shtml">Week 2 - September 15, 1998</A><BR>
+<A HREF="98wk3.shtml">Week 3 - September 22, 1998</A><BR>
+<A HREF="98wk4.shtml">Week 4 - September 29, 1998</A><BR>
+<A HREF="98wk5.shtml">Week 5 - October 6, 1998</A><BR>
+<A HREF="98wk6.shtml">Week 6 - October 13, 1998</A><BR>
+<A HREF="98wk7.shtml">Week 7 - October 20, 1998</A><BR>
+<A HREF="98wk8.shtml">Week 8 - October 27, 1998</A><BR>
+<A HREF="98wk9.shtml">Week 9 - November 3, 1998</A><BR>
+<A HREF="98wk10.shtml">Week 10 - November 10, 1998</A><BR>
+<A HREF="98wk11.shtml">Week 11 - November 17, 1998</A><BR>
+<A HREF="98wk12.shtml">Week 12 - November 24, 1998</A><BR>
+<A HREF="98wk13.shtml">Week 13 - December 1, 1998</A><BR>
+<A HREF="98wk14.shtml">Week 14 - December 8, 1998</A><BR>
+<A HREF="98wkp.shtml">Playoffs - December 15, 1998</A><BR>
+<A HREF="98wkc.shtml">Championship - December 22, 1998</A><BR>
+</CENTER>
+<P>
+
+<!--#include virtual="/base/footer.html"-->
