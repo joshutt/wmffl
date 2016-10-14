@@ -1,0 +1,18 @@
+.button {
+    border-radius: 12px;
+    background-color: #600;
+    color: #e2a500;
+    float: right;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    font-size: 16px;
+    padding: 2px 10px;
+    cursor: pointer;
+}
+
+.button > a:visited, .button > a:link {
+    color: #e2a500;
+}
+
+.inelig {
+    float: left;
+}

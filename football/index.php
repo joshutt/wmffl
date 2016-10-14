@@ -1,6 +1,7 @@
 <? 
 $title = "The WMFFL Fantasy Football League";
 
+$cssList = array("base/css/core.css");
 include "base/menu.php";
 
 ?>

@@ -1,5 +1,4 @@
 <?php
-#require_once "DataObjects/Articles.php";
 require_once "/home/joshutt/git/lib/DataObjects/Articles.php";
 
 $article = new DataObjects_Articles;
@@ -46,6 +45,11 @@ if (isset($_REQUEST["artSeason"]) && $_REQUEST["artSeason"] != null) {
 				<p><? print $article->articleText; ?></p>
 			<div class="inelig"><? print $dateString; ?></div>
 			</div>
+<?php
+if ($isin) {
+    print "<div class=\"button\"><a href=\"article/publish\">Add Article</a></div>";
+}
+?>
 		</td>
 	</tr>
 	<tr>
@@ -86,7 +90,6 @@ foreach($years as $y) {
     }
     print "<option value=\"$y\" $st>$y</option>";
 }
-
 ?>
             </select>
 		</td>

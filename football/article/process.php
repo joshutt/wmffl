@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 function imageCreateFromAny($filepath) {
     $type = exif_imagetype($filepath);
@@ -58,18 +58,20 @@ function createImageFile($image, $fileName, $type) {
 }
 
 
-function compressImage($url) {
+function compressImage($url, $config) {
     // Set-up the newName
     $maxSize = 450;
-    $rootLoc = "/home/joshutt/git/football";
-    $newDir = "images/articles";
+    $rootLoc = $config->getValue("Paths.wwwPath");
+    $newDir = $config->getValue("Paths.imagesPath");
     $type = exif_imagetype($url);
     $newName = hash_file('md5', $url).'.'.getExtension($type);
     global $fail;
 
-#    set_error_handler(logerror);
-    # $image = imagecreatefromjpeg($url);
+    // Establish image
+    set_error_handler(logerror);
     $image = imageCreateFromAny($url);
+
+    // Set-up new size
     if ($fail) { return null; }
     $width = imagesx($image);
     if ($fail) { return null; }
@@ -83,16 +85,21 @@ function compressImage($url) {
     }
     $newwidth = $width * $percent;
     $newheight = $height * $percent;
+
+    // Define new image
     $thumb = imagecreatetruecolor($newwidth, $newheight);
     if ($fail) { return null; }
     imagecopyresampled($thumb, $image, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
     if ($fail) { return null; }
+
+    // Save new image
     $shortname = "$newDir/$newName";
     $fullName = "$rootLoc/$shortname";
-    #imagejpeg($thumb, $fullName);
     createImageFile($thumb, $fullName, $type);
     if ($fail) { return null; }
-#    restore_error_handler();
+    restore_error_handler();
+
+    // Return path name
     return $shortname;
 }
 
@@ -127,7 +134,7 @@ if (!isset($article) || empty($article)) {
 }
 
 if (!$fail) {
-    $fullName = compressImage($url);
+    $fullName = compressImage($url, $config);
 }
 
 

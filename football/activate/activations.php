@@ -2,10 +2,10 @@
 $title = "WMFFL Activations";
 $week = $currentWeek;
 $season = $currentSeason;
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 ?>
 
-<? include $DOCUMENT_ROOT."/base/menu.php"; ?>
+<? include "base/menu.php"; ?>
 
 <H1 ALIGN=Center>Activations</H1>
 <HR size = "1">
@@ -22,5 +22,5 @@ require_once "$DOCUMENT_ROOT/utils/start.php";
 <? include "currentactivations.php"; ?>
 </CENTER>
 
-<? include $DOCUMENT_ROOT."/base/footer.html"; ?>
+<? include "base/footer.html"; ?>
 

@@ -1,6 +1,6 @@
 <?
-require_once "$DOCUMENT_ROOT/base/conn.php";
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "base/conn.php";
+require_once "utils/start.php";
 
 if (isset($_REQUEST["week"])) {
     $week = $_REQUEST["week"];
@@ -18,23 +18,6 @@ if (isset($_REQUEST["season"])) {
     $season = $currentSeason;
 }
 
-/*
-$select = <<<EOD
-select tn.name, p.pos, p.lastname, p.firstname, r.nflteamid, g.kickoff, UNIX_TIMESTAMP()-UNIX_TIMESTAMP(g.kickoff) as 'remain', s.gameid, g.homeTeam, g.roadTeam, i.status, i.details
-from schedule s
-left join revisedactivations a on a.season=s.season and a.week=s.week and a.teamid in (s.TeamA, s.TeamB)
-left join newplayers p on a.playerid=p.playerid
-left join teamnames tn on tn.season=a.season and tn.teamid=a.teamid
-join weekmap wm on s.season=wm.season and s.week=wm.week
-left join injuries i on i.playerid=p.playerid and i.season=wm.season and i.week=wm.week
-left join nflrosters r on r.dateon<= wm.activationDue and (r.dateoff >= wm.activationDue or r.dateoff is null) and r.playerid=p.playerid
-left join nflgames g on a.season=g.season and a.week=g.week and r.nflteamid in (g.homeTeam, g.roadTeam)
-where a.season=$season and a.week=$week
-order by s.gameid, a.teamid, p.pos, p.lastname, p.playerid
-
-EOD;
-
- */
 
 $select = <<<EOD
 select tn.name, p.pos, p.lastname, p.firstname, r.nflteamid, g.kickoff, 
