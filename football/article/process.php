@@ -1,16 +1,75 @@
 <?
 require_once "$DOCUMENT_ROOT/utils/start.php";
 
-function compressImage($url, $currentSeason, $currentWeek) {
+function imageCreateFromAny($filepath) {
+    $type = exif_imagetype($filepath);
+    $allowedTypes = array (
+        1, // gif
+        2, // jpg
+        3, // png
+        6 // bmp
+    );
+    if (!in_array($type, $allowedTypes)) {
+        return false;
+    }
+    switch ($type) {
+        case 1:
+            $im = imagecreatefromgif($filepath);
+            break;
+        case 2:
+            $im = imagecreatefromjpeg($filepath);
+            break;
+        case 3:
+            $im = imagecreatefrompng($filepath);
+            break;
+        case 6:
+            $im = imagecreatefromwbmp($filepath);
+            break;
+    }
+    return $im;
+}
+
+
+function getExtension($type) {
+    switch ($type) {
+        case 1:  return "gif"; break;
+        case 2:  return "jpg"; break;
+        case 3:  return "png"; break;
+        case 6:  return "bmp"; break;
+        default: return false;
+    }
+}
+
+function createImageFile($image, $fileName, $type) {
+    switch ($type) {
+        case 1:  // GIF
+            return imagegif($image, $fileName);
+            break;
+        case 2:  // JPG
+            return imagejpeg($image, $fileName);
+            break;
+        case 3:  // PNG
+            return imagepng($image, $fileName);
+            break;
+        case 6:  // BMP
+            return imagewbmp($image, $fileName);
+            break;
+    }
+}
+
+
+function compressImage($url) {
+    // Set-up the newName
     $maxSize = 450;
     $rootLoc = "/home/joshutt/git/football";
     $newDir = "images/articles";
-    //$newName = $currentSeason."wk".$currentWeek.".jpg";
-    $newName = hash_file('md5', $url).'.jpg';
+    $type = exif_imagetype($url);
+    $newName = hash_file('md5', $url).'.'.getExtension($type);
     global $fail;
 
-    set_error_handler(logerror);
-    $image = imagecreatefromjpeg($url);
+#    set_error_handler(logerror);
+    # $image = imagecreatefromjpeg($url);
+    $image = imageCreateFromAny($url);
     if ($fail) { return null; }
     $width = imagesx($image);
     if ($fail) { return null; }
@@ -30,9 +89,10 @@ function compressImage($url, $currentSeason, $currentWeek) {
     if ($fail) { return null; }
     $shortname = "$newDir/$newName";
     $fullName = "$rootLoc/$shortname";
-    imagejpeg($thumb, $fullName);
+    #imagejpeg($thumb, $fullName);
+    createImageFile($thumb, $fullName, $type);
     if ($fail) { return null; }
-    restore_error_handler();
+#    restore_error_handler();
     return $shortname;
 }
 
@@ -40,7 +100,7 @@ function logerror($errno, $errstr) {
     global $fail;
     global $errors;
     $fail = true;
-    array_push($errors, "Provide a full URL to a JPG image");
+    array_push($errors, "Provide a full URL to a GIF, JPG or PNG image");
 }
 
 
@@ -67,8 +127,7 @@ if (!isset($article) || empty($article)) {
 }
 
 if (!$fail) {
-    $fullName = compressImage($url, $currentSeason, $currentWeek);
-    //$fullName = compressImage($url, $currentSeason, $currentWeek-1);
+    $fullName = compressImage($url);
 }
 
 
