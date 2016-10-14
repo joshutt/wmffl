@@ -7,7 +7,7 @@
 /conf/wmffl.conf
 .htaccess
 /lib/dataobjects.ini
-lib/dataobjects.ini
 /lib/DataObjects/*.ini
-lib/DataObjects/*.ini
 /football/images/articles
+
+afile
