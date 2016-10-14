@@ -16,8 +16,8 @@ session_start();
 
 // establish Database connection information
 //$conn = mysql_connect('localhost','joshutt_test2','q%i*v@LqZ1lU');
-$conn = mysql_connect('localhost','joshutt_footbal','wmaccess');
-mysql_select_db("joshutt_oldwmffl");
+$conn = mysql_connect('localhost','joshutt_stage','Y/8}1NZ)7=WN');
+mysql_select_db("joshutt_staging");
 
 
 // Determine the current season and current week, but not every time, use cachin

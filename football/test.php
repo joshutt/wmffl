@@ -1,6 +1,6 @@
 <?
-$conn = mysql_connect('localhost','joshutt_footbal','wmaccess');
-mysql_select_db("joshutt_oldwmffl");
+$conn = mysql_connect('localhost','joshutt_stage','Y/8}1NZ)7=WN');
+mysql_select_db("joshutt_staging");
 
 $query = "select * from weekmap where season = 2016;";
 $results = mysql_query($query, $conn);

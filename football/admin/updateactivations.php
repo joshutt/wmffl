@@ -3,8 +3,8 @@
 //require_once "/home/wmffl/public_html/base/conn.php";
 #require_once "/home/wmff/public_html/utils/start.php" or die("Dead");
 
-$conn = mysql_connect('localhost','joshutt_footbal','wmaccess');
-mysql_select_db("joshutt_oldwmffl");
+$conn = mysql_connect('localhost','joshutt_stage','Y/8}1NZ)7=WN');
+mysql_select_db("joshutt_staging");
 
 $dateQuery = "SELECT w1.season, w1.week, w1.weekname, w2.weekname as 'previous' FROM weekmap w1, weekmap w2 ";
 $dateQuery .= "WHERE now() BETWEEN w1.startDate and w1.endDate ";

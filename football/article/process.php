@@ -3,9 +3,9 @@ require_once "$DOCUMENT_ROOT/utils/start.php";
 
 function compressImage($url, $currentSeason, $currentWeek) {
     $maxSize = 450;
-    $rootLoc = "/home/joshutt/football";
-    $newDir = "images/week/2012";
-    $newName = $currentSeason."wk".$currentWeek.".jpg";
+    $rootLoc = "/home/joshutt/git/football";
+    $newDir = "images/articles";
+    //$newName = $currentSeason."wk".$currentWeek.".jpg";
     $newName = hash_file('md5', $url).'.jpg';
     global $fail;
 

@@ -26,7 +26,7 @@ if (!empty($edit)) {
 } else if (!empty($publish)) {
     $sql = "UPDATE articles SET active=1 where articleId=$uid";
     $result = mysql_query($sql) or die ("Dead query: ".mysql_error());
-    header("Location: http://wmffl.com");
+    header("Location: http://$HTTP_HOST");
     exit();
 }
 ?>

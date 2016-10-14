@@ -18,9 +18,8 @@ H4 {font-size:10pt; text-decoration:italic}
 
 <table width="100%" border="0">
 <TR><TD VALIGN="top" width="100%">
-
 <?
-include "article.php";
+include "article/article.php";
 include "quicklinks.php";
 print "<p>";
 include "base/statbar.html";
