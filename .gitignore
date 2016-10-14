@@ -1,0 +1,7 @@
+/logs/*
+!/logs/empty
+
+/tmp/*
+!/tmp/empty
+
+/conf/wmffl.conf
