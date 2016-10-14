@@ -33,9 +33,10 @@ if (!isset($article)) {
 
 
 <table>
-<form method="POST" action="process.php">
+<form method="POST" action="process.php" enctype="multipart/form-data">
 <tr><th>Title:</th><td><input type="text" name="title" size="75" value="<?= $artTitle ?>"/></td></tr>
 <tr><th>Image URL:</th><td><input type="text" name="url" size="75" value="<?= $url ?>"/></td></tr>
+<tr><th>Image Upload:</th><td><input type="file" name="image" size="75" value="<?= $imageFile ?>"/></td></tr>
 <tr><th>Caption:</th><td><input type="text" name="caption" size="75" value="<?= $caption ?>"/></td></tr>
 <tr><th>Article: </th><td><textarea name="article" cols="80" rows="30"><?= $article ?></textarea></td></tr>
 <tr><th><input type="submit" name="submit" value="Preview"/></th></tr>

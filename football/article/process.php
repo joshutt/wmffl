@@ -68,7 +68,7 @@ function compressImage($url, $config) {
     global $fail;
 
     // Establish image
-    set_error_handler(logerror);
+    //set_error_handler(logerror);
     $image = imageCreateFromAny($url);
 
     // Set-up new size
@@ -97,7 +97,7 @@ function compressImage($url, $config) {
     $fullName = "$rootLoc/$shortname";
     createImageFile($thumb, $fullName, $type);
     if ($fail) { return null; }
-    restore_error_handler();
+    //restore_error_handler();
 
     // Return path name
     return $shortname;
@@ -113,8 +113,16 @@ function logerror($errno, $errstr) {
 
 $title = $_POST["title"];
 $url = $_POST["url"];
+$imageFile = $_FILES["image"];
 $caption = $_POST["caption"];
 $article = $_POST["article"];
+/*
+print "***";
+print_r($_POST);
+print_r($_FILES);
+print "***";
+*/
+
 
 global $fail;
 $fail = false;
@@ -124,8 +132,12 @@ if (!isset($title) || empty($title)) {
     array_push($errors, "Must include a title");
     $fail = true;
 }
-if (!isset($url) || empty($url)) {
-    array_push($errors, "Must include an image URL");
+
+if ((!isset($url) || empty($url)) && (!isset($imageFile) || empty($imageFile) || $imageFile["error"]==4)) {
+    array_push($errors, "Must include an image URL or image file");
+    $fail = true;
+} else if (isset($url) && !empty($url) && isset($imageFile) && !empty($imageFile) && $imageFile["error"]!=4) {
+    array_push($errors, "Only include one of image URL or image file");
     $fail = true;
 }
 if (!isset($article) || empty($article)) {
@@ -133,8 +145,16 @@ if (!isset($article) || empty($article)) {
     $fail = true;
 }
 
+
+// If there are no failures so far create new image
 if (!$fail) {
+    // If image file
+    if (isset($imageFile) && !empty($imageFile) && $imageFile["error"] != 4) {
+        $url = "/home/joshutt/git/tmp/".$_FILES["image"]["name"];
+        move_uploaded_file($_FILES["image"]["tmp_name"], $url);
+    }
     $fullName = compressImage($url, $config);
+    $url = $fullName;
 }
 
 

@@ -11,7 +11,7 @@ if (!empty($edit)) {
     $result = mysql_query($sql) or die ("Dead query: ".mysql_error());
     $row = mysql_fetch_array($result);
     $artTitle = $row["title"];
-    $url = "http://wmffl.com/".$row["link"];
+    $url = "http://".$HTTP_HOST."/".$row["link"];
     $caption = $row["caption"];
     $article = $row["articleText"];
 
