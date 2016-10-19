@@ -150,7 +150,8 @@ if (!isset($article) || empty($article)) {
 if (!$fail) {
     // If image file
     if (isset($imageFile) && !empty($imageFile) && $imageFile["error"] != 4) {
-        $url = "/home/joshutt/git/tmp/".$_FILES["image"]["name"];
+        $tmpLoc = $config->getValue("Paths.tmpPath");
+        $url = $tmpLoc."/".$_FILES["image"]["name"];
         move_uploaded_file($_FILES["image"]["tmp_name"], $url);
     }
     $fullName = compressImage($url, $config);
