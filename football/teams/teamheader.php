@@ -54,7 +54,7 @@ while (list($newSeason) = mysql_fetch_array($results)) {
     array_push($champyear, $newSeason);
 }
 
-$cssList = array("base/css/team.css");
+$cssList = array("/base/css/team.css");
 include "base/menu.php";
 ?>
 
