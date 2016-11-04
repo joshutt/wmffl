@@ -1,0 +1,62 @@
+#logo-left {
+    float: left;
+    vertical-align: middle;
+    padding: 5px;
+}
+
+
+#logo-right {
+    float: left;
+    padding: 5px;
+
+}
+
+
+#wrapper {
+    position: relative;
+    left: 50%;
+    float: left;
+    padding-bottom: 10px;
+}
+
+#teamLogoBlock {
+    //border: 1px solid;
+    text-align: center;
+    float: left;
+    margin: auto;
+    display: block;
+    position: relative;
+    left: -50%;
+}
+
+#team-name {
+    float: left;
+    //border: 1px solid;
+    padding: 5px;
+    min-width: 250px;
+}
+
+#big-name {
+    font-size: xx-large;
+    font-weight: bold;
+    margin: 5px 5px 2px 5px;
+    display: block;
+    text-align: center;
+}
+
+#est {
+    font-weight: bold;
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+
+#ownName {
+    display: block;
+    text-align: center;
+}
+
+hr {
+    width: 100%;
+}
