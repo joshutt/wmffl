@@ -8,10 +8,11 @@ if ($viewteam == null) {
 $viewteam = mysql_real_escape_string($viewteam);
 
 $teaminfoSQL = "SELECT t.name as 'teamname', t.member, u.name,
-t.logo, t.fulllogo, t.motto, t.teamid
+t.logo, t.fulllogo, t.motto, t.teamid, min(o.season) as 'season'
 FROM team t LEFT JOIN user u
 ON t.teamid=u.teamid
 AND u.active='Y'
+LEFT JOIN owners o on t.teamid=o.teamid and u.userid=o.userid
 WHERE REPLACE(LOWER('$viewteam'), ' ', '') IN (LOWER(t.teamid), LOWER(t.abbrev), replace(LOWER(t.name),' ',''))
 ORDER BY u.primaryowner DESC, u.name
 ";
@@ -31,11 +32,12 @@ while ($teaminfo = mysql_fetch_array($results)) {
     $viewteam = $teaminfo['teamid'];
     $ownerList .= $teaminfo['name'];
     $teamsince = $teaminfo['member'];
+    $ownerSince = $teaminfo['season'];
     $teammotto = "";
     if ($teaminfo['motto'] != null) {
         $teammotto = "\"${teaminfo['motto']}\"";
     }
-    $fulllogo = $teaminfo['fulllogo'];
+//    $fulllogo = $teaminfo['fulllogo'];
     $logo = $teaminfo['logo'];
 }
 $title = "$teamname $title";
@@ -52,6 +54,7 @@ while (list($newSeason) = mysql_fetch_array($results)) {
     array_push($champyear, $newSeason);
 }
 
+$cssList = array("base/css/team.css");
 include "base/menu.php";
 ?>
 
@@ -64,28 +67,25 @@ if ($fulllogo == 1) {
     <I><? print $teammotto; ?></I></H5>
 </center>
 
-<?
-} else {
-?>
+<?php } else { ?>
 
-<table width="100%">
-<tr>
-<? if ($logo != null) { ?>
-<td><img src="/teams/<? print $logo; ?>" align="left" alt="<? print $teamname;?>" /></td>
+<div id="wrapper">
+<div id="teamLogoBlock">
+<?php if ($logo != null) { ?>
+<div id="logo-left"><img src="/teams/<? print $logo; ?>" alt="<? print $teamname;?>" /></div>
 <? } ?>
-<td><H1 ALIGN=Center><? print $teamname; ?></H1>
-<H5 ALIGN=Center><? print $ownername; ?><BR>Member Since <? print $teamsince; ?><BR>
-    <I><? print $teammotto; ?></I></H5>
-</td>
+<div id="team-name">
+    <span id="big-name"><? print $teamname; ?></span>
+    <span id="est">Established <?= $teamsince; ?></span>
+    <span id="ownName"><? print $ownername; ?><BR>Since <? print $ownerSince; ?></span>
+</div>
 <? if ($logo != null) { ?>
-<td><img src="/teams/<? print $logo; ?>" align="right" alt="<? print $teamname;?>" /></td>
-<? } ?>
-</tr>
-</table>
+<div id="logo-right"><img src="/teams/<? print $logo; ?>" alt="<? print $teamname;?>" /></div>
+<?php } ?>
+</div></div>
+<?php } ?>
 
-<?  } ?>
-
-<hr size="1"/>
+<hr class="bar" />
 
 <?
 //$champyear = array (2004);
