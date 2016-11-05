@@ -1,9 +1,7 @@
 <?
-#$SCRIPT_PATH = "/home/wmffl/scripts/pear";
-$SCRIPT_PATH = "/home/joshutt/lib";
+$SCRIPT_PATH = "/home/joshutt/git/lib";
 
 ini_set("include_path", "/home/joshutt/php:$SCRIPT_PATH:".ini_get("include_path"));
-#ini_set("include_path", "/home/wmffl/pear/lib/php:/home/wmffl/scripts/pear:".ini_get("include_path"));
 
 require_once "PEAR.php";
 require_once "DB/DataObject.php";
