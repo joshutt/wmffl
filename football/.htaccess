@@ -1,4 +1,4 @@
-SuPHP_ConfigPath /home/joshutt/football
+SuPHP_ConfigPath /home/joshutt/git/football
 
 ErrorDocument 404 /404.php
 
