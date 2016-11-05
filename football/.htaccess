@@ -17,7 +17,7 @@ order allow,deny
 allow from all
 </Files>
 
-SetEnv HTTP_configFile  "/home/joshutt/football/conf/wmffl.conf"
+SetEnv HTTP_configFile  "/home/joshutt/git/conf/wmffl.conf"
 
 deny from 162.210.198.6
 deny from 199.115.112.90
