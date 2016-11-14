@@ -11,6 +11,7 @@
 
 .button > a:visited, .button > a:link {
     color: #e2a500;
+    text-decoration: none;
 }
 
 .inelig {

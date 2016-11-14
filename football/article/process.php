@@ -60,15 +60,21 @@ function createImageFile($image, $fileName, $type) {
 
 function compressImage($url, $config) {
     // Set-up the newName
+    global $fail;
+    global $errors;
+    //set_error_handler(logerror);
     $maxSize = 450;
     $rootLoc = $config->getValue("Paths.wwwPath");
     $newDir = $config->getValue("Paths.imagesPath");
     $type = exif_imagetype($url);
+    if (!in_array($type, array(IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG))) {
+        $fail = true;
+        array_push($errors, "Image must be GIF, JPEG or PNG");
+        return null;
+    }
     $newName = hash_file('md5', $url).'.'.getExtension($type);
-    global $fail;
 
     // Establish image
-    //set_error_handler(logerror);
     $image = imageCreateFromAny($url);
 
     // Set-up new size
@@ -141,7 +147,7 @@ if ((!isset($url) || empty($url)) && (!isset($imageFile) || empty($imageFile) ||
     $fail = true;
 }
 if (!isset($article) || empty($article)) {
-    array_push($errors, "Come on!  Put something in the message");
+    array_push($errors, "An article must include text in the body");
     $fail = true;
 }
 
