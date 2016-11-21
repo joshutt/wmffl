@@ -1,26 +1,19 @@
 <? 
 $title = "The WMFFL Fantasy Football League";
 
-$cssList = array("base/css/core.css");
+$cssList = array("base/css/core.css", "article/article.css");
 include "base/menu.php";
 
 ?>
-
-<style>
-<!--
-H4 {font-size:10pt; text-decoration:italic}
-.SectionHeader {color:e2a500; text-decoration:bold; font-size:14pt}
--->
-</style>
 
 <table width="100%" align="center" valign="top" bgcolor="#660000">
 <tr><td align="center"><font color="#e2a500"><b>WASHINGTON METROPOLITAN FANTASY FOOTBALL LEAGUE</b></td></tr>
 </table>
 
 <table width="100%" border="0">
-<TR><TD VALIGN="top" width="100%">
+<TR><TD VALIGN="top" width="100%" id="mainCenter">
 <?
-include "article/article.php";
+include "article/front.php";
 include "quicklinks.php";
 print "<p>";
 include "base/statbar.html";

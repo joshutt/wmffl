@@ -1,0 +1,55 @@
+
+section {
+    //height: 500px;
+    margin: auto;
+    //padding: 10px;
+}
+
+div#article {
+    //width: 79%;
+    //width: auto;
+    //height: 500px;
+    float: none;
+    margin-left: 3px;
+    margin-right: 260px;
+}
+
+
+div#rightPanel {
+   //margin-left: 85%;
+  // height: 500px;
+  float: right;
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 250px;
+}
+
+td#mainCenter > div#article {
+    margin-right: 5px;
+}
+
+
+.mainStory {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+	margin-bottom: 5px;
+	font-family:Arial,Helvetica,sans-serif;
+	font-size:14px;
+    line-height: 18px;
+}
+
+.artLink {
+    padding: 5px;
+}
+
+.dateLine {
+	color: #AAA;
+	font-style: italic;
+    //float: left;
+}
+
+.byline {
+    font-weight: bold;
+    font-size: 16px;
+}
