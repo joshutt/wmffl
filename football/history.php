@@ -8,6 +8,23 @@ include "base/menu.php";
 <HR size = "1">
 <BR>
 <TABLE WIDTH="100%">
+
+<TR><TD>
+    <A HREF="history/pastchamps.php"><IMG SRC="images/football.jpg" BORDER=0>Past Champions</A><P>
+</TD><TD>
+    <A HREF="history/pastdrafts.php"><IMG SRC="images/football.jpg" BORDER=0>Past #1 Draft Picks</A><P>
+</TD><TD>
+    <A HREF="history/paststreaks.php"><IMG SRC="images/football.jpg" BORDER=0>Past Streaks</A><P>
+</TD></TR><TR><TD> </TD></TR>
+
+<TR><TD>
+    <A HREF="history/alltimerecords.php"><IMG SRC="images/football.jpg" BORDER=0>All-Time Records</A><P>
+</TD><TD>
+    <A HREF="history/recordsweek"><IMG SRC="images/football.jpg" BORDER=0>Player Single Week Records</A><P>
+</TD><TD>
+    <A HREF="history/recordseason"><IMG SRC="images/football.jpg" BORDER=0>Player Single Season Records</A><P>
+</TD></TR><TR><TD> </TD></TR>
+
 <TR><TD>
 <A HREF="history/1992Season.shtml"><IMG SRC="images/football.jpg" BORDER=0>1992 Season</A><P>
 </TD><TD>
@@ -73,20 +90,6 @@ include "base/menu.php";
     <A HREF="history/2015Season.php"><IMG SRC="images/football.jpg" BORDER=0>2015 Season</A><P>
 </TD></TR><TR><TD> </TD></TR>
 
-
-<TR><TD>
-    <A HREF="history/pastchamps.php"><IMG SRC="images/football.jpg" BORDER=0>Past Champions</A><P>
-</TD><TD>
-    <A HREF="history/pastdrafts.php"><IMG SRC="images/football.jpg" BORDER=0>Past #1 Draft Picks</A><P>
-</TD><TD>
-    <A HREF="history/paststreaks.php"><IMG SRC="images/football.jpg" BORDER=0>Past Streaks</A><P>
-</TD></TR><TR><TD> </TD></TR>
-
-<TR><TD>
-</TD><TD>
-    <A HREF="history/alltimerecords.php"><IMG SRC="images/football.jpg" BORDER=0>All-Time Records</A><P>
-</TD><TD>
-</TD></TR><TR><TD> </TD></TR>
 
 </TD></TR></TABLE>
 <BR>
