@@ -1,0 +1,10 @@
+.posList {
+    padding: 0px 10px 10px 10px;
+    float: left;
+    height: 340px;
+    margin: 3px;
+}
+
+.currentSeason {
+    font-weight: bold;
+}
