@@ -4,12 +4,12 @@ require_once "utils/start.php";
 $thisWeek = $_REQUEST["week"];
 if ($thisWeek == "") {
     $thisWeek = $currentWeek;
-    //$thisWeek = 17;
+    $thisWeek = 17;
 }
 $thisSeason=2016;
 $title = "Standings";
 
-$clinchedList = array( );
+$clinchedList = array("MeggaMen" => 'y-', "Amish Electricians" => 'y-', "Woodland Rangers" => 'x-', "Pretend I'm Not Here" => 'z-', "Gallic Warriors" => 'y-', "Sean Taylor's Ashes" => 'z-');
 
 ?>
 

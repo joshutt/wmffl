@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 function cmp($a, $b) {
     if ($a["pct"] > $b["pct"]) {
@@ -91,7 +91,7 @@ $title = "WMFFL ALL-Time Records";
 ?>
 
 <?
-include "$DOCUMENT_ROOT/base/menu.php";
+include "base/menu.php";
 ?>
 
 <H1 ALIGN=CENTER>All-Time Win Loss Records</H1>
@@ -142,4 +142,4 @@ include "$DOCUMENT_ROOT/base/menu.php";
 <? displayBlock($toiletBowlArray, false); ?>
 </TABLE></P>
 
-<? include "$DOCUMENT_ROOT/base/footer.html" ?>
+<? include "base/footer.html" ?>

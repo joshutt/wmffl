@@ -2,8 +2,8 @@
 require_once "utils/start.php";
 
 $thisSeason = 2016;
-$thisWeek = $currentWeek;
-//$thisWeek = 17;
+//$thisWeek = $currentWeek;
+$thisWeek = 17;
 
 $sql = "SELECT s.week, t1.name, s.scorea, t2.name, s.scoreb, w.weekname, ";
 #$sql = "SELECT s.week, substring(t1.name, 1, 20), s.scorea, substring(t2.name, 1, 20), s.scoreb, w.weekname, ";
@@ -111,7 +111,7 @@ a.return {
 <A HREF="#Week11">Week 11</A> | <A HREF="#Week12">Week 12</A> |
 <A HREF="#Week13">Week 13</A> | <A HREF="#Week14">Week 14</A> <BR>
 <A HREF="#Playoffs">Playoffs</A> |
-<A HREF="#Championship">WMFFL Championship XXIV</A><HR size = "1"></CENTER>
+<A HREF="#Championship">WMFFL Championship XXV</A><HR size = "1"></CENTER>
 
 
 <?
