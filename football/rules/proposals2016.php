@@ -67,9 +67,9 @@ Make it so that any player that scores negative in a given week will have their 
 <p>
 <b>Proposal 2016.3 - Unpaid Teams Drop Draft Position</b><br/>
 <b>Sponsor: Tim Shoobridge</b></br/>
-<a class="ballot">Status: <font color="red">On Ballot</font></a><br/>
-Teams that are deliquent in paying their entry fee can't get early draft picks.  This would take effect immediately and drop the Woodland Rangers to the 5th pick in 2016.
-<blockquote><i>Drop the Woodland Rangers in the 2016 draft to 5th pick<br/>
+<a class="ballot">Status: <font color="red">Passed, 7-3, 1 abstain</font></a><br/>
+Teams that are deliquent in paying their entry fee can't get early draft picks.  This would take effect immediately <s>and drop the Woodland Rangers to the 5th pick in 2016</s>.
+<blockquote><i><s>Drop the Woodland Rangers in the 2016 draft to 5th pick</s><br/>
 Add rule VI.D.3.d to read:
     <blockquote>d. Teams that were inelgible for the playoffs the previous season due to rule XI.A.1.d will have a pick four spots later than they otherwise would be entitled to.<br/>
     </blockquote>

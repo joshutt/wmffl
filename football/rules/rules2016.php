@@ -4,7 +4,7 @@ include "base/menu.php";
 ?>
 
 <style>
-li.newrule { font-weight:bold }
+li.newRule { font-weight:bold }
 </style>
 
 <H1 ALIGN=CENTER>Rules of the WMFFL</H1>
@@ -16,12 +16,15 @@ Section 3: <A HREF="#VI">Draft Order</A>; <A HREF="#VII">Drafting</A>; <A HREF="
 Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules</A><BR>
 
 <HR size = "1">
-<P>Rules added or changed that will take effect for the 2017 season are indicated in <B>Bold</B>.</P>
+<P>Rules added or changed that will take effect for the 2016 season are indicated in <B>Bold</B>.</P>
 <ul>
+    <li>2016.1 - Clarify Official Game Scores
+    <ul><li>Add V.A.6</li>
+    </ul></li>
     <li>Automatic change triggered by X.E.5
     <ul><li>Rule X.E.1.c.i incremented to 12 pts, due to 18 WR being protected in 2016</li>
     </ul></li>
-    <li>2016.3 - Unpaid Teams Drop Draft Position
+    <li>2016.3 - Unpaid Teams Drop Draft Position (Dec 2, 2016)
         <ul><li>Add VI.D.3.d</li></ul>
     </li>
 </ul>
@@ -158,7 +161,7 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
         <li>The acting HC will not be added to the team's roster and will be removed from the team once the week is over.</li>
         </ol>
     <li>No player may be activated for a team in the postseason if that player appeared on another teams' roster after the point activations were due for the final week of the regular season</li>
-    <li>Player's scores will be considered official at 8am eastern time on the Tuesday morning immediately following the NFL games.
+    <li class="newRule">Player's scores will be considered official at 8am eastern time on the Tuesday morning immediately following the NFL games.
 	<ol type="a">
 	<li>If the NFL makes an official scoring change following that time, the league will not update the scores unless any owner provides notification to the Commissioner of the scoring change prior to the following Saturday at noon eastern time.</li>
 	<li>If the scoring change affects week 14 scores or the playoffs, the notification of change must be provided no later than one hour prior to the start of the first NFL game of the following week.</li>
