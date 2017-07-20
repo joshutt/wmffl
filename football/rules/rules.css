@@ -1,0 +1,5 @@
+.ballot:link {color: #ff0000; text-decoration: none;}
+.ballot:visited {color: #ff0000; text-decoration: none;}
+.ballot:hover {color: #e2a500; text-decoration: none;}
+
+.ballot .status {color: #e2a500;}
