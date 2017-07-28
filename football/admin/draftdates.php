@@ -1,9 +1,8 @@
 <?
-print "** $DOCUMENT_ROOT **";
 require_once "$DOCUMENT_ROOT/base/conn.php";
 
 $nflStartDate = '2017-09-07';
-$season=2016;
+$season=2017;
 
 $query = "SELECT t.name, d.date, min( d.attend ) as attend
 FROM  `draftdate` d, user u, team t

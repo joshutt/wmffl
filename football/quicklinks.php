@@ -2,20 +2,20 @@
 <tr><td class="cat" colspan="2">Other Links</td></tr>
 
 <tr><td align="left" width="*">
-<p><a href="/history/2017Season/draftorder.php">2017 Draft Order</a></p>
+<p><a href="/history/2017Season/draftdate.php">Determine Draft Date</a></p>
 </td>
 
 <td align="right" width="*">
-<p><a href="/history/2017Season/protectioncost.php">2017 Protection Costs</a></p>
+<p><a href="/history/2017Season/draftorder.php">2017 Draft Order</a></p>
 </td>
 </tr>
 
 <tr><td align="left" width="*">
-<p><a href="/history/2016Season/teammoney.php">Updated Accounting</a></p>
+<p><a href="/history/2017Season/protectioncost.php">2017 Protection Costs</a></p>
 </td>
 
 <td align="right" width="*">
-<p><a href="/history/2016Season/draftresults">2016 Draft Results</a></p>
+<p><a href="/history/2016Season/teammoney.php">Updated Accounting</a></p>
 </td>
 </tr>
 
