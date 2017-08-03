@@ -13,8 +13,8 @@ if (!$isin) {
 
 
 foreach ($HTTP_POST_VARS as $key => $value) {
-	$thequery = "update ballot set vote='".$value."' where issueid=".$key." and teamid=".$teamnum;
-	mysql_query($thequery);
+	$the_query = "update ballot set vote='".$value."' where issueid=".$key." and teamid=".$teamnum;
+	mysql_query($the_query);
 
 	$checkpassfail = "select sum(if(vote='Accept',1,0))/sum(if(vote<>'Abstain',1,0)) as Pass, sum(if(vote='Reject',1,0))/sum(if(vote<>'Abstain',1,0)) as Reject from ballot where issueid=".$key;
 	$result = mysql_query($checkpassfail);
@@ -61,7 +61,7 @@ foreach ($HTTP_POST_VARS as $key => $value) {
 <H1 ALIGN=Center>Votes Cast</H1>
 <HR>
 
-<P>Your casted votes were recieved.  Below is a record of how you voted.
+<P>Your casted votes were received.  Below is a record of how you voted.
 If you would like to change you vote, you may do so at any time before the
 ballot closes.  <A HREF="ballot.php">Ballot</A>.</P>
 

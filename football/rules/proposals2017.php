@@ -34,7 +34,7 @@ At the end of the season the League Champion can rename the Toilet Bowl loser's 
 
 <p>
 <b>Proposal 2016.4 - Pay by the Draft or Don't Play</b><br/>
-<b>Sponsor: Tim Shoobridge</b></br/>
+<b>Sponsor: Tim Shoobridge</b><br/>
 <span class="ballot">Status: <span class="status">On Ballot</span></span><br/>
 Any owner that hasn't paid by draft day will not be allowed to play.
 <blockquote><i>Update rule IX.A.1 to read:
@@ -45,7 +45,7 @@ Any owner that hasn't paid by draft day will not be allowed to play.
 
 <p>
 <b>Proposal 2017.1 - Increase Draft Time</b><br/>
-<b>Sponsor: Josh Utterback</b></br/>
+<b>Sponsor: Josh Utterback</b><br/>
 <span class="ballot">Status: <span class="status">In Discussion</span></span><br/>
 Increase the time each pick adds to the draft clock to 45 seconds.
 <blockquote><i>In rule VII.B.2 change <b>30 seconds</b> to <b>45 seconds</b></i></blockquote>
@@ -53,7 +53,7 @@ Increase the time each pick adds to the draft clock to 45 seconds.
 
 <p>
 <b>Proposal 2017.2 - Unpaid Teams Can't Purchase Transactions</b><br/>
-<b>Sponsor: Josh Utterback</b></br/>
+<b>Sponsor: Josh Utterback</b><br/>
 <span class="ballot">Status: <span class="status">In Discussion</span></span><br/>
 Make it so that teams that have not yet paid their entry fee are not allowed to purchase extra transactions.
 <blockquote><i>Add rule IX.C.4 to read:
@@ -63,7 +63,7 @@ Make it so that teams that have not yet paid their entry fee are not allowed to 
 
 <p>
 <b>Proposal 2017.3 - Add Game Planning</b><br/>
-<b>Sponsor: Josh Utterback</b></br/>
+<b>Sponsor: Josh Utterback</b><br/>
 <span class="ballot">Status: <span class="status">In Discussion</span></span><br/>
 Make it so that teams can game plan for their opponents.  A team can name one player on their roster and one on their opponent, that they game plan for.
 The player on their team that they have game planned around will earn double points.  The player on the other team that they have game planned around will
