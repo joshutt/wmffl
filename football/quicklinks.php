@@ -2,7 +2,7 @@
 <tr><td class="cat" colspan="2">Other Links</td></tr>
 
 <tr><td align="left" width="*">
-<p><a href="/history/2017Season/draftdate.php">Determine Draft Date</a></p>
+<p><a href="/transactions/protections">Set Protections</a></p>
 </td>
 
 <td align="right" width="*">

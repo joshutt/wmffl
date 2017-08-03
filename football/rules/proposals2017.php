@@ -81,4 +81,38 @@ Sunday kickoffs and will be held secret until that time.
 </i></blockquote>
 </p>
 
+<p>
+<b>Proposal 2017.4 - Decision on 10 or 12 Years</b><br/>
+<b>Sponsor: Josh Utterback</b></br/>
+<span class="ballot">Status: <span class="status">On Ballot</span></span><br/>
+Decide between dropping to 10 teams or staying at 12 teams
+<blockquote><i>If 10 teams wins:
+    <blockquote>Update I.A to change <b>twelve</b> to <b>ten</b><br/>
+  Update I.B changing <b>three</b> to <b>two</b><br/>
+    </blockquote>
+</i></blockquote>
+</p>
+
+<p>
+<b>Proposal 2017.5 - Mandatory Realignment</b><br/>
+<b>Sponsor: Tom Marsh</b></br/>
+<span class="ballot">Status: <span class="status">In Discussion</span></span><br/>
+Every three years realign the divisions based upon team's records over the previous three seasons
+<blockquote><i>Add rule I.C reading:
+    <blockquote>C. The divisions will be realigned every three seasons<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;1. Every team will be ranked based upon their regular season records over the previous three years<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a. In the event of ties they will be broken in the following manner, all based on previous three years<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i. Most playoff appearances<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ii. Most championships<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iii. Fewest Toilet Bowl appearances<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iv. Most points scored<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v. Random selection<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;2. Teams will then be placed in divisions using the following order<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a. The teams ranked #1, #6, #7 and #12 will be placed in the first division<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b. The teams ranked #2, #5, #8 and #11 will be placed in a second division<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c. The remaining teams will be in the third division<br/>
+    </blockquote>
+</i></blockquote>
+</p>
+
 <? include "base/footer.html"; ?>

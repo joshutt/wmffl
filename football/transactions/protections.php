@@ -2,7 +2,7 @@
 require_once "utils/start.php";
 #$isin = true;
 #$teamnum = 2;
-$dateSrc = "2016-08-22 04:00 EDT";
+$dateSrc = "2017-08-20 23:59 EDT";
 $dateTime = new DateTime($dateSrc);
 
 $thequery = "select p.playerid, p.firstname, p.lastname, p.pos, ";
