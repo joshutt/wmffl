@@ -34,10 +34,10 @@ foreach ($HTTP_POST_VARS as $key => $value) {
 	list($voteNum[$key], $voteName[$key]) = mysql_fetch_row($result);
 	$voteCast[$key] = $value;
 	
-    if ($key == 41) {
+    if ($key == 84) {
         switch ($voteCast[$key]) {
-            case "Accept" : $voteCast[$key]="Toby Sembower"; break;
-            case "Reject" : $voteCast[$key]="Joel Ward"; break;
+            case "Accept" : $voteCast[$key]="10 Teams"; break;
+            case "Reject" : $voteCast[$key]="12 Teams"; break;
             case "Abstain" : $voteCast[$key]="No Preference"; break;
         }
     }
