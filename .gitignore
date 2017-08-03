@@ -71,3 +71,14 @@ fabric.properties
 /vendors/*
 
 .idea/
+
+# Lib ini's
+/lib/*.ini
+/lib/DataObjects/*.ini
+
+/conf/*.conf
+/tmp
+diffignore
+
+# Uploaded images
+/football/images/articles
