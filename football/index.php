@@ -1,16 +1,11 @@
 <? 
 $title = "The WMFFL Fantasy Football League";
 
+$javascriptList = array("base/js/index.js");
+$cssList = array("base/css/index.css");
 include "base/menu.php";
 
 ?>
-
-<style>
-<!--
-H4 {font-size:10pt; text-decoration:italic}
-.SectionHeader {color:e2a500; text-decoration:bold; font-size:14pt}
--->
-</style>
 
 <table width="100%" align="center" valign="top" bgcolor="#660000">
 <tr><td align="center"><font color="#e2a500"><b>WASHINGTON METROPOLITAN FANTASY FOOTBALL LEAGUE</b></td></tr>
