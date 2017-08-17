@@ -1,58 +1,41 @@
 <? 
 $title = "The WMFFL Fantasy Football League";
 
-$javascriptList = array("base/js/index.js");
-$cssList = array("base/css/index.css");
+$javascriptList = array("/base/js/index.js");
+# $cssList = array("/base/css/index.css");
 include "base/menu.php";
 
 ?>
 
-<table width="100%" align="center" valign="top" bgcolor="#660000">
-<tr><td align="center"><font color="#e2a500"><b>WASHINGTON METROPOLITAN FANTASY FOOTBALL LEAGUE</b></td></tr>
-</table>
 
-<table width="100%" border="0">
-<TR><TD VALIGN="top" width="100%">
+<div class="m9 w3-display-left">
+<div class="w3-card-4 w3-panel" >
+<?php include "article.php"; ?>
+</div>
+<div class="w3-card-4 w3-panel">
+<?php include "quicklinks.php"; ?>
+</div>
 
-<?
-include "article.php";
-include "quicklinks.php";
-print "<p>";
-include "base/statbar.html";
-?>
+<div class="w3-card-4">
+<?php include "base/statbar.html"; ?>
+</div>
 
-
-</TD>
-
-<td align="right" valign="top" width="244">
-<table id="rightbar" width="244">
-<tr><td>
-<?
-	include "scores.php";
-	print "</td></tr>";
-	print "<tr><td>";
-	include "list.php";
-	print "</td></tr>";
-	print "<tr><td>";
-	include "forum/commentlist.php";
-?>
-</td></tr>
-</table>
-</td>
-
-</TR>
-
-<tr><td align="center" colspan="3">
-<?
-//include "$DOCUMENT_ROOT/base/statbar.html";
-?>
-</td></tr>
-
-<TD ALIGN=right WIDTH=244 VALIGN=top>
-</TD>
+</div>
 
 
-</TABLE>
+
+<div class="m3 w3-display-right">
+<div class="w3-card-4 w3-panel">
+<?  include "scores.php"; ?>
+</div>
+<div class="w3-card-4 w3-panel">
+<?	include "list.php"; ?>
+</div>
+<div class="w3-card-4 w3-panel">
+<?	include "forum/commentlist.php"; ?>
+</div>
+</div>
+
 
 <?
 include "base/footer.html";

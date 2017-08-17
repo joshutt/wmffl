@@ -1,3 +1,7 @@
+body {
+    background-color: #f5efef;
+}
+
 
 A.headline:link {color:e2a500; text-decoration:None; font-size:12pt; font-weight:bold}
 A.headline:active {color:e2a500; text-decoration:None; font-size:12pt; font-weight:bold}
@@ -63,7 +67,6 @@ A:hover {color:e2a500;}
 	font-size:11px;
 }
 .cat, .catfoot {
-/*	background-image:url('../Local%20Settings/Temporary%20Internet%20Files/Content.IE5/QBCJWFGN/skin/default/images/specific/cellpic1.gif'); */
 	background-color:#660000;
 	color:#e2a500;
 	height:25px;
@@ -76,8 +79,9 @@ A:hover {color:e2a500;}
 }
 
 .mainTable {
-    background-image: url(/images/bluestrip2.gif);
     background-repeat: repeat-y;
+    background-color: #ffffff;
+    border: 1px solid;
 }
 
 .sideButton {
@@ -85,8 +89,13 @@ A:hover {color:e2a500;}
     height: 24px;
     border: 0px solid;
     text-align: center;
-    margin-right: 20px;
+    // margin-right: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 2px;
+    padding-bottom: 2px;
     color: #660000;
+    font-family: Georgia, serif;
 }
 
 .loginText {
@@ -96,13 +105,56 @@ A:hover {color:e2a500;}
 
 .footer {
     float: left;
+    background-color: white;
 }
 
 
 A.sideButton {text-decoration: none; font-size:18px;}
 
-A.sideButton:link {color:#660000; text-decoration: none; font-weight: bold}
+A.sideButton:link {color:#e2a500; text-decoration: none; font-weight: bold}
 A.sideButton:active {color:#e2a500; text-decoration: none; font-weight: bold}
-A.sideButton:visited {color:#660000; text-decoration: none; font-weight: bold}
-A.sideButton:hover {color:#e2a500; text-decoration: none; font-weight: bold}
+A.sideButton:visited {color:#e2a500; text-decoration: none; font-weight: bold}
+A.sideButton:hover {color:#ffffff; background-color: #e2a500; text-decoration: none; font-weight: bold}
 
+
+.header {
+    background-color: #660000;
+    height: 64px;
+    border: 1px solid;
+    box-shadow: 0px 2px;
+}
+
+#logo {
+    width: 64px;
+    float: left;
+}
+
+#menuList {
+    float: left;
+    padding-left: 0px;
+}
+
+#menuList > li {
+    margin: 0px;
+    border: 0px;
+    display: block;
+    // border: 1px solid; 
+    float: left;
+    // margin: 10px;
+    padding: 5px;
+}
+
+.menuBlock {
+    width: 1050px;
+    height: auto;
+    margin: auto;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.leagueHeader {
+    font-weight: bold;
+    font-size: xx-large;
+    color: #e2a500;
+}

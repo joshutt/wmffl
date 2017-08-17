@@ -3,9 +3,12 @@
 require_once "utils/start.php";
 
 if (isset($cssList)) {
-    array_unshift($cssList, "/base/css/core.css");
+    array_unshift($cssList, "https://www.w3schools.com/w3css/4/w3.css");
+//     array_unshift($cssList, "/base/css/core.css");
+     array_unshift($cssList, "/base/css/theme.css");
 } else {
-    $cssList = array("/base/css/core.css");
+    //$cssList = array("https://www.w3schools.com/w3css/4/w3.css");
+    $cssList = array("https://www.w3schools.com/w3css/4/w3.css", "/base/css/theme.css");
 }
 ?>
 
@@ -35,26 +38,37 @@ if (isset($cssList)) {
 <!-- Begin Menu.html -->
 
 
-<body bgcolor="#f5efef">
+<body class="w3-theme-l5">
 
-<TABLE bgcolor="#ffffff" align="center" width="100%" border="0" class="mainTable">
-<TR><TD WIDTH=180 VALIGN=Top>
+<!-- Navbar -->
+<div class="w3-top">
+<div class="w3-bar w3-theme-d2 w3-left-align w3-large">
 
-<IMG SRC="/images/blank.gif" HEIGHT=11><BR>
-      <IMG SRC="/images/logo3.png" ALT="WMFFL" width="145"><BR>
-<IMG SRC="/images/blank.gif" HEIGHT=20><BR>
-    <div class="sideButton"><a class="sideButton" href="/">Front Page</a></div>
-    <div class="sideButton"><a class="sideButton" href="/activate/activations.php">Activations</a></div>
-    <div class="sideButton"><a class="sideButton" href="/teams">Teams</a></div>
-    <div class="sideButton"><a class="sideButton" href="/history/2016Season/schedule.php">Schedule</a></div>
-    <div class="sideButton"><a class="sideButton" href="/history/2016Season/standings.php">Standings</a></div>
-    <div class="sideButton"><a class="sideButton" href="/transactions/transactions.php">Transactions</a></div>
-    <div class="sideButton"><a class="sideButton" href="/rules/index.php">Rules</a></div>
-    <div class="sideButton"><a class="sideButton" href="/history">History</a></div>
+<img id="logo" class="w3-left" style="height: 48px; " src="/images/revisedLogo.png"/>
 
-<? include "login/logininc.php"; ?>
+<a class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" href="/">Front Page</a>
+<a class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" href="/activate/activations.php">Activations</a>
+<a class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" href="/teams">Teams</a>
+<a class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" href="/history/2016Season/schedule.php">Schedule</a>
+<a class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" href="/history/2016Season/standings.php">Standings</a>
+<a class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" href="/transactions/transactions.php">Transactions</a>
+<a class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" href="/rules/index.php">Rules</a>
+<a class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" href="/history">History</a>
+</div>
+</div>
 
-<!--<IMG SRC="/images/blank.gif" WIDTH=180>-->
+<!-- Navbar on small screens -->
+<div id="navDemo" class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium w3-large">
+  <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 1</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 2</a>
+      <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 3</a>
+        <a href="#" class="w3-bar-item w3-button w3-padding-large">My Profile</a>
+        </div>
 
-</TD><TD WIDTH=* VALIGN=Top ALIGN=Left>
+
+<!-- Page Container -->
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">    
+    <!-- The Grid -->
+    <div class="w3-row">
+
 <!-- End Menu.html -->
