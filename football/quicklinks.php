@@ -15,7 +15,7 @@
 </td>
 
 <td align="right" width="*">
-<p><a href="/history/2016Season/teammoney.php">Updated Accounting</a></p>
+<p><a href="/history/2017Season/teammoney.php">Updated Accounting</a></p>
 </td>
 </tr>
 
