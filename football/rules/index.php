@@ -8,7 +8,7 @@ li.newrule { font-weight:bold }
 </style>
 
 <H1 ALIGN=CENTER>Rules of the WMFFL</H1>
-<H5 ALIGN=CENTER><I>Last Updated: December 2, 2016</I></H5>
+<H5 ALIGN=CENTER><I>Last Updated: August 21, 2017</I></H5>
 <HR size = "1">
 Section 1: <A HREF="#I">Divisions and Schedules</A>; <A HREF="#II">Who Makes the Playoffs</A>; <A HREF="#III">The Playoffs</A><BR>
 Section 2: <A HREF="#IV">Team Rosters</A>; <A HREF="#V">Scoring</A><BR>
@@ -23,6 +23,15 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
     </ul></li>
     <li>2016.3 - Unpaid Teams Drop Draft Position
         <ul><li>Add VI.D.3.d</li></ul>
+    </li>
+    <li>2015.2 - League Champion Renames Toilet Bowl Loser
+        <ul><li>Revised rule III.E</li></ul>
+    </li>
+    <li>2017.2 - Unpaid Teams Can't Purchase Transactions
+        <ul><li>Add IX.C.4</li></ul>
+    </li>
+    <li>2017.3 - Add Game Planning
+        <ul><li>Add V.D</li></ul>
     </li>
 </ul>
 
@@ -96,9 +105,15 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 	<li>If the Champion is on the No Trophy List, they will not be entitled to the trophy and the league will keep it in safe keeping.</li>
 	</ol></li>
 <LI>The two last place teams in each division with the worse records will play in week 15 for the Toilet Bowl
-<OL TYPE="1">
-	<LI>The loser of the Toliet Bowl must purchase beer for the following season's draft
-	<LI>The beer must include a 12 pack of the beer of the League Champion's choosing
+<OL TYPE="1" class="newrule">
+	<li class="newrule">The loser of the Toilet Bowl will have their team renamed by the League Champion</li>
+	<li class="newrule">The team must keep their new name until one of the following occurs
+        <ol type="a">
+        <li>The team qualifies for the playoffs</li>
+        <li>The team changes owners</li>
+        <li>The team loses the Toilet Bowl again and gets renamed by the Champion</li>
+        </ol>
+    </li>
 </OL>
 </OL>
 
@@ -345,6 +360,16 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 		<LI>The better seeded team will receive a 1 point home field bonus
 		</OL>
 	</OL>
+<li class="newrule">Every week each team may optionally name one player on their team and one player on their opponent's team that they will game plan for.
+    <ol type="1">
+    <li>The player on their team that is game planned for will have their score doubled.</li>
+    <li>The player on their opponent's team that is game planned for will have their score halved, with fractions rounded up.</li>
+    <li>If both teams game plan for the same player then there will be no impact on their score</li>
+    <li>If a player is game planned for and that player is not on the activation roster, then the game planning will have no impact</li>
+    <li>Game planned players must be named no later than the earlier of the kickoff of that player's game or 12:55 pm on Sunday of the week in question.</li>
+    <li>Each team's game planned players will not be publically revealed until 1:00pm on Sunday.</li>
+    </ol>
+</li>
 </OL>
 
 <BR><A NAME="VI"><B><LI>Draft Order</B></A>
@@ -421,6 +446,7 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 	<LI>Each team will recieve a number of transaction points equal to thier unused protection points.
 	<LI>After the completion of the draft every team will receive an additional 15 transaction points.</li>
 	<LI>Once a team is out of transaction points, they may purchase more at the cost of $1.
+    <li class="newrule">No team that has failed to pay their entry fee may purchase extra transactions</li>
 </OL>
 <LI>Trades are allowed and anything maybe traded, subject to the roster restrictions.
 

@@ -2,7 +2,7 @@
 <tr><td class="cat" colspan="2">Other Links</td></tr>
 
 <tr><td align="left" width="*">
-<p><a href="/transactions/protections">Set Protections</a></p>
+<p><a href="/transactions/showprotections">View Protections</a></p>
 </td>
 
 <td align="right" width="*">

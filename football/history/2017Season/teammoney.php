@@ -81,7 +81,7 @@ include "base/menu.php";
 <div class="center">
 
 <?  
-$amt_owed = array( 3 => "202.37", 4 => "23.03", 6 => "58.21");
+$amt_owed = array( 3 => "202.37", 4 => "23.03");
 
 if ($isin && array_key_exists($teamnum, $amt_owed)) { ?>
 
@@ -91,7 +91,7 @@ if ($isin && array_key_exists($teamnum, $amt_owed)) { ?>
 <table class="report">
 <tr class="titleRow"><th>Team</th><th>Previous</th><th>Paid</th><th>Late Fees</th><th>Illegal<br/>Lineup</th><th>Extra<br/>Transactions</th><th>Wins</th><th>Playoffs</th><th>Balance</th><th>2017 Fee</th><tr>
 <tr class="oddRow"><td class="name padded">Amish Electricians</td><td class="padded">$366.49</td><td class="padded">-</td><td class="padded">-</td><td class="padded">-</td><td class="padded">-</td><td class="padded">-</td><td class="padded">-</td><td class="padded">$291.49</td><td>$0.00</td></tr>
-<tr class="evenRow"><td class="name padded">Crusaders</td><td class="padded">$16.79</td><td class="padded">-</td><td class="padded">-</td><td class="padded">-</td><td class="padded">-</td><td class="padded">-</td><td class="padded">-</td><td class="padded"><span class="debt">($58.21)</span></td><td>$58.21</td></tr>
+<tr class="evenRow"><td class="name padded">Crusaders</td><td class="padded">$16.79</td><td class="padded">$58.21<td><td class="padded">-</td><td class="padded">-</td><td class="padded">-</td><td class="padded">-</td><td class="padded">$0.00</td><td>$0.00</td></tr>
 <tr class="oddRow"><td class="name padded">Fightin' Bitin' Beavers</td><td class="padded">-</td><td class="padded">$150.00*</td><td class="padded">-</td><td class="padded">-</td><td class="padded">-</td><td class="padded">-</td><td class="padded">-</td><td class="padded">$0.00</td><td>$0.00</td></tr>
 <tr class="evenRow"><td class="name padded">Fighting Squirrels</td><td class="padded">$22.08</td><td class="padded">$52.92</td><td class="padded">-</td><td class="padded">-</td><td class="padded">-</td><td class="padded">-</td><td class="padded">-</td><td class="padded">$0.00</td><td>$0.00</td></tr>
 <tr class="oddRow"><td class="name padded">Gallic Warriors</td><td class="padded">$92.43</td><td class="padded">-</td><td class="padded">-</td><td class="padded">-</td><td class="padded">-</td><td class="padded">-</td><td class="padded">-</td><td class="padded">$17.43</td><td>$0.00</td></tr>
