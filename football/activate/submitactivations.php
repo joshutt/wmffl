@@ -251,6 +251,7 @@ if ($actingHC) {
         print "<option value=\"{$hc["playerid"]}\" $checked>{$hc["name"]} - {$hc["nfl"]} {$hc["opp"]}</option>";
     }
     print "</select></td>";
+    print "<td><input type='radio' name='mygp' value='{$hc["playerid"]}'/>Game Plan</td>";
     print "</tr>";
 }
 
@@ -279,6 +280,7 @@ foreach ($starters as $player) {
         print "<td><input name=\"{$player["pos"]}[]\" value=\"{$player["playerid"]}\" type=\"checkbox\" checked=\"true\"/>$injuryLine</td>";
     }
     print "<td>{$player["pos"]}</td><td>{$player["name"]}</td><td>{$player["nfl"]}</td><td>{$player["opp"]}</td>";
+    print "<td><input type='radio' name='mygp' value='{$player["playerid"]}'/>Game Plan</td>";
     print "</tr>";
 }
 ?>
@@ -311,6 +313,7 @@ foreach ($reserve as $player) {
         print "<td><input name=\"{$player["pos"]}[]\" type=\"checkbox\" value=\"{$player["playerid"]}\" />$injuryLine</td>";
     }
     print "<td>{$player["pos"]}</td><td>{$player["name"]}</td><td>{$player["nfl"]}</td><td>{$player["opp"]}</td>";
+    print "<td><input type='radio' name='mygp' value='{$player["playerid"]}'/>Game Plan</td>";
     print "</tr>";
 }
 ?>
