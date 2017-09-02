@@ -84,7 +84,7 @@ while ($theWeek = mysql_fetch_assoc($weekResults)) {
 //print $sql;
 
 $title = "Submit Activations";
-include "base/menu.php";
+include "$DOCUMENT_ROOT/base/menu.php";
 
 $actingHC = false;
 if ($isin) {

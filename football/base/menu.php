@@ -5,7 +5,7 @@ require_once "utils/start.php";
 
 <html>
 <head>
-<title><? print $title; ?></title>
+<title><? print $title; ?> New </title>
 <link rel="icon" href="/images/logo3.png" type="image/png" />
 <link rel="SHORTCUT ICON" href="/images/logo3.png" />
 
