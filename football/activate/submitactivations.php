@@ -1,9 +1,9 @@
 <?
 $javascriptList = array("/base/js/activations.js");
 
-require_once "$DOCUMENT_ROOT/utils/start.php";
-require_once "$DOCUMENT_ROOT/base/conn.php";
-require_once "$DOCUMENT_ROOT/login/loginglob.php";
+require_once "utils/start.php";
+require_once "base/conn.php";
+require_once "login/loginglob.php";
 
 
 //print "Set";
@@ -84,7 +84,7 @@ while ($theWeek = mysql_fetch_assoc($weekResults)) {
 //print $sql;
 
 $title = "Submit Activations";
-include "$DOCUMENT_ROOT/base/menu.php";
+include "/base/menu.php";
 
 $actingHC = false;
 if ($isin) {
@@ -207,15 +207,16 @@ if ($actingHC) {
 
 ?>
 
-<H1 ALIGN=Center>Activations</H1>
-<HR size = "1">
-<TABLE ALIGN=Center WIDTH=100% BORDER=0>
-<TD WIDTH=33%><A HREF="activations.php"><IMG SRC="/images/football.jpg" BORDER=0>Current Activations</A></TD>
-<TD WIDTH=34%></TD>
-<TD WIDTH=33%><A HREF="#Submit"><IMG SRC="/images/football.jpg" BORDER=0>Submit Activations</A></TD>
-</TR></TABLE>
+<h1 align=Center>Activations</H1>
+<hr size = "1">
+<table align=Center width=100% border=0>
+    <tr>
+<td width=33%><a href="activations.php"><img src="../images/football.jpg" border=0>Current Activations</a></td>
+<td width=34%></td>
+<td width=33%><a href="#Submit"><img src="../images/football.jpg" border=0>Submit Activations</a></td>
+</tr></table>
 
-<HR size = "1">
+<hr size = "1">
 <?
 
 if ($isin) {
