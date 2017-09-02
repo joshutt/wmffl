@@ -8,3 +8,9 @@ li {
     margin: 10px;
     padding: 5px;
 }
+
+div.alert {
+    color: #ff0000;
+    font-weight: bold;
+    text-align: center;
+}

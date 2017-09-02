@@ -205,14 +205,6 @@ if ($actingHC) {
 
 ?>
 
-<style>
-div.alert {
-    color: #ff0000;
-    font-weight: bold;
-    text-align: center;
-}
-</style>
-
 <script language="javascript">
 <!-- 
 function swapActivations(theForm) {
