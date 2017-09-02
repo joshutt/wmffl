@@ -274,16 +274,26 @@ foreach ($starters as $player) {
     }
 
     print "<tr>";
-    if ($lock) {
-        print "<td><img src=\"/images/lock-clipart2.gif\" height=\"16\" width=\"16\" align=\"left\"/><input type=\"hidden\" name=\"{$player["pos"]}[]\" value=\"{$player["playerid"]}\" />$injuryLine</td>";
-    } else {
-        print "<td><input name=\"{$player["pos"]}[]\" value=\"{$player["playerid"]}\" type=\"checkbox\" checked=\"true\"/>$injuryLine</td>";
-    }
-    print "<td>{$player["pos"]}</td><td>{$player["name"]}</td><td>{$player["nfl"]}</td><td>{$player["opp"]}</td>";
-    print "<td><input type='radio' name='mygp' value='{$player["playerid"]}'/>Game Plan</td>";
-    print "</tr>";
-}
-?>
+    if ($lock) { ?>
+        <td>
+            <input type="hidden" name="<?= $player["pos"]?>[]" value="<?=$player["playerid"]?>"/>
+            <input type='radio' name='mygp' value="<?= $player["playerid"] ?>"/>GP
+            <img src="/images/lock-clipart2.gif" height="16" width="16" align="right"/>
+            <?= $injuryLine ?>
+        </td>
+<?php } else { ?>
+        <td>
+            <input name="<?= $player["pos"] ?>[]" value="<?= $player["playerid"] ?>" type="checkbox" checked="true"/>
+            <input type='radio' name='mygp' value="<?= $player["playerid"] ?>"/>GP
+            <?= $injuryLine ?>
+        </td>
+<?php } ?>
+    <td><?= $player["pos"] ?> </td>
+    <td><?= $player["name"] ?></td>
+    <td><?= $player["nfl"] ?></td>
+    <td><?= $player["opp"] ?></td>
+    </tr>
+<?php } ?>
 
 <tr><td>&nbsp;</td></tr>
 <tr><th colspan="5">Reserves</th></tr>
@@ -307,21 +317,30 @@ foreach ($reserve as $player) {
     }
 
     print "<tr>";
-    if ($lock) {
-        print "<td><img src=\"/images/lock-clipart2.gif\" height=\"16\" width=\"16\" align=\"left\"/>$injuryLine</td>";
-    } else {
-        print "<td><input name=\"{$player["pos"]}[]\" type=\"checkbox\" value=\"{$player["playerid"]}\" />$injuryLine</td>";
-    }
-    print "<td>{$player["pos"]}</td><td>{$player["name"]}</td><td>{$player["nfl"]}</td><td>{$player["opp"]}</td>";
-    print "<td><input type='radio' name='mygp' value='{$player["playerid"]}'/>Game Plan</td>";
-    print "</tr>";
-}
-?>
+    if ($lock) { ?>
+        <td>
+            <img src="/images/lock-clipart2.gif" height="16" width="16" align="left"/>
+            <input type='radio' name='mygp' value='<?=$player["playerid"]?>'/>GP
+            <?= $injuryLine ?>
+        </td>
+<?php } else { ?>
+        <td>
+            <input name="<?= $player["pos"] ?>[]" type="checkbox" value="<?=$player["playerid"]?>" />
+            <input type='radio' name='mygp' value='<?=$player["playerid"]?>'/>GP
+            <?= $injuryLine ?>
+        </td>
+<?php } ?>
+    <td><?=$player["pos"]?></td>
+    <td><?=$player["name"]?></td>
+    <td><?=$player["nfl"]?></td>
+    <td><?=$player["opp"]?></td>
+    </tr>
+<?php } ?>
 
 <tr><td>&nbsp;</td></tr>
 <tr><td colspan="5" align="center"><input type="submit" value="Submit Activations"/></td></tr>
 </table>
-<input type="hidden" name="season" value="<? print $season; ?>"/>
+<input type="hidden" name="season" value="<?= $season; ?>"/>
 </form>
 
 <?
