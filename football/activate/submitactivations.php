@@ -338,6 +338,11 @@ foreach ($reserve as $player) {
     </tr>
 <?php } ?>
 
+    <tr>
+        <td><input type="radio" name="mygp" value="-1"/></td>
+        <td></td><td>No Game Plan</td>
+    </tr>
+
 <tr><td>&nbsp;</td></tr>
 <tr><td colspan="5" align="center"><input type="submit" value="Submit Activations"/></td></tr>
 </table>
