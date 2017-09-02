@@ -174,10 +174,10 @@ a.teamRoster:hover {
 }
 
 #statusTable {
-    width: 100%;
-    border: 1px solid;
+     width: 100%;
+//    border: 1px solid;
     overflow: hidden;
-    padding: 0px 0px 2px 5px;
+//    padding: 0px 0px 2px 5px;
 }
 
 #logInInfo, #logOutInfo {

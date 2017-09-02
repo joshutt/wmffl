@@ -15,6 +15,7 @@ $draftPicks->find();
 <head>
 
 <title>WMFFL Live Draft</title>
+<link href="/base/css/w3.css" type="text/css" rel="stylesheet" />
 <link href="draft.css" type="text/css" rel="stylesheet" />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="update.jquery.js" type="text/javascript"></script>
@@ -23,7 +24,7 @@ $draftPicks->find();
 
 <body id="body_ajax_ld" onresize="resize()" onLoad="$(ready)">
 
-    <div id="statusTable">
+    <div id="statusTable" class="w3-card-4 w3-padding-small w3-border w3-margin-left w3-margin-right w3-display-topmiddle ">
        <div id="clockDiv">
         <div id="roundNum" class="clockLine">Round:</div>
         <div id="pickNum" class="clockLine">Pick:</div>
@@ -36,7 +37,7 @@ $draftPicks->find();
 <div><a class="tools" id="logInLine" onClick="logCheck();">Log In</a></div>
 
 <div id="ajax_ld" class="pagebody">
-<div id="left_side">
+<div id="left_side" class="w3-third w3-card">
                 <table class="draft_picks_header report" cellspacing="1" align="center">
 <!--		<caption><span>Draft Picks</span></caption> -->
                     <tbody>
@@ -91,7 +92,7 @@ EOD;
             </td>
             <td width="49%" valign="top">
 -->
-                <div id="right_side">
+                <div id="right_side" class="w3-third w3-card">
 
                 <table id="recentStatus" class="draft_picks_header report">
                     <tbody>
@@ -177,7 +178,7 @@ EOD;
 
                 <?php include "logInBlock.html"; ?>
                 
-                <div id="farRight">
+                <div id="farRight" class="w3-third w3-card">
                 <div id="chat_container">
                 <table id="chat_table">
                 <tbody><tr><td>
