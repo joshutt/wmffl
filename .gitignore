@@ -83,3 +83,4 @@ diffignore
 # Uploaded images
 /football/images/articles
 football/transactions/livedraft/check.log
+/football/transactions/livedraft/check.log
