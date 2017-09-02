@@ -277,14 +277,14 @@ foreach ($starters as $player) {
     if ($lock) { ?>
         <td>
             <input type="hidden" name="<?= $player["pos"]?>[]" value="<?=$player["playerid"]?>"/>
-            <input type='radio' name='mygp' value="<?= $player["playerid"] ?>"/>GP
+            <input type='radio' name='mygp' value="<?= $player["playerid"] ?>"/>
             <img src="/images/lock-clipart2.gif" height="16" width="16" align="right"/>
             <?= $injuryLine ?>
         </td>
 <?php } else { ?>
         <td>
             <input name="<?= $player["pos"] ?>[]" value="<?= $player["playerid"] ?>" type="checkbox" checked="true"/>
-            <input type='radio' name='mygp' value="<?= $player["playerid"] ?>"/>GP
+            <input type='radio' name='mygp' value="<?= $player["playerid"] ?>"/>
             <?= $injuryLine ?>
         </td>
 <?php } ?>
@@ -320,13 +320,13 @@ foreach ($reserve as $player) {
     if ($lock) { ?>
         <td>
             <img src="/images/lock-clipart2.gif" height="16" width="16" align="left"/>
-            <input type='radio' name='mygp' value='<?=$player["playerid"]?>'/>GP
+            <input type='radio' name='mygp' value='<?=$player["playerid"]?>'/>
             <?= $injuryLine ?>
         </td>
 <?php } else { ?>
         <td>
             <input name="<?= $player["pos"] ?>[]" type="checkbox" value="<?=$player["playerid"]?>" />
-            <input type='radio' name='mygp' value='<?=$player["playerid"]?>'/>GP
+            <input type='radio' name='mygp' value='<?=$player["playerid"]?>'/>
             <?= $injuryLine ?>
         </td>
 <?php } ?>
