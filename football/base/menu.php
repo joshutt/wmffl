@@ -17,6 +17,7 @@ if (isset($javascriptList)) {
     }
 }
 
+array_unshift($cssList, "/base/css/core.css");
 if (isset($cssList)) {
     foreach ($cssList as $sheet) {
         print "<link rel=\"stylesheet\" type=\"text/css\" href=\"$sheet\"></script>";
