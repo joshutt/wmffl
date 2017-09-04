@@ -352,7 +352,10 @@ foreach ($reserve as $player) {
 </form>
 
     <div class="gameplanbox">
-
+        <span class="">Your Team</span>
+    </div>
+    <div class="gameplanbox">
+        <span class="">Opponent</span>
     </div>
 
 <?
