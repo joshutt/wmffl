@@ -5,8 +5,7 @@ $cssList = array("/base/css/activate.css");
 
 
 require_once "utils/start.php";
-require_once "base/conn.php";
-require_once "login/loginglob.php";
+//require_once "login/loginglob.php";
 
 
 //print "Set";
@@ -30,13 +29,15 @@ $currentTime = time();
 //print "Read";
 $sql = <<<EOD
 
-SELECT CONCAT(p.firstname, ' ', p.lastname) as 'name', p.pos, n.nflteamid, a.playerid as 'activeId', g.kickoff, g.homeTeam, g.roadTeam, p.playerid, i.status, i.details
+SELECT CONCAT(p.firstname, ' ', p.lastname) as 'name', p.pos, n.nflteamid, a.playerid as 'activeId', g.kickoff, 
+g.homeTeam, g.roadTeam, p.playerid, i.status, i.details, gp.side
 FROM newplayers p
 JOIN roster r ON p.playerid=r.playerid AND r.dateoff is null
 LEFT JOIN nflrosters n ON n.playerid=r.playerid and n.dateoff is null
 LEFT JOIN revisedactivations a ON a.season=$season AND a.week=$week AND p.playerid=a.playerid AND a.teamid=r.teamid
 LEFT JOIN nflgames g ON g.season=$season AND g.week=$week AND n.nflteamid in (g.homeTeam, g.roadTeam)
 LEFT JOIN injuries i ON i.playerid=r.playerid and i.season=g.season AND i.week=g.week
+LEFT JOIN gameplan gp ON gp.season=g.season and gp.week=g.week and gp.teamid=r.teamid and gp.playerid=p.playerid
 WHERE r.teamid=$teamid 
 ORDER BY p.pos, p.lastname
 
@@ -70,12 +71,13 @@ EOD;
 
 
 $opponentRoster = <<<EOD
-SELECT CONCAT(p.firstname, ' ', p.lastname) as 'name', p.pos, p.playerid, n.nflteamid
+SELECT CONCAT(p.firstname, ' ', p.lastname) as 'name', p.pos, p.playerid, n.nflteamid, gp.side
 FROM schedule s
   JOIN weekmap wm on s.Season=wm.Season and s.Week=wm.Week
   JOIN roster r on r.dateoff is null and r.TeamID = if(s.TeamA=$teamid, s.teamb, s.TeamA)
   JOIN newplayers p ON r.PlayerID=p.playerid
   LEFT JOIN nflrosters n ON n.playerid=p.playerid and n.dateoff is null
+  LEFT JOIN gameplan gp on gp.season=s.season and gp.week=s.week and gp.teamid in (s.TeamA, s.TeamB) and gp.playerid=r.playerid
 WHERE s.Season=$season and s.Week=$week and (s.TeamA=$teamid or s.TeamB=$teamid)
 ORDER BY p.pos, p.lastname, p.firstname
 EOD;
@@ -115,7 +117,7 @@ if ($isin) {
     //print_r($_REQUEST);
     $reserveCount = 0;
     $reserveIds = array();
-    $gpOption = "<option>None</option>";
+    $gpOption = "<option value=\"-1\">None</option>";
     while ($rowSet = mysql_fetch_assoc($results)) {
         #print_r($rowSet);
         #print "<br/>";
@@ -127,7 +129,13 @@ if ($isin) {
         $player["playerid"] = $rowSet["playerid"];
         $player["injuryStatus"] = $rowSet["status"];
         $player["injuryDetail"] = $rowSet["details"];
-        $gpOption .= "<option value=\"".$player["playerid"]."\">".$player["name"]." (".$player["pos"]."-".$player["nfl"].")</option>";
+        $player["gpStatus"] = $rowSet["side"];
+        if ($player["gpStatus"] == "Me") {
+            $gpSelect = " selected=\"selected\" ";
+        } else {
+            $gpSelect = "";
+        }
+        $gpOption .= "<option value=\"".$player["playerid"]."\" $gpSelect>".$player["name"]." (".$player["pos"]."-".$player["nfl"].")</option>";
 
         if ($rowSet["nflteamid"] == "") {
             $player["opp"] = "";
@@ -192,7 +200,7 @@ if ($isin) {
         }
     }
 
-    $oppGPOption = "<option>None</option>";
+    $oppGPOption = "<option value='-1'>None</option>";
     $oppRosterResults = mysql_query($opponentRoster) or die("Die on opponent roster: ".mysql_error());
     while ($rowSet = mysql_fetch_assoc($oppRosterResults)) {
         $player = array();
@@ -200,7 +208,13 @@ if ($isin) {
         $player["pos"] = $rowSet["pos"];
         $player["nfl"] = $rowSet["nflteamid"];
         $player["playerid"] = $rowSet["playerid"];
-        $oppGPOption .= "<option value=\"".$player["playerid"]."\">".$player["name"]." (".$player["pos"]."-".$player["nfl"].") </option>";
+        $player["gpStatus"] = $rowSet["side"];
+        if ($player["gpStatus"] == "Them") {
+            $gpOppSelect = "selected=\"selected\"";
+        } else {
+            $gpOppSelect = "";
+        }
+        $oppGPOption .= "<option value=\"".$player["playerid"]."\" $gpOppSelect>".$player["name"]." (".$player["pos"]."-".$player["nfl"].") </option>";
     }
 }
 
@@ -247,7 +261,6 @@ if ($actingHC) {
 
 <hr size = "1">
 <?
-
 if ($isin) {
 
 ?>
