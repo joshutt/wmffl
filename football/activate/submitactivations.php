@@ -1,6 +1,7 @@
 <?
 $javascriptList = array("/base/js/activations.js");
 
+
 require_once "utils/start.php";
 require_once "base/conn.php";
 require_once "login/loginglob.php";
