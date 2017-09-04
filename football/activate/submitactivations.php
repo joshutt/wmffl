@@ -1,5 +1,6 @@
 <?
 $javascriptList = array("/base/js/activations.js");
+$cssList = array("/base/css/activate.css");
 
 
 require_once "utils/start.php";
@@ -349,6 +350,10 @@ foreach ($reserve as $player) {
 </table>
 <input type="hidden" name="season" value="<?= $season; ?>"/>
 </form>
+
+    <div class="gameplanbox">
+
+    </div>
 
 <?
 	} else {
