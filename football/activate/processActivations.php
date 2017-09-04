@@ -48,7 +48,7 @@ if (sizeof($TE) < 1) {
 
 if (sizeof($RB) + sizeof($WR) + sizeof($TE) != 5) {
     $activeMessage .= "You must activate 1 RB, 2 WR, 1 TE and 1 flex<br/>";
-} 
+}
 
 if (sizeof($K) != 1) {
     $activeMessage .= "You must activate exactly 1 K<br/>";
@@ -85,7 +85,7 @@ foreach ($_REQUEST as $key => $value) {
                 $insertSql .= ", ";
             }
             $first = false;
-            $insertSql .= "($season, $week, $teamnum, '$key', $item)";    
+            $insertSql .= "($season, $week, $teamnum, '$key', $item)";
         }
     }
 }
@@ -93,8 +93,7 @@ if ($actID == "on") {
     $insertSql .= ", ($season, $week, $teamnum, 'HC', $actHC)";
 }
 
-mysql_query($deleteSql) or die("Unable to clear old activations: ".mysql_error());
-mysql_query($insertSql) or die("Unable to add new activations: ".mysql_error());
+mysql_query($deleteSql) or die("Unable to clear old activations: " . mysql_error());
+mysql_query($insertSql) or die("Unable to add new activations: " . mysql_error());
 
 header("Location: activations.php");
-?>
