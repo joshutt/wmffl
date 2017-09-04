@@ -1,6 +1,7 @@
 <?
 $javascriptList = array("/base/js/activations.js");
 $cssList = array("/base/css/activate.css");
+//$cssList = array("/base/css/w3.css", "/base/css/activate.css");
 
 
 require_once "utils/start.php";
@@ -68,6 +69,19 @@ ORDER BY p.lastname
 EOD;
 
 
+$opponentRoster = <<<EOD
+SELECT CONCAT(p.firstname, ' ', p.lastname) as 'name', p.pos, p.playerid, n.nflteamid
+FROM schedule s
+  JOIN weekmap wm on s.Season=wm.Season and s.Week=wm.Week
+  JOIN roster r on r.dateoff is null and r.TeamID = if(s.TeamA=$teamid, s.teamb, s.TeamA)
+  JOIN newplayers p ON r.PlayerID=p.playerid
+  LEFT JOIN nflrosters n ON n.playerid=p.playerid and n.dateoff is null
+WHERE s.Season=$season and s.Week=$week and (s.TeamA=$teamid or s.TeamB=$teamid)
+ORDER BY p.pos, p.lastname, p.firstname
+EOD;
+
+
+
 $weekSql = "SELECT week, weekname FROM weekmap WHERE Season=$season AND EndDate>now()";
 
 $weekResults = mysql_query($weekSql) or die("Unable to get Weeks: ".mysql_error());
@@ -101,6 +115,7 @@ if ($isin) {
     //print_r($_REQUEST);
     $reserveCount = 0;
     $reserveIds = array();
+    $gpOption = "<option>None</option>";
     while ($rowSet = mysql_fetch_assoc($results)) {
         #print_r($rowSet);
         #print "<br/>";
@@ -112,6 +127,7 @@ if ($isin) {
         $player["playerid"] = $rowSet["playerid"];
         $player["injuryStatus"] = $rowSet["status"];
         $player["injuryDetail"] = $rowSet["details"];
+        $gpOption .= "<option value=\"".$player["playerid"]."\">".$player["name"]." (".$player["pos"]."-".$player["nfl"].")</option>";
 
         if ($rowSet["nflteamid"] == "") {
             $player["opp"] = "";
@@ -169,11 +185,22 @@ if ($isin) {
     $noActiveResults =  mysql_query($noActivateSql) or die("Die on No activate: ".mysql_error());
     while ($rowSet = mysql_fetch_assoc($noActiveResults)) {
         $key = array_search($rowSet["playerid"], $reserveIds);
-	if ($key !== FALSE) {
-	    $player = $reserve[$key]; 
-	    $player["lock"] = true;
-	    $reserve[$key] = $player;
-	}
+        if ($key !== FALSE) {
+            $player = $reserve[$key];
+            $player["lock"] = true;
+            $reserve[$key] = $player;
+        }
+    }
+
+    $oppGPOption = "<option>None</option>";
+    $oppRosterResults = mysql_query($opponentRoster) or die("Die on opponent roster: ".mysql_error());
+    while ($rowSet = mysql_fetch_assoc($oppRosterResults)) {
+        $player = array();
+        $player["name"] = $rowSet["name"];
+        $player["pos"] = $rowSet["pos"];
+        $player["nfl"] = $rowSet["nflteamid"];
+        $player["playerid"] = $rowSet["playerid"];
+        $oppGPOption .= "<option value=\"".$player["playerid"]."\">".$player["name"]." (".$player["pos"]."-".$player["nfl"].") </option>";
     }
 }
 
@@ -254,7 +281,6 @@ if ($actingHC) {
         print "<option value=\"{$hc["playerid"]}\" $checked>{$hc["name"]} - {$hc["nfl"]} {$hc["opp"]}</option>";
     }
     print "</select></td>";
-    print "<td><input type='radio' name='mygp' value='{$hc["playerid"]}'/>Game Plan</td>";
     print "</tr>";
 }
 
@@ -280,14 +306,12 @@ foreach ($starters as $player) {
     if ($lock) { ?>
         <td>
             <input type="hidden" name="<?= $player["pos"]?>[]" value="<?=$player["playerid"]?>"/>
-            <input type='radio' name='mygp' value="<?= $player["playerid"] ?>"/>
             <img src="/images/lock-clipart2.gif" height="16" width="16" align="right"/>
             <?= $injuryLine ?>
         </td>
 <?php } else { ?>
         <td>
             <input name="<?= $player["pos"] ?>[]" value="<?= $player["playerid"] ?>" type="checkbox" checked="true"/>
-            <input type='radio' name='mygp' value="<?= $player["playerid"] ?>"/>
             <?= $injuryLine ?>
         </td>
 <?php } ?>
@@ -323,13 +347,11 @@ foreach ($reserve as $player) {
     if ($lock) { ?>
         <td>
             <img src="/images/lock-clipart2.gif" height="16" width="16" align="left"/>
-            <input type='radio' name='mygp' value='<?=$player["playerid"]?>'/>
             <?= $injuryLine ?>
         </td>
 <?php } else { ?>
         <td>
             <input name="<?= $player["pos"] ?>[]" type="checkbox" value="<?=$player["playerid"]?>" />
-            <input type='radio' name='mygp' value='<?=$player["playerid"]?>'/>
             <?= $injuryLine ?>
         </td>
 <?php } ?>
@@ -340,9 +362,23 @@ foreach ($reserve as $player) {
     </tr>
 <?php } ?>
 
+<tr><td>&nbsp;</td></tr>
+
     <tr>
-        <td><input type="radio" name="mygp" value="-1"/></td>
-        <td></td><td>No Game Plan</td>
+        <tr><th colspan="5">Game Plan</th></tr>
+    <tr>
+        <td colspan="2">My Team:</td>
+        <td colspan="3">
+            <select name="myGP"><?= $gpOption ?></select>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">Their Team:</td>
+        <td colspan="3">
+            <select name="oppGP"><?= $oppGPOption ?></select>
+        </td>
+    </tr>
+
     </tr>
 
 <tr><td>&nbsp;</td></tr>
@@ -350,13 +386,6 @@ foreach ($reserve as $player) {
 </table>
 <input type="hidden" name="season" value="<?= $season; ?>"/>
 </form>
-
-    <div class="gameplanbox">
-        <span class="">Your Team</span>
-    </div>
-    <div class="gameplanbox">
-        <span class="">Opponent</span>
-    </div>
 
 <?
 	} else {
