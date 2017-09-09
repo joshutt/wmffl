@@ -2,11 +2,11 @@
 <tr><td class="cat" colspan="2">Other Links</td></tr>
 
 <tr><td align="left" width="*">
-<p><a href="/transactions/showprotections">View Protections</a></p>
+<p><a href="/transactions/livedraft">Live Draft</a></p>
 </td>
 
 <td align="right" width="*">
-<p><a href="/history/2017Season/draftorder.php">2017 Draft Order</a></p>
+<p><a href="/transactions/showprotections">View Protections</a></p>
 </td>
 </tr>
 

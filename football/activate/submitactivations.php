@@ -30,12 +30,13 @@ $currentTime = time();
 $sql = <<<EOD
 
 SELECT CONCAT(p.firstname, ' ', p.lastname) as 'name', p.pos, n.nflteamid, a.playerid as 'activeId', g.kickoff, 
-g.homeTeam, g.roadTeam, p.playerid, i.status, i.details, gp.side
+g.homeTeam, g.roadTeam, p.playerid, i.status, i.details, gp.side, wm.ActivationDue
 FROM newplayers p
 JOIN roster r ON p.playerid=r.playerid AND r.dateoff is null
+JOIN weekmap wm ON wm.season=$season and wm.week=$week
 LEFT JOIN nflrosters n ON n.playerid=r.playerid and n.dateoff is null
-LEFT JOIN revisedactivations a ON a.season=$season AND a.week=$week AND p.playerid=a.playerid AND a.teamid=r.teamid
-LEFT JOIN nflgames g ON g.season=$season AND g.week=$week AND n.nflteamid in (g.homeTeam, g.roadTeam)
+LEFT JOIN revisedactivations a ON a.season=wm.season AND a.week=wm.week AND p.playerid=a.playerid AND a.teamid=r.teamid
+LEFT JOIN nflgames g ON g.season=wm.season AND g.week=wm.week AND n.nflteamid in (g.homeTeam, g.roadTeam)
 LEFT JOIN injuries i ON i.playerid=r.playerid and i.season=g.season AND i.week=g.week
 LEFT JOIN gameplan gp ON gp.season=g.season and gp.week=g.week and gp.teamid=r.teamid and gp.playerid=p.playerid
 WHERE r.teamid=$teamid 
@@ -71,13 +72,14 @@ EOD;
 
 
 $opponentRoster = <<<EOD
-SELECT CONCAT(p.firstname, ' ', p.lastname) as 'name', p.pos, p.playerid, n.nflteamid, gp.side
+SELECT CONCAT(p.firstname, ' ', p.lastname) as 'name', p.pos, p.playerid, n.nflteamid, gp.side, g.kickoff, wm.ActivationDue
 FROM schedule s
   JOIN weekmap wm on s.Season=wm.Season and s.Week=wm.Week
   JOIN roster r on r.dateoff is null and r.TeamID = if(s.TeamA=$teamid, s.teamb, s.TeamA)
   JOIN newplayers p ON r.PlayerID=p.playerid
   LEFT JOIN nflrosters n ON n.playerid=p.playerid and n.dateoff is null
   LEFT JOIN gameplan gp on gp.season=s.season and gp.week=s.week and gp.teamid in (s.TeamA, s.TeamB) and gp.playerid=r.playerid
+  LEFT JOIN nflgames g ON g.season=wm.season and g.week=wm.week and n.nflteamid in (g.homeTeam, g.roadTeam)
 WHERE s.Season=$season and s.Week=$week and (s.TeamA=$teamid or s.TeamB=$teamid)
 ORDER BY p.pos, p.lastname, p.firstname
 EOD;
@@ -118,10 +120,12 @@ if ($isin) {
     $reserveCount = 0;
     $reserveIds = array();
     $gpOption = "<option value=\"-1\">None</option>";
+    $gpLock = array(-1, false, "None");
     while ($rowSet = mysql_fetch_assoc($results)) {
         #print_r($rowSet);
         #print "<br/>";
 
+        // Load the player info
         $player = array();
         $player["name"] = $rowSet["name"];
         $player["pos"] = $rowSet["pos"];
@@ -132,11 +136,14 @@ if ($isin) {
         $player["gpStatus"] = $rowSet["side"];
         if ($player["gpStatus"] == "Me") {
             $gpSelect = " selected=\"selected\" ";
+            $gpLock[0] = $player["playerid"];
+            $gpLock[2] = $player["name"]." (".$player["pos"]."-".$player["nfl"].")";
         } else {
             $gpSelect = "";
         }
         $gpOption .= "<option value=\"".$player["playerid"]."\" $gpSelect>".$player["name"]." (".$player["pos"]."-".$player["nfl"].")</option>";
 
+        // Determine opposition team
         if ($rowSet["nflteamid"] == "") {
             $player["opp"] = "";
         } else if ($rowSet["kickoff"] == null) {
@@ -147,21 +154,26 @@ if ($isin) {
             $player["opp"] = "@ ".$rowSet["homeTeam"];
         }
 
+        // Find out Kickoff time for lock out
         $format = '%Y-%m-%d %H:%M:%S';
-        $realTime = strtotime($rowSet['kickoff']) - 2*60*60;
-   # print "$deadLine - $currentTime<br/>";
         if ($rowSet['kickoff'] == "") {
             $deadLine = 0;
         } else {
-            $deadLine = strtotime($rowSet['kickoff']) - 30*60;
+            $deadLine = strtotime($rowSet['kickoff']) - 5*60;
         }
         if ($deadLine > $maxDate) {
             $maxDate = $deadLine;
         }
 
-    #print $rowSet['kickoff'] ." - $deadLine - ".strtotime($rowSet['kickoff'])." - $currentTime<br/>";
+        $actDue = strtotime($rowSet["ActivationDue"]);
+        if ($currentTime > $actDue - 5*60) {
+            $gpLock[1] = true;
+        }
         if ($currentTime > $deadLine && $deadLine>0) {
             $player["lock"] = true;
+            if ($player["playerid"] == $gpLock[0]) {
+                $gpLock[1] = true;
+            }
         } else {
             $player["lock"] = false;
         }
@@ -186,8 +198,8 @@ if ($isin) {
     $allLock = false;
     if ($currentTime > $maxDate) {
         $allLock = true;
-
     }
+        // $allLock = true;
 
 
     $noActiveResults =  mysql_query($noActivateSql) or die("Die on No activate: ".mysql_error());
@@ -201,6 +213,7 @@ if ($isin) {
     }
 
     $oppGPOption = "<option value='-1'>None</option>";
+    $gpOppLock = array(-1, false, "None");
     $oppRosterResults = mysql_query($opponentRoster) or die("Die on opponent roster: ".mysql_error());
     while ($rowSet = mysql_fetch_assoc($oppRosterResults)) {
         $player = array();
@@ -208,9 +221,13 @@ if ($isin) {
         $player["pos"] = $rowSet["pos"];
         $player["nfl"] = $rowSet["nflteamid"];
         $player["playerid"] = $rowSet["playerid"];
+        $deadLine = strtotime($rowSet['kickoff']) - 5*60;
         $player["gpStatus"] = $rowSet["side"];
         if ($player["gpStatus"] == "Them") {
             $gpOppSelect = "selected=\"selected\"";
+            $gpOppLock[0] = $player["playerid"];
+            $gpOppLock[1] = ($currentTime > $deadLine) || ($currentTime > $actDue - 5*60);
+            $gpOppLock[2] = $player["name"]." (".$player["pos"]."-".$player["nfl"].")";
         } else {
             $gpOppSelect = "";
         }
@@ -382,13 +399,23 @@ foreach ($reserve as $player) {
     <tr>
         <td colspan="2">My Team:</td>
         <td colspan="3">
-            <select name="myGP"><?= $gpOption ?></select>
+            <?php if ($allLock or $gpLock[1]) { ?>
+                <?= $gpLock[2] ?>
+                <input type="hidden" name="myGP" value="<?= $gpLock[0] ?>"/>
+            <?php } else { ?>
+                <select name="myGP"><?= $gpOption ?></select>
+            <?php } ?>
         </td>
     </tr>
     <tr>
         <td colspan="2">Their Team:</td>
         <td colspan="3">
-            <select name="oppGP"><?= $oppGPOption ?></select>
+            <?php if ($allLock or $gpOppLock[1]) { ?>
+                <?= $gpOppLock[2] ?>
+                <input type="hidden" name="oppGP" value="<?= $gpOppLock[0] ?>"/>
+            <?php } else { ?>
+                <select name="oppGP"><?= $oppGPOption ?></select>
+            <?php } ?>
         </td>
     </tr>
 

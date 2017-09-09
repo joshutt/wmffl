@@ -7,6 +7,10 @@ if (isset($_REQUEST['teamid'])) {
     $autoteam = 0;
 }
 
+if (isset($_REQUEST['pos'])) {
+    $pickPos = $_REQUEST['pos'];
+    $bigWhere = "p.pos='$pickPos' ";
+} else {
 
 $bigWhere = <<<EOD
 p.pos NOT IN (
@@ -17,7 +21,7 @@ p.pos NOT IN (
                 HAVING count(r.playerid) >= 2
         )
 EOD;
-
+}
 
 $query = <<<EOD
 
@@ -25,7 +29,7 @@ SELECT p.playerid, p.firstname, p.lastname, p.pos, sum(ps.pts), r.teamid
 FROM newplayers p
 JOIN playerscores ps ON p.playerid = ps.playerid
 LEFT JOIN roster r ON p.playerid = r.playerid AND r.dateoff IS NULL
-WHERE ps.season = 2015 AND ps.week <= 14 AND r.teamid IS NULL AND p.pos <> 'HC' and p.usePos=1 and p.pos<>'' 
+WHERE ps.season = 2016 AND ps.week <= 14 AND r.teamid IS NULL AND p.pos <> 'HC' and p.usePos=1 and p.pos<>'' 
 AND $bigWhere 
 GROUP BY p.playerid
 ORDER BY sum(ps.pts) DESC;
@@ -42,7 +46,7 @@ if ($row == NULL) {
 	FROM newplayers p
 	JOIN playerscores ps ON p.playerid = ps.playerid
 	LEFT JOIN roster r ON p.playerid = r.playerid AND r.dateoff IS NULL
-	WHERE ps.season = 2015 AND ps.week <= 14 AND r.teamid IS NULL AND p.pos <> 'HC'
+	WHERE ps.season = 2016 AND ps.week <= 14 AND r.teamid IS NULL AND p.pos <> 'HC'
 	GROUP BY p.playerid
 	ORDER BY sum(ps.pts) DESC;
 
