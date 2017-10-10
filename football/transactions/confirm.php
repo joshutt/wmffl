@@ -87,6 +87,13 @@ if($submit == "Confirm") {
 		$ErrorMessage =  "That would give you $playercount players on your roster!!  You must drop someone!! <BR>";
 	}
 
+    // Query to see if allowed to aquire
+    $paid = true;
+    $remainTrans = 994;
+    if (sizeof($playerlist) > $remainTrans && !$paid) {
+        $ErrorMessage .= "You haven't paid entry fee and are out of free transactions.  No pick-ups allowed. <br />";
+    }
+
   //  print "An error: $ErrorMessage<br>";
 	if (!isset($ErrorMessage) || $ErrorMessage == "") {
 //        print "No Error so far<br>";
