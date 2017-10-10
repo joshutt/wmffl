@@ -9,11 +9,23 @@ AND t.season=wp.season AND t.week=wp.week
 AND DATE_SUB(now(), INTERVAL 4 HOUR) BETWEEN wp.startdate AND wp.enddate
 ORDER BY t.ordernumber, p.priority";
 
+/*
 $waiverOrder = "SELECT wo.teamid, wo.week FROM waiverorder wo, weekmap wp 
 WHERE wo.week=wp.week AND wo.season=wp.season
 AND DATE_SUB(now(), INTERVAL 4 HOUR) BETWEEN wp.startdate AND wp.enddate
 ORDER BY wo.ordernumber";
+*/
 
+$waiverOrder = "SELECT wo.teamid, wo.week, tp.TotalPts - tp.ProtectionPts - tp.TransPts as 'Remain',
+if(wo.teamid = 3, false, true) as 'Paid'
+FROM waiverorder wo
+JOIN weekmap wp ON wo.week=wp.week AND wo.season=wp.season
+JOIN transpoints tp ON wp.season=tp.season AND tp.teamid=wo.teamid
+WHERE DATE_SUB(now(), INTERVAL 4 HOUR) BETWEEN wp.startdate AND wp.enddate
+ORDER BY wo.ordernumber";
+
+
+// Get all of the picks for each team in order
 $results = mysql_query($sql);
 $currentTeam = 0;
 $teamList = array();
@@ -29,29 +41,28 @@ while (list($teamid, $playerid) = mysql_fetch_row($results)) {
     }
     //$reqArray = $newTeam[1];
     array_push($reqArray, $playerid);
-    //print "Request Array:";
-    //print_r ($reqArray);
-    //print "<br/>Team Array: ";
-    //print_r ($teamList);
-    //print "<br/>";
 }
 if ($currentTeam != 0) {
     array_push($teamList, array($currentTeam, $reqArray));
 }
 
+// Determine the exact waiver order
 $orderResults = mysql_query($waiverOrder) or die($waiverOrder."<br/>".mysql_error());
 $orderList = array();
-while (list($teamid, $week) = mysql_fetch_row($orderResults)) {
+$allowedTrans = array();
+while (list($teamid, $week, $transRemain, $paid) = mysql_fetch_row($orderResults)) {
     array_push($orderList, $teamid);
-    //print "$teamid<br/>";
+
+    // If paid unlimited transactions allowed, if unpaid only free
+    if ($paid) {
+        $allowedTrans[$teamid] = 99;
+    } else {
+        $allowedTrans[$teamid] = $transRemain;
+    }
 }
 
 
-//print "<pre>";
-//print_r ($teamList);
-//print "<br/>";
-//print "</pre>";
-
+// Get the list of players on roster
 $currentPlayers = "SELECT playerid FROM roster WHERE dateoff is null";
 $results = mysql_query($currentPlayers);
 $taken = array();
@@ -59,29 +70,35 @@ while (list($playerid) = mysql_fetch_row($results)) {
     array_push($taken, $playerid);
 }
 
+// Make the picks in memory
 $waivePicks = array();
 $takenPicks = array();
 $count = 1;
 while (count($teamList) > 0) {
     $thisTeam = array_shift($teamList);
     $reqArray = $thisTeam[1];
+    $thisTeamId = $thisTeam[0];
     while (count($reqArray) > 0) {
         $playerID = array_shift($reqArray);
         if (!in_array($playerID, $taken)) {
+            // If not allowed to do transactions don't bother
+            if ($allowedTrans[$thisTeamId] <= 0) {
+                break;
+            }
+
             array_push($taken, $playerID);
             $thisTeam[1] = $reqArray;
-            //print_r ($thisTeam);
-            //print "Team: ".$thisTeam[0]." gets $playerID<br/>";
-            if (!array_key_exists($thisTeam[0], $waivePicks)) {
-                $waivePicks[$thisTeam[0]] = array();
+            if (!array_key_exists($thisTeamId, $waivePicks)) {
+                $waivePicks[$thisTeamId] = array();
             }
             //$waivePicks[$thisTeam[0]] = $playerID;
-            array_push($waivePicks[$thisTeam[0]], $playerID);
+            array_push($waivePicks[$thisTeamId], $playerID);
             $takenPicks[$playerID] = $count++;
+            $allowedTrans[$thisTeamId]--;
             array_push($teamList, $thisTeam);
-            $arrayPos = array_search($thisTeam[0], $orderList);
+            $arrayPos = array_search($thisTeamId, $orderList);
             $orderList[$arrayPos] = null;
-            $orderList[$arrayPos+12] = $thisTeam[0];
+            $orderList[$arrayPos+12] = $thisTeamId;
             break;
         }
     }
