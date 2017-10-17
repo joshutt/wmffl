@@ -9,7 +9,7 @@ class DataObjects_Stats extends DB_DataObject
     ###START_AUTOCODE
     /* the code below is auto generated do not remove the above tag */
 
-    public $__table = 'stats';                           // table name
+    public $__table = 'stats';               // table name
     public $statid;                          // int(11)  not_null primary_key
     public $Season;                          // int(11)  not_null primary_key multiple_key
     public $week;                            // int(11)  not_null primary_key
@@ -40,9 +40,6 @@ class DataObjects_Stats extends DB_DataObject
     public $blockfg;                         // int(11)  not_null
     public $blockxp;                         // int(11)  not_null
     public $penalties;                       // int(11)  not_null
-
-    /* Static get */
-    function staticGet($k,$v=NULL) { return DB_DataObject::staticGet('DataObjects_Stats',$k,$v); }
 
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE

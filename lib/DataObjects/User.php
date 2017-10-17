@@ -9,7 +9,7 @@ class DataObjects_User extends DB_DataObject
     ###START_AUTOCODE
     /* the code below is auto generated do not remove the above tag */
 
-    public $__table = 'user';                            // table name
+    public $__table = 'user';                // table name
     public $UserID;                          // int(11)  not_null primary_key auto_increment
     public $TeamID;                          // int(11)  
     public $Username;                        // string(20)  not_null unique_key
@@ -21,9 +21,6 @@ class DataObjects_User extends DB_DataObject
     public $blogaddress;                     // string(75)  
     public $active;                          // string(1)  not_null enum
     public $commish;                         // int(4)  not_null
-
-    /* Static get */
-    function staticGet($k,$v=NULL) { return DB_DataObject::staticGet('DataObjects_User',$k,$v); }
 
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
