@@ -105,6 +105,10 @@ class Team {
         $sov = $this->getSOV($teamArray);
         return sprintf("%5.3f", $sov);
     }
+
+    function getPrintRecord() {
+        return sprintf("%d - %d - %d &nbsp;&nbsp;&nbsp;%5.3f", $this->record[0], $this->record[1], $this->record[2], $this->getWinPCT());
+    }
 }
 
 function orderteam($a, $b) {

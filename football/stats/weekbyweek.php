@@ -159,6 +159,7 @@ if ($format == "html" || !supportedFormat($format)) {
 
 
 <?
+    include "base/statbar.html";
     print "<div id=\"tblblock\">";
     include "weekbyweekinc.php";
     print "<div id=\"mainTable\">";
