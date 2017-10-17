@@ -3,71 +3,10 @@ require_once "utils/start.php";
 
 $title = "2017 WMFFL Financial Statements";
 
+$cssList = array("/base/css/money.css");
 include "base/menu.php";
 ?>
 
-<style>
-    tr.account1 {background-color: #eeeeee; }
-    tr.account2 {background-color: #ffffff; }
-    tr.summary {background-color: #cccccc; }
-    td.details {font-size: 8pt; text-align: center;}
-
-    .center { text-align: center; }
-    .teamList {display: none;}
-    .debt {color: red;}
-
-    #crusaders {display: none;}
-
-    .report {
-	border-spacing: 1;
-	border: 1px solid #000;
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-     }
-
-    .titleRow {
-	background: #600;
-	color: #e2a500;
-	font-style: normal;
-	font-weight: normal;
-    }
-
-    .name { 
-	text-align: left;
-    }
-
-    .evenRow {
-	background: #e0e0e0;
-	padding-top: 5px;
-	padding-bottom: 5px;
-    }
-
-    .report {
-	padding: 5px;
-    }
-
-    td.padded {
-	padding: 5px 10px;
-    }
-
-
-</style>
-
-<script language="javascript">
-
-    function showDetails(name) {
-
-        var e = document.getElementById(name);
-        if (e.style.display == "none" || e.style.display == "") {
-            e.style.display = "block";
-        } else {
-            e.style.display = "none";
-        }
-
-    }
-    
-</script>
 
 <H1 ALIGN=Center>Team Finances</H1>
 <H5 ALIGN=Center>Last Updated 10/11/2017</H5>

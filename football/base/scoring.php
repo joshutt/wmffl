@@ -410,4 +410,3 @@ function scoreString($score, $pos) {
     return $returnString;
 }
 
-?>

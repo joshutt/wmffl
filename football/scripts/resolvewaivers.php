@@ -1,6 +1,8 @@
 <?
 require_once "/home/joshutt/football/base/conn.php";
 require_once "/home/joshutt/football/base/useful.php";
+//require_once "/home/joshutt/git/football/base/conn.php";
+//require_once "/home/joshutt/git/football/base/useful.php";
 
 $sql = "SELECT t.teamid, p.playerid
 FROM waiverorder t, waiverpicks p, weekmap wp
@@ -16,11 +18,11 @@ AND DATE_SUB(now(), INTERVAL 4 HOUR) BETWEEN wp.startdate AND wp.enddate
 ORDER BY wo.ordernumber";
 */
 
-$waiverOrder = "SELECT wo.teamid, wo.week, tp.TotalPts - tp.ProtectionPts - tp.TransPts as 'Remain',
-if(wo.teamid = 3, false, true) as 'Paid'
+$waiverOrder = "SELECT wo.teamid, wo.week, tp.TotalPts - tp.ProtectionPts - tp.TransPts as 'Remain', p.paid
 FROM waiverorder wo
 JOIN weekmap wp ON wo.week=wp.week AND wo.season=wp.season
 JOIN transpoints tp ON wp.season=tp.season AND tp.teamid=wo.teamid
+JOIN paid p ON wo.teamid=p.teamid and wp.Season=p.season
 WHERE DATE_SUB(now(), INTERVAL 4 HOUR) BETWEEN wp.startdate AND wp.enddate
 ORDER BY wo.ordernumber";
 

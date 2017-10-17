@@ -7,19 +7,9 @@ include "/home/joshutt/football/base/useful.php";
 include "/home/joshutt/football/base/scoring.php";
 
 function generateSelect($thisTeamID, $currentSeason, $currentWeek) {
-    /*
-    $select = "select p.position, p.lastname, p.firstname, p.NFLteam, n.status, p.statid, s.* ";
-    $select .= "from players p, activations a, nflstatus n left join stats s ";
-    $select .= "on s.statid=p.statid and s.week=a.week and s.season=a.season ";
-    $select .= "where a.season=".$currentSeason." and a.week=".$currentWeek." and ";
-    $select .= "a.teamid=".$thisTeamID." and p.playerid in ";
-    $select .= "(a.HC, a.QB, a.RB1, a.RB2, a.WR1, a.WR2, a.TE, a.K, a.OL, a.DL1, ";
-    $select .= "a.DL2, a.LB1, a.LB2, a.DB1, a.DB2) ";
-    $select .= "and p.NFLTeam=n.NFLTeam and n.week=a.week and n.season=a.season ";
-    $select .= "order by p.position, p.lastname, p.firstname ";
-    */
     $select = <<<EOD
-        SELECT p.pos, p.lastname, p.firstname, r.teamid, g.kickoff, g.secRemain, p.flmid, s.*, if (r.dateon is null and p.pos<>'HC', 1, 0) as 'illegal'
+        SELECT p.pos, p.lastname, p.firstname, r.teamid, g.kickoff, g.secRemain, p.flmid, s.*, 
+        if (r.dateon is null and p.pos<>'HC', 1, 0) as 'illegal', gp1.side as 'Me', gp2.side as 'Them', wm.ActivationDue
         FROM newplayers p
         JOIN revisedactivations a ON p.playerid=a.playerid
 	JOIN weekmap wm ON a.season=wm.season AND a.week=wm.week
@@ -27,6 +17,8 @@ function generateSelect($thisTeamID, $currentSeason, $currentWeek) {
         LEFT JOIN nflrosters nr ON nr.playerid=p.playerid AND nr.dateoff is null
         LEFT JOIN nflgames g ON g.season=a.season AND g.week=a.week AND nr.nflteamid in (g.homeTeam, g.roadTeam)
         LEFT JOIN stats s ON s.statid=p.flmid AND s.week=a.week AND s.season=a.season
+  LEFT JOIN gameplan gp1 ON wm.season=gp1.season and wm.week=gp1.week and p.playerid=gp1.playerid and gp1.side='Me'
+  LEFT JOIN gameplan gp2 ON wm.season=gp2.season and wm.week=gp2.week and p.playerid=gp2.playerid and gp2.side='Them'
         WHERE a.teamid=$thisTeamID AND a.season=$currentSeason AND a.week=$currentWeek
 EOD;
     
@@ -42,60 +34,76 @@ function determinePoints($teamid, $season, $week, $conn) {
     $offPoints = 0;
     $defPoints = 0;
     $penalty = 0;
+    $secRemain = 0;
     while ($row = mysql_fetch_array($results)) {
         $pts = 0;
+
+        // Add game planning factor
+        $factor = 1.0;
+        if (time() > strtotime($row["ActivationDue"])) {
+            if ($row["Me"] == "Me" && $row["Them"] != "Them") {
+                $factor = 2.0;
+            } elseif ($row["Them"] == "Them" && $row["Me"] != "Me") {
+                $factor = 0.5;
+            }
+        }
+
+        // Determine Number of Points
         if ($row['illegal']==1) {
             $penalty += 2;
-        if ($teamid == 3) {
-        //print_r($row);
-            //print "<br/>";  
-            }
         } elseif ($row['kickoff'] == null && $row['pos'] != 'HC') {
             $penalty += 2;
-        if ($teamid == 3) {
-        //print_r($row);
-            //print "<br/>"; 
-           }
         } else {
             switch ($row['pos']) {
                 case 'HC' :
                     $pts = scoreHC($row);
-                    $offPoints += $pts;
+                    if ($pts < 0 && $factor == 0.5) { $factor = $1.0; }
+                    $offPoints += ceil($pts * $factor);
                     break;
                 case 'QB' :
                     $pts = scoreQB($row);
-                    $offPoints += $pts;
+                    if ($pts < 0 && $factor == 0.5) { $factor = $1.0; }
+                    $offPoints += ceil($pts * $factor);
                     break;
                 case 'RB' :
                 case 'WR' :
                      $pts = scoreOffense($row);
-                     $offPoints += $pts;
+                    if ($pts < 0 && $factor == 0.5) { $factor = $1.0; }
+                     $offPoints += ceil($pts * $factor);
                      break;
                 case 'TE' :    
                      $pts = scoreTE($row);
-                     $offPoints += $pts;
+                    if ($pts < 0 && $factor == 0.5) { $factor = $1.0; }
+                     $offPoints += ceil($pts * $factor);
                      break;
                 case 'K' :
                     $pts = scoreK($row);
-                    $offPoints += $pts;
+                    if ($pts < 0 && $factor == 0.5) { $factor = $1.0; }
+                    $offPoints += ceil($pts * $factor);
                     break;
                 case 'OL' :
                     $pts = scoreOL($row);
-                    $offPoints += $pts;
+                    if ($pts < 0 && $factor == 0.5) { $factor = $1.0; }
+                    $offPoints += ceil($pts * $factor);
                      break;
                 case 'DL' :
                 case 'LB' :
                 case 'DB' :
                      $pts = scoreDefense($row);
-                     $defPoints += $pts;
+                    if ($pts < 0 && $factor == 0.5) { $factor = $1.0; }
+                     $defPoints += ceil($pts * $factor);
                      break;
             }
         }
-        $totalPoints += $pts;
-        //print $row["firstname"]." ".$row["lastname"]." - ".$pts."\n";
+
+        //print "${row["firstname"]} ${row["lastname"]} = $pts \n";
+
+        $totalPoints += ceil($pts * $factor);
+        $secRemain += $row["secRemain"];
+        //print "Total Pts: $totalPoints  Offensive: $offPoints   Defense: $defPoints \n";
     }
     //print "$teamid-$totalPoints-$offPoints-$defPoints-$penalty<br>";
-    return array($totalPoints, $offPoints, $defPoints, $penalty);
+    return array($totalPoints, $offPoints, $defPoints, $penalty, $secRemain);
 }
 
 
@@ -134,9 +142,16 @@ while ($gameRow = mysql_fetch_array($gameResults)) {
     if ($aFinal < 0) $aFinal=0;
     if ($bFinal < 0) $bFinal=0;
 
+    // If the game is over and both scores are negative make it 1-0
+    if ($aFinal <0 && $bFinal < 0 && $aPts[4]==0 && $bPts[4] == 0) {
+        if ($aFinal > $bFinal) {
+            $aFinal = 1;
+        } else if ($bFinal > $aFinal) {
+            $bFinal = 1;
+        }
+    }
     //print $gameRow['week'];
     updateScore($gameRow['teama'], $gameRow['teamb'], $gameRow['season'], $gameRow['week'], $aFinal, $bFinal, $conn);
-    print "Updated ".$gameRow['teama']." vs ".$gameRow['teamb']."\n";
+    // print "Updated ".$gameRow['teama']." vs ".$gameRow['teamb']."\n";
 }
 
-?>

@@ -79,6 +79,7 @@ fabric.properties
 /conf/*.conf
 /tmp
 diffignore
+error_log
 
 # Uploaded images
 /football/images/articles

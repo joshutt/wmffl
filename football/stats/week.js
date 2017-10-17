@@ -103,5 +103,6 @@ function csv(frmt="csv") {
     } else {
         form.append($("<input/>", {name: "pos", value: $("#pos").val()}));
     }
+    $(document.body).append(form);
     form.submit();
 }

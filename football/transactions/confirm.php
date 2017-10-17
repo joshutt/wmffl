@@ -88,9 +88,16 @@ if($submit == "Confirm") {
 	}
 
     // Query to see if allowed to aquire
-    $paid = true;
-    $remainTrans = 994;
-    if (sizeof($playerlist) > $remainTrans && !$paid) {
+    $allowedTran = "SELECT p.paid, tp.TotalPts - tp.ProtectionPts - tp.TransPts as 'remain'
+FROM transpoints tp
+JOIN paid p on tp.teamid=p.teamid and tp.season=p.season
+WHERE tp.teamid=$teamnum and tp.season=$season";
+	$aResult = mysql_query($allowedTran) or die("Unable to get transactions: ".mysql_error());
+	list($paid, $remainTrans) = mysql_fetch_row($aResult);
+
+    //$paid = true;
+    //$remainTrans = 994;
+    if (sizeof($playlist) > $remainTrans && !$paid) {
         $ErrorMessage .= "You haven't paid entry fee and are out of free transactions.  No pick-ups allowed. <br />";
     }
 
