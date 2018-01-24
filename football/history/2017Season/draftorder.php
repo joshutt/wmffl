@@ -1,56 +1,7 @@
-<?
-require_once "$DOCUMENT_ROOT/utils/start.php";
-
-$sql = "SELECT d.round, d.pick, (t.name) as 'name', ";
-$sql .= "if(d.teamid<>d.orgTeam, '*', '') as 'flag' ";
-$sql .= "FROM draftpicks d, team t ";
-$sql .= "WHERE d.season=2017 and d.teamid=t.teamid ";
-$sql .= "ORDER BY Round, Pick";
-
-$title = "2017 WMFFL Draft Order";
+<?php
+$thisSeason = 2018;
+include "../common/draftorder.php";
 ?>
-<? include "$DOCUMENT_ROOT/base/menu.php"; ?>
-
-<H1 Align=Center>Draft Order</H1>
-<H5 ALIGN=Center><I>March 28, 2017</I></H5>
-<HR size = "1">
-<P>
-This is the official draft order for the 2017 Draft.  The order was determined based on reverse order of finish last season.
-</P>
-
-<P>
-<TABLE WIDTH=100%>
-
-<?
-$results = mysql_query($sql) or die("Database error: ".mysql_error());
-
-$round = 0;
-while ($pick = mysql_fetch_array($results)) {
-    if ($round <> $pick["round"]) {
-        if ($round > 0) {
-            print "</ol></td>";
-            if ($round % 3 == 0) {
-                print "</tr>";
-            }
-        }
-        if ($round % 3 == 0) {
-            print "<tr valign=\"top\">";
-        }
-        $round = $pick["round"];
-        print "<td width=\"26\"><b>Round $round</b>";
-        print "<ol>";
-    }
-    print "<li>${pick["name"]} <a href=\"#Notes\">${pick["flag"]}</a></li>";
-}
-?>
-
-<TR><TD>&nbsp;</TD></TR>
-
-<TR><TD COLSPAN=3><A NAME="Notes"><SUB>* - Pick obtained due to trade
-</SUB>
-</TD></TR>
-
-</TABLE></P>
 
 <P><TABLE WIDTH=100% BORDER=1 ALIGN=Center>
 <TR><TD ALIGN=Center COLSPAN=3><B>Previous 1st Picks</B></TD></TR>
@@ -82,4 +33,4 @@ while ($pick = mysql_fetch_array($results)) {
 </TABLE>
 </P>
 
-<!--#include virtual="/base/footer.html"-->
+<? include "base/footer.html"; ?>
