@@ -74,6 +74,10 @@ foreach ($teamArray as $team) {
 
 $thisSeason = $currentSeason;
 $thisWeek = $currentWeek;
+if ($thisWeek == 0) {
+    $thisWeek = 16;
+    $thisSeason = $thisSeason - 1;
+}
 $display = 0;
 include "history/common/weekstandings.php";
 ?>

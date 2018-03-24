@@ -33,6 +33,10 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
     <li>2017.3 - Add Game Planning
         <ul><li>Add V.D</li></ul>
     </li>
+    <li>2017.6 - Negative Game Plan Scores Not Halved
+        <ul><li>Add V.D.2.a</li></ul>
+    </li>
+
 </ul>
 
 <HR size = "1">
@@ -363,7 +367,11 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 <li class="newrule">Every week each team may optionally name one player on their team and one player on their opponent's team that they will game plan for.
     <ol type="1">
     <li>The player on their team that is game planned for will have their score doubled.</li>
-    <li>The player on their opponent's team that is game planned for will have their score halved, with fractions rounded up.</li>
+    <li>The player on their opponent's team that is game planned for will have their score halved, with fractions rounded up.
+        <ol type="a">
+            <li>No player that scores negative will have their score halved.</li>
+        </ol>
+    </li>
     <li>If both teams game plan for the same player then there will be no impact on their score</li>
     <li>If a player is game planned for and that player is not on the activation roster, then the game planning will have no impact</li>
     <li>Game planned players must be named no later than the earlier of the kickoff of that player's game or 12:55 pm on Sunday of the week in question.</li>

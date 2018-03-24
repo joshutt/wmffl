@@ -76,12 +76,16 @@ fabric.properties
 /lib/*.ini
 /lib/DataObjects/*.ini
 
+# Swap files
+*.swp
+
 /conf/*.conf
 /tmp
 diffignore
 error_log
 
 # Uploaded images
+/football/images
 /football/images/articles
 football/transactions/livedraft/check.log
 /football/transactions/livedraft/check.log
