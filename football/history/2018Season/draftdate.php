@@ -7,7 +7,7 @@ if ($draftMessage == "") {
 
 $draftMessage = <<<EOD
 
-The default date for the draft is August 26th.  As always we check to see if a better date is available.  Please fill out the below form, letting us know when you can NOT make the draft.  You are limited to selected 4 dates you can not attend.  The date will be announced on or about July 28th.</p>
+The default date for the draft is August 25th.  As always we check to see if a better date is available.  Please fill out the below form, letting us know when you can NOT make the draft.  You are limited to selected 4 dates you can not attend.  The date will be announced on or about August 1st.</p>
 
 EOD;
 
@@ -30,7 +30,7 @@ if ($isin) {
 
 <p><? print $draftMessage; ?></p>
 
-<P><FORM ACTION="../common/processdraftdate.php" METHOD="POST">
+<P><FORM ACTION="../common/processdraftdate" METHOD="POST">
 
 <TABLE BORDER=1>
 <TR><TH WIDTH=30%>Can Attend?</TH><TH WIDTH=70%>Date</TH></TR>
