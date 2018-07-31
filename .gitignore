@@ -83,6 +83,7 @@ fabric.properties
 /tmp
 diffignore
 error_log
+**/logs/
 
 # Uploaded images
 /football/images
