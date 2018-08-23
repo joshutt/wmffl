@@ -15,7 +15,6 @@ $draftPicks->find();
 <head>
 
 <title>WMFFL Live Draft</title>
-<link href="/base/css/w3.css" type="text/css" rel="stylesheet" />
 <link href="draft.css" type="text/css" rel="stylesheet" />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="update.jquery.js" type="text/javascript"></script>
@@ -24,7 +23,7 @@ $draftPicks->find();
 
 <body id="body_ajax_ld" onresize="resize()" onLoad="$(ready)">
 
-    <div id="statusTable" class="w3-card-4 w3-padding-small w3-border w3-margin-left w3-margin-right w3-display-topmiddle ">
+    <div id="statusTable">
        <div id="clockDiv">
         <div id="roundNum" class="clockLine">Round:</div>
         <div id="pickNum" class="clockLine">Pick:</div>
@@ -37,7 +36,7 @@ $draftPicks->find();
 <div><a class="tools" id="logInLine" onClick="logCheck();">Log In</a></div>
 
 <div id="ajax_ld" class="pagebody">
-<div id="left_side" class="w3-third w3-card">
+<div id="left_side">
                 <table class="draft_picks_header report" cellspacing="1" align="center">
 <!--		<caption><span>Draft Picks</span></caption> -->
                     <tbody>
@@ -92,7 +91,7 @@ EOD;
             </td>
             <td width="49%" valign="top">
 -->
-                <div id="right_side" class="w3-third w3-card">
+                <div id="right_side">
 
                 <table id="recentStatus" class="draft_picks_header report">
                     <tbody>
@@ -147,7 +146,8 @@ EOD;
                                     <option value="IND">IND</option>
                                     <option value="JAC">JAC</option>
                                     <option value="KC">KC</option>
-                                    <option value="LA">LA</option>
+                                    <option value="LAC">LAC</option>
+                                    <option value="LAR">LAR</option>
                                     <option value="MIA">MIA</option>
                                     <option value="MIN">MIN</option>
                                     <option value="NE">NE</option>
@@ -157,7 +157,6 @@ EOD;
                                     <option value="OAK">OAK</option>
                                     <option value="PHI">PHI</option>
                                     <option value="PIT">PIT</option>
-                                    <option value="SD">SD</option>
                                     <option value="SEA">SEA</option>
                                     <option value="SF">SF</option>
                                     <option value="TB">TB</option>
@@ -177,9 +176,13 @@ EOD;
                 </div>
 
                 <?php include "logInBlock.html"; ?>
-                
-                <div id="farRight" class="w3-third w3-card">
+
+                <div id="farRight">
                 <div id="chat_container">
+                <div id="chat_table" class="pickLabel">
+                    Join us on the <a href="https://hangouts.google.com/hangouts/_/getwellnetwork.com/wmffl-draft" target="_blank">Google Hangout</a>
+                </div>
+                <!--
                 <table id="chat_table">
                 <tbody><tr><td>
                     <div id="chat_out">
@@ -201,6 +204,7 @@ EOD;
                 </td></tr>
                 </tbody>
                 </table>
+                -->
                 </div>
 
 

@@ -12,7 +12,7 @@ $sql = <<<EOD
 SELECT c.messageId, c.userid, c.message, c.time, u.name
 FROM chat c
 LEFT JOIN user u ON c.userid=u.userid
-WHERE c.time > '2016-08-27'
+WHERE c.time > '2017-08-25'
 AND c.messageId > $last
 ORDER BY c.time DESC
 LIMIT 25

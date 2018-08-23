@@ -18,7 +18,14 @@ function getTeamOnClock($season) {
     $draftPicks->orderBy("Pick");
     $draftPicks->find(true);
 
-    return $draftPicks->teamid;
+    $sql = "SELECT value FROM config where `key`='draft.start'";
+    $result = mysql_query($sql) or die("Unable to get start: ".mysql_error());
+    $row = mysql_fetch_array($result);
+    if ($row[0] == "true") {
+        return $draftPicks->teamid;
+    } else {
+        return null;
+    }
 }
 
 

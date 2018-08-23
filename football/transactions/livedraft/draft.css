@@ -174,10 +174,10 @@ a.teamRoster:hover {
 }
 
 #statusTable {
-     width: 100%;
-//    border: 1px solid;
+    width: 100%;
+    border: 1px solid;
     overflow: hidden;
-//    padding: 0px 0px 2px 5px;
+    padding: 0px 0px 2px 5px;
 }
 
 #logInInfo, #logOutInfo {
@@ -225,8 +225,10 @@ a.teamRoster:hover {
 
 #chat_table {
     overflow: auto;
-    width: 100%;
-    border: 1px solid;
+ //   width: 100%;
+ //   border: 1px solid;
+    font-size: medium;
+    padding-bottom: 10px;
 }
 #chat {
     border: 1px solid;
@@ -255,6 +257,7 @@ a.teamRoster:hover {
     left: 0;
     background: #000000;
     z-index: 1;
+    font-size: large;
 }
 
 #logInBlock, #logOutBlock {
@@ -267,9 +270,13 @@ a.teamRoster:hover {
     border: 3px solid;
 }
 
+#logOutBlock {
+    font-size: x-large;
+}
+
 #logInButton {
     text-align: center;
-    float: right;
+    float: left;
 }
 
 #logInHide {
@@ -278,6 +285,7 @@ a.teamRoster:hover {
 
 #logInBlock label {
     float: left;
+    font-size: large;
 }
 
 #logInBlock input {
@@ -287,7 +295,7 @@ a.teamRoster:hover {
 #logInMsg {
     float: left;
     color: #f00;
-
+    font-size: x-large;
 }
 
 #logInInfo {
