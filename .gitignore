@@ -102,8 +102,11 @@ diffignore
 tags
 # Persistent undo
 [._]*.un~
-error_log
+
+
 **/logs/
+**/error_log
+**/*.log
 
 # Uploaded images
 /football/images
@@ -111,5 +114,3 @@ error_log
 /football/images/week
 football/transactions/livedraft/check.log
 /football/transactions/livedraft/check.log
-**/error_log
-**/*.log
