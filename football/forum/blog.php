@@ -82,9 +82,17 @@ $lastDay = "";
 while($posts->fetch()) {
     $user = $posts->getLink('userid');
     $team = $user->getLink('TeamID');
-    $date =  strtotime($posts->createTime);
-    $day = date("l, F d, Y", $date);
-    $time = date("g:i A", $date);
+    $dtObj = new DateTime($posts->createTime);
+    //print_r( $dtObj);
+
+    $dtObj->setTimezone(new DateTimeZone('America/New_York'));
+    $date = $dtObj -> getTimestamp();
+    $day = $dtObj -> format("l, F d, Y");
+    $time = $dtObj->format("g:i A");
+
+    //$date =  strtotime($posts->createTime);
+    //$day = date("l, F d, Y", $date);
+    //$time = date("g:i A T", $date);
     //print_r($user);
     if ($lastDay != $day) {
         print "<div class=\"date-header\">$day</div>";

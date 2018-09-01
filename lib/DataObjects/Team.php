@@ -9,7 +9,7 @@ class DataObjects_Team extends DB_DataObject
     ###START_AUTOCODE
     /* the code below is auto generated do not remove the above tag */
 
-    public $__table = 'team';                            // table name
+    public $__table = 'team';                // table name
     public $TeamID;                          // int(11)  not_null primary_key multiple_key auto_increment
     public $DivisionID;                      // int(11)  not_null
     public $Name;                            // string(50)  not_null unique_key
@@ -20,9 +20,6 @@ class DataObjects_Team extends DB_DataObject
     public $motto;                           // string(255)  
     public $abbrev;                          // string(3)  unique_key
     public $active;                          // int(4)  not_null
-
-    /* Static get */
-    function staticGet($k,$v=NULL) { return DB_DataObject::staticGet('DataObjects_Team',$k,$v); }
 
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE

@@ -9,14 +9,11 @@ class DataObjects_Ballot extends DB_DataObject
     ###START_AUTOCODE
     /* the code below is auto generated do not remove the above tag */
 
-    public $__table = 'ballot';                          // table name
+    public $__table = 'ballot';              // table name
     public $TeamID;                          // int(11)  not_null primary_key
     public $IssueID;                         // int(11)  not_null primary_key
     public $Result;                          // int(4)  
     public $Vote;                            // string(7)  enum
-
-    /* Static get */
-    function staticGet($k,$v=NULL) { return DB_DataObject::staticGet('DataObjects_Ballot',$k,$v); }
 
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE

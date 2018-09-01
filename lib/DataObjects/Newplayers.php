@@ -9,7 +9,7 @@ class DataObjects_Newplayers extends DB_DataObject
     ###START_AUTOCODE
     /* the code below is auto generated do not remove the above tag */
 
-    public $__table = 'newplayers';                      // table name
+    public $__table = 'newplayers';          // table name
     public $playerid;                        // int(11)  not_null primary_key auto_increment
     public $flmid;                           // int(11)  not_null unique_key
     public $lastname;                        // string(25)  not_null
@@ -28,9 +28,7 @@ class DataObjects_Newplayers extends DB_DataObject
     public $active;                          // int(1)  not_null
     public $usePos;                          // int(4)  not_null
     public $nflid;                           // int(11)  
-
-    /* Static get */
-    function staticGet($k,$v=NULL) { return DB_DataObject::staticGet('DataObjects_Newplayers',$k,$v); }
+    public $nfldb_id;                        // string(10)  unique_key
 
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE

@@ -1,5 +1,6 @@
 <?
 require_once "utils/start.php";
+include "utils/reportUtils.php";
 $title = "Player Stats";
 
 if ($_REQUEST["pos"] == null || $_REQUEST["pos"]=="") {
@@ -58,7 +59,7 @@ $posName = array(
 'HC' => 'Head Coach');
 
 $sql = <<<EOD
-SELECT CONCAT(p.firstname, ' ', p.lastname) as 'name', p.pos, p.team, b.week as 'bye',
+SELECT p.playerid, CONCAT(p.firstname, ' ', p.lastname) as 'name', p.pos, p.team, b.week as 'bye',
 t.abbrev as 'ffteam',
 sum(if(s.played>0,1,0)) as 'games',
 sum(ps.pts) as 'pts',
@@ -93,20 +94,13 @@ if (isset($firstSort) && $firstSort != "none") {
     }
 }
 //ORDER  BY  ps.week, p.position, ps.pts DESC, p.lastname, p.firstname";
+
+$javascriptList = array("//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js", "/base/js/jquery.tablesorter.min.js", "week.js");
+$cssList = array("week.css");
 ?>
 
 <? include "base/menu.php"; ?>
 
-
-<style>
-<!--
-.SLTables1, .SLTables1 TD, .SLTables1 TH, FORM {font-size:10px; font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;}
-.bg0 {background-color:#660000; font-weight:bold; color:#e2a500;}
-.bg1 {background-color:#B9B9B9; font-weight:bold;}
-.bg2 {background-color:#f5efef;}
-.bg0font, .bg0font A, A.bg0font {color:#FFFFFF; font-weight:bold;}
--->
-</style>
 
 <h1 align="center">Player Stats</h1>
 <hr/>
@@ -126,55 +120,10 @@ if (isset($firstSort) && $firstSort != "none") {
 <td><a href="playerstats.php?pos=DB">DB</a></td>
 </tr>
 </table></p>
-<!--
-<form action="playerstats.php" method="post">
-<table>
 
-<tr><td align="right"><b>Position:</b></td>
-<td>
-<select name="pos">
-    <option value="HC">Head Coach</option>
-    <option value="QB">Quarterback</option>
-    <option value="RB">Runningback</option>
-    <option value="WR">Wide Receiver</option>
-    <option value="TE">Tight End</option>
-    <option value="K">Kicker</option>
-    <option value="OL">Offensive Line</option>
-    <option value="DL">Defensive Line</option>
-    <option value="LB">Linebacker</option>
-    <option value="DB">Defensive Back</option>
-</select></td></tr>
-
-<tr><td align="center" colspan="2"><input type="submit" value="Get Stats"/></td></tr>
-</table>
-</form>
-<hr/>
-
--->
-
-<div class="SLTables1">
-<table border="0" cellpadding="2" cellspacing="1" width="100%">
-<tr align="left" class="bg0"><td colspan="<? print sizeof($pLine)+7; ?>" class="bg0">
-<font class="bg0font"><? print $posName[$pos]; ?></font></td></tr>
-<tr align="middle" class="bg1"><th>Name</th>
-<th>NFL Team</th>
-<th>Bye</th>
-<th>FF Team</th>
-<th>Games</th>
 <?
-print <<<EOD
-<th><a href="playerstats.php?pos=$pos&sort=pts">Pts</a></th>
-<th><A href="playerstats.php?pos=$pos&sort=ppg">PPG</a></th>
-EOD;
-
-$pLab = $posLabels[$pos];
-foreach ($pLab as $pl) {
-    $sortVal = $pLine[array_search($pl, $pLab)];
-    print "<th><a href=\"playerstats.php?pos=$pos&sort=sum($sortVal)\">$pl</a></td>";
-}
-print "</tr>";
-
 //print "Last Name,First Name,Pos,NFL,Week,Pts\n";
+$newHold = array();
 $results = mysql_query($sql) or die("There was an error in the query: ".mysql_error());
 while($playList = mysql_fetch_array($results)) {
     //print $playList[0].",".$playList[1].",".$playList[2].",";
@@ -183,25 +132,24 @@ while($playList = mysql_fetch_array($results)) {
     $numGames = $playList["games"];
     if ($numGames == 0) {$numGames=1;}
     $ppg = round($playList["pts"]/$numGames,2);
-    print <<<EOD
-<tr height="17" class="bg2" align="right" valign="middle">
-<td align="left">{$playList["name"]}</td>
-<td align="center">{$playList["team"]}</td>
-<td align="center">{$playList["bye"]}</td>
-<td align="center">{$playList["ffteam"]}</td>
-<td align="center">{$playList["games"]}</td>
-<td align="center">{$playList["pts"]}</td>
-<td align="center">{$playList["ppg"]}</td>
-EOD;
+    $id = $playList["playerid"];
+    $newHold[$id] = array($playList["name"], $playList["team"], $playList["bye"], $playList["ffteam"], $numGames, $playList["pts"], $ppg);
 
     for ($i = 7; $i<sizeof($pLine)+7; $i++) {
-        print "<td align=\"center\">{$playList[$i]}</td>";
+        array_push($newHold[$id], $playList[$i]);
     }
 }
 ?>
-</table>
-</div>
 
-<p><div align="right"><a href="statcsv.php?pos=<? print "$pos&sort=$sort&season=$season";?>"><img src="/images/csv.gif" border="0"></a></div><p>
+<?php
+$labels = array("Name", "NFL Team", "Bye", "FF Team", "G", "Pts", "PPG");
+$labels = array_merge($labels, $posLabels[$pos]);
+
+print "<div id=\"tblblock\">";
+print "<div id=\"mainTable\">";
+outputHtml($labels ,$newHold);
+print "</div></div>";
+?>
+
 
 <? include "base/footer.html"; ?>

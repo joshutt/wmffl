@@ -1,7 +1,8 @@
 <?
 //$source = "http://myrss.com/f/n/f/nflAdsrct1.rss";
 //$source = "http://sports.yahoo.com/nfl/rss.xml";
-$source = "http://www.nfl.com/rss/rsslanding?searchString=home";
+//$source = "http://www.nfl.com/rss/rsslanding?searchString=home";
+$source = "http://www.espn.com/espn/rss/nfl/news";
 //$source = "http://xml.newsisfree.com/feeds/52/1852.xml";
 //$source = "http://p.moreover.com/cgi-local/page?c=Sports%3A%20American%20football%20news&o=rss";//
 //$RSSVersion = 0.91;
@@ -55,14 +56,23 @@ print "**";
 */
 
 $feed = implode(file($source));
+print $feed;
 $xml = simplexml_load_string($feed);
+print "XML: <pre>";
+print_r( $xml);
+print "</pre>";
 $json = json_encode($xml);
+print $json;
 $array = json_decode($json,TRUE);
-$items = $array['entry'];
+print "Array: <pre>";
+print_r( $array);
+print "</pre>";
+$items = $array['channel']['item'];
+//$items = $array['entry'];
 
-//print "Items: <pre>";
-//print_r($items);
-//print "</pre>***<br/>";
+print "Items: <pre>";
+print_r($items);
+print "</pre>***<br/>";
 
 if (sizeof($items) > 6) {
     $items = array_slice($items, 0, 6);
@@ -94,10 +104,15 @@ if (sizeof($items) > 6) {
 <?
     if ($items != null) {
 		foreach ($items as $item) {
+            print_r($item["title"]);
+            ?>
+            <tr><td><a href="<?= $item["link"]?>" class="NFLHeadline">
+            <font class="NFLHeadline"><?= $item["title"] ?></font></a></td></tr>
+            <?
 		//print "<TR><TD><A HREF=\"".$item["link"]."\" class=\"NFLHeadline\">";
-		print "<TR><TD><A HREF=\"".$item["link"]["@attributes"]["href"]."\" class=\"NFLHeadline\">";
+//		print "<TR><TD><A HREF=\"".$item["link"]["@attributes"]["href"]."\" class=\"NFLHeadline\">";
 		//print "<TR><TD><A HREF=\"".$item["id"]."\" class=\"NFLHeadline\">";
-	print "<FONT class=\"NFLHeadline\">".$item["title"]."</FONT></A></TD></TR>";
+//	print "<FONT class=\"NFLHeadline\">".$item["title"]."</FONT></A></TD></TR>";
 //        echo "<A HREF=\"".$item["link"]."\">".$item["title"]."</A><BR>";
         }
     } else {

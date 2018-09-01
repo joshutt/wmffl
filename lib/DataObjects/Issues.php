@@ -9,7 +9,7 @@ class DataObjects_Issues extends DB_DataObject
     ###START_AUTOCODE
     /* the code below is auto generated do not remove the above tag */
 
-    public $__table = 'issues';                          // table name
+    public $__table = 'issues';              // table name
     public $IssueID;                         // int(11)  not_null primary_key multiple_key auto_increment
     public $IssueNum;                        // string(10)  not_null
     public $IssueName;                       // string(40)  not_null
@@ -19,9 +19,6 @@ class DataObjects_Issues extends DB_DataObject
     public $Deadline;                        // date(10)  binary
     public $StartDate;                       // date(10)  binary
     public $Result;                          // string(10)  
-
-    /* Static get */
-    function staticGet($k,$v=NULL) { return DB_DataObject::staticGet('DataObjects_Issues',$k,$v); }
 
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE

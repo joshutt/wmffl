@@ -91,8 +91,10 @@ include "base/menu.php";
 </TD></TR><TR><TD> </TD></TR>
 
 <TR><TD>
-</TD><TD>
     <A HREF="history/2016Season.php"><IMG SRC="images/football.jpg" BORDER=0>2016 Season</A><P>
+</TD><TD>
+</TD><TD>
+    <A HREF="history/2017Season.php"><IMG SRC="images/football.jpg" BORDER=0>2017 Season</A><P>
 </TD><TD>
 </TD></TR><TR><TD> </TD></TR>
 
@@ -100,3 +102,4 @@ include "base/menu.php";
 <BR>
 
 <? include "base/footer.html"; ?>
+>>>>>>> 5e27482dbbbc4c7969cfce51101d875bf010a0c6

@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 if (!$isin) {
     include "submitactivations.php";
@@ -18,6 +18,8 @@ $OL = $_REQUEST["OL"];
 $DL = $_REQUEST["DL"];
 $LB = $_REQUEST["LB"];
 $DB = $_REQUEST["DB"];
+$myGP = $_REQUEST["myGP"];
+$oppGP = $_REQUEST["oppGP"];
 
 
 $activeMessage = "";
@@ -48,7 +50,7 @@ if (sizeof($TE) < 1) {
 
 if (sizeof($RB) + sizeof($WR) + sizeof($TE) != 5) {
     $activeMessage .= "You must activate 1 RB, 2 WR, 1 TE and 1 flex<br/>";
-} 
+}
 
 if (sizeof($K) != 1) {
     $activeMessage .= "You must activate exactly 1 K<br/>";
@@ -74,6 +76,7 @@ if ($activeMessage != "") {
 }
 
 $deleteSql = "DELETE FROM revisedactivations WHERE season=$season AND week=$week AND teamid=$teamnum";
+$deleteGPs = "DELETE FROM gameplan WHERE season=$season AND week=$week AND teamid=$teamnum";
 
 $posArray = array('HC', 'QB', 'RB', 'WR', 'TE', 'K', 'OL', 'DL', 'LB', 'DB');
 $first = true;
@@ -85,7 +88,7 @@ foreach ($_REQUEST as $key => $value) {
                 $insertSql .= ", ";
             }
             $first = false;
-            $insertSql .= "($season, $week, $teamnum, '$key', $item)";    
+            $insertSql .= "($season, $week, $teamnum, '$key', $item)";
         }
     }
 }
@@ -93,8 +96,26 @@ if ($actID == "on") {
     $insertSql .= ", ($season, $week, $teamnum, 'HC', $actHC)";
 }
 
-mysql_query($deleteSql) or die("Unable to clear old activations: ".mysql_error());
-mysql_query($insertSql) or die("Unable to add new activations: ".mysql_error());
+$gameplanSql = "INSERT INTO gameplan (season, week, teamid, side, playerid) VALUES ";
+$useGp = false;
+if (isset($myGP) && $myGP != -1) {
+    $useGp = true;
+    $gameplanSql .= "($season, $week, $teamnum, 'Me', $myGP)";
+}
+
+if (isset($oppGP) && $oppGP != -1) {
+    if ($useGp) {
+        $gameplanSql .= ", ";
+    }
+    $useGp = true;
+    $gameplanSql .= "($season, $week, $teamnum, 'Them', $oppGP)";
+}
+
+mysql_query($deleteSql) or die("Unable to clear old activations: " . mysql_error());
+mysql_query($deleteGPs) or die("Unable to clear old gameplan: " . mysql_error());
+mysql_query($insertSql) or die("Unable to add new activations: " . mysql_error());
+if ($useGp) {
+    mysql_query($gameplanSql) or die("Unable to add new gameplan: " . mysql_error());
+}
 
 header("Location: activations.php");
-?>

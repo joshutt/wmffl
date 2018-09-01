@@ -9,7 +9,7 @@ class DataObjects_Activations extends DB_DataObject
     ###START_AUTOCODE
     /* the code below is auto generated do not remove the above tag */
 
-    public $__table = 'activations';                     // table name
+    public $__table = 'activations';         // table name
     public $TeamID;                          // int(11)  not_null primary_key multiple_key
     public $Season;                          // year(4)  not_null primary_key unsigned zerofill
     public $Week;                            // int(4)  not_null primary_key
@@ -28,9 +28,6 @@ class DataObjects_Activations extends DB_DataObject
     public $LB2;                             // int(11)  not_null
     public $DB1;                             // int(11)  not_null
     public $DB2;                             // int(11)  not_null
-
-    /* Static get */
-    function staticGet($k,$v=NULL) { return DB_DataObject::staticGet('DataObjects_Activations',$k,$v); }
 
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
