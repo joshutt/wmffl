@@ -1,4 +1,3 @@
-<table cellpadding="5" cellspacing="1">
 <?
 include "lib/Team.php";
 
@@ -31,7 +30,7 @@ AND s.week<=14
 GROUP BY d.name, tn.name
 
 EOD;
-//print "<pre>$query</pre>";
+print "<pre>$query</pre>";
 
 $secondQuery = <<<EOD
 SELECT t.teamid as 'teamid', t2.teamid as 'oppid', if(t.teamid=s.teama, s.scorea, s.scoreb) as 'ptsfor', if(t.teamid=s.teama, s.scoreb, s.scorea) as 'ptsagt', wm.week, tn.divisionid, tn2.divisionid
@@ -84,12 +83,15 @@ print_r($teamArray);
 print "</pre>";
 */
 usort($teamArray, "orderteam");
-//print_r($teamArray);
-$records = array();
-foreach($teamArray as $t) {
-    $thisDiv = $t->division;
-    if ($division != $thisDiv) {
-        print <<< EOD
+
+
+if (!isset($display) or $display == 1) {
+    $records = array();
+    print "<table cellpadding=\"5\" cellspacing=\"1\">";
+    foreach ($teamArray as $t) {
+        $thisDiv = $t->division;
+        if ($division != $thisDiv) {
+            print <<< EOD
 <tr height="20"><th>&nbsp;</th></tr>
 <tr><th colspan="12"><font size="+1">$thisDiv</font></th></tr>
 <tr><th></th><th colspan="4">Overall</th><th></th>
@@ -104,32 +106,32 @@ foreach($teamArray as $t) {
 <th>PF</th><th>PA</th>
 
 EOD;
-        
-        $division = $thisDiv;
-        $count = 0;
-    }
 
-    if ($count % 2 == 0) {
-        $bgcolor = "dddddd";
-    } else {
-        $bgcolor = "ffffff";
-    }
-    $count++;
+            $division = $thisDiv;
+            $count = 0;
+        }
 
-    if ($t->record[2] > 0) {
-        $records[$t->name] = sprintf("(%d-%d-%d)", $t->record[0], $t->record[1], $t->record[2]);
-    } else {
-        $records[$t->name] = sprintf("(%d-%d)", $t->record[0], $t->record[1]);
-    }
+        if ($count % 2 == 0) {
+            $bgcolor = "dddddd";
+        } else {
+            $bgcolor = "ffffff";
+        }
+        $count++;
 
-    print <<< EOD
+        if ($t->record[2] > 0) {
+            $records[$t->name] = sprintf("(%d-%d-%d)", $t->record[0], $t->record[1], $t->record[2]);
+        } else {
+            $records[$t->name] = sprintf("(%d-%d)", $t->record[0], $t->record[1]);
+        }
+
+        print <<< EOD
 <tr bgcolor="$bgcolor"><td>{$clinchedList[$t->name]}<a href="/teams/teamschedule.php?viewteam={$t->teamid}">{$t->name}</a></td>
 <td align="center">{$t->record[0]}</td>
 <td align="center">{$t->record[1]}</td>
 <td align="center">{$t->record[2]}</td>
 EOD;
-    printf ("<td>%5.3f</td>",($t->getWinPCT()));
-    print <<< EOD
+        printf("<td>%5.3f</td>", ($t->getWinPCT()));
+        print <<< EOD
 
 <td>&nbsp;</td>
 <td align="center">{$t->divRecord[0]}</td>
@@ -141,14 +143,13 @@ EOD;
 <td align="center">{$t->ptsFor}</td>
 <td align="center">{$t->ptsAgt}</td>
 EOD;
-    /*
-    printf ("<td>%5.3f</td>",($t->getDivWinPCT()));
-    print <<< EOD
-<td>{$t->divPtsFor}</td><td>{$t->divPtsAgt}</td>
-</tr>
-EOD;
-    */
+        /*
+        printf ("<td>%5.3f</td>",($t->getDivWinPCT()));
+        print <<< EOD
+    <td>{$t->divPtsFor}</td><td>{$t->divPtsAgt}</td>
+    </tr>
+    EOD;
+        */
+    }
+    print "</table>";
 }
-
-?>
-</table>
