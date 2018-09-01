@@ -26,7 +26,7 @@ function ready( ) {
     $.getJSON("picks.php", loadPicks);
     pickSpot = setInterval(function() {$.getJSON("picks.php", loadPicks);}, 5000);
     // Update chat
-    chatSpot = setInterval(function() {$.get("chat.php", updateMessage);}, 5000);
+    //chatSpot = setInterval(function() {$.get("chat.php", updateMessage);}, 5000);
     // Update clock
     $.getJSON("clockService.php", updateClock);
     fullClockSpot = setInterval(function() {$.getJSON("clockService.php", updateClock);}, 15000);
@@ -274,9 +274,9 @@ function doLogIn() {
 
 function checkIn(data) {
     if (data["results"]["isin"]) {
-        $("#logInLine").text("Log Out");
+        //$("#logInLine").text("Log Out");
         areIn = true;
-        $("#logInInfo").text("Logged in as "+data["results"]["fullname"]).toggle();
+        //$("#logInInfo").text("Logged in as "+data["results"]["fullname"]).toggle();
         $("#playerForm").show();
         $("#myPick").show();
         if (data["pre"]) {
@@ -286,7 +286,10 @@ function checkIn(data) {
             $("#choice").text("No Current Selection");
             $("#clearButton").hide();
         }
-
+        $("#logInCard").hide();
+    } else {
+        $("#myPick").hide();
+        $("#logInCard").show();
     }
 }
 

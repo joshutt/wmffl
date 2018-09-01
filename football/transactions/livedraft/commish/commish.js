@@ -74,8 +74,14 @@ function loadLogins(data) {
 
 
 function autoPick(teamid) {
-    alert("Auto Draft for team "+teamid);
-    $.post("autopick.php", {teamid: teamid}, function(data) { alert("ERROR: "+data["error"]); });
+    posSelect = $('#pickPos').val();
+    alert("Auto Draft for team "+teamid+" at Pos: "+posSelect);
+    if (posSelect == "*") {
+        $.post("autopick.php", {teamid: teamid}, function(data) { alert("ERROR: "+data["error"]); });
+    } else {
+        $.post("autopick.php", {teamid: teamid, pos: posSelect}, function(data) { alert("ERROR: "+data["error"]); });
+    }
+    $('#pickPos').val("*");
 }
 
 

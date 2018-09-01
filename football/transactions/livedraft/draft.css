@@ -1,7 +1,6 @@
 body {
     color: #660000;
     font-family: Verdana;
-    font-size: 8pt;
     background-color: #FFFFFF;
     border: 0px none;
 }
@@ -225,8 +224,10 @@ a.teamRoster:hover {
 
 #chat_table {
     overflow: auto;
-    width: 100%;
-    border: 1px solid;
+ //   width: 100%;
+ //   border: 1px solid;
+    font-size: medium;
+    padding-bottom: 10px;
 }
 #chat {
     border: 1px solid;
@@ -255,6 +256,7 @@ a.teamRoster:hover {
     left: 0;
     background: #000000;
     z-index: 1;
+    font-size: large;
 }
 
 #logInBlock, #logOutBlock {
@@ -267,9 +269,13 @@ a.teamRoster:hover {
     border: 3px solid;
 }
 
+#logOutBlock {
+    font-size: x-large;
+}
+
 #logInButton {
     text-align: center;
-    float: right;
+    float: left;
 }
 
 #logInHide {
@@ -278,6 +284,7 @@ a.teamRoster:hover {
 
 #logInBlock label {
     float: left;
+    font-size: large;
 }
 
 #logInBlock input {
@@ -287,7 +294,7 @@ a.teamRoster:hover {
 #logInMsg {
     float: left;
     color: #f00;
-
+    font-size: x-large;
 }
 
 #logInInfo {
@@ -346,12 +353,12 @@ a.teamRoster:hover {
     padding: 5px;
 }
 
-#myPick {
+/*#myPick {*/
   /*  border: 1px solid; */
-    float: center;
-    display: none;
-    margin: 0px;
-}
+    /*float: center;*/
+    /*display: none;*/
+    /*margin: 0px;*/
+/*}*/
 
 #choice {
     float: center;
@@ -369,4 +376,42 @@ a.teamRoster:hover {
 #selpla {
     float: left;
     text-align: center;
+}
+
+.text-large {
+    font-size: 150%;
+}
+
+.border-wm {
+    border-color: #660000!important;
+}
+
+.text-small {
+    font-size: .75rem;
+}
+
+.franchise, .selection {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tableList {
+    max-height: 100%;
+    overflow: auto;
+}
+
+.bg-primary {
+    background-color: #660000!important;
+    color: #e2a500!important;
+}
+
+.btn-outline-warning {
+    color: #660000!important;
+    border-color: #660000!important;
+}
+
+.btn-outline-warning:hover, .btn-outline-warning:active, .btn-outline-warning:focus {
+    color: #e2a500!important;
+    border-color: #e2a500!important;
 }

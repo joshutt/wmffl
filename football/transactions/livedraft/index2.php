@@ -136,9 +136,6 @@ $draftPicks->find();
                     </div>
                 </div>
                 <div class="col-lg-7 col-md-12">
-                    <div class="card">
-                        <span class="text-center">Join the Google <a href="https://meet.google.com/mau-zshk-cds">Hangout</a></span>
-                    </div>
 
                     <div class="card mb-2">
                         <div class="card-header bg-primary py-0">Recent Status</div>
@@ -244,7 +241,7 @@ $draftPicks->find();
                             <a onClick="displayRoster('4')" class="teamRoster">STA</a> -
                             <a onClick="displayRoster('12')" class="teamRoster">RL</a> -
                             <a onClick="displayRoster('13')" class="teamRoster">TR</a> -
-                            <a onClick="displayRoster('10')" class="teamRoster">TMC</a>
+                            <a onClick="displayRoster('10')" class="teamRoster">TPL</a>
                             </div>
                             <table width="100%">
                                 <tbody>
