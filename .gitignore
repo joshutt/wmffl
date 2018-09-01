@@ -82,11 +82,35 @@ fabric.properties
 /conf/*.conf
 /tmp
 diffignore
-error_log
+**/*.swp
+
+# Vim ignores
+# Swap
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# Session
+# Session.vim
+#
+# Temporary
+.netrwhist
+*~
+# Auto-generated tag files
+tags
+# Persistent undo
+[._]*.un~
+
+
 **/logs/
+**/error_log
+**/*.log
 
 # Uploaded images
 /football/images
 /football/images/articles
+/football/images/week
 football/transactions/livedraft/check.log
 /football/transactions/livedraft/check.log

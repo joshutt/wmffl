@@ -30,7 +30,7 @@ AND s.week<=14
 GROUP BY d.name, tn.name
 
 EOD;
-//print "<pre>$query</pre>";
+print "<pre>$query</pre>";
 
 $secondQuery = <<<EOD
 SELECT t.teamid as 'teamid', t2.teamid as 'oppid', if(t.teamid=s.teama, s.scorea, s.scoreb) as 'ptsfor', if(t.teamid=s.teama, s.scoreb, s.scorea) as 'ptsagt', wm.week, tn.divisionid, tn2.divisionid
