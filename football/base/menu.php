@@ -62,11 +62,11 @@ foreach ($cssList as $sheet) {
     <div class="sideButton"><a class="sideButton" href="/">Front Page</a></div>
     <div class="sideButton"><a class="sideButton" href="/activate/activations.php">Activations</a></div>
     <div class="sideButton"><a class="sideButton" href="/teams">Teams</a></div>
-    <div class="sideButton"><a class="sideButton" href="/history/2016Season/schedule.php">Schedule</a></div>
-    <div class="sideButton"><a class="sideButton" href="/history/2016Season/standings.php">Standings</a></div>
+    <div class="sideButton"><a class="sideButton" href="/history/2018Season/schedule">Schedule</a></div>
+    <div class="sideButton"><a class="sideButton" href="/history/2018Season/standings">Standings</a></div>
     <div class="sideButton"><a class="sideButton" href="/transactions/transactions.php">Transactions</a></div>
     <div class="sideButton"><a class="sideButton" href="/rules/index.php">Rules</a></div>
-    <div class="sideButton"><a class="sideButton" href="/history">History</a></div>
+    <div class="sideButton"><a class="sideButton" href="/history.php">History</a></div>
 
 <? include "login/logininc.php"; ?>
 

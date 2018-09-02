@@ -57,40 +57,40 @@ function determinePoints($teamid, $season, $week, $conn) {
             switch ($row['pos']) {
                 case 'HC' :
                     $pts = scoreHC($row);
-                    if ($pts < 0 && $factor == 0.5) { $factor = $1.0; }
+                    if ($pts < 0 && $factor == 0.5) { $factor = 1.0; }
                     $offPoints += ceil($pts * $factor);
                     break;
                 case 'QB' :
                     $pts = scoreQB($row);
-                    if ($pts < 0 && $factor == 0.5) { $factor = $1.0; }
+                    if ($pts < 0 && $factor == 0.5) { $factor = 1.0; }
                     $offPoints += ceil($pts * $factor);
                     break;
                 case 'RB' :
                 case 'WR' :
                      $pts = scoreOffense($row);
-                    if ($pts < 0 && $factor == 0.5) { $factor = $1.0; }
+                    if ($pts < 0 && $factor == 0.5) { $factor = 1.0; }
                      $offPoints += ceil($pts * $factor);
                      break;
                 case 'TE' :    
                      $pts = scoreTE($row);
-                    if ($pts < 0 && $factor == 0.5) { $factor = $1.0; }
+                    if ($pts < 0 && $factor == 0.5) { $factor = 1.0; }
                      $offPoints += ceil($pts * $factor);
                      break;
                 case 'K' :
                     $pts = scoreK($row);
-                    if ($pts < 0 && $factor == 0.5) { $factor = $1.0; }
+                    if ($pts < 0 && $factor == 0.5) { $factor = 1.0; }
                     $offPoints += ceil($pts * $factor);
                     break;
                 case 'OL' :
                     $pts = scoreOL($row);
-                    if ($pts < 0 && $factor == 0.5) { $factor = $1.0; }
+                    if ($pts < 0 && $factor == 0.5) { $factor = 1.0; }
                     $offPoints += ceil($pts * $factor);
                      break;
                 case 'DL' :
                 case 'LB' :
                 case 'DB' :
                      $pts = scoreDefense($row);
-                    if ($pts < 0 && $factor == 0.5) { $factor = $1.0; }
+                    if ($pts < 0 && $factor == 0.5) { $factor = 1.0; }
                      $defPoints += ceil($pts * $factor);
                      break;
             }
@@ -124,10 +124,9 @@ if ($week != '') {
     if ($season != '') {
         $gameSelect .= " AND w.season=".$season;
     }
-} elseif (date("w") == 2 && date("H") >= 11) {
-//} elseif (date("w") == 2 && date("H") >= 2) {
-    $gameSelect .= "AND w.week=".($currentWeek-1);
-    $gameSelect .= " AND w.season=".$currentSeason;
+//} elseif (date("w") == 2 && date("H") >= 11) {
+//    $gameSelect .= "AND w.week=".($currentWeek-1);
+//    $gameSelect .= " AND w.season=".$currentSeason;
 } else { 
     $gameSelect .= "and now() between w.startdate and w.enddate ";
 }

@@ -36,9 +36,9 @@ function getOtherGames($thisTeamID, $thisWeek, $thisSeason, $conn) {
 
 function generateReserves($thisTeamID, $currentSeason, $currentWeek) {
     $select = <<<EOD
-select p.pos, p.lastname, p.firstname, nr.nflteamid as 'team', n.kickoff, n.secRemain, n.complete, p.flmid, s.*, 
+select p.pos, p.lastname, p.firstname, nr.nflteamid as 'team', CONVERT_TZ(n.kickoff, 'SYSTEM', 'GMT') as 'kickoff', n.secRemain, n.complete, p.flmid, s.*, 
 if (r.dateon is null and p.pos<>'HC', 1, 0) as 'illegal', a.pos as 'startPos', a.teamid as 'teamcheck1', 
-r.teamid as 'teamcheck2', n.secRemain, gp1.side as 'GPMe', gp2.side as 'GPThem', wm.ActivationDue
+r.teamid as 'teamcheck2', n.secRemain, gp1.side as 'GPMe', gp2.side as 'GPThem', CONVERT_TZ(wm.ActivationDue, 'SYSTEM', 'GMT') as 'ActivationDue'
 from newplayers p
 JOIN weekmap wm
 LEFT JOIN roster r on p.playerid=r.playerid and r.dateon<wm.activationDue and (r.dateoff is null or r.dateoff >= wm.activationDue)
@@ -250,6 +250,11 @@ for ($i = 0; $i<2; $i++) {
 
         $gameTime = strtotime($row['kickoff']);
         $now = time();
+        if ($teamnum == 2) {
+#            print_r($row);
+#            print "{$row['kickoff']} = $gameTime<br/>";
+#            print "$gameTime - $now<br/>";
+        }
         if ($now > strtotime($row['ActivationDue'])) {
             if ($row["GPMe"] == "Me" && $row["GPThem"] != "Them") {
                 $pts = 2 * $pts;

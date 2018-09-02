@@ -19,7 +19,6 @@ $body = stripslashes(mysql_real_escape_string(str_replace("\r\n","",$HTTP_POST_V
 $post->settitle($subject);
 $post->setbody($body);
 $post->setuserid($usernum);
-$dObj = date("Y-n-d G:i:s");
 $post->setcreateTime(date("Y-n-d G:i:s"));
 $id = $post->insert();
 #print $id;

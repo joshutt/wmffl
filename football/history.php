@@ -102,4 +102,3 @@ include "base/menu.php";
 <BR>
 
 <? include "base/footer.html"; ?>
->>>>>>> 5e27482dbbbc4c7969cfce51101d875bf010a0c6

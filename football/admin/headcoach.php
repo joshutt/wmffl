@@ -1,7 +1,6 @@
 <?
 // establish connection
-print  $DOCUMENT_ROOT."/../base/conn.php";
-require $DOCUMENT_ROOT."/../base/conn.php";
+require "base/conn.php";
 
 $teamsql = "SELECT t.teamid, t.name FROM team t ORDER BY t.name";
 $teamResults = mysql_query($teamsql);
@@ -27,7 +26,6 @@ while ($team = mysql_fetch_array($teamResults)) {
 }
 print "</select>";
 print "</td></tr>";
-
 
 while ($coach = mysql_fetch_array($results)) {
     print <<<EOD

@@ -1,20 +1,21 @@
 <?
 require_once "$DOCUMENT_ROOT/base/conn.php";
 
-$nflStartDate = '2017-09-07';
-$season=2017;
+$nflStartDate = '2018-09-06';
+$season=2018;
 
 $query = "SELECT t.name, d.date, min( d.attend ) as attend
 FROM  `draftdate` d, user u, team t
-WHERE u.userid = d.userid AND u.teamid=t.teamid AND d.date >  '2017-01-01' 
+WHERE u.userid = d.userid AND u.teamid=t.teamid AND d.date >  '2018-01-01' 
 GROUP  BY u.teamid, d.date
 ORDER BY d.date";
 
 $results = mysql_query($query);
 $date = "";
 $dateList = array();
+
 while($arrayList = mysql_fetch_array($results)) {
-    if ($date <> $arrayList["date"]) {
+    if ($date != $arrayList["date"]) {
         $date = $arrayList["date"];
         $dateArray = array();
         $dateArray["yes"] = 0;

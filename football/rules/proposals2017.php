@@ -35,7 +35,7 @@ At the end of the season the League Champion can rename the Toilet Bowl loser's 
 <p>
 <b>Proposal 2016.4 - Pay by the Draft or Don't Play</b><br/>
 <b>Sponsor: Tim Shoobridge</b><br/>
-<span class="ballot">Status: <span class="status">On Ballot</span></span><br/>
+<span class="ballot">Status: <span class="status">Rejected, 4-5, 1 abstain</span></span><br/>
 Any owner that hasn't paid by draft day will not be allowed to play.
 <blockquote><i>Update rule IX.A.1 to read:
     <blockquote>1. Failure to pay the entry fee by the date of the draft will make an owner inelgible to play that season.<br/>
@@ -46,7 +46,7 @@ Any owner that hasn't paid by draft day will not be allowed to play.
 <p>
 <b>Proposal 2017.1 - Increase Draft Time</b><br/>
 <b>Sponsor: Josh Utterback</b><br/>
-<span class="ballot">Status: <span class="status">On Ballot</span></span><br/>
+<span class="ballot">Status: <span class="status">Passed, 8-2</span></span><br/>
 Increase the time each pick adds to the draft clock to 45 seconds.
 <blockquote><i>In rule VII.B.2 change <b>30 seconds</b> to <b>45 seconds</b></i></blockquote>
 </p>
@@ -96,7 +96,7 @@ Decide between dropping to 10 teams or staying at 12 teams
 <p>
 <b>Proposal 2017.5 - Mandatory Realignment</b><br/>
 <b>Sponsor: Tom Marsh</b></br/>
-<span class="ballot">Status: <span class="status">On Ballot</span></span><br/>
+<span class="ballot">Status: <span class="status">Rejected, 4-5</span></span><br/>
 Every three years realign the divisions based upon team's records over the previous three seasons
 <blockquote><i>Add rule I.C reading:
     <blockquote>C. The divisions will be realigned every three seasons<br/>
@@ -112,6 +112,16 @@ Every three years realign the divisions based upon team's records over the previ
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b. The teams ranked #2, #5, #8 and #11 will be placed in a second division<br/>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c. The remaining teams will be in the third division<br/>
     </blockquote>
+</i></blockquote>
+</p>
+
+<p>
+<b>Proposal 2017.6 - Negative Gameplan Scores Not Halved</b><br/>
+<b>Sponsor: Tom Marsh</b></br/>
+<span class="ballot">Status: <span class="status">On Ballot</span></span><br/>
+Eliminate halving of negative scores.
+    <blockquote><i>Add rule V.D.2.a that reads:
+    <blockquote>a. No player that scores negative will have their score halved.</blockquote>
 </i></blockquote>
 </p>
 
