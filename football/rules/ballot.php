@@ -36,7 +36,7 @@ then press the "VOTE" button to have you vote counted.  To review the issues in 
         $reject = "Reject";
         $abstain = "Abstain";
         $votelabel = $vote;
-        if ($issueid == 84) {
+        if ($issueid == 87) {
             $accept = "10 Teams";
             $reject = "12 Teams";
             $abstain = "No Preference";

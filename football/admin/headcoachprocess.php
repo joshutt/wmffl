@@ -1,6 +1,6 @@
 <?
 // establish connection
-require $DOCUMENT_ROOT."/../base/conn.php";
+require "base/conn.php";
 
 $updateQuery1 = <<<EOD
 INSERT INTO transactions (teamid, playerid, method, Date)

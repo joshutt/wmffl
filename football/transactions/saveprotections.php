@@ -2,7 +2,7 @@
 require_once "utils/start.php";
 
 	if (!isset($HTTP_POST_VARS["submit"])) {
-		header("Location: protections.php");
+		header("Location: protections");
 		exit;
 	}
 	
@@ -117,7 +117,7 @@ if ($isin) {
 		print "<TR><TH>TOTAL</TH><TH></TH><TH>$totalCost</TH></TR>";
 		print "</TABLE>";
 	}
-	print "<P><A HREF=\"protections.php\">Change Protections</A></P>";
+	print "<P><A HREF=\"protections">Change Protections</A></P>";
 } else {
 	print "<P><B>You must be logged in to save protections</B></P>";
 }

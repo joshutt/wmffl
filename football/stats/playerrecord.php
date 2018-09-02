@@ -1,6 +1,10 @@
 <?
 require_once "utils/start.php";
 
+if ($currentWeek == 0) {
+    $currentSeason = $currentSeason - 1;
+}
+
 function getOrd($num) {
 
     switch($num) {

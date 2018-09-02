@@ -21,8 +21,12 @@ $result = mysql_query($recordQuery);
 while ($recordList = mysql_fetch_array($result)) {
     $newArray = array($recordList["event"], $recordList["win"], $recordList["lose"], $recordList["tie"]);
 
-    $pct = ($recordList["win"] * 1.0 + $recordList["tie"] * 0.5) / ($recordList["win"] + $recordList["lose"] + $recordList["tie"]);
-    array_push($newArray, sprintf("%5.3f", $pct));
+    if ($recordList["win"] + $recordList["tie"] + $recordList["lose"] == 0) {
+        array_push($newArray, "0.000");
+    } else {
+        $pct = ($recordList["win"] * 1.0 + $recordList["tie"] * 0.5) / ($recordList["win"] + $recordList["lose"] + $recordList["tie"]);
+        array_push($newArray, sprintf("%5.3f", $pct));
+    }
 
     array_push($seasonArray, $newArray);
 }

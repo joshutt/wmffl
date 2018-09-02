@@ -1,0 +1,40 @@
+
+a.return {
+    font-size: 10pt;
+}
+
+.bg0 {
+    background-color:#BC9F8E;
+    color:#FFFFFF;
+    font-weight:bold;
+}
+
+.bg0font, .bg0font a, a.bg0font {
+    color:#FFFFFF;
+    font-weight:bold;
+}
+
+.bg1 {
+    background-color:#B9B9B9;
+    font-weight:bold;
+}
+
+.bg2 {
+    background-color:#EAE8E8;
+}
+
+.bg4 {
+    background-color:#CCCCCC;
+}
+
+.bg4font {
+    font-size: 10pt;
+}
+
+.score {
+    text-align: center;
+}
+
+.SLTables1, .SLTables1 td, .SLTables1 th, form {
+    font-family:Verdana,Geneva,Arial,Helvetica,sans-serif;
+}

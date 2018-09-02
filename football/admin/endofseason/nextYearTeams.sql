@@ -1,4 +1,4 @@
-set @season := 2016;  -- The season that just ended
+set @season := 2012;  -- The season that just ended
 set @transpoints := 55; -- Number of transaction points a team gets each year
 
 insert into teamnames
@@ -30,10 +30,13 @@ select season+1, 0, ordernumber, teamid
 from waiverorder
 where season=@season and week=16;
 
-insert into draftdate
-select Userid, DATE_ADD(Date, INTERVAL 52 WEEK), 'Y'
-from draftdate 
-where Date>concat(@season,'-01-01'); 
+INSERT into draftdate
+SELECT o.UserID, d.Date, 'Y'
+FROM owners o
+JOIN ( select distinct DATE_ADD(Date, INTERVAL 52 WEEK) as 'Date'
+       from draftdate d
+       where Date>concat(@season,'-01-01') ) d
+where o.season=@season;
 
 insert into draftvote
 select userid, @season+1, null

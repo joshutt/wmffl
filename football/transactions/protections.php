@@ -2,7 +2,7 @@
 require_once "utils/start.php";
 #$isin = true;
 #$teamnum = 2;
-$dateSrc = "2017-08-20 23:59 EDT";
+$dateSrc = "2018-08-19 23:59 EDT";
 $dateTime = new DateTime($dateSrc);
 
 $thequery = "select p.playerid, p.firstname, p.lastname, p.pos, ";
@@ -81,7 +81,7 @@ has Passed</FONT></B></P>
 	} else {
 ?>
 
-<FORM NAME="protform" ACTION="saveprotections.php" METHOD="POST">
+<FORM NAME="protform" ACTION="saveprotections" METHOD="POST">
 
 <?
 	print "Points Allowed: <B>$pts[0]</B><BR>";

@@ -9,7 +9,9 @@ if ($thisWeek == "") {
 $thisSeason=2017;
 $title = "Standings";
 
-$clinchedList = array();
+$clinchedList = array("Sean Taylor's Ashes" => 'z-', "Richard's Lionhearts" => 'e-', "Tim Always Pulls Out Late" => 'z-', "Woodland Rangers" => 'e-', 
+                "MeggaMen" => 'e-', "Sacks on the Beach" => 'x-', "Fightin' Bitin' Beavers" => 'y-', "Fighting Squirrels" => 'e-', "Gallic Warriors" => 'e-',
+                "Crusaders" => 'y-', "Amish Electricians" => 'y-', "Norsemen" => 'e-');
 
 ?>
 
@@ -33,6 +35,7 @@ if (!empty($clinchedList)) {
 ?>
 
 <p>
+e - eliminated from playoffs<br/>
 x - clinched playoff berth<br/>
 y - clinched division title<br/>
 z - clinched Toilet Bowl berth
