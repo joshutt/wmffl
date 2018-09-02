@@ -1,7 +1,6 @@
 <? 
 $title = "The WMFFL Fantasy Football League";
 
-$cssList = array("/base/css/w3.css");
 include "base/menu.php";
 
 ?>
@@ -21,8 +20,7 @@ H4 {font-size:10pt; text-decoration:italic}
 <TR><TD VALIGN="top" width="100%">
 
 <?
-include "article/article.php";
-//include "article.php";
+include "article.php";
 include "quicklinks.php";
 print "<p>";
 include "base/statbar.html";

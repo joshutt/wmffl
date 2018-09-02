@@ -1,45 +1,25 @@
 <?
-require_once "$DOCUMENT_ROOT/base/conn.php";
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "base/conn.php";
+require_once "utils/start.php";
 
+// Set Week variable
 if (isset($_REQUEST["week"])) {
     $week = $_REQUEST["week"];
-} else if (isset($week)) {
-    $week = $week;
-} else {
+} else if (!isset($week)) {
     $week = $currentWeek;
 }
 
+// Set Season variable
 if (isset($_REQUEST["season"])) {
     $season = $_REQUEST["season"];
-} else if (isset($season)) {
-    $season = $season;
-} else {
+} else if (!isset($season)) {
     $season = $currentSeason;
 }
-
-/*
-$select = <<<EOD
-select tn.name, p.pos, p.lastname, p.firstname, r.nflteamid, g.kickoff, UNIX_TIMESTAMP()-UNIX_TIMESTAMP(g.kickoff) as 'remain', s.gameid, g.homeTeam, g.roadTeam, i.status, i.details
-from schedule s
-left join revisedactivations a on a.season=s.season and a.week=s.week and a.teamid in (s.TeamA, s.TeamB)
-left join newplayers p on a.playerid=p.playerid
-left join teamnames tn on tn.season=a.season and tn.teamid=a.teamid
-join weekmap wm on s.season=wm.season and s.week=wm.week
-left join injuries i on i.playerid=p.playerid and i.season=wm.season and i.week=wm.week
-left join nflrosters r on r.dateon<= wm.activationDue and (r.dateoff >= wm.activationDue or r.dateoff is null) and r.playerid=p.playerid
-left join nflgames g on a.season=g.season and a.week=g.week and r.nflteamid in (g.homeTeam, g.roadTeam)
-where a.season=$season and a.week=$week
-order by s.gameid, a.teamid, p.pos, p.lastname, p.playerid
-
-EOD;
-
- */
 
 $select = <<<EOD
 select tn.name, p.pos, p.lastname, p.firstname, r.nflteamid, g.kickoff, 
 UNIX_TIMESTAMP()-UNIX_TIMESTAMP(g.kickoff) as 'remain', s.gameid, g.homeTeam, g.roadTeam, 
-i.status, i.details 
+i.status, i.details, CONVERT_TZ(wm.ActivationDue, 'SYSTEM', 'GMT') as 'ActivationDue'
 from teamnames tn
 join schedule s on tn.teamid in (s.teama, s.teamb) and tn.season=s.season
 left join revisedactivations a on a.season=s.season and a.week=s.week and a.teamid in (s.TeamA, s.TeamB) and tn.teamid=a.teamid
@@ -52,6 +32,18 @@ where s.season=$season and s.week=$week
 order by s.gameid, a.teamid, p.pos, p.lastname, p.playerid
 EOD;
 
+$gamePlanSelect = <<<EOD
+SELECT t.teamid, t.name, t.season, g1.week, p1.firstname as 'forName', p1.lastname as 'forLast', p1.pos as 'forPos',
+p1.team as 'forTeam', p2.firstname as 'agstName', p2.lastname as 'agstLast', p2.pos as 'agstPos', p2.team as 'agstTeam'
+FROM teamnames t
+LEFT JOIN gameplan g1 on t.teamid=g1.teamid and t.season=g1.season and g1.week=$week and g1.side='Me'
+LEFT JOIN newplayers p1 on g1.playerid=p1.playerid
+LEFT JOIN gameplan g2 ON t.teamid=g2.teamid and t.season=g2.season and g2.week=$week and g2.side='Them'
+LEFT JOIN newplayers p2 on g2.playerid=p2.playerid
+WHERE t.season=$season
+EOD;
+
+
 #print $select;
 
 $result = mysql_query($select, $conn) or die("Select: ".mysql_error());
@@ -59,28 +51,40 @@ $result = mysql_query($select, $conn) or die("Select: ".mysql_error());
 // Popuolate records
 $lastTeam = "";
 $printer = array();
+$gpLine = array();
+$nameIdMap = array();
 $i = 0;
 //print "<br/>";
+$actDue = null;
 while ($row = mysql_fetch_assoc($result)) {
     if ($row["remain"] < -30*60) {
         $lock = false;
     } else {
         $lock = true;
     }
-    //print "{$row["name"]} - {$row["pos"]} - {$row["firstname"]} {$row["lastname"]} - {$row["nflteamid"]} - {$row["kickoff"]} - {$row["remain"]} - $lock<br/>";
 
+    // Get the players name
     if ($row["name"] != $lastName) {
         $i++;
         $lastName = $row["name"];
-		$printer[$i] = "<TABLE>";
+        $nameIdMap[$lastName] = $i;
+		$printer[$i] = "<table>";
 		$printer[$i] .= "<TR><TH colspan=\"4\">".$row["name"]."</TH></TR>";
     }
+
+    // Determine is player is locked
     if ($lock) {
         $spot = "*";
     } else {
         $spot = "";
     }
 
+    // Set Act Due
+    if (!isset($actDue)) {
+        $actDue = $row["ActivationDue"];
+    }
+
+    // Determine opponent
     $opp = "Bye";
     if ($row["nflteamid"] == $row["homeTeam"]) {
         $opp = "vs ".$row["roadTeam"]; 
@@ -88,6 +92,7 @@ while ($row = mysql_fetch_assoc($result)) {
         $opp = "@ ".$row["homeTeam"]; 
     }
 
+    // Determine injusy status
     $injury_detail = "";
     switch ($row["status"]) {
         case 'P': $injury_detail = 'Probable: '; break;
@@ -98,6 +103,7 @@ while ($row = mysql_fetch_assoc($result)) {
     }
     $injury_detail .= $row["details"];
 
+    // Build the line to print
     $printer[$i] .= "<tr><td>".$spot.$row["pos"]."</td>";
     $printer[$i] .= "<td>".$row["firstname"]." ".$row["lastname"]."</td>";
     if ($row["status"] != "") {
@@ -105,21 +111,40 @@ while ($row = mysql_fetch_assoc($result)) {
     } else {
         $printer[$i] .= "<td></td>";
     }
-    $printer[$i] .= "<td>".$row["nflteamid"]."</td><td>$opp</td></tr>";
+    $printer[$i] .= "<td>".$row["nflteamid"]."</td><td>$opp</td>";
+    $printer[$i] .= "</tr>";
     
 }
 
+if (time() > strtotime($actDue)) {
+    $results = mysql_query($gamePlanSelect) or die("Unable to get gameplans".mysql_error());
+    while ($row = mysql_fetch_array($results)) {
+        $i = $nameIdMap[$row["name"]];
+        $playFor = $row["forName"]." ".$row["forLast"]." (".$row["forPos"]."-".$row["forTeam"].")";
+        $playAgt = $row["agstName"]." ".$row["agstLast"]." (".$row["agstPos"]."-".$row["agstTeam"].")";
+        if ($row["forName"] == null) { $playFor = "None"; }
+        if ($row["agstName"] == null) { $playAgt = "None"; }
+        $gpLine[$i] = "<tr><td colspan='5'>Game Plan For: $playFor</td></tr>";
+        $gpLine[$i] .= "<tr><td colspan='5'>Game Plan Against: $playAgt</td></tr>";
+    }
 
-// display teams in schedule order
-print "<TABLE>";
-print "<TR><TD COLSPAN=3 ALIGN=center><B>Current Activations for Week $week</B></TD></TR>";
-
-foreach (range(1,6) as $i) {
-    print "<TR><TD VALIGN=top>".$printer[2*$i - 1]."</table></TD>";
-    print "<TD width=\"5%\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>";
-    print "<TD VALIGN=top>".$printer[2*$i]."</table></TD></TR>";
-    print "<TR><TD>&nbsp;</TD></TR>";
 }
 
-print "</TABLE>";
 ?>
+
+
+<table>
+<tr><td colspan=3 align=center><b>Current Activations for Week <?= $week ?></b></td></tr>
+
+<?php
+foreach (range(1,6) as $i) {
+    ?>
+    <tr><td valign=top><?= $printer[2*$i - 1] ?>
+        <?= $gpLine[2*$i - 1] ?></table></td>
+    <td width="5%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td valign=top><?= $printer[2*$i] ?>
+        <?= $gpLine[2*$i] ?></table></td></tr>
+    <tr><td>&nbsp;</td></tr>
+<?php } ?>
+
+</table>

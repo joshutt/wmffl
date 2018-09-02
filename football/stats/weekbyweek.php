@@ -3,6 +3,7 @@ require_once "utils/start.php";
 include "utils/reportUtils.php";
 
 
+
 // If a player has fewer weeks than max fill with nulls 
 function checkMaxGames($player, $max) {
     if (sizeof($player) < $max + 5) {
@@ -64,6 +65,8 @@ if (isset($_REQUEST["team"]) && $_REQUEST["team"] != "") {
 // Determine the season to use
 if (isset($_REQUEST["season"])) {
     $season = $_REQUEST["season"];
+} else if ($currentWeek == 0) {
+    $season = $currentSeason - 1;
 } else {
     $season = $currentSeason;
 }

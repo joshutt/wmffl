@@ -16,21 +16,27 @@ Section 3: <A HREF="#VI">Draft Order</A>; <A HREF="#VII">Drafting</A>; <A HREF="
 Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules</A><BR>
 
 <HR size = "1">
-<P>Rules added or changed that will take effect for the 2018 season are indicated in <B>Bold</B>.</P>
+<P>Rules added or changed that will take effect for the 2017 season are indicated in <B>Bold</B>.</P>
 <ul>
-    <li>2018.4 - Remove Game Planning
-        <ul><li>Repeal rule V.D</li></ul>
+    <li>Automatic change triggered by X.E.5
+    <ul><li>Rule X.E.1.c.i incremented to 12 pts, due to 18 WR being protected in 2016</li>
+    </ul></li>
+    <li>2016.3 - Unpaid Teams Drop Draft Position
+        <ul><li>Add VI.D.3.d</li></ul>
     </li>
-    <li>2018.8 - Wild card not automatically 4th seed
-        <ul><li>Revise rule III.A</li>
-        <li>Repeal rule III.B.3</li>
-        </ul>
-    <li>2018.9 - Update Division winner and First Round Payoffs
-        <ul><li>Revise rules XI.C.3.c and XI.C.3.d</li></ul>
+    <li>2015.2 - League Champion Renames Toilet Bowl Loser
+        <ul><li>Revised rule III.E</li></ul>
     </li>
-    <li>2018.10 - Update the auto draft algorithm
-        <ul><li>Revise rule VI.E.3.b</li></ul>
+    <li>2017.2 - Unpaid Teams Can't Purchase Transactions
+        <ul><li>Add IX.C.4</li></ul>
     </li>
+    <li>2017.3 - Add Game Planning
+        <ul><li>Add V.D</li></ul>
+    </li>
+    <li>2017.6 - Negative Game Plan Scores Not Halved
+        <ul><li>Add V.D.2.a</li></ul>
+    </li>
+
 </ul>
 
 <HR size = "1">
@@ -73,16 +79,20 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 
 <BR><A NAME="III"><B><LI>The Playoffs</B></A>
 <OL TYPE="A">
-    <LI class="newrule">Once the four teams that will make the playoffs have been decided, they are seeded based on regular season record
+    <LI>Once the four teams that will make the playoffs have been decided, they are seeded based on regular season record
 <OL TYPE="1">
-    <li>Seeding will be done based on the tie-breaker rules above.</li>
-    <li>Excepting that the wild card team will lose any tie-breakers they are involved in</li>
+    <LI>The first three seeds will go to the division champions, based on the above criteria.
+<LI>Seed four will go to the wildcard team, again based on the above criteria.
 </OL>
 <LI>In the first week of the playoffs, the match-ups will be:
 <OL TYPE="1">
 <LI>Seed 1 vs. Seed 4
 <LI>Seed 2 vs. Seed 3
-<li class="newrule"><i>Repealed</i></li>
+<li>Unless Seed 1 and 4 are from the same division, then match-ups will be:
+    <ol type="a">
+        <li>Seed 1 vs Seed 3</li>
+        <li>Seed 2 vs Seed 4</li>
+    </ol></li>
 </OL>
 <LI>The following week will be the Championship.
 <OL TYPE="1">
@@ -99,9 +109,9 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 	<li>If the Champion is on the No Trophy List, they will not be entitled to the trophy and the league will keep it in safe keeping.</li>
 	</ol></li>
 <LI>The two last place teams in each division with the worse records will play in week 15 for the Toilet Bowl
-<OL TYPE="1" class="">
-	<li class="">The loser of the Toilet Bowl will have their team renamed by the League Champion</li>
-	<li class="">The team must keep their new name until one of the following occurs
+<OL TYPE="1" class="newrule">
+	<li class="newrule">The loser of the Toilet Bowl will have their team renamed by the League Champion</li>
+	<li class="newrule">The team must keep their new name until one of the following occurs
         <ol type="a">
         <li>The team qualifies for the playoffs</li>
         <li>The team changes owners</li>
@@ -354,7 +364,20 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 		<LI>The better seeded team will receive a 1 point home field bonus
 		</OL>
 	</OL>
-<li class="newrule"><i>Repealed</i></li>
+<li class="newrule">Every week each team may optionally name one player on their team and one player on their opponent's team that they will game plan for.
+    <ol type="1">
+    <li>The player on their team that is game planned for will have their score doubled.</li>
+    <li>The player on their opponent's team that is game planned for will have their score halved, with fractions rounded up.
+        <ol type="a">
+            <li>No player that scores negative will have their score halved.</li>
+        </ol>
+    </li>
+    <li>If both teams game plan for the same player then there will be no impact on their score</li>
+    <li>If a player is game planned for and that player is not on the activation roster, then the game planning will have no impact</li>
+    <li>Game planned players must be named no later than the earlier of the kickoff of that player's game or 12:55 pm on Sunday of the week in question.</li>
+    <li>Each team's game planned players will not be publically revealed until 1:00pm on Sunday.</li>
+    </ol>
+</li>
 </OL>
 
 <BR><A NAME="VI"><B><LI>Draft Order</B></A>
@@ -382,7 +405,7 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
             <li>The loser of the Toilet Bowl will get the second pick.</li>
         </OL>
         <LI>Remaining positions will be filled by non-playoff teams in reverse order of record.
-        <li class="">Teams that were inelgible for the playoffs the previous season due to rule XI.A.1.d will have a pick four spots later than they otherwise would be entitled to.</li>
+        <li class="newrule">Teams that were inelgible for the playoffs the previous season due to rule XI.A.1.d will have a pick four spots later than they otherwise would be entitled to.</li>
 	</OL>
 </OL>
 <LI>The exact date of the draft will be selected to maximize the number of people able to attend.
@@ -401,10 +424,7 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 	<LI>The owner missing the draft may specify a method for determining their draft picks.
 	<OL TYPE="a">
         <LI>Failure to specify a picking method will result in the league picking the teams players based on the points scored the previous year.</li>
-        <li class="newrule">When the league picks players for a team, it will select starters at every position before selecting backups at any position.
-        <ol type="i">
-            i. A backup at every position will be picked before a second backup at any position</li>
-        </ol></li>
+        <LI>When the league picks players for a team, it will select two players at every position, before selecting a third player from any position.</li>
         <LI>Failure of a team to specify a picking method will also result in a $10 fine being assessed against that team.</li>
 	</OL>
 </OL>
@@ -434,7 +454,7 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 	<LI>Each team will recieve a number of transaction points equal to thier unused protection points.
 	<LI>After the completion of the draft every team will receive an additional 15 transaction points.</li>
 	<LI>Once a team is out of transaction points, they may purchase more at the cost of $1.
-    <li class="">No team that has failed to pay their entry fee may purchase extra transactions</li>
+    <li class="newrule">No team that has failed to pay their entry fee may purchase extra transactions</li>
 </OL>
 <LI>Trades are allowed and anything maybe traded, subject to the roster restrictions.
 
@@ -495,7 +515,7 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 		</OL>
 		<LI>WR
 		<OL TYPE="i">
-            <LI class="">12 pts</li>
+            <LI class="newrule">12 pts</li>
 		</OL>
 		<LI>TE
 		<OL TYPE="i">
@@ -574,8 +594,8 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 <OL TYPE="a">
 <LI>50% goes to the League Champion
 <LI>25% goes to the runner-up
-<LI class="newrule">5% goes to each of the Semi-Final Losers</li>
-<LI class="newrule">5% goes to each Division Champion</li>
+<LI>10% goes to each of the Semi-Final Losers
+<LI>2.5% goes to each Division Champion
 </OL></OL></OL>
 
 <BR><A NAME="XII"><B><LI>Changing Rules</B></A>
