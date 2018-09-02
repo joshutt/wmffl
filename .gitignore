@@ -80,6 +80,7 @@ fabric.properties
 *.swp
 
 /conf/*.conf
+**/*.conf
 /tmp
 diffignore
 **/*.swp
