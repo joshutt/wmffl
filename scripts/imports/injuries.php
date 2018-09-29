@@ -18,8 +18,11 @@ $results = mysql_query($sql) or die ("Unable to get this week: ".mysql_error());
 
 list($week, $season) = mysql_fetch_array($results);
 
-$request_url = "http://football.myfantasyleague.com/$season/export?TYPE=injuries&W=$week";
-$xml = simplexml_load_file($request_url) or die("Feed not loading");
+$request_url = "http://www.myfantasyleague.com/$season/export?TYPE=injuries&JSON=1&W=$week";
+$json = json_decode(file_get_contents($request_url));
+#print_r($json);
+#exit();
+#$xml = simplexml_load_file($request_url) or die("Feed not loading");
 
 
 // Display Output
@@ -31,17 +34,20 @@ echo "</pre>";
 
 //print "<pre>";
 
-foreach ($xml->injury as $injuries) {
+$injuries = $json->injuries;
+//print_r($injuries);
+foreach ($injuries->injury as $injuries) {
     //print_r($injuries);
 
-    $playerid = $injuries['id'];
-    $status = $injuries['status'];
-    $details = mysql_real_escape_string(trim($injuries['details']));
+    $playerid = $injuries->id;
+    $status = $injuries->status;
+    $details = mysql_real_escape_string(trim($injuries->details));
     $statShort = substr($status, 0, 1);
 
     //print "$playerid - $status - $details - $statShort<br/>";
     $query = "select playerid, $season, $week, '$statShort', '$details' from newplayers where flmid=$playerid";
     //print $query;
+    //print "\n";
     //print "<br/>";
 
     $fullQuery = "REPLACE into injuries $query";

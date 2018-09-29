@@ -116,6 +116,7 @@ while ($row = mysql_fetch_assoc($result)) {
     
 }
 
+/*
 if (time() > strtotime($actDue)) {
     $results = mysql_query($gamePlanSelect) or die("Unable to get gameplans".mysql_error());
     while ($row = mysql_fetch_array($results)) {
@@ -129,6 +130,7 @@ if (time() > strtotime($actDue)) {
     }
 
 }
+*/
 
 ?>
 
