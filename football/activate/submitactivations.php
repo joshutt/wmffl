@@ -58,7 +58,7 @@ ORDER BY p.pos, p.lastname
 EOD;
 
 $actingHCsql = <<<EOD
-SELECT CONCAT(p.firstname, ' ', p.lastname) as 'name', p.pos, n.nflteamid, a.playerid as 'activeId', g.kickoff, g.homeTeam, g.roadTeam, p.playerid
+SELECT CONCAT(p.firstname, ' ', p.lastname) as 'name', p.pos, n.nflteamid, a.playerid as 'activeId', CONVERT_TZ(g.kickoff, 'SYSTEM', 'GMT') as 'kickoff', g.homeTeam, g.roadTeam, p.playerid
 FROM newplayers p
 LEFT JOIN roster r on p.playerid=r.playerid and r.dateoff is null
 LEFT JOIN nflrosters n ON n.playerid=p.playerid and n.dateoff is null
@@ -112,7 +112,7 @@ if ($isin) {
     $starters = array();
     $reserve = array();
 
-    #putenv("TZ=US/Eastern");
+    putenv("TZ=US/Eastern");
     $maxDate = 0;
     //print_r($_REQUEST);
     $reserveCount = 0;
@@ -159,7 +159,7 @@ if ($isin) {
             $maxDate = $deadLine;
         }
 
-    #print $rowSet['kickoff'] ." - $deadLine - ".strtotime($rowSet['kickoff'])." - $currentTime<br/>";
+    # print $rowSet['kickoff'] ." - $deadLine - ".strtotime($rowSet['kickoff'])." - $currentTime<br/>";
         if ($currentTime > $deadLine && $deadLine>0) {
             $player["lock"] = true;
         } else {
@@ -374,25 +374,6 @@ foreach ($reserve as $player) {
     <td><?=$player["opp"]?></td>
     </tr>
 <?php } ?>
-
-<tr><td>&nbsp;</td></tr>
-
-    <tr>
-        <tr><th colspan="5">Game Plan</th></tr>
-    <tr>
-        <td colspan="2">My Team:</td>
-        <td colspan="3">
-            <select name="myGP"><?= $gpOption ?></select>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2">Their Team:</td>
-        <td colspan="3">
-            <select name="oppGP"><?= $oppGPOption ?></select>
-        </td>
-    </tr>
-
-    </tr>
 
 <tr><td>&nbsp;</td></tr>
 <tr><td colspan="5" align="center"><input type="submit" value="Submit Activations"/></td></tr>
