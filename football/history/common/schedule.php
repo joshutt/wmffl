@@ -1,14 +1,21 @@
 <?
-$sql = "SELECT s.week, t1.name, s.scorea, t2.name, s.scoreb, w.weekname, ";
-#$sql = "SELECT s.week, substring(t1.name, 1, 20), s.scorea, substring(t2.name, 1, 20), s.scoreb, w.weekname, ";
-$sql .= "MONTHNAME(w.displayDate), DAYOFMONTH(w.displayDate), ";
-$sql .= "DAYNAME(w.displayDate), MONTHNAME(DATE_SUB(w.enddate, INTERVAL 1 DAY)), DAYOFMONTH(DATE_SUB(w.enddate, INTERVAL 1 DAY)) ";
-$sql .= ", s.label, s.postseason ";
-$sql .= "FROM schedule s JOIN weekmap w ON s.season=w.season and s.week=w.week ";
-$sql .= "LEFT JOIN teamnames t1 ON s.teama=t1.teamid and s.season=t1.season ";
-$sql .= "LEFT JOIN teamnames t2 ON s.teamb=t2.teamid and s.season=t2.season ";
-$sql .= "WHERE s.season=$thisSeason ";
-$sql .= "ORDER BY s.week, s.label, MD5(CONCAT(t1.name, t2.name)) ";
+if ($thisSeason < $currentSeason) {
+    $thisWeek = 17;
+} else {
+    $thisWeek = $currentWeek;
+}
+
+$sql = <<<EOD
+SELECT s.week, t1.name, s.scorea, t2.name, s.scoreb, w.weekname,
+MONTHNAME(w.displayDate), DAYOFMONTH(w.displayDate),
+DAYNAME(w.displayDate), MONTHNAME(DATE_SUB(w.enddate, INTERVAL 1 DAY)), DAYOFMONTH(DATE_SUB(w.enddate, INTERVAL 1 DAY)),
+s.label, s.postseason
+FROM schedule s JOIN weekmap w ON s.season=w.season and s.week=w.week
+LEFT JOIN teamnames t1 ON s.teama=t1.teamid and s.season=t1.season
+LEFT JOIN teamnames t2 ON s.teamb=t2.teamid and s.season=t2.season
+WHERE s.season=$thisSeason
+ORDER BY s.week, s.label, MD5(CONCAT(t1.name, t2.name))
+EOD;
 
 $byeSQL = <<<EOD
 SELECT t.nflteam, t.name, t.nickname, wm.season, wm.week
@@ -60,8 +67,7 @@ $cssList = array("/base/css/schedule.css");
 <A HREF="#Week11">Week 11</A> | <A HREF="#Week12">Week 12</A> |
 <A HREF="#Week13">Week 13</A> | <A HREF="#Week14">Week 14</A> <BR>
 <A HREF="#Playoffs">Playoffs</A> |
-<A HREF="#Championship">WMFFL Championship XXV</A><HR size = "1"></CENTER>
-
+<A HREF="#Championship">WMFFL Championship XXVII</A><HR size = "1"></CENTER>
 
 <?
 $results = mysql_query($sql);
