@@ -60,6 +60,7 @@ function printPlayer($row, $color, $score, $reserveClass="") {
     $printString .= "<div class=\"PQDO\"> </div>";
     $printString .= "<div class=\"lnx\"><a class=\"player\" onmouseover=\"Q('{$row['flmid']}')\">{$row['lastname']}, {$row['firstname']}</a></div>";
     $printString .= "<div class=\"rightLine\">";
+    /*
     if (time() > strtotime($row["ActivationDue"])) {
         if ($row["GPMe"] == "Me") {
             $printString .= "<div class=\"gp\">GP+</div> ";
@@ -68,6 +69,7 @@ function printPlayer($row, $color, $score, $reserveClass="") {
             $printString .= "<div class=\"gp\">GP-</div> ";
         }
     }
+    */
     $printString .= "<div class=\"teamprefix\">{$row['team']}</div></div></td>";
     $printString .= "<td class=\"c2 c2$color\">$score</td></tr>";
     return $printString;
