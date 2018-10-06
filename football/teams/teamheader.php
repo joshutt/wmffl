@@ -1,11 +1,11 @@
 <?
-require_once "base/conn.php";
-require_once "base/useful.php";
+//require_once "base/conn.php";
+//require_once "base/useful.php";
 
 if ($viewteam == null) {
     $viewteam = 2;
 }
-$viewteam = mysql_real_escape_string($viewteam);
+$viewteam = $conn->real_escape_string($viewteam);
 
 $teaminfoSQL = "SELECT t.name as 'teamname', t.member, u.name,
 t.logo, t.fulllogo, t.motto, t.teamid, min(o.season) as 'season'
@@ -20,10 +20,10 @@ ORDER BY u.primaryowner DESC, u.name
 //print $teaminfoSQL;
 //exit(1);
 
-$results = mysql_query($teaminfoSQL) or die("Error in query: ".mysql_error());
+$results = mysqli_query($conn, $teaminfoSQL) or die("Error in query: " . mysqli_error($conn));
 $ownerList = null;
 $ownCount = 1;
-while ($teaminfo = mysql_fetch_array($results)) {
+while ($teaminfo = mysqli_fetch_array($results)) {
     $teamname = $teaminfo['teamname'];
     if ($ownerList != null) {
         $ownerList .= " and ";
@@ -48,13 +48,14 @@ if ($ownCount > 1) {
 }
 
 $titleSQL = "SELECT season FROM titles WHERE teamid=$viewteam AND type='League'";
-$results = mysql_query($titleSQL) or die("Error: ".mysql_error());
+$results = mysqli_query($conn, $titleSQL) or die("Error: " . mysqli_error($conn));
 $champyear = array();
-while (list($newSeason) = mysql_fetch_array($results)) {
+while (list($newSeason) = mysqli_fetch_array($results)) {
     array_push($champyear, $newSeason);
 }
 
 $cssList = array("/base/css/team.css");
+$javascriptList = array("//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js", "/base/js/jquery.tablesorter.min.js", "/base/js/team.js");
 include "base/menu.php";
 ?>
 
