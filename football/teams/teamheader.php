@@ -1,6 +1,5 @@
-<?
-//require_once "base/conn.php";
-//require_once "base/useful.php";
+<?php
+require_once "utils/connect.php";
 
 if ($viewteam == null) {
     $viewteam = 2;

@@ -11,6 +11,10 @@
 
 require_once "setup.php";
 
+if (isset($conn) && get_class($conn) == "mysqli") {
+    return;
+}
+
 // Start the session, so that every page is in session
 session_start();
 
