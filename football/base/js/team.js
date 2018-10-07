@@ -44,16 +44,45 @@ $.tablesorter.addParser({
     type: 'numeric'
 });
 
+$.tablesorter.addParser({
+    id: 'injury',
+    is: function (s) {
+        return false;
+    },
+    format: function (s) {
+        if (s == "Prob") {
+            return -1;
+        }
+        else if (s == "Ques") {
+            return -2;
+        }
+        else if (s == "Doub") {
+            return -3;
+        }
+        else if (s == "Out") {
+            return -4;
+        }
+        else if (s == "IR") {
+            return -5;
+        }
+        else if (s == "Susp") {
+            return -6;
+        }
+    },
+    type: 'numeric'
+})
+
 
 function setSorter() {
     $("#statTable").tablesorter({
         headers: {
-            0: {sorter: 'pos'}
+            0: {sorter: 'pos'},
+            5: {sorter: 'injury'}
         },
         cssHeader: "header",
         cssAsc: "headerSortUp",
         cssDesc: "headerSortDown",
-        widgets: ["zebra"],
+        //widgets: ["zebra"],
         //debug: true
     });
 }

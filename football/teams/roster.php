@@ -8,48 +8,89 @@ $theDate = mysqli_fetch_row($result);
 
 ?>
 
+<div class="roster d-flex justify-content-center row">
+    <div class="row text-center">
+        <div class="col-12 font-weight-bold h4">Current Roster</div>
+        <div class="col-6"><?
+            $ptsLeft = $theDate[2] - $theDate[1];
+            if ($ptsLeft > 0) {
+                print "$ptsLeft Remaining Free Transactions";
+            } else {
+                print abs($ptsLeft) . " extra transactions used";
+            }
+            ?>
+        </div>
+        <div class="col-6"><?= $theDate[3] ?> players on roster</div>
+    </div>
+    <div class="col-12 d-flex justify-content-center">
+        <?
+        //$teamname = $HTTP_POST_VARS["teamname"];
+        //	print "Team name: ".$teamname;
+        //$thequery = "select p.lastname, p.pos, p.team, IF(p.firstname <> '', concat(', ',p.firstname), '') from newplayers p, roster r, team t where p.playerid=r.playerid and r.teamid=t.teamid and r.dateoff is null and t.teamid=$viewteam order by p.pos, p.lastname";
+        $thequery = "select p.lastname, p.pos, p.team, b.week,
+       IF(p.firstname <> '', concat(', ',p.firstname), '') as 'firstname',
+       r.DateOn, i.status as 'injury', max(pocos.cost) as 'cost', p.dob, TIMESTAMPDIFF(YEAR, p.dob, now()) as 'age',
+       ifnull(ps.pts,0) as 'pts'
+from newplayers p
+       join roster r on p.playerid=r.playerid and r.dateoff is null
+       join team t on r.teamid=t.teamid
+       join weekmap wm on wm.StartDate <= now() and wm.EndDate >= now()
+       left join nflbyes b on p.team=b.nflteam and b.season=wm.season
+       left join injuries i on i.playerid=p.playerid and i.season=wm.season and i.week=wm.week
+       left join protectioncost pc on p.playerid=pc.playerid and pc.season=if(wm.week <= 1, wm.season, wm.season+1)
+       join positioncost pocos on p.pos=pocos.position and pocos.endSeason is null and pocos.years <= ifnull(pc.years, 0)
+       left join (
+                 select playerid, season, sum(pts) as 'pts'
+                 from playerscores
+                 group by playerid, season
+                 ) ps on p.playerid=ps.playerid and ps.season=if(wm.week <= 1, wm.season-1, wm.season)
+where t.teamid=$viewteam
+group by p.playerid
+order by p.pos, p.lastname";
 
-<TR><TD ALIGN=Center COLSPAN=2>
-	<A NAME="Roster"><H3>Current Roster</H3></A>
-	<H5><I>As of <?print $theDate[0];?></I><P>
-	<?
-	 $ptsLeft = $theDate[2] - $theDate[1];
-	 if ($ptsLeft > 0) {
-		print "$ptsLeft Remaining Free Transactions";
-	 } else {
-	      print abs($ptsLeft)." extra transactions used";
-	 }
-	print "<BR>$theDate[3] players on roster";
-	?>
-    </H5>
-</TD></TR>
+        $result = mysqli_query($conn, $thequery) or die(mysqli_error($conn));
+        $hold = array();
+        while ($player = mysqli_fetch_array($result)) {
+            $date = date_create($player["DateOn"]);
+            switch ($player["injury"]) {
+                case 'P':
+                    $inj = "Prob";
+                    break;
+                case 'Q':
+                    $inj = "Ques";
+                    break;
+                case 'D':
+                    $inj = "Doub";
+                    break;
+                case 'O':
+                    $inj = "Out";
+                    break;
+                case 'I':
+                    $inj = "IR";
+                    break;
+                case 'S':
+                    $inj = "Susp";
+                    break;
+                default:
+                    $inj = "";
+            }
+            $newItem = array("pos" => $player["pos"], "name" => $player["lastname"] . $player["firstname"],
+                "team" => $player["team"], "bye" => $player["week"], "age" => $player["age"], "injury" => $inj,
+                "date" => date_format($date, "M j, Y"), "cost" => $player["cost"],
+                "pts" => $player["pts"]);
+            array_push($hold, $newItem);
+        }
+        mysqli_close($conn);
 
-<TR>
-    <TD VALIGN=Top>
-<?
-	//$teamname = $HTTP_POST_VARS["teamname"];
-//	print "Team name: ".$teamname;
-	//$thequery = "select p.lastname, p.pos, p.team, IF(p.firstname <> '', concat(', ',p.firstname), '') from newplayers p, roster r, team t where p.playerid=r.playerid and r.teamid=t.teamid and r.dateoff is null and t.teamid=$viewteam order by p.pos, p.lastname";
-	 $thequery = "select p.lastname, p.pos, p.team, b.week,
-		 IF(p.firstname <> '', concat(', ',p.firstname), '') as 'firstname'
-		 from newplayers p
-		 join roster r on p.playerid=r.playerid and r.dateoff is null
-		 join team t on r.teamid=t.teamid 
-		 left join nflbyes b on p.team=b.nflteam and b.season=$currentSeason
-		 where t.teamid=$viewteam
-		 order by p.pos, p.lastname";
-$result = mysqli_query($conn, $thequery);
-$hold = array();
-while ($player = mysqli_fetch_array($result)) {
-    $newItem = array("pos" => $player["pos"], "name" => $player["lastname"] . $player["firstname"], "team" => $player["team"], "bye" => $player["week"]);
-    array_push($hold, $newItem);
-}
-mysqli_close($conn);
-
-$titles = array("Pos", "Name", "Team", "Bye");
-outputHtml($titles, $hold);
-?>
-
-</TD></TR>
-	
+        $proSeason = $currentSeason + 1;
+        $ptsSeason = $currentSeason;
+        if ($currentWeek <= 1) {
+            $proSeason = $currentSeason;
+            $ptsSeason = $currentSeason - 1;
+        }
+        $titles = array("Pos", "Name", "Team", "Bye", "Age", "Injury", "Aquired", "$proSeason<br/>Cost", "$ptsSeason<br/>Pts");
+        outputHtml($titles, $hold);
+        ?>
+    </div>
+</div>
 

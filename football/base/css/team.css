@@ -87,7 +87,7 @@ table.tablesorter thead tr .header {
 
 table.tablesorter tbody td {
     color: #3D3D3D;
-    padding: 4px;
+    padding: 4px 8px;
     background-color: #FFF;
     vertical-align: top;
     text-align: center;

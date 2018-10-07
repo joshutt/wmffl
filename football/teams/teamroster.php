@@ -1,11 +1,8 @@
-<?php require_once "utils/connect.php"; ?>
-
-<? 
+<?php
+require_once "utils/connect.php";
 $title = "Roster";
-include "teamheader.php"; ?>
+include "teamheader.php";
 
-<table width="100%" align="center">
-<? include "roster.php"; ?>
-</table>
+include "roster.php";
 
-<? include "base/footer.html"; ?>
+include "base/footer.html";

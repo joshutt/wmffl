@@ -53,7 +53,7 @@ while (list($newSeason) = mysqli_fetch_array($results)) {
     array_push($champyear, $newSeason);
 }
 
-$cssList = array("/base/css/team.css");
+$cssList = array("/transactions/livedraft/bootstrap.min.css", "/base/css/team.css");
 $javascriptList = array("//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js", "/base/js/jquery.tablesorter.min.js", "/base/js/team.js");
 include "base/menu.php";
 ?>
