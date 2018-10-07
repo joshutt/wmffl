@@ -1,5 +1,7 @@
-<?
-require_once "utils/start.php";
+<?php
+require_once "utils/connect.php";
+require_once "utils/reportUtils.php";
+
 if ($currentWeek < 1) {
     $thisSeason = $currentSeason - 1;
 } else {
@@ -7,112 +9,61 @@ if ($currentWeek < 1) {
 }
 
 if (isset($_REQUEST["season"])) {
-    $thisSeason=$_REQUEST["season"];
+    $thisSeason = $_REQUEST["season"];
 }
 
-$sql = "SELECT  t.name, p.pos, sum(ps.active) as 'totpts' ";
-//$sql .= "FROM playerscores ps, players p, roster r, team t, weekmap w ";
-$sql .= "FROM playerscores ps, newplayers p, roster r, teamnames t, weekmap w ";
-$sql .= "WHERE ps.playerid=p.playerid and r.playerid=p.playerid ";
-$sql .= "and r.teamid=t.teamid and r.dateon <= w.activationdue ";
-$sql .= "and (r.dateoff is null or r.dateoff > w.activationdue) ";
-$sql .= "and w.season=$thisSeason and ps.season=w.season and ps.week=w.week ";
-$sql .= "and ps.week<=14 ";
-$sql .= "and t.season=$thisSeason ";
-$sql .= "and ps.active is not null ";
-$sql .= "GROUP BY t.name, p.pos ";
-$sql .= "ORDER BY p.pos, `totpts` DESC ";
+$sql = "SELECT  t.name, p.pos, sum(ps.active) as 'totpts'
+FROM playerscores ps
+    JOIN newplayers p ON ps.playerid=p.playerid
+    JOIN roster r ON r.PlayerID=p.playerid
+    JOIN teamnames t ON r.teamid=t.teamid and ps.season=t.season
+    JOIN weekmap w ON r.dateon <= w.activationdue and (r.dateoff is null or r.dateoff > w.activationdue)
+WHERE w.season=$thisSeason and ps.season=w.season and ps.week=w.week
+and ps.week<=14
+and ps.active is not null
+GROUP BY t.name, p.pos
+ORDER BY t.name, p.pos";
 
 $dateQuery = "SELECT max(week) FROM playerscores where season=$thisSeason and week<=14";
 
-$results = mysql_query($sql) or die("$sql<br/>".mysql_error());
-$dateRes = mysql_query($dateQuery);
+$results = mysqli_query($conn, $sql) or die("$sql<br/>" . mysqli_error());
+$dateRes = mysqli_query($conn, $dateQuery);
 
-list($week) = mysql_fetch_row($dateRes);
-$numCol = 3;
+list($week) = mysqli_fetch_row($dateRes);
 
+$teamResults = array();
+while ($teams = mysqli_fetch_array($results)) {
+    if (!key_exists($teams["name"], $teamResults)) {
+        $teamResults[$teams["name"]] = array("name" => $teams["name"]);
+    }
+    $teamResults[$teams["name"]][$teams["pos"]] = $teams["totpts"];
+}
+
+// For each team calculate the offense and defense and overall
+foreach ($teamResults as $teamName) {
+    $off = $teamName["HC"] + $teamName["QB"] + $teamName["RB"] + $teamName["WR"] + $teamName["TE"] + $teamName["K"] + $teamName["OL"];
+    $def = $teamName["DL"] + $teamName["LB"] + $teamName["DB"];
+    $teamName["offense"] = $off;
+    $teamName["defense"] = $def;
+    $teamName["total"] = $off + $def;
+    $teamResults[$teamName["name"]] = $teamName;
+}
+
+$colTitles = array("Team", "HC", "QB", "RB", "WR", "TE", "K", "OL", "DL", "LB", "DB", "Offense", "Defense", "Total<br/>Pts");
+
+$javascriptList = array("//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js", "/base/js/jquery.tablesorter.min.js", "leaders.js");
+$cssList = array("week.css");
 $title = "League Leaders";
+include "base/menu.php";
 ?>
 
-<? include "base/menu.php"; ?>
-
-<H1 ALIGN=Center>League Leaders</H1>
-<H5 ALIGN=Center><I>Through Week <?print $week;?></I></H5>
-<!-- <H5 ALIGN=Center><I>Season Final</I></H5> -->
-<HR>
+    <H1 ALIGN=Center>League Leaders</H1>
+    <H5 ALIGN=Center><I>Through Week <?= $week ?></I></H5>
+    <HR>
 
 <? include "base/statbar.html"; ?>
-
-<P>Below is a list of how many points each team has scored at each position
-during the course of the season.</P>
-
-<TABLE WIDTH=100% ALIGN=Center> 
-<TR>
-<?
-$off = array();
-$def = array();
-$count = 0;
-$pos = "";
-while ($rank = mysql_fetch_array($results)) {
-    if ($rank["pos"] != $pos) {
-        $pos = $rank["pos"];
-        
-        if ($count > 0) {
-            print "</TABLE></TD>";
-        }
-        
-        if ($count % $numCol == 0) {
-            print "</TR><TR><TD>&nbsp;</TD></TR><TR>";
-        }
-        $count++;
-		
-        print "<TD valign=\"top\"><TABLE>";
-	print "<TR><TH COLSPAN=3 ALIGN=Center>".$rank["pos"]."</TH></TR>";
-
-    }
-    
-    print "<TR><TD>".$rank["name"]."</TD><td width=\"10\"></td><TD>".$rank["totpts"]."</TD></TR>";
-    if ($rank["pos"] == "DB" || $rank["pos"] == "LB" || $rank["pos"] == "DL") {
-        $def[$rank["name"]] += $rank["totpts"];
-    } else {
-        $off[$rank["name"]] += $rank["totpts"];
-    }
- 
-}
-print "</table></td>";
-
-arsort($off);
-arsort($def);
-
-#print "<tr><td>&nbsp;</td></tr>";
-#print "<tr><TD><TABLE>";
-print "<td><table>";
-print "<TR><TH COLSPAN=3 ALIGN=Center>Offense</TH></TR>";
-$totpts = array();
-foreach ($off as $team=>$score) {
-    print "<TR><TD>$team</TD><td width=\"10\"></td><TD>$score</TD></TR>";
-    $totpts[$team] = $score + $def[$team];
-}
-print "</TABLE></TD>";
-print "<TD><TABLE>";
-print "<TR><TH COLSPAN=3 ALIGN=Center>Defense</TH></TR>";
-foreach ($def as $team=>$score) {
-    print "<TR><TD>$team</TD><td width=\"10\"></td><TD>$score</TD></TR>";
-}
-print "</TABLE></TD>";
-print "</TR><TR><TD>&nbsp;</TD></TR><TR>";
-print "<TD></TD>";
-arsort($totpts);
-print "<TD><TABLE>";
-print "<TR><TH COLSPAN=3 ALIGN=Center>Total Points</TH></TR>";
-foreach ($totpts as $team=>$score) {
-    print "<TR><TD>$team</TD><td width=\"10\"></td><TD>$score</TD></TR>";
-}
-print "</TABLE></TD>";
+    <p>Points scored over the course of the season</p>
+<?php
+outputHtml($colTitles, $teamResults);
 ?>
-</TR>
-</TABLE>
-
-<?
-include "base/footer.html";
-?>
+<?php include "base/footer.html"; ?>

@@ -14,13 +14,14 @@ for ($yearloop=0; $yearloop<count($champyear); $yearloop++) {
 </td></tr>
 </table>
 
-<table width="100%">
-<tr><td width="5%"></td>
-<td><a href="teamhistory.php?viewteam=<? print $viewteam; ?>"><img src="/images/football.jpg" border="0"/>History</a></td>
-<td><a href="teamroster.php?viewteam=<? print $viewteam; ?>"><img src="/images/football.jpg" border="0"/>Roster</a></td>
-<td><a href="teamschedule.php?viewteam=<? print $viewteam; ?>"><img src="/images/football.jpg" border="0"/>Schedule</a></td>
-</tr>
-</table>
+<ul class="teamnav sideButton nav nav-tabs justify-content-center">
+    <li class="nav-item nav-link col-4"><a href="teamhistory.php?viewteam=<? print $viewteam; ?>"><img
+                    src="/images/football.jpg" border="0"/>History</a></li>
+    <li class="nav-item nav-link col-4 active"><a href="teamroster.php?viewteam=<? print $viewteam; ?>"><img
+                    src="/images/football.jpg" border="0"/>Roster</a></li>
+    <li class="nav-item nav-link col-4"><a href="teamschedule.php?viewteam=<? print $viewteam; ?>"><img
+                    src="/images/football.jpg" border="0"/>Schedule</a></li>
+</ul>
 
-<hr size="1"/>
+
 

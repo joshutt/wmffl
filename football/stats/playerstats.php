@@ -1,5 +1,5 @@
 <?
-require_once "utils/start.php";
+require_once "utils/connect.php";
 include "utils/reportUtils.php";
 $title = "Player Stats";
 
@@ -108,24 +108,24 @@ $cssList = array("week.css");
 
 <p><table width="100%">
 <tr>
-<td><a href="playerstats.php?pos=HC">HC</a></td>
-<td><a href="playerstats.php?pos=QB">QB</a></td>
-<td><a href="playerstats.php?pos=RB">RB</a></td>
-<td><a href="playerstats.php?pos=WR">WR</a></td>
-<td><a href="playerstats.php?pos=TE">TE</a></td>
-<td><a href="playerstats.php?pos=K">K</a></td>
-<td><a href="playerstats.php?pos=OL">OL</a></td>
-<td><a href="playerstats.php?pos=DL">DL</a></td>
-<td><a href="playerstats.php?pos=LB">LB</a></td>
-<td><a href="playerstats.php?pos=DB">DB</a></td>
+    <td><a href="playerstats?pos=HC">HC</a></td>
+    <td><a href="playerstats?pos=QB">QB</a></td>
+    <td><a href="playerstats?pos=RB">RB</a></td>
+    <td><a href="playerstats?pos=WR">WR</a></td>
+    <td><a href="playerstats?pos=TE">TE</a></td>
+    <td><a href="playerstats?pos=K">K</a></td>
+    <td><a href="playerstats?pos=OL">OL</a></td>
+    <td><a href="playerstats?pos=DL">DL</a></td>
+    <td><a href="playerstats?pos=LB">LB</a></td>
+    <td><a href="playerstats?pos=DB">DB</a></td>
 </tr>
 </table></p>
 
 <?
 //print "Last Name,First Name,Pos,NFL,Week,Pts\n";
 $newHold = array();
-$results = mysql_query($sql) or die("There was an error in the query: ".mysql_error());
-while($playList = mysql_fetch_array($results)) {
+$results = mysqli_query($conn, $sql) or die("There was an error in the query: " . mysqli_error());
+while ($playList = mysqli_fetch_array($results)) {
     //print $playList[0].",".$playList[1].",".$playList[2].",";
     //print $playList[3].",".$playList[4].",".$playList[5];
     //print "\n";

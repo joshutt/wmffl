@@ -62,9 +62,9 @@ include "base/menu.php";
 if ($fulllogo == 1) {
 ?>
 
-<center><img src="/teams/<? print $logo; ?>" align="center" alt="<? print $teamname;?>" />
-<H5 ALIGN=Center><? print $ownername; ?><BR>Member Since <? print $teamsince; ?><BR>
-    <I><? print $teammotto; ?></I></H5>
+    <center><img src="/teams/<?= $logo; ?>" align="center" alt="<?= $teamname; ?>"/>
+        <div class="h5 justify-content-center"><?= $ownername; ?><BR>Member Since <?= $teamsince; ?><BR>
+            <I><?= $teammotto; ?></I></div>
 </center>
 
 <?php } else { ?>
@@ -72,15 +72,15 @@ if ($fulllogo == 1) {
 <div id="wrapper">
 <div id="teamLogoBlock">
 <?php if ($logo != null) { ?>
-<div id="logo-left"><img src="/teams/<? print $logo; ?>" alt="<? print $teamname;?>" /></div>
+    <div id="logo-left"><img src="/teams/<?= $logo; ?>" alt="<?= $teamname; ?>"/></div>
 <? } ?>
 <div id="team-name">
-    <span id="big-name"><? print $teamname; ?></span>
+    <span id="big-name"><?= $teamname; ?></span>
     <span id="est">Established <?= $teamsince; ?></span>
-    <span id="ownName"><? print $ownername; ?><BR>Since <? print $ownerSince; ?></span>
+    <span id="ownName"><?= $ownername; ?><BR>Since <?= $ownerSince; ?></span>
 </div>
 <? if ($logo != null) { ?>
-<div id="logo-right"><img src="/teams/<? print $logo; ?>" alt="<? print $teamname;?>" /></div>
+    <div id="logo-right"><img src="/teams/<?= $logo; ?>" alt="<?= $teamname; ?>"/></div>
 <?php } ?>
 </div></div>
 <?php } ?>
@@ -92,3 +92,4 @@ if ($fulllogo == 1) {
 include "newlinkbar.php";
 ?>
 
+<hr class="bar"/>
