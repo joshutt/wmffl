@@ -154,7 +154,7 @@ if (isset($_REQUEST["format"])) {
 if ($format == "html" || !supportedFormat($format)) {
     $title = "Week By Week";
     $javascriptList = array("//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js", "/base/js/jquery.tablesorter.min.js", "week.js");
-    $cssList = array("week.css");
+    $cssList = array("week.css", "stats.css");
     include_once "base/menu.php";
 ?>
 <h1 align="center"><?= $title ?></h1>
@@ -163,9 +163,9 @@ if ($format == "html" || !supportedFormat($format)) {
 
 <?
     include "base/statbar.html";
-    print "<div id=\"tblblock\">";
+    print "<div id=\"tblblock\" class='container justify-content-center'>";
     include "weekbyweekinc.php";
-    print "<div id=\"mainTable\">";
+    print "<div id=\"mainTable\" class='row col-12 justify-content-center'>";
     outputHtml($titles, $newHold);
     print "</div></div>";
     include "base/footer.html"; 

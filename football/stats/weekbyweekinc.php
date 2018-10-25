@@ -3,13 +3,14 @@ include_once "utils/teamList.php";
 $teamArray = getTeamList($season);
 ?>
 
-<div class="selectOptions">
-	<select id="display">
+<div class="row col justify-content-center">
+    <div>
+        <select id="display" class="mx-1">
 	    <option value="team">By Team</option>
 	    <option value="pos">By Pos</option>
 	</select>
 
-	<select id="team">
+        <select id="team" class="mx-1">
 <?php
 foreach ($teamArray as $team) {
     if ($searchTeam == $team["id"]) { 
@@ -22,7 +23,7 @@ foreach ($teamArray as $team) {
 ?>
 	</select>
 
-	<select id="pos">
+        <select id="pos" class="mx-1">
 <?php
 foreach (getPosList() as $pos) {
     if ($searchPos == $pos) {
@@ -34,13 +35,13 @@ foreach (getPosList() as $pos) {
 }
 ?>
 	</select>
-
-	<button class="button" id="refresh" onClick="refresh(); return false;">Refresh</button>
-
 </div>
+    <div>
 
-<div class="formatOptions">
-	<button class="button" id="csv" onClick="csv()">CSV</button>
-	<button class="button" id="json" onClick="csv('json')">JSON</button>
+        <button class="button mx-1" id="refresh" onClick="refresh(); return false;">Refresh</button>
+
+        <button class="button mx-2" id="csv" onClick="csv()">CSV</button>
+        <button class="button mx-2" id="json" onClick="csv('json')">JSON</button>
 </div>
-<div class="tableOption">
+</div>
+</div>

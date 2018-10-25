@@ -1,15 +1,6 @@
 $(document).ready(function () {
     setSorter();
 
-    // Show the correct selected options
-    $('#' + $('#display option:selected').val()).show();
-    var current = '#' + $('#display option:selected').val();
-
-    $('#display').change(function () {
-        $('#' + $('#display option:selected').val()).show();
-        $(current).hide();
-        current = '#' + $('#display option:selected').val();
-    });
 });
 
 function setSorter() {
@@ -21,4 +12,11 @@ function setSorter() {
         widgets: ["zebra"],
         //debug: true
     });
+}
+
+function csv(frmt="csv") {
+    var form = $("<form/>", {action: "leaders", method: "POST"});
+    form.append($("<input/>", {name: "format", value: frmt}));
+    $(document.body).append(form);
+    form.submit();
 }

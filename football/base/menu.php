@@ -20,8 +20,9 @@ if (isset($javascriptList)) {
 // If no cssList then add it, otherwise add core.css
 if (isset($cssList)) {
     array_unshift($cssList, "/base/css/core.css");
+    array_unshift($cssList, "/transactions/livedraft/bootstrap.min.css");
 } else {
-    $cssList = array("/base/css/core.css");
+    $cssList = array("/transactions/livedraft/bootstrap.min.css", "/base/css/core.css");
 }
 
 // Print out the css

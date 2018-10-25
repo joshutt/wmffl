@@ -12,6 +12,13 @@ if (isset($_REQUEST["season"])) {
     $thisSeason = $_REQUEST["season"];
 }
 
+// Determine the format
+$format = "html";
+if (isset($_REQUEST["format"])) {
+    $format = strtolower($_REQUEST["format"]);
+}
+
+
 $sql = "SELECT  t.name, p.pos, sum(ps.active) as 'totpts'
 FROM playerscores ps
     JOIN newplayers p ON ps.playerid=p.playerid
@@ -51,19 +58,35 @@ foreach ($teamResults as $teamName) {
 
 $colTitles = array("Team", "HC", "QB", "RB", "WR", "TE", "K", "OL", "DL", "LB", "DB", "Offense", "Defense", "Total<br/>Pts");
 
-$javascriptList = array("//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js", "/base/js/jquery.tablesorter.min.js", "leaders.js");
-$cssList = array("week.css");
-$title = "League Leaders";
-include "base/menu.php";
-?>
+
+if ($format == "html" || !supportedFormat($format)) {
+
+    $javascriptList = array("//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js", "/base/js/jquery.tablesorter.min.js", "leaders.js");
+    $cssList = array("stats.css");
+    $title = "League Leaders";
+    include "base/menu.php";
+    ?>
 
     <H1 ALIGN=Center>League Leaders</H1>
-    <H5 ALIGN=Center><I>Through Week <?= $week ?></I></H5>
     <HR>
 
-<? include "base/statbar.html"; ?>
-    <p>Points scored over the course of the season</p>
-<?php
-outputHtml($colTitles, $teamResults);
-?>
-<?php include "base/footer.html"; ?>
+    <? include "base/statbar.html"; ?>
+
+    <div class="container mt-2">
+        <span class="row justify-content-center my-2">Through Week <?= $week ?></span>
+        <div class="formatOptions row col justify-content-center">
+            <button class="button mx-1" id="csv" onClick="csv()">CSV</button>
+            <button class="button mx-1" id="json" onClick="csv('json')">JSON</button>
+        </div>
+        <div id="mainTable" class="row col-12 justify-content-center">
+            <?php outputHtml($colTitles, $teamResults); ?>
+        </div>
+    </div>
+    <?php include "base/footer.html"; ?>
+
+    <?php
+} else if ($format == "csv") {
+    outputCSV($colTitles, $teamResults, "leaders.csv");
+} else if ($format == "json") {
+    outputJSON($colTitles, $teamResults);
+}

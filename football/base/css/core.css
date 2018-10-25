@@ -114,3 +114,15 @@ div.alert {
 }
 
 span.quicklink { color: #555555; padding: 5px; float: left; margin: 3px 15px;}
+
+h1 {
+    font-family: "Times New Roman", Times, Serif !important;
+    font-size: 2em !important;
+    font-weight: bold !important;
+}
+
+body {
+    margin: 8px;
+    background-color: #660000;
+    font-family: "Times New Roman", Times, Serif;
+}
