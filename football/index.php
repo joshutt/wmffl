@@ -1,6 +1,7 @@
 <? 
 $title = "The WMFFL Fantasy Football League";
 
+$javascriptList = array("base/js/front.js");
 include "base/menu.php";
 
 ?>

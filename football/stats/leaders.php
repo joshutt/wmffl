@@ -89,4 +89,6 @@ if ($format == "html" || !supportedFormat($format)) {
     outputCSV($colTitles, $teamResults, "leaders.csv");
 } else if ($format == "json") {
     outputJSON($colTitles, $teamResults);
+} else if ($format == "ajax") {
+    outputHtml($colTitles, $teamResults);
 }
