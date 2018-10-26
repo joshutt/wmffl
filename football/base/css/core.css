@@ -1,18 +1,69 @@
 
-A.headline:link {color:e2a500; text-decoration:None; font-size:12pt; font-weight:bold}
-A.headline:active {color:e2a500; text-decoration:None; font-size:12pt; font-weight:bold}
-A.headline:visited {color:e2a500; text-decoration:None; font-size:12pt; font-weight:bold}
-A.headline:hover {color:660000; text-decoration:None; font-size:12pt; font-weight:bold}
+A.headline:link {
+    color: #e2a500;
+    text-decoration: None;
+    font-size: 12pt;
+    font-weight: bold
+}
 
-.stats {background-color:f5efef}
-A.stats:link {font-size:10pt; text-decoration:none; color:660000;}
-A.stats:visited {font-size:10pt; text-decoration:none; color:660000;}
-A.stats:hover {font-size:10pt; text-decoration:none; color:e2a500;}
+A.headline:active {
+    color: #e2a500;
+    text-decoration: None;
+    font-size: 12pt;
+    font-weight: bold
+}
 
-A:link {color:660000;}
-A:active {color:e2a500;}
-A:visited {color:660000;}
-A:hover {color:e2a500;}
+A.headline:visited {
+    color: #e2a500;
+    text-decoration: None;
+    font-size: 12pt;
+    font-weight: bold
+}
+
+A.headline:hover {
+    color: #660000;
+    text-decoration: None;
+    font-size: 12pt;
+    font-weight: bold
+}
+
+.stats {
+    background-color: #f5efef
+}
+
+A.stats:link {
+    font-size: 10pt;
+    text-decoration: none;
+    color: #660000;
+}
+
+A.stats:visited {
+    font-size: 10pt;
+    text-decoration: none;
+    color: #660000;
+}
+
+A.stats:hover {
+    font-size: 10pt;
+    text-decoration: none;
+    color: #e2a500;
+}
+
+A:link {
+    color: #660000;
+}
+
+A:active {
+    color: #e2a500;
+}
+
+A:visited {
+    color: #660000;
+}
+
+A:hover {
+    color: #e2a500;
+}
 
 .row{white-space:nowrap;padding:1px 3px 1px 3px;}
 .c1{background-color:#EFEFEF;}
@@ -125,4 +176,52 @@ body {
     margin: 8px;
     background-color: #660000;
     font-family: "Times New Roman", Times, Serif;
+}
+
+.btn-wmffl.focus, .btn-wmffl:focus, .btn-wmffl:not(:disabled):not(.disabled).active:focus, .btn-wmffl:not(:disabled):not(.disabled):active:focus, .show > .btn-wmffl.dropdown-toggle:focus {
+    box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .5)
+}
+
+.btn.disabled, .btn:disabled {
+    opacity: .65
+}
+
+a.btn.disabled, fieldset:disabled a.btn {
+    pointer-events: none
+}
+
+.btn-wmffl {
+    color: #e2a500;
+    background-color: #660000;
+    border-color: #660000;
+}
+
+.btn-wmffl:hover {
+    color: #600000;
+    background-color: #e2a500;
+    border-color: #440000;
+    /*
+    background-color: #0069d9;
+    border-color: #0062cc
+    */
+}
+
+.btn-wmffl.disabled, .btn-wmffl:disabled {
+    color: #e2a500;
+    background-color: #660000;
+    border-color: #440000;
+}
+
+.btn-wmffl:not(:disabled):not(.disabled).active, .btn-wmffl:not(:disabled):not(.disabled):active, .show > .btn-wmffl.dropdown-toggle {
+    color: #e2a500;
+    background-color: #600000;
+    border-color: #440000
+}
+
+.btn-wmffl > a:link, .btn-wmffl > a:visited, a.btn-wmffl:link, a.btn-wmffl:visited {
+    color: #e2a500;
+}
+
+.btn-wmffl:hover > a:link, .btn-wmffl:hover > a:visited, a.btn-wmffl:hover {
+    color: #660000;
 }
