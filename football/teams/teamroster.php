@@ -1,6 +1,6 @@
 <?php
 require_once "utils/connect.php";
-$title = "Roster";
+$page = "Roster";
 include "teamheader.php";
 
 include "roster.php";

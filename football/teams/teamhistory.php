@@ -1,7 +1,7 @@
 <? 
 //$teamname = "Illuminati";
 //$viewteam = 4;
-$title = "History";
+$page = "History";
 include "teamheader.php"; 
 ?>
 

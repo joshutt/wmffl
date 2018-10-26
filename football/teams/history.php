@@ -195,7 +195,7 @@ array_push($ownerArray, $oneName);
 print <<<EOD
 <table width="100%">
 <TR><TD ALIGN=Center COLSPAN=2>
-	<A NAME="History"><H3>History</H3></A>
+	<A NAME="History"><H4 class="font-weight-bold">History</H4></A>
 	<TABLE WIDTH=75%>
 	<TH>Record
 	<TR><TD WIDTH=20%><B>YEAR</B></TD><TD WIDTH=8%><B>W</B></TD><TD WIDTH=8%><B>L</B></TD>

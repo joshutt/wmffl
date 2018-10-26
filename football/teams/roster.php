@@ -88,7 +88,7 @@ order by p.pos, p.lastname";
             $proSeason = $currentSeason;
             $ptsSeason = $currentSeason - 1;
         }
-        $titles = array("Pos", "Name", "Team", "Bye", "Age", "Injury", "Aquired", "$proSeason<br/>Cost", "$ptsSeason<br/>Pts");
+        $titles = array("Pos", "Name", "Team", "Bye<br/>Week", "Age", "Injury", "Aquired", "$proSeason<br/>Cost", "$ptsSeason<br/>Pts");
         outputHtml($titles, $hold);
         ?>
     </div>

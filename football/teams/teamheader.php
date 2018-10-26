@@ -22,6 +22,7 @@ ORDER BY u.primaryowner DESC, u.name
 $results = mysqli_query($conn, $teaminfoSQL) or die("Error in query: " . mysqli_error($conn));
 $ownerList = null;
 $ownCount = 1;
+$teamname = "";
 while ($teaminfo = mysqli_fetch_array($results)) {
     $teamname = $teaminfo['teamname'];
     if ($ownerList != null) {
@@ -39,7 +40,7 @@ while ($teaminfo = mysqli_fetch_array($results)) {
 //    $fulllogo = $teaminfo['fulllogo'];
     $logo = $teaminfo['logo'];
 }
-$title = "$teamname $title";
+$title = "$teamname $page";
 if ($ownCount > 1) {
     $ownername = "Owners: $ownerList";
 } else {
@@ -53,7 +54,7 @@ while (list($newSeason) = mysqli_fetch_array($results)) {
     array_push($champyear, $newSeason);
 }
 
-$cssList = array("/transactions/livedraft/bootstrap.min.css", "/base/css/team.css");
+$cssList = array("/stats/stats.css", "/base/css/team.css");
 $javascriptList = array("//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js", "/base/js/jquery.tablesorter.min.js", "/base/js/team.js");
 include "base/menu.php";
 ?>
@@ -83,13 +84,10 @@ if ($fulllogo == 1) {
     <div id="logo-right"><img src="/teams/<?= $logo; ?>" alt="<?= $teamname; ?>"/></div>
 <?php } ?>
 </div></div>
-<?php } ?>
+    <?php
+}
 
-<hr class="bar" />
-
-<?
 //$champyear = array (2004);
 include "newlinkbar.php";
 ?>
 
-<hr class="bar"/>
