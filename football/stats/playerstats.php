@@ -1,6 +1,7 @@
 <?
-require_once "utils/start.php";
+require_once "utils/connect.php";
 include "utils/reportUtils.php";
+include_once "utils/teamList.php";
 $title = "Player Stats";
 
 if ($_REQUEST["pos"] == null || $_REQUEST["pos"]=="") {
@@ -95,37 +96,10 @@ if (isset($firstSort) && $firstSort != "none") {
 }
 //ORDER  BY  ps.week, p.position, ps.pts DESC, p.lastname, p.firstname";
 
-$javascriptList = array("//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js", "/base/js/jquery.tablesorter.min.js", "week.js");
-$cssList = array("week.css");
-?>
-
-<? include "base/menu.php"; ?>
-
-
-<h1 align="center">Player Stats</h1>
-<hr/>
-<? include "base/statbar.html";?>
-
-<p><table width="100%">
-<tr>
-<td><a href="playerstats.php?pos=HC">HC</a></td>
-<td><a href="playerstats.php?pos=QB">QB</a></td>
-<td><a href="playerstats.php?pos=RB">RB</a></td>
-<td><a href="playerstats.php?pos=WR">WR</a></td>
-<td><a href="playerstats.php?pos=TE">TE</a></td>
-<td><a href="playerstats.php?pos=K">K</a></td>
-<td><a href="playerstats.php?pos=OL">OL</a></td>
-<td><a href="playerstats.php?pos=DL">DL</a></td>
-<td><a href="playerstats.php?pos=LB">LB</a></td>
-<td><a href="playerstats.php?pos=DB">DB</a></td>
-</tr>
-</table></p>
-
-<?
 //print "Last Name,First Name,Pos,NFL,Week,Pts\n";
 $newHold = array();
-$results = mysql_query($sql) or die("There was an error in the query: ".mysql_error());
-while($playList = mysql_fetch_array($results)) {
+$results = mysqli_query($conn, $sql) or die("There was an error in the query: " . mysqli_error());
+while ($playList = mysqli_fetch_array($results)) {
     //print $playList[0].",".$playList[1].",".$playList[2].",";
     //print $playList[3].",".$playList[4].",".$playList[5];
     //print "\n";
@@ -135,21 +109,67 @@ while($playList = mysql_fetch_array($results)) {
     $id = $playList["playerid"];
     $newHold[$id] = array($playList["name"], $playList["team"], $playList["bye"], $playList["ffteam"], $numGames, $playList["pts"], $ppg);
 
-    for ($i = 7; $i<sizeof($pLine)+7; $i++) {
-        array_push($newHold[$id], $playList[$i]);
+    foreach ($posMap[$pos] as $pset) {
+        array_push($newHold[$id], $playList["sum($pset)"]);
     }
-}
-?>
 
-<?php
+}
+
+// Get the labels
 $labels = array("Name", "NFL Team", "Bye", "FF Team", "G", "Pts", "PPG");
 $labels = array_merge($labels, $posLabels[$pos]);
 
-print "<div id=\"tblblock\">";
-print "<div id=\"mainTable\">";
-outputHtml($labels ,$newHold);
-print "</div></div>";
+
+// Determine the format
+$format = "html";
+if (isset($_REQUEST["format"])) {
+    $format = strtolower($_REQUEST["format"]);
+}
+
+// Display output
+if ($format == "html" || !supportedFormat($format)) {
+    $javascriptList = array("//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js", "/base/js/jquery.tablesorter.min.js", "playerstats.js");
+    $cssList = array("stats.css");
+    include "base/menu.php"; ?>
+
+
+    <h1 align="center">Player Stats</h1>
+    <hr/>
+    <? include "base/statbar.html"; ?>
+
+    <div id="tblblock" class="container">
+
+        <div class="formatOptions row col justify-content-center">
+            <select id="pos" class="mr-2">
+                <?php
+                foreach (getPosList() as $setPos) {
+                    if ($setPos == $pos) {
+                        $selected = "selected=\"true\" ";
+                    } else {
+                        $selected = "";
+                    }
+                    print "<option value=\"$setPos\" $selected>$setPos</option>";
+                }
+                ?>
+            </select>
+            <button class="button mx-1" id="csv" onClick="csv()">CSV</button>
+            <button class="button mx-1" id="json" onClick="csv('json')">JSON</button>
+        </div>
+        <div id="mainTable" class="row col-12 justify-content-center">
+            <?php outputHtml($labels, $newHold); ?>
+        </div>
+    </div>
+
+
+    <? include "base/footer.html"; ?>
+
+
+    <?php
+} else if ($format == "csv") {
+    outputCSV($labels, $newHold, "playerstats-$pos.csv");
+} else if ($format == "json") {
+    outputJSON($labels, $newHold);
+} else if ($format == "ajax") {
+    outputHtml($labels, $newHold);
+}
 ?>
-
-
-<? include "base/footer.html"; ?>

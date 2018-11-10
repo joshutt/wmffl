@@ -33,7 +33,8 @@ EOD;
 #print "<pre>$query</pre>";
 
 $secondQuery = <<<EOD
-SELECT t.teamid as 'teamid', t2.teamid as 'oppid', if(t.teamid=s.teama, s.scorea, s.scoreb) as 'ptsfor', if(t.teamid=s.teama, s.scoreb, s.scorea) as 'ptsagt', wm.week, tn.divisionid, tn2.divisionid
+SELECT t.teamid as 'teamid', t2.teamid as 'oppid', if(t.teamid=s.teama, s.scorea, s.scoreb) as 'ptsfor', 
+if(t.teamid=s.teama, s.scoreb, s.scorea) as 'ptsagt', wm.week, tn.divisionid, tn2.divisionid
 FROM schedule s
 JOIN team t ON t.teamid in (s.teama, s.teamb)
 JOIN teamnames tn ON t.teamid=tn.teamid AND tn.season=s.season
@@ -93,7 +94,7 @@ if (!isset($display) or $display == 1) {
         if ($division != $thisDiv) {
             print <<< EOD
 <tr height="20"><th>&nbsp;</th></tr>
-<tr><th colspan="12"><font size="+1">$thisDiv</font></th></tr>
+<tr><th colspan="12" class="text-center"><font size="+1">$thisDiv</font></th></tr>
 <tr><th></th><th colspan="4">Overall</th><th></th>
 <th colspan="3">In Division</th></tr>
 <tr><th>Team</th><th>W</th><th>L</th><th>T</th>

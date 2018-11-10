@@ -13,26 +13,12 @@ if ($checkWeek == 0) {
 }
 
 $otherSeason = "select distinct season from schedule where $viewteam in (teama, teamb) order by season desc";
-$res1 = mysql_query($otherSeason);
+$res1 = mysqli_query($conn, $otherSeason);
 ?>
 
-<div align="right"><form action="teamschedule.php">
-<input type="hidden" name="viewteam" value="<? print $viewteam; ?>"/>
-View other seasons: 
-<select name="viewseason" onChange="submit();">
-<option value=""></option>
-<?
-while (list($newSeason) = mysql_fetch_array($res1)) {
-    print "<option value=\"$newSeason\">$newSeason</option>";
-}
+<h3 class="font-weight-bold" align="center"><? print $viewseason; ?> Schedule</h3>
 
-?>
-</select>
-</form>
-</div>
-
-<h3 align="center"><? print $viewseason;?> Schedule</h3>
-
+<div class="col">
 <?
 $SQL = "SELECT if(isnull(s.label), wm.weekname, s.label) as 'weekname', t.name, 
 if(s.teama=$viewteam, s.scorea, s.scoreb) as 'score', 
@@ -44,10 +30,10 @@ AND s.season=wm.season AND s.week=wm.week
 AND t.season=s.season
 ORDER BY s.season, s.week";
 
-$results = mysql_query($SQL) or die("Unable to complete query: ".mysql_error());
+$results = mysqli_query($conn, $SQL) or die("Unable to complete query: " . mysqli_error($conn));
 
 print "<table align=\"center\" border=\"1\">";
-while ($sched = mysql_fetch_array($results)) {
+while ($sched = mysqli_fetch_array($results)) {
     if ($sched['score'] != null && $sched['week'] < $checkWeek) {
         print "<tr>";
         print "<td>${sched['weekname']}</td>";
@@ -69,5 +55,23 @@ while ($sched = mysql_fetch_array($results)) {
         print "</tr>";
     }
 }
-print "</table>";
 ?>
+    </table>
+</div>
+
+<div class="pt-4 justify-content-center col text-center">
+    <form action="teamschedule.php">
+        <input type="hidden" name="viewteam" value="<? print $viewteam; ?>"/>
+        View previous seasons:
+        <select name="viewseason" onChange="submit();">
+            <option value=""></option>
+            <?
+            while (list($newSeason) = mysqli_fetch_array($res1)) {
+                print "<option value=\"$newSeason\">$newSeason</option>";
+            }
+
+            ?>
+        </select>
+    </form>
+</div>
+

@@ -1,30 +1,14 @@
-<table width="100%">
-<tr><td class="cat" colspan="2">Other Links</td></tr>
+<div class="cat">Other Links</div>
 
-<tr><td align="left" width="*">
-<p><a href="/rules/ballot">Vote on Proposals</a></p>
-</td>
+<ul class="list-group">
+    <li class="list-group-item float-left col-lg-4 col-md-6 col-12"><a href="/rules/ballot">Vote on Proposals</a></li>
+    <li class="list-group-item float-left col-lg-4 col-md-6 col-12"><a
+                href="/transactions/showprotections">Protections</a></li>
+    <li class="list-group-item float-left col-lg-4 col-md-6 col-12"><a href="/rules/proposals2018">Rule Proposals</a>
+    </li>
+    <li class="list-group-item float-left col-lg-4 col-md-6 col-12"><a href="/history/2018Season/teammoney">Updated
+            Accounting</a></li>
+    <li class="list-group-item float-left col-lg-4 col-md-6 col-12"><a href="/history/2018Season/draftorder">2018 Draft
+            Order</a></li>
+</ul>
 
-<td align="right" width="*">
-<p><a href="/transactions/showprotections">Protections</a></p>
-</td>
-</tr>
-
-<tr><td align="left" width="*">
-<p><a href="/rules/proposals2018">Rule Proposals</a></p>
-</td>
-
-<td align="right" width="*">
-<p><a href="/history/2018Season/teammoney">Updated Accounting</a></p>
-</td>
-
-<tr><td align="left" width="*">
-<p><a href="/history/2018Season/draftorder">2018 Draft Order</a></p>
-</td>
-
-<td align="right" width="*">
-</td>
-</tr>
-
-
-</table>

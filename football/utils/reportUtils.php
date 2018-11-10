@@ -10,6 +10,8 @@ function supportedFormat($format) {
 
 /**
  * Given an array of titles and the content print out in a table
+ * @param $titles List of the headers for the columns
+ * @param $content The data to fill in
  */
 function outputHtml($titles, $content) {
 
