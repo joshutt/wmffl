@@ -75,6 +75,7 @@ fabric.properties
 # Lib ini's
 /lib/*.ini
 /lib/DataObjects/*.ini
+**/php.ini
 
 # Swap files
 *.swp
