@@ -1,11 +1,10 @@
-<?
-require_once "base/conn.php";
-require_once "base/useful.php";
+<?php
+require_once "utils/connect.php";
 
 if ($viewteam == null) {
     $viewteam = 2;
 }
-$viewteam = mysql_real_escape_string($viewteam);
+$viewteam = $conn->real_escape_string($viewteam);
 
 $teaminfoSQL = "SELECT t.name as 'teamname', t.member, u.name,
 t.logo, t.fulllogo, t.motto, t.teamid, min(o.season) as 'season'
@@ -20,10 +19,11 @@ ORDER BY u.primaryowner DESC, u.name
 //print $teaminfoSQL;
 //exit(1);
 
-$results = mysql_query($teaminfoSQL) or die("Error in query: ".mysql_error());
+$results = mysqli_query($conn, $teaminfoSQL) or die("Error in query: " . mysqli_error($conn));
 $ownerList = null;
 $ownCount = 1;
-while ($teaminfo = mysql_fetch_array($results)) {
+$teamname = "";
+while ($teaminfo = mysqli_fetch_array($results)) {
     $teamname = $teaminfo['teamname'];
     if ($ownerList != null) {
         $ownerList .= " and ";
@@ -40,7 +40,7 @@ while ($teaminfo = mysql_fetch_array($results)) {
 //    $fulllogo = $teaminfo['fulllogo'];
     $logo = $teaminfo['logo'];
 }
-$title = "$teamname $title";
+$title = "$teamname $page";
 if ($ownCount > 1) {
     $ownername = "Owners: $ownerList";
 } else {
@@ -48,13 +48,14 @@ if ($ownCount > 1) {
 }
 
 $titleSQL = "SELECT season FROM titles WHERE teamid=$viewteam AND type='League'";
-$results = mysql_query($titleSQL) or die("Error: ".mysql_error());
+$results = mysqli_query($conn, $titleSQL) or die("Error: " . mysqli_error($conn));
 $champyear = array();
-while (list($newSeason) = mysql_fetch_array($results)) {
+while (list($newSeason) = mysqli_fetch_array($results)) {
     array_push($champyear, $newSeason);
 }
 
-$cssList = array("/base/css/team.css");
+$cssList = array("/stats/stats.css", "/base/css/team.css");
+$javascriptList = array("//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js", "/base/js/jquery.tablesorter.min.js", "/base/js/team.js");
 include "base/menu.php";
 ?>
 
@@ -62,9 +63,9 @@ include "base/menu.php";
 if ($fulllogo == 1) {
 ?>
 
-<center><img src="/teams/<? print $logo; ?>" align="center" alt="<? print $teamname;?>" />
-<H5 ALIGN=Center><? print $ownername; ?><BR>Member Since <? print $teamsince; ?><BR>
-    <I><? print $teammotto; ?></I></H5>
+    <center><img src="/teams/<?= $logo; ?>" align="center" alt="<?= $teamname; ?>"/>
+        <div class="h5 justify-content-center"><?= $ownername; ?><BR>Member Since <?= $teamsince; ?><BR>
+            <I><?= $teammotto; ?></I></div>
 </center>
 
 <?php } else { ?>
@@ -72,22 +73,20 @@ if ($fulllogo == 1) {
 <div id="wrapper">
 <div id="teamLogoBlock">
 <?php if ($logo != null) { ?>
-<div id="logo-left"><img src="/teams/<? print $logo; ?>" alt="<? print $teamname;?>" /></div>
+    <div id="logo-left"><img src="/teams/<?= $logo; ?>" alt="<?= $teamname; ?>"/></div>
 <? } ?>
 <div id="team-name">
-    <span id="big-name"><? print $teamname; ?></span>
+    <span id="big-name"><?= $teamname; ?></span>
     <span id="est">Established <?= $teamsince; ?></span>
-    <span id="ownName"><? print $ownername; ?><BR>Since <? print $ownerSince; ?></span>
+    <span id="ownName"><?= $ownername; ?><BR>Since <?= $ownerSince; ?></span>
 </div>
 <? if ($logo != null) { ?>
-<div id="logo-right"><img src="/teams/<? print $logo; ?>" alt="<? print $teamname;?>" /></div>
+    <div id="logo-right"><img src="/teams/<?= $logo; ?>" alt="<?= $teamname; ?>"/></div>
 <?php } ?>
 </div></div>
-<?php } ?>
+    <?php
+}
 
-<hr class="bar" />
-
-<?
 //$champyear = array (2004);
 include "newlinkbar.php";
 ?>

@@ -2,10 +2,34 @@
 }
 
 li {
-    display: block;
-    border: 1px solid; 
-    float: left;
-    margin: 10px;
-    padding: 5px;
 }
 
+.boxScore {
+}
+
+.gameBox {
+    background-color: #eeeeee;
+    font-size: 10pt;
+    text-decoration: none;
+    color: Brown;
+}
+
+a.NFLHeadline {
+    font-size: 10pt;
+    text-decoration: none;
+    color: Brown
+}
+
+a.NFLHeadline:hover {
+    color: Red
+}
+
+a.comment {
+    font-size: 10pt;
+    text-decoration: none;
+    color: #e2a500
+}
+
+a.comment:hover {
+    color: Brown
+}

@@ -1,6 +1,0 @@
-[12-Jun-2007 09:21:49] PHP Parse error:  syntax error, unexpected T_OBJECT_OPERATOR, expecting ',' or ';' in /home/wmffl/public_html/wmfflblog/test.php on line 12
-[12-Jun-2007 09:24:07] PHP Parse error:  syntax error, unexpected T_OBJECT_OPERATOR in /home/wmffl/public_html/wmfflblog/test.php on line 12
-[12-Jun-2007 09:55:13] PHP Fatal error:  Call to undefined function:  http_get() in /home/wmffl/public_html/wmfflblog/test.php on line 16
-[12-Jun-2007 10:57:03] PHP Parse error:  syntax error, unexpected '(', expecting '}' in /home/wmffl/public_html/wmfflblog/test.php on line 39
-[12-Jun-2007 13:32:10] PHP Parse error:  syntax error, unexpected '(', expecting '}' in /home/wmffl/public_html/wmfflblog/test.php on line 42
-[12-Jun-2007 13:32:26] PHP Parse error:  syntax error, unexpected '(', expecting '}' in /home/wmffl/public_html/wmfflblog/test.php on line 43

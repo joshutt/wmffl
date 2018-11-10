@@ -16,9 +16,9 @@ WHERE $viewteam in (s.teama, s.teamb) and postseason=1
 group by playoffs desc
 EOD;
 
-$result = mysql_query($recordQuery);
+$result = mysqli_query($conn, $recordQuery);
 
-while ($recordList = mysql_fetch_array($result)) {
+while ($recordList = mysqli_fetch_array($result)) {
     $newArray = array($recordList["event"], $recordList["win"], $recordList["lose"], $recordList["tie"]);
 
     if ($recordList["win"] + $recordList["tie"] + $recordList["lose"] == 0) {
@@ -47,9 +47,9 @@ GROUP BY s.season
 order by s.season desc
 EOD;
 
-$result = mysql_query($recordQuery);
+$result = mysqli_query($conn, $recordQuery);
 
-while ($recordList = mysql_fetch_array($result)) {
+while ($recordList = mysqli_fetch_array($result)) {
     $newArray = array($recordList["season"], $recordList["win"], $recordList["lose"], $recordList["tie"]);
 
     if ($newArray[1]+$newArray[2]+$newArray[3] != 0) {
@@ -93,10 +93,10 @@ $playoffQuery =<<<EOD
     order by s.season asc, s.week asc
 EOD;
 
-$result = mysql_query($playoffQuery) or die("Mysql error: ".mysql_error());
+$result = mysqli_query($conn, $playoffQuery) or die("Mysql error: " . mysqli_error());
 $playoffResults = array();
 
-while ($recordList = mysql_fetch_array($result)) {
+while ($recordList = mysqli_fetch_array($result)) {
     $singleGame = array();
     
     if ($recordList["myscore"] > $recordList["otherscore"]) {
@@ -123,11 +123,11 @@ $titleQuery =<<<EOD
     order by t.season asc
 EOD;
 
-$result = mysql_query($titleQuery) or die("Mysql error: ".mysql_error());
+$result = mysqli_query($conn, $titleQuery) or die("Mysql error: " . mysqli_error());
 $leagueTitles = array();
 $divisionTitles = array();
 
-while ($titles = mysql_fetch_array($result)) {
+while ($titles = mysqli_fetch_array($result)) {
     if ($titles["type"] == "League") {
         array_push($leagueTitles, $titles["season"]);
     } else if ($titles["type"] == "Division") {
@@ -142,10 +142,10 @@ while ($titles = mysql_fetch_array($result)) {
  *********************************************************/
 $namedArray = array();
 $nameQuery = "select season, name from teamnames where teamid=$viewteam order by season asc";
-$result = mysql_query($nameQuery);
+$result = mysqli_query($conn, $nameQuery);
 $prevName = "";
 $startSeason = 0;
-while ($nameSet = mysql_fetch_array($result)) {
+while ($nameSet = mysqli_fetch_array($result)) {
     if ($nameSet["name"] != $prevName) {
         if ($startSeason != 0) {
             $oneName = array("start" => $startSeason, "end" => $nameSet["season"]-1, "name" => $prevName);
@@ -163,11 +163,11 @@ array_push($namedArray, $oneName);
  *********************************************************/
 $ownerArray = array();
 $ownerQuery = "SELECT u.name, o.season, o.primary from owners o, user u where o.userid=u.userid and o.teamid=$viewteam order by o.season asc, o.primary asc";
-$result = mysql_query($ownerQuery) or die("Die: ".mysql_error());
+$result = mysqli_query($conn, $ownerQuery) or die("Die: " . mysqli_error());
 $prevName = "";
 $finalName = "";
 $startSeason = 0;
-while ($ownerSet = mysql_fetch_array($result)) {
+while ($ownerSet = mysqli_fetch_array($result)) {
     if ($ownerSet["primary"] == 0) {
         $finalName .= " and ".$ownerSet["name"];
         continue;
@@ -195,7 +195,7 @@ array_push($ownerArray, $oneName);
 print <<<EOD
 <table width="100%">
 <TR><TD ALIGN=Center COLSPAN=2>
-	<A NAME="History"><H3>History</H3></A>
+	<A NAME="History"><H4 class="font-weight-bold">History</H4></A>
 	<TABLE WIDTH=75%>
 	<TH>Record
 	<TR><TD WIDTH=20%><B>YEAR</B></TD><TD WIDTH=8%><B>W</B></TD><TD WIDTH=8%><B>L</B></TD>
@@ -295,4 +295,3 @@ foreach ($namedArray as $names) {
     }
 }
 print "</TABLE></TD></TR>";
-?>
