@@ -10,6 +10,10 @@ if (isset($_REQUEST["nflteam"])) {
     $where .= "and p.team='${_REQUEST["nflteam"]}' ";
 }
 
+if (isset($_REQUEST["playerid"])) {
+    $where .= "and p.playerid=${_REQUEST["playerid"]}";
+}
+
 // Query to get current rosters
 $sql = <<<EOD
 
