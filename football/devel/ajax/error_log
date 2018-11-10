@@ -1,7 +1,0 @@
-[30-May-2007 15:05:18] PHP Parse error:  syntax error, unexpected T_START_HEREDOC in /home/wmffl/public_html/devel/ajax/roster.php on line 5
-[30-May-2007 15:05:44] PHP Parse error:  syntax error, unexpected T_START_HEREDOC in /home/wmffl/public_html/devel/ajax/roster.php on line 5
-[30-May-2007 15:06:03] PHP Warning:  main(start.php) [<a href='function.main'>function.main</a>]: failed to open stream: No such file or directory in /home/wmffl/public_html/devel/ajax/roster.php on line 2
-[30-May-2007 15:06:03] PHP Fatal error:  main() [<a href='function.require'>function.require</a>]: Failed opening required 'start.php' (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/wmffl/public_html/devel/ajax/roster.php on line 2
-[30-May-2007 15:06:39] PHP Warning:  main(../util/start.php) [<a href='function.main'>function.main</a>]: failed to open stream: No such file or directory in /home/wmffl/public_html/devel/ajax/roster.php on line 2
-[30-May-2007 15:06:39] PHP Fatal error:  main() [<a href='function.require'>function.require</a>]: Failed opening required '../util/start.php' (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/wmffl/public_html/devel/ajax/roster.php on line 2
-[30-May-2007 15:07:04] PHP Warning:  mysql_fetch_row(): supplied argument is not a valid MySQL result resource in /home/wmffl/public_html/devel/ajax/roster.php on line 15
