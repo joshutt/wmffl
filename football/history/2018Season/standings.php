@@ -9,7 +9,7 @@ if ($thisWeek == "") {
 $thisSeason=2018;
 $title = "Standings";
 
-$clinchedList = array();
+$clinchedList = array('Trump Molests Collies' => 'y-');
 
 ?>
 

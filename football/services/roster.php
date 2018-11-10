@@ -1,6 +1,10 @@
 <?
 require_once "utils/start.php";
 
+if (isset($_GET['id'])) {
+    $teamCrit = "AND t.teamid=".$_GET['id'];
+}
+
 // Query to get current rosters
 $sql = <<<EOD
 
@@ -9,6 +13,7 @@ FROM newplayers p
 JOIN roster r ON r.playerid=p.playerid and r.dateoff is null
 JOIN teamnames t ON r.teamid=t.teamid
 WHERE t.season=$currentSeason
+$teamCrit
 ORDER BY t.name, p.pos, p.lastname
 
 EOD;
