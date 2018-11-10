@@ -1,0 +1,244 @@
+table.other {
+    border-color: #aabbcc
+}
+
+.statbox {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    border: 1px;
+}
+
+.statblock {
+    border: 1px;
+}
+
+.othertitle {
+    background: #660000;
+    color: #e2a500;
+    text-weight: bold;
+    font-size: 14pt;
+    text-align: center;
+    font-family: times, courier;
+}
+
+.othername {
+    background: #dee3e7;
+    color: #660000;
+    text-weight: bold;
+}
+
+.otherscore {
+    background: #dee3e7;
+    color: #660000;
+    text-weight: bold;
+}
+
+.boxlink {
+    background: #efefef;
+    font-size: 12px;
+}
+
+.reserve {
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center
+}
+
+.showReserve {
+    display: none;
+    width: 100%;
+    background-color: #FFFFFF;
+    border: 0px #006699 solid;
+    border-spacing: 1px;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.buffer {
+    height: 10px
+}
+
+.tablebuffer {
+    height: 25px
+}
+
+.breakbuff {
+    height: 100px
+}
+
+.forumline {
+    background-color: #FFFFFF;
+    border: 0px #006699 solid;
+    border-spacing: 1px;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.liveTable {
+    border-collapse: collapse;
+    border: 0px solid black;
+    width: 100%;
+    padding: 0px
+}
+
+.expandStats {
+    border-collapse: collapse;
+    border: 1px solid black;
+    padding: 0px;
+}
+
+.scoretitle {
+    text-color: #660000;
+}
+
+#statline {
+    background-color: #DCDBBE;
+    height: 10px;
+}
+
+.c1 {
+    background-color: #EFEFEF;
+    font-size: 11px;
+    margin-right: 3px;
+}
+
+.c2 {
+    background-color: #DEE3E7;
+    width: 30px;
+    font-size: 11px;
+    text-align: center
+}
+
+.posprefix {
+    float: left;
+    text-align: right;
+    width: 18px
+}
+
+.teamprefix {
+    width: 24px;
+    float: right;
+    text-align: left;
+    padding: 0px 1px 0px 2px;
+}
+
+.PQDO {
+    float: left;
+    color: #FF3300;
+    font-style: italic;
+    width: 20px;
+    text-align: center;
+    padding: 0px 1px 0px 2px;
+}
+
+.player {
+    margin-left: 3px;
+    margin-right: 3px;
+    padding-left: 2px;
+    float: left;
+}
+
+.player:hover {
+    color: #00B0B0;
+}
+
+.lnx {
+    font-weight: 700;
+    text-decoration: none;
+    min-width: 50px
+}
+
+.bye {
+    font-color: red
+}
+
+.final {
+    font-color: black
+}
+
+.later {
+    font-color: green
+}
+
+.current {
+    font-color: blue
+}
+
+.statItem {
+    color: rgb(204, 51, 51);
+    font-weight: 700;
+    width: 40px;
+    padding-left: 5px;
+    text-align: right;
+    float: right;
+}
+
+.gp {
+    float: left;
+    color: red;
+    font-weight: 600;
+    width: 24px;
+}
+
+.rightLine {
+    float: right
+}
+
+.R {
+    text-align: right;
+}
+
+.L {
+    text-align: left;
+}
+
+.C {
+    text-align: center;
+}
+
+.top {
+    align: top;
+}
+
+.c1pts {
+    font-weight: 700;
+    margin-left: 3px;
+    padding-right: 3px;
+    text-align: right;
+}
+
+.c2pts {
+    font-weight: 700
+}
+
+.c1bye {
+    background-color: #F49F9F;
+}
+
+.c2bye {
+    background-color: #EE7173;
+}
+
+.c1illegal {
+    background-color: #F4F49F;
+}
+
+.c2illegal {
+    background-color: #EEF173;
+}
+
+.c1current {
+    background-color: #9F9FF4;
+}
+
+.c2current {
+    background-color: #6F71F3;
+}
+
+.c1later {
+    background-color: #9FF49F;
+}
+
+.c2later {
+    background-color: #6FF173;
+}

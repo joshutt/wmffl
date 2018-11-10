@@ -107,7 +107,16 @@ class Team {
     }
 
     function getPrintRecord() {
-        return sprintf("%d - %d - %d &nbsp;&nbsp;&nbsp;%5.3f", $this->record[0], $this->record[1], $this->record[2], $this->getWinPCT());
+        return sprintf("%s &nbsp;&nbsp;&nbsp;%5.3f", $this->printShortRecord(), $this->getWinPCT());
+    }
+
+    function printShortRecord()
+    {
+        if ($this->record[2] > 0) {
+            return sprintf("%d - %d - %d", $this->record[0], $this->record[1], $this->record[2]);
+        } else {
+            return sprintf("%d - %d", $this->record[0], $this->record[1]);
+        }
     }
 }
 

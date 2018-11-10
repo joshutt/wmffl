@@ -34,29 +34,6 @@ $results = mysqli_query($conn, $sql) or die("Dead: $sql <br/>" . mysqli_error($c
 
 ?>
 
-<style>
-    A.Score:link {
-        font-size: 10pt;
-        text-decoration: none;
-        color: Brown;
-    }
-
-    A.Score:visited {
-        font-size: 10pt;
-        text-decoration: none;
-        color: Brown;
-    }
-
-    A.Score:hover {
-        font-size: 10pt;
-        color: Gold;
-    }
-
-    .NFLNewsDate {
-        font-size: 8pt
-    }
-</style>
-
 <div class="cat text-center"><?= strtoupper($weekname) ?> SCORES</div>
 <div class="container">
     <?php
@@ -74,10 +51,10 @@ $results = mysqli_query($conn, $sql) or die("Dead: $sql <br/>" . mysqli_error($c
             }
             $otInd = $ot ? "OT" : "";
             ?>
-            <div class="boxScore col-6 px-0 text-left"><?= $leader ?><br/> <?= $trail ?></div>
-            <div class="boxScore col-2 px-0 text-center"><?= $leadscore ?><br/><?= $trailscore ?>
+            <div class="boxScore col-8 px-0 text-left text-truncate"><?= $leader ?><br/> <?= $trail ?></div>
+            <div class="boxScore col-1 px-0 text-center"><?= $leadscore ?><br/><?= $trailscore ?>
                 <span class="align-top"><?= $otInd ?></span></div>
-            <div class="boxScore col-4 align-middle px-0 text-center pt-1"><a class="NFLHeadline"
+            <div class="boxScore col-3 align-middle px-0 text-center pt-1"><a class="NFLHeadline"
                                                                               href="/activate/currentscore.php?teamid=<?= $team1 ?>&week=<?= $week ?>">Box
                     Score</a></div>
 

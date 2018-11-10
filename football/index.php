@@ -27,7 +27,7 @@ include "base/menu.php";
 
         </TD>
 
-        <td align="right" valign="top" width="244">
+        <td align="right" valign="top" width="260">
             <div class="card m-1">
                 <?php include "scores.php" ?>
             </div>

@@ -1,98 +1,12 @@
 <?
-require_once "utils/start.php";
+require_once "utils/connect.php";
 include "base/scoring.php";
+include "scoreFunctions.php";
 
-function getOtherTeam($thisTeamID, $thisWeek, $thisSeason, $conn) {
-    $getTeamSQL = "SELECT if(s.scorea >= s.scoreb, s.teamA, s.teamB) as 'teamA', ";
-    $getTeamSQL .= "if(s.scorea >= s.scoreb, s.teamB, s.teamA) as 'teamB', ";
-    $getTeamSQL .= "if(s.scorea >= s.scoreb, tna.name, tnb.name), ";
-    $getTeamSQL .= "if(s.scorea >= s.scoreb, tnb.name, tna.name) ";
-	$getTeamSQL .= "FROM schedule s, team ta, team tb, teamnames tna, teamnames tnb ";
-    $getTeamSQL .= "WHERE s.Week=$thisWeek AND s.Season=$thisSeason ";
-    $getTeamSQL .= "AND (s.TeamA=$thisTeamID OR s.TeamB=$thisTeamID) ";
-	$getTeamSQL .= "AND s.teamA=ta.teamid and s.teamb=tb.teamid ";
-    $getTeamSQL .= "AND ta.teamid=tna.teamid AND tb.teamid=tnb.teamid ";
-    $getTeamSQL .= "AND tna.season=s.Season AND tnb.season=s.season ";
-
-    $results = mysql_query($getTeamSQL, $conn);
-    $row = mysql_fetch_array($results);
-    return $row;
-}
-
-function getOtherGames($thisTeamID, $thisWeek, $thisSeason, $conn) {
-    $getTeamSQL = "SELECT s.teamA, s.teamB, ta.abbrev as 'aname', tb.abbrev as 'bname', ";
-	$getTeamSQL .= "s.scorea, s.scoreb, s.overtime ";
-	$getTeamSQL .= "FROM schedule s, teamnames ta, teamnames tb ";
-    $getTeamSQL .= "WHERE s.Week=$thisWeek AND s.Season=$thisSeason ";
-//    $getTeamSQL .= "AND s.TeamA<>$thisTeamID and s.TeamB<>$thisTeamID ";
-	$getTeamSQL .= "AND s.teama=ta.teamid and s.teamb=tb.teamid ";
-    $getTeamSQL .= "AND ta.season=s.season AND tb.season=s.season ";
-    $results = mysql_query($getTeamSQL, $conn) or die("Database error: ".mysql_error());
-	return $results;
-//    $row = mysql_fetch_array($results);
-//    return $row;
-}
-
-
-function generateReserves($thisTeamID, $currentSeason, $currentWeek) {
-    $select = <<<EOD
-select p.pos, p.lastname, p.firstname, nr.nflteamid as 'team', CONVERT_TZ(n.kickoff, 'SYSTEM', 'GMT') as 'kickoff', n.secRemain, n.complete, p.flmid, s.*, 
-if (r.dateon is null and p.pos<>'HC', 1, 0) as 'illegal', a.pos as 'startPos', a.teamid as 'teamcheck1', 
-r.teamid as 'teamcheck2', n.secRemain, gp1.side as 'GPMe', gp2.side as 'GPThem', CONVERT_TZ(wm.ActivationDue, 'SYSTEM', 'GMT') as 'ActivationDue'
-from newplayers p
-JOIN weekmap wm
-LEFT JOIN roster r on p.playerid=r.playerid and r.dateon<wm.activationDue and (r.dateoff is null or r.dateoff >= wm.activationDue)
-LEFT JOIN revisedactivations a on a.season=wm.season and a.week=wm.week and a.playerid=p.playerid
-left join stats s on s.season=wm.season and s.week=wm.week and s.statid=p.flmid
-left join nflrosters nr on p.playerid=nr.playerid and nr.dateon <= wm.activationdue and (nr.dateoff is null or nr.dateoff >= wm.activationdue)
-left join nflgames n on n.week=wm.week and n.season=wm.season and nr.nflteamid in (n.hometeam, n.roadteam)
-  LEFT JOIN gameplan gp1 ON wm.season=gp1.season and wm.week=gp1.week and p.playerid=gp1.playerid and gp1.side='Me'
-  LEFT JOIN gameplan gp2 ON wm.season=gp2.season and wm.week=gp2.week and p.playerid=gp2.playerid and gp2.side='Them'
-WHERE wm.season=$currentSeason and wm.week=$currentWeek and (r.teamid=$thisTeamID or a.teamid=$thisTeamID)
-order by p.pos, p.lastname, p.firstname
-EOD;
-    return $select;
-}
-
-
-function printPlayer($row, $color, $score, $reserveClass="") {
-    $printString = "<tr><td class=\"c1 c1$color\"><div class=\"posprefix\">{$row['pos']}</div>";
-    $printString .= "<div class=\"PQDO\"> </div>";
-    $printString .= "<div class=\"lnx\"><a class=\"player\" onmouseover=\"Q('{$row['flmid']}')\">{$row['lastname']}, {$row['firstname']}</a></div>";
-    $printString .= "<div class=\"rightLine\">";
-    /*
-    if (time() > strtotime($row["ActivationDue"])) {
-        if ($row["GPMe"] == "Me") {
-            $printString .= "<div class=\"gp\">GP+</div> ";
-        }
-        if ($row["GPThem"] == "Them") {
-            $printString .= "<div class=\"gp\">GP-</div> ";
-        }
-    }
-    */
-    $printString .= "<div class=\"teamprefix\">{$row['team']}</div></div></td>";
-    $printString .= "<td class=\"c2 c2$color\">$score</td></tr>";
-    return $printString;
-}
-
-
-
-function playerJavaScript($row, $score) {
-    $javascriptLine = "player.M{$row['flmid']} = new ply(\"{$row['flmid']}\", \"$score\", \"{$row['secRemain']}\",";
-    $javascriptLine .= "\"{$row['firstname']} {$row['lastname']}\", \"{$row['pos']}\", \"{$row['team']}\", ";
-    $scoreString = scoreString($row, $row['pos']);
-    $javascriptLine .= "\"$scoreString\");\n";
-    return $javascriptLine;
-}
-
-?>
-
-
-<?
-#$thisTeamID = $_GET['teamid'] ? $_GET['teamid'] : 2;
-//$thisTeamID = isset($teamid) ? $teamid : 2;
+// Get Team to show
 $thisTeamID = isset($teamid) ? $teamid : 2;
 
+// Determine season and week to show
 if ($currentWeek < 1) {
     $thisSeason= isset($season) ? $season : $currentSeason-1;
     $thisWeek = isset($week) ? $week : 16;
@@ -106,84 +20,19 @@ if ($thisSeason == $currentSeason) {
 } else {
     $weekListSQL = "SELECT week, weekname FROM weekmap WHERE season=$thisSeason AND week<=16 AND week>=1 ORDER BY week";
 }
-$results = mysql_query($weekListSQL);
+$results = mysqli_query($conn, $weekListSQL);
 $weekList = array();
-while ($row = mysql_fetch_array($results)) {
+while ($row = mysqli_fetch_array($results)) {
     array_push($weekList, $row);
 }
 
+$weekLabel = $weekList[$thisWeek - 1][1];
 $title = "Current Scores";
-$weekLabel = $weekList[$thisWeek-1][1];
+$cssList = array("score.css");
+include "$DOCUMENT_ROOT/base/menu.php";
 ?>
 
-<? include "$DOCUMENT_ROOT/base/menu.php"; ?>
 
-<style>
-<!--
-/*body,font,td,th,p{font-family:Arial,Helvetica,sans-serif;font-size:11px;} */
-table.other {border-color: #aabbcc}
-.statbox{font-family:Arial,Helvetica,sans-serif;font-size:11px;border:1}
-.statblock{border:1px;}
-.othertitle {background:#660000 ; color:#e2a500; text-decoration:bold; font-size:14pt; text-align=center; font-family: times, courier;}
-.othername {background: #dee3e7; color:#660000; text-decoration:bold; }
-.otherscore {background: #dee3e7; color:#660000; text-decoration:bold; }
-.boxlink {background: #efefef; font-size: 12px;}
-.reserve {font-size: 12px; font-weight: bold; text-align: center}
-.showReserve {display: none; width: 100%;background-color:#FFFFFF;border:0px #006699 solid;border-spacing:1px;border-collapse:collapse;width:100%;}
-.buffer {height: 10px}
-.tablebuffer {height: 25px}
-.breakbuff {height: 100px}
-.forumline{background-color:#FFFFFF;border:0px #006699 solid;border-spacing:1px;border-collapse:collapse;width:100%;}
-.liveTable{border-collapse:collapse;border:0px solid black;width:100%;padding:0px}
-.expandStats{border-collapse:collapse;border:1px solid black;padding:0px;}
-.scoretitle{text-color:#660000;}
-
-#statline {background-color: #DCDBBE; height: 10px;}
-
-.c1{background-color:#EFEFEF; font-size:11px; margin-right:3px;}
-.c2{background-color:#DEE3E7; width: 30px; font-size:11px; text-align:center}
-.posprefix{float:left;text-align:right;width:18px}
-.teamprefix{width:24px; float: right; text-align:left; padding: 0px 1px 0px 2px;}
-.PQDO {
-	float: left;
-	color: #FF3300;
-	font-style: italic;
-	width: 20px;
-	text-align: center;
-	padding: 0px 1px 0px 2px;
-}
-.player{margin-left:3px;margin-right:3px; padding-left: 2px; float:left;}
-.player:hover{color:#00B0B0;}
-.lnx{font-weight:700;text-decoration:none;min-width:50px}
-.bye {font-color: red}
-.final {font-color: black}
-.later {font-color: green}
-.current {font-color: blue}
-.statItem {color: rgb(204, 51, 51); font-weight: 700; width: 40px; padding-left: 5px; text-align: right; float: right; }
-
-.gp {float: left; color: red; font-weight: 600; width: 24px;}
-.rightLine {float: right}
-
-.R {text-align: right;}
-.L {text-align: left;}
-.C {text-align: center;}
-.top {align: top;}
-
-.c1pts {font-weight:700; margin-left:3px; padding-right: 3px; text-align: right;}
-.c2pts {font-weight:700}
-
-.c1bye {background-color:#F49F9F;}
-.c2bye {background-color:#EE7173;}
-.c1illegal {background-color:#F4F49F;}
-.c2illegal {background-color:#EEF173;}
-.c1current {background-color:#9F9FF4;}
-.c2current {background-color:#6F71F3;}
-.c1later {background-color:#9FF49F;}
-.c2later {background-color:#6FF173;}
--->
-</style>
-
-<hr size = "1" />
 <table border="0" width="100%">
 
 <tr><td valign="top">
@@ -205,13 +54,13 @@ for ($i = 0; $i<2; $i++) {
 	$reserveString[$i] = "";
     $timeRemain = 0;
 
-    $results = mysql_query($select, $conn) or die(mysql_error());
+    $results = mysqli_query($conn, $select) or die(mysqli_error($conn));
 
     $totalPoints[$i] = 0;
     $offPoints[$i] = 0;
     $defPoints[$i] = 0;
     $penalty[$i] = 0;
-    while ($row = mysql_fetch_array($results)) {
+    while ($row = mysqli_fetch_array($results)) {
         if ($row["teamcheck1"] != null && $row["teamcheck1"]!=$teams[$i]) {
             continue;
         }
@@ -360,38 +209,29 @@ $printString[1] = "<TR><TH>".$teams[3]."</TH><th>".$startPoints[1]."</th></TR>".
 <table class="expandStats" align="center" border="0">
 
 <tbody><tr>
-				<td class="cat C" colspan="6">Individual Player Summary</td>
+    <td class="cat C" colspan="2">Individual Player Summary</td>
 			</tr>
 			<tr>
-				<th class="C" id="mugname" colspan="6">&nbsp;</th>
+                <th class="C" id="mugname" colspan="2">&nbsp;</th>
 			</tr>
 			<tr>
-                <td class="row c1 R" style="width: 16%;">Pos:</td>
-                <td class="row c1 L" style="width: 16%;" id="pos">&nbsp;</td>
-				<td class="row c1 R" style="width: 16%;">NFL:</td>
-				<td class="row c1 L" style="width: 16%;" id="prmatchup">&nbsp;</td>
-				<td class="row c1 R" style="width: 16%;">Current Score:</td>
-				<td class="row c1 scoreActive" id="prscore" style="width: 16%;">&nbsp;</td>
+                <td class="c1 L pl-1">Pos: <span id="pos">&nbsp;</span></td>
+                <td class="c1 L pr-1">NFL: <span class="scoreActive" id="prmatchup">&nbsp;</span></td>
 			</tr>
 			<tr>
                 <!--
 				<td class="row c1 R">Injury class: </td>
                 <td style="color: rgb(102, 153, 153);" class="row c1 L healthy" id="prhealth">Healthy</td>
                 -->
-				<td class="row c1 R"></td>
-                <td style="color: rgb(102, 153, 153);" class="row c1 L healthy" id="prhealth"></td>
-				<td class="row c1 R">Time left: </td>
-				<td class="row c1 L scoreActive" id="prminleft"> </td>
-				<td class="row c1">&nbsp;</td>
-				<td class="row c1">&nbsp;</td>
+                <td class="c1 L pl-1">Time left: <span id="prminleft">&nbsp;</span></td>
+                <td class="c1 L pr-1">Current Score: <span id="prscore">&nbsp;</span></td>
 			</tr>
 			<tr>
-				<td colspan="6" id="statline"></td>
+                <td colspan="2" id="statline"></td>
 
 			</tr>
 			<tr>
-				<td class="row c1 R top" colspan="5" valign="top" id="breakdown">&nbsp;</td>
-				<td class="row c1 breakbuff">&nbsp;</td>
+                <td class="c1 R top breakbuff pr-2" colspan="2" valign="top" id="breakdown">&nbsp;</td>
 			</tr>
 			</tbody>
 
@@ -582,7 +422,7 @@ function Q (index)
 <?
 $gameresults = getOtherGames($thisTeamID, $thisWeek, $thisSeason, $conn);
 $count = 0;
-while ($row = mysql_fetch_array($gameresults)) {
+while ($row = mysqli_fetch_array($gameresults)) {
     $count++;
     if ($row["scorea"] >= $row["scoreb"]) {
         $winningName = $row["aname"];
@@ -623,7 +463,7 @@ while ($row = mysql_fetch_array($gameresults)) {
 
 </table>
 
-<center><p><b>Previous Weeks</b>
+        <div class="mt-2 justify-content-center text-center"><p><b>Previous Weeks</b>
 <form action="currentscore.php" method="post">
 <input type="hidden" name="season" value="<? print $thisSeason; ?>"/>
 <input type="hidden" name="teamid" value="<? print $thisTeamID; ?>"/>
@@ -638,7 +478,7 @@ foreach ($weekList as $row) {
 ?>
 </select>
 </form>
-</center>
+        </div>
 
 </td></tr>
 </table>

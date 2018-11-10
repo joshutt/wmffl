@@ -25,9 +25,9 @@ foreach ($teamArray as $t) {
         $margin = "mt-2";
         ?>
     <?php } ?>
-    <div class="row <?= $margin ?>">
-        <div class="boxScore col-6 pl-1 text-left"><?= $t->name ?></div>
-        <div class="boxScore col-6  text-right"><?= $t->getPrintRecord() ?></div>
+    <div class="row <?= $margin ?> justify-content-between">
+        <div class="boxScore col-8 pl-1 pr-0 text-left text-truncate"><?= $t->name ?></div>
+        <div class="boxScore col-4 px-0 d-block text-center"><?= $t->printShortRecord() ?></div>
     </div>
 <?php } ?>
 </div>
