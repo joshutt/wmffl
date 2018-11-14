@@ -247,3 +247,11 @@ a.btn.disabled, fieldset:disabled a.btn {
 .list-group {
     display: inline-block;
 }
+
+.mainStory > div > table {
+    font-size: 11px;
+}
+
+.mainStory > div > p > strong > span {
+    font-size: medium !important;
+}
