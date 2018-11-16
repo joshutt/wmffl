@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 
 require "DataObjects/Forum.php";
@@ -11,16 +11,12 @@ $post->find();
 
 ?>
 
-<style>
-</STYLE>
-
-
 <div class="cat text-center">LATEST TRASH TALK</div>
 <div class="my-1 text-left gameBox">
     <?php
 while ($post->fetch()) {
     ?>
-    <div class="boxScore p-1"><a class="NFLHeadline" href="/forum/comments.php"><?= $post->gettitle() ?></a></div>
+    <div class="boxScore p-1"><a class="NFLHeadline" href="/forum/comments.php#<?= $post->forumid ?>"><?= $post->gettitle() ?></a></div>
     <?php
 }
 ?>
