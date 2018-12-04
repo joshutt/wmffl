@@ -53,7 +53,7 @@ require_once "utils/start.php";
             <div class="sideButton"><a class="sideButton" href="/history/2018Season/standings">Standings</a></div>
             <div class="sideButton"><a class="sideButton" href="/transactions/transactions">Transactions</a></div>
             <div class="sideButton"><a class="sideButton" href="/rules">Rules</a></div>
-            <div class="sideButton"><a class="sideButton" href="/history.php">History</a></div>
+            <div class="sideButton"><a class="sideButton" href="/history">History</a></div>
 
             <? include "login/logininc.php"; ?>
 
