@@ -1,9 +1,7 @@
-<HTML>
-<HEAD>
-<TITLE>Fighting Squirrels</TITLE>
-</HEAD>
-
-<!--#include virtual="/base/menu.php"-->
+<?php
+$title = "Fighting Squirrels";
+include "base/menu.php";
+?>
 
 <H1 ALIGN=Center>The Fighting Squirrels</H1>
 <H5 ALIGN=Center>Owner: Andy Eckert<BR>Member in 1996 (now Defunct)</H5>
@@ -46,4 +44,4 @@ AEE 11-10-97
 </TABLE>
 
 
-<!--#include virtual="/base/footer.html"-->
+<?php include "base/footer.html"; ?>

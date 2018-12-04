@@ -42,7 +42,7 @@ foreach ($teamList as $divisionName => $division) {
 
 <td><table>
 <th>Defunct Teams</th>
-<tr><td><a href="squirrels.shtml">The Fighting Squirrels</a></td></tr>
+<tr><td><a href="squirrels.php">The Fighting Squirrels</a></td></tr>
 <tr><td>Kingsmen</td></tr>
 </table></td>
 
