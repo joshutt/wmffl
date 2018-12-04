@@ -4,7 +4,11 @@ require_once "utils/start.php";
 $page = "Schedule";
 include "teamheader.php";
 
-include "indschedule.php";
+if ($vsTeam != null) {
+    include "h2h.php";
+} else {
+    include "indschedule.php";
+}
 
 include "base/footer.html";
 ?>

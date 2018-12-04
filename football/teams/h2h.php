@@ -21,16 +21,16 @@ group by t.teamid) ts
 ON t.teamid=ts.teamid and t.season=ts.season
 ORDER BY t.name
 ";
-$res1 = mysql_query($otherSeason);
+$res1 = mysqli_query($conn, $otherSeason);
 ?>
 
-<div align="right"><form action="teamschedule-new.php">
+<div align="right"><form action="teamschedule.php">
 <input type="hidden" name="viewteam" value="<? print $viewteam; ?>"/>
 View other teams: 
 <select name="vsTeam" onChange="submit();">
 <option value=""></option>
 <?
-while (list($newName, $newTeamid) = mysql_fetch_array($res1)) {
+while (list($newName, $newTeamid) = mysqli_fetch_array($res1)) {
     if ($newTeamid == $vsTeam) {
         $displayName = $newName;
     }
@@ -73,8 +73,8 @@ AND t.teamid=$vsTeam
 ORDER BY wm.season, wm.week
 EOD;
 
-$r2 = mysql_query($SQL2) or die("Unable to complete query: ".mysql_error());
-list($win, $tie, $loss) = mysql_fetch_array($r2);
+$r2 = mysqli_query($conn, $SQL2) or die("Unable to complete query: ".mysqli_error($conn));
+list($win, $tie, $loss) = mysqli_fetch_array($r2);
 if ($win+$tie+$loss == 0) {
     $pct = 0.000;
 } else {
@@ -83,11 +83,11 @@ if ($win+$tie+$loss == 0) {
 
 printf("<h3 align=\"center\">(%d - %d - %d - %5.3f)</h3>", $win, $loss, $tie, $pct);
 
-$results = mysql_query($SQL) or die("Unable to complete query: ".mysql_error());
+$results = mysqli_query($conn, $SQL) or die("Unable to complete query: ".mysqli_error($conn));
 
-print "<table class=\"headTable\">";
+print "<table class=\"table table-striped table-sm\">";
 $wins=0; $ties=0; $loss=0;
-while ($sched = mysql_fetch_array($results)) {
+while ($sched = mysqli_fetch_array($results)) {
     if ($sched['score'] != null && ($sched['season'] < $currentSeason || $sched['week'] < $checkWeek)) {
         print "<tr>";
         print "<td>${sched['season']}</td>";
