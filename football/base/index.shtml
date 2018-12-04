@@ -1,5 +1,0 @@
-<!--#include virtual="menu.php"-->
-
-<p>This page is only here to prevent Warren from snooping around.  So was I right, is this Warren?  You're trying to poke around and see what other files are in this directory aren't you?  How stupid do you think I am?</p>
-
-<!--#include virtual="footer.html"-->
