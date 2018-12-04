@@ -19,7 +19,7 @@ require_once "utils/start.php";
 
     // If no cssList then add it, otherwise add core.css
     if (isset($cssList)) {
-        array_unshift($cssList, "/base/css/core.css");
+        array_unshift($cssList, "/base/css/core.css?v11");
         array_unshift($cssList, "/transactions/livedraft/bootstrap.min.css");
     } else {
         $cssList = array("/transactions/livedraft/bootstrap.min.css", "/base/css/core.css");

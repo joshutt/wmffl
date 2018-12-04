@@ -9,7 +9,7 @@ if ($thisWeek == "") {
 $thisSeason=2018;
 $title = "Standings";
 
-$clinchedList = array('Trump Molests Collies' => 'y-', 'Amish Electricians' => 'e-', 'Fighting Squirrels' => 'e-');
+$clinchedList = array('Trump Molests Collies' => 'y-', 'Amish Electricians' => 'z-', 'Fighting Squirrels' => 'e-', 'Gallic Warriors' => 'e-', 'Crusaders' => 'e-', 'Norsemen' => 'y-', 'Fightin\' Bitin\' Beavers' => 'y-', 'Sean Taylor\'s Ashes' => 'e-', 'Sacks on the Beach' => 'e-', 'Testudos Revenge' => 'e-');
 
 include "base/menu.php";
 ?>
@@ -18,9 +18,9 @@ include "base/menu.php";
 <table width="100%">
 <tr><td class="cat" align="center">Current Standings</td></tr></table>
 <center>
-<? include "../common/weekstandings.php"; ?>
+<?php
+include "../common/weekstandings.php";
 
-<?
 if (!empty($clinchedList)) {
 ?>
 
@@ -31,6 +31,8 @@ y - clinched division title<br/>
 z - clinched Toilet Bowl berth
 </p>
 </center>
-<?php } ?>
+<?php
+}
 
-<? include "base/footer.html"; ?>
+include "base/footer.html";
+?>

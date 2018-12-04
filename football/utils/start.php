@@ -11,6 +11,7 @@
 
 require_once "setup.php";
 
+// If we've already loaded the mysqli then just return
 if (isset($conn) && get_class($conn) == "mysqli") {
     return;
 }
@@ -19,9 +20,8 @@ if (isset($conn) && get_class($conn) == "mysqli") {
 session_start();
 
 // establish Database connection information
-//$conn = mysql_connect('localhost','joshutt_test2','q%i*v@LqZ1lU');
-$conn = mysql_connect('localhost','joshutt_stage','Y/8}1NZ)7=WN');
-mysql_select_db("joshutt_staging");
+$conn = mysql_connect('localhost',$ini["userName"],$ini['password']);
+mysql_select_db($ini["dbName"]);
 
 
 // Determine the current season and current week, but not every time, use cachin

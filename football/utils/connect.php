@@ -20,7 +20,7 @@ require_once "setup.php";
 session_start();
 
 // Establish database connections
-$conn = mysqli_connect('localhost', 'joshutt_stage', 'Y/8}1NZ)7=WN', 'joshutt_staging');
+$conn = mysqli_connect('localhost', $ini['userName'], $ini['password'], $ini['dbName']);
 
 // Determine the current season and current week, but not every time, use cachin
 //if (!isset($_SESSION["lastFetch"]) || time() > $lastFetch + 60 * 60) {

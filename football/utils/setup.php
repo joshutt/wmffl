@@ -1,7 +1,8 @@
-<?
+<?php
 $SCRIPT_PATH = "/home/joshutt/git/lib";
 
 ini_set("include_path", "/home/joshutt/php:$SCRIPT_PATH:".ini_get("include_path"));
+$ini = parse_ini_file("wmffl.conf");
 
 require_once "PEAR.php";
 require_once "DB/DataObject.php";
@@ -12,4 +13,3 @@ $options = $config['DB_DataObject'];
 
 DB_DataObject::debugLevel($debug);
 
-?>
