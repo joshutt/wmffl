@@ -52,7 +52,7 @@ function generateReserves($thisTeamID, $currentSeason, $currentWeek)
 {
     $select = <<<EOD
 select p.pos, p.lastname, p.firstname, nr.nflteamid as 'team', CONVERT_TZ(n.kickoff, 'SYSTEM', 'GMT') as 'kickoff', n.secRemain, n.complete, p.flmid, s.*, 
-if (r.dateon is null and p.pos<>'HC', 1, 0) as 'illegal', a.pos as 'startPos', a.teamid as 'teamcheck1', 
+if ((r.dateon is null and p.pos<>'HC') or (p.playerid=2637 and wm.season=2018 and wm.week=14), 1, 0) as 'illegal', a.pos as 'startPos', a.teamid as 'teamcheck1', 
 r.teamid as 'teamcheck2', n.secRemain, gp1.side as 'GPMe', gp2.side as 'GPThem', CONVERT_TZ(wm.ActivationDue, 'SYSTEM', 'GMT') as 'ActivationDue'
 from newplayers p
 JOIN weekmap wm

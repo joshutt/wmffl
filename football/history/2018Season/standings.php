@@ -9,7 +9,7 @@ if ($thisWeek == "") {
 $thisSeason=2018;
 $title = "Standings";
 
-$clinchedList = array('Trump Molests Collies' => 'y-', 'Amish Electricians' => 'z-', 'Fighting Squirrels' => 'e-', 'Gallic Warriors' => 'e-', 'Crusaders' => 'e-', 'Norsemen' => 'y-', 'Fightin\' Bitin\' Beavers' => 'y-', 'Sean Taylor\'s Ashes' => 'e-', 'Sacks on the Beach' => 'e-', 'Testudos Revenge' => 'e-');
+$clinchedList = array('Trump Molests Collies' => 'y-', 'Amish Electricians' => 'z-', 'Fighting Squirrels' => 'z-', 'Gallic Warriors' => 'e-', 'Crusaders' => 'e-', 'Norsemen' => 'y-', 'Fightin\' Bitin\' Beavers' => 'y-', 'Sean Taylor\'s Ashes' => 'e-', 'Sacks on the Beach' => 'e-', 'Testudos Revenge' => 'e-', 'MeggaMen' => 'x-', 'Richard\'s Lionhearts' => 'e-');
 
 include "base/menu.php";
 ?>
