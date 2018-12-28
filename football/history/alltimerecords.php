@@ -38,16 +38,16 @@ function displayBlock($array, $wties = true) {
         $count++;
         if ($wties) {
             print <<<EOD
-    <TR bgcolor="$bgcolor"><TD>$dec{$team["name"]}$ced</TD>
-    <TD align="center">$dec{$team["games"]}$ced</TD><TD align="center">$dec{$team["wins"]}$ced</TD>
-    <TD align="center">$dec{$team["losses"]}$ced</TD><TD align="center">$dec{$team["ties"]}$ced</TD>
-    <TD align="center">$dec$disPCT$ced</TD></TR>
+    <TR><TD class="text-left">$dec{$team["name"]}$ced</TD>
+    <TD>$dec{$team["games"]}$ced</TD><TD>$dec{$team["wins"]}$ced</TD>
+    <TD>$dec{$team["losses"]}$ced</TD><TD>$dec{$team["ties"]}$ced</TD>
+    <TD>$dec$disPCT$ced</TD></TR>
 EOD;
         } else {
             print <<<EOD
-    <TR bgcolor="$bgcolor"><TD>$dec{$team["name"]}$ced</TD>
-    <TD align="center">$dec{$team["games"]}$ced</TD><TD align="center">$dec{$team["wins"]}$ced</TD>
-    <TD align="center">$dec{$team["losses"]}$ced</TD><TD align="center">$dec$disPCT$ced</TD></TR>
+    <TR><TD class="text-left">$dec{$team["name"]}$ced</TD>
+    <TD>$dec{$team["games"]}$ced</TD><TD>$dec{$team["wins"]}$ced</TD>
+    <TD>$dec{$team["losses"]}$ced</TD><TD>$dec$disPCT$ced</TD></TR>
 EOD;
         }
     }
@@ -98,48 +98,102 @@ include "base/menu.php";
 <H5 ALIGN=CENTER>Through <? print $currentSeason-1; ?> Season</H5>
 <HR size = "1">
 
-<P><TABLE WIDTH=100%>
-<TR><TD COLSPAN=6><B>Overall Records</B></TD></TR>
-<TR><TD><B>Team</B></TD><TD align="center"><B>Games</B></TD><TD align="center"><B>Wins</B></TD>
-<TD align="center"><B>Losses</B></TD><td align="center"><b>Ties</b></td>
-<TD align="center"><B>PCT</B></TD></TR>
+<div class="text-center font-weight-bold ">Overall Records</div>
+<table class="table table-striped table-hover table-sm text-center table-sortable"> 
+<thead>
+<tr>
+<th scope="col" class="text-left">Team</th>
+<th scope="col">Games</th>
+<th scope="col">Wins</th>
+<th scope="col">Losses</th>
+<th scope="col">Ties</th>
+<th scope="col">PCT</th>
+</tr>
+</thead>
+<tbody>
 <? displayBlock($allTimeArray); ?>
-</TABLE></P>
+</tbody>
+</TABLE>
 
-<P><TABLE WIDTH=100%>
-<TR><TD COLSPAN=6><B>Regular Season Records</B></TD></TR>
-<TR><TD><B>Team</B></TD><TD align="center"><B>Games</B></TD><TD align="center"><B>Wins</B></TD>
-<TD align="center"><B>Losses</B></TD><td align="center"><b>Ties</b></td>
-<TD align="center"><B>PCT</B></TD></TR>
+<div class="text-center font-weight-bold ">Regular Season Records</div>
+<table class="table table-striped table-hover table-sm text-center table-sortable"> 
+<thead>
+<tr>
+<th scope="col" class="text-left">Team</th>
+<th scope="col">Games</th>
+<th scope="col">Wins</th>
+<th scope="col">Losses</th>
+<th scope="col">Ties</th>
+<th scope="col">PCT</th>
+</tr>
+</thead>
+<tbody>
 <? displayBlock($regSeasonArray); ?>
-</TABLE></P>
+</TABLE>
 
-<P><TABLE WIDTH=100%>
-<TR><TD COLSPAN=5><B>Post-Season Records</B></TD></TR>
-<TR><TD><B>Team</B></TD><TD align="center"><B>Games</B></TD><TD align="center"><B>Wins</B></TD>
-<TD align="center"><B>Losses</B></TD><TD align="center"><B>PCT</B></TD></TR>
+<div class="text-center font-weight-bold ">Post-Season Records</div>
+<table class="table table-striped table-hover table-sm text-center table-sortable"> 
+<thead>
+<tr>
+<th scope="col" class="text-left">Team</th>
+<th scope="col">Games</th>
+<th scope="col">Wins</th>
+<th scope="col">Losses</th>
+<th scope="col">PCT</th>
+</tr>
+</thead>
+<tbody>
 <? displayBlock($postSeasonArray, false); ?>
-</TABLE></P>
+</tbody>
+</TABLE>
 
-<P><TABLE WIDTH=100%>
-<TR><TD COLSPAN=5><B>Playoff Records</B></TD></TR>
-<TR><TD><B>Team</B></TD><TD align="center"><B>Games</B></TD><TD align="center"><B>Wins</B></TD>
-<TD align="center"><B>Losses</B></TD><TD align="center"><B>PCT</B></TD></TR>
+<div class="text-center font-weight-bold ">Playoff Records</div>
+<table class="table table-striped table-hover table-sm text-center table-sortable"> 
+<thead>
+<tr>
+<th scope="col" class="text-left">Team</th>
+<th scope="col">Games</th>
+<th scope="col">Wins</th>
+<th scope="col">Losses</th>
+<th scope="col">PCT</th>
+</tr>
+</thead>
+<tbody>
 <? displayBlock($playoffArray, false); ?>
-</TABLE></P>
+</tbody>
+</table>
 
-<P><TABLE WIDTH=100%>
-<TR><TD COLSPAN=5><B>Championship Game Records</B></TD></TR>
-<TR><TD><B>Team</B></TD><TD align="center"><B>Games</B></TD><TD align="center"><B>Wins</B></TD>
-<TD align="center"><B>Losses</B></TD><TD align="center"><B>PCT</B></TD></TR>
+<div class="text-center font-weight-bold ">Championship Game Records</div>
+<table class="table table-striped table-hover table-sm text-center table-sortable"> 
+<thead>
+<tr>
+<th scope="col" class="text-left">Team</th>
+<th scope="col">Games</th>
+<th scope="col">Wins</th>
+<th scope="col">Losses</th>
+<th scope="col">PCT</th>
+</tr>
+</thead>
+<tbody>
 <? displayBlock($championshipArray, false); ?>
-</TABLE></P>
+</tbody>
+</table>
 
-<P><TABLE WIDTH=100%>
-<TR><TD COLSPAN=5><B>Toilet Bowl Game Records</B></TD></TR>
-<TR><TD><B>Team</B></TD><TD align="center"><B>Games</B></TD><TD align="center"><B>Wins</B></TD>
-<TD align="center"><B>Losses</B></TD><TD align="center"><B>PCT</B></TD></TR>
+
+<div class="text-center font-weight-bold ">Toilet Bowl Game Records</div>
+<table class="table table-striped table-hover table-sm text-center table-sortable"> 
+<thead>
+<tr>
+<th scope="col" class="text-left">Team</th>
+<th scope="col">Games</th>
+<th scope="col">Wins</th>
+<th scope="col">Losses</th>
+<th scope="col">PCT</th>
+</tr>
+</thead>
+<tbody>
 <? displayBlock($toiletBowlArray, false); ?>
-</TABLE></P>
+</tbody>
+</table>
 
 <? include "base/footer.html" ?>

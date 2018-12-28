@@ -1,4 +1,4 @@
-<?
+<?php
 $title = "WMFFL Past Champions";
 include "base/menu.php";
 ?>
@@ -39,6 +39,7 @@ include "base/menu.php";
 <TR><TD>2015</TD><TD>Sean Taylor's Ashes</TD></TR>
 <TR><TD>2016</TD><TD>Amish Electricians</TD></TR>
 <TR><TD>2017</TD><TD>Amish Electricians</TD></TR>
+<TR><TD>2018</TD><TD>Norsemen</TD></TR>
 </TABLE>
 </TD><TD valign="bottom">
 <B>Orange Division Champions</B>
@@ -70,6 +71,7 @@ include "base/menu.php";
 <TR><TD>2015</TD><TD>Crusaders</TD></TR>
 <TR><TD>2016</TD><TD>Gallic Warriors</TD></TR>
 <TR><TD>2017</TD><TD>Crusaders</TD></TR>
+<TR><TD>2018</TD><TD>Trump Molests Collies</TD></TR>
 </TABLE>
 </TD><TD valign="bottom">
 <B>White Division Champions</B>
@@ -83,6 +85,7 @@ include "base/menu.php";
 <TR><TD>2015</TD><TD>MeggaMen</TD></TR>
 <TR><TD>2016</TD><TD>MeggaMen</TD></TR>
 <TR><TD>2017</TD><TD>Fightin' Bitin' Beavers</TD></TR>
+<TR><TD>2018</TD><TD>Fightin' Bitin' Beavers</TD></TR>
 </table>
 </TD></TR></TABLE>
 
@@ -116,6 +119,7 @@ include "base/menu.php";
 <TR><TD>2015</TD><TD>MeggaMen</TD><TD>64</TD><TD>Sacks on the Beach</TD><TD>14</TD><TD>Brandon Marshall</TD></TR>
 <TR><TD>2016</TD><TD>Woodland Rangers</TD><TD>63</TD><TD>MeggaMen</TD><TD>27</TD><TD>Jordy Nelson</TD></TR>
 <TR><TD>2017</TD><TD>Amish Electricians</TD><TD>24</TD><TD>Sacks on the Beach</TD><TD>10</TD><TD>Marshon Lattimore</TD></TR>
+<TR><TD>2018</TD><TD>Trump Molests Collies</TD><TD>56</TD><TD>Norsemen</TD><TD>50</TD><TD>Deshaun Watson</TD></TR>
 </TABLE>
 
 <BR><BR>
@@ -140,9 +144,8 @@ include "base/menu.php";
 <TR><TD>2014</TD><TD>Woodland Rangers</TD><TD>46</TD><TD>Norsemen</TD><TD>0</TD></TR>
 <TR><TD>2015</TD><TD>Woodland Rangers</TD><TD>19</TD><TD>Whiskey Tango</TD><TD>0</TD></TR>
 <TR><TD>2016</TD><TD>Pretend I'm Not Here</TD><TD>55</TD><TD>Sean Taylor's Ashes</TD><TD>0</TD></TR>
-<TR><TD>2017</TD><TD>Tim Always Pulss Out Late</TD><TD>88</TD><TD>Sean Taylor's Ashes</TD><TD>0</TD></TR>
+<TR><TD>2017</TD><TD>Tim Always Pulls Out Late</TD><TD>88</TD><TD>Sean Taylor's Ashes</TD><TD>0</TD></TR>
+<TR><TD>2018</TD><TD>Amish Electricians</TD><TD>41</TD><TD>Fighting Squirrels</TD><TD>0</TD></TR>
 </TABLE>
 
-<?
-include "base/footer.html";
-?>
+<?php include "base/footer.html"; ?>
