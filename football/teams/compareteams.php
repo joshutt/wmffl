@@ -1,10 +1,9 @@
-<?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+<?php
+require_once "utils/start.php";
 $title = "Compare Rosters";
-?>
 
-<? include $DOCUMENT_ROOT."/base/menu.php"; ?>
-<?
+include "base/menu.php";
+
 	$aquery = "SELECT name, teamid FROM team WHERE active=1 ORDER BY name";
 	$results = mysql_query($aquery, $conn);
 	$outputString = "";
@@ -21,16 +20,18 @@ $title = "Compare Rosters";
 <CEnter>
 <FORM ACTION="compareteams.php" METHOD="POST">
 <SELECT NAME="teamone">
-<? print $outputString; ?>
+    <?= $outputString; ?>
 </SELECT>
 <SELECT NAME="teamtwo">
-<? print $outputString; ?>
+    <?= $outputString; ?>
 </SELECT>
 <INPUT TYPE="Submit" VALUE="Compare">
 </FORM>
 
 <?
-if (isset($teamone) && isset($teamtwo)) {
+if (array_key_exists('teamone', $_REQUEST) && array_key_exists('teamtwo', $_REQUEST)) {
+    $teamone = $_REQUEST['teamone'];
+    $teamtwo = $_REQUEST['teamtwo'];
 	$thequery = "select concat(p.firstname, ' ', p.lastname) as 'name', p.pos, p.team, ";
 	$thequery .= "t.name as 'teamname'";
 	$thequery .= "from newplayers p, roster r, team t ";
@@ -60,4 +61,4 @@ if (isset($teamone) && isset($teamtwo)) {
 }
 ?>
 </CENTER>
-<? include $DOCUMENT_ROOT."/base/footer.html"; ?>
+<? include "base/footer.html"; ?>

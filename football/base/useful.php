@@ -1,5 +1,5 @@
 <?
-//require_once "$DOCUMENT_ROOT/base/conn.php";
+//require_once "base/conn.php";
 
 if (isset($conn)) {
     // Determine the current season and current week

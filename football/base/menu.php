@@ -1,4 +1,4 @@
-<?
+<?php
 // This is temporary, but maybe it's not such a bad idea
 require_once "utils/start.php";
 ?>

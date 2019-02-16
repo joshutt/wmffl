@@ -1,6 +1,6 @@
 <?
 $title="Playoff Scenarios";
-include "$DOCUMENT_ROOT/base/menu.php";
+include "base/menu.php";
 ?>
 
 <H1 ALIGN=Center>Playoff Scenarios</H1>
@@ -63,5 +63,4 @@ What?  Are you suicidal?  Isn't the above complicated enough for you?  Your head
 </ul>
 
 
-
-<? include "$DOCUMENT_ROOT/base/footer.html"; ?>
+<? include "base/footer.html"; ?>

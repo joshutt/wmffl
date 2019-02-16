@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 $title = "Determine Draft Date";
 
@@ -17,7 +17,7 @@ EOD;
 }
 
 
-include "$DOCUMENT_ROOT/base/menu.php";
+include "base/menu.php";
 ?>
 
 <H1 ALIGN=Center>Draft Date Open</H1>
@@ -60,5 +60,5 @@ if ($isin) {
 <CENTER><B>You must be logged in to use this feature</B></CENTER>
 
 <? }
-  include "$DOCUMENT_ROOT/base/footer.html";
+include "base/footer.html";
 

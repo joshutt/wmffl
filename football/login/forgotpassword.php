@@ -41,7 +41,7 @@ $vowels = 'aeiouy';
   return $password;
 }
 
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 	if (isset($Username)) {
 			
 			// Make sure that old password matches password passed in

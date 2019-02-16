@@ -1,5 +1,5 @@
-<?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+<?php
+require_once "utils/start.php";
 
 class Team {
     
@@ -14,6 +14,7 @@ class Team {
     var $games;
     var $teamid;
     var $allRef;
+    var $allRefKeys;
     
     function Team($newName, $newDiv, $newID) {
         $this->name = $newName;
@@ -75,10 +76,12 @@ class Team {
         if ($teamArray == NULL || !isset($teamArray)) {
             $teamArray = $this->allRef;
         }
-        //print $teamArray;
         $rec = array(0,0,0);
+        $keyList = array_map("getTeamId", $teamArray);
+        $keyList = array_flip($keyList);
+        // Loop through each game and if you won, add that teams record
         foreach ($this->games as $game) {
-            $teamRec = $teamArray[$game[0]]->record;
+            $teamRec = $teamArray[$keyList[$game[0]]]->record;
             foreach ($teamArray as $team) {
                 if ($team->teamid == $game[0]) {
                     $teamRec = $team->record;
@@ -203,4 +206,9 @@ function orderteam($a, $b) {
     }
     return 0;
 }
-?>
+
+
+function getTeamId($t)
+{
+    return $t->teamid;
+}

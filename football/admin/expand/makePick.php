@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 $sql = <<<EOD
 SELECT ex.playerid, t.name as 'teamid', concat(ex.firstname, ' ', ex.lastname) as 'name', ex.pos, if (el.num>=2 or exp.teamid is not null, 1, ep.protected) as 'protected', ex.cost, r.nflteamid

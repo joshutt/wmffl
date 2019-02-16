@@ -1,5 +1,5 @@
 <?
-//require_once "$DOCUMENT_ROOT/base/conn.php";
+//require_once "base/conn.php";
 //require_once "/home/wmffl/public_html/base/conn.php";
 #require_once "/home/wmff/public_html/utils/start.php" or die("Dead");
 

@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 $protect = array();
 $pullback = array();
@@ -28,7 +28,7 @@ $title = "Expansion Picks";
 
 <body onLoad="load();">
 <?
-include "$DOCUMENT_ROOT/base/menu.php";
+include "base/menu.php";
 ?>
 
 <h1 align="center"><?= $title; ?></h1>
@@ -114,5 +114,5 @@ while ($player = mysql_fetch_array($results)) {
 
 <?
 
-include "$DOCUMENT_ROOT/base/footer.html";
+include "base/footer.html";
 ?>

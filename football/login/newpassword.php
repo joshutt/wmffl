@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 if (!$isin) {
     header("Location: http://wmffl.com");
     exit();
@@ -48,7 +48,7 @@ $title = "Change Password";
 ?>
 
 
-<? include "$DOCUMENT_ROOT/base/menu.php"; ?>
+<? include "base/menu.php"; ?>
 
 <h1 align="center">Change WMFFL Password</h1>
 <hr size="1"/>
@@ -88,4 +88,4 @@ $title = "Change Password";
 </form>
 
 
-<? include "$DOCUMENT_ROOT/base/footer.html"; ?>
+<? include "base/footer.html"; ?>

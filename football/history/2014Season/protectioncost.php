@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 $query = "SELECT p.firstname, p.lastname, pc.years, CEILING(if(p.pos in ('QB', 'RB', 'WR', 'TE'), pc.years, pc.years/2)) as 'Extra', t.name, p.pos ";
 $query .= "FROM newplayers p ";
 $query .= "JOIN protectioncost pc ON p.playerid=pc.playerid ";
@@ -27,7 +27,7 @@ while ($aLine = mysql_fetch_array($result)) {
 $title = "2014 Protection Costs";
 ?>
 
-<? include "$DOCUMENT_ROOT/base/menu.php"; ?>
+<? include "base/menu.php"; ?>
 
 <H1 Align=Center>Protection Costs</H1>
 <HR size = "1">
@@ -92,4 +92,4 @@ $teamName = '';
 
 </TABLE>
 </TD></TR></TABLE>
-<? include "$DOCUMENT_ROOT/base/footer.html"; ?>
+<? include "base/footer.html"; ?>

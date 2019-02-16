@@ -1,7 +1,7 @@
 <?
 $title = "2014 WMFFL Draft Order";
 
-include "$DOCUMENT_ROOT/base/menu.php";
+include "base/menu.php";
 ?>
 
 <H1 Align=Center>2014 Draft Order</H1>
@@ -30,5 +30,5 @@ table of every team's draft positions.</P>
 </TABLE></P>
 
 <?
-include "$DOCUMENT_ROOT/base/footer.html";
+include "base/footer.html";
 ?>

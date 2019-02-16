@@ -79,4 +79,4 @@ $teamName = '';
 
 </TABLE>
 </TD></TR></TABLE>
-<? include "$DOCUMENT_ROOT/base/footer.html"; ?>
+<? include "base/footer.html"; ?>

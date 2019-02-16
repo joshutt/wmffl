@@ -1,5 +1,5 @@
 <?
-//require_once "$DOCUMENT_ROOT/base/conn.php";
+//require_once "base/conn.php";
 require_once "/home/wmffl/public_html/base/conn.php";
 require_once "/home/wmffl/public_html/base/useful.php";
 	
@@ -28,7 +28,8 @@ require_once "/home/wmffl/public_html/base/useful.php";
 	// Perform queries
 	mysql_query($create, $conn) or die("Create");
 	mysql_query($insert, $conn) or die("Insert");
-	$result = mysql_query($select, $conn) or die("Select"); 
+	$result = mysql_query($select, $conn) or die("Select");
+ 
 	// Populate records
 	while ($row = mysql_fetch_row($result)) {
 		if (!isset($activates[$row[0]]["count"])) $activates[$row[0]]["count"]=0;

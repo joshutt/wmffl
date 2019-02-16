@@ -1,7 +1,7 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
-#require_once "$DOCUMENT_ROOT/base/conn.php";
-#require_once "$DOCUMENT_ROOT/base/useful.php";
+require_once "utils/start.php";
+#require_once "base/conn.php";
+#require_once "base/useful.php";
 
 //print "**$currentSeason**<br/>";
 

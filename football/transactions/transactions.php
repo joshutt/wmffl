@@ -54,9 +54,9 @@ function trade($teamid, $date) {
 	$thequery = "SELECT DATE_FORMAT(max(date), '%m/%e/%Y'), DATE_FORMAT(max(date),'%m'), DATE_FORMAT(max(date),'%Y') FROM transactions";
 	$results = mysql_query($thequery);
 	list($lastupdate, $themonth, $theyear) = mysql_fetch_row($results);
-	
-	if (isset($HTTP_GET_VARS["month"])) $themonth = $HTTP_GET_VARS["month"];
-	if (isset($HTTP_GET_VARS["year"])) $theyear = $HTTP_GET_VARS["year"];
+
+if (isset($_REQUEST["month"])) $themonth = $_REQUEST["month"];
+if (isset($_REQUEST["year"])) $theyear = $_REQUEST["year"];
 //	if (!isset($HTTP_GET_VARS["year"])) $HTTP_GET_VARS["year"]=2002;
 
     $title = "WMFFL Transactions";

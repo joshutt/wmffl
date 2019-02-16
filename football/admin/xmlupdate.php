@@ -5,7 +5,7 @@ mysql_select_db('joshutt_misc');
 */
 
 print "start<br/>";
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 
 $request_url = "http://football.myfantasyleague.com/2008/export?TYPE=players&L=&W=";

@@ -1,8 +1,8 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";    
+require_once "utils/start.php";
 
 $title = "Password Created";
-include "$DOCUMENT_ROOT/base/menu.php";
+include "base/menu.php";
 ?>
 
 <h1 align="center">New Password Created</h1>
@@ -11,4 +11,4 @@ include "$DOCUMENT_ROOT/base/menu.php";
 <p>Your password has been changed.  You will recieve an email shortly with
 your new password.</p>
 
-<? include "$DOCUMENT_ROOT/base/footer.html"; ?>
+<? include "base/footer.html"; ?>

@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 $thisWeek = $_REQUEST["week"];
 if ($thisWeek == "") {
@@ -13,7 +13,7 @@ $clinchedList = array("Pretend I'm Not Here" => 'z-', "Werewolves" => 'y-', "Meg
 
 ?>
 
-<? include "$DOCUMENT_ROOT/base/menu.php"; ?>
+<? include "base/menu.php"; ?>
 
 <style>
 <!--
@@ -36,4 +36,4 @@ z - clinched Toilet Bowl berth
 </center>
 
 
-<? include "$DOCUMENT_ROOT/base/footer.html"; ?>
+<? include "base/footer.html"; ?>

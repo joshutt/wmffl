@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/base/conn.php";
+require_once "base/conn.php";
 
 $sql = "SELECT  t.name, p.position, sum(ps.active) as 'totpts' ";
 $sql .= "FROM playerscores ps, players p, roster r, team t, weekmap w ";
@@ -25,7 +25,7 @@ list($week) = mysql_fetch_row($dateRes);
 <TITLE>League Leaders</TITLE>
 </HEAD>
 
-<? include "$DOCUMENT_ROOT/base/menu.php"; ?>
+<? include "base/menu.php"; ?>
 
 <H1 ALIGN=Center>League Leaders</H1>
 <!-- <H5 ALIGN=Center><I>Through Week <?print $week;?></I></H5> -->
@@ -96,5 +96,5 @@ print "</TABLE></TD>";
 </TABLE>
 
 <?
-include "$DOCUMENT_ROOT/base/footer.html";
+include "base/footer.html";
 ?>

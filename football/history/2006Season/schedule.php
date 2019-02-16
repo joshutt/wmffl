@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 $thisSeason = 2006;
 $thisWeek = 17;
 
@@ -21,7 +21,7 @@ $byeWeekQuery = "SELECT t.name FROM nflstatus s, nflteams t WHERE status='B' AND
 $title = "WMFFL Schedule";
 ?>
 
-<? include "$DOCUMENT_ROOT/base/menu.php"; ?>
+<? include "base/menu.php"; ?>
 
 <H1 Align=Center><? print $thisSeason;?> Schedule</H1>
 <HR size = "1"><CENTER>
@@ -112,4 +112,4 @@ Playoff Winner #1 vs Playoff Winner #2
 <P>
 -->
 
-<? include "$DOCUMENT_ROOT/base/footer.html"; ?>
+<? include "base/footer.html"; ?>

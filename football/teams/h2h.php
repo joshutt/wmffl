@@ -1,7 +1,9 @@
 <?
 //$currentSeason = 2004;
 $checkWeek = 17;
-if ($viewseason == null) {
+if (array_key_exists('viewseasom', $_REQUEST)) {
+    $viewseason = $_REQUEST['viewseasom'];
+} else {
     $viewseason = $currentSeason;
     $checkWeek = $currentWeek;
 }
@@ -9,7 +11,12 @@ if ($viewseason == null) {
 if ($checkWeek == 0) {
     $viewseason--;
     $checkWeek = 17;
-#$viewseason=2010;
+}
+
+if (array_key_exists('vsTeam', $_REQUEST)) {
+    $vsTeam = $_REQUEST['vsTeam'];
+} else {
+    $vsTeam = 1;
 }
 
 $otherSeason = "select t.name, t.teamid
@@ -43,7 +50,7 @@ while (list($newName, $newTeamid) = mysqli_fetch_array($res1)) {
 </div>
 
 
-<h3 align="center">Vs <? print $displayName;?></h3>
+<h3 align="center">Vs <?= $displayName ?></h3>
 
 <?
 $SQL = <<<EOD

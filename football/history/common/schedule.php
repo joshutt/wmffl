@@ -31,6 +31,7 @@ $byeResults = mysql_query($byeSQL);
 $lastName = "";
 $lastWeek = 0;
 $byeList = array();
+$string = "";
 while ($rows = mysql_fetch_assoc($byeResults)) {
     $week = $rows['week'];
     $teamName = $rows['name'];
@@ -111,8 +112,8 @@ EOD;
         </td>
     </tr>
 EOD;
-        $byeString = $byeList[$row[0]];
-        if ($byeString != "") {
+        if (array_key_exists($row[0], $byeList)) {
+            $byeString = $byeList[$row[0]];
             print <<<EOD
     <tr id="main" class="bg4" align="left">
         <td class="bg4" colspan="6">

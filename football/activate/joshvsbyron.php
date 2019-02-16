@@ -1,6 +1,6 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
-include "$DOCUMENT_ROOT/base/scoring.php";
+require_once "utils/start.php";
+include "base/scoring.php";
 
 function getOtherTeam($thisTeamID, $thisWeek, $thisSeason, $conn) {
     $getTeamSQL = "SELECT if(s.scorea >= s.scoreb, s.teamA, s.teamB) as 'teamA', ";
@@ -101,7 +101,7 @@ $title = "Current Scores";
 $weekLabel = $weekList[$thisWeek-1][1];
 ?>
 
-<? include "$DOCUMENT_ROOT/base/menu.php"; ?>
+<? include "base/menu.php"; ?>
 
 <style>
 <!--
@@ -599,4 +599,4 @@ foreach ($weekList as $row) {
 </td></tr>
 </table>
 
-<? include "$DOCUMENT_ROOT/base/footer.html"; ?>
+<? include "base/footer.html"; ?>

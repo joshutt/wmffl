@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 $season = 2008;
 $dateSet = "'2008-08-31'";
@@ -59,7 +59,7 @@ $nflResult = mysql_query($uniqueNfl) or die("Unable to get teams: ".mysql_error(
 
 $title = "2008 WMFFL Draft Results";
 ?>
-<? include "$DOCUMENT_ROOT/base/menu.php"; ?>
+<? include "base/menu.php"; ?>
 
 <style>
 
@@ -178,4 +178,4 @@ EOD;
         </table>
 
 
-<? include "$DOCUMENT_ROOT/base/footer.html"; ?>
+<? include "base/footer.html"; ?>

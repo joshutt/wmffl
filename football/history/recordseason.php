@@ -57,7 +57,7 @@ function printRankList($sql, $pos, $hlSeason=2016, $extraList=array()) {
             break; 
         }
 
-        while ($extraList[$extraCount]["pts"] >= $player["pts"]) {
+        while (isset($extraList[$extraCount]) && $extraList[$extraCount]["pts"] >= $player["pts"]) {
             printPlayer($extraList[$extraCount], $count, $hlSeason);
             $extraCount++;
             $count++;
@@ -113,6 +113,7 @@ $dbList = array(array("name"=>"Rodney Harrison", "season"=>1997, "pts"=>146),
 
 
 $cssList = array("/base/css/history.css");
+$title = "Single Season Records";
 include "base/menu.php";
 ?>
 

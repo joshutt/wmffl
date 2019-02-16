@@ -102,7 +102,7 @@ while ($theWeek = mysql_fetch_assoc($weekResults)) {
 //print $sql;
 
 $title = "Submit Activations";
-include "$DOCUMENT_ROOT/base/menu.php";
+include "base/menu.php";
 
 $actingHC = false;
 if ($isin) {
@@ -388,5 +388,5 @@ foreach ($reserve as $player) {
 <CENTER><B>You must be logged in to submit activations</B></CENTER>
 
 <? } ?>
-<? include "$DOCUMENT_ROOT/base/footer.html";
+<? include "base/footer.html";
 ?>

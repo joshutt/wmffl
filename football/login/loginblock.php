@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/base/conn.php";
+require_once "base/conn.php";
 
 if (isset($teamid)) {
 	$thequery = "select teamid, password from user where password='".$teamid."'";

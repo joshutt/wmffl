@@ -29,7 +29,7 @@ while ($row = mysqli_fetch_array($results)) {
 $weekLabel = $weekList[$thisWeek - 1][1];
 $title = "Current Scores";
 $cssList = array("score.css");
-include "$DOCUMENT_ROOT/base/menu.php";
+include "base/menu.php";
 ?>
 
 

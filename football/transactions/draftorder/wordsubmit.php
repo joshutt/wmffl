@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 $word = $_POST["word"];
 $teamid = $_POST["teamid"];
@@ -45,7 +45,7 @@ if ($count == 0) {
 
 
 $title = "Word Submitted";
-include "$DOCUMENT_ROOT/base/menu.php";
+include "base/menu.php";
 ?>
 
 <h1 align="center">Draft Order Determination</h1>
@@ -55,4 +55,4 @@ include "$DOCUMENT_ROOT/base/menu.php";
 
 <p>Return to <a href="index.php">word submit</a> page</p>
 
-<? include "$DOCUMENT_ROOT/base/footer.html"; ?>
+<? include "base/footer.html"; ?>

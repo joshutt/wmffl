@@ -1,6 +1,6 @@
 <?
-require_once "$DOCUMENT_ROOT/base/conn.php";
-require_once "$DOCUMENT_ROOT/base/useful.php";
+require_once "base/conn.php";
+require_once "base/useful.php";
 
 function getOtherGames($thisWeek, $thisSeason, $conn) {
     $getTeamSQL = "SELECT s.teamA, s.teamB, ta.name as 'aname', tb.name as 'bname', ";

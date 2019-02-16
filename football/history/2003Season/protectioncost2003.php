@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/base/conn.php";
+require_once "base/conn.php";
 $query = "SELECT p.firstname, p.lastname, pc.years, MAX(pos.cost)-MIN(pos.cost) as 'Extra', t.name ";
 $query .= "FROM players p, protectioncost pc, positioncost pos ";
 $query .= "LEFT JOIN roster r ON r.playerid=p.playerid AND r.dateoff is null ";
@@ -22,7 +22,7 @@ while ($aLine = mysql_fetch_array($result)) {
 <TITLE>2003 WMFFL Protection Costs</TITLE>
 </HEAD>
 
-<? include "$DOCUMENT_ROOT/base/menu.php"; ?>
+<? include "base/menu.php"; ?>
 
 <H1 Align=Center>Protection Costs</H1>
 <HR size = "1">
@@ -118,4 +118,4 @@ be able to find out how much each player will cost to protect.</P>
 
 </TABLE>
 </TD></TR></TABLE>
-<? include "$DOCUMENT_ROOT/base/footer.html"; ?>
+<? include "base/footer.html"; ?>

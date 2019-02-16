@@ -1,7 +1,7 @@
 <?
 $title = "2010 WMFFL Draft Weights and Schedule";
 
-include "$DOCUMENT_ROOT/base/menu.php";
+include "base/menu.php";
 ?>
 
 <H1 Align=Center>Draft Weight and Schedule</H1>
@@ -45,5 +45,5 @@ extra game matchups for next season.</P>
 </ul></p>
 
 <?
-include "$DOCUMENT_ROOT/base/footer.html";
+include "base/footer.html";
 ?>

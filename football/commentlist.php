@@ -2,7 +2,7 @@
 //$source = "http://myrss.com/f/n/f/nflAdsrct1.rss";
 //$source = "http://xml.newsisfree.com/feeds/52/1852.xml";
 //$source = "http://p.moreover.com/cgi-local/page?c=Sports%3A%20American%20football%20news&o=rss";
-$source = "$DOCUMENT_ROOT/blog/atom.xml";
+$source = "blog/atom.xml";
 
 #define('MAGPIE_CACHE_ON', 0);
 include_once("lib/rss/magpier/rss_fetch.inc");

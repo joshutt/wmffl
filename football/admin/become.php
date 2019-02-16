@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/base/conn.php";
+require_once "base/conn.php";
 session_start();
 	$thequery = "select teamid, password, name, username from user where teamid=$teamchangeid";
 	$result = mysql_query($thequery, $conn);

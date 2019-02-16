@@ -1,5 +1,5 @@
 <?
-include "$DOCUMENT_ROOT/utils/start.php";
+include "utils/start.php";
 
 function make_password($length, $strength=0) {
     $vowels = 'aeiouy';
@@ -67,7 +67,7 @@ Webmaster WMFFL";
 $title = "Generate New Password";
 ?>
 
-<? include "$DOCUMENT_ROOT/base/menu.php"; ?>
+<? include "base/menu.php"; ?>
 
 <h1 align="center"><? print $title; ?></h1>
 <hr size="1"/>
@@ -88,4 +88,4 @@ $title = "Generate New Password";
     </table>
 </form>
 
-<? include "$DOCUMENT_ROOT/base/footer.html"; ?>
+<? include "base/footer.html"; ?>

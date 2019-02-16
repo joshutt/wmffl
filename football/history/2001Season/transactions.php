@@ -44,7 +44,7 @@ function trade($teamid, $date) {
 //	if (!isset($HTTP_GET_VARS["year"])) $HTTP_GET_VARS["year"]=2002;
 
     $title = "WMFFL Transactions";
-	include "$DOCUMENT_ROOT/base/menu.php";
+include "base/menu.php";
 ?>
 
 <H1 ALIGN=Center>Transactions</H1>
@@ -78,8 +78,8 @@ function trade($teamid, $date) {
 <INPUT TYPE="submit" NAME="submit" VALUE="Search">
 </FORM>
 -->
-<? 
-	include "$DOCUMENT_ROOT/history/2001Season/transmenu.html";
+<?
+include "history/2001Season/transmenu.html";
 
 //	if (!isset($HTTP_POST_VARS["month"])) $HTTP_POST_VARS["month"]=$themonth;
 //	if (!isset($HTTP_POST_VARS["year"])) $HTTP_POST_VARS["year"]=2001;
@@ -143,6 +143,6 @@ function trade($teamid, $date) {
 	}
 	print "</UL></UL>";
 
-	include "$DOCUMENT_ROOT/base/footer.html";
+include "base/footer.html";
 ?>
 

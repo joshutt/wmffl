@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 function singleCompare($scoreA, $scoreB) {
     if ($scoreA < 0) return $scoreA;

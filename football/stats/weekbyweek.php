@@ -3,20 +3,21 @@ require_once "utils/start.php";
 include "utils/reportUtils.php";
 
 
-
-// If a player has fewer weeks than max fill with nulls 
-function checkMaxGames($player, $max) {
+// If a player has fewer weeks than max fill with nulls
+function checkMaxGames($player, $max)
+{
     if (sizeof($player) < $max + 5) {
-	$len = sizeof($player) - 5;
-	for ($i = $len+1; $i<=$max; $i++) {
-	    $player[$i] = null;
-	}	
+        $len = sizeof($player) - 5;
+        for ($i = $len + 1; $i <= $max; $i++) {
+            $player[$i] = null;
+        }
     }
     return $player;
 }
 
 // Move the tot column to the end of the player array
-function moveTot($player) {
+function moveTot($player)
+{
     $name = array_shift($player);
     $pos = array_shift($player);
     $nfl = array_shift($player);
@@ -27,22 +28,27 @@ function moveTot($player) {
     return $player;
 }
 
-function checkForAllNull($player) {
+function checkForAllNull($player)
+{
     if ($player["tot"] != 0) {
-	return true;
+        return true;
     }
-    for ($i = 5; $i<sizeof($player); $i++) {
+    for ($i = 5; $i < sizeof($player); $i++) {
+        if (!array_key_exists($i, $player)) {
+            continue;
+        }
         if ($player[$i] != null) {
-	    return true;
- 	}
+            return true;
+        }
     }
     return false;
 }
 
 
-function cmp($a, $b) {
+function cmp($a, $b)
+{
     if ($a["tot"] == $b["tot"]) {
-	return ($a["name"] > $b["name"]);
+        return ($a["name"] > $b["name"]);
     }
     return ($a["tot"] > $b["tot"]) ? -1 : 1;
 }
@@ -55,7 +61,7 @@ if (isset($_REQUEST["team"]) && $_REQUEST["team"] != "") {
 } else if (isset($_REQUEST["pos"]) && $_REQUEST["pos"] != "") {
     $searchPos = mysql_real_escape_string($_REQUEST["pos"]);
     $byPos = true;
-} else if ($_SESSION["teamnum"] != "") {
+} else if (array_key_exists('teamnum', $_SESSION) && $_SESSION["teamnum"] != "") {
     $searchTeam = $_SESSION["teamnum"];
 } else {
     $searchTeam = 1;
@@ -76,7 +82,7 @@ if (isset($_REQUEST["season"])) {
 
 if (isset($searchTeam)) {
 
-$sql = <<<EOD
+    $sql = <<<EOD
 select p.playerid, p.firstname, p.lastname, p.pos, ps.season as 'season', ps.week as 'week', ps.pts as 'pts', t.abbrev, p.team as 'nfl'
 from newplayers p
 left join roster r on p.playerid=r.playerid and r.dateoff is null
@@ -88,7 +94,7 @@ EOD;
 
 } else if ($byPos) {
 
-$sql = <<<EOD
+    $sql = <<<EOD
 select p.playerid, p.firstname, p.lastname, p.pos, ps.season as 'season', ps.week as 'week', ps.pts as 'pts', t.abbrev, p.team as 'nfl'
 from newplayers p
 left join roster r on p.playerid=r.playerid and r.dateoff is null
@@ -100,15 +106,15 @@ EOD;
 
 }
 
-$results = mysql_query($sql) or die("There was an error in the query: ".mysql_error());
+$results = mysql_query($sql) or die("There was an error in the query: " . mysql_error());
 $newHold = array();
 $max = 0;
-while($playList = mysql_fetch_array($results)) {
+while ($playList = mysql_fetch_array($results)) {
     // If the new player isn't already in array add it
     $id = $playList["playerid"];
-    if (sizeof($newHold) == 0 || !array_key_exists($id, $newHold )) {
-    	$newHold[$id] = array("name" => $playList["firstname"]." ".$playList["lastname"], "pos" => $playList["pos"], "nfl" => $playList["nfl"], "team" => $playList["abbrev"], "tot" => 0);
- 	$lastNum = 0;
+    if (sizeof($newHold) == 0 || !array_key_exists($id, $newHold)) {
+        $newHold[$id] = array("name" => $playList["firstname"] . " " . $playList["lastname"], "pos" => $playList["pos"], "nfl" => $playList["nfl"], "team" => $playList["abbrev"], "tot" => 0);
+        $lastNum = 0;
     }
 
     // Fill in blank weeks
@@ -116,10 +122,10 @@ while($playList = mysql_fetch_array($results)) {
     if ($week == null) {
         $week = 1;
     }
-    if ($week > $lastNum+1) {
-	for ($i = $lastNum+1; $i < $week; $i++) {
-	    $newHold[$id][$i] = null;
-	}
+    if ($week > $lastNum + 1) {
+        for ($i = $lastNum + 1; $i < $week; $i++) {
+            $newHold[$id][$i] = null;
+        }
     }
 
     // Add the week
@@ -127,7 +133,7 @@ while($playList = mysql_fetch_array($results)) {
     $newHold[$id]["tot"] += $playList["pts"];
     $lastNum = $week;
     if ($week > $max) {
-	$max = $week;
+        $max = $week;
     }
 }
 
@@ -139,7 +145,7 @@ $newHold = array_map("checkMaxGames", $newHold, array_fill(1, sizeof($newHold), 
 $newHold = array_map("moveTot", $newHold);
 
 // Build titles
-$titles = array("Name", "Pos", "NFL", "Team"); 
+$titles = array("Name", "Pos", "NFL", "Team");
 //$titles = array_merge($titles, range(1, 16));
 $titles = array_merge($titles, range(1, $max));
 array_push($titles, "Tot");
@@ -156,19 +162,19 @@ if ($format == "html" || !supportedFormat($format)) {
     $javascriptList = array("//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js", "/base/js/jquery.tablesorter.min.js", "week.js");
     $cssList = array("week.css", "stats.css");
     include_once "base/menu.php";
-?>
-<h1 align="center"><?= $title ?></h1>
-<hr size = "1">
+    ?>
+    <h1 align="center"><?= $title ?></h1>
+    <hr size="1">
 
 
-<?
+    <?
     include "base/statbar.html";
     print "<div id=\"tblblock\" class='container justify-content-center'>";
     include "weekbyweekinc.php";
     print "<div id=\"mainTable\" class='row col-12 justify-content-center'>";
     outputHtml($titles, $newHold);
     print "</div></div>";
-    include "base/footer.html"; 
+    include "base/footer.html";
 } else if ($format == "ajax") {
     outputHtml($titles, $newHold);
 } else if ($format == "csv") {

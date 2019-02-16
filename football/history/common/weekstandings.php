@@ -1,4 +1,5 @@
 <?
+
 include "lib/Team.php";
 
 //$thisSeason = 2004;
@@ -62,6 +63,7 @@ while ($row = mysql_fetch_array($results)) {
     $t->divPtsFor = $row["divpf"];
     $t->divPtsAgt = $row["divpa"];
     $t->allRef = &$teamArray;
+    $t->allRefKeys = array_keys($teamArray);
     $teamArray[$row["teamid"]] = $t;
     //array_push($teamArray, $t);
 }
@@ -78,12 +80,10 @@ while ($row = mysql_fetch_array($results)) {
     $teamArray[$teamid]->addGame($opp, $pts, $agst, 99);
 }
 
-/*
-print "<pre>";
-print_r($teamArray);
-print "</pre>";
-*/
 usort($teamArray, "orderteam");
+//print "<pre>";
+//print_r($teamArray);
+//print "</pre>";
 
 
 if (!isset($display) or $display == 1) {
@@ -91,7 +91,7 @@ if (!isset($display) or $display == 1) {
     print "<table cellpadding=\"5\" cellspacing=\"1\">";
     foreach ($teamArray as $t) {
         $thisDiv = $t->division;
-        if ($division != $thisDiv) {
+        if (!isset($division) || $division != $thisDiv) {
             print <<< EOD
 <tr height="20"><th>&nbsp;</th></tr>
 <tr><th colspan="12" class="text-center"><font size="+1">$thisDiv</font></th></tr>

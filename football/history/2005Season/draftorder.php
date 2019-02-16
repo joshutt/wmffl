@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 $sql = "SELECT d.round, d.pick, t.name, if(d.teamid<>d.orgTeam, '*', '') as 'flag' ";
 $sql .= "FROM draftpicks d, team t ";
@@ -8,7 +8,7 @@ $sql .= "ORDER BY Round, Pick";
 
 $title = "2005 WMFFL Draft Order";
 ?>
-<? include "$DOCUMENT_ROOT/base/menu.php"; ?>
+<? include "base/menu.php"; ?>
 
 <H1 Align=Center>Draft Order</H1>
 <H5 ALIGN=Center><I>August 4, 2005</I></H5>
@@ -74,4 +74,4 @@ while ($pick = mysql_fetch_array($results)) {
 </TABLE>
 </P>
 
-<!--#include virtual="/base/footer.html"-->
+<?php include "base/footer.html" ?>

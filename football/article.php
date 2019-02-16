@@ -2,6 +2,7 @@
 require_once "DataObjects/Articles.php";
 
 // Get the infomation for the main article
+#$article = DB_DataObject::factory('articles');
 $article = new DataObjects_Articles;
 // If given an Id use that one, otherwise most current
 if (array_key_exists("uid", $_REQUEST) && $_REQUEST["uid"] != null) {

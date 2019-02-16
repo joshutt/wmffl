@@ -50,9 +50,11 @@ function outputCSV($titles, $content, $filename="data.csv") {
 function outputJSON($titles, $content) {
     $jsonArr = array();
     foreach ($content as $item) {
-	$jsonObj = array();
+        $jsonObj = array();
+        $keys = array_keys($item);
         for ($i = 0; $i < sizeof($titles); $i++) {
-            $jsonObj[$titles[$i]] = $item[$i];
+            $key = $keys[$i];
+            $jsonObj[$titles[$i]] = $item[$key];
         }
         array_push($jsonArr, $jsonObj);
     }   

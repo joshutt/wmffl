@@ -4,19 +4,19 @@ include "utils/reportUtils.php";
 include_once "utils/teamList.php";
 $title = "Player Stats";
 
-if ($_REQUEST["pos"] == null || $_REQUEST["pos"]=="") {
+if (!isset($_REQUEST["pos"]) || $_REQUEST["pos"] == "") {
     $pos = "QB";
 } else {
     $pos = $_REQUEST["pos"];
 }
 
-if ($_REQUEST["sort"] == null || $_REQUEST["sort"] == "") {
+if (!isset($_REQUEST["sort"]) || $_REQUEST["sort"] == "") {
     $sort = "ppg";
 } else {
     $sort = $_REQUEST["sort"];
 }
 
-if ($_REQUEST["season"] == null || $_REQUEST["season"] == "") {
+if (!isset($_REQUEST["season"]) || $_REQUEST["season"] == "") {
     if ($currentWeek == 0) {
         $season = $currentSeason - 1;
     } else {
@@ -86,10 +86,13 @@ GROUP BY p.playerid
 ORDER BY `$sort` DESC, `pts` DESC
 EOD;
 
-$firstSort = $HTTP_POST_VARS["firstsort"];
+if (isset($_POST["firstsort"])) {
+    $firstSort = $_POST["firstsort"];
+}
+
 if (isset($firstSort) && $firstSort != "none") {
     $sql .= "ORDER BY $firstSort ";
-    $secondSort = $HTTP_POST_VARS["secondsort"];
+    $secondSort = $_POST["secondsort"];
     if (isset($secondSort) && $secondSort != "none") {
         $sql .= ", $secondSort ";
     }

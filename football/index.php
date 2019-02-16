@@ -1,4 +1,4 @@
-<?
+<?php
 $title = "The WMFFL Fantasy Football League";
 
 $cssList = array("base/css/index.css");

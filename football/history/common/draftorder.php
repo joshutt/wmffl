@@ -15,7 +15,7 @@ $sql .= "ORDER BY Round, Pick";
 
 $title = "$season WMFFL Draft Order";
 ?>
-<? include "$DOCUMENT_ROOT/base/menu.php"; ?>
+<? include "base/menu.php"; ?>
 
 <H1 Align=Center>Draft Order</H1>
 <HR size = "1">

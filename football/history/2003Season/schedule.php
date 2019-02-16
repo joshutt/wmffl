@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 $thisSeason = 2003;
 $thisWeek = 17;
 
@@ -21,21 +21,35 @@ $byeWeekQuery = "SELECT t.name FROM nflstatus s, nflteams t WHERE status='B' AND
 $title = "WMFFL Schedule";
 ?>
 
-<? include "$DOCUMENT_ROOT/base/menu.php"; ?>
-
-<H1 Align=Center><? print $thisSeason;?> Schedule</H1>
-<HR size = "1"><CENTER>
-
-<A HREF="#Week1">Week 1</A> | <A HREF="#Week2">Week 2</A> |
-<A HREF="#Week3">Week 3</A> | <A HREF="#Week4">Week 4</A> |
-<A HREF="#Week5">Week 5</A> | <A HREF="#Week6">Week 6</A> |
-<A HREF="#Week7">Week 7</A> | <A HREF="#Week8">Week 8</A> <BR>
-<A HREF="#Week9">Week 9</A> | <A HREF="#Week10">Week 10</A> |
-<A HREF="#Week11">Week 11</A> | <A HREF="#Week12">Week 12</A> |
-<A HREF="#Week13">Week 13</A> | <A HREF="#Week14">Week 14</A> <BR>
-<A HREF="#Playoffs">Playoffs</A> |
-<A HREF="#Championship">WMFFL Championship XII</A><HR size = "1"></CENTER>
-
+<? include "base/menu.php"; ?>
+
+
+<H1 Align=Center><? print $thisSeason;?> Schedule</H1>
+
+<HR size = "1"><CENTER>
+
+
+
+<A HREF="#Week1">Week 1</A> | <A HREF="#Week2">Week 2</A> |
+
+<A HREF="#Week3">Week 3</A> | <A HREF="#Week4">Week 4</A> |
+
+<A HREF="#Week5">Week 5</A> | <A HREF="#Week6">Week 6</A> |
+
+<A HREF="#Week7">Week 7</A> | <A HREF="#Week8">Week 8</A> <BR>
+
+<A HREF="#Week9">Week 9</A> | <A HREF="#Week10">Week 10</A> |
+
+<A HREF="#Week11">Week 11</A> | <A HREF="#Week12">Week 12</A> |
+
+<A HREF="#Week13">Week 13</A> | <A HREF="#Week14">Week 14</A> <BR>
+
+<A HREF="#Playoffs">Playoffs</A> |
+
+<A HREF="#Championship">WMFFL Championship XII</A><HR size = "1"></CENTER>
+
+
+
 
 <?
 $results = mysql_query($sql);
@@ -99,17 +113,28 @@ while ($row = mysql_fetch_array($results)) {
 print "</TABLE>";
 ?>
 <!--
-<A NAME="Playoffs"<H4><B>Playoffs</B></H4></A>
-<H5>December 14-15</H5>
-War Eagles vs Wild Card #2<BR>
-Crusaders vs Wild Card #1<BR>
-Toliet Bowl V: Norsemen vs Gold Division #5
+<A NAME="Playoffs"<H4><B>Playoffs</B></H4></A>
+
+<H5>December 14-15</H5>
+
+War Eagles vs Wild Card #2<BR>
+
+Crusaders vs Wild Card #1<BR>
+
+Toliet Bowl V: Norsemen vs Gold Division #5
+
 <P>
-
-<A NAME="Championship"<H4><B>WMFFL Championship XII</B></H4></A>
-<H5>December 20-22 (Saturday)</H5>
-Playoff Winner #1 vs Playoff Winner #2
-<P>
+
+
+<A NAME="Championship"<H4><B>WMFFL Championship XII</B></H4></A>
+
+<H5>December 20-22 (Saturday)</H5>
+
+Playoff Winner #1 vs Playoff Winner #2
+
+<P>
+
 -->
-
-<? include "$DOCUMENT_ROOT/base/footer.html"; ?>
+
+
+<? include "base/footer.html"; ?>

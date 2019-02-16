@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 if (!$isin) {
     header("Location: /history/2017Season/draftdate.php");

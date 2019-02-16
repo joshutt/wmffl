@@ -1,6 +1,6 @@
 <table cellpadding="5" cellspacing="1">
 <?
-include "$DOCUMENT_ROOT/lib/Team.php";
+include "lib/Team.php";
 
 //$thisSeason = 2004;
 //$thisWeek = 5;

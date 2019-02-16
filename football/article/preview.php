@@ -1,10 +1,10 @@
 <?
-include "$DOCUMENT_ROOT/base/menu.php";
+include "base/menu.php";
 
 ?>
 <table width="100%" border="0">
 <TR><TD VALIGN="top" width="100%">
-<? include "$DOCUMENT_ROOT/article.php"; ?>
+        <? include "article.php"; ?>
 </TD>
 
 <td align="right" valign="top" width="244">
@@ -24,5 +24,5 @@ include "$DOCUMENT_ROOT/base/menu.php";
 </form>
 
 <?
-include "$DOCUMENT_ROOT/base/footer.html";
+include "base/footer.html";
 ?>

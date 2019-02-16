@@ -1,8 +1,8 @@
-<?
+<?php
+require_once "utils/start.php";
 $title = "WMFFL Activations";
 $week = $currentWeek;
 $season = $currentSeason;
-require_once "utils/start.php";
 ?>
 
 <? include "base/menu.php"; ?>
@@ -22,5 +22,5 @@ require_once "utils/start.php";
 <? include "currentactivations.php"; ?>
 </CENTER>
 
-<? include $DOCUMENT_ROOT."/base/footer.html"; ?>
+    <? include "base/footer.html"; ?>
 

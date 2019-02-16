@@ -2,7 +2,7 @@
 $title = "Determine Draft Date";
 
 require_once $DOCUMENT_ROOT."/login/loginglob.php";
-include "$DOCUMENT_ROOT/base/menu.php";
+include "base/menu.php";
 ?>
 
 <H1 ALIGN=Center>Draft Date Open</H1>
@@ -53,6 +53,6 @@ weekend days.
 <CENTER><B>You must be logged in to use this feature</B></CENTER>
 
 <? }
-  include "$DOCUMENT_ROOT/base/footer.html";
+include "base/footer.html";
 ?>
 

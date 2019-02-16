@@ -110,7 +110,7 @@ while(list($ta, $tb) = mysql_fetch_row($results)) {
 <TITLE>Power Rankings</TITLE>
 </HEAD>
 
-<? include "$DOCUMENT_ROOT/base/menu.php"; ?>
+<? include "base/menu.php"; ?>
 
 <H1 ALIGN=Center>Power Rankings</H1>
 <H5 ALIGN=Center><I>Through Week <?print $week;?></I></H5>
@@ -167,4 +167,4 @@ if ($powerArray{$teama}[$week] > $powerArray{$teamb}[$week]) {
 ?>
 </TABLE>
 
-<?include "$DOCUMENT_ROOT/base/footer.html";?>
+<? include "base/footer.html"; ?>

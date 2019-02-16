@@ -1,6 +1,6 @@
 <?
 $title="Playoff Scenarios";
-include "$DOCUMENT_ROOT/base/menu.php";
+include "base/menu.php";
 ?>
 
 <H1 ALIGN=Center>Playoff Scenarios</H1>
@@ -60,5 +60,4 @@ include "$DOCUMENT_ROOT/base/menu.php";
 </ul>
 
 
-
-<? include "$DOCUMENT_ROOT/base/footer.html"; ?>
+<? include "base/footer.html"; ?>

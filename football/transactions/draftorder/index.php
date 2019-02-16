@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 function numberName($num) {
     switch($num) {
@@ -14,7 +14,7 @@ function numberName($num) {
 
 $title = "Determine Draft Order";
 
-include "$DOCUMENT_ROOT/base/menu.php";
+include "base/menu.php";
 
 ?>
 <script language="javascript">
@@ -192,5 +192,5 @@ Gallic Warriors<br/>
 </tr>
 </table>
 <?
-include "$DOCUMENT_ROOT/base/footer.html";
+include "base/footer.html";
 ?>

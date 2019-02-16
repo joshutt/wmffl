@@ -1,7 +1,9 @@
 <?
 require_once "utils/start.php";
 
-if (!isset($week)) {
+if (array_key_exists('week', $_REQUEST)) {
+    $week = $_REQUEST['week'];
+} else {
     $week = $currentWeek - 1;
 }
 if ($currentWeek == 0) {

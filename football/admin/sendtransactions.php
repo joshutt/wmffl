@@ -1,5 +1,5 @@
 <?
-//	require "$DOCUMENT_ROOT/../base/conn.php";
+//	require "../base/conn.php";
     require "/home/wmffl/public_html/base/conn.php";
 	
 	// Determine time range

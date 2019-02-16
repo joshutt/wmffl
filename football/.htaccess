@@ -1,4 +1,5 @@
-SuPHP_ConfigPath /home/joshutt/git/football
+#suPHP_ConfigPath /home/joshutt/git/football
+#PHPIniDir "C:/Users/Josh/IdeaProjects/wmffl"
 
 ErrorDocument 404 /404.php
 
@@ -18,6 +19,4 @@ allow from all
 </Files>
 
 SetEnv HTTP_configFile  "/home/joshutt/git/conf/wmffl.conf"
-
-deny from 162.210.198.6
-deny from 199.115.112.90
+php_value include_path ".;c:/php7/includes;c:/pear/share/pear;C:/Users/Josh/IdeaProjects/wmffl/football;../lib;../conf"

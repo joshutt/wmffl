@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 $thequery = "select teamid, password, name, userid from user where username='".$username."' and (password=password('".$password."') or password=md5('$password')) and Active='Y'";
 $result = mysql_query($thequery, $conn);

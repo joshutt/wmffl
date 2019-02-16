@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 $teamid = $_REQUEST['team'];
 $playerid = $_REQUEST['player'];

@@ -1,7 +1,9 @@
 <?
 //$currentSeason = 2004;
 $checkWeek = 17;
-if ($viewseason == null) {
+if (array_key_exists('viewseason', $_REQUEST)) {
+    $viewseason = $_REQUEST['viewseason'];
+} else {
     $viewseason = $currentSeason;
     $checkWeek = $currentWeek;
 }
@@ -9,7 +11,6 @@ if ($viewseason == null) {
 if ($checkWeek == 0) {
     $viewseason--;
     $checkWeek = 17;
-#$viewseason=2010;
 }
 
 $otherSeason = "select distinct season from schedule where $viewteam in (teama, teamb) order by season desc";

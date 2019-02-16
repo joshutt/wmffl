@@ -144,7 +144,7 @@ $results = mysql_query($query) or die("Error: ".mysql_error());
 
 $actPlayers = array();
 $team = array();
-$currentTeam;
+$currentTeam = "";
 while ($player = mysql_fetch_array($results)) {
 //    print_r($player);
     if ($currentTeam != $player["name"]) {

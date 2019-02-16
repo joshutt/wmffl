@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 $uid = $_REQUEST["uid"];
 $edit = $_REQUEST["Edit"];

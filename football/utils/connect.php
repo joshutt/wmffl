@@ -17,7 +17,9 @@
 require_once "setup.php";
 
 // Start the sessions, ensure every page is in session
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Establish database connections
 $conn = mysqli_connect('localhost', $ini['userName'], $ini['password'], $ini['dbName']);

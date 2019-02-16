@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/base/conn.php";
+require_once "base/conn.php";
 
 $sql = "SELECT teamid, name FROM team ORDER BY name";
 $results = mysql_query($sql);
