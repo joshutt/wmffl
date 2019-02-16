@@ -3,9 +3,7 @@
 <TITLE>Activations</TITLE>
 </HEAD>
 
-<?
-	include $DOCUMENT_ROOT . "/base/menu.php";
-?>
+<?php include "base/menu.php"; ?>
 
 <H1 ALIGN=Center>Activations</H1>
 <HR size = "1">
@@ -27,6 +25,4 @@
 ?>
 </CENTER>
 
-<?
-	include $DOCUMENT_ROOT . "/base/footer.html";
-?>
+<?php include "base/footer.html"; ?>
