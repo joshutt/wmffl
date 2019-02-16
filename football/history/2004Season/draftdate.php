@@ -5,8 +5,8 @@
 
 <?
 
-require_once $DOCUMENT_ROOT."/base/conn.php";
-require_once $DOCUMENT_ROOT."/login/loginglob.php";
+require_once "base/conn.php";
+require_once "login/loginglob.php";
 include "base/menu.php";
 ?>
 

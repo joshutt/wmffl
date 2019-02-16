@@ -1,7 +1,7 @@
 <?
 	// Include the file that defines the connection information
 // establish connection
-require $DOCUMENT_ROOT."/base/conn.php";
+require "base/conn.php";
 
 $thequery = "select i.issuenum, ";
 $thequery .= "sum(if(b.vote='Accept',1,0)), sum(if(b.vote='Reject',1,0)), "; 

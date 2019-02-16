@@ -1,7 +1,7 @@
 <?
 
-require_once $DOCUMENT_ROOT."/base/conn.php";
-require_once $DOCUMENT_ROOT."/login/loginglob.php";
+require_once "base/conn.php";
+require_once "login/loginglob.php";
 if (!$isin) {
     header("Location: /history/2002Season/draftdate.php");
 }

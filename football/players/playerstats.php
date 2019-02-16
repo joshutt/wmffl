@@ -1,7 +1,7 @@
 <?
-include_once $DOCUMENT_ROOT."/base/conn.php";
+include_once "base/conn.php";
 
-include $DOCUMENT_ROOT."/base/menu.php";
+include "base/menu.php";
 
 $sql = "SELECT p.playerid as 'ID', CONCAT(p.firstname,' ',p.lastname) as 'Name', IFNULL(t.name, '-') as 'Team', p.nflteam as 'NFL', sum(ps.pts) as 'Pts'
 FROM players p, playerscores ps
@@ -39,5 +39,5 @@ while($player = mysql_fetch_array($results)) {
 }
 print "</table>";
 
-include $DOCUMENT_ROOT."/base/footer.html";
+include "base/footer.html";
 ?>

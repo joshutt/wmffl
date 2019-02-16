@@ -33,7 +33,7 @@ function trade($teamid, $date) {
 
 
 	// Include the file that defines the connection information
-	require $DOCUMENT_ROOT."/base/conn.php";
+require "base/conn.php";
 	
 	$thequery = "SELECT DATE_FORMAT(max(date), '%m/%e/%Y'), DATE_FORMAT(max(date),'%m'), DATE_FORMAT(max(date),'%Y') FROM transactions";
 	$results = mysql_query($thequery);

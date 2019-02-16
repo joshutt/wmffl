@@ -1,5 +1,5 @@
 <?
-require_once $DOCUMENT_ROOT."/base/conn.php";
+require_once "base/conn.php";
 
 function powersort($a, $b) {
     $aar = array_reverse($a);

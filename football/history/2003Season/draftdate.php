@@ -1,7 +1,7 @@
 <?
 $title = "Determine Draft Date";
 
-require_once $DOCUMENT_ROOT."/login/loginglob.php";
+require_once "login/loginglob.php";
 include "base/menu.php";
 ?>
 

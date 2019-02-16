@@ -109,7 +109,8 @@ tags
 [._]*.un~
 
 
-**/logs/
+**/logs/*
+!**/logs/empty
 **/error_log
 **/*.log
 

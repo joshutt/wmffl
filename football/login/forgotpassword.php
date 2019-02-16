@@ -81,7 +81,7 @@ require_once "utils/start.php";
 <TITLE>Generate New Password</TITLE>
 </HEAD>
 
-<? include $DOCUMENT_ROOT."/base/menu.php"; ?>
+<? include "base/menu.php"; ?>
 
 <H1 ALIGN=Center>Generate New WMFFL Password</H1>
 <HR size = "1">
@@ -102,5 +102,5 @@ require_once "utils/start.php";
 </CENTER>
 <P>
 
-<? include $DOCUMENT_ROOT."/base/footer.html"; ?>
+    <? include "base/footer.html"; ?>
 
