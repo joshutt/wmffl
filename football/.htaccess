@@ -1,6 +1,3 @@
-#suPHP_ConfigPath /home/joshutt/git/football
-#PHPIniDir "C:/Users/Josh/IdeaProjects/wmffl"
-
 ErrorDocument 404 /404.php
 
 RewriteEngine On
@@ -18,5 +15,3 @@ order allow,deny
 allow from all
 </Files>
 
-SetEnv HTTP_configFile  "/home/joshutt/git/conf/wmffl.conf"
-php_value include_path ".;c:/php7/includes;c:/pear/share/pear;C:/Users/Josh/IdeaProjects/wmffl/football;../lib;../conf"
