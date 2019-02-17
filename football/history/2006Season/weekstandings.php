@@ -19,17 +19,15 @@ sum(if(tn.divisionid=t2.divisionid, IF(t.teamid=s.teama AND s.scorea<s.scoreb, 1
 sum(if(tn.divisionid=t2.divisionid, IF(s.scorea=s.scoreb, 1, 0),0)) as 'divtie'
 
 
-FROM schedule s, team t, teamnames tn, division d, teamnames t2, weekmap wm
+FROM schedule s
+ JOIN team t on t.TeamID in (s.TeamA, s.TeamB)
+  JOIN teamnames tn on t.TeamID=tn.teamid AND tn.season=s.season
+  JOIN division d ON d.divisionid=tn.divisionid and d.startYear <= s.Season and (d.endYear >= s.Season or d.endYear is null)
+  JOIN teamnames t2 ON t2.teamid in (s.teama, s.teamb) AND t2.teamid <> t.teamid and t2.season=tn.season
+  JOIN weekmap wm ON wm.season=s.season and wm.week=s.week and wm.enddate<=now()
 WHERE s.season =$thisSeason
-AND t.teamid in (s.teama, s.teamb)
-AND t.teamid=tn.teamid
-AND tn.season=s.season
 AND s.week<=$thisWeek
 AND s.week<=14
-AND d.divisionid=tn.divisionid
-and d.startYear <= s.season and (d.endYear >= s.season or d.endYear is null)
-AND t2.teamid in (s.teama, s.teamb) AND t2.teamid <> t.teamid and t2.season=tn.season
-AND wm.season=s.season and wm.week=s.week and wm.enddate<=now()
 GROUP BY d.name, tn.name
 
 EOD;
