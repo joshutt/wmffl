@@ -4,13 +4,13 @@
 	
 	// Determine time range
     $cronEnter = true;
-	if (!isset($HTTP_GET_VARS["StartDate"]) || $HTTP_GET_VARS["StartDate"]=="") {
+if (!isset($_GET["StartDate"]) || $_GET["StartDate"] == "") {
 		$StartDate = "now()";
 	} else {
 		$StartDate = "'$StartDate'";
         $cronEnter = false;
 	}
-	if (!isset($HTTP_GET_VARS["EndDate"]) || $HTTP_GET_VARS["EndDate"]=="") {
+if (!isset($_GET["EndDate"]) || $_GET["EndDate"] == "") {
 		$EndDate = "now()";
 	} else {
 		$EndDate = "'$EndDate'";

@@ -24,12 +24,12 @@ function buildObjectArray($they) {
     return $theyItems;
 }
 
-if (isset($HTTP_POST_VARS["cancel"])) {
+if (isset($_POST["cancel"])) {
 	header("Location: tradescreen.php");
     exit();
 }
 
-$offerid = $HTTP_POST_VARS["offerid"];
+$offerid = $_POST["offerid"];
 
 $they = $_SESSION["they"];
 //print_r($they);
@@ -88,7 +88,7 @@ $mailmessage .= $myTeam->getName()." offer ".printList($youItems);
 $mailmessage .= " to the ".$otherTeam->getName()." in exchange for ";
 $mailmessage .= printList($theyItems);
 $mailmessage .= "\n\n";
-$mailmessage .= $HTTP_POST_VARS["comments"];
+$mailmessage .= $_POST["comments"];
 $mailmessage .= "\n\n";
 $mailmessage .= "To accept, reject or modify this trade please go to the trade page: http://wmffl.com/transactions/trades/tradescreen.php  ";
 $mailmessage .= "This offer will expire in 7 days.";

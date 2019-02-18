@@ -24,7 +24,7 @@ function buildObjectArray($they) {
     return $theyItems;
 }
 
-$offerid = $HTTP_GET_VARS["offerid"];
+$offerid = $_GET["offerid"];
 
 $they = $_SESSION["they"];
 //print_r($they);

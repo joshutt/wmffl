@@ -94,10 +94,10 @@ GROUP BY p.playerid
 ORDER BY `$sort` DESC, `pts` DESC
 EOD;
 
-$firstSort = $HTTP_POST_VARS["firstsort"];
+$firstSort = $_POST["firstsort"];
 if (isset($firstSort) && $firstSort != "none") {
     $sql .= "ORDER BY $firstSort ";
-    $secondSort = $HTTP_POST_VARS["secondsort"];
+    $secondSort = $_POST["secondsort"];
     if (isset($secondSort) && $secondSort != "none") {
         $sql .= ", $secondSort ";
     }

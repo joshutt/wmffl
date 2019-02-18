@@ -24,10 +24,11 @@ class DuplicateDraft {
     var $options = array();
 }
 
-function checkTransactions($teamid, &$retArray, $HTTP_POST_VARS) {
+function checkTransactions($teamid, &$retArray, $_POST)
+{
     // Get each team's number
-    $teamto = $HTTP_POST_VARS["teamto"];
-    $trans = array($HTTP_POST_VARS["you"], $HTTP_POST_VARS["they"]);
+    $teamto = $_POST["teamto"];
+    $trans = array($_POST["you"], $_POST["they"]);
 
     // for each pts object look if given player has that many points in year
     for ($i=0; $i<count($trans); $i++) {
@@ -59,10 +60,11 @@ function checkTransactions($teamid, &$retArray, $HTTP_POST_VARS) {
     }
 }
 
-function checkDraft($teamid, &$retArray, $HTTP_POST_VARS) {
+function checkDraft($teamid, &$retArray, $_POST)
+{
     // Get each team's number
-    $teamto = $HTTP_POST_VARS["teamto"];
-    $trans = array($HTTP_POST_VARS["you"], $HTTP_POST_VARS["they"]);
+    $teamto = $_POST["teamto"];
+    $trans = array($_POST["you"], $_POST["they"]);
 
     for ($i=0; $i<count($trans); $i++) {
         $team = (($i==0) ? $teamid : $teamto);

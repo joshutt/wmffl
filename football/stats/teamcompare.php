@@ -39,13 +39,13 @@ while ($resArry = mysql_fetch_array($results)) {
 }
 
 $numWeeks = $week;
-if (isset($HTTP_GET_VARS["numWeeks"])) {
-    $numWeeks = $HTTP_GET_VARS["numWeeks"];
+if (isset($_GET["numWeeks"])) {
+    $numWeeks = $_GET["numWeeks"];
 }
 
 $theTeam = "Amish Electricians";
-if (isset($HTTP_GET_VARS["team"])) {
-    $theTeam = $HTTP_GET_VARS["team"];
+if (isset($_GET["team"])) {
+    $theTeam = $_GET["team"];
 }
 
 foreach ($tot[$theTeam] as $pos=>$others) {

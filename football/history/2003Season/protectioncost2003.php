@@ -1,28 +1,28 @@
-<?
-require_once "base/conn.php";
-$query = "SELECT p.firstname, p.lastname, pc.years, MAX(pos.cost)-MIN(pos.cost) as 'Extra', t.name ";
-$query .= "FROM players p, protectioncost pc, positioncost pos ";
-$query .= "LEFT JOIN roster r ON r.playerid=p.playerid AND r.dateoff is null ";
-$query .= "LEFT JOIN team t on r.teamid=t.teamid ";
-$query .= "WHERE p.playerid=pc.playerid and pc.season=2003 ";
-$query .= "and p.position=pos.position and pos.years<=pc.years ";
-$query .= "GROUP BY p.playerid, pos.position ";
-$query .= "ORDER BY t.name, Extra desc, pc.years desc";
+<?php
+require_once "utils/connect.php";
+$query = "SELECT p.firstname, p.lastname, pc.years, MAX(pos.cost)-MIN(pos.cost) as 'Extra', t.name
+FROM newplayers p
+ JOIN protectioncost pc on p.playerid=pc.playerid
+ JOIN positioncost pos ON p.pos=pos.position and pos.years<=pc.years
+LEFT JOIN roster r ON r.playerid=p.playerid AND r.dateon <= '2003-08-25' and (r.dateoff is null or r.DateOff > '2003-09-01')
+LEFT JOIN teamnames t on r.teamid=t.teamid and t.season=pc.season
+WHERE pc.season=2003
+GROUP BY p.playerid, pos.position
+ORDER BY t.name, Extra desc, pc.years desc";
 
-$result = mysql_query($query, $conn);	
-while ($aLine = mysql_fetch_array($result)) {
+$page = array();
+$result = mysqli_query($conn, $query);
+while ($aLine = mysqli_fetch_array($result)) {
+    if (!array_key_exists($aLine['name'], $page)) {
+        $page[$aLine['name']] = "";
+    }
 	$page[$aLine['name']] .= "<TR><TD>".$aLine['firstname']." ".$aLine['lastname'];
 	$page[$aLine['name']] .= "</TD><TD ALIGN=Center>".$aLine['years']."</TD>";
 	$page[$aLine['name']] .= "<TD ALIGN=Center>+".$aLine['Extra']."</TD></TR>";
 }
+$title = "2003 WMFFL Protection Costs";
+include "base/menu.php";
 ?>
-
-<HTML>
-<HEAD>
-<TITLE>2003 WMFFL Protection Costs</TITLE>
-</HEAD>
-
-<? include "base/menu.php"; ?>
 
 <H1 Align=Center>Protection Costs</H1>
 <HR size = "1">
@@ -34,7 +34,7 @@ protected.  The base position points are as follows:
 <TABLE BORDER=1>
 <TR><TD>QB</TD><TD>RB</TD><TD>WR</TD><TD>TE</TD><TD>K</TD><TD>OL</TD><TD>DL</TD><TD>LB</TD><TD>DB</TD></TR>
 <TR><TD>9</TD><TD>10</TD><TD>8</TD><TD>4</TD><TD>1</TD><TD>1</TD><TD>3</TD><TD>5</TD><TD>4</TD></TR>
-</TABLE></P>
+</TABLE>
 
 <P>The adjustment factor for years protected are:
 <TABLE BORDER=1>
@@ -42,7 +42,7 @@ protected.  The base position points are as follows:
 <TR><TD></TD><TD>1</TD><TD>2</TD><TD>3</TD><TD>4</TD><TD>5</TD><TD>6</TD><TD>7</TD><TD>8+</TD></TR>
 <TR><TD>QB, RB, WR & TE</TD><TD>+1</TD><TD>+2</TD><TD>+3</TD><TD>+4</TD><TD>+4</TD><TD>+5</TD><TD>+5</TD><TD>+6</TD></TR>
 <TR><TD>K, OL, DL, LB & DB</TD><TD>+1</TD><TD>+1</TD><TD>+2</TD><TD>+2</TD><TD>+3</TD><TD>+3</TD><TD>+3</TD><TD>+4</TD></TR>
-</TABLE></P>
+</TABLE>
 
 <P>Adding the postion cost and adjustment factor together will give you
 a player's protection cost.  As many players as desired may be protected,
@@ -62,60 +62,60 @@ be able to find out how much each player will cost to protect.</P>
 
 <TR><TH COLSPAN=2>Crusaders</TH></TR>
 <TR><TH>Player Name</TH><TH>Years Protected</TH><TH>Extra Cost</TH></TR>
-<? print $page['Crusaders']; ?>
+    <?= $page['Crusaders']; ?>
 <TR><TD>&nbsp;</TD></TR>
 
 <TR><TH COLSPAN=2>Freezer Burn</TH></TR>
 <TR><TH>Player Name</TH><TH>Years Protected</TH><TH>Extra Cost</TH></TR>
-<? print $page['Freezer Burn']; ?>
+    <?= $page['Freezer Burn']; ?>
 <TR><TD>&nbsp;</TD></TR>
 
 <TR><TH COLSPAN=2>Green Wave</TH></TR>
 <TR><TH>Player Name</TH><TH>Years Protected</TH><TH>Extra Cost</TH></TR>
-<? print $page['Green Wave']; ?>
+    <?= $page['Green Wave']; ?>
 <TR><TD>&nbsp;</TD></TR>
 
 <TR><TH COLSPAN=2>Illuminati</TH></TR>
 <TR><TH>Player Name</TH><TH>Years Protected</TH><TH>Extra Cost</TH></TR>
-<? print $page['Illuminati']; ?>
+    <?= $page['Illuminati']; ?>
 <TR><TD>&nbsp;</TD></TR>
 
 <TR><TH COLSPAN=2>MeggaMen</TH></TR>
 <TR><TH>Player Name</TH><TH>Years Protected</TH><TH>Extra Cost</TH></TR>
-<? print $page['MeggaMen']; ?>
+    <?= $page['MeggaMen']; ?>
 </TABLE>
 </TD><TD WIDTH=*></TD><TD WIDTH=45% VALIGN=Top>
 
 <TABLE ALIGN=Right VALIGN=Top>
 <TR><TH COLSPAN=2>Norsemen</TH></TR>
 <TR><TH>Player Name</TH><TH>Years Protected</TH><TH>Extra Cost</TH></TR>
-<? print $page['Norsemen']; ?>
+    <?= $page['Norsemen']; ?>
 <TR><TD>&nbsp;</TD></TR>
 
 <TR><TH COLSPAN=2>Rednecks</TH></TR>
 <TR><TH>Player Name</TH><TH>Years Protected</TH><TH>Extra Cost</TH></TR>
-<? print $page['Rednecks']; ?>
+    <?= $page['Rednecks']; ?>
 <TR><TD>&nbsp;</TD></TR>
 
 <TR><TH COLSPAN=2>War Eagles</TH></TR>
 <TR><TH>Player Name</TH><TH>Years Protected</TH><TH>Extra Cost</TH></TR>
-<? print $page['War Eagles']; ?>
+    <?= $page['War Eagles']; ?>
 <TR><TD>&nbsp;</TD></TR>
 
 <TR><TH COLSPAN=2>Werewolves</TH></TR>
 <TR><TH>Player Name</TH><TH>Years Protected</TH><TH>Extra Cost</TH></TR>
-<? print $page['Werewolves']; ?>
+    <?= $page['Werewolves']; ?>
 <TR><TD>&nbsp;</TD></TR>
 
 <TR><TH COLSPAN=2>Whiskey Tango</TH></TR>
 <TR><TH>Player Name</TH><TH>Years Protected</TH><TH>Extra Cost</TH></TR>
-<? print $page['Whiskey Tango']; ?>
+    <?= $page['Whiskey Tango']; ?>
 <TR><TD>&nbsp;</TD></TR>
 
 <TR><TH COLSPAN=2>Not on a Team</TH></TR>
 <TR><TH>Player Name</TH><TH>Years Protected</TH><TH>Extra Cost</TH></TR>
-<? print $page['']; ?>
+    <?= $page['']; ?>
 
 </TABLE>
 </TD></TR></TABLE>
-<? include "base/footer.html"; ?>
+<?php include "base/footer.html"; ?>

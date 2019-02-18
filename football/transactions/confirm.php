@@ -48,7 +48,7 @@ if($submit == "Confirm") {
 //    print "In Confirm<br>";
 	$playercount = 0;
 	$listcount = 0;
-	while(list($key, $val) = each($HTTP_POST_VARS)) {
+    while (list($key, $val) = each($_POST)) {
 		$com = substr($key, 0, 4);
   //      print "$key - $com - $val<br>";
 		if ($com == "keep") {
@@ -181,7 +181,7 @@ WHERE tp.teamid=$teamnum and tp.season=$season";
 	}
 
 } else {
-	$playlist = process($HTTP_POST_VARS);
+    $playlist = process($_POST);
 }
 
 $waveCount = 0;

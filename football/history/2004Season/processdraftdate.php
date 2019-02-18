@@ -7,7 +7,7 @@ if (!$isin) {
 }
 
 $userID = 3;
-foreach ($HTTP_POST_VARS as $key => $value) {
+foreach ($_POST as $key => $value) {
     //print "$key - $value <BR>";
     $thequery = "UPDATE draftdate SET attend='$value' ";
     $thequery.= "WHERE date='2004-".substr($key,0,2)."-".substr($key,2,2)."' ";

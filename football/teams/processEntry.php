@@ -6,8 +6,8 @@ if (!$isin) {
     exit;
 }
 
-$subject = stripslashes($HTTP_POST_VARS["subject"]);
-$body = stripslashes($HTTP_POST_VARS["body"]);
+$subject = stripslashes($_POST["subject"]);
+$body = stripslashes($_POST["body"]);
 
 #$sql = "SELECT blogaddress FROM user WHERE userid=$teamnum";
 $sql = "SELECT blogaddress FROM user WHERE username='$user'";

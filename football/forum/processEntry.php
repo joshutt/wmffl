@@ -11,10 +11,9 @@ require "DataObjects/Forum.php";
 $post = new DataObjects_Forum;
 
 
-$subject = stripslashes(mysql_real_escape_string($HTTP_POST_VARS["subject"]));
-$body = stripslashes(mysql_real_escape_string(str_replace("\r\n","",$HTTP_POST_VARS["body"])));
+$subject = stripslashes(mysql_real_escape_string($_POST["subject"]));
+$body = stripslashes(mysql_real_escape_string(str_replace("\r\n", "", $_POST["body"])));
 
-//print mysql_real_escape_string(stripslashes($HTTP_POST_VARS["body"]));
 
 $post->settitle($subject);
 $post->setbody($body);

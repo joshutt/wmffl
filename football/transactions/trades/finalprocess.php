@@ -24,13 +24,13 @@ function buildObjectArray($trade, $dir) {
     return $theyItems;
 }
 
-$selection = $HTTP_POST_VARS["select"];
+$selection = $_POST["select"];
 if ($selection == "Yes") {
 
 //print "Yes";
-	$action = $HTTP_POST_VARS["action"];
-	$offerid = $HTTP_POST_VARS["offerid"];
-	$comments = $HTTP_POST_VARS["comments"];
+    $action = $_POST["action"];
+    $offerid = $_POST["offerid"];
+    $comments = $_POST["comments"];
 
 /*
 p
@@ -64,7 +64,7 @@ print $comments;
         $mailmessage .= $teamB->getName()." in exchange for ";
         $mailmessage .= printList($youItems);
         $mailmessage .= "\n\nComments: \n";
-        $mailmessage .= $HTTP_POST_VARS["comments"];
+        $mailmessage .= $_POST["comments"];
         $mailmessage .= "\n\n";
         
         $subject = "Trade Offer Rejected";
@@ -115,7 +115,7 @@ print $comments;
         $mailmessage .= printList($youItems);
         $mailmessage .= "\n\n";
         $mailmessage .= "Comments: \n";
-        $mailmessage .= $HTTP_POST_VARS["comments"];
+        $mailmessage .= $_POST["comments"];
         $mailmessage .= "\n\n";
         
         $subject = "Trade Offer Accepted";

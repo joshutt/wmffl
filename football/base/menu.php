@@ -1,11 +1,14 @@
 <?php
 // This is temporary, but maybe it's not such a bad idea
 require_once "utils/start.php";
+if (!isset($title)) {
+    $title = "WMFFL";
+}
 ?>
 
 <html>
 <head>
-    <title><? print $title; ?></title>
+    <title><?= $title; ?></title>
     <link rel="icon" href="/images/logo3.png" type="image/png"/>
     <link rel="SHORTCUT ICON" href="/images/logo3.png"/>
 

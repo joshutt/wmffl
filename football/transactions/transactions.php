@@ -57,7 +57,7 @@ function trade($teamid, $date) {
 
 if (isset($_REQUEST["month"])) $themonth = $_REQUEST["month"];
 if (isset($_REQUEST["year"])) $theyear = $_REQUEST["year"];
-//	if (!isset($HTTP_GET_VARS["year"])) $HTTP_GET_VARS["year"]=2002;
+//	if (!isset($_GET["year"])) $_GET["year"]=2002;
 
     $title = "WMFFL Transactions";
 	include "base/menu.php";
@@ -98,8 +98,8 @@ if (isset($_REQUEST["year"])) $theyear = $_REQUEST["year"];
 	include "transactions/transmenu.php";
 	//include "transactions/transmenu.html";
 
-//	if (!isset($HTTP_POST_VARS["month"])) $HTTP_POST_VARS["month"]=$themonth;
-//	if (!isset($HTTP_POST_VARS["year"])) $HTTP_POST_VARS["year"]=2001;
+//	if (!isset($_POST["month"])) $_POST["month"]=$themonth;
+//	if (!isset($_POST["year"])) $_POST["year"]=2001;
 
 	// Create the query
 	$thequery="SELECT DATE_FORMAT(t.date, '%M %e, %Y'), m.name, t.method, concat(p.firstname, ' ', p.lastname), p.pos, p.team, m.teamid, DATE_FORMAT(t.date, '%Y-%m-%d') ";
@@ -107,7 +107,7 @@ if (isset($_REQUEST["year"])) $theyear = $_REQUEST["year"];
 	$thequery .= "FROM transactions t, teamnames m, newplayers p ";
 	$thequery .= "WHERE t.teamid=m.teamid AND t.playerid=p.playerid ";
     $thequery .= "AND m.season=$theyear ";
-	//$thequery .= "AND t.date BETWEEN '".$HTTP_GET_VARS["year"]."-".$themonth."-01' AND ";
+//$thequery .= "AND t.date BETWEEN '".$_GET["year"]."-".$themonth."-01' AND ";
 	if ($themonth > 8) {
 		$thequery .= "AND t.date BETWEEN '".$theyear."-".$themonth."-01' AND ";
 		$thequery .= "'".$theyear."-".$themonth."-31 23:59:59.99999' ";
@@ -115,7 +115,7 @@ if (isset($_REQUEST["year"])) $theyear = $_REQUEST["year"];
 		$thequery .= "AND t.date BETWEEN '".$theyear."-01-01' AND ";
 		$thequery .= "'".$theyear."-08-31 23:59:59.99999' ";
 	}
-//	$thequery .= "'".HTTP_POST_VARS["year"]."-".$HTTP_POST_VARS["month"]."-31' ";
+//	$thequery .= "'".HTTP_POST_VARS["year"]."-".$_POST["month"]."-31' ";
 //	$thequery .= "ORDER BY t.date DESC, m.name, t.method, p.lastname";
 	$thequery .= "ORDER BY DATE_FORMAT(t.date, '%Y/%m/%d') DESC, m.name, t.method, p.lastname";
 	

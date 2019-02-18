@@ -1,7 +1,7 @@
 <?
 require_once "utils/start.php";
 
-	if (!isset($HTTP_POST_VARS["submit"])) {
+if (!isset($_POST["submit"])) {
 		header("Location: protections");
 		exit;
 	}

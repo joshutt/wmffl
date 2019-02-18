@@ -12,7 +12,7 @@ if (!$isin) {
 }
 
 
-foreach ($HTTP_POST_VARS as $key => $value) {
+foreach ($_POST as $key => $value) {
 	$thequery = "update ballot set vote='".$value."' where issueid=".$key." and teamid=".$teamnum;
 	mysql_query($thequery);
 

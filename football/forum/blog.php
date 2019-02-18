@@ -6,7 +6,7 @@ require "DataObjects/Forum.php";
 $posts = new DataObjects_Forum;
 $posts->orderBy('createTime DESC');
 $posts->limit(20);
-if ($_REQUEST["start"]) {
+if (array_key_exists("start", $_REQUEST)) {
     $posts->whereAdd('forumid < '.$start);
 }
 

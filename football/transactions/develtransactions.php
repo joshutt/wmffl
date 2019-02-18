@@ -43,10 +43,10 @@ function trade($teamid, $date) {
 	$thequery = "SELECT DATE_FORMAT(max(date), '%m/%e/%Y'), DATE_FORMAT(max(date),'%m'), DATE_FORMAT(max(date),'%Y') FROM transactions";
 	$results = mysql_query($thequery);
 	list($lastupdate, $themonth, $theyear) = mysql_fetch_row($results);
-	
-	if (isset($HTTP_GET_VARS["month"])) $themonth = $HTTP_GET_VARS["month"];
-	if (isset($HTTP_GET_VARS["year"])) $theyear = $HTTP_GET_VARS["year"];
-//	if (!isset($HTTP_GET_VARS["year"])) $HTTP_GET_VARS["year"]=2002;
+
+if (isset($_GET["month"])) $themonth = $_GET["month"];
+if (isset($_GET["year"])) $theyear = $_GET["year"];
+//	if (!isset($_GET["year"])) $_GET["year"]=2002;
 
     $title = "WMFFL Transactions";
 	include "base/menu.php";
@@ -87,8 +87,8 @@ function trade($teamid, $date) {
 	include "transactions/transmenu.php";
 	//include "transactions/transmenu.html";
 
-//	if (!isset($HTTP_POST_VARS["month"])) $HTTP_POST_VARS["month"]=$themonth;
-//	if (!isset($HTTP_POST_VARS["year"])) $HTTP_POST_VARS["year"]=2001;
+//	if (!isset($_POST["month"])) $_POST["month"]=$themonth;
+//	if (!isset($_POST["year"])) $_POST["year"]=2001;
 
 	// Create the query
 	$thequery="SELECT DATE_FORMAT(t.date, '%M %e, %Y'), m.name, t.method, concat(p.firstname, ' ', p.lastname), p.pos, p.team, m.teamid, DATE_FORMAT(t.date, '%Y-%m-%d') ";
@@ -96,7 +96,7 @@ function trade($teamid, $date) {
 	$thequery .= "FROM transactions t, teamnames m, newplayers p ";
 	$thequery .= "WHERE t.teamid=m.teamid AND t.playerid=p.playerid ";
     $thequery .= "AND m.season=$theyear ";
-	//$thequery .= "AND t.date BETWEEN '".$HTTP_GET_VARS["year"]."-".$themonth."-01' AND ";
+//$thequery .= "AND t.date BETWEEN '".$_GET["year"]."-".$themonth."-01' AND ";
 	if ($themonth > 8) {
 		$thequery .= "AND t.date BETWEEN '".$theyear."-".$themonth."-01' AND ";
 		$thequery .= "'".$theyear."-".$themonth."-31 23:59:59.99999' ";
@@ -104,7 +104,7 @@ function trade($teamid, $date) {
 		$thequery .= "AND t.date BETWEEN '".$theyear."-01-01' AND ";
 		$thequery .= "'".$theyear."-08-31 23:59:59.99999' ";
 	}
-//	$thequery .= "'".HTTP_POST_VARS["year"]."-".$HTTP_POST_VARS["month"]."-31' ";
+//	$thequery .= "'".HTTP_POST_VARS["year"]."-".$_POST["month"]."-31' ";
 //	$thequery .= "ORDER BY t.date DESC, m.name, t.method, p.lastname";
 	$thequery .= "ORDER BY DATE_FORMAT(t.date, '%Y/%m/%d') DESC, m.name, t.method, p.lastname";
 	

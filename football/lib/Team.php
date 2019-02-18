@@ -75,6 +75,9 @@ class Team {
 //        return .500;
         if ($teamArray == NULL || !isset($teamArray)) {
             $teamArray = $this->allRef;
+            if (empty($teamArray)) {
+                return 0.000;
+            }
         }
         $rec = array(0,0,0);
         $keyList = array_map("getTeamId", $teamArray);
@@ -188,6 +191,7 @@ function orderteam($a, $b) {
     print "-->";
     */
 
+//    error_log(print_r($a, TRUE));
     if ($a->getSOV() > $b->getSOV()) {
         return -1;
     } elseif ($a->getSOV() < $b->getSOV()) {

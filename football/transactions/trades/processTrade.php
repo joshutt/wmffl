@@ -9,8 +9,8 @@ if (!$isin) {
     exit;
 }
 //$teamid = 2;
-$tradeID = $HTTP_POST_VARS["offerid"];
-$action = $HTTP_POST_VARS["action"];
+$tradeID = $_POST["offerid"];
+$action = $_POST["action"];
 
 #print $tradeID;
 #print $action;

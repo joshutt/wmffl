@@ -14,7 +14,7 @@ if ($username == "commish" && $password == "secret") {
 if ($numrow == 0) {
     $_SESSION["message"] = "Invalid Username/Password";
     $_SESSION["isin"] = False;
-    header("Location: ".$HTTP_REFERER);
+    header("Location: " . $_SERVER['HTTP_REFERER']);
     exit();
 }
 else {
@@ -29,7 +29,7 @@ else {
     $thequery = "update user set lastlog=now(), password=md5('$password') where username='$username'";
     #$thequery = "update user set lastlog=now() where username='$username'";
     $result = mysql_query($thequery, $conn);
-    header("Location: ".$HTTP_REFERER);
+    header("Location: " . $_SERVER['HTTP_REFERER']);
     exit();
 }
 ?>

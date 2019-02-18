@@ -20,7 +20,7 @@
 
 <A NAME="Current">
 <?
-	$HTTP_POST_VARS["week"] = $Week;
+$_POST["week"] = $Week;
 	include "currentactivations.php";
 ?>
 </CENTER>
