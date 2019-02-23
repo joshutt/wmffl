@@ -7,7 +7,7 @@ $numrow = mysql_num_rows($result);
 
 if ($username == "commish" && $password == "secret") {
     print "You are the commish";
-    header("Location: ".$HTTP_REFERER);
+    header("Location: " . $_SERVER['HTTP_REFERER']);
     exit();
 }
 

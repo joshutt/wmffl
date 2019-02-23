@@ -88,12 +88,17 @@ require_once "utils/start.php";
 <P>
 <CENTER>
 
-<P><FONT COLOR="Red" SIZE="+1"><? print $ErrorMessage; ?></FONT></P>
+    <?php if (isset($ErrorMessage)) { ?>
+    <P><FONT COLOR="Red" SIZE="+1"><?= $ErrorMessage ?></FONT></P>
+<?php } ?>
 
 <FORM METHOD="POST">
 
 <TABLE>
-<TR><TD>Username:</TD><TD><INPUT TYPE="Text" NAME="Username" VALUE="<? print $HTTP_COOKIE_VARS["user"]; ?>"></TD></TR>
+    <TR>
+        <TD>Username:</TD>
+        <TD><INPUT TYPE="Text" NAME="Username" VALUE="<?= $_COOKIE["user"]; ?>"></TD>
+    </TR>
 <TR><TD></TD><TD><INPUT TYPE="Submit" VALUE="Get New Password"></TD></TR>
 </TABLE>
 

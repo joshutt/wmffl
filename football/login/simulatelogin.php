@@ -25,7 +25,7 @@ if (!isset($_REQUEST["teamchangeid"])) {
 	$numrow = mysql_num_rows($result);
 
 	if ($numrow == 0) {
-		header("Location: ".$HTTP_REFERER);
+		header("Location: " . $_SERVER['HTTP_REFERER']);
 		setcookie ("message", "Invalid Username/Password", 0, "/", ".wmffl.com");
 	}
 	else {
