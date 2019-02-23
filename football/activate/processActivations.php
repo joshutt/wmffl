@@ -6,20 +6,20 @@ if (!$isin) {
     exit();
 }
 
-$actID = $_REQUEST["actHC"];
-$actHC = $_REQUEST["actHCid"];
-$HC = $_REQUEST["HC"];
-$QB = $_REQUEST["QB"];
-$RB = $_REQUEST["RB"];
-$WR = $_REQUEST["WR"];
-$TE = $_REQUEST["TE"];
-$K = $_REQUEST["K"];
-$OL = $_REQUEST["OL"];
-$DL = $_REQUEST["DL"];
-$LB = $_REQUEST["LB"];
-$DB = $_REQUEST["DB"];
-$myGP = $_REQUEST["myGP"];
-$oppGP = $_REQUEST["oppGP"];
+$actID = array_key_exists("actHC", $_REQUEST) ? $_REQUEST["actHC"] : null;
+$actHC = array_key_exists("actHCid", $_REQUEST) ? $_REQUEST["actHCid"] : null;
+$HC = array_key_exists("HC", $_REQUEST) ? $_REQUEST["HC"] : null;
+$QB = array_key_exists("QB", $_REQUEST) ? $_REQUEST["QB"] : null;
+$RB = array_key_exists("RB", $_REQUEST) ? $_REQUEST["RB"] : null;
+$WR = array_key_exists("WR", $_REQUEST) ? $_REQUEST["WR"] : null;
+$TE = array_key_exists("TE", $_REQUEST) ? $_REQUEST["TE"] : null;
+$K = array_key_exists("K", $_REQUEST) ? $_REQUEST["K"] : null;
+$OL = array_key_exists("OL", $_REQUEST) ? $_REQUEST["OL"] : null;
+$DL = array_key_exists("DL", $_REQUEST) ? $_REQUEST["DL"] : null;
+$LB = array_key_exists("LB", $_REQUEST) ? $_REQUEST["LB"] : null;
+$DB = array_key_exists("DB", $_REQUEST) ? $_REQUEST["DB"] : null;
+$myGP = array_key_exists("myGP", $_REQUEST) ? $_REQUEST["myGP"] : null;
+$oppGP = array_key_exists("oppGP", $_REQUEST) ? $_REQUEST["oppGP"] : null;
 
 
 $activeMessage = "";

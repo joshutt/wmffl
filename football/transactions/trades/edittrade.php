@@ -1,23 +1,22 @@
-<?
-function convertNiceNames(&$_POST, $dir)
+<?php
+function convertNiceNames(&$post, $dir)
 {
-    foreach ($_POST[$dir] as $key => $ch) {
+    foreach ($post[$dir] as $key => $ch) {
         if (substr($ch, 0, 5) == "draft") {
             $drID = substr($ch, 5, 1);
-            $trYear = $_POST[$dir . "draftyear" . $drID];
-            $trRnd = $_POST[$dir . "draftround" . $drID];
-            $_POST[$dir][$key] = "pick$trYear$trRnd";
+            $trYear = $post[$dir . "draftyear" . $drID];
+            $trRnd = $post[$dir . "draftround" . $drID];
+            $post[$dir][$key] = "pick$trYear$trRnd";
 //            array_push($returnList, "pick$trYear$trRnd");
         } else if (substr($ch, 0, 7) == "newprot") {
             $drID = substr($ch, 7, 1);
-            $trPts = $_POST[$dir . $ch];
-            $trYear = $_POST[$dir . "protyear" . $drID];
-            $_POST[$dir][$key] = "pts$trYear$trPts";
+            $trPts = $post[$dir . $ch];
+            $trYear = $post[$dir . "protyear" . $drID];
+            $post[$dir][$key] = "pts$trYear$trPts";
         }
     }
 }
 
-session_start();
 require_once "utils/start.php";
 
 if (!$isin) {

@@ -1,5 +1,4 @@
-<?
-session_start();
+<?php
 // establish connection
 require "utils/start.php";
 include_once "base/useful.php";

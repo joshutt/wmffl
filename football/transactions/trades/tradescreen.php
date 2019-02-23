@@ -1,5 +1,4 @@
-<?
-session_start();
+<?php
 require_once "utils/start.php";
 
 include_once "trade.class.php";

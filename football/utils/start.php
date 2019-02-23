@@ -1,4 +1,4 @@
-<?
+<?php
 /************************************************************************
  * This will open the session and a database connection.
  *

@@ -269,7 +269,7 @@ if ($isin) {
 <form action="processActivations.php" method="POST" name="activeForm">
 
 <?
-if ($activeMessage != "") {
+if (isset($activeMessage) && $activeMessage != "") {
     print "<div class=\"alert\">$activeMessage</div>";
 }
 ?>
@@ -286,7 +286,7 @@ if ($actingHC) {
     print "<td><input name=\"actHC\" value=\"on\" type=\"checkbox\" checked=\"true\" /></td>";
     print "<td>{$player["pos"]}</td><td colspan=\"3\"><select name=\"actHCid\">";
     foreach ($hcArray as $hc) {
-        if ($hc["activeId"] == null) {
+        if (!array_key_exists("activeId", $hc) || $hc["activeId"] == null) {
             $checked = "";
         } else {
             $checked = "selected=\"TRUE\"";

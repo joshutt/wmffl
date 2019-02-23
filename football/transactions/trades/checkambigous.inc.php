@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "base/conn.php";
 
 $PROBLEM = true;
@@ -24,11 +24,11 @@ class DuplicateDraft {
     var $options = array();
 }
 
-function checkTransactions($teamid, &$retArray, $_POST)
+function checkTransactions($teamid, &$retArray, $post)
 {
     // Get each team's number
-    $teamto = $_POST["teamto"];
-    $trans = array($_POST["you"], $_POST["they"]);
+    $teamto = $post["teamto"];
+    $trans = array($post["you"], $post["they"]);
 
     // for each pts object look if given player has that many points in year
     for ($i=0; $i<count($trans); $i++) {
@@ -60,11 +60,11 @@ function checkTransactions($teamid, &$retArray, $_POST)
     }
 }
 
-function checkDraft($teamid, &$retArray, $_POST)
+function checkDraft($teamid, &$retArray, $post)
 {
     // Get each team's number
-    $teamto = $_POST["teamto"];
-    $trans = array($_POST["you"], $_POST["they"]);
+    $teamto = $post["teamto"];
+    $trans = array($post["you"], $post["they"]);
 
     for ($i=0; $i<count($trans); $i++) {
         $team = (($i==0) ? $teamid : $teamto);
@@ -96,4 +96,3 @@ function checkDraft($teamid, &$retArray, $_POST)
         return false; // no errors
     }
 }
-?>
