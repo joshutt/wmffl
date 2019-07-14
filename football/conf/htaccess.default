@@ -1,0 +1,4 @@
+# Add these settings to the .htaccess file
+
+order allow,deny
+deny from all

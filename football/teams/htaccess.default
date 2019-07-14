@@ -1,3 +1,4 @@
+# Add these settings to the .htaccess file
 
 RewriteEngine On
 
