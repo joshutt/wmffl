@@ -88,6 +88,7 @@ diffignore
 **/*.swp
 **/*.bak
 **/*.bk
+.htaccess
 
 # Vim ignores
 # Swap
