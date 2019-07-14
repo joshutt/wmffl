@@ -46,7 +46,7 @@ EOD;
 
 #print $select;
 
-$result = mysql_query($select, $conn) or die("Select: ".mysql_error());
+$result = mysqli_query($conn, $select) or die("Select: " . mysqli_error($conn));
 
 // Popuolate records
 $lastTeam = "";
@@ -57,7 +57,7 @@ $i = 0;
 //print "<br/>";
 $actDue = null;
 $lastName = "";
-while ($row = mysql_fetch_assoc($result)) {
+while ($row = mysqli_fetch_assoc($result)) {
     if ($row["remain"] < -30*60) {
         $lock = false;
     } else {

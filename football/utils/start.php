@@ -20,8 +20,8 @@ if (isset($conn) && get_class($conn) == "mysqli") {
 session_start();
 
 // establish Database connection information
-$conn = mysql_connect('localhost',$ini["userName"],$ini['password']);
-mysql_select_db($ini["dbName"]);
+$conn = mysqli_connect('localhost', $ini["userName"], $ini['password'], $ini["dbName"]);
+//mysqli_select_db($conn, $ini["dbName"]);
 
 
 // Determine the current season and current week, but not every time, use cachin
@@ -29,8 +29,8 @@ mysql_select_db($ini["dbName"]);
     $dateQuery = "SELECT w1.season, w1.week, w1.weekname, w2.weekname as 'previous' FROM weekmap w1, weekmap w2 ";
     $dateQuery .= "WHERE now() BETWEEN w1.startDate and w1.endDate ";
     $dateQuery .= "and IF(w1.week=0, w2.season=w1.season-1 and w2.week=16, w2.week=w1.week-1 and w2.season=w1.season) ";
-    $dateResult = mysql_query($dateQuery, $conn);
-    list($_SESSION["currentSeason"], $_SESSION["currentWeek"], $_SESSION["weekName"], $_SESSION["previousWeekName"]) = mysql_fetch_row($dateResult);
+$dateResult = mysqli_query($conn, $dateQuery);
+list($_SESSION["currentSeason"], $_SESSION["currentWeek"], $_SESSION["weekName"], $_SESSION["previousWeekName"]) = mysqli_fetch_row($dateResult);
     if ($_SESSION["currentWeek"] == 0) {
         $_SESSION["previousWeekSeason"] = $_SESSION["currentSeason"]-1;
         $_SESSION["previousWeek"] = 16;

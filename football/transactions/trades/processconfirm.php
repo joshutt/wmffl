@@ -98,12 +98,12 @@ $subject = "Trade Offer";
 
 // Send email
 $addyGet = "SELECT email, teamid FROM user WHERE teamid in ($teamnum, $teamto) AND active='Y'";
-$addyResults = mysql_query($addyGet);
+$addyResults = mysqli_query($conn, $addyGet);
 $first = true;
 $replyFirst = true;
 $address = "";
 $replyTo = "Reply-To: ";
-while (list($emailAdd, $fromTeam) = mysql_fetch_array($addyResults)) {
+while (list($emailAdd, $fromTeam) = mysqli_fetch_array($addyResults)) {
     if (!$first) {
         $address .= ", ";
     }

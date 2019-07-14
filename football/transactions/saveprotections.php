@@ -75,14 +75,14 @@ if ($isin) {
 	
 	// Gather costs
 //	print "<P>$checkQuery</P>";
-	$result = mysql_query($checkQuery);
+    $result = mysqli_query($conn, $checkQuery);
 	$totalCost = 0;
-	while (list($thiscost) = mysql_fetch_row($result)) {
+    while (list($thiscost) = mysqli_fetch_row($result)) {
 		$totalCost += $thiscost;
 	}
 	//print "<P>$checkCost</P>";
-	$result = mysql_query($checkCost);
-	$thiscost = mysql_fetch_row($result);
+    $result = mysqli_query($conn, $checkCost);
+    $thiscost = mysqli_fetch_row($result);
 	if ($totalCost > $thiscost[1]) {
 		print "<P><B>You spent too many protection points<BR>";
 		print "Spent: $totalCost<BR>";
@@ -91,27 +91,27 @@ if ($isin) {
 	
 		// Remove old and insert new protections
 //	print "<P>$delQuery</P>";
-		mysql_query($delQuery) or die("Delete Query");
+        mysqli_query($conn, $delQuery) or die("Delete Query");
 //	print "<P>$insQuery</P>";
-		mysql_query($insQuery) or die("Insert Query: ".mysql_error());
+        mysqli_query($conn, $insQuery) or die("Insert Query: " . mysqli_error($conn));
 		
 		// Determine the new cost
 //	print "<P>$detCost</P>";
-//		$result = mysql_query($detCost) or die("Cost Query");
-//		$cost = mysql_fetch_row($result);
+//		$result = mysqli_query($conn, $detCost) or die("Cost Query");
+//		$cost = mysqli_fetch_row($result);
 //		$updCost .= $cost[0];
 		$updCost .= $totalCost;
 		$updCost .= " WHERE teamid=$teamnum and season=$currentSeason";
 //		print "<P>$updCost</P>";
-		mysql_query($updCost) or die("Update Cost Query");
+        mysqli_query($conn, $updCost) or die("Update Cost Query");
 		
 		print "<P><B>Your protections have been saved.  ";
 		print "You may revise them anytime until the deadline.</B></P>";
 
 		print "<TABLE>";
 		print "<TR><TH>Player</TH><TH></TH><TH>Cost</TH></TR>";
-		$results = mysql_query($display);
-		while (list($player, $pos, $team, $cost) = mysql_fetch_row($results)) {
+        $results = mysqli_query($conn, $display);
+        while (list($player, $pos, $team, $cost) = mysqli_fetch_row($results)) {
 			print "<TR><TD>$player ($pos-$team)</TD><TD>&nbsp;</TD><TD>$cost</TD></TR>";
 		}
 		print "<TR><TH>TOTAL</TH><TH></TH><TH>$totalCost</TH></TR>";

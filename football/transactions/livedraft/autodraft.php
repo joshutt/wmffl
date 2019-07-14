@@ -38,23 +38,23 @@ group by p.playerid
 order by 4 desc;
 EOD;
 
-$results = mysql_query($sql) or die("Error: ".mysql_error());
-$numResults = mysql_num_rows($results);
+$results = mysqli_query($conn, $sql) or die("Error: " . mysqli_error($conn));
+$numResults = mysqli_num_rows($results);
 if ($numResults == 0) {
-    $results = mysql_query($sql2) or die("Error: ".mysql_error());
+    $results = mysqli_query($conn, $sql2) or die("Error: " . mysqli_error($conn));
 }
 
 include "base/menu.php";
 
 
 print "<table>";
-$row = mysql_fetch_assoc($results);
+$row = mysqli_fetch_assoc($results);
 print "<tr><th colspan=\"2\">${row[name]}</th></tr>";
 for ($i=1; $i<=10; $i++) {
     print "<tr><td>$i</td><td>${row[firstname]} ${row[lastname]}</td>";
     print "<td>${row[pos]}</td></tr>";
     //print_r($row);
-    $row = mysql_fetch_assoc($results);
+    $row = mysqli_fetch_assoc($results);
 
 }
 print "</table>";
@@ -65,9 +65,9 @@ SELECT teamid, name
 FROM team
 WHERE active=1
 EOD;
-$results = mysql_query($sql) or die("Error: ".mysql_error());
+$results = mysqli_query($conn, $sql) or die("Error: " . mysqli_error($conn));
 
-while ($row = mysql_fetch_assoc($results)) {
+while ($row = mysqli_fetch_assoc($results)) {
     print "<a href=\"autodraft.php?teamid=${row[teamid]}\">${row[name]}</a> - ";
 }
 

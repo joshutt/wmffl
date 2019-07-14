@@ -65,12 +65,12 @@ include_once "base/useful.php";
 		
 		if ($Order == "") $Order="lastname";
 		$orderby = "ORDER BY ".$Order;
-		
-		//$result = mysql_query("$search where $whereclause $orderby", $conn) or die("query");
+
+        //$result = mysqli_query($conn, "$search where $whereclause $orderby") or die("query");
         //print $search.$orderby;
-		$result = mysql_query($search.$orderby) or 
-//        print mysql_error();
-die("query: $search$orderby<br/>".mysql_error());
+        $result = mysqli_query($conn, $search . $orderby) or
+//        print mysqli_error($conn);
+        die("query: $search$orderby<br/>" . mysqli_error($conn));
         
 
 	} 
@@ -178,7 +178,7 @@ First Name:<INPUT TYPE="text" NAME="First" VALUE="<? print $First; ?>"><BR>
 <TD><B><A HREF="list.php?Position=<? print $Position; ?>&Team=<? print $Team; ?>&Available=<? print $Available; ?>&Order=nflteam&submit=y&Last=<? print $Last;?>&First=<? print $First;?>">NFL Team</A></B></TD></TR>
 <?
 	if ($theset) {
-		while (list($avail, $last, $first, $pos, $team, $id) = mysql_fetch_row($result)) {
+        while (list($avail, $last, $first, $pos, $team, $id) = mysqli_fetch_row($result)) {
 			if ($avail == "Available") {
 				print "<TR><TD><SELECT NAME=\"pick$id\"><OPTION VALUE=\"\" SELECTED>Available</OPTION><OPTION VALUE=\"$id\">Pick Up</OPTION></SELECT></TD>";
 			} else {

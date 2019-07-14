@@ -19,7 +19,7 @@ LIMIT 25
 
 EOD;
 
-$results = mysql_query($sql) or die("Error: ".mysql_error());
+$results = mysqli_query($conn, $sql) or die("Error: " . mysqli_error($conn));
 $body = "<table class=\"draft_picks_header report\" cellspacing=\"1\" align=\"center\" id=\"chat\">";
 $body .= "<tbody><tr><th class=\"byName\">By</th>";
 $body .= "<th class=\"message\">Message</th></tr>";
@@ -29,7 +29,7 @@ $maxPick = 0;
 $count = 0;
 $xmlOutput = "";
 $text = "";
-while($row = mysql_fetch_assoc($results)) {
+while ($row = mysqli_fetch_assoc($results)) {
 
     if ($count % 2) {
         $class = "oddtablerow";

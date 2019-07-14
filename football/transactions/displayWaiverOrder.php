@@ -25,10 +25,10 @@ The waiver selection order for <? print $weekName; ?>.
 
 <?
 $sql = "SELECT t.name as 'name' FROM team t, waiverorder w WHERE t.teamid=w.teamid AND w.season=$currentSeason AND w.week=$week ORDER BY w.ordernumber";
-$results = mysql_query($sql);
+$results = mysqli_query($conn, $sql);
 #print $sql;
 print "<ol>";
-while (list($teamSet) = mysql_fetch_row($results)) {
+while (list($teamSet) = mysqli_fetch_row($results)) {
     print "<li>".$teamSet."</li>";
 }
 print "</ol>";
@@ -41,10 +41,10 @@ Your current waiver priority for this week:
 
 <?
 $sql = "select p.firstname, p.lastname, p.pos, p.team from waiverpicks wp join newplayers p on wp.playerid=p.playerid where wp.season=$currentSeason and wp.week=$week and wp.teamid=$teamnum order by wp.priority";
-$results = mysql_query($sql);
+    $results = mysqli_query($conn, $sql);
 //print $sql;
 print "<ol>";
-while (list($firstname, $lastName, $pos, $team) = mysql_fetch_row($results)) {
+    while (list($firstname, $lastName, $pos, $team) = mysqli_fetch_row($results)) {
     print "<li>$firstname $lastName ($pos-$team)</li>";
 }
 print "</ol>";

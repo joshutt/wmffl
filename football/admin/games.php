@@ -1,16 +1,11 @@
-<?
-//$conn = mysql_connect('localhost', 'joshutt_misc', 'swwrbo');
-//mysql_select_db('joshutt_misc');
-//$conn = mysql_connect('localhost', 'joshutt_footbal', 'wmaccess');
-//mysql_select_db('joshutt_oldwmffl');
-
+<?php
 include "players/config.php";
 
 //$week = $_REQUEST['week'];
 //$week = 4;
 $sql = "select week, season from weekmap where startDate < now() and endDate > now()";
-$results = mysql_query($sql) or die ("Unable to get this week: ".mysql_error());
-list($curWeek, $season) = mysql_fetch_array($results);
+$results = mysqli_query($conn, $sql) or die ("Unable to get this week: " . mysqli_error($conn));
+list($curWeek, $season) = mysqli_fetch_array($results);
 $curWeek = 0;
 
 for ($week = $curWeek-1; $week <= 17; $week++) { 
@@ -106,7 +101,7 @@ function loadWeekGames($season, $week) {
     }
     print "<br/>";
 
-    mysql_query($string) or die("Dead: ".mysql_error());
+    mysqli_query($conn, $string) or die("Dead: " . mysqli_error($conn));
 }
 
 ?>

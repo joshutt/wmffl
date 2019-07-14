@@ -111,8 +111,8 @@ if ($isin) {
     FROM draftPickHold d JOIN newplayers p ON d.playerid=p.playerid
     JOIN nflrosters r on r.playerid=d.playerid and r.dateoff is null
     WHERE d.teamid=$teamnum";
-    $result2 = mysql_query($sql);
-    $preArray = mysql_fetch_array($result2);
+    $result2 = mysqli_query($conn, $sql);
+    $preArray = mysqli_fetch_array($result2);
 }
 
 

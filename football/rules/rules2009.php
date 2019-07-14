@@ -8,10 +8,10 @@ li.newRule { font-weight:bold }
 
 </HEAD>
 
-<!--#include virtual="/base/menu.php"-->
+<?php include "/base/menu.php" ?>
 
 <H1 ALIGN=CENTER>Rules of the WMFFL</H1>
-<H5 ALIGN=CENTER><I>Last Updated: September 17, 2011</I></H5>
+<H5 ALIGN=CENTER><I>Last Updated: August 24, 2008</I></H5>
 <HR size = "1">
 Section 1: <A HREF="#I">Divisions and Schedules</A>; <A HREF="#II">Who Makes the Playoffs</A>; <A HREF="#III">The Playoffs</A><BR>
 Section 2: <A HREF="#IV">Team Rosters</A>; <A HREF="#V">Scoring</A><BR>
@@ -19,20 +19,8 @@ Section 3: <A HREF="#VI">Draft Order</A>; <A HREF="#VII">Drafting</A>; <A HREF="
 Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules</A><BR>
 
 <HR size = "1">
-<P>Rules added or changed that will take effect for the 2011 season are indicated in <B>Bold</B>.</P>
+<P>Rules added or changed that will take effect for the 2009 season are indicated in <B>Bold</B>.</P>
 <UL>
-    <li>2010.3 - Post-Season Tiebreakers
-    <ul><li>Update rule V.C.3.a</li>
-    </ul></li>
-    <li>2011.3 - Entry Free Deadline Week 8
-    <ul><li>Update rule XI.A.1.d</li>
-    </ul>
-    <li>2011.4 - Revisions to Protection Process
-    <ul><li>Update rule X.A</li>
-        <li>Modifications to rules X.E.1.a, .b and .c</li>
-        <li>Replace rule X.E.2</li>
-        <li>Add rule X.E.5</li>
-    </ul>
 </UL>
 
 <HR size = "1">
@@ -40,8 +28,8 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 <OL TYPE="I">
 <A NAME="I"><B><LI>Divisions and Schedules</B></A>
 <OL TYPE="A">
-    <LI>The WMFFL consists of twelve teams.
-<LI>These teams are organized into three divisions of equal size.
+<LI>The WMFFL consists of ten teams.
+<LI>These teams are organized into two divisions of equal size.
 <LI><I>Repealed</I>
 <LI>The regular season will last for 14 weeks.
 <LI>Each week every team will be scheduled to play one other team.
@@ -55,7 +43,7 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 <LI>Based on this score each team will either win, lose or tie.
 </OL>
 <LI>At the end of the season, the team in each division with the highest win-loss-tie percentage is the division champion.
-<LI>The next highest total (from any division) will become the wildcard teams.
+<LI>The next two highest totals (from either division) will become the wildcard teams.
 <LI>Win-loss-tie percentage is calculated by adding the number of wins plus half the number of ties and dividing by the total number of games played.
 <LI>In the event that there is a tie for who should get into the playoffs, or for seeding within the playoffs, the following procedures will be used:
 <OL TYPE="1">
@@ -64,41 +52,36 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 <LI>Win-Loss-Tie percentage
 <LI>Head-To-Head Record
 <LI>Record in Division, if tied within division
-<li>Combined record of all teams defeated (Strength of Victory)</li>
+<li class="newRule">Combined record of all teams defeated (Strength of Victory)</li>
 <LI>Total Point differential, head-to-head
 <LI>Total Points scored by Head Coach
-<li>Longest playoff drought</li>
+<li class="newRule">Longest playoff drought</li>
 </OL>
 <LI>Once one team either betters the other teams, or falls behind the other teams, revert back to step one.
-<li>All ties within a division must be broken before breaking ties across divisions.  Teams always retain their position within the division.</li>
+<li class="newRule">All ties within a division must be broken before breaking ties across divisions.  Teams always retain their position within the division.</li>
 </OL></OL>
 
 <BR><A NAME="III"><B><LI>The Playoffs</B></A>
 <OL TYPE="A">
-    <LI>Once the four teams that will make the playoffs have been decided, they are seeded based on regular season record
+<LI>Once the four teams that will make the playoffs have been decided, they are seeded.
 <OL TYPE="1">
-    <LI>The first three seeds will go to the division champions, based on the above criteria.
-<LI>Seed four will go to the wildcard team, again based on the above criteria.
+<LI>The first two seeds will go to the division champions, based on the above criteria.
+<LI>Seeds three and four will go to the wildcard teams, again based on the above criteria.
 </OL>
 <LI>In the first week of the playoffs, the match-ups will be:
 <OL TYPE="1">
 <LI>Seed 1 vs. Seed 4
 <LI>Seed 2 vs. Seed 3
-<li>Unless Seed 1 and 4 are from the same division, then match-ups will be:
-    <ol type="a">
-        <li>Seed 1 vs Seed 3</li>
-        <li>Seed 2 vs Seed 4</li>
-    </ol></li>
 </OL>
 <LI>The following week will be the Championship.
 <OL TYPE="1">
 <LI>This will be between whatever two teams win in the first round of the playoffs.
 </OL>
 <LI>Whoever wins the Championship Game will be the Champion.
-<LI>The two last place teams in each division with the worse records will play in week 15 for the Toilet Bowl
+<LI>The last place team in each division will play in week 15 for the Toliet Bowl
 <OL TYPE="1">
 	<LI>The loser of the Toliet Bowl must purchase beer for the following season's draft
-	<LI>The beer must include a 12 pack of the beer of the League Champion's choosing
+	<LI>The beer must include a 12 pack of the "Offical League Beer" (Killian's Red) and a 12 pack of the beer of the League Champion's choosing
 </OL>
 </OL>
 
@@ -332,7 +315,7 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 		</OL>
 	<LI>If a tie occurs during the playoffs, the following procedures will be applied in order until the tie no longer exists
 		<OL TYPE="a">
-		<li class="newRule">Each of the offensive players on a team's roster that were not selected to be on the active roster will be added to their score and each of the defensive players that were not selected for the active roster will be subtracted from the opponent's score.
+		<LI>Each team's best non-activated player at each of RB. WR and TE will be added to thier score while DL. LB and DB will be subtracted from their opponent's
 			<OL TYPE="i">
 			<LI>Negative scores will be reset to 0
 			</OL>
@@ -361,12 +344,12 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
             <LI>The League Champion will draft last.
             <LI>The remaining playoff teams will pick in reverse order of regular season record.
         </OL>
-        <LI>The first two picks will be awared to the Toilet Bowl participants.
-        <OL TYPE="i">
-            <li>The winner of the Toilet Bowl will get the first pick.</li>
-            <li>The loser of the Toilet Bowl will get the second pick.</li>
-        </OL>
-        <LI>Remaining positions will be filled by non-playoff teams in reverse order of record.
+		<LI>The first three positions will be determined by random, weighted draw of non-playoff teams
+		<OL TYPE="i">
+			<LI>The fifth place team, from the year before, will receive a weight of 1.
+			<LI>Every other team will be weighted in reverse order of record, recieving a weight of 1 more than the previous team.
+		</OL>
+		<LI>Remaining positions will be filled by non-playoff teams not selected in the lottery, in reverse order of record.
 	</OL>
 </OL>
 <LI>The exact date of the draft will be selected to maximize the number of people able to attend.
@@ -402,7 +385,7 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 <LI>Remaining roster positions may be filled, after the draft, through standard transaction method.
 </OL>
 
-<BR><A NAME="VIII"><LI><I>Repealed</I></li></A>
+<BR><A NAME="VIII"><LI><I>Repealed</I></A>
 
 <BR><A NAME="IX"><B><LI>Transactions</B></A>
 <OL TYPE="A">
@@ -455,7 +438,7 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 
 <BR><A NAME="X"><B><LI>Protections</B></A>
 <OL TYPE="A">
-    <LI class="newRule">Between seasons each team will be awarded <b>55</b> protection points to spend on protections or transactions
+<LI>Between seasons each team will be awarded 65 protection points to spend on protections or transactions
 <LI>Protection lists must be turned into the commissioner at least one week prior to the draft day.
 <LI><I>Repealed</I>
 <LI>All non protected players are cleared from the roster after the deadline and are eligible to be drafted.
@@ -463,17 +446,17 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 <OL TYPE="1">
 	<LI>Position Costs
 	<OL TYPE="a">
-		<LI class="newRule">QB
+		<LI>QB
 		<OL TYPE="i">
-			<LI class="newRule">10 pts
+			<LI>9 pts
 		</OL>
-		<LI class="newRule">RB
+		<LI>RB
 		<OL TYPE="i">
-			<LI class="newRule">12 pts
+			<LI>10 pts
 		</OL>
-		<LI class="newRule">WR
+		<LI>WR
 		<OL TYPE="i">
-			<LI class="newRule">9 pts
+			<LI>8 pts
 		</OL>
 		<LI>TE
 		<OL TYPE="i">
@@ -500,15 +483,61 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 			<LI>4 pts
 		</OL>
 	</OL>
-	<LI class="newRule">Modifiers are based on position and number of previous years protected
+	<LI>Modifiers are based on position and number of previous years protected
 	<OL TYPE="a">
 		<LI>QB, RB, WR and TE
 		<OL TYPE="i">
-            <LI class="newRule">+1 per year</li>
+			<LI>0 Years
+			<OL TYPE="a">
+				<LI>+0
+			</OL>
+			<LI>1 Year
+			<OL TYPE="a">
+				<LI>+1
+			</OL>
+			<LI>2 Years
+			<OL TYPE="a">
+				<LI>+2
+			</OL>
+			<LI>3 Years
+			<OL TYPE="a">
+				<LI>+3
+			</OL>
+			<LI>4 or 5 Years
+			<OL TYPE="a">
+				<LI>+4
+			</OL>
+			<LI>6 or 7 Years
+			<OL TYPE="a">
+				<LI>+5
+			</OL>
+			<LI>8 or more Years
+			<OL TYPE="a">
+				<LI>+6
+			</OL>
 		</OL>
 		<LI>K, OL, DL, LB and DB
 		<OL TYPE="i">
-            <LI class="newRule">+1 for every 2 years, rounded up</li>
+			<LI>0 Years
+			<OL TYPE="a">
+				<LI>+0
+			</OL>
+			<LI>1 or 2 Years
+			<OL TYPE="a">
+				<LI>+1
+			</OL>
+			<LI>3 or 4 Years
+			<OL TYPE="a">
+				<LI>+2
+			</OL>
+			<LI>5, 6 or 7 Years
+			<OL TYPE="a">
+				<LI>+3
+			</OL>
+			<LI>8 or more Years
+			<OL TYPE="a">
+				<LI>+4
+			</OL>
 		</OL>
 	</OL>
 	<LI>If a player is left unprotected his modifier will be reduced by 2 and his previous protections will be reduced to that level
@@ -517,7 +546,6 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 		<LI>If a player has his modifier reduced to a level where multiple years are possible, he will assume the higher of those years
 	</OL>
 	<LI>Unused protection are converted to transaction points immediatly following the draft
-    <li class="newRule">If more than 16 players are protected in the same year at the same position then the cost of that position in rule X.E.1 will be increased by 1, to take effect the following season</li>
 </OL>
 </OL>
 
@@ -530,7 +558,7 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 <LI>The day following the draft a $1 fine is levied.
 <LI>Two days following the draft a $5 fine is placed.
 <LI>Every 30 days thereafter (until the team's balance is positive) will result in a $5 fine.
-<LI class="newRule">If a team has a negative balance after <b>week 8</b>, they will be inelgible for the playoffs.
+<LI>If a team has a negative balance after week 14, they will be inelgible for the playoffs.
 </OL>
 <LI>Teams that have not been given the option to fully receive the previous year's winnings will not be charged an a fine as a result of failing to pay the entry fee.</li>
 </OL>
@@ -572,4 +600,4 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 <LI>The rule is rejected by more than 50% of the vote.
 </OL></OL></OL>
 
-<!--#include virtual="/base/footer.html"-->
+<?php include "/base/footer.html" ?>

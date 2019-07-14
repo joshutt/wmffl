@@ -22,8 +22,8 @@ function _array_search ($needle, $haystick) {
 
 function loadTeam($teamID) {
     $sql = "SELECT name FROM team WHERE teamid=$teamID";
-    $resultlt = mysql_query($sql);
-    $name = mysql_fetch_array($resultlt);
+    $resultlt = mysqli_query($conn, $sql);
+    $name = mysqli_fetch_array($resultlt);
     return new Team($name[0], $teamID);
 }
 
@@ -34,9 +34,9 @@ function loadTradedPlayers($offerid, $teamid) {
     $sql .= "where p.playerid=op.playerid and op.offerid=$offerid ";
     $sql .= "and op.teamfromid=$teamid ";
     $sql .= "order by p.pos, p.lastname";
-    $results = mysql_query($sql) or die("Database error: $sql<br/>".mysql_error());
+    $results = mysqli_query($conn, $sql) or die("Database error: $sql<br/>" . mysqli_error($conn));
     $playerArr = array();
-    while ($player = mysql_fetch_array($results)) {
+    while ($player = mysqli_fetch_array($results)) {
         $playerLoad = new Player($player["name"], $player["playerid"]);
         $playerLoad->setPos($player["pos"]);
         $playerLoad->setNFLTeam($player["team"]);
@@ -49,10 +49,10 @@ function loadTradedPicks($offerid, $teamid) {
     $sql = "SELECT * FROM offeredpicks ";
     $sql .= "WHERE offerid=$offerid and teamfromid=$teamid ";
     $sql .= "order by season, round";
-    $results = mysql_query($sql);
+    $results = mysqli_query($conn, $sql);
 
     $pickArr = array();
-    while ($tradePick = mysql_fetch_array($results)) {
+    while ($tradePick = mysqli_fetch_array($results)) {
         if (isset($tradePick["OrgTeam"])) {
             $orgTeam = loadTeam($tradePick["OrgTeam"]);
         } else {
@@ -68,10 +68,10 @@ function loadTradedPoints($offerid, $teamID) {
     $sql = "SELECT * FROM offeredpoints ";
     $sql .= "WHERE offerid=$offerid AND teamfromid=$teamID ";
     $sql .= "ORDER BY season";
-    $results = mysql_query($sql);
+    $results = mysqli_query($conn, $sql);
 
     $ptArr = array();
-    while ($loadPts = mysql_fetch_array($results)) {
+    while ($loadPts = mysqli_fetch_array($results)) {
         $newPts = new Points($loadPts["Points"], $loadPts["Season"]);
         array_push($ptArr, $newPts);
     }
@@ -94,8 +94,8 @@ function loadTrade(&$trade) {
 
 function loadTradeByID($id, $thisTeam) {
     $sql = "select * from offer where offerid=$id";
-    $results = mysql_query($sql);
-    $arr = mysql_fetch_array($results);
+    $results = mysqli_query($conn, $sql);
+    $arr = mysqli_fetch_array($results);
 
     $newTrade = new Trade($arr["OfferID"], $arr["Status"], $arr["Date"]);
     if ($thisTeam->getID() == $arr["TeamAID"]) {
@@ -131,8 +131,8 @@ function loadRoster($team) {
     $sql .= " order by p.pos, p.lastname";
     
     $roster = array();
-    $results = mysql_query($sql);
-    while ($arr = mysql_fetch_array($results)) {
+    $results = mysqli_query($conn, $sql);
+    while ($arr = mysqli_fetch_array($results)) {
         $player = new Player($arr["firstname"]." ".$arr["lastname"], $arr["playerid"]);
         $player->setPos($arr["pos"]);
         $player->setNFLTeam($arr["team"]);
@@ -143,8 +143,8 @@ function loadRoster($team) {
 
 function loadPlayer($playerid) {
     $sql = "select * from newplayers p where playerid=$playerid";
-    $results = mysql_query($sql);
-    while ($arr = mysql_fetch_array($results)) {
+    $results = mysqli_query($conn, $sql);
+    while ($arr = mysqli_fetch_array($results)) {
         $player = new Player($arr["firstname"]." ".$arr["lastname"], $playerid);
         $player->setPos($arr["pos"]);
         $player->setNFLTeam($arr["team"]);
@@ -172,11 +172,11 @@ function saveOffer($trade) {
         $lastID = "NULL";
     } else {
         $oldUpdate = "UPDATE offer SET Status='Modified' WHERE OfferID=$lastID";
-        mysql_query($oldUpdate);
+        mysqli_query($conn, $oldUpdate);
     }
     $offerSQL .= "($teamAID, $teamBID, 'Pending', now(), $teamAID)";
-    mysql_query($offerSQL);
-    $tradeID = mysql_insert_id();
+    mysqli_query($conn, $offerSQL);
+    $tradeID = mysqli_insert_id($conn);
     $trade->setID($tradeID);
 
     // Insert Players
@@ -247,16 +247,22 @@ function saveOffer($trade) {
     }
    
     // Do inserts
-    if ($prevPts) {mysql_query($ptsSQL);}
-    if ($prevPlay) {mysql_query($playSQL);}
-    if ($prevPick) {mysql_query($pickSQL);}
+    if ($prevPts) {
+        mysqli_query($conn, $ptsSQL);
+    }
+    if ($prevPlay) {
+        mysqli_query($conn, $playSQL);
+    }
+    if ($prevPick) {
+        mysqli_query($conn, $pickSQL);
+    }
     
 }
 
 
 function rejectTrade($offerid) {
     $sql = "UPDATE offer SET Status='Reject' WHERE offerid=$offerid";
-    mysql_query($sql);
+    mysqli_query($conn, $sql);
 }
 
 function validateTrade($offerid, $teamid) {
@@ -297,9 +303,9 @@ function validateTrade($offerid, $teamid) {
         $sql = "SELECT * FROM draftpicks WHERE season=$year AND round=$round ";
         $sql .= "AND teamid=$teamID AND orgTeam=$orgTeam";
         //print $sql;
-        $results = mysql_query($sql);
+        $results = mysqli_query($conn, $sql);
         //print_r($results);
-        if (mysql_num_rows($results) != 1) {
+        if (mysqli_num_rows($results) != 1) {
             //print "<p>return false due to no draft picks</p>";
             return false;
         }
@@ -309,8 +315,8 @@ function validateTrade($offerid, $teamid) {
         $year = $pts->getSeason();
         $numPts = $pts->getPts();
         $sql = "SELECT ProtectionPts, TransPts, TotalPts FROM transpoints WHERE season=$year AND teamid=$teamid";
-        $results = mysql_query($sql);
-        list($protPts, $tranPts, $totPts) = mysql_fetch_row($results);
+        $results = mysqli_query($conn, $sql);
+        list($protPts, $tranPts, $totPts) = mysqli_fetch_row($results);
         //print "$protPts + $tranPts + $numPts + $totPts<br/>";
         if ($protPts+$tranPts+$numPts > $totPts) {
             return false;
@@ -326,8 +332,8 @@ function validateTrade($offerid, $teamid) {
         $orgTeam = $orginalTeam->getID();
         $sql = "SELECT * FROM draftpicks WHERE season=$year AND round=$round ";
         $sql .= "AND teamid=$teamID AND orgTeam=$orgTeam";
-        $results = mysql_query($sql);
-        if (mysql_num_rows($results) != 1) {
+        $results = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($results) != 1) {
             //print "<p>return false due to no draft picks from</p>";
             return false;
         }
@@ -336,8 +342,8 @@ function validateTrade($offerid, $teamid) {
         $year = $pts->getSeason();
         $numPts = $pts->getPts();
         $sql = "SELECT ProtectionPts, TransPts, TotalPts FROM transpoints WHERE season=$year AND teamid=$teamid";
-        $results = mysql_query($sql);
-        list($protPts, $tranPts, $totPts) = mysql_fetch_row($results);
+        $results = mysqli_query($conn, $sql);
+        list($protPts, $tranPts, $totPts) = mysqli_fetch_row($results);
         #print "$protPts + $tranPts + $numPts + $totPts<br/>";
         if ($protPts+$tranPts+$numPts > $totPts) {
             //print "<p>return false due to transactions from</p>";
@@ -357,7 +363,7 @@ function acceptTrade($offerid, $teamid) {
 
     // Mark offer as 'Accept'
     $acceptSQL = "UPDATE offer SET Status='Accept' WHERE offerid=$offerid";
-    mysql_query($acceptSQL);
+    mysqli_query($conn, $acceptSQL);
 
     // For each player, remove from old roster, insert into new roster
     $playerRemoveSQL = "UPDATE roster SET Dateoff=now() WHERE Dateoff is null ";
@@ -388,8 +394,8 @@ function acceptTrade($offerid, $teamid) {
     }
     $playerRemoveSQL .= ")";
     if ($count > 0) {
-        mysql_query($playerRemoveSQL);
-        mysql_query($playerInsertSQL);
+        mysqli_query($conn, $playerRemoveSQL);
+        mysqli_query($conn, $playerInsertSQL);
     }
 
     // For each pick, if orgTeam is null set to teamid, set teamid to new team
@@ -404,7 +410,7 @@ function acceptTrade($offerid, $teamid) {
         $exChange .= "AND orgTeam=".$orgOwner->getID();
         if ($fromString != "") {$fromString .= "and ";}
         $fromString .= "a ".$pick->getRound().ordinalEnding($pick->getRound())." round pick in ".$pick->getSeason()." ";
-        mysql_query($exChange);
+        mysqli_query($conn, $exChange);
     }
     foreach ($trade->getPicksTo() as $pick) {
         $orgOwner = $pick->getOrgOwner();
@@ -414,7 +420,7 @@ function acceptTrade($offerid, $teamid) {
         $exChange .= "AND orgTeam=".$orgOwner->getID();
         if ($toString != "") {$toString .= "and ";}
         $toString .= "a ".$pick->getRound().ordinalEnding($pick->getRound())." round pick in ".$pick->getSeason()." ";
-        mysql_query($exChange);
+        mysqli_query($conn, $exChange);
     }
 
     // For each pts, reduce and increase pts
@@ -423,28 +429,28 @@ function acceptTrade($offerid, $teamid) {
     foreach ($trade->getPointsTo() as $pts) {
         $exChange = $addPtsSQL.$pts->getPts();
         $exChange .= " WHERE teamid=$teamid AND season=".$pts->getSeason();
-        mysql_query($exChange);
+        mysqli_query($conn, $exChange);
         $exChange = $subPtsSQL.$pts->getPts();
         $exChange .= " WHERE teamid=$otherTeam AND season=".$pts->getSeason();
         if ($toString != "") {$toString .= "and ";}
         $toString .= $pts->getPts()." protection points in ".$pts->getSeason()." ";
-        mysql_query($exChange);
+        mysqli_query($conn, $exChange);
     }
     foreach ($trade->getPointsFrom() as $pts) {
         $exChange = $addPtsSQL.$pts->getPts();
         $exChange .= " WHERE teamid=$otherTeam AND season=".$pts->getSeason();
-        mysql_query($exChange);
+        mysqli_query($conn, $exChange);
         $exChange = $subPtsSQL.$pts->getPts();
         $exChange .= " WHERE teamid=$teamid AND season=".$pts->getSeason();
         if ($fromString != "") {$fromString .= "and ";}
         $fromString .= $pts->getPts()." protection points in ".$pts->getSeason()." ";
-        mysql_query($exChange);
+        mysqli_query($conn, $exChange);
     }
     
     // Get highest trade group
     $highGroup = "SELECT max(tradegroup)+1 from trade";
-    $results = mysql_query($highGroup) or die("Database error on trade group: ".mysql_error());
-    list($tradeGroup) = mysql_fetch_row($results);
+    $results = mysqli_query($conn, $highGroup) or die("Database error on trade group: " . mysqli_error($conn));
+    list($tradeGroup) = mysqli_fetch_row($results);
 
     // Insert record for each item in trade
     $tradeInsert = "INSERT INTO trade (TeamFromID, TeamToID, PlayerID, Other, ";
@@ -463,12 +469,12 @@ function acceptTrade($offerid, $teamid) {
         $count++;
         $tradeInsert .= "$anItem, now(), $tradeGroup) ";
     }
-    mysql_query($tradeInsert) or die ("Database error on trade insert: ".mysql_error());
+    mysqli_query($conn, $tradeInsert) or die ("Database error on trade insert: " . mysqli_error($conn));
     
     // Insert transactions records
     $transInsert = "INSERT INTO transactions (teamid, playerid, method, date) ";
     $transInsert .= "VALUES ($teamid, 1, 'Trade', now()), ($otherTeam, 1, 'Trade', now())";
-    mysql_query($transInsert) or die("Database error on transaction insert: ".mysql_error());
+    mysqli_query($conn, $transInsert) or die("Database error on transaction insert: " . mysqli_error($conn));
 }
 
 function printList($theyItems) {

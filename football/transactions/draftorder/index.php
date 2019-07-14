@@ -64,10 +64,10 @@ In order to ensure that the draft order is fairly chosen randomly, we use a thir
 if ($isin) {
 
     $query = "SELECT `key`, value FROM config WHERE `key` like 'draft.order.%'";
-    $results = mysql_query($query) or die("Can't get config values: ".mysql_error());
+    $results = mysqli_query($conn, $query) or die("Can't get config values: " . mysqli_error($conn));
     $orderArray = array();
     $inArray = 0;
-    while($row = mysql_fetch_assoc($results)) {
+    while ($row = mysqli_fetch_assoc($results)) {
         if ($row["value"] == "") {
             continue;
         }

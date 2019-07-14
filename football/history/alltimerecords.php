@@ -66,10 +66,10 @@ EOD;
     $groupBy = "group by t.teamid";
 
     $finalQuery = $alltimeQuery." ".$addWhere." ".$groupBy;
-    $result = mysql_query($finalQuery) or die("Dead alltime query: ".$finalQuery."<br/>Error: ".mysql_error());
+    $result = mysqli_query($conn, $finalQuery) or die("Dead alltime query: " . $finalQuery . "<br/>Error: " . mysqli_error($conn));
 
     $recordsArray = array();
-    while ($team = mysql_fetch_array($result)) {
+    while ($team = mysqli_fetch_array($result)) {
         $pct = ($team["wins"] + $team["ties"]/2.0) / $team["games"];
         $team["pct"]=$pct;
         array_push($recordsArray, $team);

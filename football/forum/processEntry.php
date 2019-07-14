@@ -11,8 +11,8 @@ require "DataObjects/Forum.php";
 $post = new DataObjects_Forum;
 
 
-$subject = stripslashes(mysql_real_escape_string($_POST["subject"]));
-$body = stripslashes(mysql_real_escape_string(str_replace("\r\n", "", $_POST["body"])));
+$subject = stripslashes(mysqli_real_escape_string($conn, $_POST["subject"]));
+$body = stripslashes(mysqli_real_escape_string($conn, str_replace("\r\n", "", $_POST["body"])));
 
 
 $post->settitle($subject);
@@ -29,8 +29,8 @@ $id = $post->insert();
 $sql = "SELECT blogaddress FROM user WHERE username='$user'";
 //print $sql;
 //print "<br/>";
-$results = mysql_query($sql) or die("Error in SQL: ".mysql_error());
-list($address) = mysql_fetch_row($results);
+$results = mysqli_query($conn, $sql) or die("Error in SQL: ".mysqli_error($conn));
+list($address) = mysqli_fetch_row($results);
 //print $address;
 
 mail($address, $subject, $body);
@@ -38,4 +38,3 @@ mail($address, $subject, $body);
 
 header("Location: comments.php");
 exit;
-?>

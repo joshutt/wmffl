@@ -111,11 +111,11 @@ if (isset($oppGP) && $oppGP != -1) {
     $gameplanSql .= "($season, $week, $teamnum, 'Them', $oppGP)";
 }
 
-mysql_query($deleteSql) or die("Unable to clear old activations: " . mysql_error());
-mysql_query($deleteGPs) or die("Unable to clear old gameplan: " . mysql_error());
-mysql_query($insertSql) or die("Unable to add new activations: " . mysql_error());
+mysqli_query($conn, $deleteSql) or die("Unable to clear old activations: " . mysqli_error($conn));
+mysqli_query($conn, $deleteGPs) or die("Unable to clear old gameplan: " . mysqli_error($conn));
+mysqli_query($conn, $insertSql) or die("Unable to add new activations: " . mysqli_error($conn));
 if ($useGp) {
-    mysql_query($gameplanSql) or die("Unable to add new gameplan: " . mysql_error());
+    mysqli_query($conn, $gameplanSql) or die("Unable to add new gameplan: " . mysqli_error($conn));
 }
 
 header("Location: activations.php");

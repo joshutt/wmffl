@@ -35,10 +35,10 @@ function printPlayer($player, $count, $hlSeason) {
 
 function printRankList($sql, $pos, $hlSeason=2016, $extraList = array()) {
 
-    $result = mysql_query(sprintf($sql, $pos)) or die("Unable to run query: ".mysql_error());
+    $result = mysqli_query($conn, sprintf($sql, $pos)) or die("Unable to run query: " . mysqli_error($conn));
 
     $posArray = array();
-    while ($players = mysql_fetch_array($result)) {
+    while ($players = mysqli_fetch_array($result)) {
         $name = $players['firstname']." ".$players['lastname'];
         $season = $players['season'];
         $week = $players['week'];

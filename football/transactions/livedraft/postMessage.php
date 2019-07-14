@@ -7,7 +7,7 @@ $league = $_REQUEST["league"];
 /*
 print $message;
 print "<br/>";
-print mysql_escape_string($message);
+print mysqli_real_escape_string($conn, $message);
 print "<br/>";
 */
 #print $_SESSION["userid"];
@@ -18,9 +18,9 @@ if ($league == "true") {
     $toUseId=0;
 }
 
-$sql = "INSERT INTO chat (userid, message) VALUES ($toUseId, '".mysql_escape_string($message)."')";
+$sql = "INSERT INTO chat (userid, message) VALUES ($toUseId, '" . mysqli_real_escape_string($conn, $message) . "')";
 //print $sql;
-mysql_query($sql) or die("Die: "+mysql_error());
+mysqli_query($conn, $sql) or die("Die: " + mysqli_error($conn));
 
 
 include "chat.php";

@@ -11,10 +11,10 @@ $query .= "ORDER BY t.name, Extra desc, pc.years desc";
 
 $base = array('HC' => 0, 'QB' => 10, 'RB' => 13, 'WR' => 12, 'TE'=>4, 'K'=>1, 'OL'=>1, 'DL'=>3, 'LB'=>5, 'DB'=>4);
 
-$result = mysql_query($query, $conn) or die("error: ".mysql_error());	
-$count = mysql_num_rows($result);
+$result = mysqli_query($conn, $query) or die("error: " . mysqli_error($conn));
+$count = mysqli_num_rows($result);
 $page = array();
-while ($aLine = mysql_fetch_array($result)) {
+while ($aLine = mysqli_fetch_array($result)) {
     $totCost = $base[$aLine['pos']] + $aLine['Extra'];
 	$page[$aLine['name']] .= "<TR><TD>".$aLine['firstname']." ".$aLine['lastname'];
     $page[$aLine['name']] .= "</TD><TD ALIGN=Center>".$aLine['pos'];

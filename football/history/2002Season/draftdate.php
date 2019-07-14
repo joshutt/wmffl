@@ -18,7 +18,7 @@ if ($isin) {
 
     $thequery = "SELECT DATE_FORMAT(date, '%m%e'), DATE_FORMAT(date, '%W, %M %D'), attend ";
     $thequery .= "FROM draftdate WHERE userid=$usernum ORDER BY date";
-    $results = mysql_query($thequery);
+    $results = mysqli_query($conn, $thequery);
 
 ?>
 
@@ -37,7 +37,7 @@ weekend days.
 <TR><TH WIDTH=30%>Can Attend?</TH><TH WIDTH=70%>Date</TH></TR>
 
 <?
-    while(list($date, $fulldate, $attend) = mysql_fetch_row($results)) {
+while (list($date, $fulldate, $attend) = mysqli_fetch_row($results)) {
         print "<TR><TD><INPUT TYPE=\"radio\" NAME=\"$date\" VALUE=\"Y\" ";
         if ($attend == 'Y') print "CHECKED ";
         print "/>Yes<INPUT TYPE=\"radio\" NAME=\"$date\" VALUE=\"N\" ";

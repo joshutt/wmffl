@@ -16,8 +16,8 @@ if (isset($_GET["week"])) {
     $week = $_POST["week"];
 	} else {
 		$pickweek = "SELECT week FROM weekmap WHERE EndDate>=now() and StartDate<=now()";
-		$result = mysql_query($pickweek, $conn) or die("Week Pick");
-		$row = mysql_fetch_row($result);
+    $result = mysqli_query($conn, $pickweek) or die("Week Pick");
+    $row = mysqli_fetch_row($result);
 		$week = $row[0];
 	}
 	
@@ -26,16 +26,16 @@ if (isset($_GET["week"])) {
 	
 
 	// Perform queries
-	mysql_query($create, $conn) or die("Create");
-	mysql_query($insert, $conn) or die("Insert");
-	$result = mysql_query($select, $conn) or die("Select");
+mysqli_query($conn, $create) or die("Create");
+mysqli_query($conn, $insert) or die("Insert");
+$result = mysqli_query($conn, $select) or die("Select");
  
 	// Populate records
-	while ($row = mysql_fetch_row($result)) {
+while ($row = mysqli_fetch_row($result)) {
 		if (!isset($activates[$row[0]]["count"])) $activates[$row[0]]["count"]=0;
 		$activates[$row[0]][$activates[$row[0]]["count"]++] = $row;
 	}
-	mysql_query($drop, $conn) or die("Drop");
+mysqli_query($conn, $drop) or die("Drop");
 	
 	
 	// populate team output 

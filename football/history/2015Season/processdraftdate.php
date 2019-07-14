@@ -34,13 +34,13 @@ EOD;
         $thequery .= "AND userid = $usernum"; 
         
         #print $thequery."<BR>";
-        mysql_query($thequery) or die("Error: ".mysql_error());
+        mysqli_query($conn, $thequery) or die("Error: " . mysqli_error($conn));
         
 
     }
 
     $newQuery = "UPDATE draftvote SET lastUpdate=now() where season=$season and userid=$usernum";
-    mysql_query($newQuery) or die("Error: ".mysql_error());
+    mysqli_query($conn, $newQuery) or die("Error: " . mysqli_error($conn));
 
     $draftMessage = <<<EOD
     Your draft request has been recorded.</p>

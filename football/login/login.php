@@ -2,8 +2,8 @@
 require_once "utils/start.php";
 
 $thequery = "select teamid, password, name, userid from user where username='".$username."' and (password=password('".$password."') or password=md5('$password')) and Active='Y'";
-$result = mysql_query($thequery, $conn);
-$numrow = mysql_num_rows($result);
+$result = mysqli_query($conn, $thequery);
+$numrow = mysqli_num_rows($result);
 
 if ($username == "commish" && $password == "secret") {
     print "You are the commish";
@@ -18,7 +18,7 @@ if ($numrow == 0) {
     exit();
 }
 else {
-    $team = mysql_fetch_row($result);		
+    $team = mysqli_fetch_row($result);		
     $_SESSION["isin"] = True;
     $_SESSION["teamnum"] = $team[0];
     $_SESSION["user"] = $username;
@@ -28,7 +28,7 @@ else {
 
     $thequery = "update user set lastlog=now(), password=md5('$password') where username='$username'";
     #$thequery = "update user set lastlog=now() where username='$username'";
-    $result = mysql_query($thequery, $conn);
+    $result = mysqli_query($conn, $thequery);
     header("Location: " . $_SERVER['HTTP_REFERER']);
     exit();
 }

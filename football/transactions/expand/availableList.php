@@ -16,7 +16,7 @@ left join expansionpicks exp on exp.playerid=ex.playerid
     order by ex.teamid, pos, lastname
 EOD;
 
-$results = mysql_query($sql) or die("Unable to get expansion protections: ".mysql_error());
+$results = mysqli_query($conn, $sql) or die("Unable to get expansion protections: " . mysqli_error($conn));
 
 
 $title = "Expansion Picks";
@@ -48,7 +48,7 @@ include "base/menu.php";
 <?
 $currentTeam = "";
 $count =0;
-while ($player = mysql_fetch_array($results)) {
+while ($player = mysqli_fetch_array($results)) {
     if ($player['protected'] == 1) {
         $class = 'protect';
     } else {
@@ -87,7 +87,7 @@ $sql = <<<EOD
     ORDER BY t.teamid, p.pos, p.lastname
 EOD;
 
-$results = mysql_query($sql) or die("Unable to get expansion rosters: ".mysql_error());
+$results = mysqli_query($conn, $sql) or die("Unable to get expansion rosters: " . mysqli_error($conn));
 ?>
 
 <div id="rosterList">
@@ -95,7 +95,7 @@ $results = mysql_query($sql) or die("Unable to get expansion rosters: ".mysql_er
 
 <?
 $currentTeam = "";
-while ($player = mysql_fetch_array($results)) {
+while ($player = mysqli_fetch_array($results)) {
     if ($player['tname'] != $currentTeam) {
         print "<tr></tr>";
         print "<tr class=\"bg1\"><th colspan=\"4\">${player['tname']}</th></tr>";

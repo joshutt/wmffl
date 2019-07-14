@@ -14,8 +14,8 @@ function getOtherTeam($thisTeamID, $thisWeek, $thisSeason, $conn) {
     $getTeamSQL .= "AND ta.teamid=tna.teamid AND tb.teamid=tnb.teamid ";
     $getTeamSQL .= "AND tna.season=s.Season AND tnb.season=s.season ";
 
-    $results = mysql_query($getTeamSQL, $conn);
-    $row = mysql_fetch_array($results);
+    $results = mysqli_query($conn, $getTeamSQL);
+    $row = mysqli_fetch_array($results);
     return $row;
 }
 
@@ -27,9 +27,9 @@ function getOtherGames($thisTeamID, $thisWeek, $thisSeason, $conn) {
 //    $getTeamSQL .= "AND s.TeamA<>$thisTeamID and s.TeamB<>$thisTeamID ";
 	$getTeamSQL .= "AND s.teama=ta.teamid and s.teamb=tb.teamid ";
     $getTeamSQL .= "AND ta.season=s.season AND tb.season=s.season ";
-    $results = mysql_query($getTeamSQL, $conn) or die("Database error: ".mysql_error());
+    $results = mysqli_query($conn, $getTeamSQL) or die("Database error: " . mysqli_error($conn));
 	return $results;
-//    $row = mysql_fetch_array($results);
+//    $row = mysqli_fetch_array($results);
 //    return $row;
 }
 
@@ -91,9 +91,9 @@ if ($thisSeason == $currentSeason) {
 } else {
     $weekListSQL = "SELECT week, weekname FROM weekmap WHERE season=$thisSeason AND week<=16 AND week>=1 ORDER BY week";
 }
-$results = mysql_query($weekListSQL);
+$results = mysqli_query($conn, $weekListSQL);
 $weekList = array();
-while ($row = mysql_fetch_array($results)) {
+while ($row = mysqli_fetch_array($results)) {
     array_push($weekList, $row);
 }
 
@@ -193,13 +193,13 @@ for ($i = 0; $i<2; $i++) {
 	$printString[$i] = "";
 	$reserveString[$i] = "";
 
-    $results = mysql_query($select, $conn) or die(mysql_error());
+    $results = mysqli_query($conn, $select) or die(mysqli_error($conn));
 
     $totalPoints[$i] = 0;
     $offPoints[$i] = 0;
     $defPoints[$i] = 0;
     $penalty[$i] = 0;
-    while ($row = mysql_fetch_array($results)) {
+    while ($row = mysqli_fetch_array($results)) {
         if ($row["teamcheck1"] != null && $row["teamcheck1"]!=$teams[$i]) {
             continue;
         }
@@ -538,7 +538,7 @@ function Q (index)
 <?
 $gameresults = getOtherGames($thisTeamID, $thisWeek, $thisSeason, $conn);
 $count = 0;
-while ($row = mysql_fetch_array($gameresults)) {
+while ($row = mysqli_fetch_array($gameresults)) {
     $count++;
     if ($row["scorea"] >= $row["scoreb"]) {
         $winningName = $row["aname"];

@@ -46,9 +46,9 @@ require_once "utils/start.php";
 			
 			// Make sure that old password matches password passed in
 			$thequery = "select name, email from user where username='".$Username."'";
-			$result = mysql_query($thequery, $conn);
-			$email = mysql_fetch_row($result);
-			$numrow = mysql_num_rows($result);
+        $result = mysqli_query($conn, $thequery);
+        $email = mysqli_fetch_row($result);
+        $numrow = mysqli_num_rows($result);
 			if ($numrow == 0) {
 				$ErrorMessage = "Invalid Account";
 			} else {
@@ -59,7 +59,7 @@ require_once "utils/start.php";
 				// Save password in db
 				// Sent confirmation mail
 				$thequery = "UPDATE user SET password=md5('".$newPass."') WHERE username='".$Username."'";
-				$result = mysql_query($thequery, $conn);
+                $result = mysqli_query($conn, $thequery);
 
 				$body = $email[0].",\n\nYour request for a new password has been completed.  Your new password is ";
 				$body = $body."".$newPass."\n\nThis password must be entered exactly as it appears, the login is case sensitive.\n\n";
@@ -67,11 +67,11 @@ require_once "utils/start.php";
 				$body = $body."Webmaster WMFFL";
 
 				mail ($email[1], "WMFFL New Password", $body, "From: webmaster@$SERVER_NAME");
-				mysql_close($conn);
+                mysqli_close$conn);
 				header("Location: thanksnew.php");
 			}
-			
-			mysql_close($conn);
+
+        mysqli_close$conn);
 	}
 	
 ?>

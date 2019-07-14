@@ -43,7 +43,7 @@ function getOtherGames($thisTeamID, $thisWeek, $thisSeason, $conn)
     $getTeamSQL .= "AND ta.season=s.season AND tb.season=s.season ";
     $results = mysqli_query($conn, $getTeamSQL) or die("Database error: " . mysqli_error($conn));
     return $results;
-//    $row = mysql_fetch_array($results);
+//    $row = mysqli_fetch_array($results);
 //    return $row;
 }
 

@@ -1,33 +1,47 @@
 <HTML>
 <HEAD>
 <TITLE>WMFFL Rules</TITLE>
+
+<style>
+li.newRule { font-weight:bold }
+</style>
+
 </HEAD>
 
-<!--#include virtual="/base/menu.php"-->
+<?php include "/base/menu.php" ?>
 
 <H1 ALIGN=CENTER>Rules of the WMFFL</H1>
-<H5 ALIGN=CENTER><I>Last Updated: September 5, 2006</I></H5>
+<H5 ALIGN=CENTER><I>Last Updated: September 17, 2011</I></H5>
 <HR size = "1">
 Section 1: <A HREF="#I">Divisions and Schedules</A>; <A HREF="#II">Who Makes the Playoffs</A>; <A HREF="#III">The Playoffs</A><BR>
 Section 2: <A HREF="#IV">Team Rosters</A>; <A HREF="#V">Scoring</A><BR>
 Section 3: <A HREF="#VI">Draft Order</A>; <A HREF="#VII">Drafting</A>; <A HREF="#IX">Transactions</A>; <A HREF="#X">Protections</A><BR>
 Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules</A><BR>
 
-<!--
 <HR size = "1">
-<P>Rules added or changed that will take effect for the 2006 season are 
-indicated in <B>Bold</B>.</P>
+<P>Rules added or changed that will take effect for the 2011 season are indicated in <B>Bold</B>.</P>
 <UL>
+    <li>2010.3 - Post-Season Tiebreakers
+    <ul><li>Update rule V.C.3.a</li>
+    </ul></li>
+    <li>2011.3 - Entry Free Deadline Week 8
+    <ul><li>Update rule XI.A.1.d</li>
+    </ul>
+    <li>2011.4 - Revisions to Protection Process
+    <ul><li>Update rule X.A</li>
+        <li>Modifications to rules X.E.1.a, .b and .c</li>
+        <li>Replace rule X.E.2</li>
+        <li>Add rule X.E.5</li>
+    </ul>
 </UL>
--->
 
 <HR size = "1">
 
 <OL TYPE="I">
 <A NAME="I"><B><LI>Divisions and Schedules</B></A>
 <OL TYPE="A">
-<LI>The WMFFL consists of ten teams.
-<LI>These teams are organized into two divisions of equal size.
+    <LI>The WMFFL consists of twelve teams.
+<LI>These teams are organized into three divisions of equal size.
 <LI><I>Repealed</I>
 <LI>The regular season will last for 14 weeks.
 <LI>Each week every team will be scheduled to play one other team.
@@ -41,7 +55,7 @@ indicated in <B>Bold</B>.</P>
 <LI>Based on this score each team will either win, lose or tie.
 </OL>
 <LI>At the end of the season, the team in each division with the highest win-loss-tie percentage is the division champion.
-<LI>The next two highest totals (from either division) will become the wildcard teams.
+<LI>The next highest total (from any division) will become the wildcard teams.
 <LI>Win-loss-tie percentage is calculated by adding the number of wins plus half the number of ties and dividing by the total number of games played.
 <LI>In the event that there is a tie for who should get into the playoffs, or for seeding within the playoffs, the following procedures will be used:
 <OL TYPE="1">
@@ -50,37 +64,41 @@ indicated in <B>Bold</B>.</P>
 <LI>Win-Loss-Tie percentage
 <LI>Head-To-Head Record
 <LI>Record in Division, if tied within division
-<LI>Total Point differential, all season
+<li>Combined record of all teams defeated (Strength of Victory)</li>
 <LI>Total Point differential, head-to-head
 <LI>Total Points scored by Head Coach
-<LI>Record in Last 5 games
-<LI>Record against teams .500 or better
-<LI>Historical Tendancy
+<li>Longest playoff drought</li>
 </OL>
 <LI>Once one team either betters the other teams, or falls behind the other teams, revert back to step one.
+<li>All ties within a division must be broken before breaking ties across divisions.  Teams always retain their position within the division.</li>
 </OL></OL>
 
 <BR><A NAME="III"><B><LI>The Playoffs</B></A>
 <OL TYPE="A">
-<LI>Once the four teams that will make the playoffs have been decided, they are seeded.
+    <LI>Once the four teams that will make the playoffs have been decided, they are seeded based on regular season record
 <OL TYPE="1">
-<LI>The first two seeds will go to the division champions, based on the above criteria.
-<LI>Seeds three and four will go to the wildcard teams, again based on the above criteria.
+    <LI>The first three seeds will go to the division champions, based on the above criteria.
+<LI>Seed four will go to the wildcard team, again based on the above criteria.
 </OL>
 <LI>In the first week of the playoffs, the match-ups will be:
 <OL TYPE="1">
 <LI>Seed 1 vs. Seed 4
 <LI>Seed 2 vs. Seed 3
+<li>Unless Seed 1 and 4 are from the same division, then match-ups will be:
+    <ol type="a">
+        <li>Seed 1 vs Seed 3</li>
+        <li>Seed 2 vs Seed 4</li>
+    </ol></li>
 </OL>
 <LI>The following week will be the Championship.
 <OL TYPE="1">
 <LI>This will be between whatever two teams win in the first round of the playoffs.
 </OL>
 <LI>Whoever wins the Championship Game will be the Champion.
-<LI>The last place team in each division will play in week 15 for the Toliet Bowl
+<LI>The two last place teams in each division with the worse records will play in week 15 for the Toilet Bowl
 <OL TYPE="1">
 	<LI>The loser of the Toliet Bowl must purchase beer for the following season's draft
-	<LI>The beer must include a 12 pack of the "Offical League Beer" (Killian's Red) and a 12 pack of the beer of the League Champion's choosing
+	<LI>The beer must include a 12 pack of the beer of the League Champion's choosing
 </OL>
 </OL>
 
@@ -121,18 +139,25 @@ indicated in <B>Bold</B>.</P>
 <OL TYPE="A">
 <LI>Each week, every team must turn in an activation roster to the commissioner, or a duly appointed representative
 	<OL TYPE="1">
-	<LI>Activations are due one hour before the kickoff of the first NFL game of the week
+	<LI>Any player listed as active 30 minutes prior to kickoff of their team's NFL game will be considered an active player for that week.
 		<OL TYPE="a">
-		<LI>Activations recieved after the deadline will count towards the following week
-		<LI>Failure to submit activations will result in the activations from the previous week being used
-		</OL>
-	<LI>An active roster includes 1 HC, 1 QB, 2 RB, 2 WR, 1 TE, 1 K, 1 OL, 2 DL, 2 LB and 2 DB
+		<LI>The activation status of a player may not be changed after that deadline.</li>
+		<LI>A player's activation status will not change from the previous week, unless explicitly done so by the owner.</li>
+		</OL></li>
+	<LI>An active roster includes 1 HC, 1 QB, 1 RB, 2 WR, 1 TE, 1 K, 1 OL, 2 DL, 2 LB, 2 DB and 1 additional player at either RB, WR or TE.</li>
 	<LI>Submitting incomplete lineups can result in penalties and fines
 		<OL TYPE="a">
 		<LI>Activating players on NFL bye weeks will result in a $1 fine and a 2 point penalty per violation
 		<LI>Activating players not on a NFL team will result in a $1 fine and a 2 point penalty per violation
 		<LI>Activating the incorrect number of players will result in a $1 fine and a 2 point penalty per violation 
 		</OL>
+    <LI>If a team's HC is on a bye for a given week the team may name an acting HC for that week only.  The team will score points for the acting HC as if they were the regular HC.
+        <OL TYPE="a">
+        <LI>The acting HC can not appear on any other team's roster or have been named an acting HC for another team in the same week.</li>
+        <li>The acting HC must be named prior to activations being due for the given week.</li>
+        <li>The acting HC will not be added to the team's roster and will be removed from the team once the week is over.</li>
+        </ol>
+    <li>No Player may be activated for a team in the postseason, unless that player was on that team's roster at the point activations were due for the final week of the regular season.</li>
 	</OL>
 <LI>Activated players will recieve points based on their position and performance in a particular week.
 	<OL TYPE="1">
@@ -285,6 +310,15 @@ indicated in <B>Bold</B>.</P>
 			<OL TYPE="i">
 			<LI>Every 10 pts = 1 pt
 			</OL>
+        <li>Team Penalties
+            <ol type="i">
+            <li>3 or fewer penalties = 3 pts</li>
+            <li>between 4 and 6 penalties = 2 pts</li>
+            <li>7 or 8 penalties = 1 pt</li>
+            <li>11 or 12 penalties = -1 pt</li>
+            <li>13 or 14 penalties = -2 pts</li>
+            <li>15 or more penalties = -3 pts</li>
+            </ol></li>
 		</OL>
 	</OL>
 <LI>A team's final score is the cumulation of their offensive player's scores minus the cumulation of their opponents defensive player's scores.
@@ -298,7 +332,7 @@ indicated in <B>Bold</B>.</P>
 		</OL>
 	<LI>If a tie occurs during the playoffs, the following procedures will be applied in order until the tie no longer exists
 		<OL TYPE="a">
-		<LI>Each team's best non-activated player at each of RB. WR and TE will be added to thier score while DL. LB and DB will be subtracted from their opponent's
+		<li class="newRule">Each of the offensive players on a team's roster that were not selected to be on the active roster will be added to their score and each of the defensive players that were not selected for the active roster will be subtracted from the opponent's score.
 			<OL TYPE="i">
 			<LI>Negative scores will be reset to 0
 			</OL>
@@ -327,12 +361,12 @@ indicated in <B>Bold</B>.</P>
             <LI>The League Champion will draft last.
             <LI>The remaining playoff teams will pick in reverse order of regular season record.
         </OL>
-		<LI>The first three positions will be determined by random, weighted draw of non-playoff teams
-		<OL TYPE="i">
-			<LI>The fifth place team, from the year before, will receive a weight of 1.
-			<LI>Every other team will be weighted in reverse order of record, recieving a weight of 1 more than the previous team.
-		</OL>
-		<LI>Remaining positions will be fdilled by non-playoff teams not selected in the lottery, in reverse order of record.
+        <LI>The first two picks will be awared to the Toilet Bowl participants.
+        <OL TYPE="i">
+            <li>The winner of the Toilet Bowl will get the first pick.</li>
+            <li>The loser of the Toilet Bowl will get the second pick.</li>
+        </OL>
+        <LI>Remaining positions will be filled by non-playoff teams in reverse order of record.
 	</OL>
 </OL>
 <LI>The exact date of the draft will be selected to maximize the number of people able to attend.
@@ -368,7 +402,7 @@ indicated in <B>Bold</B>.</P>
 <LI>Remaining roster positions may be filled, after the draft, through standard transaction method.
 </OL>
 
-<BR><A NAME="VIII"><LI><I>Repealed</I></A>
+<BR><A NAME="VIII"><LI><I>Repealed</I></li></A>
 
 <BR><A NAME="IX"><B><LI>Transactions</B></A>
 <OL TYPE="A">
@@ -377,7 +411,7 @@ indicated in <B>Bold</B>.</P>
 <LI>If a roster position is open, teams can add a player to their team by spending a transaction point.
 <OL TYPE="1">
 	<LI>Each team will recieve a number of transaction points equal to thier unused protection points.
-	<LI><I>Repealed</I>
+	<LI>After the completion of the draft every team will receive an additional 5 transaction points.</li>
 	<LI>Once a team is out of transaction points, they may purchase more at the cost of $1.
 </OL>
 <LI>Trades are allowed and anything maybe traded, subject to the roster restrictions.
@@ -421,7 +455,7 @@ indicated in <B>Bold</B>.</P>
 
 <BR><A NAME="X"><B><LI>Protections</B></A>
 <OL TYPE="A">
-<LI>Between seasons each team will be awarded 65 protection points to spend on protections or transactions
+    <LI class="newRule">Between seasons each team will be awarded <b>55</b> protection points to spend on protections or transactions
 <LI>Protection lists must be turned into the commissioner at least one week prior to the draft day.
 <LI><I>Repealed</I>
 <LI>All non protected players are cleared from the roster after the deadline and are eligible to be drafted.
@@ -429,17 +463,17 @@ indicated in <B>Bold</B>.</P>
 <OL TYPE="1">
 	<LI>Position Costs
 	<OL TYPE="a">
-		<LI>QB
+		<LI class="newRule">QB
 		<OL TYPE="i">
-			<LI>9 pts
+			<LI class="newRule">10 pts
 		</OL>
-		<LI>RB
+		<LI class="newRule">RB
 		<OL TYPE="i">
-			<LI>10 pts
+			<LI class="newRule">12 pts
 		</OL>
-		<LI>WR
+		<LI class="newRule">WR
 		<OL TYPE="i">
-			<LI>8 pts
+			<LI class="newRule">9 pts
 		</OL>
 		<LI>TE
 		<OL TYPE="i">
@@ -466,61 +500,15 @@ indicated in <B>Bold</B>.</P>
 			<LI>4 pts
 		</OL>
 	</OL>
-	<LI>Modifiers are based on position and number of previous years protected
+	<LI class="newRule">Modifiers are based on position and number of previous years protected
 	<OL TYPE="a">
 		<LI>QB, RB, WR and TE
 		<OL TYPE="i">
-			<LI>0 Years
-			<OL TYPE="a">
-				<LI>+0
-			</OL>
-			<LI>1 Year
-			<OL TYPE="a">
-				<LI>+1
-			</OL>
-			<LI>2 Years
-			<OL TYPE="a">
-				<LI>+2
-			</OL>
-			<LI>3 Years
-			<OL TYPE="a">
-				<LI>+3
-			</OL>
-			<LI>4 or 5 Years
-			<OL TYPE="a">
-				<LI>+4
-			</OL>
-			<LI>6 or 7 Years
-			<OL TYPE="a">
-				<LI>+5
-			</OL>
-			<LI>8 or more Years
-			<OL TYPE="a">
-				<LI>+6
-			</OL>
+            <LI class="newRule">+1 per year</li>
 		</OL>
 		<LI>K, OL, DL, LB and DB
 		<OL TYPE="i">
-			<LI>0 Years
-			<OL TYPE="a">
-				<LI>+0
-			</OL>
-			<LI>1 or 2 Years
-			<OL TYPE="a">
-				<LI>+1
-			</OL>
-			<LI>3 or 4 Years
-			<OL TYPE="a">
-				<LI>+2
-			</OL>
-			<LI>5, 6 or 7 Years
-			<OL TYPE="a">
-				<LI>+3
-			</OL>
-			<LI>8 or more Years
-			<OL TYPE="a">
-				<LI>+4
-			</OL>
+            <LI class="newRule">+1 for every 2 years, rounded up</li>
 		</OL>
 	</OL>
 	<LI>If a player is left unprotected his modifier will be reduced by 2 and his previous protections will be reduced to that level
@@ -529,6 +517,7 @@ indicated in <B>Bold</B>.</P>
 		<LI>If a player has his modifier reduced to a level where multiple years are possible, he will assume the higher of those years
 	</OL>
 	<LI>Unused protection are converted to transaction points immediatly following the draft
+    <li class="newRule">If more than 16 players are protected in the same year at the same position then the cost of that position in rule X.E.1 will be increased by 1, to take effect the following season</li>
 </OL>
 </OL>
 
@@ -541,7 +530,7 @@ indicated in <B>Bold</B>.</P>
 <LI>The day following the draft a $1 fine is levied.
 <LI>Two days following the draft a $5 fine is placed.
 <LI>Every 30 days thereafter (until the team's balance is positive) will result in a $5 fine.
-<LI>If a team has a negative balance after week 14, they will be inelgible for the playoffs.
+<LI class="newRule">If a team has a negative balance after <b>week 8</b>, they will be inelgible for the playoffs.
 </OL>
 <LI>Teams that have not been given the option to fully receive the previous year's winnings will not be charged an a fine as a result of failing to pay the entry fee.</li>
 </OL>
@@ -583,4 +572,4 @@ indicated in <B>Bold</B>.</P>
 <LI>The rule is rejected by more than 50% of the vote.
 </OL></OL></OL>
 
-<!--#include virtual="/base/footer.html"-->
+<?php include "/base/footer.html" ?>

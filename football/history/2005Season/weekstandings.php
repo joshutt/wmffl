@@ -30,10 +30,10 @@ WHERE s.season =$thisSeason
 GROUP BY d.name, tn.name
 EOD;
 
-$results = mysql_query($query) or die("Error: ".mysql_error());
+$results = mysqli_query($conn, $query) or die("Error: " . mysqli_error($conn));
 $count =0;
 $teamArray = array();
-while ($row = mysql_fetch_array($results)) {
+while ($row = mysqli_fetch_array($results)) {
 #    print_r($row);
    // $divRar = 
 

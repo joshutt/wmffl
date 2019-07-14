@@ -23,13 +23,13 @@ $sql .= "and r.playerid=p.playerid and r.teamid=t.teamid ";
 $sql .= "and ps.week=w.week and ps.season=w.season and ps.playerid=p.playerid ";
 $sql .= "order by w.week, t.name, p.position, ps.pts desc";
 
-$results = mysql_query($sql);
+$results = mysqli_query($conn, $sql);
 $potPts = array();
 $actPts = array();
 
 $curTeam = "";
 $curPos = "";
-while ($row = mysql_fetch_array($results)) {
+while ($row = mysqli_fetch_array($results)) {
     $week = $row["week"];
     $teamName = $row["name"];
     if ($curTeam != $teamName) {
@@ -96,10 +96,10 @@ $lineSQL = "SELECT t1.name, t2.name FROM schedule s, team t1, team t2 ";
 $lineSQL .= "WHERE s.teama=t1.teamid AND s.teamb=t2.teamid AND s.season=2003 ";
 $lineSQL .= "AND s.week=".($week+1);
 
-$results = mysql_query($lineSQL);
+$results = mysqli_query($conn, $lineSQL);
 $arra = array();
 $arrb = array();
-while(list($ta, $tb) = mysql_fetch_row($results)) {
+while (list($ta, $tb) = mysqli_fetch_row($results)) {
     array_push($arra, $ta);
     array_push($arrb, $tb);
 }

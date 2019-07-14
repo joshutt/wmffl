@@ -10,10 +10,10 @@ $query .= "WHERE pc.season=2011 ";
 $query .= "GROUP BY p.playerid, pos.position ";
 $query .= "ORDER BY t.name, Extra desc, pc.years desc";
 
-$result = mysql_query($query, $conn) or die("error: ".mysql_error());	
-$count = mysql_num_rows($result);
+$result = mysqli_query($conn, $query) or die("error: " . mysqli_error($conn));
+$count = mysqli_num_rows($result);
 $page = array();
-while ($aLine = mysql_fetch_array($result)) {
+while ($aLine = mysqli_fetch_array($result)) {
 	$page[$aLine['name']] .= "<TR><TD>".$aLine['firstname']." ".$aLine['lastname'];
     $page[$aLine['name']] .= "</TD><TD ALIGN=Center>".$aLine['pos'];
 	$page[$aLine['name']] .= "</TD><TD ALIGN=Center>".$aLine['years']."</TD>";

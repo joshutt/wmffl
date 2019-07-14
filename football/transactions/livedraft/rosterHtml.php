@@ -16,12 +16,12 @@ ORDER BY t.name, p.pos, p.lastname
 
 EOD;
 
-$results = mysql_query($sql) or die("Error: ".mysql_error());
+$results = mysqli_query($conn, $sql) or die("Error: " . mysqli_error($conn));
 $body = "";
 $team = "";
 $first = true;
 $count = 0;
-while($row = mysql_fetch_assoc($results)) {
+while ($row = mysqli_fetch_assoc($results)) {
     if ($first) {
         $body .= "<tr><th colspan=\"4\">{$row["name"]}</th></tr>";
         $first = false;

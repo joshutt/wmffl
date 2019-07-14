@@ -20,8 +20,8 @@ if (!isset($_GET["EndDate"]) || $_GET["EndDate"] == "") {
 	$checkQuery = "SELECT * FROM transactions WHERE Date BETWEEN $StartDate AND $EndDate";
 
 	// Check if any exist
-	$result = mysql_query($checkQuery);
-	if (mysql_num_rows($result) <= 0 && !$cronEnter) {
+$result = mysqli_query($conn, $checkQuery);
+if (mysqli_num_rows($result) <= 0 && !$cronEnter) {
 		print "No Transactions to send";
 		exit();
 	} 
@@ -45,8 +45,8 @@ if (!isset($_GET["EndDate"]) || $_GET["EndDate"] == "") {
 	$thequery .= "ORDER BY t.date, m.name, t.method, p.lastname";
 	
 	$body = "";
-	$results = mysql_query($thequery);
-	while (list($date, $teamcode, $playercode, $method) = mysql_fetch_row($results)) {
+$results = mysqli_query($conn, $thequery);
+while (list($date, $teamcode, $playercode, $method) = mysqli_fetch_row($results)) {
 		switch($method) {
 			case 'Cut':  
 			case 'Fire': $methodCode = 2; break;

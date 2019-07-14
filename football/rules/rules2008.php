@@ -8,10 +8,10 @@ li.newRule { font-weight:bold }
 
 </HEAD>
 
-<!--#include virtual="/base/menu.php"-->
+<?php include "/base/menu.php" ?>
 
 <H1 ALIGN=CENTER>Rules of the WMFFL</H1>
-<H5 ALIGN=CENTER><I>Last Updated: August 4, 2010</I></H5>
+<H5 ALIGN=CENTER><I>Last Updated: August 24, 2008</I></H5>
 <HR size = "1">
 Section 1: <A HREF="#I">Divisions and Schedules</A>; <A HREF="#II">Who Makes the Playoffs</A>; <A HREF="#III">The Playoffs</A><BR>
 Section 2: <A HREF="#IV">Team Rosters</A>; <A HREF="#V">Scoring</A><BR>
@@ -19,21 +19,9 @@ Section 3: <A HREF="#VI">Draft Order</A>; <A HREF="#VII">Drafting</A>; <A HREF="
 Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules</A><BR>
 
 <HR size = "1">
-<P>Rules added or changed that will take effect for the 2010 season are indicated in <B>Bold</B>.</P>
+<P>Rules added or changed that will take effect for the 2008 season are 
+indicated in <B>Bold</B>.</P>
 <UL>
-    <li>2009.4 - Remove Draft Lottery
-    <ul><li>Repeal rule VI.D.3.b</li>
-        <li>Update rule VI.D.3.c</li>
-    </ul></li>
-    <li>2010.1 - Expand to 12 Teams
-    <ul><li>Modify rules I.A and I.B</li>
-        <li>Modify rule II.C</li>
-        <li>Modify rule III.A</li>
-        <li>Add rule III.B.3</li>
-        <li>Modify rule III.E</li>
-    </ul></li>
-    <li>2010.4 - Eliminate League Beer
-    <ul><li>Amend rule III.E.2</li></ul>
 </UL>
 
 <HR size = "1">
@@ -41,8 +29,8 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 <OL TYPE="I">
 <A NAME="I"><B><LI>Divisions and Schedules</B></A>
 <OL TYPE="A">
-    <LI>The WMFFL consists of <b>twelve</b> teams.
-<LI>These teams are organized into <b>three</b> divisions of equal size.
+<LI>The WMFFL consists of ten teams.
+<LI>These teams are organized into two divisions of equal size.
 <LI><I>Repealed</I>
 <LI>The regular season will last for 14 weeks.
 <LI>Each week every team will be scheduled to play one other team.
@@ -56,7 +44,7 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 <LI>Based on this score each team will either win, lose or tie.
 </OL>
 <LI>At the end of the season, the team in each division with the highest win-loss-tie percentage is the division champion.
-<LI>The next highest total (from any division) will become the wildcard teams.
+<LI>The next two highest totals (from either division) will become the wildcard teams.
 <LI>Win-loss-tie percentage is calculated by adding the number of wins plus half the number of ties and dividing by the total number of games played.
 <LI>In the event that there is a tie for who should get into the playoffs, or for seeding within the playoffs, the following procedures will be used:
 <OL TYPE="1">
@@ -65,41 +53,37 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 <LI>Win-Loss-Tie percentage
 <LI>Head-To-Head Record
 <LI>Record in Division, if tied within division
-<li>Combined record of all teams defeated (Strength of Victory)</li>
+<LI>Total Point differential, all season
 <LI>Total Point differential, head-to-head
 <LI>Total Points scored by Head Coach
-<li>Longest playoff drought</li>
+<LI>Record in Last 5 games
+<LI>Record against teams .500 or better
+<LI>Historical Tendancy
 </OL>
 <LI>Once one team either betters the other teams, or falls behind the other teams, revert back to step one.
-<li>All ties within a division must be broken before breaking ties across divisions.  Teams always retain their position within the division.</li>
 </OL></OL>
 
 <BR><A NAME="III"><B><LI>The Playoffs</B></A>
 <OL TYPE="A">
-    <LI>Once the four teams that will make the playoffs have been decided, they are seeded <b>based on regular season record</b>
+<LI>Once the four teams that will make the playoffs have been decided, they are seeded.
 <OL TYPE="1">
-    <LI>The first <b>three</b> seeds will go to the division champions, based on the above criteria.
-<LI>Seed four will go to the wildcard team, again based on the above criteria.
+<LI>The first two seeds will go to the division champions, based on the above criteria.
+<LI>Seeds three and four will go to the wildcard teams, again based on the above criteria.
 </OL>
 <LI>In the first week of the playoffs, the match-ups will be:
 <OL TYPE="1">
 <LI>Seed 1 vs. Seed 4
 <LI>Seed 2 vs. Seed 3
-<li class="newRule">Unless Seed 1 and 4 are from the same division, then match-ups will be:
-    <ol type="a">
-        <li>Seed 1 vs Seed 3</li>
-        <li>Seed 2 vs Seed 4</li>
-    </ol></li>
 </OL>
 <LI>The following week will be the Championship.
 <OL TYPE="1">
 <LI>This will be between whatever two teams win in the first round of the playoffs.
 </OL>
 <LI>Whoever wins the Championship Game will be the Champion.
-<LI><b>The two last place teams in each division with the worse records will play in week 15 for the Toliet Bowl</b>
+<LI>The last place team in each division will play in week 15 for the Toliet Bowl
 <OL TYPE="1">
 	<LI>The loser of the Toliet Bowl must purchase beer for the following season's draft
-	<LI>The beer must include a 12 pack of the beer of the League Champion's choosing
+	<LI>The beer must include a 12 pack of the "Offical League Beer" (Killian's Red) and a 12 pack of the beer of the League Champion's choosing
 </OL>
 </OL>
 
@@ -140,12 +124,12 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 <OL TYPE="A">
 <LI>Each week, every team must turn in an activation roster to the commissioner, or a duly appointed representative
 	<OL TYPE="1">
-	<LI>Any player listed as active 30 minutes prior to kickoff of their team's NFL game will be considered an active player for that week.
+	<LI class="newRule">Any player listed as active 30 minutes prior to kickoff of their team's NFL game will be considered an active player for that week.
 		<OL TYPE="a">
 		<LI>The activation status of a player may not be changed after that deadline.</li>
 		<LI>A player's activation status will not change from the previous week, unless explicitly done so by the owner.</li>
 		</OL></li>
-	<LI>An active roster includes 1 HC, 1 QB, 1 RB, 2 WR, 1 TE, 1 K, 1 OL, 2 DL, 2 LB, 2 DB and 1 additional player at either RB, WR or TE.</li>
+	<LI class="newRule">An active roster includes 1 HC, 1 QB, 1 RB, 2 WR, 1 TE, 1 K, 1 OL, 2 DL, 2 LB, 2 DB and 1 additional player at either RB, WR or TE.</li>
 	<LI>Submitting incomplete lineups can result in penalties and fines
 		<OL TYPE="a">
 		<LI>Activating players on NFL bye weeks will result in a $1 fine and a 2 point penalty per violation
@@ -158,7 +142,7 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
         <li>The acting HC must be named prior to activations being due for the given week.</li>
         <li>The acting HC will not be added to the team's roster and will be removed from the team once the week is over.</li>
         </ol>
-    <li>No Player may be activated for a team in the postseason, unless that player was on that team's roster at the point activations were due for the final week of the regular season.</li>
+    <li class="newRule">No Player may be activated for a team in the postseason, unless that player was on that team's roster at the point activations were due for the final week of the regular season.</li>
 	</OL>
 <LI>Activated players will recieve points based on their position and performance in a particular week.
 	<OL TYPE="1">
@@ -362,8 +346,12 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
             <LI>The League Champion will draft last.
             <LI>The remaining playoff teams will pick in reverse order of regular season record.
         </OL>
-        <LI><i>Repealed</i>
-        <LI>Remaining positions will be filled by non-playoff teams in reverse order of record.
+		<LI>The first three positions will be determined by random, weighted draw of non-playoff teams
+		<OL TYPE="i">
+			<LI>The fifth place team, from the year before, will receive a weight of 1.
+			<LI>Every other team will be weighted in reverse order of record, recieving a weight of 1 more than the previous team.
+		</OL>
+		<LI>Remaining positions will be fdilled by non-playoff teams not selected in the lottery, in reverse order of record.
 	</OL>
 </OL>
 <LI>The exact date of the draft will be selected to maximize the number of people able to attend.
@@ -614,4 +602,4 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 <LI>The rule is rejected by more than 50% of the vote.
 </OL></OL></OL>
 
-<!--#include virtual="/base/footer.html"-->
+<?php include "/base/footer.html" ?>

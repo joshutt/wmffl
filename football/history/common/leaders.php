@@ -20,10 +20,10 @@ ORDER BY ra.pos, `totpts` DESC";
 
 $dateQuery = "SELECT max(week) FROM playerscores where season=$season and week<=14";
 
-$results = mysql_query($sql) or die("$sql<br/>".mysql_error());
-$dateRes = mysql_query($dateQuery);
+$results = mysqli_query($conn, $sql) or die("$sql<br/>" . mysqli_error($conn));
+$dateRes = mysqli_query($conn, $dateQuery);
 
-list($week) = mysql_fetch_row($dateRes);
+list($week) = mysqli_fetch_row($dateRes);
 $numCol = 3;
 
 $title = "League Leaders";
@@ -40,7 +40,7 @@ $title = "League Leaders";
 $off = array();
 $def = array();
 $count = 0;
-while ($rank = mysql_fetch_array($results)) {
+while ($rank = mysqli_fetch_array($results)) {
 	if ($count % $numCol == 0) {
 		print "</TR><TR><TD>&nbsp;</TD></TR><TR>";
 	}
@@ -54,7 +54,7 @@ while ($rank = mysql_fetch_array($results)) {
         $off[$rank["name"]] += $rank["totpts"];
     }
 	for ($i=1; $i<12; $i++) {
-		$rank = mysql_fetch_array($results);
+        $rank = mysqli_fetch_array($results);
 		print "<TR><TD>".$rank["name"]."</TD><td width=\"10\"></td><TD>".$rank["totpts"]."</TD></TR>";
         if ($rank["pos"] == "DB" || $rank["pos"] == "LB" || $rank["pos"] == "DL") {
             $def[$rank["name"]] += $rank["totpts"];

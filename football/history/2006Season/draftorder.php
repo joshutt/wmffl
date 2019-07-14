@@ -26,10 +26,10 @@ teams.  The weights were: Lindbergh Baby Casserole - 6; Rednecks - 5; Norsemen
 <TABLE WIDTH=100%>
 
 <?
-$results = mysql_query($sql) or die("Database error: ".mysql_error());
+$results = mysqli_query($conn, $sql) or die("Database error: " . mysqli_error($conn));
 
 $round = 0;
-while ($pick = mysql_fetch_array($results)) {
+while ($pick = mysqli_fetch_array($results)) {
     if ($round <> $pick["round"]) {
         if ($round > 0) {
             print "</ol></td>";

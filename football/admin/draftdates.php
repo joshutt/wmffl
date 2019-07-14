@@ -10,11 +10,11 @@ WHERE u.userid = d.userid AND u.teamid=t.teamid AND d.date >  '2018-01-01'
 GROUP  BY u.teamid, d.date
 ORDER BY d.date";
 
-$results = mysql_query($query);
+$results = mysqli_query($conn, $query);
 $date = "";
 $dateList = array();
 
-while($arrayList = mysql_fetch_array($results)) {
+while ($arrayList = mysqli_fetch_array($results)) {
     if ($date != $arrayList["date"]) {
         $date = $arrayList["date"];
         $dateArray = array();
@@ -53,10 +53,10 @@ group by o.teamid
 having max(dv.lastUpdate) is null
 EOD;
 
-$results = mysql_query($secondQuery) or die("Error: ".mysql_error());
+$results = mysqli_query($conn, $secondQuery) or die("Error: " . mysqli_error($conn));
 
 $teamArray = array();
-while($arrayList = mysql_fetch_array($results)) {
+while ($arrayList = mysqli_fetch_array($results)) {
     array_push($teamArray, $arrayList["name"]);
 }
 

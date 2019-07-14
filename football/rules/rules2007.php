@@ -1,27 +1,23 @@
-<HTML>
-<HEAD>
-<TITLE>WMFFL Rules</TITLE>
-
-<style>
-li.newRule { font-weight:bold }
-</style>
-
-</HEAD>
-
-<!--#include virtual="/base/menu.php"-->
+<?php
+$title = "WMFFL Rules";
+include "base/menu.php";
+?>
 
 <H1 ALIGN=CENTER>Rules of the WMFFL</H1>
-<H5 ALIGN=CENTER><I>Last Updated: August 24, 2008</I></H5>
+<H5 ALIGN=CENTER><I>Last Updated: September 5, 2007</I></H5>
 <HR size = "1">
 Section 1: <A HREF="#I">Divisions and Schedules</A>; <A HREF="#II">Who Makes the Playoffs</A>; <A HREF="#III">The Playoffs</A><BR>
 Section 2: <A HREF="#IV">Team Rosters</A>; <A HREF="#V">Scoring</A><BR>
 Section 3: <A HREF="#VI">Draft Order</A>; <A HREF="#VII">Drafting</A>; <A HREF="#IX">Transactions</A>; <A HREF="#X">Protections</A><BR>
 Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules</A><BR>
 
+<!--
 <HR size = "1">
-<P>Rules added or changed that will take effect for the 2009 season are indicated in <B>Bold</B>.</P>
+<P>Rules added or changed that will take effect for the 2006 season are 
+indicated in <B>Bold</B>.</P>
 <UL>
 </UL>
+-->
 
 <HR size = "1">
 
@@ -52,13 +48,14 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 <LI>Win-Loss-Tie percentage
 <LI>Head-To-Head Record
 <LI>Record in Division, if tied within division
-<li class="newRule">Combined record of all teams defeated (Strength of Victory)</li>
+<LI>Total Point differential, all season
 <LI>Total Point differential, head-to-head
 <LI>Total Points scored by Head Coach
-<li class="newRule">Longest playoff drought</li>
+<LI>Record in Last 5 games
+<LI>Record against teams .500 or better
+<LI>Historical Tendancy
 </OL>
 <LI>Once one team either betters the other teams, or falls behind the other teams, revert back to step one.
-<li class="newRule">All ties within a division must be broken before breaking ties across divisions.  Teams always retain their position within the division.</li>
 </OL></OL>
 
 <BR><A NAME="III"><B><LI>The Playoffs</B></A>
@@ -122,12 +119,12 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 <OL TYPE="A">
 <LI>Each week, every team must turn in an activation roster to the commissioner, or a duly appointed representative
 	<OL TYPE="1">
-	<LI>Any player listed as active 30 minutes prior to kickoff of their team's NFL game will be considered an active player for that week.
+	<LI>Activations are due one hour before the kickoff of the first NFL game of the week
 		<OL TYPE="a">
-		<LI>The activation status of a player may not be changed after that deadline.</li>
-		<LI>A player's activation status will not change from the previous week, unless explicitly done so by the owner.</li>
-		</OL></li>
-	<LI>An active roster includes 1 HC, 1 QB, 1 RB, 2 WR, 1 TE, 1 K, 1 OL, 2 DL, 2 LB, 2 DB and 1 additional player at either RB, WR or TE.</li>
+		<LI>Activations recieved after the deadline will count towards the following week
+		<LI>Failure to submit activations will result in the activations from the previous week being used
+		</OL>
+	<LI>An active roster includes 1 HC, 1 QB, 2 RB, 2 WR, 1 TE, 1 K, 1 OL, 2 DL, 2 LB and 2 DB
 	<LI>Submitting incomplete lineups can result in penalties and fines
 		<OL TYPE="a">
 		<LI>Activating players on NFL bye weeks will result in a $1 fine and a 2 point penalty per violation
@@ -140,7 +137,6 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
         <li>The acting HC must be named prior to activations being due for the given week.</li>
         <li>The acting HC will not be added to the team's roster and will be removed from the team once the week is over.</li>
         </ol>
-    <li>No Player may be activated for a team in the postseason, unless that player was on that team's roster at the point activations were due for the final week of the regular season.</li>
 	</OL>
 <LI>Activated players will recieve points based on their position and performance in a particular week.
 	<OL TYPE="1">
@@ -349,7 +345,7 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 			<LI>The fifth place team, from the year before, will receive a weight of 1.
 			<LI>Every other team will be weighted in reverse order of record, recieving a weight of 1 more than the previous team.
 		</OL>
-		<LI>Remaining positions will be filled by non-playoff teams not selected in the lottery, in reverse order of record.
+		<LI>Remaining positions will be fdilled by non-playoff teams not selected in the lottery, in reverse order of record.
 	</OL>
 </OL>
 <LI>The exact date of the draft will be selected to maximize the number of people able to attend.
@@ -600,4 +596,4 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 <LI>The rule is rejected by more than 50% of the vote.
 </OL></OL></OL>
 
-<!--#include virtual="/base/footer.html"-->
+<?php include "/base/footer.html" ?>

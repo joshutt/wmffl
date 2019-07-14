@@ -1,28 +1,23 @@
-<HTML>
-<HEAD>
-<TITLE>WMFFL Rules</TITLE>
-
-<style>
-li.newRule { font-weight:bold }
-</style>
-
-</HEAD>
-
-<!--#include virtual="/base/menu.php"-->
+<?php
+$title = "WMFFL Rules";
+include "base/menu.php";
+?>
 
 <H1 ALIGN=CENTER>Rules of the WMFFL</H1>
-<H5 ALIGN=CENTER><I>Last Updated: August 24, 2008</I></H5>
+<H5 ALIGN=CENTER><I>Last Updated: September 5, 2006</I></H5>
 <HR size = "1">
 Section 1: <A HREF="#I">Divisions and Schedules</A>; <A HREF="#II">Who Makes the Playoffs</A>; <A HREF="#III">The Playoffs</A><BR>
 Section 2: <A HREF="#IV">Team Rosters</A>; <A HREF="#V">Scoring</A><BR>
 Section 3: <A HREF="#VI">Draft Order</A>; <A HREF="#VII">Drafting</A>; <A HREF="#IX">Transactions</A>; <A HREF="#X">Protections</A><BR>
 Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules</A><BR>
 
+<!--
 <HR size = "1">
-<P>Rules added or changed that will take effect for the 2008 season are 
+<P>Rules added or changed that will take effect for the 2006 season are 
 indicated in <B>Bold</B>.</P>
 <UL>
 </UL>
+-->
 
 <HR size = "1">
 
@@ -124,25 +119,18 @@ indicated in <B>Bold</B>.</P>
 <OL TYPE="A">
 <LI>Each week, every team must turn in an activation roster to the commissioner, or a duly appointed representative
 	<OL TYPE="1">
-	<LI class="newRule">Any player listed as active 30 minutes prior to kickoff of their team's NFL game will be considered an active player for that week.
+	<LI>Activations are due one hour before the kickoff of the first NFL game of the week
 		<OL TYPE="a">
-		<LI>The activation status of a player may not be changed after that deadline.</li>
-		<LI>A player's activation status will not change from the previous week, unless explicitly done so by the owner.</li>
-		</OL></li>
-	<LI class="newRule">An active roster includes 1 HC, 1 QB, 1 RB, 2 WR, 1 TE, 1 K, 1 OL, 2 DL, 2 LB, 2 DB and 1 additional player at either RB, WR or TE.</li>
+		<LI>Activations recieved after the deadline will count towards the following week
+		<LI>Failure to submit activations will result in the activations from the previous week being used
+		</OL>
+	<LI>An active roster includes 1 HC, 1 QB, 2 RB, 2 WR, 1 TE, 1 K, 1 OL, 2 DL, 2 LB and 2 DB
 	<LI>Submitting incomplete lineups can result in penalties and fines
 		<OL TYPE="a">
 		<LI>Activating players on NFL bye weeks will result in a $1 fine and a 2 point penalty per violation
 		<LI>Activating players not on a NFL team will result in a $1 fine and a 2 point penalty per violation
 		<LI>Activating the incorrect number of players will result in a $1 fine and a 2 point penalty per violation 
 		</OL>
-    <LI>If a team's HC is on a bye for a given week the team may name an acting HC for that week only.  The team will score points for the acting HC as if they were the regular HC.
-        <OL TYPE="a">
-        <LI>The acting HC can not appear on any other team's roster or have been named an acting HC for another team in the same week.</li>
-        <li>The acting HC must be named prior to activations being due for the given week.</li>
-        <li>The acting HC will not be added to the team's roster and will be removed from the team once the week is over.</li>
-        </ol>
-    <li class="newRule">No Player may be activated for a team in the postseason, unless that player was on that team's roster at the point activations were due for the final week of the regular season.</li>
 	</OL>
 <LI>Activated players will recieve points based on their position and performance in a particular week.
 	<OL TYPE="1">
@@ -295,15 +283,6 @@ indicated in <B>Bold</B>.</P>
 			<OL TYPE="i">
 			<LI>Every 10 pts = 1 pt
 			</OL>
-        <li>Team Penalties
-            <ol type="i">
-            <li>3 or fewer penalties = 3 pts</li>
-            <li>between 4 and 6 penalties = 2 pts</li>
-            <li>7 or 8 penalties = 1 pt</li>
-            <li>11 or 12 penalties = -1 pt</li>
-            <li>13 or 14 penalties = -2 pts</li>
-            <li>15 or more penalties = -3 pts</li>
-            </ol></li>
 		</OL>
 	</OL>
 <LI>A team's final score is the cumulation of their offensive player's scores minus the cumulation of their opponents defensive player's scores.
@@ -396,7 +375,7 @@ indicated in <B>Bold</B>.</P>
 <LI>If a roster position is open, teams can add a player to their team by spending a transaction point.
 <OL TYPE="1">
 	<LI>Each team will recieve a number of transaction points equal to thier unused protection points.
-	<LI>After the completion of the draft every team will receive an additional 5 transaction points.</li>
+	<LI><I>Repealed</I>
 	<LI>Once a team is out of transaction points, they may purchase more at the cost of $1.
 </OL>
 <LI>Trades are allowed and anything maybe traded, subject to the roster restrictions.
@@ -602,4 +581,4 @@ indicated in <B>Bold</B>.</P>
 <LI>The rule is rejected by more than 50% of the vote.
 </OL></OL></OL>
 
-<!--#include virtual="/base/footer.html"-->
+<?php include "/base/footer.html" ?>

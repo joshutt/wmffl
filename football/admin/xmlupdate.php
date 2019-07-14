@@ -1,8 +1,4 @@
 <?
-/*
-$conn = mysql_connect('localhost', 'joshutt_misc', 'swwrbo');
-mysql_select_db('joshutt_misc');
-*/
 
 print "start<br/>";
 require_once "utils/start.php";
@@ -110,18 +106,18 @@ foreach ($xml->player as $player) {
 
 $timeSql = "SELECT value FROM config WHERE `key`='player.update.timestamp'";
 echo "$timeSql<br/>";
-$result = mysql_query($timeSql) or die("Unable to select: ".mysql_error());
-$numReturn = mysql_num_rows($result);
+$result = mysqli_query($conn, $timeSql) or die("Unable to select: " . mysqli_error($conn));
+$numReturn = mysqli_num_rows($result);
 if ($numReturn == 0) {
     $setSql = sprintf("INSERT INTO config (`key`, value) VALUES ('player.update.timestamp', '%d')", $timeStamp);
-    mysql_query($setSql) or die("Unable to insert: ".mysql_error());
+    mysqli_query($conn, $setSql) or die("Unable to insert: " . mysqli_error($conn));
 
 } else {
-    $config = mysql_fetch_assoc($result);
+    $config = mysqli_fetch_assoc($result);
     $thisStamp = intval($config["value"]);
     if ($thisStamp < $timeStamp) {
         $setSql = sprintf("UPDATE config SET value='%d' WHERE `key`='player.update.timestamp'", $timeStamp);
-        mysql_query($setSql) or die("Unable to update: ".mysql_error());
+        mysqli_query($conn, $setSql) or die("Unable to update: " . mysqli_error($conn));
     } else {
         echo "Here<br/>";
         return;
@@ -162,22 +158,22 @@ EOD;
 // Save or update the players
 foreach ($playerList as &$player) {
     $query = sprintf($selectSQL, $player["flmid"]);
-    $result = mysql_query($query);
+    $result = mysqli_query($conn, $query);
 
-    $numReturn = mysql_num_rows($result);
+    $numReturn = mysqli_num_rows($result);
     if ($numReturn == 0) {
         //Insert Here
         $query2 = sprintf($insertSQL, $player["flmid"], $player["lastName"], $player["firstName"], $player["pos"], $player["team"]);
-        mysql_query($query2);
-        $player["playerid"] = mysql_insert_id();
+        mysqli_query($conn, $query2);
+        $player["playerid"] = mysqli_insert_id($conn);
     } else {
         // Update if necessary
-        $row = mysql_fetch_assoc($result);
+        $row = mysqli_fetch_assoc($result);
         if ($row["lastname"] != $player["lastName"]  || $row["firstname"] != $player["firstName"]
             || $row["pos"] != $player["pos"] || $row["team"] != $player["team"])    {
 
             $query2 = sprintf($updateSQL, $player["lastName"], $player["firstName"], $player["pos"], $player["team"], $player["flmid"]);
-            mysql_query($query2);
+            mysqli_query($conn, $query2);
 
         }
         $player["playerid"] = $row["playerid"];
@@ -211,12 +207,12 @@ $closeBase = "";
 
 foreach ($playerList as $player) {
     $query = sprintf($currentSql, $player["playerid"]);
-    $result = mysql_query($query) or die("Unable to get current roster: ".mysql_error());
-    $numRows = mysql_num_rows($result);
+    $result = mysqli_query($conn, $query) or die("Unable to get current roster: " . mysqli_error($conn));
+    $numRows = mysqli_num_rows($result);
 
     if ($player["team"] != "") {
         if ($numRows > 0) {
-            $row = mysql_fetch_assoc($result);
+            $row = mysqli_fetch_assoc($result);
             if ($row["team"] != $player["team"]) {
                 // matches, do nothing
             } else {
@@ -254,15 +250,15 @@ foreach ($playerList as $player) {
 
 if ($insertBase != "") {
     $insertQuery = "INSERT INTO nflrosters (playerid, nflteamid, dateon, dateoff) VALUES $insertBase";
-    mysql_query($insertQuery) or die ("Unable to insert: ".mysql_error());
-    $affectedRows = mysql_affected_rows();
+    mysqli_query($conn, $insertQuery) or die ("Unable to insert: " . mysqli_error($conn));
+    $affectedRows = mysqli_affected_rows($conn);
     print "Inserted $affectedRows rows<br/>";
 }
 
 if ($closeBase != "") {
     $closeQuery = "UPDATE nflrosters SET dateoff=now() WHERE dateoff is null AND playerid in ($closeBase)";
-    mysql_query($closeQuery) or die ("Unable to update: ".mysql_error());
-    $affectedRows = mysql_affected_rows();
+    mysqli_query($conn, $closeQuery) or die ("Unable to update: " . mysqli_error($conn));
+    $affectedRows = mysqli_affected_rows($conn);
     print "Updated $affectedRows rows<br/>";
 }
 

@@ -72,12 +72,12 @@ print $comments;
 
         // Send email
         $addyGet = "SELECT email, teamid FROM user WHERE teamid in (".$teamA->getID().", ".$teamB->getID().") AND Active='Y'";
-        $addyResults = mysql_query($addyGet);
+        $addyResults = mysqli_query($conn, $addyGet);
         $first = true;
         $replyFirst = true;
         $address = "";
         $replyTo = "Reply-To: ";
-        while (list($emailAdd, $mailTeam) = mysql_fetch_array($addyResults)) {
+        while (list($emailAdd, $mailTeam) = mysqli_fetch_array($addyResults)) {
             if (!$first) {
                 $address .= ", ";
             }
@@ -122,12 +122,12 @@ print $comments;
 
         // Send email
         $addyGet = "SELECT email, teamid FROM user WHERE teamid in (".$teamA->getID().", ".$teamB->getID().") AND active='Y'";
-        $addyResults = mysql_query($addyGet);
+        $addyResults = mysqli_query($conn, $addyGet);
         $first = true;
         $replyFirst = true;
         $address = "";
         $replyTo = "Reply-To: ";
-        while (list($emailAdd, $mailTeam) = mysql_fetch_array($addyResults)) {
+        while (list($emailAdd, $mailTeam) = mysqli_fetch_array($addyResults)) {
             if (!$first) {
                 $address .= ", ";
             }

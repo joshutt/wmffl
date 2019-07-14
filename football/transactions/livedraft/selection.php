@@ -103,15 +103,15 @@ if (sizeof($errors) > 0) {
 	/*
     // Get the previous pick time
     $sql = "SELECT max(pickTime) as 'pickTime'  FROM draftpicks";
-    $results = mysql_query($sql) or die ("Unable to get max time: ".mysql_error()); 
-    $rows = mysql_fetch_assoc($results);
+    $results = mysqli_query($conn, $sql) or die ("Unable to get max time: ".mysqli_error($conn)); 
+    $rows = mysqli_fetch_assoc($results);
     $pickTime = strtotime($rows["pickTime"]);
 
     // Get any clock stop time
     $sql = "SELECT * FROM draftclockstop WHERE season=$season AND round={$draftPicks->Round} and pick={$draftPicks->Pick}";
-    $results = mysql_query($sql) or die ("Unable to get clock stop: ".mysql_error()); 
+    $results = mysqli_query($conn, $sql) or die ("Unable to get clock stop: ".mysqli_error($conn)); 
     $totalExtra = 0;
-    while ($rows = mysql_fetch_assoc($results)) {
+    while ($rows = mysqli_fetch_assoc($results)) {
         $timeStopped = strtotime($rows["timeStopped"]);
 	$timeStarted = strtotime($rows["timeStarted"]);
 	if ($timeStarted == null) {
@@ -127,22 +127,22 @@ if (sizeof($errors) > 0) {
 
     // Save player as the selected one
     $sql = "UPDATE draftpicks SET playerid=$player where Season=$season and Round={$draftPicks->Round} and Pick={$draftPicks->Pick}";
-    mysql_query($sql) or die ("MySQL Error #1: ".mysql_error());
+    mysqli_query($conn, $sql) or die ("MySQL Error #1: " . mysqli_error($conn));
     
     // Save the player onto the roster (NOT YET THOUGH)
     $sql = "INSERT INTO roster (playerid, teamid, dateon) VALUES ($player, $team, now())";
-    mysql_query($sql) or die ("MySQL ERROR #2: ".mysql_error());
+    mysqli_query($conn, $sql) or die ("MySQL ERROR #2: " . mysqli_error($conn));
 
     // Update the time remaining
     $sql = "UPDATE config c1 JOIN config c2 on c2.key='draft.clock.maxTime' SET c1.value = if(if(c1.value-$totalTime > c2.value, c2.value, c1.value-$totalTime) > 0, if(c1.value-$totalTime > c2.value, c2.value, c1.value-$totalTime), 0) WHERE c1.key = 'draft.team.$team'";
     //error_log("Update: $sql\n", 3, "check.log");
-    mysql_query($sql) or die ("Unable to update clock ".mysql_error());
+    mysqli_query($conn, $sql) or die ("Unable to update clock " . mysqli_error($conn));
 
     if ($draftPicks->fetch()) {
 	$inNow = "{$draftPicks->Round} - {$draftPicks->Pick} - {$draftPicks->teamid}";
 	$sql = "UPDATE config c1 JOIN config c2 on c2.key='draft.clock.addTime' JOIN config c3 ON c3.key='draft.clock.maxTime' SET c1.value=if(c1.value+c2.value > c3.value, c3.value, c1.value+c2.value) where c1.key = 'draft.team.{$draftPicks->teamid}'";
     //error_log("Update: $sql\n", 3, "check.log");
-        mysql_query($sql) or die ("Unable to add time to clock ".mysql_error());
+        mysqli_query($conn, $sql) or die ("Unable to add time to clock " . mysqli_error($conn));
     }
 
     $responseArray["code"] = 1;

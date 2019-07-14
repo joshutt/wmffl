@@ -15,3 +15,8 @@ order allow,deny
 allow from all
 </Files>
 
+php_value include_path ".;C:\pear\share\pear;C:\Users\Josh\IdeaProjects\wmffl\football;C:\Users\Josh\IdeaProjects\wmffl\conf;C:\Users\Josh\IdeaProjects\wmffl\lib"
+php_value error_log "C:\Users\Josh\IdeaProjects\wmffl\logs\wmffl.log"
+php_value log_errors 1
+php_value display_errors 0
+

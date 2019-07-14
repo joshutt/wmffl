@@ -28,9 +28,9 @@ then press the "VOTE" button to have you vote counted.  To review the issues in 
 				and i.startDate<=now() 
 				and (Deadline is null or Deadline >= now())
 				and b.teamid=".$teamnum." order by issuenum";
-	
-	$results = mysql_query($thequery);
-	while (list($issueid, $issuenum, $issuename, $vote, $descr) = mysql_fetch_row($results)) {
+
+$results = mysqli_query($conn, $thequery);
+while (list($issueid, $issuenum, $issuename, $vote, $descr) = mysqli_fetch_row($results)) {
 
         $accept = "Accept";
         $reject = "Reject";

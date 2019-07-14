@@ -37,8 +37,8 @@ $posVal = array();
 $posCount = array();
 $allPlayers = array();
 $fullPlayers = array();
-$results = mysql_query($playerSQL) or die("Can't query database: ".mysql_error());
-while ($rows = mysql_fetch_assoc($results)) {
+$results = mysqli_query($conn, $playerSQL) or die("Can't query database: " . mysqli_error($conn));
+while ($rows = mysqli_fetch_assoc($results)) {
     $pos = $rows["pos"];
     $teamid = $rows["teamid"];
     $week = $rows["week"];
@@ -107,8 +107,8 @@ print "<tr><th colspan=4>Player of the Week</th></tr>";
 foreach ($finals as $playerid=>$score) {
     /*
     $playerInfoSQL = "SELECT concat(firstname, ' ', lastname) as 'name', team, pos FROM newplayers WHERE playerid=$playerid";
-    $playerResult = mysql_query($playerInfoSQL) or die("Dead: ".mysql_error());
-    $playerInfo = mysql_fetch_array($playerResult);
+    $playerResult = mysqli_query($conn, $playerInfoSQL) or die("Dead: ".mysqli_error($conn));
+    $playerInfo = mysqli_fetch_array($playerResult);
     */
     $playerInfo = $fullPlayers[$playerid];
     $pos = $playerInfo['pos'];
@@ -127,8 +127,8 @@ print "<tr><th colspan=4>Defensive POW</th></tr>";
 foreach ($finals as $playerid=>$score) {
     /*
     $playerInfoSQL = "SELECT concat(firstname, ' ', lastname) as 'name', team, pos FROM newplayers WHERE playerid=$playerid";
-    $playerResult = mysql_query($playerInfoSQL) or die("Dead: ".mysql_error());
-    $playerInfo = mysql_fetch_array($playerResult);
+    $playerResult = mysqli_query($conn, $playerInfoSQL) or die("Dead: ".mysqli_error($conn));
+    $playerInfo = mysqli_fetch_array($playerResult);
     */
     $playerInfo = $fullPlayers[$playerid];
     $pos = $playerInfo['pos'];

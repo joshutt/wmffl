@@ -59,7 +59,7 @@ $byPos = false;
 if (isset($_REQUEST["team"]) && $_REQUEST["team"] != "") {
     $searchTeam = $_REQUEST["team"];
 } else if (isset($_REQUEST["pos"]) && $_REQUEST["pos"] != "") {
-    $searchPos = mysql_real_escape_string($_REQUEST["pos"]);
+    $searchPos = mysqli_real_escape_string($conn, $_REQUEST["pos"]);
     $byPos = true;
 } else if (array_key_exists('teamnum', $_SESSION) && $_SESSION["teamnum"] != "") {
     $searchTeam = $_SESSION["teamnum"];
@@ -106,10 +106,10 @@ EOD;
 
 }
 
-$results = mysql_query($sql) or die("There was an error in the query: " . mysql_error());
+$results = mysqli_query($conn, $sql) or die("There was an error in the query: " . mysqli_error($conn));
 $newHold = array();
 $max = 0;
-while ($playList = mysql_fetch_array($results)) {
+while ($playList = mysqli_fetch_array($results)) {
     // If the new player isn't already in array add it
     $id = $playList["playerid"];
     if (sizeof($newHold) == 0 || !array_key_exists($id, $newHold)) {

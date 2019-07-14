@@ -9,11 +9,11 @@ AND s.season=$thisSeason AND t1.season=$thisSeason AND t2.season=$thisSeason
 AND s.week=$thisWeek
 ORDER BY s.label, MD5(CONCAT(t1.name, t2.name))
 EOD;
-$results = mysql_query($weekQuery) or die("SQL Error: ".mysql_error());
+$results = mysqli_query($conn, $weekQuery) or die("SQL Error: " . mysqli_error($conn));
 
 $count = 0;
 $gameArray = array();
-while ($row = mysql_fetch_array($results)) {
+while ($row = mysqli_fetch_array($results)) {
     if ($count % 2 == 0) {
         $bgcolor="dddddd";
     } else {

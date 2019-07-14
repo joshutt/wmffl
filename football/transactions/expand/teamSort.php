@@ -15,12 +15,12 @@ left join expansionpicks exp on exp.playerid=ex.playerid
     order by `$orderBy`, pos, lastname
 EOD;
 
-$results = mysql_query($sql) or die("Unable to get expansion protections: ".mysql_error());
+$results = mysqli_query($conn, $sql) or die("Unable to get expansion protections: " . mysqli_error($conn));
 
 $currentTeam = "";
 $count =0;
 print "<table class=\"SLTables1 left\" id=\"tblId\">";
-while ($player = mysql_fetch_array($results)) {
+while ($player = mysqli_fetch_array($results)) {
     if ($player['protected'] == 1) {
         $class = 'protect';
     } else {

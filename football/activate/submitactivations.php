@@ -86,10 +86,10 @@ EOD;
 
 $weekSql = "SELECT week, weekname FROM weekmap WHERE Season=$season AND EndDate>now()";
 
-$weekResults = mysql_query($weekSql) or die("Unable to get Weeks: ".mysql_error());
+$weekResults = mysqli_query($conn, $weekSql) or die("Unable to get Weeks: " . mysqli_error($conn));
 
 $weekList = "";
-while ($theWeek = mysql_fetch_assoc($weekResults)) {
+while ($theWeek = mysqli_fetch_assoc($weekResults)) {
     $checked = "";
     if ($week == $theWeek['week']) {
         $checked = "selected=\"true\"";
@@ -107,7 +107,7 @@ include "base/menu.php";
 $actingHC = false;
 if ($isin) {
 
-    $results = mysql_query($sql) or die("Ug: ".mysql_error());
+    $results = mysqli_query($conn, $sql) or die("Ug: " . mysqli_error($conn));
 
     $starters = array();
     $reserve = array();
@@ -118,7 +118,7 @@ if ($isin) {
     $reserveCount = 0;
     $reserveIds = array();
     $gpOption = "<option value=\"-1\">None</option>";
-    while ($rowSet = mysql_fetch_assoc($results)) {
+    while ($rowSet = mysqli_fetch_assoc($results)) {
         #print_r($rowSet);
         #print "<br/>";
 
@@ -190,8 +190,8 @@ if ($isin) {
     }
 
 
-    $noActiveResults =  mysql_query($noActivateSql) or die("Die on No activate: ".mysql_error());
-    while ($rowSet = mysql_fetch_assoc($noActiveResults)) {
+    $noActiveResults = mysqli_query($conn, $noActivateSql) or die("Die on No activate: " . mysqli_error($conn));
+    while ($rowSet = mysqli_fetch_assoc($noActiveResults)) {
         $key = array_search($rowSet["playerid"], $reserveIds);
         if ($key !== FALSE) {
             $player = $reserve[$key];
@@ -201,8 +201,8 @@ if ($isin) {
     }
 
     $oppGPOption = "<option value='-1'>None</option>";
-    $oppRosterResults = mysql_query($opponentRoster) or die("Die on opponent roster: ".mysql_error());
-    while ($rowSet = mysql_fetch_assoc($oppRosterResults)) {
+    $oppRosterResults = mysqli_query($conn, $opponentRoster) or die("Die on opponent roster: " . mysqli_error($conn));
+    while ($rowSet = mysqli_fetch_assoc($oppRosterResults)) {
         $player = array();
         $player["name"] = $rowSet["name"];
         $player["pos"] = $rowSet["pos"];
@@ -219,9 +219,9 @@ if ($isin) {
 }
 
 if ($actingHC) {
-    $HCResults = mysql_query($actingHCsql) or die("Unable to get active HC: ".mysql_error());
+    $HCResults = mysqli_query($conn, $actingHCsql) or die("Unable to get active HC: " . mysqli_error($conn));
     $hcArray = array();
-    while ($rowSet = mysql_fetch_assoc($HCResults)) {
+    while ($rowSet = mysqli_fetch_assoc($HCResults)) {
         $player = array();
         $player["name"] = $rowSet["name"];
         $player["pos"] = $rowSet["pos"];

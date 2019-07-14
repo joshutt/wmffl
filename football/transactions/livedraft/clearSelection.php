@@ -9,4 +9,4 @@ $teamId = $_SESSION["teamnum"];
 
 // Remove this team's preselections
 $sql = "DELETE FROM draftPickHold WHERE teamid=$teamId";
-mysql_query($sql) or die ("Unable to remove hold: ".mysql_error());
+mysqli_query($conn, $sql) or die ("Unable to remove hold: " . mysqli_error($conn));

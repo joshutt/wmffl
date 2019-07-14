@@ -43,9 +43,9 @@ $title = "Protections Saved";
 
 
 <?
-mysql_query($deleteSql) or die ("Unable to clear old protections: ".mysql_error());
+mysqli_query($conn, $deleteSql) or die ("Unable to clear old protections: " . mysqli_error($conn));
 
-mysql_query($sql) or die ("Unable to save your protections: ".mysql_error());
+mysqli_query($conn, $sql) or die ("Unable to save your protections: " . mysqli_error($conn));
 
 ?>
 

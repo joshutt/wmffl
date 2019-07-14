@@ -1,16 +1,14 @@
-<HTML>
-<HEAD>
-<TITLE>WMFFL Rule Proposals</TITLE>
-</HEAD>
-
-<!--#include virtual="/base/menu.php"-->
+<?php
+$title = "WMFFL Rule Proposals";
+include "base/menu.php";
+?>
 
 <H1 ALIGN=Center>Current Rule Proposals</H1>
 <HR size = "1">
 
 <P>This is the list of proposals voted on for the 2002 WMFFL season.
 If you would like to suggest a rule proposal, you may
-do so on the <A HREF="ballotsubmit.shtml">proposals page</A>.  The part of
+    do so on the <A HREF="proposesubmit.php">proposals page</A>. The part of
 each proposal that appears in <I>Italics</I> is what effect this proposal will
 have on the ruleset, if passed.</P>
 
@@ -165,4 +163,4 @@ offensive players.<BR>
 Amend rule X.E.2.b to read "K, OL, DL, LB and DB"
 </I></BLOCKQUOTE></P>
 
-<!--#include virtual="/base/footer.html"-->
+<?php include "/base/footer.html" ?>

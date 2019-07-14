@@ -261,13 +261,13 @@ AND ps.active >= $tMin
 ORDER BY ps.active DESC, ps.week
 EOD;
 
-$results = mysql_query($query) or die("Error: ".mysql_error());
+    $results = mysqli_query($conn, $query) or die("Error: " . mysqli_error($conn));
 
 $count = 1;
 $adj = 0;
 $softAdj = 0;
 $lastChange = 999;
-while($rank = mysql_fetch_array($results)) {
+    while ($rank = mysqli_fetch_array($results)) {
     //print "{$rank["name"]}<br/>";
 //    print "Adding: {$rank["name"]} - {$rank["pts"]} - **$pos**<br/>";
     for ($i = $count; $i<=sizeof($list); $i++) {
@@ -317,13 +317,13 @@ HAVING `pts` >= $sMin
 ORDER BY `pts` DESC
 EOD;
 
-$results = mysql_query($totalQuery) or die("Error: ".mysql_error());
+    $results = mysqli_query($conn, $totalQuery) or die("Error: " . mysqli_error($conn));
 
 $count = 1;
 $adj = 0;
 $softAdj = 0;
 $lastChange = 999;
-while($rank = mysql_fetch_array($results)) {
+    while ($rank = mysqli_fetch_array($results)) {
     //print "{$rank["name"]}<br/>";
     //print "Adding: {$rank["name"]} - {$rank["pts"]} - **$pos**<br/>";
     for ($i = $count; $i<=sizeof($list); $i++) {
@@ -354,8 +354,8 @@ while($rank = mysql_fetch_array($results)) {
 
 }
 $dateQuery = "SELECT max(week) FROM playerscores where season=$currentSeason and week<=16";
-$dateRes = mysql_query($dateQuery);
-list($week) = mysql_fetch_row($dateRes);
+$dateRes = mysqli_query($conn, $dateQuery);
+list($week) = mysqli_fetch_row($dateRes);
 
 $title = "Player Records";
 include "base/menu.php";

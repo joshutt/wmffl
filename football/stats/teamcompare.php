@@ -19,9 +19,9 @@ $sql .= "AND r.dateoff is null and ps.playerid=p.playerid ";
 $sql .= "and ps.season=$currentSeason ";
 $sql .= "order by t.teamid, p.pos, ps.week, ps.pts DESC ";
 
-$results = mysql_query($sql);
+$results = mysqli_query($conn, $sql);
 
-while ($resArry = mysql_fetch_array($results)) {
+while ($resArry = mysqli_fetch_array($results)) {
     $name = $resArry["name"];
     $pos = $resArry["pos"];
     $week = $resArry["week"];

@@ -1,9 +1,7 @@
-<HTML>
-<HEAD>
-<TITLE>Details on Proposal 2002.6</TITLE>
-</HEAD>
-
-<!--#include virtual="/base/menu.php"-->
+<?php
+$title = "Details on Proposal 2002.6";
+include "base/menu.php";
+?>
 
 <H1 ALIGN=Center>Details on 2002.6</H1>
 <HR size = "1">
@@ -205,4 +203,4 @@ look like.  <A HREF="proposals2002.shtml">Return to proposals</A></P>
 </I></BLOCKQUOTE>
 </P>
 
-<!--#include virtual="/base/footer.html"-->
+<?php include "/base/footer.html" ?>

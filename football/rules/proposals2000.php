@@ -1,16 +1,14 @@
-<HTML>
-<HEAD>
-<TITLE>WMFFL Rule Proposals</TITLE>
-</HEAD>
-
-<!--#include virtual="/base/menu.php"-->
+<?php
+$title = "WMFFL Rule Proposals";
+include "base/menu.php";
+?>
 
 <H1 ALIGN=Center>Current Rule Proposals</H1>
 <HR size = "1">
 
 <P>This is the list of proposals voted on for the 2000 WMFFL season.
 If you would like to suggest a rule proposal for next year, you may
-do so on the <A HREF="ballotsubmit.shtml">proposals page</A>.</P>
+    do so on the <A HREF="proposesubmit.php">proposals page</A>.</P>
 
 <P><B>Proposal 2000.1 - Change Name of the League</B><BR>
 <FONT COLOR="Red"><B>Rejected</B></FONT><BR>
@@ -94,4 +92,4 @@ the best bench player at each of the 6 individual positions is counted.  The
 second tie-breaker would be the head coach scored.  The final tie-breaker is
 the better seed wins (home-field).</P>
 
-<!--#include virtual="/base/footer.html"-->
+<?php include "/base/footer.html" ?>

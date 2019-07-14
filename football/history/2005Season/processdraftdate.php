@@ -14,7 +14,7 @@ foreach ($_POST as $key => $value) {
     $thequery .= "AND userid = $usernum"; 
     
     #print $thequery."<BR>";
-    mysql_query($thequery);
+    mysqli_query($conn, $thequery);
     
 
 }

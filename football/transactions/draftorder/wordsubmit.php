@@ -13,18 +13,18 @@ if (!$isin) {
 
 
 $query = "select `key` from config where `key` like 'draft.order.word.%' and value=''";
-$results = mysql_query($query) or die("Ugg ".mysql_error());
+$results = mysqli_query($conn, $query) or die("Ugg " . mysqli_error($conn));
 
 $query2 = "select `key`, value from config where `key` like 'draft.order.team.%' and value='$teamid'";
-$result2 = mysql_query($query2) or die("Ugg ".mysql_error());
-$count = mysql_num_rows($result2);
+$result2 = mysqli_query($conn, $query2) or die("Ugg " . mysqli_error($conn));
+$count = mysqli_num_rows($result2);
 
 if ($count > 0) {
     $message2 = "You have already submitted a word.";
 }
 
 $min = 9;
-while ($row = mysql_fetch_assoc($results)) {
+while ($row = mysqli_fetch_assoc($results)) {
     $key = $row["key"]; 
     if (substr($key, -1) < $min) {
         $min = substr($key, -1);
@@ -33,9 +33,9 @@ while ($row = mysql_fetch_assoc($results)) {
 
 if ($count == 0) {
     $query = "update config set value = '$word' where `key`='draft.order.word.$min'";
-    mysql_query($query) or die("Unable to set word ".mysql_error());
+    mysqli_query($conn, $query) or die("Unable to set word " . mysqli_error($conn));
     $query = "update config set value = '$teamid' where `key`='draft.order.team.$min'";
-    mysql_query($query) or die("Unable to set team ".mysql_error());
+    mysqli_query($conn, $query) or die("Unable to set team " . mysqli_error($conn));
     $message2 = "Your word has been submited as '$word' and will be the $min word in the identifier";
 
     if ($min == 4) {

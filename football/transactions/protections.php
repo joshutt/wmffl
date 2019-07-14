@@ -43,8 +43,8 @@ $title = "WMFFL Protections";
 
 <?
 if ($isin) {
-	$results = mysql_query($ptsQuery) or die("Database error: ".mysql_error());
-	$pts = mysql_fetch_row($results);
+    $results = mysqli_query($conn, $ptsQuery) or die("Database error: " . mysqli_error($conn));
+    $pts = mysqli_fetch_row($results);
 ?>
 
 <SCRIPT LANGUAGE="JavaScript">
@@ -93,9 +93,9 @@ has Passed</FONT></B></P>
 <TR><TH></TH><TH>Name</TH><TH>Position</TH><TH>Cost</TH></TR>
 <? 
 	// Create the query
-	$results = mysql_query($thequery);
+$results = mysqli_query($conn, $thequery);
 	$idx = 0;
-	while (list($playerid, $firstname, $lastname, $pos, $nfl, $year, $cost, $protected) = mysql_fetch_row($results)) {
+while (list($playerid, $firstname, $lastname, $pos, $nfl, $year, $cost, $protected) = mysqli_fetch_row($results)) {
 		print "<TR><TD><INPUT TYPE=\"checkbox\" NAME=\"protect[]\" VALUE=\"$playerid\" ONCLICK=\"change($cost, $idx)\"";
 		if ($protected == 1 || $pos=="HC") print "CHECKED ";
 		print "></TD>";

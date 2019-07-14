@@ -27,11 +27,11 @@ exit;
 $teamID = $teamnum;
 
 $sql = "select * from offer where status='Pending' and $teamID in (TeamAID, TeamBID)";
-$results = mysql_query($sql) or die("UG");
+$results = mysqli_query($conn, $sql) or die("UG");
 
 $tradeArray = array();
 $thisTeam = loadTeam($teamID);
-while ($arr = mysql_fetch_array($results)) {
+while ($arr = mysqli_fetch_array($results)) {
     $newTrade = loadTradeByID($arr["OfferID"], $thisTeam);
     array_push($tradeArray, $newTrade);
 }
@@ -143,14 +143,14 @@ foreach ($buttons as $buttonName) {
 
 <?
 $sql2 = "SELECT name, teamid FROM team WHERE active=1 ORDER BY name";
-$results = mysql_query($sql2);
+$results = mysqli_query($conn, $sql2);
 ?>
 
 <H3 ALIGN=Center>Offer New Trade</H3>
 <FORM ACTION="edittrade.php" METHOD="POST">
 Offer Trade To: <SELECT NAME="teamto">
 <?
-while ($teamarr = mysql_fetch_array($results)) {
+while ($teamarr = mysqli_fetch_array($results)) {
     printf ("<OPTION VALUE=\"%d\">%s</OPTION>", $teamarr["teamid"], $teamarr["name"]);
 }
 ?>

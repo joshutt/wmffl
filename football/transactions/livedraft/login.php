@@ -20,8 +20,8 @@ print "AAA";
 $commish = 0;
 if (isset($team)) {
     $sql = "SELECT count(*), sum(u.commish), max(u.userid) FROM user u, team t where u.teamid=t.teamid and t.teamid=$team and u.password=MD5('$pass')";
-    $resultA = mysql_query($sql) or die("ERROR Can't verify password: ".mysql_error());
-    $count = mysql_fetch_row($resultA);
+    $resultA = mysqli_query($conn, $sql) or die("ERROR Can't verify password: " . mysqli_error($conn));
+    $count = mysqli_fetch_row($resultA);
     if ($count[0] == 0) {
         print "ERROR Username and password did not match";
         exit();
@@ -42,11 +42,11 @@ $queryArr .= "100)";
 
 if ($commish) {
     $_SESSION['commish'] = true;
-    $results = mysql_query("SELECT teamid, name FROM team where active=1") or die("ERROR Unable to get Teams in query: ".mysql_error());
+    $results = mysqli_query($conn, "SELECT teamid, name FROM team where active=1") or die("ERROR Unable to get Teams in query: " . mysqli_error($conn));
 } else {
-    $results = mysql_query("SELECT teamid, name FROM team where teamid in $queryArr") or die("ERROR Unable to get Teams in query: ".mysql_error());
+    $results = mysqli_query($conn, "SELECT teamid, name FROM team where teamid in $queryArr") or die("ERROR Unable to get Teams in query: " . mysqli_error($conn));
 }
-while ($teamList = mysql_fetch_array($results)) {
+while ($teamList = mysqli_fetch_array($results)) {
     print "<option value=\"{$teamList['teamid']}\">{$teamList['name']}</option>";
 }
 

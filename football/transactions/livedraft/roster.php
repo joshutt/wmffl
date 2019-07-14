@@ -12,12 +12,12 @@ ORDER BY t.name, p.pos, p.lastname
 
 EOD;
 
-$results = mysql_query($sql) or die("Error: ".mysql_error());
+$results = mysqli_query($conn, $sql) or die("Error: " . mysqli_error($conn));
 $body = "";
 $team = "";
 $first = true;
 $maxPick = 0;
-while($row = mysql_fetch_assoc($results)) {
+while ($row = mysqli_fetch_assoc($results)) {
     if ($row["name"] != $team) {
         if (!$first) {
             $body .= "</team>";

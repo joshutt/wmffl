@@ -15,12 +15,12 @@ function trade($teamid, $date) {
     $tradequery.="and '$date' between wm.startDate and wm.enddate ";
 	$tradequery.="group by t1.tradegroup, abs(tm1.teamid-$teamid), p.lastname ";
 
-	$results = mysql_query($tradequery);
+    $results = mysqli_query($conn, $tradequery);
 	$oldgroup = 0;
-    $numRows = mysql_num_rows($results);
+    $numRows = mysqli_num_rows($results);
     //print $tradequery;
     $firstteam = $teamid;
-	while (list($group, $date, $TeamFrom, $lastname, $firstname, $position, $nflteam, $other) = mysql_fetch_row($results)) {
+    while (list($group, $date, $TeamFrom, $lastname, $firstname, $position, $nflteam, $other) = mysqli_fetch_row($results)) {
 		if ($oldgroup != $group) {
 			print "<LI>Traded ";
 			$oldgroup = $group;
@@ -41,8 +41,8 @@ function trade($teamid, $date) {
 
 
 	$thequery = "SELECT DATE_FORMAT(max(date), '%m/%e/%Y'), DATE_FORMAT(max(date),'%m'), DATE_FORMAT(max(date),'%Y') FROM transactions";
-	$results = mysql_query($thequery);
-	list($lastupdate, $themonth, $theyear) = mysql_fetch_row($results);
+$results = mysqli_query($conn, $thequery);
+list($lastupdate, $themonth, $theyear) = mysqli_fetch_row($results);
 
 if (isset($_GET["month"])) $themonth = $_GET["month"];
 if (isset($_GET["year"])) $theyear = $_GET["year"];
@@ -107,13 +107,13 @@ if (isset($_GET["year"])) $theyear = $_GET["year"];
 //	$thequery .= "'".HTTP_POST_VARS["year"]."-".$_POST["month"]."-31' ";
 //	$thequery .= "ORDER BY t.date DESC, m.name, t.method, p.lastname";
 	$thequery .= "ORDER BY DATE_FORMAT(t.date, '%Y/%m/%d') DESC, m.name, t.method, p.lastname";
-	
-	$results = mysql_query($thequery) or die("Error: ".mysql_error());
+
+$results = mysqli_query($conn, $thequery) or die("Error: " . mysqli_error($conn));
 	$first = TRUE;
     $olddate = "";
     $oldteam = "";
     $oldmethod = "";
-	while (list($date, $teamname, $method, $player, $position, $nflteam, $teamid, $rawdate) = mysql_fetch_row($results)) {
+while (list($date, $teamname, $method, $player, $position, $nflteam, $teamid, $rawdate) = mysqli_fetch_row($results)) {
 		$change = FALSE;
 		if ($olddate != $date) {
 			if (!$first) {

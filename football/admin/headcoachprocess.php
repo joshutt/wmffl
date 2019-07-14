@@ -29,10 +29,10 @@ EOD;
 
 
 #print $updateQuery;
-mysql_query($updateQuery1) or die("Dead: ".mysql_error());
-mysql_query($updateQuery2) or die("Dead: ".mysql_error());
-mysql_query($updateQuery3) or die("Dead: ".mysql_error());
-mysql_query($updateQuery4) or die("Dead: ".mysql_error());
+mysqli_query($conn, $updateQuery1) or die("Dead: " . mysqli_error($conn));
+mysqli_query($conn, $updateQuery2) or die("Dead: " . mysqli_error($conn));
+mysqli_query($conn, $updateQuery3) or die("Dead: " . mysqli_error($conn));
+mysqli_query($conn, $updateQuery4) or die("Dead: " . mysqli_error($conn));
 
 ?>
 <b>Head Coach Changed</b><br/>

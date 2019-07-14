@@ -33,17 +33,17 @@ function make_password($length, $strength=0) {
 
 if (isset($change)) {
     $theQuery = "SELECT name, email FROM user WHERE username='$username'";
-    $result = mysql_query($theQuery);
-    $numrow = mysql_num_rows($result);
+    $result = mysqli_query($conn, $theQuery);
+    $numrow = mysqli_num_rows($result);
     if ($numrow == 0) {
         $errorMsg = "Invalid Account";
     } else {
-        list($name, $email) = mysql_fetch_row($result);
+        list($name, $email) = mysqli_fetch_row($result);
         $newPass = make_password(6, 7);
 
         // Save the password in DB
         $theQuery = "UPDATE user SET password=PASSWORD('$newPass') WHERE username='$username'";
-        $result = mysql_query($theQuery);
+        $result = mysqli_query($conn, $theQuery);
 
         // Send confirmation email
         $body = "$name,

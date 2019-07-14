@@ -33,7 +33,7 @@ left join config c2 on c2.key=concat('draft.team.', t.teamid)
 where o.season=2018
 order by t.name";
 
-$results = mysql_query($query) or die("Unable to do query: " . mysql_error());
+$results = mysqli_query($conn, $query) or die("Unable to do query: " . mysqli_error($conn));
 ?>
 
 <div class="container">
@@ -48,7 +48,7 @@ $results = mysql_query($query) or die("Unable to do query: " . mysql_error());
                     <th>Auto Pick</th>
                 </tr>
                 <?php
-                while ($row = mysql_fetch_array($results)) {
+                while ($row = mysqli_fetch_array($results)) {
                     if ($row[4] == "In") {
                         $png = "green.png";
                     } else {

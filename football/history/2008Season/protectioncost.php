@@ -9,9 +9,9 @@ $query .= "and p.position=pos.position and pos.years<=pc.years ";
 $query .= "GROUP BY p.playerid, pos.position ";
 $query .= "ORDER BY t.name, Extra desc, pc.years desc";
 
-$result = mysql_query($query, $conn);	
-$count = mysql_num_rows($result);
-while ($aLine = mysql_fetch_array($result)) {
+$result = mysqli_query($conn, $query);
+$count = mysqli_num_rows($result);
+while ($aLine = mysqli_fetch_array($result)) {
 	$page[$aLine['name']] .= "<TR><TD>".$aLine['firstname']." ".$aLine['lastname'];
 	$page[$aLine['name']] .= "</TD><TD ALIGN=Center>".$aLine['years']."</TD>";
 	$page[$aLine['name']] .= "<TD ALIGN=Center>+".$aLine['Extra']."</TD></TR>";

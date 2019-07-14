@@ -22,9 +22,9 @@ where r.teamid=$autoteam
 group by p.pos
 EOD;
 
-    $results = mysql_query($posQuery) or die("Unable to do query: " . mysql_error());
+    $results = mysqli_query($conn, $posQuery) or die("Unable to do query: " . mysqli_error($conn));
     $posMap = array("HC" => 0, "QB" => 0, "RB" => 0, "WR" => 0, "TE" => 0, "K" => 0, "OL"=>0, "DL" => 0, "LB" => 0, "DB" => 0);
-    while ($row = mysql_fetch_array($results)) {
+    while ($row = mysqli_fetch_array($results)) {
         $posMap[$row[0]] = $row[1];
     }
 
@@ -80,8 +80,8 @@ ORDER BY sum(ps.pts) DESC, RAND();
 
 EOD;
 
-$results = mysql_query($query) or die("Unable to do query: ".mysql_error());
-$row = mysql_fetch_array($results);
+$results = mysqli_query($conn, $query) or die("Unable to do query: " . mysqli_error($conn));
+$row = mysqli_fetch_array($results);
 
 
 $autoDraft = true;
