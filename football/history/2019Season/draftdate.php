@@ -28,26 +28,48 @@ if ($isin) {
 
 ?>
 
-<p><? print $draftMessage; ?></p>
+    <div class="container px-2"><?= $draftMessage ?></div>
 
 <P><FORM ACTION="../common/processdraftdate" METHOD="POST">
 
-<TABLE BORDER=1>
-<TR><TH WIDTH=30%>Can Attend?</TH><TH WIDTH=70%>Date</TH></TR>
+        <div class="container">
+            <div class="row m-1">
+                <div class="col-2"><h5>Can Attend?</h5></div>
+                <div class="col-2"><h5>Date</h5></div>
+            </div>
 
-<?
+
+            <?php
 while (list($date, $fulldate, $attend) = mysqli_fetch_row($results)) {
-        print "<TR><TD><INPUT TYPE=\"radio\" NAME=\"$date\" VALUE=\"Y\" ";
-        if ($attend == 'Y') print "CHECKED ";
-        print "/>Yes<INPUT TYPE=\"radio\" NAME=\"$date\" VALUE=\"N\" ";
-        if ($attend == 'N') print "CHECKED ";
-        print "/>No</TD><TD>$fulldate</TD></TR>";
-    }
-?>
+    ?>
+    <div class="row m-1">
+        <div class="col-2">
+            <div class="form-check-inline">
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input"
+                           name="<?= $date ?>" <?= $attend == 'Y' ? 'CHECKED' : '' ?> value="Y"/>Yes
+                </label>
+            </div>
+            <div class="form-check-inline">
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input"
+                           name="<?= $date ?>" <?= $attend == 'N' ? 'CHECKED' : '' ?> value="N"/>No
+                </label>
+            </div>
 
-<TR><TD COLSPAN=2 ALIGN=Center><INPUT TYPE="Submit" VALUE="Submit"></TD></TR>
+        </div>
+        <div class="col-2"><?= $fulldate ?></div>
+    </div>
+<?php } ?>
 
-</TABLE>
+            <div class="row">
+                <div class="col-4 mt-2 ml-3">
+                    <button type="submit" class="btn-wmffl mx-auto">Submit</button>
+                </div>
+            </div>
+
+
+        </div>
 </FORM>
 </P>
 <?
