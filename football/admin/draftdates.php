@@ -1,12 +1,12 @@
 <?
 require_once "base/conn.php";
 
-$nflStartDate = '2018-09-06';
-$season=2018;
+$nflStartDate = '2019-09-05';
+$season=2019;
 
 $query = "SELECT t.name, d.date, min( d.attend ) as attend
 FROM  `draftdate` d, user u, team t
-WHERE u.userid = d.userid AND u.teamid=t.teamid AND d.date >  '2018-01-01' 
+WHERE u.userid = d.userid AND u.teamid=t.teamid AND d.date >  '$season-01-01' 
 GROUP  BY u.teamid, d.date
 ORDER BY d.date";
 
