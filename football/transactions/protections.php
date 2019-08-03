@@ -1,8 +1,8 @@
-<?
-require_once "utils/start.php";
+<?php
+require_once "utils/connect.php";
 #$isin = true;
 #$teamnum = 2;
-$dateSrc = "2018-08-19 23:59 EDT";
+$dateSrc = "2019-08-25 23:59 EDT";
 $dateTime = new DateTime($dateSrc);
 
 $thequery = "select p.playerid, p.firstname, p.lastname, p.pos, ";
@@ -31,10 +31,7 @@ $ptsQuery = "select TotalPts, ProtectionPts from transpoints where teamid=$teamn
 //$ptsQuery = "select TotalPts, ProtectionPts from newtranspoints where teamid=$teamnum and season=2003";
 
 $title = "WMFFL Protections";
-?>
-
-<?
-	include "base/menu.php";
+include "base/menu.php";
 ?>
 
 
@@ -107,8 +104,8 @@ while (list($playerid, $firstname, $lastname, $pos, $nfl, $year, $cost, $protect
 
 <INPUT TYPE=SUBMIT NAME="submit" VALUE="Submit Protections" onClick="return checkForm()">
 </FORM>
-	
-<?
+
+        <?php
 }
 	} else {
 ?>
@@ -116,8 +113,8 @@ while (list($playerid, $firstname, $lastname, $pos, $nfl, $year, $cost, $protect
 <CENTER><B>You must be logged in to submit protections</B></CENTER>
 
 <? } ?>
-	
-<?
+
+<?php
 	include "base/footer.html";
 ?>
 

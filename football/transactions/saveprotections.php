@@ -1,5 +1,5 @@
 <?
-require_once "utils/start.php";
+require_once "utils/connect.php";
 
 if (!isset($_POST["submit"])) {
 		header("Location: protections");
@@ -117,12 +117,10 @@ if ($isin) {
 		print "<TR><TH>TOTAL</TH><TH></TH><TH>$totalCost</TH></TR>";
 		print "</TABLE>";
 	}
-	print "<P><A HREF=\"protections">Change Protections</A></P>";
+    print "<P><A HREF=\"protections\">Change Protections</A></P>";
 } else {
 	print "<P><B>You must be logged in to save protections</B></P>";
 }
-?>
-<?
 	include "base/footer.html";
 ?>
 
