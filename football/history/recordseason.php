@@ -29,6 +29,7 @@ function printPlayer($player, $count, $hlSeason) {
 
 function printRankList($sql, $pos, $hlSeason=2016, $extraList=array()) {
 
+    global $conn;
     $result = mysqli_query($conn, sprintf($sql, $pos)) or die("Unable to run query: " . mysqli_error($conn));
 
     $posArray = array();

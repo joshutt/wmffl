@@ -26,6 +26,7 @@ class DuplicateDraft {
 
 function checkTransactions($teamid, &$retArray, $post)
 {
+    global $conn;
     // Get each team's number
     $teamto = $post["teamto"];
     $trans = array($post["you"], $post["they"]);
@@ -62,6 +63,7 @@ function checkTransactions($teamid, &$retArray, $post)
 
 function checkDraft($teamid, &$retArray, $post)
 {
+    global $conn;
     // Get each team's number
     $teamto = $post["teamto"];
     $trans = array($post["you"], $post["they"]);

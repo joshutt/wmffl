@@ -188,18 +188,18 @@ $waveCount = 0;
 $wavePlayers = array();
 //if ($isWaiver == 1) {
   //  $displayWaiver = true;
-    $waiverSQL = "SELECT w.playerid, p.lastname, p.firstname, p.team, ";
-    $waiverSQL .= "p.pos, w.priority FROM waiverpicks w, newplayers p ";
-    $waiverSQL .= "WHERE w.playerid=p.playerid AND teamid=$teamnum ";
-    $waiverSQL .= "AND season=$season AND week=$week ";
-    $waiverSQL .= "ORDER BY w.priority ";
+$waiverSQL = "SELECT w.playerid, p.lastname, p.firstname, p.team, ";
+$waiverSQL .= "p.pos, w.priority FROM waiverpicks w, newplayers p ";
+$waiverSQL .= "WHERE w.playerid=p.playerid AND teamid=$teamnum ";
+$waiverSQL .= "AND season=$season AND week=$week ";
+$waiverSQL .= "ORDER BY w.priority ";
 $result = mysqli_query($conn, $waiverSQL) or die("Dead: " + mysqli_error($conn));
-    $waveCount = 0;
+$waveCount = 0;
 while ($wavePlayers[$waveCount] = mysqli_fetch_row($result)) {
-        $waveCount++;
-        $displayWaiver = true;
-    }
-    array_pop($wavePlayers);
+    $waveCount++;
+    $displayWaiver = true;
+}
+array_pop($wavePlayers);
 //} else {
     //$waiverSQL = "SELECT DISTINCT playerid FROM roster r, weekmap w WHERE r.dateoff BETWEEN w.startdate and now() AND w.season=$currentSeason AND w.week=$currentWeek";
 
@@ -216,12 +216,16 @@ EOD;
     //$waiverSQL = "SELECT DISTINCT playerid FROM roster r, weekmap w WHERE r.dateoff BETWEEN w.startdate and now() AND w.season=$season AND w.week=$week";
 //    $waiverSQL .= " AND r.dateoff > '2004-09-07 11:00:00' ";
 $result = mysqli_query($conn, $waiverSQL) or die("Dead: " + mysqli_error($conn));
-    $wavePlayCount = 1;
-    //$wavePlayCount = 0;
-while (list($waiveElgPlayers[$wavePlayCount]) = mysqli_fetch_row($result)) {
-        $wavePlayCount++;
-    }
-//}
+$wavePlayCount = 1;
+$waiveElgPlayers = array();
+while ($row = mysqli_fetch_row($result)) {
+    //error_log("Row: ".print_r($row, true));
+    $waiveElgPlayers[$wavePlayCount] = $row[0];
+    //error_log("Array: ".is_array($waiveElgPlayers));
+    //error_log(print_r($waiveElgPlayers, true));
+    $wavePlayCount++;
+}
+//error_log("Waive Elg: ".print_r($waiveElgPlayers, true));
 
 
 // Generate query to list players
@@ -239,13 +243,7 @@ while ($pickups[$i] = mysqli_fetch_row($result)) {
         $pickups[$i][5] = 1;
         $waveCount++;
     } else {
-//        print "***".$pickups[$i][0]."***";
-//        print_r($waiveElgPlayers);
-//        print "***".$waiveElgPlayers[0]."***";
-        $dddd = $waiveElgPlayers[0];
-        if ($pickups[$i][0] == $dddd) {
-//            print "Yes";
-        }
+        //error_log("Pickups: ".print_r($pickups, true));
         $searcher = $pickups[$i][0];
 //        print $searcher;
 //        print array_search($pickups[$i][0], $waiveElgPlayers);

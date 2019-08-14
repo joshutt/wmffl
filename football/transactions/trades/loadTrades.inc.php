@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "base/conn.php";
 include_once "trade.class.php";
 
@@ -21,6 +21,7 @@ function _array_search ($needle, $haystick) {
 }
 
 function loadTeam($teamID) {
+    global $conn;
     $sql = "SELECT name FROM team WHERE teamid=$teamID";
     $resultlt = mysqli_query($conn, $sql);
     $name = mysqli_fetch_array($resultlt);
@@ -28,6 +29,7 @@ function loadTeam($teamID) {
 }
 
 function loadTradedPlayers($offerid, $teamid) {
+    global $conn;
     $sql = "SELECT concat(p.firstname, ' ', p.lastname) as 'name', p.playerid, ";
     $sql .= "p.pos, p.team ";
     $sql .= "from newplayers p, offeredplayers op ";
@@ -46,6 +48,7 @@ function loadTradedPlayers($offerid, $teamid) {
 }
 
 function loadTradedPicks($offerid, $teamid) {
+    global $conn;
     $sql = "SELECT * FROM offeredpicks ";
     $sql .= "WHERE offerid=$offerid and teamfromid=$teamid ";
     $sql .= "order by season, round";
@@ -65,6 +68,7 @@ function loadTradedPicks($offerid, $teamid) {
 }
 
 function loadTradedPoints($offerid, $teamID) {
+    global $conn;
     $sql = "SELECT * FROM offeredpoints ";
     $sql .= "WHERE offerid=$offerid AND teamfromid=$teamID ";
     $sql .= "ORDER BY season";
@@ -93,6 +97,7 @@ function loadTrade(&$trade) {
 }
 
 function loadTradeByID($id, $thisTeam) {
+    global $conn;
     $sql = "select * from offer where offerid=$id";
     $results = mysqli_query($conn, $sql);
     $arr = mysqli_fetch_array($results);
@@ -125,6 +130,7 @@ function getPlural($count) {
 
 
 function loadRoster($team) {
+    global $conn;
     $sql = "select * from newplayers p, roster r ";
     $sql .= "where p.playerid=r.playerid and r.dateoff is null ";
     $sql .= "and r.teamid=".$team->getID();
@@ -142,6 +148,7 @@ function loadRoster($team) {
 }
 
 function loadPlayer($playerid) {
+    global $conn;
     $sql = "select * from newplayers p where playerid=$playerid";
     $results = mysqli_query($conn, $sql);
     while ($arr = mysqli_fetch_array($results)) {
@@ -153,6 +160,7 @@ function loadPlayer($playerid) {
 }
 
 function saveOffer($trade) {
+    global $conn;
     $ptsSQL = "INSERT INTO offeredpoints (OfferID, TeamFromID, Season, Points) ";
     $ptsSQL .= "VALUES ";
     $pickSQL = "INSERT INTO offeredpicks (OfferID, TeamFromID, Season, Round) ";
@@ -261,11 +269,13 @@ function saveOffer($trade) {
 
 
 function rejectTrade($offerid) {
+    global $conn;
     $sql = "UPDATE offer SET Status='Reject' WHERE offerid=$offerid";
     mysqli_query($conn, $sql);
 }
 
 function validateTrade($offerid, $teamid) {
+    global $conn;
     $mTeam = loadTeam($teamid);
     $trade = loadTradeByID($offerid, $mTeam);
     $oTeam = $trade->getOtherTeam();
@@ -355,6 +365,7 @@ function validateTrade($offerid, $teamid) {
 }
 
 function acceptTrade($offerid, $teamid) {
+    global $conn;
     $mTeam = loadTeam($teamid);
     $trade = loadTradeByID($offerid, $mTeam);
     $oTeam = $trade->getOtherTeam();
@@ -492,4 +503,3 @@ function printList($theyItems) {
     return $output;
 }
 
-?>

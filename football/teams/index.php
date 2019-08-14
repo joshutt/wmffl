@@ -1,4 +1,4 @@
-<?
+<?php
 include "utils/start.php";
 
 $title = "WMFFL Teams";

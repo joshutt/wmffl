@@ -1,4 +1,4 @@
-<?
+<?php
 $title = "WMFFL Past Draft Picks";
 include "base/menu.php";
 ?>
@@ -34,13 +34,14 @@ include "base/menu.php";
 <TR><TD ALIGN=Left>2015</TD><TD ALIGN=Left>Woodland Rangers</TD><TD>Brandin Cooks</TD><TD>WR</TD><TD>NO</TD></TR>
 <TR><TD ALIGN=Left>2016</TD><TD ALIGN=Left>Woodland Rangers</TD><TD>Ezekiel Elliott</TD><TD>RB</TD><TD>DAL</TD></TR>
 <TR><TD ALIGN=Left>2017</TD><TD ALIGN=Left>Fightin' Bitin' Beavers</TD><TD>DeAndre Hopkins</TD><TD>WR</TD><TD>HOU</TD></TR>
+<TR><TD ALIGN=Left>2018</TD><TD ALIGN=Left>Trump Molests Collies</TD><TD>Saquon Barkley</TD><TD>RB</TD><TD>NYG</TD></TR>
 </TABLE></P>
 
 <P><TABLE WIDTH=100% BORDER=0 ALIGN=Center>
 <TR><TD COLSPAN=3><B>#1 picks by team</B></TD></TR>
 <TR><TD>Fighting Squirrels</TD><TD>4</TD><TD>(1995, 2001, 2006, 2009)</TD></TR>
 <TR><TD>Gallic Warriors</TD><TD>4</TD><TD>(1997, 2007, 2012, 2013)</TD></TR>
-<TR><TD>Whiskey Tango</TD><TD>3</TD><TD>(1998, 2002, 2004)</TD></TR>
+<TR><TD>Trump Molests Collies</TD><TD>4</TD><TD>(1998, 2002, 2004, 2018)</TD></TR>
 <TR><TD>Crusaders</TD><TD>3</TD><TD>(1996, 2003, 2010)</TD></TR>
 <tr><td>Fightin' Bitin' Beavers</td><td>3</td><td>(1999, 2011, 2017)</td></tr>
 <TR><TD>Norsemen</TD><TD>2</TD><TD>(1992, 1994)</TD></TR>
@@ -52,12 +53,11 @@ include "base/menu.php";
 
 <P><TABLE WIDTH=100% BORDER=0 ALIGN=Center>
 <TR><TD COLSPAN=3><B>#1 picks by position</B></TD></TR>
-<TR><TD>Runningback</TD><TD>14</TD><TD>(1992, 1996, 1997, 1998, 2001, 2003, 2005, 2006, 2007, 2008, 2010, 2011, 2014, 2016)</TD></TR>
+<TR><TD>Runningback</TD><TD>15</TD><TD>(1992, 1996, 1997, 1998, 2001, 2003, 2005, 2006, 2007, 2008, 2010, 2011, 2014, 2016, 2018)</TD></TR>
 <TR><TD>Wide Receivers</TD><TD>7</TD><TD>(1993, 1999, 2000, 2004, 2009, 2015, 2017)</TD></TR>
 <TR><TD>Quarterbacks</TD><TD>5</TD><TD>(1994, 1995, 2002, 2012, 2013)</TD></TR>
 </TABLE></P>
 
 
-<?
+<?php
 include "base/footer.html";
-?>

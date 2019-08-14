@@ -54,6 +54,7 @@ EOD;
 }
 
 function getRecList($addWhere, $season) {
+    global $conn;
     $alltimeQuery =<<<EOD
         select t.name, t.active, count(s.gameid) as 'games',
         sum(if(t.teamid=s.TeamA, if(s.scorea>s.scoreb, 1, 0), if(s.scoreb>s.scorea, 1, 0))) as 'wins',

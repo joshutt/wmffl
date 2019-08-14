@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "utils/start.php";
 
 if (!$isin) {
@@ -6,20 +6,20 @@ if (!$isin) {
     exit();
 }
 
-$actID = array_key_exists("actHC", $_REQUEST) ? $_REQUEST["actHC"] : null;
-$actHC = array_key_exists("actHCid", $_REQUEST) ? $_REQUEST["actHCid"] : null;
-$HC = array_key_exists("HC", $_REQUEST) ? $_REQUEST["HC"] : null;
-$QB = array_key_exists("QB", $_REQUEST) ? $_REQUEST["QB"] : null;
-$RB = array_key_exists("RB", $_REQUEST) ? $_REQUEST["RB"] : null;
-$WR = array_key_exists("WR", $_REQUEST) ? $_REQUEST["WR"] : null;
-$TE = array_key_exists("TE", $_REQUEST) ? $_REQUEST["TE"] : null;
-$K = array_key_exists("K", $_REQUEST) ? $_REQUEST["K"] : null;
-$OL = array_key_exists("OL", $_REQUEST) ? $_REQUEST["OL"] : null;
-$DL = array_key_exists("DL", $_REQUEST) ? $_REQUEST["DL"] : null;
-$LB = array_key_exists("LB", $_REQUEST) ? $_REQUEST["LB"] : null;
-$DB = array_key_exists("DB", $_REQUEST) ? $_REQUEST["DB"] : null;
-$myGP = array_key_exists("myGP", $_REQUEST) ? $_REQUEST["myGP"] : null;
-$oppGP = array_key_exists("oppGP", $_REQUEST) ? $_REQUEST["oppGP"] : null;
+$actID = array_key_exists("actHC", $_REQUEST) ? $_REQUEST["actHC"] : array();
+$actHC = array_key_exists("actHCid", $_REQUEST) ? $_REQUEST["actHCid"] : array();
+$HC = array_key_exists("HC", $_REQUEST) ? $_REQUEST["HC"] : array();
+$QB = array_key_exists("QB", $_REQUEST) ? $_REQUEST["QB"] : array();
+$RB = array_key_exists("RB", $_REQUEST) ? $_REQUEST["RB"] : array();
+$WR = array_key_exists("WR", $_REQUEST) ? $_REQUEST["WR"] : array();
+$TE = array_key_exists("TE", $_REQUEST) ? $_REQUEST["TE"] : array();
+$K = array_key_exists("K", $_REQUEST) ? $_REQUEST["K"] : array();
+$OL = array_key_exists("OL", $_REQUEST) ? $_REQUEST["OL"] : array();
+$DL = array_key_exists("DL", $_REQUEST) ? $_REQUEST["DL"] : array();
+$LB = array_key_exists("LB", $_REQUEST) ? $_REQUEST["LB"] : array();
+$DB = array_key_exists("DB", $_REQUEST) ? $_REQUEST["DB"] : array();
+$myGP = array_key_exists("myGP", $_REQUEST) ? $_REQUEST["myGP"] : array();
+$oppGP = array_key_exists("oppGP", $_REQUEST) ? $_REQUEST["oppGP"] : array();
 
 
 $activeMessage = "";
@@ -76,7 +76,7 @@ if ($activeMessage != "") {
 }
 
 $deleteSql = "DELETE FROM revisedactivations WHERE season=$season AND week=$week AND teamid=$teamnum";
-$deleteGPs = "DELETE FROM gameplan WHERE season=$season AND week=$week AND teamid=$teamnum";
+// $deleteGPs = "DELETE FROM gameplan WHERE season=$season AND week=$week AND teamid=$teamnum";
 
 $posArray = array('HC', 'QB', 'RB', 'WR', 'TE', 'K', 'OL', 'DL', 'LB', 'DB');
 $first = true;
@@ -96,6 +96,7 @@ if ($actID == "on") {
     $insertSql .= ", ($season, $week, $teamnum, 'HC', $actHC)";
 }
 
+/*
 $gameplanSql = "INSERT INTO gameplan (season, week, teamid, side, playerid) VALUES ";
 $useGp = false;
 if (isset($myGP) && $myGP != -1) {
@@ -110,12 +111,15 @@ if (isset($oppGP) && $oppGP != -1) {
     $useGp = true;
     $gameplanSql .= "($season, $week, $teamnum, 'Them', $oppGP)";
 }
+*/
 
 mysqli_query($conn, $deleteSql) or die("Unable to clear old activations: " . mysqli_error($conn));
-mysqli_query($conn, $deleteGPs) or die("Unable to clear old gameplan: " . mysqli_error($conn));
+//mysqli_query($conn, $deleteGPs) or die("Unable to clear old gameplan: " . mysqli_error($conn));
 mysqli_query($conn, $insertSql) or die("Unable to add new activations: " . mysqli_error($conn));
+/*
 if ($useGp) {
     mysqli_query($conn, $gameplanSql) or die("Unable to add new gameplan: " . mysqli_error($conn));
 }
+*/
 
 header("Location: activations.php");

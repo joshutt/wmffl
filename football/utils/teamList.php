@@ -2,6 +2,7 @@
 require_once "start.php";
 
 function getTeamList($season) {
+    global $conn;
     $sql = "SELECT name, teamid, abbrev FROM teamnames WHERE season=$season ORDER BY name ASC";
     $season = intval($season);
     $results = mysqli_query($conn, $sql) or die("Unable to run query: " . mysqli_error($conn));

@@ -19,15 +19,15 @@ function powersort($a, $b) {
     return 0;
 }
 
-$sql = "select w.week, t.name, p.firstname, p.lastname, p.pos, ps.pts, ";
-$sql .= "ps.active ";
-$sql .= "from roster r, weekmap w, newplayers p, teamnames t, playerscores ps ";
-$sql .= "where w.season=$thisSeason and r.dateon <= w.activationdue ";
-$sql .= "and (r.dateoff > w.activationdue or r.dateoff is null) ";
-$sql .= "and r.playerid=p.playerid and r.teamid=t.teamid ";
-$sql .= "and ps.week=w.week and ps.season=w.season and ps.playerid=p.playerid ";
-$sql .= "and t.season=ps.season ";
-$sql .= "order by w.week, t.name, p.pos, ps.pts desc";
+$sql = "select wm.week, t.name, p.firstname, p.lastname, p.pos, ps.pts, ps.active
+from roster r
+join weekmap wm on r.DateOn <= wm.ActivationDue and (r.DateOff is null or r.DateOff >= wm.ActivationDue)
+join newplayers p on r.PlayerID=p.playerid
+join teamnames t on r.TeamID=t.teamid and wm.Season=t.season
+join playerscores ps on ps.playerid=p.playerid and ps.season=wm.Season and ps.week=wm.Week
+where wm.Season=$thisSeason and wm.EndDate < now()
+order by wm.week, t.name, p.pos, ps.pts desc";
+
 
 $results = mysqli_query($conn, $sql);
 $potPts = array();

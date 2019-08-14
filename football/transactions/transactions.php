@@ -2,20 +2,9 @@
 require_once "utils/start.php";
 
 function trade($teamid, $date) {
+    global $conn;
 	$tradequery="select t1.tradegroup, t1.date, tm1.name as TeamFrom, ";
 	$tradequery.="p.lastname, p.firstname, p.pos, p.team, t1.other ";
-	//$tradequery.="from trade t1, trade t2, team tm1, team tm2 ";
-	/*
-    $tradequery.="from trade t1, trade t2, teamnames tm1, team tm2, weekmap wm ";
-    $tradequery.="left join newplayers p on p.playerid=t1.playerid ";
-	$tradequery.="where t1.tradegroup=t2.tradegroup and t1.teamfromid<>t2.teamfromid ";
-	$tradequery.="and (t1.TeamFromid=$teamid or t1.TeamToid=$teamid) and t1.teamfromid=tm1.teamid ";
-	$tradequery.="and t2.teamfromid=tm2.teamid ";
-	$tradequery.="and t1.date='$date' ";
-    $tradequery.="and '$date' between wm.startDate and wm.enddate ";
-    $tradequery.="and tm1.season = wm.season ";
-	$tradequery.="group by t1.tradegroup, abs(tm1.teamid-$teamid), p.lastname ";
-	*/
     $tradequery.="from trade t1 ";
     $tradequery.="left join trade t2 on t1.tradegroup=t2.tradegroup and t1.teamfromid<>t2.teamfromid ";
     $tradequery.="join teamnames tm1 on t1.teamfromid=tm1.teamid ";

@@ -1,4 +1,4 @@
-<?
+<?php
 $javascriptList = array("/base/js/activations.js");
 $cssList = array("/base/css/activate.css");
 //$cssList = array("/base/css/w3.css", "/base/css/activate.css");
@@ -381,12 +381,12 @@ foreach ($reserve as $player) {
 <input type="hidden" name="season" value="<?= $season; ?>"/>
 </form>
 
-<?
+<?php
 	} else {
 ?>
 
 <CENTER><B>You must be logged in to submit activations</B></CENTER>
 
-<? } ?>
-<? include "base/footer.html";
-?>
+<?php
+}
+include "base/footer.html";

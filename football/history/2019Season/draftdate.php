@@ -3,7 +3,7 @@ require_once "utils/start.php";
 
 $title = "Determine Draft Date";
 
-if ($draftMessage == "") {
+if (empty($draftMessage)) {
 
 $draftMessage = <<<EOD
 
@@ -13,14 +13,13 @@ EOD;
 
 }
 
-
 include "base/menu.php";
 ?>
 
 <H1 ALIGN=Center>Draft Date Open</H1>
 <HR size = "1"/>
 
-<?
+<?php
 if ($isin) {
     $thequery = "SELECT DATE_FORMAT(d.date, '%m%e'), DATE_FORMAT(d.date, '%W, %M %D'), d.attend ";
     $thequery .= "FROM draftdate d, user u WHERE d.userid=u.userid and u.username='$user' AND d.date BETWEEN '$currentSeason-07-01' AND '$currentSeason-10-01' ORDER BY d.date";

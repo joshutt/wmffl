@@ -79,11 +79,18 @@ class Team {
                 return 0.000;
             }
         }
+        //error_log(print_r($teamArray, true));
         $rec = array(0,0,0);
         $keyList = array_map("getTeamId", $teamArray);
         $keyList = array_flip($keyList);
         // Loop through each game and if you won, add that teams record
+//        error_log(print_r($keyList, true));
+//        error_log(print_r($this->games, true));
         foreach ($this->games as $game) {
+//            error_log("Game: ".$game[0]);
+//            error_log("Key List: ". $keyList[$game[0]]);
+//            error_log("Team Array: ".$teamArray[$keyList[$game[0]]]);
+//            error_log("Team Record: ".$teamArray[$keyList[$game[0]]]->record);
             $teamRec = $teamArray[$keyList[$game[0]]]->record;
             foreach ($teamArray as $team) {
                 if ($team->teamid == $game[0]) {

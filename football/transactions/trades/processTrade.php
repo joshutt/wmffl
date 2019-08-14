@@ -18,6 +18,7 @@ if ($action == "Amend" || $action == "Counter") {
 	header("Location: edittrade.php?offerid=$tradeID");
 }
 
+$question = "";
 switch($action) {
 	case 'Accept':
 		$question = "Are you sure you would like to accept this offer?";
