@@ -53,7 +53,7 @@ require_once "utils/start.php";
 				$ErrorMessage = "Invalid Account";
 			} else {
 			
-				$newPass = generate_password(6);
+				//$newPass = generate_password(6);
 				$newPass = make_password(6, 7);
 
 				// Save password in db
@@ -66,12 +66,15 @@ require_once "utils/start.php";
 				$body = $body."Once you are logged in, please change your password to something you will remember.  Thank you.\n\n\n";
 				$body = $body."Webmaster WMFFL";
 
-				mail ($email[1], "WMFFL New Password", $body, "From: webmaster@$SERVER_NAME");
-                mysqli_close$conn);
+                //error_log("Mail to: ".$email[1]);
+                //error_log("Mail From: webmaster@".$_SERVER['SERVER_NAME']);
+                //error_log("Mail Body: $body");
+				mail ($email[1], "WMFFL New Password", $body, "From: webmaster@".$_SERVER['SERVER_NAME']);
+                mysqli_close($conn);
 				header("Location: thanksnew.php");
 			}
 
-        mysqli_close$conn);
+        mysqli_close($conn);
 	}
 	
 ?>
