@@ -1,4 +1,4 @@
-<?
+<?php
 $title = "WMFFL Rules";
 include "base/menu.php";
 ?>
@@ -18,7 +18,9 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 <HR size = "1">
 <P>Rules added or changed that will take effect for the 2019 season are indicated in <B>Bold</B>.</P>
 <ul>
-    <li>None enacted</li>
+    <li>Automatic change triggered by X.E.5
+        <ul><li>Rule X.E.1.b.i incremented to 14 pts, due to 17 RB being protected in 2019, takes effect in 2020</li>
+        </ul></li>
 </ul>
 
 <HR size = "1">
@@ -475,9 +477,9 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 		<OL TYPE="i">
 			<LI>10 pts
 		</OL>
-		<LI>RB
+		<LI class="newrule">RB
 		<OL TYPE="i">
-            <LI>13 pts</li>
+            <LI>14 pts</li>
 		</OL>
 		<LI>WR
 		<OL TYPE="i">
