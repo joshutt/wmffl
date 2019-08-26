@@ -8,7 +8,7 @@ li.newrule { font-weight:bold }
 </style>
 
 <H1 ALIGN=CENTER>Rules of the WMFFL</H1>
-<H5 ALIGN=CENTER><I>Last Updated: August 21, 2017</I></H5>
+<H5 ALIGN=CENTER><I>Last Updated: August 21, 2018</I></H5>
 <HR size = "1">
 Section 1: <A HREF="#I">Divisions and Schedules</A>; <A HREF="#II">Who Makes the Playoffs</A>; <A HREF="#III">The Playoffs</A><BR>
 Section 2: <A HREF="#IV">Team Rosters</A>; <A HREF="#V">Scoring</A><BR>
