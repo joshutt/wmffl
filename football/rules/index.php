@@ -8,7 +8,7 @@ li.newrule { font-weight:bold }
 </style>
 
 <H1 ALIGN=CENTER>Rules of the WMFFL</H1>
-<H5 ALIGN=CENTER><I>Last Updated: August 21, 2017</I></H5>
+<H5 ALIGN=CENTER><I>Last Updated: August 25, 2019</I></H5>
 <HR size = "1">
 Section 1: <A HREF="#I">Divisions and Schedules</A>; <A HREF="#II">Who Makes the Playoffs</A>; <A HREF="#III">The Playoffs</A><BR>
 Section 2: <A HREF="#IV">Team Rosters</A>; <A HREF="#V">Scoring</A><BR>
@@ -16,21 +16,9 @@ Section 3: <A HREF="#VI">Draft Order</A>; <A HREF="#VII">Drafting</A>; <A HREF="
 Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules</A><BR>
 
 <HR size = "1">
-<P>Rules added or changed that will take effect for the 2018 season are indicated in <B>Bold</B>.</P>
+<P>Rules added or changed that will take effect for the 2019 season are indicated in <B>Bold</B>.</P>
 <ul>
-    <li>2018.4 - Remove Game Planning
-        <ul><li>Repeal rule V.D</li></ul>
-    </li>
-    <li>2018.8 - Wild card not automatically 4th seed
-        <ul><li>Revise rule III.A</li>
-        <li>Repeal rule III.B.3</li>
-        </ul>
-    <li>2018.9 - Update Division winner and First Round Payoffs
-        <ul><li>Revise rules XI.C.3.c and XI.C.3.d</li></ul>
-    </li>
-    <li>2018.10 - Update the auto draft algorithm
-        <ul><li>Revise rule VI.E.3.b</li></ul>
-    </li>
+    <li>None enacted</li>
 </ul>
 
 <HR size = "1">
@@ -73,7 +61,7 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 
 <BR><A NAME="III"><B><LI>The Playoffs</B></A>
 <OL TYPE="A">
-    <LI class="newrule">Once the four teams that will make the playoffs have been decided, they are seeded based on regular season record
+    <LI>Once the four teams that will make the playoffs have been decided, they are seeded based on regular season record
 <OL TYPE="1">
     <li>Seeding will be done based on the tie-breaker rules above.</li>
     <li>Excepting that the wild card team will lose any tie-breakers they are involved in</li>
@@ -82,7 +70,6 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 <OL TYPE="1">
 <LI>Seed 1 vs. Seed 4
 <LI>Seed 2 vs. Seed 3
-<li class="newrule"><i>Repealed</i></li>
 </OL>
 <LI>The following week will be the Championship.
 <OL TYPE="1">
@@ -354,7 +341,6 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 		<LI>The better seeded team will receive a 1 point home field bonus
 		</OL>
 	</OL>
-<li class="newrule"><i>Repealed</i></li>
 </OL>
 
 <BR><A NAME="VI"><B><LI>Draft Order</B></A>
@@ -401,7 +387,7 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 	<LI>The owner missing the draft may specify a method for determining their draft picks.
 	<OL TYPE="a">
         <LI>Failure to specify a picking method will result in the league picking the teams players based on the points scored the previous year.</li>
-        <li class="newrule">When the league picks players for a team, it will select starters at every position before selecting backups at any position.
+        <li>When the league picks players for a team, it will select starters at every position before selecting backups at any position.
         <ol type="i">
             i. A backup at every position will be picked before a second backup at any position</li>
         </ol></li>
@@ -574,8 +560,8 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 <OL TYPE="a">
 <LI>50% goes to the League Champion
 <LI>25% goes to the runner-up
-<LI class="newrule">5% goes to each of the Semi-Final Losers</li>
-<LI class="newrule">5% goes to each Division Champion</li>
+<LI>5% goes to each of the Semi-Final Losers</li>
+<LI>5% goes to each Division Champion</li>
 </OL></OL></OL>
 
 <BR><A NAME="XII"><B><LI>Changing Rules</B></A>
