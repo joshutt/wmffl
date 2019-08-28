@@ -30,6 +30,7 @@ function evaluatePlayer(Player $player) {
  * @param unknown_type $player
  */
 function insertNew(Player $player) {
+    global $conn;
     $firstName = mysqli_real_escape_string($conn, $player->firstName);
     $lastName = mysqli_real_escape_string($conn, $player->lastName);
     $baseQuery = "INSERT INTO newplayers (flmid, lastname, firstname, pos, team";
@@ -78,6 +79,7 @@ function insertNew(Player $player) {
  * @param Player $player
  */
 function updateExisting(Player $player) {
+    global $conn;
     $baseQuery = "UPDATE newplayers ";
 
     $firstName = mysqli_real_escape_string($conn, $player->firstName);
@@ -138,6 +140,7 @@ function updateExisting(Player $player) {
  * @param Player $player
  */
 function updateRoster(Player $player) {
+    global $conn;
     $query = "SELECT * FROM nflrosters WHERE playerid = {$player->id} AND dateoff is null";
     $result = mysqli_query($conn, $query) or die ("Unable to get roster for [{$player->id}] - " . mysqli_error($conn));
     $resultArray = mysqli_fetch_array($result);
@@ -207,17 +210,20 @@ function updateRoster(Player $player) {
 
 
 function endDBRosterEntry($playerid) {
+    global $conn;
     $query = "UPDATE nflrosters SET dateoff=now() WHERE dateoff is null AND playerid=$playerid";
     mysqli_query($conn, $query) or die("Unable to end query for [$playerid] - " . mysqli_error($conn));
 }
 
 function startDBRosterEntry($playerid, $team) {
+    global $conn;
     $query = "INSERT INTO nflrosters (playerid, nflteamid, dateon) VALUES ($playerid, '$team', now())";
     mysqli_query($conn, $query) or die("Unable to start query for [$playerid] - " . mysqli_error($conn));
 }
 
 
 function getPlayerByStatId($statId) {
+    global $conn;
     static $query = "SELECT * FROM newplayers WHERE flmid=%d";
 
     $result = mysqli_query($conn, sprintf($query, $statId)) or die("Error doing select on [$statId] - " . mysqli_error($conn));
@@ -234,6 +240,7 @@ function getPlayerByStatId($statId) {
 
 
 function checkForStatId($statId) {
+    global $conn;
     static $query = "SELECT count(*) FROM newplayers WHERE flmid=%d";
 
     $result = mysqli_query($conn, sprintf($query, $statId)) or die("Error doing count on [$statId] - " . mysqli_error($conn));
@@ -243,6 +250,7 @@ function checkForStatId($statId) {
 
 
 function getLastTimestamp() {
+    global $conn;
     $timeSql = "SELECT value FROM config WHERE `key`='player.update.timestamp'";
     $result = mysqli_query($conn, $timeSql) or die("Unable to get latest timestamp: " . mysqli_error($conn));
     $numReturn = mysqli_num_rows($result);
@@ -258,6 +266,7 @@ function getLastTimestamp() {
 }
 
 function updateTimestamp($timestamp) {
+    global $conn;
     $query = "UPDATE config SET value='$timestamp' WHERE `key`='player.update.timestamp'";
     mysqli_query($conn, $query) or die("Unable to update timestamp: " . mysqli_error($conn));
 }
