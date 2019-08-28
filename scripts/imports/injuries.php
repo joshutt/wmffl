@@ -1,7 +1,7 @@
 <?
 $conn = mysqli_connect('localhost', 'joshutt_footbal', 'wmaccess', 'joshutt_oldwmffl');
 
-$week = $_REQUEST['week'];
+// $week = $_REQUEST['week'];
 #$season = 2011;
 
 // Get the current week
