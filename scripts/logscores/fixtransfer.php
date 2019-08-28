@@ -25,10 +25,10 @@ $sql .= " and ps.playerid is null ";
 $bigquery = "insert into playerscores (playerid, season, week, pts) ";
 $bigquery .= "values ";
 
-$results = mysql_query($sql);
+$results = mysqli_query($conn, $sql);
 $first = 1;
 set_error_handler("catchBadFunction");
-while($player = mysql_fetch_array($results)) {
+while ($player = mysqli_fetch_array($results)) {
     $funcName = "score".$player["pos"];
     if ($player["pos"] == "") {
         $pts = 0;
@@ -46,7 +46,7 @@ while($player = mysql_fetch_array($results)) {
 }
 restore_error_handler();
 //print $bigquery; 
-mysql_query($bigquery);
+mysqli_query($conn, $bigquery);
 
 
 $querySQL = <<<EOD
@@ -59,9 +59,9 @@ EOD;
 $sql = "UPDATE playerscores SET active=pts WHERE season=$currentSeason AND week=$week ";
 $sql .= "AND playerid in (";
 
-$results = mysql_query($querySQL);
+$results = mysqli_query($conn, $querySQL);
 $first = 1;
-while (list($playerid) = mysql_fetch_row($results)) {
+while (list($playerid) = mysqli_fetch_row($results)) {
     if ($first != 1) {
         $sql .= ", ";
     }
@@ -69,7 +69,7 @@ while (list($playerid) = mysql_fetch_row($results)) {
     $sql .= $playerid;
 }
 $sql .= ")";
-mysql_query($sql);
+mysqli_query($conn, $sql);
 
 print "Successfully Transfered scores\n";
 

@@ -28,10 +28,10 @@ ORDER BY wo.ordernumber";
 
 
 // Get all of the picks for each team in order
-$results = mysql_query($sql);
+$results = mysqli_query($conn, $sql);
 $currentTeam = 0;
 $teamList = array();
-while (list($teamid, $playerid) = mysql_fetch_row($results)) {
+while (list($teamid, $playerid) = mysqli_fetch_row($results)) {
     if ($teamid != $currentTeam) {
         if ($currentTeam != 0) {
             array_push($teamList, array($currentTeam, $reqArray));
@@ -49,10 +49,10 @@ if ($currentTeam != 0) {
 }
 
 // Determine the exact waiver order
-$orderResults = mysql_query($waiverOrder) or die($waiverOrder."<br/>".mysql_error());
+$orderResults = mysqli_query($conn, $waiverOrder) or die($waiverOrder . "<br/>" . mysqli_error($conn));
 $orderList = array();
 $allowedTrans = array();
-while (list($teamid, $week, $transRemain, $paid) = mysql_fetch_row($orderResults)) {
+while (list($teamid, $week, $transRemain, $paid) = mysqli_fetch_row($orderResults)) {
     array_push($orderList, $teamid);
 
     // If paid unlimited transactions allowed, if unpaid only free
@@ -66,9 +66,9 @@ while (list($teamid, $week, $transRemain, $paid) = mysql_fetch_row($orderResults
 
 // Get the list of players on roster
 $currentPlayers = "SELECT playerid FROM roster WHERE dateoff is null";
-$results = mysql_query($currentPlayers);
+$results = mysqli_query($conn, $currentPlayers);
 $taken = array();
-while (list($playerid) = mysql_fetch_row($results)) {
+while (list($playerid) = mysqli_fetch_row($results)) {
     array_push($taken, $playerid);
 }
 
@@ -139,15 +139,15 @@ foreach ($waivePicks as $teamid=>$aqArray) {
     }
     $ptsQuery = "UPDATE transpoints SET TransPts=TransPts+$count WHERE season=$currentSeason AND teamid=$teamid";
     //print "$ptsQuery<br/>";
-    mysql_query($ptsQuery);
+    mysqli_query($conn, $ptsQuery);
     $firstTeam = false;
 }
 if (!$firstTeam) {
     //print "$rostQuery<br/>$tranQuery<br/>";
-    mysql_query($rostQuery);
-    mysql_query($tranQuery);
+    mysqli_query($conn, $rostQuery);
+    mysqli_query($conn, $tranQuery);
     //print "$awardQuery\n";
-    mysql_query($awardQuery) or die("Dead on AwardQuery: $awardQuery\n ".mysql_error());
+    mysqli_query($conn, $awardQuery) or die("Dead on AwardQuery: $awardQuery\n " . mysqli_error($conn));
 }
 
 $counter = 1;
@@ -165,5 +165,5 @@ foreach ($orderList as $teamid) {
     }
 }
 //print $nextWeekSQL."\n";
-mysql_query($nextWeekSQL) or die("Dead on Next Week: $nextWeekSQL\n ".mysql_error());
+mysqli_query($conn, $nextWeekSQL) or die("Dead on Next Week: $nextWeekSQL\n " . mysqli_error($conn));
 ?>

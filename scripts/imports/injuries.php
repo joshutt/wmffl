@@ -1,9 +1,5 @@
 <?
-//$conn = mysql_connect('localhost', 'joshutt_misc', 'swwrbo');
-//mysql_select_db('joshutt_misc');
-
-$conn = mysql_connect('localhost', 'joshutt_footbal', 'wmaccess');
-mysql_select_db('joshutt_oldwmffl');
+$conn = mysqli_connect('localhost', 'joshutt_footbal', 'wmaccess', 'joshutt_oldwmffl');
 
 $week = $_REQUEST['week'];
 #$season = 2011;
@@ -14,9 +10,9 @@ if (isset($week)) {
 } else {
     $sql = "select week, season from weekmap where startDate < now() and endDate > now()";
 }
-$results = mysql_query($sql) or die ("Unable to get this week: ".mysql_error());
+$results = mysqli_query($conn, $sql) or die ("Unable to get this week: " . mysqli_error($conn));
 
-list($week, $season) = mysql_fetch_array($results);
+list($week, $season) = mysqli_fetch_array($results);
 
 $request_url = "http://www.myfantasyleague.com/$season/export?TYPE=injuries&JSON=1&W=$week";
 $json = json_decode(file_get_contents($request_url));
@@ -41,7 +37,7 @@ foreach ($injuries->injury as $injuries) {
 
     $playerid = $injuries->id;
     $status = $injuries->status;
-    $details = mysql_real_escape_string(trim($injuries->details));
+    $details = mysqli_real_escape_string($conn, trim($injuries->details));
     $statShort = substr($status, 0, 1);
 
     //print "$playerid - $status - $details - $statShort<br/>";
@@ -52,7 +48,7 @@ foreach ($injuries->injury as $injuries) {
 
     $fullQuery = "REPLACE into injuries $query";
     //$fullQuery = "Insert into injuries $query";
-    mysql_query($fullQuery) or die("Unable to insert: ".mysql_error());
+    mysqli_query($conn, $fullQuery) or die("Unable to insert: " . mysqli_error($conn));
 }
 
 //print "</pre>";

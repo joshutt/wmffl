@@ -30,8 +30,8 @@ function evaluatePlayer(Player $player) {
  * @param unknown_type $player
  */
 function insertNew(Player $player) {
-    $firstName = mysql_real_escape_string($player->firstName);
-    $lastName = mysql_real_escape_string($player->lastName);
+    $firstName = mysqli_real_escape_string($conn, $player->firstName);
+    $lastName = mysqli_real_escape_string($conn, $player->lastName);
     $baseQuery = "INSERT INTO newplayers (flmid, lastname, firstname, pos, team";
     $baseValues = "{$player->statId}, '$lastName', '$firstName', '{$player->pos}', '{$player->team}'";
     
@@ -62,9 +62,9 @@ function insertNew(Player $player) {
     }
     
     $finalQuery = "$baseQuery, active) VALUES ($baseValues, 1)";
-    $result = mysql_query($finalQuery) or die("Unable to insert [{$player->statId}] - ".mysql_error());
-    $numRows = mysql_affected_rows();
-    $newId = mysql_insert_id();
+    $result = mysqli_query($conn, $finalQuery) or die("Unable to insert [{$player->statId}] - " . mysqli_error($conn));
+    $numRows = mysqli_affected_rows($conn);
+    $newId = mysqli_insert_id($conn);
     $player->id = $newId;
     
     print "Adding {$player->firstName} {$player->lastName}\n";
@@ -79,9 +79,9 @@ function insertNew(Player $player) {
  */
 function updateExisting(Player $player) {
     $baseQuery = "UPDATE newplayers ";
-    
-    $firstName = mysql_real_escape_string($player->firstName);
-    $lastName = mysql_real_escape_string($player->lastName);
+
+    $firstName = mysqli_real_escape_string($conn, $player->firstName);
+    $lastName = mysqli_real_escape_string($conn, $player->lastName);
     $baseQuery .= "SET lastname='$lastName', firstname='$firstName', pos='{$player->pos}'";
     $baseQuery .= ", active=1, team='{$player->team}'";
     
@@ -119,12 +119,12 @@ function updateExisting(Player $player) {
     
     $finalQuery = "$baseQuery WHERE flmid={$player->statId}";
     //print "<p>$finalQuery</p>";
-    $result = mysql_query($finalQuery) or die("Unable to update [{$player->statId}] - ".mysql_error());
-    $numRows = mysql_affected_rows();
+    $result = mysqli_query($conn, $finalQuery) or die("Unable to update [{$player->statId}] - " . mysqli_error($conn));
+    $numRows = mysqli_affected_rows($conn);
     
     $idQuery = "SELECT playerid FROM newplayers WHERE flmid={$player->statId}";
-    $result2 = mysql_query($idQuery) or die("Unable to get ral id [{$player->statId}] - ".mysql_error());
-    $resultArray = mysql_fetch_array($result2);
+    $result2 = mysqli_query($conn, $idQuery) or die("Unable to get ral id [{$player->statId}] - " . mysqli_error($conn));
+    $resultArray = mysqli_fetch_array($result2);
     $player->id = $resultArray[0];
     
     print "Updating {$player->firstName} {$player->lastName}\n";
@@ -139,8 +139,8 @@ function updateExisting(Player $player) {
  */
 function updateRoster(Player $player) {
     $query = "SELECT * FROM nflrosters WHERE playerid = {$player->id} AND dateoff is null";
-    $result = mysql_query($query) or die ("Unable to get roster for [{$player->id}] - ".mysql_error());
-    $resultArray = mysql_fetch_array($result);
+    $result = mysqli_query($conn, $query) or die ("Unable to get roster for [{$player->id}] - " . mysqli_error($conn));
+    $resultArray = mysqli_fetch_array($result);
     
     
     /*
@@ -208,20 +208,20 @@ function updateRoster(Player $player) {
 
 function endDBRosterEntry($playerid) {
     $query = "UPDATE nflrosters SET dateoff=now() WHERE dateoff is null AND playerid=$playerid";
-    mysql_query($query) or die("Unable to end query for [$playerid] - ".mysql_error());
+    mysqli_query($conn, $query) or die("Unable to end query for [$playerid] - " . mysqli_error($conn));
 }
 
 function startDBRosterEntry($playerid, $team) {
     $query = "INSERT INTO nflrosters (playerid, nflteamid, dateon) VALUES ($playerid, '$team', now())";
-    mysql_query($query) or die("Unable to start query for [$playerid] - ".mysql_error());
+    mysqli_query($conn, $query) or die("Unable to start query for [$playerid] - " . mysqli_error($conn));
 }
 
 
 function getPlayerByStatId($statId) {
-    static $query = "SELECT * FROM newplayers WHERE flmid=%d";    
-    
-    $result = mysql_query(sprintf($query, $statId)) or die("Error doing select on [$statId] - ".mysql_error());
-    $resultArray = mysql_fetch_array($result);
+    static $query = "SELECT * FROM newplayers WHERE flmid=%d";
+
+    $result = mysqli_query($conn, sprintf($query, $statId)) or die("Error doing select on [$statId] - " . mysqli_error($conn));
+    $resultArray = mysqli_fetch_array($result);
     $player = Player::buildFromDatabase($resultArray);
     return $player;    
     /*
@@ -235,23 +235,23 @@ function getPlayerByStatId($statId) {
 
 function checkForStatId($statId) {
     static $query = "SELECT count(*) FROM newplayers WHERE flmid=%d";
-    
-    $result = mysql_query(sprintf($query, $statId)) or die("Error doing count on [$statId] - ".mysql_error());
-    $num = mysql_fetch_array($result);
+
+    $result = mysqli_query($conn, sprintf($query, $statId)) or die("Error doing count on [$statId] - " . mysqli_error($conn));
+    $num = mysqli_fetch_array($result);
     return $num[0]==1 ? true : false;
 }
 
 
 function getLastTimestamp() {
     $timeSql = "SELECT value FROM config WHERE `key`='player.update.timestamp'";
-    $result = mysql_query($timeSql) or die("Unable to get latest timestamp: ".mysql_error());
-    $numReturn = mysql_num_rows($result);
+    $result = mysqli_query($conn, $timeSql) or die("Unable to get latest timestamp: " . mysqli_error($conn));
+    $numReturn = mysqli_num_rows($result);
     if ($numReturn == 0) {
         $setSql = sprintf("INSERT INTO config (`key`, value) VALUES ('player.update.timestamp', '%d')", 0);
-        mysql_query($setSql) or die("Unable to insert: ".mysql_error());
+        mysqli_query($conn, $setSql) or die("Unable to insert: " . mysqli_error($conn));
        $timestamp = 0; 
     } else {
-        $config = mysql_fetch_assoc($result);
+        $config = mysqli_fetch_assoc($result);
         $timestamp = intval($config["value"]);
     }
     return $timestamp;
@@ -259,5 +259,5 @@ function getLastTimestamp() {
 
 function updateTimestamp($timestamp) {
     $query = "UPDATE config SET value='$timestamp' WHERE `key`='player.update.timestamp'";
-    mysql_query($query) or die("Unable to update timestamp: ".mysql_error());
+    mysqli_query($conn, $query) or die("Unable to update timestamp: " . mysqli_error($conn));
 }

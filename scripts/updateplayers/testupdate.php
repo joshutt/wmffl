@@ -23,9 +23,9 @@ function updatePlayer(&$conn, $player, $checkPlayer) {
             substr($checkedName, -1) != ',') {
         $fullname = correctCase($player->getName());
         $name = split(",", $fullname);
-        $query .= "LastName='".mysql_escape_string($name[0])."', ";
+            $query .= "LastName='" . mysqli_real_escape_string($conn, $name[0]) . "', ";
         if (count($name) > 1) {
-            $query .= "FirstName='".mysql_escape_string($name[1])."', ";
+            $query .= "FirstName='" . mysqli_real_escape_string($conn, $name[1]) . "', ";
         } else {
             if ($player->getPosition() != 'OL') return;
             $query .= "FirstName='', ";
@@ -73,10 +73,10 @@ function updatePlayer(&$conn, $player, $checkPlayer) {
     if ($updateCheck) {
         $query = substr($query, 0, -2);
         $query .= " WHERE statid=".$checkPlayer->StatID;
-        //$result = mysql_query($query, $conn);
+        //$result = mysqli_query($conn, $query, $conn);
         //print "**".$result."**\n";
         print $query;
-        //print " - ".mysql_affected_rows()." - UPDATED\n";
+        //print " - ".mysqli_affected_rows($conn)." - UPDATED\n";
     } else {
         $query = "No Action";
     }
@@ -89,9 +89,9 @@ function insertPlayer(&$conn, $player) {
     // Get Name in correct format
     $fullname = correctCase($player->getName());
     $name = split(",", $fullname);
-    $value =  "('".mysql_escape_string($name[0])."',";
+    $value = "('" . mysqli_real_escape_string($conn, $name[0]) . "',";
     if (count($name) > 1) {
-        $value .= "'".mysql_escape_string($name[1])."',";
+        $value .= "'" . mysqli_real_escape_string($conn, $name[1]) . "',";
     } else {
         if ($player->getPosition() != 'OL') return;
         $value .= "'',";
@@ -118,23 +118,21 @@ function insertPlayer(&$conn, $player) {
     $value .= $player->getID().")";
 
     print $query.$value."\n";
-    //$result = mysql_query($query.$value, $conn) or die("I'm dead: ".mysql_error()."\n");
-    if (mysql_errno != 0) {
-        print mysql_errno().": ".mysql_error()."\n";
+    //$result = mysqli_query($conn, $query.$value, $conn) or die("I'm dead: ".mysqli_error($conn)."\n");
+    if (mysqli_errno($conn) != 0) {
+        print mysqli_errno($conn) . ": " . mysqli_error($conn) . "\n";
         die("Oh the humanity\n");
     }
 
     
     print $value;
-    //print " - ".mysql_affected_rows()."- ADDED\n";
+    //print " - ".mysqli_affected_rows($conn)."- ADDED\n";
 }
 
 
 function updateDatabase ($playerList) {
 
 	global $database, $db_host, $db_user, $db_pass;
-   // $conn = mysql_connect($db_host, $db_user, $db_pass) or die("Can't connect\n");
-    //mysql_select_db($database) or die("Can't select database\n");
 
     //print "OK, I'm doing it now\n";
 
@@ -154,17 +152,17 @@ function updateDatabase ($playerList) {
         //print $player->getPosition()."\n";
         print $player->getPosition();
 */
-        //$check = mysql_query($checkQuery.$player->getID());
-        //$numRows = mysql_num_rows($check);
+        //$check = mysqli_query($conn, $checkQuery.$player->getID());
+        //$numRows = mysqli_num_rows($check);
         if ($numRows) {
-            //$checkPlayer = mysql_fetch_object($check);
+            //$checkPlayer = mysqli_fetch_object($check);
             updatePlayer($conn, $player, $checkPlayer);
         } else {
             insertPlayer($conn, $player);
         }
     }
 
-    //mysql_close($conn);
+    //mysqli_close($conn);
 }
 
 ?>
