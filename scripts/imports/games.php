@@ -39,7 +39,8 @@ function determineTeam($teamId) {
 
 
 function loadWeekGames($season, $week) {
-    $request_url = "http://football.myfantasyleague.com/$season/export?TYPE=nflSchedule&W=$week";
+    global $conn;
+    $request_url = "http://www.myfantasyleague.com/$season/export?TYPE=nflSchedule&W=$week";
     $xml = simplexml_load_file($request_url) or die("Feed not loading");
 
     $matchupList = array();

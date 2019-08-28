@@ -78,7 +78,7 @@ Class Player {
     public static function buildFromArray($playerArray) {
         $player = new Player();
         
-        $name = split(",", $playerArray['name']);
+        $name = explode(",", $playerArray['name']);
         $player->lastName = $name[0];
         $player->firstName = trim($name[1]);
         $player->statId = $playerArray['id'];

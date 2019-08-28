@@ -27,12 +27,12 @@ function determineTeam($teamId) {
             break;
         case 'NEP': $teamVal = 'NE'; break;
         case 'KCC': $teamVal = 'KC'; break;
-        case 'SDC': $teamVal = 'SD'; break;
+        case 'SDC': case 'LAC': $teamVal = 'LAC'; break;
         case 'GBP': $teamVal = 'GB'; break;
         case 'TBB': $teamVal = 'TB'; break;
         case 'NOS': $teamVal = 'NO'; break;
         case 'SFO': $teamVal = 'SF'; break;
-        case 'RAM': $teamVal = 'LA'; break;
+        case 'RAM': $teamVal = 'LAR'; break;
         default:    $teamVal = '';
     }
     return $teamVal;
