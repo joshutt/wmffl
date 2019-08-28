@@ -7,6 +7,7 @@ class Clock {
 }
 
 function getPreviousPickTime() {
+    global $conn;
     // Get the previous pick time
     $sql = "SELECT max(pickTime) as 'pickTime', max(c.value) as 'startTime'  FROM draftpicks p JOIN config c ON c.key='draft.full.start'";
     $results = mysqli_query($conn, $sql) or die ("Unable to get max time: " . mysqli_error($conn));
@@ -19,11 +20,16 @@ function getPreviousPickTime() {
 
 
 function getExtraTime($season, $round, $pick) {
+    global $conn;
     // Get any clock stop time
+    //$sql = "SELECT *, CONVERT_TZ(timeStarted, 'SYSTEM', 'GMT') as timeStarted,
+    //   CONVERT_TZ(timeStopped,'SYSTEM','GMT') as timeStopped FROM draftclockstop
+    //    WHERE season=$season AND round=$round and pick=$pick";
     $sql = "SELECT * FROM draftclockstop WHERE season=$season AND round=$round and pick=$pick";
     $results = mysqli_query($conn, $sql) or die ("Unable to get clock stop: " . mysqli_error($conn));
     $totalExtra = 0;
     while ($rows = mysqli_fetch_assoc($results)) {
+        //error_log(print_r($rows,true), 3, "check.log");
         $timeStopped = strtotime($rows["timeStopped"]);
         $timeStarted = strtotime($rows["timeStarted"]);
 //	print $timeStarted;
@@ -34,12 +40,15 @@ function getExtraTime($season, $round, $pick) {
 //	print $timeStarted;
 //	print "***";
 //	print $timeStopped;
+        //error_log("Time Started: $timeStarted *** Time Stopped: $timeStopped\n", 3, "check.log");
         $totalExtra += $timeStarted - $timeStopped;
+        //error_log("Extra Time: $totalExtra", 3, "check.log");
     }
     return $totalExtra;
 }
 
 function getCurrentPick($season) {
+    global $conn;
     $sql = "SELECT round, pick FROM draftpicks WHERE season=$season and playerid is null ORDER BY round, pick";
     $results = mysqli_query($conn, $sql) or die ("Unable to get current pick: " . mysqli_error($conn));
     $rows = mysqli_fetch_assoc($results);
@@ -48,6 +57,7 @@ function getCurrentPick($season) {
 }
 
 function getTimeAvail($team) {
+    global $conn;
     $sql = "SELECT value FROM config WHERE `key`='draft.team.$team' ";
     $results = mysqli_query($conn, $sql) or die ("Unable to get time available: " . mysqli_error($conn));
     $rows = mysqli_fetch_assoc($results);
@@ -56,6 +66,7 @@ function getTimeAvail($team) {
 }
 
 function clockRunning() {
+    global $conn;
     $sql = "SELECT value from config WHERE `key`='draft.clock.run' ";
     $results = mysqli_query($conn, $sql) or die ("Unable to get time available: " . mysqli_error($conn));
     $rows = mysqli_fetch_assoc($results);
@@ -79,12 +90,12 @@ function getTotalTimeUsed($season, $round=0, $pick=0) {
     
     //print "Time: ".time();
     //print "Extra: $extra";
-//    error_log("Time: ".time()."\n", 3, "check.log");
-//    error_log("Extra: ".$extra."\n", 3, "check.log");
+    //error_log("Time: ".time()."\n", 3, "check.log");
+    //error_log("Extra: ".$extra."\n", 3, "check.log");
     $prev = getPreviousPickTime();
-//    error_log("Previous: ".$prev."\n", 3, "check.log");
+    //error_log("Previous: ".$prev."\n", 3, "check.log");
     $totalTime = time() - $prev - $extra;
-//    error_log("Total Time: ".$totalTime."\n", 3, "check.log");
+    //error_log("Total Time: ".$totalTime."\n", 3, "check.log");
 
     return $totalTime;
 }

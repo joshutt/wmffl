@@ -35,6 +35,7 @@ $pickList = array();
 $round = 0;
 $roundArray = array();
 $pick = 0;
+$draftPick = array();
 while ($draftPicks->fetch()) {
     // Determine and set-up round and pick
     $roundDist = sprintf("%02d", $draftPicks->Round);

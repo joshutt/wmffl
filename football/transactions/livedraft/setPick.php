@@ -12,7 +12,7 @@ if (!$isin) {
 
 // Get the team and the pick
 $teamId = $_SESSION["teamnum"];
-$fullPlayer = $_REQUEST["player"];
+$fullPlayer = array_key_exists("player", $_REQUEST) ? $_REQUEST["player"] : "";
 
 // If this is autodraft use it
 if (isset($autoDraft) && $teamId == 2) {
@@ -54,5 +54,3 @@ while ($selection["playerid"]) {
 }
 
 
-
-?>

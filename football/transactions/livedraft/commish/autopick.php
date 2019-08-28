@@ -65,6 +65,7 @@ EOD;
     }
 }
 
+$evalSeason = $currentSeason - 1;  // $currentSeason will exist because of start.php
 $query = <<<EOD
 
 SELECT p.playerid, p.firstname, p.lastname, p.pos, sum(ps.pts), r.teamid
@@ -72,7 +73,7 @@ FROM newplayers p
 JOIN playerscores ps ON p.playerid = ps.playerid
 LEFT JOIN roster r ON p.playerid = r.playerid AND r.dateoff IS NULL
 LEFT JOIN nflrosters nr ON nr.playerid=p.playerid and nr.dateoff is null
-WHERE ps.season = 2017 AND ps.week <= 14 AND r.teamid IS NULL AND p.pos <> 'HC' and p.usePos=1 and p.pos<>'' 
+WHERE ps.season = $evalSeason AND ps.week <= 14 AND r.teamid IS NULL AND p.pos <> 'HC' and p.usePos=1 and p.pos<>'' 
 AND nr.nflteamid is not null
 AND $bigWhere 
 GROUP BY p.playerid
@@ -88,5 +89,4 @@ $autoDraft = true;
 $autoPlayer = "id-" . $row["playerid"];
 
 include "../setPick.php";
-
 

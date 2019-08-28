@@ -9,6 +9,7 @@ require "clock.class.php";
 
 // Return the id of the team currently on the clock
 function getTeamOnClock($season) {
+    global $conn;
     // Get the current Pick
     // Make sure this is the correct team for it
     $draftPicks = new DataObjects_Draftpicks;
@@ -31,6 +32,7 @@ function getTeamOnClock($season) {
 
 // Save the current pick as a future selection
 function saveTeamPick($teamid, $playerid) {
+    global $conn;
     // UPDATE pick with this player
     $sql = "REPLACE draftPickHold (teamid, playerid) VALUES ($teamid, $playerid)";
     $result = mysqli_query($conn, $sql) or die("Unable to update draftPickHold: " . mysqli_error($conn));
@@ -38,6 +40,7 @@ function saveTeamPick($teamid, $playerid) {
 
 
 function makePick($teamid, $playerid, $season) {
+    global $conn;
     $errors = confirmPlayerAvailable($playerid);
     if (sizeof($errors) > 0) {
         return $errors;
@@ -110,6 +113,7 @@ function getCurrentPick($season) {
 
 
 function adjustClock($season, $round, $pick, $teamid, $totalTime) {
+    global $conn;
 
 //    error_log("-------------Adjust Clock---------------\n", 3, "check.log");
     //$totalTime = getTotalTimeUsed($season, $round, $pick);
@@ -129,6 +133,7 @@ function adjustClock($season, $round, $pick, $teamid, $totalTime) {
 
 
 function getPreselection($teamid) {
+    global $conn;
     $sql = "SELECT playerid FROM draftPickHold WHERE teamid=$teamid";
     $results = mysqli_query($conn, $sql) or die ("Unable to get draftPickHold: " . mysqli_error($conn));
     return mysqli_fetch_array($results);

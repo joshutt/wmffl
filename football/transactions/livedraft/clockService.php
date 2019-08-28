@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER["DOCUMENT_ROOT"]."/utils/start.php";
+require_once "utils/start.php";
 require_once "clock.class.php";
 
 $sql = "SELECT * FROM config WHERE `key` like 'draft.clock.%'";
@@ -8,7 +8,7 @@ $results = mysqli_query($conn, $sql) or die("Unable to get Config values: " . my
 $configArray = array();
 while ($rows = mysqli_fetch_assoc($results)) {
     $mainVal = $rows["key"];
-    $broken = split("\.", $mainVal);
+    $broken = explode(".", $mainVal);
     $configArray[$broken[2]] = $rows["value"];
 }
 
@@ -30,12 +30,14 @@ $currentClockTime = getTotalTimeUsed($currentSeason);
 $availClockTime = getTimeAvail($teamId);
 $remainTime = $availClockTime - $currentClockTime;
 
+/*
 error_log("---------------------------------------------------------------------\n", 3, "check.log");
 error_log("Current Clock $currentClockTime\n", 3, "check.log");
 error_log("Available Clock $availClockTime\n", 3, "check.log");
 error_log("Remain Time $remainTime\n", 3, "check.log");
 error_log("All teams ".print_r($teamArray, TRUE)."\n", 3, "check.log");
 error_log("---------------------------------------------------------------------\n", 3, "check.log");
+*/
 
 if ($remainTime < 0) {
     $remainTime = 0;
