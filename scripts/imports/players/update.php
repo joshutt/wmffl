@@ -3,7 +3,7 @@ require_once 'playerHelpers.php';
 require_once 'savePlayers.php';
 
 
-$season = 2016;
+$season = 2019;
 $request_url = "http://football.myfantasyleague.com/$season/export?TYPE=players&DETAILS=1";
 
 //testRun($request_url);
