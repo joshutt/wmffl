@@ -1,5 +1,5 @@
 <?
-$conn = mysqli_connect('localhost', 'joshutt_footbal', 'wmaccess', 'joshutt_oldwmffl');
+include dirname(__FILE__)."/../base.php";
 
 $currentSeason=2011;
 #$currentSeason=2009;

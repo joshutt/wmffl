@@ -1,4 +1,5 @@
 <?
+require_once dirname(__FILE__)."/../base.php";
 
 function catchBadFunction($errno, $errstr, $errfile, $errline, $vars) {
     error_log("$errstr in $errfile on line $errline");
@@ -11,8 +12,8 @@ function catchBadFunction($errno, $errstr, $errfile, $errline, $vars) {
     $vars["pts"] = 0;
 }
 
-require_once "/home/joshutt/football/utils/start.php";
-include "/home/joshutt/football/base/scoring.php";
+//require_once "/home/joshutt/football/utils/start.php";
+include "base/scoring.php";
 
 //$week = $currentWeek - 1;
 $week = $currentWeek;

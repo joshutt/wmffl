@@ -1,4 +1,5 @@
 <?php
+require_once dirname(__FILE__)."/../../base.php";
 require_once 'playerHelpers.php';
 require_once 'savePlayers.php';
 

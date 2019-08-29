@@ -1,8 +1,5 @@
-<?
-//require_once "/home/joshutt/football/base/conn.php";
-//require_once "/home/joshutt/football/base/useful.php";
-require_once "/home/joshutt/git/football/base/conn.php";
-require_once "/home/joshutt/git/football/base/useful.php";
+<?php
+require_once "base.php";
 
 $sql = "SELECT t.teamid, p.playerid
 FROM waiverorder t, waiverpicks p, weekmap wp

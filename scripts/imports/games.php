@@ -1,5 +1,5 @@
 <?php
-include "players/config.php";
+include dirname(__FILE__)."/../base.php";
 
 //$week = $_REQUEST['week'];
 //$week = 4;

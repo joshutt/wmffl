@@ -1,6 +1,5 @@
 <?php
 require_once 'playerHelpers.php';
-require_once 'config.php';
 
 function test($player) {
     $a = new Player();

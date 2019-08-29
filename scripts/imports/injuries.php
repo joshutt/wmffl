@@ -1,5 +1,5 @@
-<?
-$conn = mysqli_connect('localhost', 'joshutt_footbal', 'wmaccess', 'joshutt_oldwmffl');
+<?php
+include dirname(__FILE__)."/../base.php";
 
 // $week = $_REQUEST['week'];
 #$season = 2011;
