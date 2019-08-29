@@ -9,7 +9,7 @@ include "base/menu.php";
 
 
 <H1 ALIGN=Center>Team Finances</H1>
-<H5 ALIGN=Center>Last Updated 8/21/2019</H5>
+<H5 ALIGN=Center>Last Updated 8/28/2019</H5>
 <HR size="1">
 
 <p>
@@ -20,7 +20,7 @@ include "base/menu.php";
 <div class="center">
 
     <?
-    $amt_owed = array( 6=>71.70, 1=>150, 8=>69.82, 9=>71.17, 12=>48.83, 4=>61.05 );
+    $amt_owed = array( 6=>71.70, 1=>150, 8=>69.82, 12=>48.83, 4=>61.05 );
 
     if ($isin && array_key_exists($teamnum, $amt_owed)) { ?>
 
@@ -91,14 +91,14 @@ include "base/menu.php";
         <tr class="oddRow">
             <td class="name padded">Gallic Warriors</td>
             <td class="padded">$3.83</td>
-            <td class="padded">-</td>
+            <td class="padded">$71.17</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">$0.00</td>
-            <td class="padded">$71.17</td>
+            <td class="padded">$0.00</td>
         </tr>
         <tr class="evenRow">
             <td class="name padded">MeggaMen</td>
