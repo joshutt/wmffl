@@ -1,6 +1,6 @@
 <table cellpadding="5" cellspacing="1">
 <?
-include "$DOCUMENT_ROOT/lib/Team.php";
+include "lib/Team.php";
 
 //$thisSeason = 2004;
 //$thisWeek = 5;
@@ -34,10 +34,10 @@ GROUP BY d.name, tn.name
 
 EOD;
 
-$results = mysql_query($query) or die("Error: ".mysql_error());
+$results = mysqli_query($conn, $query) or die("Error: " . mysqli_error($conn));
 $count =0;
 $teamArray = array();
-while ($row = mysql_fetch_array($results)) {
+while ($row = mysqli_fetch_array($results)) {
 #    print_r($row);
    // $divRar = 
 

@@ -1,8 +1,5 @@
 <?
-$conn = mysql_connect('localhost', 'joshutt_footbal', 'wmaccess');
-#$conn = mysql_connect('localhost', 'joshutt_misc', 'swwrbo');
-mysql_select_db('joshutt_oldwmffl');
-#mysql_select_db('joshutt_misc');
+include dirname(__FILE__)."/../base.php";
 
 $currentSeason=2011;
 #$currentSeason=2009;
@@ -30,12 +27,12 @@ function determineTeam($teamId) {
             break;
         case 'NEP': $teamVal = 'NE'; break;
         case 'KCC': $teamVal = 'KC'; break;
-        case 'SDC': $teamVal = 'SD'; break;
+        case 'SDC': case 'LAC': $teamVal = 'LAC'; break;
         case 'GBP': $teamVal = 'GB'; break;
         case 'TBB': $teamVal = 'TB'; break;
         case 'NOS': $teamVal = 'NO'; break;
         case 'SFO': $teamVal = 'SF'; break;
-        case 'RAM': $teamVal = 'LA'; break;
+        case 'RAM': $teamVal = 'LAR'; break;
         default:    $teamVal = '';
     }
     return $teamVal;
@@ -112,18 +109,18 @@ foreach ($xml->player as $player) {
 
 $timeSql = "SELECT value FROM config WHERE `key`='player.update.timestamp'";
 echo "$timeSql<br/>";
-$result = mysql_query($timeSql) or die("Unable to select: ".mysql_error());
-$numReturn = mysql_num_rows($result);
+$result = mysqli_query($conn, $timeSql) or die("Unable to select: " . mysqli_error($conn));
+$numReturn = mysqli_num_rows($result);
 if ($numReturn == 0) {
     $setSql = sprintf("INSERT INTO config (`key`, value) VALUES ('player.update.timestamp', '%d')", $timeStamp);
-    mysql_query($setSql) or die("Unable to insert: ".mysql_error());
+    mysqli_query($conn, $setSql) or die("Unable to insert: " . mysqli_error($conn));
 
 } else {
-    $config = mysql_fetch_assoc($result);
+    $config = mysqli_fetch_assoc($result);
     $thisStamp = intval($config["value"]);
     if ($thisStamp < $timeStamp) {
         $setSql = sprintf("UPDATE config SET value='%d' WHERE `key`='player.update.timestamp'", $timeStamp);
-        mysql_query($setSql) or die("Unable to update: ".mysql_error());
+        mysqli_query($conn, $setSql) or die("Unable to update: " . mysqli_error($conn));
     } else {
         echo "Here<br/>";
         return;
@@ -164,23 +161,23 @@ EOD;
 // Save or update the players
 foreach ($playerList as &$player) {
     $query = sprintf($selectSQL, $player["flmid"]);
-    $result = mysql_query($query);
+    $result = mysqli_query($conn, $query);
 
-    $numReturn = mysql_num_rows($result);
+    $numReturn = mysqli_num_rows($result);
     if ($numReturn == 0) {
         //Insert Here
-        $query2 = sprintf($insertSQL, $player["flmid"], mysql_real_escape_string($player["lastName"]), mysql_real_escape_string($player["firstName"]), $player["pos"], $player["team"]);
-        mysql_query($query2) or die("Ug: ".mysql_error());
-        $player["playerid"] = mysql_insert_id();
+        $query2 = sprintf($insertSQL, $player["flmid"], mysqli_real_escape_string($conn, $player["lastName"]), mysqli_real_escape_string($conn, $player["firstName"]), $player["pos"], $player["team"]);
+        mysqli_query($conn, $query2) or die("Ug: " . mysqli_error($conn));
+        $player["playerid"] = mysqli_insert_id($conn);
         #print $query2;
     } else {
         // Update if necessary
-        $row = mysql_fetch_assoc($result);
+        $row = mysqli_fetch_assoc($result);
         if ($row["lastname"] != $player["lastName"]  || $row["firstname"] != $player["firstName"] || $row["active"] != 1
             || $row["pos"] != $player["pos"] || $row["team"] != $player["team"])    {
 
-            $query2 = sprintf($updateSQL, mysql_real_escape_string($player["lastName"]), mysql_real_escape_string($player["firstName"]), $player["pos"], $player["team"], $player["flmid"]);
-            mysql_query($query2) or die("Ug: ".mysql_error());
+            $query2 = sprintf($updateSQL, mysqli_real_escape_string($conn, $player["lastName"]), mysqli_real_escape_string($conn, $player["firstName"]), $player["pos"], $player["team"], $player["flmid"]);
+            mysqli_query($conn, $query2) or die("Ug: " . mysqli_error($conn));
 //print $query2;
 
         }
@@ -218,13 +215,13 @@ $closeBase = "";
 foreach ($playerList as &$player) {
 //print "--".$playerList[1960]["playerid"]."--";
     $query = sprintf($currentSql, $player["playerid"]);
-    $result = mysql_query($query) or die("Unable to get current roster: ".mysql_error());
-    $numRows = mysql_num_rows($result);
+    $result = mysqli_query($conn, $query) or die("Unable to get current roster: " . mysqli_error($conn));
+    $numRows = mysqli_num_rows($result);
     //print "{$player["playerid"]} - {$player["firstName"]} - {$player["lastName"]} - {$player["team"]} - ";
 
     if ($player["team"] != "") {
         if ($numRows > 0) {
-            $row = mysql_fetch_assoc($result);
+            $row = mysqli_fetch_assoc($result);
             if ($row["nflteamid"] == $player["team"]) {
                 print "Match";
                 // matches, do nothing
@@ -270,15 +267,15 @@ foreach ($playerList as &$player) {
 
 if ($closeBase != "") {
     $closeQuery = "UPDATE nflrosters SET dateoff=now() WHERE dateoff is null AND playerid in ($closeBase)";
-    mysql_query($closeQuery) or die ("Unable to update: ".mysql_error());
-    $affectedRows = mysql_affected_rows();
+    mysqli_query($conn, $closeQuery) or die ("Unable to update: " . mysqli_error($conn));
+    $affectedRows = mysqli_affected_rows($conn);
     print "Updated $affectedRows rows<br/>";
 }
 
 if ($insertBase != "") {
     $insertQuery = "INSERT INTO nflrosters (playerid, nflteamid, dateon, dateoff) VALUES $insertBase";
-    mysql_query($insertQuery) or die ("Unable to insert: ".mysql_error());
-    $affectedRows = mysql_affected_rows();
+    mysqli_query($conn, $insertQuery) or die ("Unable to insert: " . mysqli_error($conn));
+    $affectedRows = mysqli_affected_rows($conn);
     print "Inserted $affectedRows rows<br/>";
 }
 
@@ -293,8 +290,8 @@ WHERE o.season=$currentSeason
 
 EOD;
 
-mysql_query($overrideQuery) or die ("Unable to override: ".mysql_error());
-$affectedRows = mysql_affected_rows();
+mysqli_query($conn, $overrideQuery) or die ("Unable to override: " . mysqli_error($conn));
+$affectedRows = mysqli_affected_rows($conn);
 print "Overrode $affectedRows players<br/>";
 
 ?>

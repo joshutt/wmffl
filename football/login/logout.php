@@ -1,10 +1,9 @@
-<? 
-require_once "$DOCUMENT_ROOT/utils/start.php";
+<?
+require_once "utils/start.php";
 
 unset($_SESSION["teamnum"]);
 unset($_SESSION["user"]);
 unset($_SESSION["fullname"]);
 $_SESSION["isin"] = False;
 
-header("Location: ".$HTTP_REFERER);
-?>
+header("Location: " . $_SERVER['HTTP_REFERER']);

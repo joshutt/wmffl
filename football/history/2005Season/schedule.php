@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 $thisSeason = $currentSeason;
 $thisWeek = $currentWeek;
 $thisSeason = 2005;
@@ -23,7 +23,7 @@ $byeWeekQuery = "SELECT t.name FROM nflstatus s, nflteams t WHERE status='B' AND
 $title = "WMFFL Schedule";
 ?>
 
-<? include "$DOCUMENT_ROOT/base/menu.php"; ?>
+<? include "base/menu.php"; ?>
 
 <H1 Align=Center><? print $thisSeason;?> Schedule</H1>
 <HR size = "1"><CENTER>
@@ -40,13 +40,13 @@ $title = "WMFFL Schedule";
 
 
 <?
-$results = mysql_query($sql);
+$results = mysqli_query($conn, $sql);
 
 $listWeek = 0;
 print "<TABLE BORDER=0>";
-while ($row = mysql_fetch_array($results)) {
+while ($row = mysqli_fetch_array($results)) {
     if ($row[0] != $listWeek) {
-        $byes = mysql_query($byeWeekQuery.$row[0]);
+        $byes = mysqli_query($conn, $byeWeekQuery . $row[0]);
         print "</TABLE><P>";
         print "<A NAME=\"".str_replace(" ","",$row[5])."\"><H4>".$row[5]."</H4></A>";
         print "<H5>".$row[6]." ".$row[7]."-";
@@ -57,11 +57,11 @@ while ($row = mysql_fetch_array($results)) {
         if ($row[8] != "Sunday") {
             print " (".$row[8].")";
         }
-        $numByes = mysql_num_rows($byes);
+        $numByes = mysqli_num_rows($byes);
         if ($numByes > 0) {
             print "<BR>NFL Byes: ";
             $byeCount = 1;
-            while (list($byeTeam) = mysql_fetch_row($byes)) {
+            while (list($byeTeam) = mysqli_fetch_row($byes)) {
                 print $byeTeam;
                 if ($byeCount+1 == $numByes) {
                     print " and ";
@@ -115,4 +115,4 @@ Playoff Winner #1 vs Playoff Winner #2
 <P>
 
 -->
-<? include "$DOCUMENT_ROOT/base/footer.html"; ?>
+<? include "base/footer.html"; ?>

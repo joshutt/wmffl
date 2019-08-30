@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 if (!$isin) {
     header("Location: http://wmffl.com");
     exit();
@@ -17,17 +17,17 @@ if (isset($change)) {
 
         // Make sure that the old password matches entered password
         $theQuery = "SELECT name, email FROM user WHERE username='$username' AND (password=PASSWORD('$oldpassword') or password=MD5('$oldpassword'))";
-        $result = mysql_query($theQuery);
-        $numrow = mysql_num_rows($result);
+        $result = mysqli_query($conn, $theQuery);
+        $numrow = mysqli_num_rows($result);
 
         if ($numrow != 1) {
             $errorMessage = "Old password does not equal current password";
         } else {
-            list($name, $email) = mysql_fetch_row($result);
+            list($name, $email) = mysqli_fetch_row($result);
             
             // Save password in database
             $theQuery = "UPDATE user SET password=MD5('$newpassword1') WHERE username='$user'";
-            $result = mysql_query($theQuery) or die("An error occured: ".mysql_error());
+            $result = mysqli_query($conn, $theQuery) or die("An error occured: " . mysqli_error($conn));
 
             // Send email confirming change
             $body = "$name,
@@ -48,7 +48,7 @@ $title = "Change Password";
 ?>
 
 
-<? include "$DOCUMENT_ROOT/base/menu.php"; ?>
+<? include "base/menu.php"; ?>
 
 <h1 align="center">Change WMFFL Password</h1>
 <hr size="1"/>
@@ -88,4 +88,4 @@ $title = "Change Password";
 </form>
 
 
-<? include "$DOCUMENT_ROOT/base/footer.html"; ?>
+<? include "base/footer.html"; ?>

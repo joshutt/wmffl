@@ -18,13 +18,13 @@ ORDER BY t.name, p.pos, p.lastname
 
 EOD;
 
-$results = mysql_query($sql) or die("Error: ".mysql_error());
+$results = mysqli_query($conn, $sql) or die("Error: " . mysqli_error($conn));
 $team = "";
 $first = true;
 
 $result_array = array();
 // For each item in the Query
-while($row = mysql_fetch_assoc($results)) {
+while ($row = mysqli_fetch_assoc($results)) {
     // If it's a new team add the team array
     if ($row["teamname"] != $team) {
         $first = false;

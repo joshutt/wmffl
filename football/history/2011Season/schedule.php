@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 $thisSeason = 2011;
 $thisWeek = 17;
 #$thisWeek = $currentWeek;
@@ -25,11 +25,11 @@ group by wm.week, t.nflteam
 order by wm.week, t.name
 EOD;
 
-$byeResults = mysql_query($byeSQL);
+$byeResults = mysqli_query($conn, $byeSQL);
 $lastName = "";
 $lastWeek = 0;
 $byeList = array();
-while ($rows = mysql_fetch_assoc($byeResults)) {
+while ($rows = mysqli_fetch_assoc($byeResults)) {
     $week = $rows['week'];
     $teamName = $rows['name'];
     if ($teamName == 'New York') {
@@ -97,7 +97,7 @@ a.return {
 -->
 </style>
 
-<? include "$DOCUMENT_ROOT/base/menu.php"; ?>
+<? include "base/menu.php"; ?>
 
 <H1 Align=Center><? print $thisSeason;?> Schedule</H1>
 <HR size = "1"><CENTER>
@@ -114,11 +114,11 @@ a.return {
 
 
 <?
-$results = mysql_query($sql);
+$results = mysqli_query($conn, $sql);
 
 $listWeek = 0;
 $lastLabel = "";
-while ($row = mysql_fetch_array($results)) {
+while ($row = mysqli_fetch_array($results)) {
     if ($row[0] != $listWeek || $row[11] != $lastLabel) {
         if ($listWeek != 0) {
             print <<<EOD
@@ -204,4 +204,4 @@ print "</div><br/>";
 
 <a name="Playoffs"/><a name="Championship"/>
 
-<? include "$DOCUMENT_ROOT/base/footer.html"; ?>
+<? include "base/footer.html"; ?>

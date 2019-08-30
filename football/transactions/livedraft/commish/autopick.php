@@ -22,9 +22,9 @@ where r.teamid=$autoteam
 group by p.pos
 EOD;
 
-    $results = mysql_query($posQuery) or die("Unable to do query: " . mysql_error());
+    $results = mysqli_query($conn, $posQuery) or die("Unable to do query: " . mysqli_error($conn));
     $posMap = array("HC" => 0, "QB" => 0, "RB" => 0, "WR" => 0, "TE" => 0, "K" => 0, "OL"=>0, "DL" => 0, "LB" => 0, "DB" => 0);
-    while ($row = mysql_fetch_array($results)) {
+    while ($row = mysqli_fetch_array($results)) {
         $posMap[$row[0]] = $row[1];
     }
 
@@ -65,6 +65,7 @@ EOD;
     }
 }
 
+$evalSeason = $currentSeason - 1;  // $currentSeason will exist because of start.php
 $query = <<<EOD
 
 SELECT p.playerid, p.firstname, p.lastname, p.pos, sum(ps.pts), r.teamid
@@ -72,7 +73,7 @@ FROM newplayers p
 JOIN playerscores ps ON p.playerid = ps.playerid
 LEFT JOIN roster r ON p.playerid = r.playerid AND r.dateoff IS NULL
 LEFT JOIN nflrosters nr ON nr.playerid=p.playerid and nr.dateoff is null
-WHERE ps.season = 2017 AND ps.week <= 14 AND r.teamid IS NULL AND p.pos <> 'HC' and p.usePos=1 and p.pos<>'' 
+WHERE ps.season = $evalSeason AND ps.week <= 14 AND r.teamid IS NULL AND p.pos <> 'HC' and p.usePos=1 and p.pos<>'' 
 AND nr.nflteamid is not null
 AND $bigWhere 
 GROUP BY p.playerid
@@ -80,13 +81,12 @@ ORDER BY sum(ps.pts) DESC, RAND();
 
 EOD;
 
-$results = mysql_query($query) or die("Unable to do query: ".mysql_error());
-$row = mysql_fetch_array($results);
+$results = mysqli_query($conn, $query) or die("Unable to do query: " . mysqli_error($conn));
+$row = mysqli_fetch_array($results);
 
 
 $autoDraft = true;
 $autoPlayer = "id-" . $row["playerid"];
 
 include "../setPick.php";
-
 

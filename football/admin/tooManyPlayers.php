@@ -1,7 +1,7 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
-#require_once "$DOCUMENT_ROOT/base/conn.php";
-#require_once "$DOCUMENT_ROOT/base/useful.php";
+require_once "utils/start.php";
+#require_once "base/conn.php";
+#require_once "base/useful.php";
 
 //print "**$currentSeason**<br/>";
 
@@ -14,9 +14,9 @@ group by wm.week, t.teamid
 order by `count(r.playerid)` DESC";
 
 //print $sql;
-$results = mysql_query($sql) or die("Error: ".mysql_error());
+$results = mysqli_query($conn, $sql) or die("Error: " . mysqli_error($conn));
 $empty = true;
-while ($teams = mysql_fetch_array($results)) {
+while ($teams = mysqli_fetch_array($results)) {
     if ($teams[2] <=26) {
         break;
     }

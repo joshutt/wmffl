@@ -24,13 +24,13 @@ function buildObjectArray($trade, $dir) {
     return $theyItems;
 }
 
-$selection = $HTTP_POST_VARS["select"];
+$selection = $_POST["select"];
 if ($selection == "Yes") {
 
 //print "Yes";
-	$action = $HTTP_POST_VARS["action"];
-	$offerid = $HTTP_POST_VARS["offerid"];
-	$comments = $HTTP_POST_VARS["comments"];
+    $action = $_POST["action"];
+    $offerid = $_POST["offerid"];
+    $comments = $_POST["comments"];
 
 /*
 p
@@ -64,7 +64,7 @@ print $comments;
         $mailmessage .= $teamB->getName()." in exchange for ";
         $mailmessage .= printList($youItems);
         $mailmessage .= "\n\nComments: \n";
-        $mailmessage .= $HTTP_POST_VARS["comments"];
+        $mailmessage .= $_POST["comments"];
         $mailmessage .= "\n\n";
         
         $subject = "Trade Offer Rejected";
@@ -72,12 +72,12 @@ print $comments;
 
         // Send email
         $addyGet = "SELECT email, teamid FROM user WHERE teamid in (".$teamA->getID().", ".$teamB->getID().") AND Active='Y'";
-        $addyResults = mysql_query($addyGet);
+        $addyResults = mysqli_query($conn, $addyGet);
         $first = true;
         $replyFirst = true;
         $address = "";
         $replyTo = "Reply-To: ";
-        while (list($emailAdd, $mailTeam) = mysql_fetch_array($addyResults)) {
+        while (list($emailAdd, $mailTeam) = mysqli_fetch_array($addyResults)) {
             if (!$first) {
                 $address .= ", ";
             }
@@ -115,19 +115,19 @@ print $comments;
         $mailmessage .= printList($youItems);
         $mailmessage .= "\n\n";
         $mailmessage .= "Comments: \n";
-        $mailmessage .= $HTTP_POST_VARS["comments"];
+        $mailmessage .= $_POST["comments"];
         $mailmessage .= "\n\n";
         
         $subject = "Trade Offer Accepted";
 
         // Send email
         $addyGet = "SELECT email, teamid FROM user WHERE teamid in (".$teamA->getID().", ".$teamB->getID().") AND active='Y'";
-        $addyResults = mysql_query($addyGet);
+        $addyResults = mysqli_query($conn, $addyGet);
         $first = true;
         $replyFirst = true;
         $address = "";
         $replyTo = "Reply-To: ";
-        while (list($emailAdd, $mailTeam) = mysql_fetch_array($addyResults)) {
+        while (list($emailAdd, $mailTeam) = mysqli_fetch_array($addyResults)) {
             if (!$first) {
                 $address .= ", ";
             }

@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 $sql = "SELECT d.round, d.pick, (t.name) as 'name', ";
 $sql .= "if(d.teamid<>d.orgTeam, '*', '') as 'flag' ";
@@ -9,7 +9,7 @@ $sql .= "ORDER BY Round, Pick";
 
 $title = "2012 WMFFL Draft Order";
 ?>
-<? include "$DOCUMENT_ROOT/base/menu.php"; ?>
+<? include "base/menu.php"; ?>
 
 <H1 Align=Center>Draft Order</H1>
 <H5 ALIGN=Center><I>July 8th, 2012</I></H5>
@@ -24,10 +24,10 @@ August 16.-->  The order was determined based on reverse order of finish last se
 <TABLE WIDTH=100%>
 
 <?
-$results = mysql_query($sql) or die("Database error: ".mysql_error());
+$results = mysqli_query($conn, $sql) or die("Database error: " . mysqli_error($conn));
 
 $round = 0;
-while ($pick = mysql_fetch_array($results)) {
+while ($pick = mysqli_fetch_array($results)) {
     if ($round <> $pick["round"]) {
         if ($round > 0) {
             print "</ol></td>";

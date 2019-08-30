@@ -17,7 +17,7 @@ $title = "WMFFL Rule Proposals";
 
 <p>This is the list of proposals to be voted on for the 2013 WMFFL season.
 If you would like to suggest a rule proposal, you may
-do so on the <a href="ballotsubmit.shtml">proposals page</a>.  The part of
+    do so on the <a href="proposesubmit.php">proposals page</a>. The part of
 each proposal that appears in <i>Italics</i> is what effect this proposal will
 have on the ruleset, if passed.</p>
 

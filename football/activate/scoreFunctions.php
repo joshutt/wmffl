@@ -43,7 +43,7 @@ function getOtherGames($thisTeamID, $thisWeek, $thisSeason, $conn)
     $getTeamSQL .= "AND ta.season=s.season AND tb.season=s.season ";
     $results = mysqli_query($conn, $getTeamSQL) or die("Database error: " . mysqli_error($conn));
     return $results;
-//    $row = mysql_fetch_array($results);
+//    $row = mysqli_fetch_array($results);
 //    return $row;
 }
 
@@ -51,9 +51,9 @@ function getOtherGames($thisTeamID, $thisWeek, $thisSeason, $conn)
 function generateReserves($thisTeamID, $currentSeason, $currentWeek)
 {
     $select = <<<EOD
-select p.pos, p.lastname, p.firstname, nr.nflteamid as 'team', CONVERT_TZ(n.kickoff, 'SYSTEM', 'GMT') as 'kickoff', n.secRemain, n.complete, p.flmid, s.*, 
-if (r.dateon is null and p.pos<>'HC', 1, 0) as 'illegal', a.pos as 'startPos', a.teamid as 'teamcheck1', 
-r.teamid as 'teamcheck2', n.secRemain, gp1.side as 'GPMe', gp2.side as 'GPThem', CONVERT_TZ(wm.ActivationDue, 'SYSTEM', 'GMT') as 'ActivationDue'
+select p.pos, p.lastname, p.firstname, nr.nflteamid as 'team', CONVERT_TZ(n.kickoff, 'SYSTEM', '+0:00') as 'kickoff', n.secRemain, n.complete, p.flmid, s.*, 
+if ((r.dateon is null and p.pos<>'HC') or (p.playerid=2637 and wm.season=2018 and wm.week=14), 1, 0) as 'illegal', a.pos as 'startPos', a.teamid as 'teamcheck1', 
+r.teamid as 'teamcheck2', n.secRemain, gp1.side as 'GPMe', gp2.side as 'GPThem', CONVERT_TZ(wm.ActivationDue, 'SYSTEM', '+0:00') as 'ActivationDue'
 from newplayers p
 JOIN weekmap wm
 LEFT JOIN roster r on p.playerid=r.playerid and r.dateon<wm.activationDue and (r.dateoff is null or r.dateoff >= wm.activationDue)

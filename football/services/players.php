@@ -25,13 +25,13 @@ ORDER BY p.playerid
 
 EOD;
 
-$results = mysql_query($sql) or die("Error: ".mysql_error());
+$results = mysqli_query($conn, $sql) or die("Error: " . mysqli_error($conn));
 $team = "";
 $first = true;
 
 $result_array = array();
 // For each item in the Query
-while($row = mysql_fetch_assoc($results)) {
+while ($row = mysqli_fetch_assoc($results)) {
     array_push($result_array, $row);
 }
 

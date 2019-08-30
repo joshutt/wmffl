@@ -16,13 +16,13 @@ $sql .= "and r.playerid=p.playerid and r.teamid=t.teamid ";
 $sql .= "and ps.week=w.week and ps.season=w.season and ps.playerid=p.playerid ";
 $sql .= "order by w.week, t.name, p.pos, ps.pts desc";
 
-$results = mysql_query($sql) or die ("Dead: ".mysql_error());
+$results = mysqli_query($conn, $sql) or die ("Dead: " . mysqli_error($conn));
 $potPts = array();
 $actPts = array();
 
 $curTeam = "";
 $curPos = "";
-while ($row = mysql_fetch_array($results)) {
+while ($row = mysqli_fetch_array($results)) {
     $week = $row["week"];
     $teamName = $row["name"];
     if ($curTeam != $teamName) {

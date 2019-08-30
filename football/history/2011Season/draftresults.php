@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 $season = 2011;
 $dateSet = "'2011-08-21'";
@@ -44,7 +44,7 @@ WHERE season =$season
 ORDER BY name
 EOD;
 
-$teamResult = mysql_query($uniqueTeam) or die("Unable to get teams: ".mysql_error());
+$teamResult = mysqli_query($conn, $uniqueTeam) or die("Unable to get teams: " . mysqli_error($conn));
 
 $uniqueNfl = <<<EOD
 SELECT DISTINCT (nflteamid)
@@ -53,13 +53,13 @@ WHERE dateon <= $dateSet and (dateoff is null or dateoff >= $dateSet)
 ORDER BY nflteamid
 EOD;
 
-$nflResult = mysql_query($uniqueNfl) or die("Unable to get teams: ".mysql_error());
+$nflResult = mysqli_query($conn, $uniqueNfl) or die("Unable to get teams: " . mysqli_error($conn));
 
 
 
 $title = "2011 WMFFL Draft Results";
 ?>
-<? include "$DOCUMENT_ROOT/base/menu.php"; ?>
+<? include "base/menu.php"; ?>
 
 <style>
 
@@ -126,7 +126,7 @@ Round: <select name="round"><option value="ALL">ALL</option><option value="1">1<
 Pick: <select name="pick"><option value="ALL">ALL</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option></select>
 Team: <select name="team"><option value="ALL">ALL</option><?
 
-while($row = mysql_fetch_assoc($teamResult)) {
+        while ($row = mysqli_fetch_assoc($teamResult)) {
     print "<option value=\"{$row["teamid"]}\">{$row["name"]}</option>";
 }
 
@@ -134,7 +134,7 @@ while($row = mysql_fetch_assoc($teamResult)) {
 Pos: <select name="pos"><option value="ALL">ALL</option><option value="QB">QB</option><option value="RB">RB</option><option value="WR">WR</option><option value="TE">TE</option><option value="K">K</option><option name="OL">OL</option><option name="DL">DL</option><option name="LB">LB</option><option name="DB">DB</option></select>
 NFL: <select name="nfl"><option value="ALL">ALL</option>
 <?
-while($row = mysql_fetch_assoc($nflResult)) {
+while ($row = mysqli_fetch_assoc($nflResult)) {
     print "<option value=\"{$row["nflteamid"]}\">{$row["nflteamid"]}</option>";
 }
 ?></select>
@@ -155,8 +155,8 @@ while($row = mysql_fetch_assoc($nflResult)) {
                         </tr>
 
 <?
-$results = mysql_query($sql) or die("Ug: ".mysql_error());
-while ($row = mysql_fetch_assoc($results)) {
+$results = mysqli_query($conn, $sql) or die("Ug: " . mysqli_error($conn));
+while ($row = mysqli_fetch_assoc($results)) {
 
     print <<<EOD
                 <tr id="pick_{$roundDist}_{$pickDist}">
@@ -178,4 +178,4 @@ EOD;
         </table>
 
 
-<? include "$DOCUMENT_ROOT/base/footer.html"; ?>
+<? include "base/footer.html"; ?>

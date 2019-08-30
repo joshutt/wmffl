@@ -1,10 +1,10 @@
 #!/usr/local/devel/python
 
 matchDict = {1:'BUF', 2:'IND', 3:'MIA', 4:'NE', 5:'NYJ', 6:'CIN', 7:'CLE', \
-			8:'TEN', 9:'JAC', 10:'PIT', 11:'DEN', 12:'KC', 13:'OAK', 14:'SD', \
+			8:'TEN', 9:'JAC', 10:'PIT', 11:'DEN', 12:'KC', 13:'OAK', 14:'LAC', \
 			15:'SEA', 16:'DAL', 17:'NYG', 18:'PHI', 19:'ARI', 20:'WAS', \
 			21:'CHI', 22:'DET', 23:'GB', 24:'MIN', 25:'TB', 26:'ATL', 27:'CAR',\
-			28:'LA', 29:'NO', 30:'SF', 31:'BAL', 32:'HOU'}
+			28:'LAR', 29:'NO', 30:'SF', 31:'BAL', 32:'HOU'}
 			
 def doubleByte(byteAsString) :
 	returnValue = 0

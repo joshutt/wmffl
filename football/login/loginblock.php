@@ -1,15 +1,15 @@
 <?
-require_once "$DOCUMENT_ROOT/base/conn.php";
+require_once "base/conn.php";
 
 if (isset($teamid)) {
 	$thequery = "select teamid, password from user where password='".$teamid."'";
-	$result = mysql_query($thequery, $conn);
-	$numrow = mysql_num_rows($result);
+    $result = mysqli_query($conn, $thequery);
+    $numrow = mysqli_num_rows($result);
 
 	if ($numrow == 0) {
 		$teamnum = 0;
 	} else {
-		$team = mysql_fetch_row($result);
+        $team = mysqli_fetch_row($result);
 		$teamnum = $team[0];
 		setcookie ("teamid", $team[1], time()+1800, "/", ".wmffl.com");
 		print $teamid;

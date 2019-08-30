@@ -20,9 +20,9 @@ $ptSql .= "order by ps.week, t.name ";
 
 
 // Get potential offense and defense scores
-$results = mysql_query($ptSql);
+$results = mysqli_query($conn, $ptSql);
 $potArray = array();
-while ($pot = mysql_fetch_array($results)) {
+while ($pot = mysqli_fetch_array($results)) {
     $potArray[$pot["week"]][$pot["name"]]["off"] = $pot["off"];
     $potArray[$pot["week"]][$pot["name"]]["def"] = $pot["def"];
 }
@@ -35,6 +35,9 @@ $reltArray = array();
 foreach ($potArray as $week=>$scores) {
     if ($week > $maxWeek) {$maxWeek = $week;}
     foreach ($scores as $name=>$posScore) {
+        if (!array_key_exists($name, $reltArray)) {
+            $reltArray[$name] = array("win" => 0, "lose" => 0, "tie" => 0);
+        }
        foreach ($scores as $comName=>$comScore) {
             if ($name == $comName) {continue;}
             $myScore = $posScore["off"] - $comScore["def"];
@@ -67,8 +70,11 @@ $sql .= "order by s.week, t1.name";
 
 // Get actual wins and losses
 $actual = array();
-$final = mysql_query($sql);
-while ($score = mysql_fetch_array($final)) {
+$final = mysqli_query($conn, $sql);
+while ($score = mysqli_fetch_array($final)) {
+    if (!array_key_exists($score["name"], $actual)) {
+        $actual[$score["name"]] = array("wins" => 0, "lose" => 0, "tie" => 0);
+    }
     if ($score['ptsfor'] > $score["ptsag"]) {
         $actual[$score["name"]]["wins"]++;
     } else if ($score['ptsfor'] < $score["ptsag"]) {

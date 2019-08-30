@@ -1,7 +1,7 @@
 <?
-include_once $DOCUMENT_ROOT."/base/conn.php";
+include_once "base/conn.php";
 
-include $DOCUMENT_ROOT."/base/menu.php";
+include "base/menu.php";
 
 $sql = "SELECT p.playerid as 'ID', CONCAT(p.firstname,' ',p.lastname) as 'Name', IFNULL(t.name, '-') as 'Team', p.nflteam as 'NFL', sum(ps.pts) as 'Pts'
 FROM players p, playerscores ps
@@ -26,11 +26,11 @@ th {background-color: #006699; text-align: center;
 </style>
 
 <?
-$results = mysql_query($sql) or die("MySQL Error: ".mysql_error());
+$results = mysqli_query($conn, $sql) or die("MySQL Error: " . mysqli_error($conn));
 print "<table>";
 print "<tr><th>Name</th><th>Team</th><th>NFL</th><th>Pts</th></tr>";
 $odd = true;
-while($player = mysql_fetch_array($results)) {
+while ($player = mysqli_fetch_array($results)) {
    if ($odd) $color="#f0f0f0"; else $color="#e0e0e0";
    $odd = !$odd;
    print "<tr bgcolor=\"$color\">";
@@ -39,5 +39,5 @@ while($player = mysql_fetch_array($results)) {
 }
 print "</table>";
 
-include $DOCUMENT_ROOT."/base/footer.html";
+include "base/footer.html";
 ?>

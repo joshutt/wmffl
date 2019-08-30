@@ -1,7 +1,7 @@
 <?
 $title = "Publish Article";
 
-include "$DOCUMENT_ROOT/base/menu.php";
+include "base/menu.php";
 
 if (!$isin) {
     print "You Shouldn't Be here";
@@ -64,5 +64,5 @@ if (!isset($article)) {
 
 
 <?
-include "$DOCUMENT_ROOT/base/footer.html";
+include "base/footer.html";
 ?>

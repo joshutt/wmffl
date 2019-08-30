@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 $title = $_REQUEST["title"];
 $imagePath = $_REQUEST["image"];

@@ -46,7 +46,7 @@ EOD;
 
 #print $select;
 
-$result = mysql_query($select, $conn) or die("Select: ".mysql_error());
+$result = mysqli_query($conn, $select) or die("Select: " . mysqli_error($conn));
 
 // Popuolate records
 $lastTeam = "";
@@ -56,7 +56,8 @@ $nameIdMap = array();
 $i = 0;
 //print "<br/>";
 $actDue = null;
-while ($row = mysql_fetch_assoc($result)) {
+$lastName = "";
+while ($row = mysqli_fetch_assoc($result)) {
     if ($row["remain"] < -30*60) {
         $lock = false;
     } else {
@@ -116,22 +117,6 @@ while ($row = mysql_fetch_assoc($result)) {
     
 }
 
-/*
-if (time() > strtotime($actDue)) {
-    $results = mysql_query($gamePlanSelect) or die("Unable to get gameplans".mysql_error());
-    while ($row = mysql_fetch_array($results)) {
-        $i = $nameIdMap[$row["name"]];
-        $playFor = $row["forName"]." ".$row["forLast"]." (".$row["forPos"]."-".$row["forTeam"].")";
-        $playAgt = $row["agstName"]." ".$row["agstLast"]." (".$row["agstPos"]."-".$row["agstTeam"].")";
-        if ($row["forName"] == null) { $playFor = "None"; }
-        if ($row["agstName"] == null) { $playAgt = "None"; }
-        $gpLine[$i] = "<tr><td colspan='5'>Game Plan For: $playFor</td></tr>";
-        $gpLine[$i] .= "<tr><td colspan='5'>Game Plan Against: $playAgt</td></tr>";
-    }
-
-}
-*/
-
 ?>
 
 
@@ -139,13 +124,14 @@ if (time() > strtotime($actDue)) {
 <tr><td colspan=3 align=center><b>Current Activations for Week <?= $week ?></b></td></tr>
 
 <?php
-foreach (range(1,6) as $i) {
+for ($i = 1;
+$i <= sizeof($printer) / 2;
+$i++) {
     ?>
-    <tr><td valign=top><?= $printer[2*$i - 1] ?>
-        <?= $gpLine[2*$i - 1] ?></table></td>
+    <tr>
+        <td valign=top><?= $printer[2 * $i - 1] ?></table></td>
     <td width="5%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-    <td valign=top><?= $printer[2*$i] ?>
-        <?= $gpLine[2*$i] ?></table></td></tr>
+    <td valign=top><?= $printer[2 * $i] ?></table></td></tr>
     <tr><td>&nbsp;</td></tr>
 <?php } ?>
 

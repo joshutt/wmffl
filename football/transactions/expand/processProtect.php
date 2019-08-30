@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 //print_r($_REQUEST);
 
@@ -36,16 +36,16 @@ $deleteSql = "DELETE FROM expansionprotections where teamid=$teamnum";
 $title = "Protections Saved";
 ?>
 
-<? include "$DOCUMENT_ROOT/base/menu.php"; ?>
+<? include "base/menu.php"; ?>
 
 <h1 align="center">Protections Saved</h1>
 <hr/>
 
 
 <?
-mysql_query($deleteSql) or die ("Unable to clear old protections: ".mysql_error());
+mysqli_query($conn, $deleteSql) or die ("Unable to clear old protections: " . mysqli_error($conn));
 
-mysql_query($sql) or die ("Unable to save your protections: ".mysql_error());
+mysqli_query($conn, $sql) or die ("Unable to save your protections: " . mysqli_error($conn));
 
 ?>
 
@@ -54,4 +54,4 @@ mysql_query($sql) or die ("Unable to save your protections: ".mysql_error());
 
 <p><a href="protectList.php">Return to Protections page</a></p>
 
-<? include "$DOCUMENT_ROOT/base/footer.html"; ?>
+<? include "base/footer.html"; ?>

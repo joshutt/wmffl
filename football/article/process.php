@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 function compressImage($url, $currentSeason, $currentWeek) {
     $maxSize = 600;
@@ -79,11 +79,10 @@ if ($fail) {
 }
 
 
-
-$useTitle = mysql_real_escape_string($title);
-$useURL = mysql_real_escape_string($fullName);
-$useCaption = mysql_real_escape_string($caption);
-$useArticle = mysql_real_escape_string($article);
+$useTitle = mysqli_real_escape_string($conn, $title);
+$useURL = mysqli_real_escape_string($conn, $fullName);
+$useCaption = mysqli_real_escape_string($conn, $caption);
+$useArticle = mysqli_real_escape_string($conn, $article);
 
 $sql =<<<EOD
 INSERT INTO articles
@@ -93,8 +92,8 @@ VALUES
 EOD;
 
 //print $sql;
-$result = mysql_query($sql) or die("Failed: ".mysql_error());
-$uid = mysql_insert_id();
+$result = mysqli_query($conn, $sql) or die("Failed: " . mysqli_error($conn));
+$uid = mysqli_insert_id($conn);
 $_REQUEST["uid"] = $uid;
 
 include "preview.php";

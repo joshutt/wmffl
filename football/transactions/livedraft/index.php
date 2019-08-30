@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "utils/start.php";
 
 require "DataObjects/Draftpicks.php";
@@ -16,6 +16,7 @@ $draftPicks->find();
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="icon" href="/images/logo3.png" type="image/png">
     <title>WMFFL Live Draft</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
@@ -25,11 +26,11 @@ $draftPicks->find();
     <link href="draft.css" type="text/css" rel="stylesheet"/>
 
     <!-- Latest compiled and minified JavaScript -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="update.jquery.js" type="text/javascript"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="update.jquery.js" type="text/javascript"></script>
 </head>
 
 <body onresize="resize()" onLoad="$(ready)">
@@ -49,8 +50,9 @@ $draftPicks->find();
 
 <main class="mt-1">
     <div class="container-fluid">
-        <div class="row flex-md-row-reverse mx-0">
-            <div class="row col-lg-8 col-md-6">
+        <div class="row flex-md-row-reverse mx-0 py-1">
+            <div class="col-lg-8 col-md-6">
+                <div class="row mx-0">
                 <div class="col-lg-5 col-md-12 px-0">
                     <div class="card" id="logInCard">
                         <div class="card-header bg-primary py-0">Log In</div>
@@ -135,7 +137,7 @@ $draftPicks->find();
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-7 col-md-12">
+                <div class="col-lg-7 col-md-12 pr-0">
                     <div class="card">
                         <span class="text-center">Join the Google <a href="https://meet.google.com/mau-zshk-cds">Hangout</a></span>
                     </div>
@@ -255,7 +257,7 @@ $draftPicks->find();
                             </table>
                         </div>
                     </div>
-
+                </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 col-lg-pull-8 px-0 card tableList">
@@ -283,8 +285,10 @@ $draftPicks->find();
                             $playerName = "";
                         }
 
+                        //error_log(print_r($team, true));
+                        $teamName = $team->Name;
                         print <<<EOD
-                            <tr id="pick_{$roundDist}_{$pickDist}" class="$row" classname="$row">
+                            <tr id="pick_{$roundDist}_{$pickDist}">
                                 <td class="round text-small px-2">$roundDist</td>
                                 <td class="pick text-small px-2">$pickDist</td>
                                 <td class="franchise text-small px-2">$teamName</td>

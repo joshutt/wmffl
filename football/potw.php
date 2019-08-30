@@ -1,7 +1,7 @@
 <?
 $playerid = 5449;
 
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 include_once "DataObjects/Newplayers.php";
 
 $player = new DataObjects_Newplayers;

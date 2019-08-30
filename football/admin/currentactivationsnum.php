@@ -1,5 +1,5 @@
 <?
-//require_once "$DOCUMENT_ROOT/base/conn.php";
+//require_once "base/conn.php";
 require_once "/home/wmffl/public_html/base/conn.php";
 require_once "/home/wmffl/public_html/base/useful.php";
 	
@@ -9,15 +9,15 @@ require_once "/home/wmffl/public_html/base/useful.php";
 	$create = "CREATE TEMPORARY TABLE $tablename (teamid INT(11) DEFAULT '0' NOT NULL, Season YEAR(4) DEFAULT '0000' NOT NULL, Week   TINYINT(4)  DEFAULT '0' NOT NULL) TYPE=HEAP";
 	$select = "select t.name, p.position, IF (p.firstname <> '', concat(p.lastname, ', ', p.firstname), p.lastname), p.nflteam, p.statid, t.statid, w.week from team t, players p, activations a, $tablename w where a.teamid=t.teamid and a.teamid=w.teamid and a.week=w.week and a.season=w.season and p.playerid in (a.HC,a.QB,a.RB1,a.RB2,a.WR1,a.WR2,a.TE,a.K,a.OL, a.DL1,a.DL2,a.LB1,a.LB2,a.DB1,a.DB2) group by t.teamid, p.position, p.lastname, p.firstname, p.playerid";
 	$drop = "DROP TABLE IF EXISTS $tablename";
-	
-	if (isset($HTTP_GET_VARS["week"])) {
-		$week = $HTTP_GET_VARS["week"];
-	} else if (isset($HTTP_POST_VARS["week"])) {
-		$week = $HTTP_POST_VARS["week"];
+
+if (isset($_GET["week"])) {
+    $week = $_GET["week"];
+} else if (isset($_POST["week"])) {
+    $week = $_POST["week"];
 	} else {
 		$pickweek = "SELECT week FROM weekmap WHERE EndDate>=now() and StartDate<=now()";
-		$result = mysql_query($pickweek, $conn) or die("Week Pick");
-		$row = mysql_fetch_row($result);
+    $result = mysqli_query($conn, $pickweek) or die("Week Pick");
+    $row = mysqli_fetch_row($result);
 		$week = $row[0];
 	}
 	
@@ -26,15 +26,16 @@ require_once "/home/wmffl/public_html/base/useful.php";
 	
 
 	// Perform queries
-	mysql_query($create, $conn) or die("Create");
-	mysql_query($insert, $conn) or die("Insert");
-	$result = mysql_query($select, $conn) or die("Select"); 
+mysqli_query($conn, $create) or die("Create");
+mysqli_query($conn, $insert) or die("Insert");
+$result = mysqli_query($conn, $select) or die("Select");
+ 
 	// Populate records
-	while ($row = mysql_fetch_row($result)) {
+while ($row = mysqli_fetch_row($result)) {
 		if (!isset($activates[$row[0]]["count"])) $activates[$row[0]]["count"]=0;
 		$activates[$row[0]][$activates[$row[0]]["count"]++] = $row;
 	}
-	mysql_query($drop, $conn) or die("Drop");
+mysqli_query($conn, $drop) or die("Drop");
 	
 	
 	// populate team output 

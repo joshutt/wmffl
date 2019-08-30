@@ -64,6 +64,6 @@ include "base/menu.php";
 $thisSeason = 2013;
 $thisWeek = 17;
 $clinchedList = array( 'Woodland Rangers' => 'z-', 'Norsemen' => 'y-', 'Werewolves' => 'z-', 'Crusaders' => 'y-', 'MeggaMen' => 'y-', 'Gallic Warriors' => 'x-');
-include "2013Season/weekstandings.php";
+include "common/weekstandings.php";
 include "base/footer.html";
 ?>

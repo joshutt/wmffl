@@ -1,5 +1,4 @@
-<?
-session_start();
+<?php
 require_once "utils/start.php";
 include_once "trade.class.php";
 include_once "loadTrades.inc.php";
@@ -9,8 +8,8 @@ if (!$isin) {
     exit;
 }
 //$teamid = 2;
-$tradeID = $HTTP_POST_VARS["offerid"];
-$action = $HTTP_POST_VARS["action"];
+$tradeID = $_POST["offerid"];
+$action = $_POST["action"];
 
 #print $tradeID;
 #print $action;
@@ -19,6 +18,7 @@ if ($action == "Amend" || $action == "Counter") {
 	header("Location: edittrade.php?offerid=$tradeID");
 }
 
+$question = "";
 switch($action) {
 	case 'Accept':
 		$question = "Are you sure you would like to accept this offer?";
@@ -113,11 +113,11 @@ include "base/menu.php"; ?>
 
 <CENTER>
 <FORM ACTION="finalprocess.php" METHOD="POST">
-<INPUT TYPE="hidden" name="action" value="<?print $action;?>">
-<INPUT TYPE="hidden" name="offerid" value="<?print $tradeID;?>">
-<H3 ALIGN=Center><? print $question; ?></H3>
-<? print $thisTeamString; ?><BR>
-<? print $otherTeamString; ?><BR>
+    <INPUT TYPE="hidden" name="action" value="<?= $action ?>">
+    <INPUT TYPE="hidden" name="offerid" value="<?= $tradeID ?>">
+    <H3 ALIGN=Center><?= $question ?></H3>
+    <?= $thisTeamString ?><BR>
+    <?= $otherTeamString ?><BR>
 <P>Additional Comments:<BR>
 <TEXTAREA NAME="comments" COLS=60 ROWS=8>
 </TEXTAREA></P>

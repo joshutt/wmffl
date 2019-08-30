@@ -1,8 +1,8 @@
-<?
-require_once "utils/start.php";
+<?php
+require_once "utils/connect.php";
 #$isin = true;
 #$teamnum = 2;
-$dateSrc = "2018-08-19 23:59 EDT";
+$dateSrc = "2019-08-25 23:59 EDT";
 $dateTime = new DateTime($dateSrc);
 
 $thequery = "select p.playerid, p.firstname, p.lastname, p.pos, ";
@@ -31,10 +31,7 @@ $ptsQuery = "select TotalPts, ProtectionPts from transpoints where teamid=$teamn
 //$ptsQuery = "select TotalPts, ProtectionPts from newtranspoints where teamid=$teamnum and season=2003";
 
 $title = "WMFFL Protections";
-?>
-
-<?
-	include "base/menu.php";
+include "base/menu.php";
 ?>
 
 
@@ -43,8 +40,8 @@ $title = "WMFFL Protections";
 
 <?
 if ($isin) {
-	$results = mysql_query($ptsQuery) or die("Database error: ".mysql_error());
-	$pts = mysql_fetch_row($results);
+    $results = mysqli_query($conn, $ptsQuery) or die("Database error: " . mysqli_error($conn));
+    $pts = mysqli_fetch_row($results);
 ?>
 
 <SCRIPT LANGUAGE="JavaScript">
@@ -93,9 +90,9 @@ has Passed</FONT></B></P>
 <TR><TH></TH><TH>Name</TH><TH>Position</TH><TH>Cost</TH></TR>
 <? 
 	// Create the query
-	$results = mysql_query($thequery);
+$results = mysqli_query($conn, $thequery);
 	$idx = 0;
-	while (list($playerid, $firstname, $lastname, $pos, $nfl, $year, $cost, $protected) = mysql_fetch_row($results)) {
+while (list($playerid, $firstname, $lastname, $pos, $nfl, $year, $cost, $protected) = mysqli_fetch_row($results)) {
 		print "<TR><TD><INPUT TYPE=\"checkbox\" NAME=\"protect[]\" VALUE=\"$playerid\" ONCLICK=\"change($cost, $idx)\"";
 		if ($protected == 1 || $pos=="HC") print "CHECKED ";
 		print "></TD>";
@@ -107,8 +104,8 @@ has Passed</FONT></B></P>
 
 <INPUT TYPE=SUBMIT NAME="submit" VALUE="Submit Protections" onClick="return checkForm()">
 </FORM>
-	
-<?
+
+        <?php
 }
 	} else {
 ?>
@@ -116,8 +113,8 @@ has Passed</FONT></B></P>
 <CENTER><B>You must be logged in to submit protections</B></CENTER>
 
 <? } ?>
-	
-<?
+
+<?php
 	include "base/footer.html";
 ?>
 

@@ -29,10 +29,11 @@ function printPlayer($player, $count, $hlSeason) {
 
 function printRankList($sql, $pos, $hlSeason=2016, $extraList=array()) {
 
-    $result = mysql_query(sprintf($sql, $pos)) or die("Unable to run query: ".mysql_error());
+    global $conn;
+    $result = mysqli_query($conn, sprintf($sql, $pos)) or die("Unable to run query: " . mysqli_error($conn));
 
     $posArray = array();
-    while ($players = mysql_fetch_array($result)) {
+    while ($players = mysqli_fetch_array($result)) {
         $name = $players['firstname']." ".$players['lastname'];
         $season = $players['season'];
         $pts = $players['active'];
@@ -57,7 +58,7 @@ function printRankList($sql, $pos, $hlSeason=2016, $extraList=array()) {
             break; 
         }
 
-        while ($extraList[$extraCount]["pts"] >= $player["pts"]) {
+        while (isset($extraList[$extraCount]) && $extraList[$extraCount]["pts"] >= $player["pts"]) {
             printPlayer($extraList[$extraCount], $count, $hlSeason);
             $extraCount++;
             $count++;
@@ -113,6 +114,7 @@ $dbList = array(array("name"=>"Rodney Harrison", "season"=>1997, "pts"=>146),
 
 
 $cssList = array("/base/css/history.css");
+$title = "Single Season Records";
 include "base/menu.php";
 ?>
 

@@ -1,4 +1,5 @@
 <?
+require_once dirname(__FILE__)."/../base.php";
 
 function catchBadFunction($errno, $errstr, $errfile, $errline, $vars) {
     error_log("$errstr in $errfile on line $errline");
@@ -11,22 +12,22 @@ function catchBadFunction($errno, $errstr, $errfile, $errline, $vars) {
     $vars["pts"] = 0;
 }
 
-require_once "/home/joshutt/football/utils/start.php";
-include "/home/joshutt/football/base/scoring.php";
+//require_once "/home/joshutt/football/utils/start.php";
+include "base/scoring.php";
 
 //$week = $currentWeek - 1;
 $week = $currentWeek;
 
 $sql = "select p.playerid, p.pos, s.season, s.* from newplayers p, stats s ";
-$sql .= "where s.statid=p.flmid and s.season=$currentSeason and week=$week";
+$sql .= "where s.statid=p.flmid and s.played=1 and s.season=$currentSeason and week=$week";
 
 $bigquery = "insert into playerscores (playerid, season, week, pts) ";
 $bigquery .= "values ";
 
-$results = mysql_query($sql) or die("Dead on select: ".mysql_error());
+$results = mysqli_query($conn, $sql) or die("Dead on select: " . mysqli_error($conn));
 $first = 1;
 set_error_handler("catchBadFunction");
-while($player = mysql_fetch_array($results)) {
+while ($player = mysqli_fetch_array($results)) {
     $funcName = "score".$player["pos"];
     if ($player["pos"] == "") {
         $pts = 0;
@@ -43,8 +44,8 @@ while($player = mysql_fetch_array($results)) {
 
 }
 restore_error_handler();
-print $bigquery; 
-mysql_query($bigquery) or die("Error: ".mysql_error());
+print $bigquery;
+mysqli_query($conn, $bigquery) or die("Error: " . mysqli_error($conn));
 
 
 $querySql = <<<EOD
@@ -55,8 +56,8 @@ $querySql = <<<EOD
     WHERE ps.season=$currentSeason AND ps.week=$week
 EOD;
 
-$results = mysql_query($querySql) or die("Error: ".mysql_error());
+$results = mysqli_query($conn, $querySql) or die("Error: " . mysqli_error($conn));
 
-print "Successfully Transfered ".mysql_affected_rows($results)." scores\n";
+print "Successfully Transfered " . mysqli_affected_rows($conn) . " scores\n";
 
 ?>

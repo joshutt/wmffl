@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "utils/connect.php";
 include "base/scoring.php";
 include "scoreFunctions.php";
@@ -29,7 +29,7 @@ while ($row = mysqli_fetch_array($results)) {
 $weekLabel = $weekList[$thisWeek - 1][1];
 $title = "Current Scores";
 $cssList = array("score.css");
-include "$DOCUMENT_ROOT/base/menu.php";
+include "base/menu.php";
 ?>
 
 
@@ -47,8 +47,6 @@ $teams = getOtherTeam($thisTeamID, $thisWeek, $thisSeason, $conn);
 
 $javascriptString = "";
 for ($i = 0; $i<2; $i++) {
-?>
-<?
     $select = generateReserves($teams[$i], $thisSeason, $thisWeek);
 	$printString[$i] = "";
 	$reserveString[$i] = "";

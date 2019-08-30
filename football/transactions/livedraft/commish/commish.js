@@ -31,11 +31,13 @@ function setA(data) {
 function startClock() {
     $.get("../stopClock.php", {"start":"start"});
     $("#stClock").text("Stop Clock");
+    $("#stClock").removeClass("btn-green").addClass("btn-red");
 }
 
 function stopClock() {
     $.get("../stopClock.php", {"stop":"stop"});
     $("#stClock").text("Start Clock");
+    $("#stClock").removeClass("btn-red").addClass("btn-green");
 }
 
 function changeClock() {
@@ -99,3 +101,8 @@ function convertTime(secs) {
     return min+":"+disSec;
 }
 
+
+function startDraft() {
+    $.get("startDraft.php");
+    alert("Start Draft");
+}

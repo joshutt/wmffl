@@ -1,18 +1,24 @@
-<?
-function trade($teamid, $date) {
-	$tradequery="select t1.tradegroup, t1.date, tm1.name as TeamFrom, ";
-	$tradequery.="p.lastname, p.firstname, p.position, p.nflteam, t1.other ";
-	$tradequery.="from trade t1, trade t2, team tm1, team tm2 ";
-    $tradequery.="left join players p on p.playerid=t1.playerid ";
-	$tradequery.="where t1.tradegroup=t2.tradegroup and t1.teamfromid<>t2.teamfromid ";
-	$tradequery.="and (t1.TeamFromid=$teamid or t1.TeamToid=$teamid) and t1.teamfromid=tm1.teamid ";
-	$tradequery.="and t2.teamfromid=tm2.teamid ";
-	$tradequery.="and t1.date='$date' ";
-	$tradequery.="group by t1.tradegroup, abs(tm1.teamid-$teamid), p.lastname ";
+<?php
+function trade($conn, $teamid, $date)
+{
+    $tradequery = "select t2.tradegroup, t1.date, tm1.name as TeamFrom,
+p.lastname, p.firstname, p.pos, r.nflteamid, t1.other
+from trade t1
+ join trade t2 on t1.TradeGroup=t2.TradeGroup
+ join team tm1 on t1.TeamFromID=tm1.TeamID
+ JOIN team tm2 on t2.TeamFromID=tm2.TeamID and tm1.TeamID != tm2.TeamID
+left join newplayers p on p.playerid=t1.playerid
+left join nflrosters r on p.playerid=r.playerid and r.dateon <= t1.Date and (r.dateoff >= t1.Date or r.dateoff is null)
+where (t1.TeamFromid=$teamid or t1.TeamToid=$teamid)
+and t1.date='$date'
+group by t1.tradegroup, abs(tm1.teamid-$teamid), p.lastname";
 
-	$results = mysql_query($tradequery);
+    $results = mysqli_query($conn, $tradequery) or die("Error: " . mysqli_error($conn));
 	$oldgroup = 0;
-	while (list($group, $date, $TeamFrom, $lastname, $firstname, $position, $nflteam, $other) = mysql_fetch_row($results)) {
+    $firstteam = "";
+    $firstplayer = TRUE;
+    /** @noinspection PhpUnusedLocalVariableInspection */
+    while (list($group, $tdate, $TeamFrom, $lastname, $firstname, $position, $nflteam, $other) = mysqli_fetch_row($results)) {
 		if ($oldgroup != $group) {
 			print "<LI>Traded ";
 			$oldgroup = $group;
@@ -33,71 +39,46 @@ function trade($teamid, $date) {
 
 
 	// Include the file that defines the connection information
-	require $DOCUMENT_ROOT."/base/conn.php";
+require "utils/connect.php";
 	
 	$thequery = "SELECT DATE_FORMAT(max(date), '%m/%e/%Y'), DATE_FORMAT(max(date),'%m'), DATE_FORMAT(max(date),'%Y') FROM transactions";
-	$results = mysql_query($thequery);
-	list($lastupdate, $themonth, $theyear) = mysql_fetch_row($results);
-	
-	if (isset($HTTP_GET_VARS["month"])) $themonth = $HTTP_GET_VARS["month"];
-	if (isset($HTTP_GET_VARS["year"])) $theyear = $HTTP_GET_VARS["year"];
-//	if (!isset($HTTP_GET_VARS["year"])) $HTTP_GET_VARS["year"]=2002;
+$results = mysqli_query($conn, $thequery);
+list($lastupdate, $themonth, $theyear) = mysqli_fetch_row($results);
+
+if (isset($_REQUEST["month"])) $themonth = $_REQUEST["month"];
+if (isset($_REQUEST["year"])) $theyear = $_REQUEST["year"];
+//	if (!isset($_GET["year"])) $_GET["year"]=2002;
 
     $title = "WMFFL Transactions";
-	include "$DOCUMENT_ROOT/base/menu.php";
+include "base/menu.php";
 ?>
 
 <H1 ALIGN=Center>Transactions</H1>
 <H5 ALIGN=Center>Last Updated <?print $lastupdate;?></H5>
 <HR size = "1">
-<!--
-<FORM ACTION="transactions.php" METHOD="GET">
-<SELECT NAME="month">
-	<OPTION VALUE="01"<? if ($themonth=='01') print "SELECTED";?>>January</OPTION>
-	<OPTION VALUE="02"<? if ($themonth=='02') print "SELECTED";?>>February</OPTION>
-	<OPTION VALUE="03"<? if ($themonth=='03') print "SELECTED";?>>March</OPTION>
-	<OPTION VALUE="04"<? if ($themonth=='04') print "SELECTED";?>>April</OPTION>
-	<OPTION VALUE="05"<? if ($themonth=='05') print "SELECTED";?>>May</OPTION>
-	<OPTION VALUE="06"<? if ($themonth=='06') print "SELECTED";?>>June</OPTION>
-	<OPTION VALUE="07"<? if ($themonth=='07') print "SELECTED";?>>July</OPTION>
-	<OPTION VALUE="08"<? if ($themonth=='08') print "SELECTED";?>>August</OPTION>
-	<OPTION VALUE="09"<? if ($themonth=='09') print "SELECTED";?>>September</OPTION>
-	<OPTION VALUE="10"<? if ($themonth=='10') print "SELECTED";?>>October</OPTION>
-	<OPTION VALUE="11"<? if ($themonth=='11') print "SELECTED";?>>November</OPTION>
-	<OPTION VALUE="12"<? if ($themonth=='12') print "SELECTED";?>>December</OPTION>
-</SELECT>
-<INPUT TYPE="hidden" NAME="year" VALUE="2001">
--->
-<!--
-<SELECT NAME="year">
-	<OPTION VALUE="2001">This Season</OPTION>
-	<OPTION VALUE="2000">2000 Season</OPTION>
-</SELECT>
--->
-<!--
-<INPUT TYPE="submit" NAME="submit" VALUE="Search">
-</FORM>
--->
-<? 
-	include "$DOCUMENT_ROOT/history/2001Season/transmenu.html";
+<?php
+include "history/2001Season/transmenu.html";
 
-//	if (!isset($HTTP_POST_VARS["month"])) $HTTP_POST_VARS["month"]=$themonth;
-//	if (!isset($HTTP_POST_VARS["year"])) $HTTP_POST_VARS["year"]=2001;
+//	if (!isset($_POST["month"])) $_POST["month"]=$themonth;
+//	if (!isset($_POST["year"])) $_POST["year"]=2001;
 
 	// Create the query
-	$thequery="SELECT DATE_FORMAT(t.date, '%M %e, %Y'), m.name, t.method, concat(p.firstname, ' ', p.lastname), p.position, p.nflteam, m.teamid, t.date ";
-	$thequery .= "FROM transactions t, team m, players p ";
-	$thequery .= "WHERE t.teamid=m.teamid AND t.playerid=p.playerid ";
-	//$thequery .= "AND t.date BETWEEN '".$HTTP_GET_VARS["year"]."-".$themonth."-01' AND ";
-	$thequery .= "AND t.date BETWEEN '".$theyear."-".$themonth."-01' AND ";
-	$thequery .= "'".$theyear."-".$themonth."-31' ";
-//	$thequery .= "'".HTTP_POST_VARS["year"]."-".$HTTP_POST_VARS["month"]."-31' ";
-	$thequery .= "ORDER BY t.date DESC, m.name, t.method, p.lastname";
-	
-	
-	$results = mysql_query($thequery);
+$thequery = "SELECT DATE_FORMAT(t.date, '%M %e, %Y'), m.name, t.method, concat(p.firstname, ' ', p.lastname), p.pos, r.nflteamid, m.teamid, t.date
+FROM transactions t
+ JOIN teamnames m on t.TeamID=m.teamid and m.season=$theyear
+  JOIN newplayers p on t.PlayerID=p.playerid
+left JOIN nflrosters r on t.PlayerID=r.playerid and r.dateon <= t.Date and (r.dateoff>=t.Date or r.dateoff is null)
+WHERE t.date BETWEEN '$theyear-$themonth-01' AND
+'$theyear-$themonth-31'
+ORDER BY t.date DESC, m.name, t.method, p.lastname";
+
+
+$results = mysqli_query($conn, $thequery);
 	$first = TRUE;
-	while (list($date, $teamname, $method, $player, $position, $nflteam, $teamid, $rawdate) = mysql_fetch_row($results)) {
+$olddate = "";
+$oldteam = "";
+$oldmethod = "";
+while (list($date, $teamname, $method, $player, $position, $nflteam, $teamid, $rawdate) = mysqli_fetch_row($results)) {
 		$change = FALSE;
 		if ($olddate != $date) {
 			if (!$first) {
@@ -124,7 +105,7 @@ function trade($teamid, $date) {
 				case 'Sign': print "<LI>Picked Up "; break;
 				case 'Trade':
 					if ($tradeonce) continue 2;
-					trade($teamid, $rawdate); 
+                    trade($conn, $teamid, $rawdate);
 					$change = TRUE;
 					$oldmethod = "";
 					$tradeonce = TRUE;
@@ -143,6 +124,5 @@ function trade($teamid, $date) {
 	}
 	print "</UL></UL>";
 
-	include "$DOCUMENT_ROOT/base/footer.html";
-?>
+include "base/footer.html";
 

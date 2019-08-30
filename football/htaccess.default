@@ -1,0 +1,15 @@
+# Add these settings to the .htaccess file
+
+ErrorDocument 404 /404.php
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+<Files php.ini>
+order allow,deny
+deny from all
+</Files>
+
+

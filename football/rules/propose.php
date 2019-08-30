@@ -3,10 +3,10 @@ require_once "/utils/start.php";
 
 if ($isin) {
 
-$name = $HTTP_POST_VARS["Name"];
-$team = $HTTP_POST_VARS["Team"];
-$email = $HTTP_POST_VARS["email"];
-$proposal = $HTTP_POST_VARS["proposal"];
+    $name = $_POST["Name"];
+    $team = $_POST["Team"];
+    $email = $_POST["email"];
+    $proposal = $_POST["proposal"];
 
 $subject = "RULE PROPOSAL";
 $body = "$name ($email) of the $team has made the following proposal:\n$proposal";

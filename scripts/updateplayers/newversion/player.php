@@ -83,7 +83,7 @@ function nflLabel($teamNum) {
         case 11: return 'DEN'; break;
         case 12: return 'KC'; break;
         case 13: return 'OAK'; break;
-        case 14: return 'SD'; break;
+        case 14: return 'LAC'; break;
         case 15: return 'SEA'; break;
         case 16: return 'DAL'; break;
         case 17: return 'NYG'; break;
@@ -97,7 +97,7 @@ function nflLabel($teamNum) {
         case 25: return 'TB'; break;
         case 26: return 'ATL'; break;
         case 27: return 'CAR'; break;
-        case 28: return 'LA'; break;
+        case 28: return 'LAR'; break;
         case 29: return 'NO'; break;
         case 30: return 'SF'; break;
         case 31: return 'BAL'; break;

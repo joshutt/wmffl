@@ -1,11 +1,14 @@
-<?
+<?php
 // This is temporary, but maybe it's not such a bad idea
 require_once "utils/start.php";
+if (!isset($title)) {
+    $title = "WMFFL";
+}
 ?>
 
 <html>
 <head>
-    <title><? print $title; ?></title>
+    <title><?= $title; ?></title>
     <link rel="icon" href="/images/logo3.png" type="image/png"/>
     <link rel="SHORTCUT ICON" href="/images/logo3.png"/>
 
@@ -19,7 +22,7 @@ require_once "utils/start.php";
 
     // If no cssList then add it, otherwise add core.css
     if (isset($cssList)) {
-        array_unshift($cssList, "/base/css/core.css");
+        array_unshift($cssList, "/base/css/core.css?v11");
         array_unshift($cssList, "/transactions/livedraft/bootstrap.min.css");
     } else {
         $cssList = array("/transactions/livedraft/bootstrap.min.css", "/base/css/core.css");
@@ -53,7 +56,7 @@ require_once "utils/start.php";
             <div class="sideButton"><a class="sideButton" href="/history/2018Season/standings">Standings</a></div>
             <div class="sideButton"><a class="sideButton" href="/transactions/transactions">Transactions</a></div>
             <div class="sideButton"><a class="sideButton" href="/rules">Rules</a></div>
-            <div class="sideButton"><a class="sideButton" href="/history.php">History</a></div>
+            <div class="sideButton"><a class="sideButton" href="/history">History</a></div>
 
             <? include "login/logininc.php"; ?>
 

@@ -24,12 +24,12 @@ function buildObjectArray($they) {
     return $theyItems;
 }
 
-if (isset($HTTP_POST_VARS["cancel"])) {
+if (isset($_POST["cancel"])) {
 	header("Location: tradescreen.php");
     exit();
 }
 
-$offerid = $HTTP_POST_VARS["offerid"];
+$offerid = $_POST["offerid"];
 
 $they = $_SESSION["they"];
 //print_r($they);
@@ -88,7 +88,7 @@ $mailmessage .= $myTeam->getName()." offer ".printList($youItems);
 $mailmessage .= " to the ".$otherTeam->getName()." in exchange for ";
 $mailmessage .= printList($theyItems);
 $mailmessage .= "\n\n";
-$mailmessage .= $HTTP_POST_VARS["comments"];
+$mailmessage .= $_POST["comments"];
 $mailmessage .= "\n\n";
 $mailmessage .= "To accept, reject or modify this trade please go to the trade page: http://wmffl.com/transactions/trades/tradescreen.php  ";
 $mailmessage .= "This offer will expire in 7 days.";
@@ -98,12 +98,12 @@ $subject = "Trade Offer";
 
 // Send email
 $addyGet = "SELECT email, teamid FROM user WHERE teamid in ($teamnum, $teamto) AND active='Y'";
-$addyResults = mysql_query($addyGet);
+$addyResults = mysqli_query($conn, $addyGet);
 $first = true;
 $replyFirst = true;
 $address = "";
 $replyTo = "Reply-To: ";
-while (list($emailAdd, $fromTeam) = mysql_fetch_array($addyResults)) {
+while (list($emailAdd, $fromTeam) = mysqli_fetch_array($addyResults)) {
     if (!$first) {
         $address .= ", ";
     }

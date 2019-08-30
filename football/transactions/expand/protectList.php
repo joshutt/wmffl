@@ -11,9 +11,9 @@ $sql = <<<EOD
     select playerid, type from expansionprotections where teamid=$teamnum order by type
 EOD;
 
-$results = mysql_query($sql) or die("Unable to get expansion protections: ".mysql_error());
+    $results = mysqli_query($conn, $sql) or die("Unable to get expansion protections: " . mysqli_error($conn));
 
-while (list($playerid, $type) = mysql_fetch_array($results)) {
+    while (list($playerid, $type) = mysqli_fetch_array($results)) {
     if ($type == "protect") {
         array_push($protect, $playerid);
     } else if ($type == "pullback") {
@@ -292,12 +292,12 @@ ORDER BY p.pos, p.lastname
 
 EOD;
 
-$teamResults = mysql_query($sql) or die("Unable to get team list: ".mysql_error());
+    $teamResults = mysqli_query($conn, $sql) or die("Unable to get team list: " . mysqli_error($conn));
 
 print "<form action=\"processProtect.php\" method=\"post\" onsubmit=\"return checkform();\"/>";
 print "<div id=\"roster\">";
 print "<table><tr><th><a title=\"Protection - Limit 5\">P</a></th><th><a title=\"Pull-Back - Limit 2\">PB<a></th><th><a title=\"Alternate - Limit 1\">A</a></th><th>Player</th><th>Pos</th><th>NFL Team</th></tr>";
-while ($player = mysql_fetch_assoc($teamResults)) {
+    while ($player = mysqli_fetch_assoc($teamResults)) {
     print "<tr id=\"${player["playerid"]}\" onclick=\"rotate(this)\">";
     print "<td><input type=\"checkbox\" name=\"pro[]\" value=\"${player["playerid"]}\" onclick=\"saveClick(this)\" id=\"pro${player["playerid"]}\"/></td>";
     print "<td><input type=\"checkbox\" name=\"pb[]\" value=\"${player["playerid"]}\" onclick=\"saveClick(this)\" id=\"pb${player["playerid"]}\"/></td>";

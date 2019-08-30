@@ -1,6 +1,6 @@
 <?
-require_once "$DOCUMENT_ROOT/base/conn.php";
-require_once "$DOCUMENT_ROOT/base/useful.php";
+require_once "base/conn.php";
+require_once "base/useful.php";
 
 function getOtherGames($thisWeek, $thisSeason, $conn) {
     $getTeamSQL = "SELECT s.teamA, s.teamB, ta.name as 'aname', tb.name as 'bname', ";
@@ -8,9 +8,9 @@ function getOtherGames($thisWeek, $thisSeason, $conn) {
 	$getTeamSQL .= "FROM schedule s, team ta, team tb ";
     $getTeamSQL .= "WHERE s.Week=$thisWeek AND s.Season=$thisSeason ";
 	$getTeamSQL .= "AND s.teama=ta.teamid and s.teamb=tb.teamid ";
-    $results = mysql_query($getTeamSQL, $conn) or die("AUUGH: ".mysql_error());
+    $results = mysqli_query($conn, $getTeamSQL) or die("AUUGH: " . mysqli_error($conn));
 	return $results;
-//    $row = mysql_fetch_array($results);
+//    $row = mysqli_fetch_array($results);
 //    return $row;
 }
 
@@ -25,7 +25,7 @@ if ($currentWeek == 16) {$thisWeek=16;}
 $gameresults = getOtherGames($thisWeek, $currentSeason, $conn);
 $gameCol = 0;
 $gamesPrint = array();
-while ($row = mysql_fetch_array($gameresults)) {
+while ($row = mysqli_fetch_array($gameresults)) {
 	if ($row['scorea'] < $row['scoreb']) {
 		$winName = $row['bname'];
 		$winScore = $row['scoreb'];

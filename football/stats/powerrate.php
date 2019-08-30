@@ -19,23 +19,23 @@ function powersort($a, $b) {
     return 0;
 }
 
-$sql = "select w.week, t.name, p.firstname, p.lastname, p.pos, ps.pts, ";
-$sql .= "ps.active ";
-$sql .= "from roster r, weekmap w, newplayers p, teamnames t, playerscores ps ";
-$sql .= "where w.season=$thisSeason and r.dateon <= w.activationdue ";
-$sql .= "and (r.dateoff > w.activationdue or r.dateoff is null) ";
-$sql .= "and r.playerid=p.playerid and r.teamid=t.teamid ";
-$sql .= "and ps.week=w.week and ps.season=w.season and ps.playerid=p.playerid ";
-$sql .= "and t.season=ps.season ";
-$sql .= "order by w.week, t.name, p.pos, ps.pts desc";
+$sql = "select wm.week, t.name, p.firstname, p.lastname, p.pos, ps.pts, ps.active
+from roster r
+join weekmap wm on r.DateOn <= wm.ActivationDue and (r.DateOff is null or r.DateOff >= wm.ActivationDue)
+join newplayers p on r.PlayerID=p.playerid
+join teamnames t on r.TeamID=t.teamid and wm.Season=t.season
+join playerscores ps on ps.playerid=p.playerid and ps.season=wm.Season and ps.week=wm.Week
+where wm.Season=$thisSeason and wm.EndDate < now()
+order by wm.week, t.name, p.pos, ps.pts desc";
 
-$results = mysql_query($sql);
+
+$results = mysqli_query($conn, $sql);
 $potPts = array();
 $actPts = array();
 
 $curTeam = "";
 $curPos = "";
-while ($row = mysql_fetch_array($results)) {
+while ($row = mysqli_fetch_array($results)) {
     $week = $row["week"];
     $teamName = $row["name"];
     if ($curTeam != $teamName) {
@@ -117,10 +117,10 @@ $lineSQL = "SELECT t1.name, t2.name FROM schedule s, team t1, team t2 ";
 $lineSQL .= "WHERE s.teama=t1.teamid AND s.teamb=t2.teamid AND s.season=$thisSeason ";
 $lineSQL .= "AND s.week=".($week+1);
 
-$results = mysql_query($lineSQL);
+$results = mysqli_query($conn, $lineSQL);
 $arra = array();
 $arrb = array();
-while(list($ta, $tb) = mysql_fetch_row($results)) {
+while (list($ta, $tb) = mysqli_fetch_row($results)) {
     array_push($arra, $ta);
     array_push($arrb, $tb);
 }

@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 $thisSeason = 2007;
 $thisWeek = 17;
 //$thisWeek = $currentWeek;
@@ -70,7 +70,7 @@ a.return {
 -->
 </style>
 
-<? include "$DOCUMENT_ROOT/base/menu.php"; ?>
+<? include "base/menu.php"; ?>
 
 <H1 Align=Center><? print $thisSeason;?> Schedule</H1>
 <HR size = "1"><CENTER>
@@ -87,11 +87,11 @@ a.return {
 
 
 <?
-$results = mysql_query($sql) or die("Unable to get games: ".mysql_error());
+$results = mysqli_query($conn, $sql) or die("Unable to get games: " . mysqli_error($conn));
 
 $listWeek = 0;
 $lastLabel = "";
-while ($row = mysql_fetch_array($results)) {
+while ($row = mysqli_fetch_array($results)) {
     if ($row[0] != $listWeek || $row[11] != $lastLabel) {
         if ($listWeek != 0) {
             print <<<EOD
@@ -103,8 +103,8 @@ while ($row = mysql_fetch_array($results)) {
 EOD;
         }
 
-        
-        $byes = mysql_query($byeWeekQuery.$row[0]);
+
+        $byes = mysqli_query($conn, $byeWeekQuery . $row[0]);
         $anchorName = str_replace(" ","",$row[5]);
         $displayWeek = $row[5];
         if ($row[11] != "") {
@@ -129,11 +129,11 @@ EOD;
         </td>
     </tr>
 EOD;
-        $numByes = mysql_num_rows($byes);
+        $numByes = mysqli_num_rows($byes);
         if ($numByes > 0) {
             $byeCount = 1;
             $byeList = "";
-            while (list($byeTeam) = mysql_fetch_row($byes)) {
+            while (list($byeTeam) = mysqli_fetch_row($byes)) {
                 $byeList .= $byeTeam;
                 if ($byeCount+1 == $numByes) {
                     $byeList .= " and ";
@@ -189,4 +189,4 @@ print "</div><br/>";
 
 <a name="Playoffs"/><a name="Championship"/>
 
-<? include "$DOCUMENT_ROOT/base/footer.html"; ?>
+<? include "base/footer.html"; ?>

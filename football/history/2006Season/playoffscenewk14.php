@@ -1,6 +1,6 @@
 <?
 $title="Playoff Scenarios";
-include "$DOCUMENT_ROOT/base/menu.php";
+include "base/menu.php";
 ?>
 
 <H1 ALIGN=Center>Playoff Scenarios</H1>
@@ -43,4 +43,4 @@ The Norsemen and the Sacks on the Beach have both clinched the wild cards, seedi
 <p>The Gallic Warriors and the Lindbergh Baby Casserole are eliminated from post-season consideration.</p>
 
 
-<? include "$DOCUMENT_ROOT/base/footer.html"; ?>
+<? include "base/footer.html"; ?>

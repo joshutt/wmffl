@@ -36,8 +36,8 @@ if (!isset($ErrorMessage)) {$ErrorMessage = "";}
 $waiverSQL = "SELECT IF(now()>ActivationDue,1,0) AS 'WaiverPeriod', ";
 $waiverSQL .= "season, week ";
 $waiverSQL .= "FROM weekmap WHERE now() BETWEEN startdate AND enddate";
-$result = mysql_query($waiverSQL) or die("Error: ".mysql_error());
-list($isWaiver, $season, $week) = mysql_fetch_row($result);
+$result = mysqli_query($conn, $waiverSQL) or die("Error: " . mysqli_error($conn));
+list($isWaiver, $season, $week) = mysqli_fetch_row($result);
 if ($week==0) {$isWaiver = 1;}
 
 $displayWaiver = false;
@@ -48,7 +48,7 @@ if($submit == "Confirm") {
 //    print "In Confirm<br>";
 	$playercount = 0;
 	$listcount = 0;
-	while(list($key, $val) = each($HTTP_POST_VARS)) {
+    while (list($key, $val) = each($_POST)) {
 		$com = substr($key, 0, 4);
   //      print "$key - $com - $val<br>";
 		if ($com == "keep") {
@@ -92,8 +92,8 @@ if($submit == "Confirm") {
 FROM transpoints tp
 JOIN paid p on tp.teamid=p.teamid and tp.season=p.season
 WHERE tp.teamid=$teamnum and tp.season=$season";
-	$aResult = mysql_query($allowedTran) or die("Unable to get transactions: ".mysql_error());
-	list($paid, $remainTrans) = mysql_fetch_row($aResult);
+    $aResult = mysqli_query($conn, $allowedTran) or die("Unable to get transactions: " . mysqli_error($conn));
+    list($paid, $remainTrans) = mysqli_fetch_row($aResult);
 
     //$paid = true;
     //$remainTrans = 994;
@@ -115,9 +115,9 @@ WHERE tp.teamid=$teamnum and tp.season=$season";
 
 		$first = TRUE;
 		for ($i=0; $i<sizeof($playlist); $i++) {
-			$result = mysql_query($checkquery.$playlist[$i], $conn) or die ("Check Query Failed: ".$playlist[$i]);
-			if (mysql_num_rows($result) != 0) {
-				$rst = mysql_fetch_row($result);
+            $result = mysqli_query($conn, $checkquery . $playlist[$i]) or die ("Check Query Failed: " . $playlist[$i]);
+            if (mysqli_num_rows($result) != 0) {
+                $rst = mysqli_fetch_row($result);
 				$ErrorMessage .= $rst[2]." ".$rst[1]." is already on a roster!!<BR>";
 			} else {
 				if (!$first) {
@@ -156,21 +156,21 @@ WHERE tp.teamid=$teamnum and tp.season=$season";
         // Actually Do queries here
         //print "Any Errors? $ErrorMessage<br>";
 		if (!isset($ErrorMessage) || $ErrorMessage == "") {
-			mysql_query($dropquery, $conn) or die ("Drop Query Failed");
+            mysqli_query($conn, $dropquery) or die ("Drop Query Failed");
 			if (!$nopicks) {
-				mysql_query($thequery, $conn) or die ("Insert Query Failed");
-				mysql_query($ptsquery, $conn) or die ("Pts Query Failed");
+                mysqli_query($conn, $thequery) or die ("Insert Query Failed");
+                mysqli_query($conn, $ptsquery) or die ("Pts Query Failed");
 			}
 			if (!$first) {
-				mysql_query($transquery, $conn) or die ("Transaction Query Failed");
+                mysqli_query($conn, $transquery) or die ("Transaction Query Failed");
 			}
           //  print "In other queries<br>";
             //if ($isWaiver == 1) {
             if ($displayWaiver) {
             //    print "Doing this query<br>";
-                mysql_query($waiveClear) or die ("Clearing Waiver Failed: ".mysql_error());
+                mysqli_query($conn, $waiveClear) or die ("Clearing Waiver Failed: " . mysqli_error($conn));
                 if (!$firstW) {
-                    mysql_query($waivequery) or die ("Waiver Query Failed<br/>$waivequery<br/>".mysql_error());
+                    mysqli_query($conn, $waivequery) or die ("Waiver Query Failed<br/>$waivequery<br/>" . mysqli_error($conn));
                 }
             }
 			// Forward to completion page
@@ -181,25 +181,25 @@ WHERE tp.teamid=$teamnum and tp.season=$season";
 	}
 
 } else {
-	$playlist = process($HTTP_POST_VARS);
+    $playlist = process($_POST);
 }
 
 $waveCount = 0;
 $wavePlayers = array();
 //if ($isWaiver == 1) {
   //  $displayWaiver = true;
-    $waiverSQL = "SELECT w.playerid, p.lastname, p.firstname, p.team, ";
-    $waiverSQL .= "p.pos, w.priority FROM waiverpicks w, newplayers p ";
-    $waiverSQL .= "WHERE w.playerid=p.playerid AND teamid=$teamnum ";
-    $waiverSQL .= "AND season=$season AND week=$week ";
-    $waiverSQL .= "ORDER BY w.priority ";
-    $result = mysql_query($waiverSQL) or die("Dead: "+mysql_error());
-    $waveCount = 0;
-    while ($wavePlayers[$waveCount] = mysql_fetch_row($result)) {
-        $waveCount++;
-        $displayWaiver = true;
-    }
-    array_pop($wavePlayers);
+$waiverSQL = "SELECT w.playerid, p.lastname, p.firstname, p.team, ";
+$waiverSQL .= "p.pos, w.priority FROM waiverpicks w, newplayers p ";
+$waiverSQL .= "WHERE w.playerid=p.playerid AND teamid=$teamnum ";
+$waiverSQL .= "AND season=$season AND week=$week ";
+$waiverSQL .= "ORDER BY w.priority ";
+$result = mysqli_query($conn, $waiverSQL) or die("Dead: " + mysqli_error($conn));
+$waveCount = 0;
+while ($wavePlayers[$waveCount] = mysqli_fetch_row($result)) {
+    $waveCount++;
+    $displayWaiver = true;
+}
+array_pop($wavePlayers);
 //} else {
     //$waiverSQL = "SELECT DISTINCT playerid FROM roster r, weekmap w WHERE r.dateoff BETWEEN w.startdate and now() AND w.season=$currentSeason AND w.week=$currentWeek";
 
@@ -215,13 +215,17 @@ EOD;
 
     //$waiverSQL = "SELECT DISTINCT playerid FROM roster r, weekmap w WHERE r.dateoff BETWEEN w.startdate and now() AND w.season=$season AND w.week=$week";
 //    $waiverSQL .= " AND r.dateoff > '2004-09-07 11:00:00' ";
-    $result = mysql_query($waiverSQL) or die("Dead: "+mysql_error());
-    $wavePlayCount = 1;
-    //$wavePlayCount = 0;
-    while (list($waiveElgPlayers[$wavePlayCount]) = mysql_fetch_row($result)) {
-        $wavePlayCount++;
-    }
-//}
+$result = mysqli_query($conn, $waiverSQL) or die("Dead: " + mysqli_error($conn));
+$wavePlayCount = 1;
+$waiveElgPlayers = array();
+while ($row = mysqli_fetch_row($result)) {
+    //error_log("Row: ".print_r($row, true));
+    $waiveElgPlayers[$wavePlayCount] = $row[0];
+    //error_log("Array: ".is_array($waiveElgPlayers));
+    //error_log(print_r($waiveElgPlayers, true));
+    $wavePlayCount++;
+}
+//error_log("Waive Elg: ".print_r($waiveElgPlayers, true));
 
 
 // Generate query to list players
@@ -232,20 +236,14 @@ for ($i=0; $i<sizeof($playlist); $i++) {
 $thequery .= ")";
 
 // Get info about players to pickup
-$result = mysql_query($thequery, $conn) or die ("Query 1 Failed");
+$result = mysqli_query($conn, $thequery) or die ("Query 1 Failed");
 $i = 0;
-while ($pickups[$i] = mysql_fetch_row($result)) {
+while ($pickups[$i] = mysqli_fetch_row($result)) {
     if ($isWaiver == 1) {
         $pickups[$i][5] = 1;
         $waveCount++;
     } else {
-//        print "***".$pickups[$i][0]."***";
-//        print_r($waiveElgPlayers);
-//        print "***".$waiveElgPlayers[0]."***";
-        $dddd = $waiveElgPlayers[0];
-        if ($pickups[$i][0] == $dddd) {
-//            print "Yes";
-        }
+        //error_log("Pickups: ".print_r($pickups, true));
         $searcher = $pickups[$i][0];
 //        print $searcher;
 //        print array_search($pickups[$i][0], $waiveElgPlayers);
@@ -267,9 +265,9 @@ while ($pickups[$i] = mysql_fetch_row($result)) {
 
 // Get info about current roster
 $thequery = "select p.playerid, p.lastname, p.firstname, p.team, p.pos from newplayers p, roster r, team t where p.playerid=r.playerid and r.teamid=t.teamid and r.dateoff is null and t.teamid=$teamnum order by p.pos, p.lastname";
-$result = mysql_query($thequery, $conn) or die ("Query 2 Failed");
+$result = mysqli_query($conn, $thequery) or die ("Query 2 Failed");
 $i = 0;
-while ($currentroster[$i] = mysql_fetch_row($result)) {
+while ($currentroster[$i] = mysqli_fetch_row($result)) {
 	$i++;
 }
 
@@ -277,8 +275,8 @@ while ($currentroster[$i] = mysql_fetch_row($result)) {
 // Get team info
 //$thequery = "select count(*), t.preptsleft-t.ptsleft from roster r, players p, transpoints t where r.playerid=p.playerid and r.teamid=t.teamid and r.teamid=$teamnum and r.dateoff is null and p.position<>'HC' group by t.teamid";
 $thequery = "select count(*), t.totalpts-t.protectionpts-t.transpts from roster r, newplayers p, transpoints t where r.playerid=p.playerid and r.teamid=t.teamid and r.teamid=$teamnum and r.dateoff is null and p.pos<>'HC' and t.season=$season group by t.teamid";
-$result = mysql_query($thequery, $conn) or die ("Query 3 Failed");
-list($numplayers, $ptsleft) = mysql_fetch_row($result);
+$result = mysqli_query($conn, $thequery) or die ("Query 3 Failed");
+list($numplayers, $ptsleft) = mysqli_fetch_row($result);
 ?>
 
 

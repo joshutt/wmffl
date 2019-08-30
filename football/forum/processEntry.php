@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 if (!$isin) {
     header("Location: blogentry.php");
@@ -11,10 +11,9 @@ require "DataObjects/Forum.php";
 $post = new DataObjects_Forum;
 
 
-$subject = stripslashes(mysql_real_escape_string($HTTP_POST_VARS["subject"]));
-$body = stripslashes(mysql_real_escape_string(str_replace("\r\n","",$HTTP_POST_VARS["body"])));
+$subject = stripslashes(mysqli_real_escape_string($conn, $_POST["subject"]));
+$body = stripslashes(mysqli_real_escape_string($conn, str_replace("\r\n", "", $_POST["body"])));
 
-//print mysql_real_escape_string(stripslashes($HTTP_POST_VARS["body"]));
 
 $post->settitle($subject);
 $post->setbody($body);
@@ -30,8 +29,8 @@ $id = $post->insert();
 $sql = "SELECT blogaddress FROM user WHERE username='$user'";
 //print $sql;
 //print "<br/>";
-$results = mysql_query($sql) or die("Error in SQL: ".mysql_error());
-list($address) = mysql_fetch_row($results);
+$results = mysqli_query($conn, $sql) or die("Error in SQL: ".mysqli_error($conn));
+list($address) = mysqli_fetch_row($results);
 //print $address;
 
 mail($address, $subject, $body);
@@ -39,4 +38,3 @@ mail($address, $subject, $body);
 
 header("Location: comments.php");
 exit;
-?>

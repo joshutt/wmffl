@@ -1,8 +1,8 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 $title = "2006 Draft Picks";
-include "$DOCUMENT_ROOT/base/menu.php";
+include "base/menu.php";
 ?>
 <!--<meta http-equiv="refresh" content="60;">-->
 
@@ -14,4 +14,4 @@ This is the complete list of up-to-the-minute draft picks.
 <? include "draftsummary.txt"; ?>
 </PRE>
 
-<? include "$DOCUMENT_ROOT/base/footer.html"; ?>
+<? include "base/footer.html"; ?>

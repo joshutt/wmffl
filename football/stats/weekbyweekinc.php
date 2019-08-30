@@ -13,7 +13,7 @@ $teamArray = getTeamList($season);
         <select id="team" class="mx-1">
 <?php
 foreach ($teamArray as $team) {
-    if ($searchTeam == $team["id"]) { 
+    if (!empty($searchTeam) && $searchTeam == $team["id"]) {
 	$selected = "selected=\"true\" "; 
     } else {
 	$selected = "";
@@ -26,7 +26,7 @@ foreach ($teamArray as $team) {
         <select id="pos" class="mx-1">
 <?php
 foreach (getPosList() as $pos) {
-    if ($searchPos == $pos) {
+    if (!empty($searchPos) && $searchPos == $pos) {
 	$selected = "selected=\"true\" ";
     } else {
 	$selected = "";

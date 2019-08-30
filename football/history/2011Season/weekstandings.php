@@ -1,6 +1,6 @@
 <table cellpadding="5" cellspacing="1">
 <?
-include "$DOCUMENT_ROOT/lib/Team.php";
+include "lib/Team.php";
 
 //$thisSeason = 2004;
 //$thisWeek = 5;
@@ -48,10 +48,10 @@ AND s.week<=14
 EOD;
 
 
-$results = mysql_query($query) or die("Error: ".mysql_error());
+$results = mysqli_query($conn, $query) or die("Error: " . mysqli_error($conn));
 $count =0;
 $teamArray = array();
-while ($row = mysql_fetch_array($results)) {
+while ($row = mysqli_fetch_array($results)) {
     $t = new Team($row["team"], $row["division"], $row["teamid"]);
     $rec = array($row["win"], $row["lose"], $row["tie"]);
     $div = array($row["divwin"], $row["divlose"], $row["divtie"]);
@@ -67,8 +67,8 @@ while ($row = mysql_fetch_array($results)) {
 
 //print_r($teamArray);
 
-$results = mysql_query($secondQuery) or die("Second Error: ".mysql_error());
-while ($row = mysql_fetch_array($results)) {
+$results = mysqli_query($conn, $secondQuery) or die("Second Error: " . mysqli_error($conn));
+while ($row = mysqli_fetch_array($results)) {
     //print_r($row);
     $teamid = $row["teamid"];
     $opp = $row["oppid"];

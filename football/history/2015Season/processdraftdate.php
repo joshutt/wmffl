@@ -1,12 +1,12 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 if (!$isin) {
     header("Location: /history/2014Season/draftdate.php");
 }
 
 $numNo = 0;
-foreach ($HTTP_POST_VARS as $key => $value) {
+foreach ($_POST as $key => $value) {
     if ($value == "N") {
         $numNo++;
     }
@@ -27,20 +27,20 @@ EOD;
 } else {
     $season = 2015;
 
-    foreach ($HTTP_POST_VARS as $key => $value) {
+    foreach ($_POST as $key => $value) {
         //print "$key - $value <BR>";
         $thequery = "UPDATE draftdate SET attend='$value' ";
         $thequery.= "WHERE date='$season-".substr($key,0,2)."-".substr($key,2,2)."' ";
         $thequery .= "AND userid = $usernum"; 
         
         #print $thequery."<BR>";
-        mysql_query($thequery) or die("Error: ".mysql_error());
+        mysqli_query($conn, $thequery) or die("Error: " . mysqli_error($conn));
         
 
     }
 
     $newQuery = "UPDATE draftvote SET lastUpdate=now() where season=$season and userid=$usernum";
-    mysql_query($newQuery) or die("Error: ".mysql_error());
+    mysqli_query($conn, $newQuery) or die("Error: " . mysqli_error($conn));
 
     $draftMessage = <<<EOD
     Your draft request has been recorded.</p>

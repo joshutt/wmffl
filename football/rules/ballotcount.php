@@ -12,13 +12,13 @@ if (!$isin) {
 }
 
 
-foreach ($HTTP_POST_VARS as $key => $value) {
+foreach ($_POST as $key => $value) {
 	$thequery = "update ballot set vote='".$value."' where issueid=".$key." and teamid=".$teamnum;
-	mysql_query($thequery);
+    mysqli_query($conn, $thequery);
 
 	$checkpassfail = "select sum(if(vote='Accept',1,0))/sum(if(vote<>'Abstain',1,0)) as Pass, sum(if(vote='Reject',1,0))/sum(if(vote<>'Abstain',1,0)) as Reject from ballot where issueid=".$key;
-	$result = mysql_query($checkpassfail);
-	list($pass, $fail) = mysql_fetch_row($result);
+    $result = mysqli_query($conn, $checkpassfail);
+    list($pass, $fail) = mysqli_fetch_row($result);
 	if ($pass >= $PASS_THRES) {
 		// Here we email a pass message
 		$body = "Proposal $key has passed";
@@ -30,8 +30,8 @@ foreach ($HTTP_POST_VARS as $key => $value) {
 	}
 	
 	$anotherquery = "select IssueNum, IssueName from issues where issueid=".$key;
-	$result = mysql_query($anotherquery);
-	list($voteNum[$key], $voteName[$key]) = mysql_fetch_row($result);
+    $result = mysqli_query($conn, $anotherquery);
+    list($voteNum[$key], $voteName[$key]) = mysqli_fetch_row($result);
 	$voteCast[$key] = $value;
 	
     if ($key == 87) {
@@ -52,10 +52,7 @@ foreach ($HTTP_POST_VARS as $key => $value) {
 ?>
 
 
-<HTML>
-<HEAD>
-<TITLE>WMFFL Ballot</TITLE>
-</HEAD>
+<?php include "WMFFL Ballot" ?>
 <?	include "base/menu.php"; ?>
 
 <H1 ALIGN=Center>Votes Cast</H1>

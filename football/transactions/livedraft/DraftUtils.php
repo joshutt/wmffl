@@ -9,6 +9,7 @@ require "clock.class.php";
 
 // Return the id of the team currently on the clock
 function getTeamOnClock($season) {
+    global $conn;
     // Get the current Pick
     // Make sure this is the correct team for it
     $draftPicks = new DataObjects_Draftpicks;
@@ -19,8 +20,8 @@ function getTeamOnClock($season) {
     $draftPicks->find(true);
 
     $sql = "SELECT value FROM config where `key`='draft.start'";
-    $result = mysql_query($sql) or die("Unable to get start: ".mysql_error());
-    $row = mysql_fetch_array($result);
+    $result = mysqli_query($conn, $sql) or die("Unable to get start: " . mysqli_error($conn));
+    $row = mysqli_fetch_array($result);
     if ($row[0] == "true") {
         return $draftPicks->teamid;
     } else {
@@ -31,13 +32,15 @@ function getTeamOnClock($season) {
 
 // Save the current pick as a future selection
 function saveTeamPick($teamid, $playerid) {
+    global $conn;
     // UPDATE pick with this player
     $sql = "REPLACE draftPickHold (teamid, playerid) VALUES ($teamid, $playerid)";
-    $result = mysql_query($sql) or die("Unable to update draftPickHold: ".mysql_error());
+    $result = mysqli_query($conn, $sql) or die("Unable to update draftPickHold: " . mysqli_error($conn));
 }
 
 
 function makePick($teamid, $playerid, $season) {
+    global $conn;
     $errors = confirmPlayerAvailable($playerid);
     if (sizeof($errors) > 0) {
         return $errors;
@@ -48,15 +51,15 @@ function makePick($teamid, $playerid, $season) {
 
     // Save player as the selected one
     $sql = "UPDATE draftpicks SET playerid=$playerid where Season=$season and Round=$round and Pick=$pick";
-    mysql_query($sql) or die (array_push($errors, "MySQL Error #1: ".mysql_error()));
+    mysqli_query($conn, $sql) or die (array_push($errors, "MySQL Error #1: " . mysqli_error($conn)));
     
     // Save the player onto the roster (NOT YET THOUGH)
     $sql = "INSERT INTO roster (playerid, teamid, dateon) VALUES ($playerid, $teamid, now())";
-    mysql_query($sql) or die (array_push($errors, "MySQL ERROR #2: ".mysql_error()));
+    mysqli_query($conn, $sql) or die (array_push($errors, "MySQL ERROR #2: " . mysqli_error($conn)));
 
     // Remove this team's preselections
     $sql = "DELETE FROM draftPickHold WHERE teamid=$teamid OR playerid=$playerid";
-    mysql_query($sql) or die (array_push($errors, "MySQL ERROR #3: ".mysql_error()));
+    mysqli_query($conn, $sql) or die (array_push($errors, "MySQL ERROR #3: " . mysqli_error($conn)));
 
     if (sizeof($errors) > 0) {
         return $errors;
@@ -110,26 +113,28 @@ function getCurrentPick($season) {
 
 
 function adjustClock($season, $round, $pick, $teamid, $totalTime) {
+    global $conn;
 
 //    error_log("-------------Adjust Clock---------------\n", 3, "check.log");
     //$totalTime = getTotalTimeUsed($season, $round, $pick);
     // Update the time remaining
     $sql = "UPDATE config c1 JOIN config c2 on c2.key='draft.clock.maxTime' SET c1.value = if(if(c1.value-$totalTime > c2.value, c2.value, c1.value-$totalTime) > 0, if(c1.value-$totalTime > c2.value, c2.value, c1.value-$totalTime), 0) WHERE c1.key = 'draft.team.$teamid'";
 //    error_log("$sql\n", 3, "check.log");
-    mysql_query($sql) or die ("Unable to update clock ".mysql_error());
+    mysqli_query($conn, $sql) or die ("Unable to update clock " . mysqli_error($conn));
 
     // Add time to next team
     $nextTeam = getTeamOnClock($season);
     $sql = "UPDATE config c1 JOIN config c2 on c2.key='draft.clock.addTime' JOIN config c3 ON c3.key='draft.clock.maxTime' SET c1.value=if(c1.value+c2.value > c3.value, c3.value, c1.value+c2.value) where c1.key = 'draft.team.$nextTeam'";
 //    error_log("$sql\n", 3, "check.log");
-    mysql_query($sql) or die ("Unable to add time to clock ".mysql_error());
+    mysqli_query($conn, $sql) or die ("Unable to add time to clock " . mysqli_error($conn));
 
 //    error_log("---------------------------------------\n", 3, "check.log");
 }
 
 
 function getPreselection($teamid) {
+    global $conn;
     $sql = "SELECT playerid FROM draftPickHold WHERE teamid=$teamid";
-    $results = mysql_query($sql) or die ("Unable to get draftPickHold: ".mysql_error());
-    return mysql_fetch_array($results);
+    $results = mysqli_query($conn, $sql) or die ("Unable to get draftPickHold: " . mysqli_error($conn));
+    return mysqli_fetch_array($results);
 }

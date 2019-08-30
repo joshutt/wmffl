@@ -1,4 +1,4 @@
-<?
+<?php
 $title = "2008 WMFFL Season";
 include "base/menu.php"; 
 ?>
@@ -59,9 +59,10 @@ include "base/menu.php";
 
 <HR size = "1">
 
-<?
+<?php
 $thisSeason = 2008;
 $thisWeek = 17;
-include "2008Season/weekstandings.php";
+$clinchedList = array('Lindbergh Baby Casserole' => 'y-', 'Sacks on the Beach' => 'x-', 'Crusaders' => 'y-',
+    'Norsemen' => 'x-', 'Fighting Squirrels' => 'z-', "Pretend I'm Not Here" => 'z-');
+include "common/weekstandings.php";
 include "base/footer.html";
-?>

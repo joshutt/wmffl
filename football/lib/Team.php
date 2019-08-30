@@ -1,5 +1,5 @@
-<?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+<?php
+require_once "utils/start.php";
 
 class Team {
     
@@ -14,6 +14,7 @@ class Team {
     var $games;
     var $teamid;
     var $allRef;
+    var $allRefKeys;
     
     function Team($newName, $newDiv, $newID) {
         $this->name = $newName;
@@ -74,11 +75,23 @@ class Team {
 //        return .500;
         if ($teamArray == NULL || !isset($teamArray)) {
             $teamArray = $this->allRef;
+            if (empty($teamArray)) {
+                return 0.000;
+            }
         }
-        //print $teamArray;
+        //error_log(print_r($teamArray, true));
         $rec = array(0,0,0);
+        $keyList = array_map("getTeamId", $teamArray);
+        $keyList = array_flip($keyList);
+        // Loop through each game and if you won, add that teams record
+//        error_log(print_r($keyList, true));
+//        error_log(print_r($this->games, true));
         foreach ($this->games as $game) {
-            $teamRec = $teamArray[$game[0]]->record;
+//            error_log("Game: ".$game[0]);
+//            error_log("Key List: ". $keyList[$game[0]]);
+//            error_log("Team Array: ".$teamArray[$keyList[$game[0]]]);
+//            error_log("Team Record: ".$teamArray[$keyList[$game[0]]]->record);
+            $teamRec = $teamArray[$keyList[$game[0]]]->record;
             foreach ($teamArray as $team) {
                 if ($team->teamid == $game[0]) {
                     $teamRec = $team->record;
@@ -185,6 +198,7 @@ function orderteam($a, $b) {
     print "-->";
     */
 
+//    error_log(print_r($a, TRUE));
     if ($a->getSOV() > $b->getSOV()) {
         return -1;
     } elseif ($a->getSOV() < $b->getSOV()) {
@@ -203,4 +217,9 @@ function orderteam($a, $b) {
     }
     return 0;
 }
-?>
+
+
+function getTeamId($t)
+{
+    return $t->teamid;
+}

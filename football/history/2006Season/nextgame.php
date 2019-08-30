@@ -8,10 +8,10 @@ AND t1.teamid=s.teama AND t2.teamid=s.teamb
 AND t1.season=s.season AND t2.season=s.season
 ORDER BY MD5(CONCAT(t1.name, t2.name))
 EOD;
-$results = mysql_query($query) or die("Error: ".mysql_error());
+$results = mysqli_query($conn, $query) or die("Error: " . mysqli_error($conn));
 
 $count = 0;
-while($games = mysql_fetch_array($results)) {
+while ($games = mysqli_fetch_array($results)) {
     if ($count % 2 == 0) {
         $bgcolor = "dddddd";
     } else {

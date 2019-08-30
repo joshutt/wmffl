@@ -1,12 +1,12 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 $thisWeek = $_REQUEST["week"];
 $thisSeason = 2006;
 $title = "Week $thisWeek Recap";
 ?>
 
-<? include "$DOCUMENT_ROOT/base/menu.php"; ?>
+<? include "base/menu.php"; ?>
 
 <style>
 <!--
@@ -20,7 +20,11 @@ H4 {color:660000; text-decoration:None; font-size:14pt; font-weight:bold}
 <hr/>
 
 <p>
-<? include "summary$thisWeek.inc"; ?>
+    <?php
+    if (file_exists("summary$thisWeek.inc")) {
+        include "summary$thisWeek.inc";
+    }
+    ?>
 </p>
 
 <p>
@@ -44,4 +48,4 @@ H4 {color:660000; text-decoration:None; font-size:14pt; font-weight:bold}
 <? include "boxscores.php"; ?>
 </p>
 
-<? include "$DOCUMENT_ROOT/base/footer.html"; ?>
+<? include "base/footer.html"; ?>

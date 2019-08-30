@@ -140,12 +140,12 @@ where a.season=$thisSeason and a.week=$thisWeek
 order by t.name, p.pos, p.lastname, p.firstname
 EOD;
 
-$results = mysql_query($query) or die("Error: ".mysql_error());
+$results = mysqli_query($conn, $query) or die("Error: " . mysqli_error($conn));
 
 $actPlayers = array();
 $team = array();
-$currentTeam;
-while ($player = mysql_fetch_array($results)) {
+$currentTeam = null;
+while ($player = mysqli_fetch_array($results)) {
 //    print_r($player);
     if ($currentTeam != $player["name"]) {
         //print_r($team);

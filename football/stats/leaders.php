@@ -41,15 +41,18 @@ list($week) = mysqli_fetch_row($dateRes);
 $teamResults = array();
 while ($teams = mysqli_fetch_array($results)) {
     if (!key_exists($teams["name"], $teamResults)) {
-        $teamResults[$teams["name"]] = array("name" => $teams["name"]);
+        $teamResults[$teams["name"]] = array("name" => $teams["name"], "HC" => 0, "QB" => 0, "RB" => 0, "WR" => 0,
+            "TE" => 0, "K" => 0, "OL" => 0, "DL" => 0, "LB" => 0, "DB" => 0);
     }
     $teamResults[$teams["name"]][$teams["pos"]] = $teams["totpts"];
 }
+//error_log(print_r($teamResults, true));
 
 // For each team calculate the offense and defense and overall
 foreach ($teamResults as $teamName) {
-    $off = $teamName["HC"] + $teamName["QB"] + $teamName["RB"] + $teamName["WR"] + $teamName["TE"] + $teamName["K"] + $teamName["OL"];
-    $def = $teamName["DL"] + $teamName["LB"] + $teamName["DB"];
+    $off = $teamName["HC"] ?? 0 + $teamName["QB"] ?? 0 + $teamName["RB"] ?? 0 + $teamName["WR"] ?? 0
+        + $teamName["TE"] ?? 0 + $teamName["K"] ?? 0 + $teamName["OL"] ?? 0;
+    $def = $teamName["DL"] ?? 0 + $teamName["LB"] ?? 0 + $teamName["DB"] ?? 0;
     $teamName["offense"] = $off;
     $teamName["defense"] = $def;
     $teamName["total"] = $off + $def;

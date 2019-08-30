@@ -28,14 +28,14 @@ EOD;
 
 function determinePoints($teamid, $season, $week, $conn) {
     $statSelect = generateSelect($teamid, $season, $week);
-    $results = mysql_query($statSelect, $conn) or die ("Dead: ".mysql_error());
+    $results = mysqli_query($conn, $statSelect) or die ("Dead: " . mysqli_error($conn));
 
     $totalPoints = 0;
     $offPoints = 0;
     $defPoints = 0;
     $penalty = 0;
     $secRemain = 0;
-    while ($row = mysql_fetch_array($results)) {
+    while ($row = mysqli_fetch_array($results)) {
         $pts = 0;
 
         // Add game planning factor
@@ -111,7 +111,7 @@ function updateScore($teamA, $teamB, $season, $week, $aScore, $bScore, $conn) {
     $update = "UPDATE schedule SET scorea=$aScore, scoreb=$bScore ";
     $update .= "WHERE season=$season and week=$week and ";
     $update .= "teama=$teamA and teamb=$teamB";
-    mysql_query($update, $conn);
+    mysqli_query($conn, $update);
 }
 
 
@@ -131,9 +131,9 @@ if ($week != '') {
     $gameSelect .= "and now() between w.startdate and w.enddate ";
 }
 //print $gameSelect;
-$gameResults = mysql_query($gameSelect, $conn);
+$gameResults = mysqli_query($conn, $gameSelect);
 
-while ($gameRow = mysql_fetch_array($gameResults)) {
+while ($gameRow = mysqli_fetch_array($gameResults)) {
     $aPts = determinePoints($gameRow['teama'], $gameRow['season'], $gameRow['week'], $conn);
     $bPts = determinePoints($gameRow['teamb'], $gameRow['season'], $gameRow['week'], $conn);
     $aFinal = $aPts[1] - $bPts[2] - $aPts[3];

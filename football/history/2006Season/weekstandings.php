@@ -1,6 +1,6 @@
 <table cellpadding="5" cellspacing="1">
-<?
-include "$DOCUMENT_ROOT/lib/Team.php";
+    <?php
+    include_once "lib/Team.php";
 
 //$thisSeason = 2004;
 //$thisWeek = 5;
@@ -12,32 +12,30 @@ sum(IF(t.teamid=s.teama AND s.scorea>s.scoreb, 1, if(t.teamid=s.teamb AND s.scor
 sum(IF(t.teamid=s.teama AND s.scorea<s.scoreb, 1, if(t.teamid=s.teamb AND s.scoreb<s.scorea, 1, 0))) as 'lose',
 sum(IF(s.scorea=s.scoreb, 1, 0)) as 'tie',
 
-sum(if(t.divisionid=t2.divisionid, if(t.teamid=s.teama, s.scorea, s.scoreb), 0)) as 'divpf',
-sum(if(t.divisionid=t2.divisionid, if(t.teamid=s.teama, s.scoreb, s.scorea), 0)) as 'divpa',
-sum(if(t.divisionid=t2.divisionid, IF(t.teamid=s.teama AND s.scorea>s.scoreb, 1, if(t.teamid=s.teamb AND s.scoreb>s.scorea, 1, 0)),0)) as 'divwin',
-sum(if(t.divisionid=t2.divisionid, IF(t.teamid=s.teama AND s.scorea<s.scoreb, 1, if(t.teamid=s.teamb AND s.scoreb<s.scorea, 1, 0)),0)) as 'divlose',
-sum(if(t.divisionid=t2.divisionid, IF(s.scorea=s.scoreb, 1, 0),0)) as 'divtie'
+sum(if(tn.divisionid=t2.divisionid, if(t.teamid=s.teama, s.scorea, s.scoreb), 0)) as 'divpf',
+sum(if(tn.divisionid=t2.divisionid, if(t.teamid=s.teama, s.scoreb, s.scorea), 0)) as 'divpa',
+sum(if(tn.divisionid=t2.divisionid, IF(t.teamid=s.teama AND s.scorea>s.scoreb, 1, if(t.teamid=s.teamb AND s.scoreb>s.scorea, 1, 0)),0)) as 'divwin',
+sum(if(tn.divisionid=t2.divisionid, IF(t.teamid=s.teama AND s.scorea<s.scoreb, 1, if(t.teamid=s.teamb AND s.scoreb<s.scorea, 1, 0)),0)) as 'divlose',
+sum(if(tn.divisionid=t2.divisionid, IF(s.scorea=s.scoreb, 1, 0),0)) as 'divtie'
 
 
-FROM schedule s, team t, teamnames tn, division d, team t2, weekmap wm
+FROM schedule s
+ JOIN team t on t.TeamID in (s.TeamA, s.TeamB)
+  JOIN teamnames tn on t.TeamID=tn.teamid AND tn.season=s.season
+  JOIN division d ON d.divisionid=tn.divisionid and d.startYear <= s.Season and (d.endYear >= s.Season or d.endYear is null)
+  JOIN teamnames t2 ON t2.teamid in (s.teama, s.teamb) AND t2.teamid <> t.teamid and t2.season=tn.season
+  JOIN weekmap wm ON wm.season=s.season and wm.week=s.week and wm.enddate<=now()
 WHERE s.season =$thisSeason
-AND t.teamid in (s.teama, s.teamb)
-AND t.teamid=tn.teamid
-AND tn.season=s.season
 AND s.week<=$thisWeek
 AND s.week<=14
-AND d.divisionid=t.divisionid
-and d.startYear <= s.season and (d.endYear >= s.season or d.endYear is null)
-AND t2.teamid in (s.teama, s.teamb) AND t2.teamid <> t.teamid
-AND wm.season=s.season and wm.week=s.week and wm.enddate<=now()
 GROUP BY d.name, tn.name
 
 EOD;
 
-$results = mysql_query($query) or die("Error: ".mysql_error());
+    $results = mysqli_query($conn, $query) or die("Error: " . mysqli_error($conn));
 $count =0;
 $teamArray = array();
-while ($row = mysql_fetch_array($results)) {
+    while ($row = mysqli_fetch_array($results)) {
 #    print_r($row);
    // $divRar = 
 
@@ -50,6 +48,7 @@ while ($row = mysql_fetch_array($results)) {
     $t->ptsAgt = $row["ptsagt"];
     $t->divPtsFor = $row["divpf"];
     $t->divPtsAgt = $row["divpa"];
+    $t->allRef = &$teamArray;
     array_push($teamArray, $t);
 }
 
@@ -57,6 +56,7 @@ while ($row = mysql_fetch_array($results)) {
 usort($teamArray, "orderteam");
 //print_r($teamArray);
 $records = array();
+    $division = "";
 foreach($teamArray as $t) {
     $thisDiv = $t->division;
     if ($division != $thisDiv) {
@@ -92,7 +92,7 @@ EOD;
     }
 
     print <<< EOD
-<tr bgcolor="$bgcolor"><td>{$clinchedList[$t->name]}<a href="/teams/teamschedule.php?viewteam={$t->teamid}">{$t->name}</a></td>
+<tr bgcolor="$bgcolor"><td><a href="/teams/teamschedule.php?viewteam={$t->teamid}">{$t->name}</a></td>
 <td align="center">{$t->record[0]}</td>
 <td align="center">{$t->record[1]}</td>
 <td align="center">{$t->record[2]}</td>

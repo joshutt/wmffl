@@ -8,7 +8,7 @@ if (!$isin) {
     exit;
 }
 
-$offerid = $HTTP_GET_VARS["offerid"];
+$offerid = $_GET["offerid"];
 rejectTrade($offerid);
 ?>
 

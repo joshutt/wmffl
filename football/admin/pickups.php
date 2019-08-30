@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 class Player {
     var $name = "";
@@ -150,12 +150,12 @@ $query = <<<EOD
     order by p.playerid, ps.week
 EOD;
 
-$results = mysql_query($query) or die("Dead: ".mysql_error());
+$results = mysqli_query($conn, $query) or die("Dead: " . mysqli_error($conn));
 
 $current = 0;
 $fullArray = array();
 $newObj = null;
-while ($row = mysql_fetch_array($results)) {
+while ($row = mysqli_fetch_array($results)) {
     if ($row['playerid'] != $current) {
         if ($newObj != null) {
             array_push($fullArray, $newObj);

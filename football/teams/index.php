@@ -1,4 +1,4 @@
-<?
+<?php
 include "utils/start.php";
 
 $title = "WMFFL Teams";
@@ -9,9 +9,9 @@ FROM team t, division d
 WHERE t.divisionid=d.divisionid and $currentSeason between d.startYear and d.endYear
 ORDER BY d.name, t.name";
 
-$results = mysql_query($divisionSQL) or die("Error in query: ".mysql_error());
+$results = mysqli_query($conn, $divisionSQL) or die("Error in query: " . mysqli_error($conn));
 $teamList = array();
-while ($teamInfo = mysql_fetch_array($results)) {
+while ($teamInfo = mysqli_fetch_array($results)) {
     if (!array_key_exists($teamInfo['division'], $teamList)) {
         $teamList[$teamInfo['division']] = array();
     }
@@ -42,7 +42,7 @@ foreach ($teamList as $divisionName => $division) {
 
 <td><table>
 <th>Defunct Teams</th>
-<tr><td><a href="squirrels.shtml">The Fighting Squirrels</a></td></tr>
+<tr><td><a href="squirrels.php">The Fighting Squirrels</a></td></tr>
 <tr><td>Kingsmen</td></tr>
 </table></td>
 

@@ -31,8 +31,8 @@ if (!isset($order) || $order=='team') {
 }
 
 $displayArray = array();
-$result = mysql_query($query) or die("Error: ".mysql_error());
-while (list($team, $name, $pos, $nfl, $cost) = mysql_fetch_row($result)) {
+$result = mysqli_query($conn, $query) or die("Error: " . mysqli_error($conn));
+while (list($team, $name, $pos, $nfl, $cost) = mysqli_fetch_row($result)) {
     if ($teamcheck) {
         $labels = array("Name", "Position", "NFL Team", "Cost");
         if ($oldteam != $team) {
@@ -71,7 +71,7 @@ $title = "WMFFL Protections";
 
 <TABLE WIDTH=100%>
 <?
-$result = mysql_query($query) or die("Error: ".mysql_error());
+$result = mysqli_query($conn, $query) or die("Error: " . mysqli_error($conn));
 
 foreach ($displayArray as $key=>$teamArray) {
     print "<tr><th colspan=\"4\">$key (".sizeof($teamArray).")</th></tr>";

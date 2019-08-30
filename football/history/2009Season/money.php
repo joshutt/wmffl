@@ -1,9 +1,9 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 $title = "2009 WMFFL Financial Statements";
 
-include "$DOCUMENT_ROOT/base/menu.php";
+include "base/menu.php";
 ?>
 
 <H1 ALIGN=Center>League Finances</H1>
@@ -59,4 +59,4 @@ also a page detailing each team's balance.</P>
 <TR BGCOLOR="#CCCCCC"><TD>&nbsp;&nbsp;&nbsp;League Champion</TD><TD>&nbsp;</TD><TD>1 @ $136.84</TD></TR>
 </TABLE>
 
-<? include "$DOCUMENT_ROOT/base/footer.html"; ?>
+<? include "base/footer.html"; ?>

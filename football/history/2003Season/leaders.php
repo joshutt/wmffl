@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/base/conn.php";
+require_once "base/conn.php";
 
 $sql = "SELECT  t.name, p.position, sum(ps.active) as 'totpts' ";
 $sql .= "FROM playerscores ps, players p, roster r, team t, weekmap w ";
@@ -14,10 +14,10 @@ $sql .= "ORDER BY p.position, 'totpts' DESC ";
 
 $dateQuery = "SELECT max(week) FROM playerscores where season=2003";
 
-$results = mysql_query($sql);
-$dateRes = mysql_query($dateQuery);
+$results = mysqli_query($conn, $sql);
+$dateRes = mysqli_query($conn, $dateQuery);
 
-list($week) = mysql_fetch_row($dateRes);
+list($week) = mysqli_fetch_row($dateRes);
 ?>
 
 <HTML>
@@ -25,7 +25,7 @@ list($week) = mysql_fetch_row($dateRes);
 <TITLE>League Leaders</TITLE>
 </HEAD>
 
-<? include "$DOCUMENT_ROOT/base/menu.php"; ?>
+<? include "base/menu.php"; ?>
 
 <H1 ALIGN=Center>League Leaders</H1>
 <!-- <H5 ALIGN=Center><I>Through Week <?print $week;?></I></H5> -->
@@ -41,7 +41,7 @@ during the course of the season.</P>
 $off = array();
 $def = array();
 $count = 0;
-while ($rank = mysql_fetch_array($results)) {
+while ($rank = mysqli_fetch_array($results)) {
 	if ($count % 3 == 0) {
 		print "</TR><TR><TD>&nbsp;</TD></TR><TR>";
 	}
@@ -55,7 +55,7 @@ while ($rank = mysql_fetch_array($results)) {
         $off[$rank["name"]] += $rank["totpts"];
     }
 	for ($i=1; $i<10; $i++) {
-		$rank = mysql_fetch_array($results);
+        $rank = mysqli_fetch_array($results);
 		print "<TR><TD>".$rank["name"]."</TD><TD>".$rank["totpts"]."</TD></TR>";
         if ($rank["position"] == "DB" || $rank["position"] == "LB" || $rank["position"] == "DL") {
             $def[$rank["name"]] += $rank["totpts"];
@@ -96,5 +96,5 @@ print "</TABLE></TD>";
 </TABLE>
 
 <?
-include "$DOCUMENT_ROOT/base/footer.html";
+include "base/footer.html";
 ?>

@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "base/conn.php";
 
 $PROBLEM = true;
@@ -24,10 +24,12 @@ class DuplicateDraft {
     var $options = array();
 }
 
-function checkTransactions($teamid, &$retArray, $HTTP_POST_VARS) {
+function checkTransactions($teamid, &$retArray, $post)
+{
+    global $conn;
     // Get each team's number
-    $teamto = $HTTP_POST_VARS["teamto"];
-    $trans = array($HTTP_POST_VARS["you"], $HTTP_POST_VARS["they"]);
+    $teamto = $post["teamto"];
+    $trans = array($post["you"], $post["they"]);
 
     // for each pts object look if given player has that many points in year
     for ($i=0; $i<count($trans); $i++) {
@@ -40,8 +42,8 @@ function checkTransactions($teamid, &$retArray, $HTTP_POST_VARS) {
                 $sql = "SELECT TotalPts-(ProtectionPts+TransPts) as 'PtsLeft' ";
                 $sql .= "FROM transpoints WHERE season=$year AND ";
                 $sql .= "teamid=$team";
-                $results = mysql_query($sql);
-                $arr = mysql_fetch_array($results);
+                $results = mysqli_query($conn, $sql);
+                $arr = mysqli_fetch_array($results);
                 if (!$arr || $arr["PtsLeft"] < $pts) {
                     $newInvalid = new InvalidTrans();
                     $newInvalid->team = $team;
@@ -59,10 +61,12 @@ function checkTransactions($teamid, &$retArray, $HTTP_POST_VARS) {
     }
 }
 
-function checkDraft($teamid, &$retArray, $HTTP_POST_VARS) {
+function checkDraft($teamid, &$retArray, $post)
+{
+    global $conn;
     // Get each team's number
-    $teamto = $HTTP_POST_VARS["teamto"];
-    $trans = array($HTTP_POST_VARS["you"], $HTTP_POST_VARS["they"]);
+    $teamto = $post["teamto"];
+    $trans = array($post["you"], $post["they"]);
 
     for ($i=0; $i<count($trans); $i++) {
         $team = (($i==0) ? $teamid : $teamto);
@@ -74,9 +78,9 @@ function checkDraft($teamid, &$retArray, $HTTP_POST_VARS) {
                 $sql = "SELECT * FROM draftpicks WHERE season=$year AND ";
                 $sql .= "round=$round AND teamid=$team";
                 //print "Checking $sql";
-                $results = mysql_query($sql);
-                //$arr = mysql_fetch_array($results);
-                $num = mysql_num_rows($results);
+                $results = mysqli_query($conn, $sql);
+                //$arr = mysqli_fetch_array($results);
+                $num = mysqli_num_rows($results);
                 if ($num != 1) {
                     $newInvalid = new InvalidDraft();
                     $newInvalid->team = $team;
@@ -94,4 +98,3 @@ function checkDraft($teamid, &$retArray, $HTTP_POST_VARS) {
         return false; // no errors
     }
 }
-?>

@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 $title = "Determine Draft Date";
 
@@ -16,7 +16,7 @@ EOD;
 }
 
 
-include "$DOCUMENT_ROOT/base/menu.php";
+include "base/menu.php";
 ?>
 
 <H1 ALIGN=Center>Draft Date Open</H1>
@@ -26,7 +26,7 @@ include "$DOCUMENT_ROOT/base/menu.php";
 if ($isin) {
     $thequery = "SELECT DATE_FORMAT(d.date, '%m%e'), DATE_FORMAT(d.date, '%W, %M %D'), d.attend ";
     $thequery .= "FROM draftdate d, user u WHERE d.userid=u.userid and u.username='$user' AND d.date BETWEEN '2008-07-01' AND '2008-10-01' ORDER BY d.date";
-    $results = mysql_query($thequery);
+    $results = mysqli_query($conn, $thequery);
 
 ?>
 
@@ -42,7 +42,7 @@ if ($isin) {
 <TR><TH WIDTH=30%>Can Attend?</TH><TH WIDTH=70%>Date</TH></TR>
 
 <?
-    while(list($date, $fulldate, $attend) = mysql_fetch_row($results)) {
+while (list($date, $fulldate, $attend) = mysqli_fetch_row($results)) {
         print "<TR><TD><INPUT TYPE=\"radio\" NAME=\"$date\" VALUE=\"Y\" ";
         if ($attend == 'Y') print "CHECKED ";
         print "/>Yes<INPUT TYPE=\"radio\" NAME=\"$date\" VALUE=\"N\" ";
@@ -63,6 +63,6 @@ if ($isin) {
 <CENTER><B>You must be logged in to use this feature</B></CENTER>
 
 <? }
-  include "$DOCUMENT_ROOT/base/footer.html";
+include "base/footer.html";
 ?>
 

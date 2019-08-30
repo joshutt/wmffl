@@ -1,20 +1,20 @@
 <?
-require_once "$DOCUMENT_ROOT/base/conn.php";
+require_once "base/conn.php";
 
-$nflStartDate = '2018-09-06';
-$season=2018;
+$nflStartDate = '2019-09-05';
+$season=2019;
 
 $query = "SELECT t.name, d.date, min( d.attend ) as attend
 FROM  `draftdate` d, user u, team t
-WHERE u.userid = d.userid AND u.teamid=t.teamid AND d.date >  '2018-01-01' 
+WHERE u.userid = d.userid AND u.teamid=t.teamid AND d.date >  '$season-01-01' 
 GROUP  BY u.teamid, d.date
 ORDER BY d.date";
 
-$results = mysql_query($query);
+$results = mysqli_query($conn, $query);
 $date = "";
 $dateList = array();
 
-while($arrayList = mysql_fetch_array($results)) {
+while ($arrayList = mysqli_fetch_array($results)) {
     if ($date != $arrayList["date"]) {
         $date = $arrayList["date"];
         $dateArray = array();
@@ -53,10 +53,10 @@ group by o.teamid
 having max(dv.lastUpdate) is null
 EOD;
 
-$results = mysql_query($secondQuery) or die("Error: ".mysql_error());
+$results = mysqli_query($conn, $secondQuery) or die("Error: " . mysqli_error($conn));
 
 $teamArray = array();
-while($arrayList = mysql_fetch_array($results)) {
+while ($arrayList = mysqli_fetch_array($results)) {
     array_push($teamArray, $arrayList["name"]);
 }
 

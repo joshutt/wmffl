@@ -1,8 +1,8 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 $title = "Explaination of Season Tiebreakers";
-include "$DOCUMENT_ROOT/base/menu.php";
+include "base/menu.php";
 ?>
 
 <h1 align="center">Final Standings Explaination</h1>
@@ -70,4 +70,4 @@ MeggaMen beat Bug Stompers head-to-head, they get the #4 seed</li></ol></p>
 <li>Werewolves</li>
 <li>MeggaMen</li></ol></p>
 
-<? include "$DOCUMENT_ROOT/base/footer.html"; ?>
+<? include "base/footer.html"; ?>

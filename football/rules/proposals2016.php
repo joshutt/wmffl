@@ -1,16 +1,10 @@
 <?
 session_start();
 $title = "WMFFL Rule Proposals";
+$cssList = array("rules.css");
 
+include "base/menu.php";
 ?>
-
-<style>
-.ballot:link {color: #ff0000; text-decoration: none;}
-.ballot:visited {color: #ff0000; text-decoration: none;}
-.ballot:hover {color: #e2a500; text-decoration: none;}
-</style>
-
-<? include "base/menu.php"; ?>
 
 <h1 align=center>Current Rule Proposals</h1>
 <hr SIZE = "1"/>
@@ -66,7 +60,7 @@ Make it so that any player that scores negative in a given week will have their 
 
 <p>
 <b>Proposal 2016.3 - Unpaid Teams Drop Draft Position</b><br/>
-<b>Sponsor: Tim Shoobridge</b></br/>
+    <b>Sponsor: Tim Shoobridge</b><br/>
 <a class="ballot">Status: <font color="red">Passed, 7-3, 1 abstain</font></a><br/>
 Teams that are deliquent in paying their entry fee can't get early draft picks.  This would take effect immediately <s>and drop the Woodland Rangers to the 5th pick in 2016</s>.
 <blockquote><i><s>Drop the Woodland Rangers in the 2016 draft to 5th pick</s><br/>
@@ -79,7 +73,7 @@ Add rule VI.D.3.d to read:
 
 <p>
 <b>Proposal 2016.4 - Pay by the Draft or Don't Play</b><br/>
-<b>Sponsor: Tim Shoobridge</b></br/>
+    <b>Sponsor: Tim Shoobridge</b><br/>
 <a class="ballot">Status: <font color="red">On Ballot</font></a><br/>
 Any owner that hasn't paid by draft day will not be allowed to play.
 <blockquote><i>Update rule IX.A.1 to read:
@@ -90,7 +84,7 @@ Any owner that hasn't paid by draft day will not be allowed to play.
 
 <p>
 <b>Proposal 2016.5 - New Owner</b><br/>
-<b>Sponsor: Jon Hall</b></br/>
+    <b>Sponsor: Jon Hall</b><br/>
 <a class="ballot">Status: <font color="red">Passed, 9-0, 2 no votes</font></a><br/>
 Install Derrick Inman as the new owner of the Woodland Rangers.
 <blockquote><i>No rule change required</i></blockquote>

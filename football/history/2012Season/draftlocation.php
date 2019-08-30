@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 $title = "2012 WMFFL Draft Information";
 ?>
@@ -13,7 +13,7 @@ $title = "2012 WMFFL Draft Information";
     </style>
 </head>
 
-<? include "$DOCUMENT_ROOT/base/menu.php"; ?>
+<? include "base/menu.php"; ?>
 
 <H1 Align=Center>Draft Information</H1>
 <H5 ALIGN=Center><I>August 19, 2012</I></H5>
@@ -48,5 +48,5 @@ if ($isin) {
 <?
 }
 
-include "$DOCUMENT_ROOT/base/footer.html"; 
+include "base/footer.html"; 
 ?>

@@ -83,7 +83,7 @@ Sunday kickoffs and will be held secret until that time.
 
 <p>
 <b>Proposal 2017.4 - Decision on 10 or 12 Years</b><br/>
-<b>Sponsor: Josh Utterback</b></br/>
+    <b>Sponsor: Josh Utterback</b><br/>
 <span class="ballot">Status: <span class="status">Withdrawn when two owners were found (vote was 2-1 in favor of 12 at the time)</span></span><br/>
 Decide between dropping to 10 teams or staying at 12 teams
 <blockquote><i>If 10 teams wins:
@@ -95,7 +95,7 @@ Decide between dropping to 10 teams or staying at 12 teams
 
 <p>
 <b>Proposal 2017.5 - Mandatory Realignment</b><br/>
-<b>Sponsor: Tom Marsh</b></br/>
+    <b>Sponsor: Tom Marsh</b><br/>
 <span class="ballot">Status: <span class="status">Rejected, 4-5</span></span><br/>
 Every three years realign the divisions based upon team's records over the previous three seasons
 <blockquote><i>Add rule I.C reading:
@@ -117,7 +117,7 @@ Every three years realign the divisions based upon team's records over the previ
 
 <p>
 <b>Proposal 2017.6 - Negative Gameplan Scores Not Halved</b><br/>
-<b>Sponsor: Tom Marsh</b></br/>
+    <b>Sponsor: Tom Marsh</b><br/>
 <span class="ballot">Status: <span class="status">On Ballot</span></span><br/>
 Eliminate halving of negative scores.
     <blockquote><i>Add rule V.D.2.a that reads:

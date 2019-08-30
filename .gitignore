@@ -76,6 +76,7 @@ fabric.properties
 /lib/*.ini
 /lib/DataObjects/*.ini
 php.ini
+.user.ini
 
 # Swap files
 *.swp
@@ -87,6 +88,7 @@ diffignore
 **/*.swp
 **/*.bak
 **/*.bk
+.htaccess
 
 # Vim ignores
 # Swap
@@ -108,7 +110,8 @@ tags
 [._]*.un~
 
 
-**/logs/
+**/logs/*
+!**/logs/empty
 **/error_log
 **/*.log
 

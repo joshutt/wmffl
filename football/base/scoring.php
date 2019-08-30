@@ -404,9 +404,13 @@ function scoreString($score, $pos) {
 
             break;
     }
-    while($returnString[0] == '^') {
+
+    // Trim off any leading ^
+    //error_log("Return String Before: $returnString");
+    while(!empty($returnString) && $returnString[0] == '^') {
         $returnString = substr($returnString, 1);
     }
+    //error_log("Return String After: $returnString");
     return $returnString;
 }
 

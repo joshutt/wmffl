@@ -1,22 +1,22 @@
-<?
-function convertNiceNames(&$HTTP_POST_VARS, $dir) {
-    foreach($HTTP_POST_VARS[$dir] as $key=>$ch) {
+<?php
+function convertNiceNames(&$post, $dir)
+{
+    foreach ($post[$dir] as $key => $ch) {
         if (substr($ch, 0, 5) == "draft") {
             $drID = substr($ch, 5, 1);
-            $trYear = $HTTP_POST_VARS[$dir."draftyear".$drID];
-            $trRnd = $HTTP_POST_VARS[$dir."draftround".$drID];
-            $HTTP_POST_VARS[$dir][$key] = "pick$trYear$trRnd";
+            $trYear = $post[$dir . "draftyear" . $drID];
+            $trRnd = $post[$dir . "draftround" . $drID];
+            $post[$dir][$key] = "pick$trYear$trRnd";
 //            array_push($returnList, "pick$trYear$trRnd");
         } else if (substr($ch, 0, 7) == "newprot") {
             $drID = substr($ch, 7, 1);
-            $trPts = $HTTP_POST_VARS[$dir.$ch];
-            $trYear = $HTTP_POST_VARS[$dir."protyear".$drID];
-            $HTTP_POST_VARS[$dir][$key] = "pts$trYear$trPts";
+            $trPts = $post[$dir . $ch];
+            $trYear = $post[$dir . "protyear" . $drID];
+            $post[$dir][$key] = "pts$trYear$trPts";
         }
     }
 }
 
-session_start();
 require_once "utils/start.php";
 
 if (!$isin) {
@@ -31,7 +31,7 @@ $NUM_PTS_DISPLAY=1;
 
 //$teamid = 2;
 $updateFlag = false;
-if (isset($HTTP_POST_VARS["cancel"])) {
+if (isset($_POST["cancel"])) {
 	header("Location: tradescreen.php");
 }
 
@@ -40,28 +40,28 @@ require_once "checkambigous.inc.php";
 $badTransArray = array();
 $badDraftArray = array();
 $ambigous = false;
-if (isset($HTTP_POST_VARS["they"]) && isset($HTTP_POST_VARS["you"])) {
-    convertNiceNames($HTTP_POST_VARS, "they");
-    convertNiceNames($HTTP_POST_VARS, "you");
+if (isset($_POST["they"]) && isset($_POST["you"])) {
+    convertNiceNames($_POST, "they");
+    convertNiceNames($_POST, "you");
 
     //print "ambigous $ambigous<br/>";
-    $ambigous = checkTransactions($teamnum, $badTransArray, $HTTP_POST_VARS);
+    $ambigous = checkTransactions($teamnum, $badTransArray, $_POST);
     //print "Check Draft, ambigous $ambigous<br/>";
-    $ambigous = checkDraft($teamnum, $badDraftArray, $HTTP_POST_VARS) || $ambigous;
+    $ambigous = checkDraft($teamnum, $badDraftArray, $_POST) || $ambigous;
     //print "Post Check Draft, ambigous $ambigous<br/>";
 }
 
-if (!$ambigous && isset($HTTP_POST_VARS["confirm"])) {
+if (!$ambigous && isset($_POST["confirm"])) {
     //session_start();
     //$_SESSION["ab"] = "AlphaBeta";
-    $_SESSION["they"] = $HTTP_POST_VARS["they"];
+    $_SESSION["they"] = $_POST["they"];
     //print_r($_SESSION["they"]);
-    $_SESSION["you"] = $HTTP_POST_VARS["you"];
-    $_SESSION["teamto"] = $HTTP_POST_VARS["teamto"];
-    $offerid = $HTTP_POST_VARS["offerid"];
+    $_SESSION["you"] = $_POST["you"];
+    $_SESSION["teamto"] = $_POST["teamto"];
+    $offerid = $_POST["offerid"];
 	//header("Location: ambigouspick.php?offerid=$offerid");
 	header("Location: confirmoffer.php?offerid=$offerid");
-} elseif ($ambigous || isset($HTTP_POST_VARS["update"]) || isset($HTTP_POST_VARS["edit"])) {
+} elseif ($ambigous || isset($_POST["update"]) || isset($_POST["edit"])) {
     $updateFlag = true;
 }
 
@@ -79,8 +79,8 @@ if (isset($offerid) && $offerid != 0) {
 } else {
     $offerid=0;
     $trade = new Trade($offerid);
-    if (isset($HTTP_POST_VARS["teamto"])) {
-        $otherTeamID = $HTTP_POST_VARS["teamto"];
+    if (isset($_POST["teamto"])) {
+        $otherTeamID = $_POST["teamto"];
     } else {
         $otherTeamID = $trade;
     }
@@ -90,12 +90,12 @@ if (isset($offerid) && $offerid != 0) {
 $mapping = array($teamnum=>$thisTeam->getName(), 
                 $otherTeam->getID()=>$otherTeam->getName());
 
-//print_r ($HTTP_POST_VARS);
+//print_r ($_POST);
 //print "<br/>";
 
 if ($updateFlag) {
-    $you = $HTTP_POST_VARS["you"];
-    $they = $HTTP_POST_VARS["they"];
+    $you = $_POST["you"];
+    $they = $_POST["they"];
     include "updatetrade.inc.php";
 //    print_r ($trade);
 }

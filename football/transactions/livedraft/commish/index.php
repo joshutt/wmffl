@@ -30,10 +30,10 @@ join user u on o.userid=u.UserID
 join teamnames t on o.teamid=t.teamid and t.season=o.season
 left join config c on c.key=concat('draft.login.', u.userid)
 left join config c2 on c2.key=concat('draft.team.', t.teamid)
-where o.season=2018
+where o.season=$currentSeason
 order by t.name";
 
-$results = mysql_query($query) or die("Unable to do query: " . mysql_error());
+$results = mysqli_query($conn, $query) or die("Unable to do query: " . mysqli_error($conn));
 ?>
 
 <div class="container">
@@ -48,7 +48,7 @@ $results = mysql_query($query) or die("Unable to do query: " . mysql_error());
                     <th>Auto Pick</th>
                 </tr>
                 <?php
-                while ($row = mysql_fetch_array($results)) {
+                while ($row = mysqli_fetch_array($results)) {
                     if ($row[4] == "In") {
                         $png = "green.png";
                     } else {
@@ -85,11 +85,12 @@ $results = mysql_query($query) or die("Unable to do query: " . mysql_error());
             <div id="clockStatus"><small>Clock is</small></div>
             <div id="team"></div>
             <div id="clock">5:00</div>
-            <div id="stClock" class="button col-4" onclick="changeClock();">Start Clock</div>
-            <div id="undo" class="button col-4" onclick="undoPick();">Undo Pick</div>
+            <div id="stClock" class="btn btn-green col-4" onclick="changeClock();">Start Clock</div>
+            <div id="undo" class="btn btn-grey col-4" onclick="undoPick();">Undo Pick</div>
             <div class="highlight">Total draft time:
                 <div id="totalTime"/>
             </div>
+            <div id="startDraft" class="btn btn-green" onclick="startDraft();">Start Draft</div>
         </div>
     </div>
 

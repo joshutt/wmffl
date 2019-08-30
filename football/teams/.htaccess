@@ -1,6 +1,0 @@
-
-RewriteEngine On
-
-RewriteRule ^(.*)/roster teamroster.php?viewteam=$1
-RewriteRule ^(.*)/history teamhistory.php?viewteam=$1
-RewriteRule ^(.*)/schedule teamschedule.php?viewteam=$1

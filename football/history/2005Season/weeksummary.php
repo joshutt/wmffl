@@ -1,12 +1,11 @@
-<?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+<?php
+require_once "utils/start.php";
 
 $thisWeek = $_REQUEST["week"];
 $thisSeason = 2005;
 $title = "Week $thisWeek Recap";
-?>
 
-<? include "$DOCUMENT_ROOT/base/menu.php"; ?>
+include "base/menu.php"; ?>
 
 <style>
 <!--
@@ -16,7 +15,7 @@ H4 {color:660000; text-decoration:None; font-size:14pt; font-weight:bold}
 </style>
 
 
-<h1 align="center"><? print $title; ?></h1>
+<h1 align="center"><?= $title; ?></h1>
 <hr/>
 
 <p>
@@ -44,4 +43,4 @@ H4 {color:660000; text-decoration:None; font-size:14pt; font-weight:bold}
 <? include "boxscores.php"; ?>
 </p>
 
-<? include "$DOCUMENT_ROOT/base/footer.html"; ?>
+<? include "base/footer.html"; ?>

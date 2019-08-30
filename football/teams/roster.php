@@ -24,7 +24,7 @@ $theDate = mysqli_fetch_row($result);
     </div>
     <div class="col-12 d-flex justify-content-center">
         <?
-        //$teamname = $HTTP_POST_VARS["teamname"];
+        //$teamname = $_POST["teamname"];
         //	print "Team name: ".$teamname;
         //$thequery = "select p.lastname, p.pos, p.team, IF(p.firstname <> '', concat(', ',p.firstname), '') from newplayers p, roster r, team t where p.playerid=r.playerid and r.teamid=t.teamid and r.dateoff is null and t.teamid=$viewteam order by p.pos, p.lastname";
         $thequery = "select p.lastname, p.pos, p.team, b.week,

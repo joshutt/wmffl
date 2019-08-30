@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 function singleCompare($scoreA, $scoreB) {
     if ($scoreA < 0) return $scoreA;
@@ -35,8 +35,8 @@ EOD;
 $posVal = array();
 $posCount = array();
 $allPlayers = array();
-$results = mysql_query($playerSQL) or die("Can't query database: ".mysql_error());
-while ($rows = mysql_fetch_assoc($results)) {
+$results = mysqli_query($conn, $playerSQL) or die("Can't query database: " . mysqli_error($conn));
+while ($rows = mysqli_fetch_assoc($results)) {
     $pos = $rows["pos"];
     $teamid = $rows["teamid"];
     if ($rows["active"] >= 0) {
@@ -101,8 +101,8 @@ print "<tr><th colspan=4>Player of the Week</th></tr>";
 foreach ($finals as $playerid=>$score) {
     /*
     $playerInfoSQL = "SELECT concat(firstname, ' ', lastname) as 'name', team, pos FROM newplayers WHERE playerid=$playerid";
-    $playerResult = mysql_query($playerInfoSQL) or die("Dead: ".mysql_error());
-    $playerInfo = mysql_fetch_array($playerResult);
+    $playerResult = mysqli_query($conn, $playerInfoSQL) or die("Dead: ".mysqli_error($conn));
+    $playerInfo = mysqli_fetch_array($playerResult);
     */
     $playerInfo = $allPlayers[$playerid];
     print "<tr><td>$count</td><td>${playerInfo['name']}</td>";
@@ -120,8 +120,8 @@ print "<tr><th colspan=4>Defensive POW</th></tr>";
 foreach ($finals as $playerid=>$score) {
     /*
     $playerInfoSQL = "SELECT concat(firstname, ' ', lastname) as 'name', team, pos FROM newplayers WHERE playerid=$playerid";
-    $playerResult = mysql_query($playerInfoSQL) or die("Dead: ".mysql_error());
-    $playerInfo = mysql_fetch_array($playerResult);
+    $playerResult = mysqli_query($conn, $playerInfoSQL) or die("Dead: ".mysqli_error($conn));
+    $playerInfo = mysqli_fetch_array($playerResult);
     */
     $playerInfo = $allPlayers[$playerid];
     $pos = $playerInfo['pos'];

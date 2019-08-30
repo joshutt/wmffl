@@ -58,13 +58,13 @@ foreach ($you as $ch) {
         array_push($trFrPtsArr, new Points($trPts, $trYear));
     } else if (substr($ch, 0, 5) == "draft") {
         $drID = substr($ch, 5, 1);
-        $trYear = $HTTP_POST_VARS["youdraftyear".$drID];
-        $trRnd = $HTTP_POST_VARS["youdraftround".$drID];
+        $trYear = $_POST["youdraftyear" . $drID];
+        $trRnd = $_POST["youdraftround" . $drID];
         array_push($trFrPickArr, new Pick($trYear, $trRnd, 0));
     } else if (substr($ch, 0, 7) == "newprot") {
         $drID = substr($ch, 7, 1);
-        $trPts = $HTTP_POST_VARS["you$ch"];
-        $trYear = $HTTP_POST_VARS["youprotyear".$drID];
+        $trPts = $_POST["you$ch"];
+        $trYear = $_POST["youprotyear" . $drID];
         array_push($trFrPtsArr, new Points($trPts, $trYear));
     }
 }
@@ -88,13 +88,13 @@ foreach ($they as $ch) {
         array_push($trToPtsArr, new Points($trPts, $trYear));
     } else if (substr($ch, 0, 5) == "draft") {
         $drID = substr($ch, 5, 1);
-        $trYear = $HTTP_POST_VARS["theydraftyear".$drID];
-        $trRnd = $HTTP_POST_VARS["theydraftround".$drID];
+        $trYear = $_POST["theydraftyear" . $drID];
+        $trRnd = $_POST["theydraftround" . $drID];
         array_push($trToPickArr, new Pick($trYear, $trRnd, 0));
     } else if (substr($ch, 0, 7) == "newprot") {
         $drID = substr($ch, 7, 1);
-        $trPts = $HTTP_POST_VARS["they$ch"];
-        $trYear = $HTTP_POST_VARS["theyprotyear".$drID];
+        $trPts = $_POST["they$ch"];
+        $trYear = $_POST["theyprotyear" . $drID];
         array_push($trToPtsArr, new Points($trPts, $trYear));
     }
 }

@@ -1,12 +1,12 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 
 if (!$isin) {
     header("Location: /history/2007Season/draftdate.php");
 }
 
 $numNo = 0;
-foreach ($HTTP_POST_VARS as $key => $value) {
+foreach ($_POST as $key => $value) {
     if ($value == "N") {
         $numNo++;
     }
@@ -26,14 +26,14 @@ EOD;
 
 } else {
 
-    foreach ($HTTP_POST_VARS as $key => $value) {
+    foreach ($_POST as $key => $value) {
         //print "$key - $value <BR>";
         $thequery = "UPDATE draftdate SET attend='$value' ";
         $thequery.= "WHERE date='2007-".substr($key,0,2)."-".substr($key,2,2)."' ";
         $thequery .= "AND userid = $usernum"; 
         
         #print $thequery."<BR>";
-        mysql_query($thequery);
+        mysqli_query($conn, $thequery);
         
 
     }

@@ -1,7 +1,9 @@
 <?php
 require_once "utils/connect.php";
 
-if ($viewteam == null) {
+if (array_key_exists('viewteam', $_REQUEST)) {
+    $viewteam = $_REQUEST['viewteam'];
+} else {
     $viewteam = 2;
 }
 $viewteam = $conn->real_escape_string($viewteam);
@@ -60,7 +62,7 @@ include "base/menu.php";
 ?>
 
 <?
-if ($fulllogo == 1) {
+if (isset($fulllogo) && $fulllogo == 1) {
 ?>
 
     <center><img src="/teams/<?= $logo; ?>" align="center" alt="<?= $teamname; ?>"/>

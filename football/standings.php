@@ -1,7 +1,5 @@
-<?
+<?php
 require_once "utils/connect.php";
-
-//include "lib/Team.php";
 
 
 $thisSeason = $currentSeason;

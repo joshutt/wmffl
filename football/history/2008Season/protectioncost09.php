@@ -1,5 +1,5 @@
 <?
-require_once "$DOCUMENT_ROOT/utils/start.php";
+require_once "utils/start.php";
 $query = "SELECT p.firstname, p.lastname, pc.years, MAX(pos.cost)-MIN(pos.cost) as 'Extra', t.name ";
 $query .= "FROM newplayers p ";
 $query .= "JOIN protectioncost pc ON p.playerid=pc.playerid ";
@@ -10,9 +10,9 @@ $query .= "WHERE pc.season=2009 ";
 $query .= "GROUP BY p.playerid, pos.position ";
 $query .= "ORDER BY t.name, Extra desc, pc.years desc";
 
-$result = mysql_query($query, $conn) or die("error: ".mysql_error());	
-$count = mysql_num_rows($result);
-while ($aLine = mysql_fetch_array($result)) {
+$result = mysqli_query($conn, $query) or die("error: " . mysqli_error($conn));
+$count = mysqli_num_rows($result);
+while ($aLine = mysqli_fetch_array($result)) {
 	$page[$aLine['name']] .= "<TR><TD>".$aLine['firstname']." ".$aLine['lastname'];
 	$page[$aLine['name']] .= "</TD><TD ALIGN=Center>".$aLine['years']."</TD>";
 	$page[$aLine['name']] .= "<TD ALIGN=Center>+".$aLine['Extra']."</TD></TR>";
@@ -25,7 +25,7 @@ while ($aLine = mysql_fetch_array($result)) {
 <TITLE>2009 WMFFL Protection Costs</TITLE>
 </HEAD>
 
-<? include "$DOCUMENT_ROOT/base/menu.php"; ?>
+<? include "base/menu.php"; ?>
 
 <H1 Align=Center>Protection Costs</H1>
 <HR size = "1">
@@ -96,4 +96,4 @@ $teamName = '';
 
 </TABLE>
 </TD></TR></TABLE>
-<? include "$DOCUMENT_ROOT/base/footer.html"; ?>
+<? include "base/footer.html"; ?>
