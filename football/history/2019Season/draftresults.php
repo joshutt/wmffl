@@ -1,6 +1,6 @@
 <?php
-$season = 2018;
-$dateSet = "'2018-08-26'";
+$season = 2019;
+$dateSet = "'2019-08-31'";
 
 include "../common/draftresults.php";
 include "base/footer.html";
