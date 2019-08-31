@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "utils/start.php";
 
 $title = "2019 WMFFL Financial Statements";
@@ -9,7 +9,7 @@ include "base/menu.php";
 
 
 <H1 ALIGN=Center>Team Finances</H1>
-<H5 ALIGN=Center>Last Updated 8/30/2019</H5>
+<H5 ALIGN=Center>Last Updated 8/31/2019</H5>
 <HR size="1">
 
 <p>
@@ -20,7 +20,7 @@ include "base/menu.php";
 <div class="center">
 
     <?
-    $amt_owed = array( 6=>71.70, 8=>69.82, 4=>61.05 );
+    $amt_owed = array( 6=>71.70, 4=>61.05 );
 
     if ($isin && array_key_exists($teamnum, $amt_owed)) { ?>
 
@@ -79,14 +79,14 @@ include "base/menu.php";
         <tr class="evenRow">
             <td class="name padded">Fighting Squirrels</td>
             <td class="padded">$5.18</td>
-            <td class="padded">-</td>
+            <td class="padded">$69.82</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">$0.00</td>
-            <td class="padded">$69.82</td>
+            <td class="padded">$0.00</td>
         </tr>
         <tr class="oddRow">
             <td class="name padded">Gallic Warriors</td>
