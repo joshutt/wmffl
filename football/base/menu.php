@@ -52,8 +52,8 @@ if (!isset($title)) {
             <div class="sideButton"><a class="sideButton" href="/activate/activations">Activations</a></div>
             <div class="sideButton"><a class="sideButton" href="/teams">Teams</a></div>
             <div class="sideButton"><a class="sideButton" href="/stats/leaders">Stats</a></div>
-            <div class="sideButton"><a class="sideButton" href="/history/2018Season/schedule">Schedule</a></div>
-            <div class="sideButton"><a class="sideButton" href="/history/2018Season/standings">Standings</a></div>
+            <div class="sideButton"><a class="sideButton" href="/history/2019Season/schedule">Schedule</a></div>
+            <div class="sideButton"><a class="sideButton" href="/history/2019Season/standings">Standings</a></div>
             <div class="sideButton"><a class="sideButton" href="/transactions/transactions">Transactions</a></div>
             <div class="sideButton"><a class="sideButton" href="/rules">Rules</a></div>
             <div class="sideButton"><a class="sideButton" href="/history">History</a></div>

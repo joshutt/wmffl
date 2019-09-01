@@ -1,4 +1,4 @@
-<?
+<?php
 if ($thisSeason < $currentSeason) {
     $thisWeek = 17;
 } else {
@@ -52,23 +52,11 @@ $byeList[$lastWeek] = $string;
 
 $title = "WMFFL Schedule";
 $cssList = array("/base/css/schedule.css");
+include "base/menu.php";
 ?>
-
-
-<? include "base/menu.php"; ?>
 
 <H1 Align=Center><? print $thisSeason;?> Schedule</H1>
 <HR size = "1"><CENTER>
-
-<A HREF="#Week1">Week 1</A> | <A HREF="#Week2">Week 2</A> |
-<A HREF="#Week3">Week 3</A> | <A HREF="#Week4">Week 4</A> |
-<A HREF="#Week5">Week 5</A> | <A HREF="#Week6">Week 6</A> |
-<A HREF="#Week7">Week 7</A> | <A HREF="#Week8">Week 8</A> <BR>
-<A HREF="#Week9">Week 9</A> | <A HREF="#Week10">Week 10</A> |
-<A HREF="#Week11">Week 11</A> | <A HREF="#Week12">Week 12</A> |
-<A HREF="#Week13">Week 13</A> | <A HREF="#Week14">Week 14</A> <BR>
-<A HREF="#Playoffs">Playoffs</A> |
-<A HREF="#Championship">WMFFL Championship XXVII</A><HR size = "1"></CENTER>
 
 <?
 $results = mysqli_query($conn, $sql);
@@ -78,13 +66,12 @@ $lastLabel = "";
 while ($row = mysqli_fetch_array($results)) {
     if ($row[0] != $listWeek || $row[11] != $lastLabel) {
         if ($listWeek != 0) {
-            print <<<EOD
+            ?>
 </tbody>
 </table>
-<a href="#" class="return">Return to top</a>
 </div>
 <br/>
-EOD;
+<?php
         }
 
         
@@ -94,33 +81,31 @@ EOD;
             $displayWeek = $row[11];
         }
 
-        print <<<EOD
+?>
         <a name="$anchorName"/>
         <div class="SLTables1">
 <table width="550" cellspacing="1" cellpadding="2" border="0" class="SLTables1">
     <tbody>
     <tr class="bg0" align="center">
         <td class="bg0" colspan="6">
-            <font class="bg0font">$displayWeek</font>
+            <font class="bg0font"><?= $displayWeek ?></font>
         </td>
     </tr>
-EOD;
-        print <<<EOD
     <tr class="bg1" align="center">
         <td class="bg1" colspan="6">
-            <font class="bg1font"><b>{$row[8]}, {$row[6]} {$row[7]}</b></font>
+            <font class="bg1font"><b><?= $row[8] ?>, <?= $row[6]?> <?=$row[7]?></b></font>
         </td>
     </tr>
-EOD;
+<?php
         if (array_key_exists($row[0], $byeList)) {
             $byeString = $byeList[$row[0]];
-            print <<<EOD
+?>
     <tr id="main" class="bg4" align="left">
         <td class="bg4" colspan="6">
-            <font class="bg4font">NFL Byes: $byeString</font>
+            <font class="bg4font">NFL Byes: <?=$byeString?></font>
         </td>
     </tr>
-EOD;
+<?php
         }
         $listWeek = $row[0];
         $lastLabel = $row[11];
@@ -136,29 +121,31 @@ EOD;
         $loseName = $row[3];
         $loseScore = $row[4];
     }
-
-    print "<tr class=\"bg2\" valign=\"middle\" height=\"17\" align=\"right\">";
-    if ($row[0] < $thisWeek) {
-        print "<td align=\"left\" width=\"235\">$winName</td>";
-        print "<td align=\"center\" width=\"40\">$winScore</td>";
-        print "<td align=\"left\" width=\"20\">&nbsp;</td>";
-        print "<td align=\"left\" width=\"235\">$loseName</td>";
-        print "<td align=\"center\" width=\"40\">$loseScore</td>";
-    } else {
-        print "<td align=\"left\" width=\"235\">$winName</td><td width=\"40\">&nbsp;</td>";
-        print "<td align=\"left\" width=\"20\">vs</td><td width=\"40\">&nbsp;</td>";
-        print "<td align=\"left\" width=\"235\">$loseName</td>";
-    }
-    print "</tr>";
-}
-
-print "</tbody></table>";
-print "<a href=\"#\" class=\"return\">Return to top</a>";
-print "</div><br/>";
-
-
 ?>
 
-<a name="Playoffs"/><a name="Championship"/>
+<tr class="bg2" valign="middle" height="17" align="right">
+
+<?php
+    if ($row[0] < $thisWeek) {
+?>
+    <td align="left" width="235"><?=$winName?></td>
+    <td align="center" width="40"><?=$winScore?></td>
+    <td align="left" width="20">&nbsp;</td>
+    <td align="left" width="235"><?=$loseName?></td>
+    <td align="center" width="40"><?=$loseScore?></td>
+<?php
+    } else {
+?>
+        <td align="left" width="235"><?=$winName?></td><td width="40">&nbsp;</td>
+        <td align="left" width="20">vs</td><td width="40">&nbsp;</td>
+        <td align="left" width="235"><?=$loseName?></td>
+<?php } ?>
+    </tr>
+<?php
+}
+?>
+
+</tbody></table>
+</div><br/>
 
 <? include "base/footer.html"; ?>
