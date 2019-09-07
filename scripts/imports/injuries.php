@@ -37,10 +37,14 @@ foreach ($injuries->injury as $injuries) {
 
     $playerid = $injuries->id;
     $status = $injuries->status;
+    if (empty(trim($playerid))) {
+        continue;
+    }
     $details = mysqli_real_escape_string($conn, trim($injuries->details));
     $statShort = substr($status, 0, 1);
 
     //print "$playerid - $status - $details - $statShort<br/>";
+    //continue;
     $query = "select playerid, $season, $week, '$statShort', '$details' from newplayers where flmid=$playerid";
     //print $query;
     //print "\n";

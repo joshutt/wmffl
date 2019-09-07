@@ -5,8 +5,8 @@ require_once "utils/start.php";
 #    $week = 1;
 #} else {
     $week = $currentWeek;
-$week = 13;
-$currentSeason = 2018;
+#$week = 13;
+#$currentSeason = 2018;
 #}
 
 $title = "Waiver Order";

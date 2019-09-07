@@ -1,6 +1,7 @@
 #!/bin/sh
 
-SCRIPT_DIR='/home/joshutt/football/scripts/livescore'
+#SCRIPT_DIR='/home/joshutt/git/scripts/livescore'
+SCRIPT_DIR='/home/joshutt/wmffl/scripts/livescore'
 DATA_DIR=$SCRIPT_DIR'/data'
 FILE_DIR='/home/joshutt/football/activate'
 FAILURE=1
@@ -58,7 +59,8 @@ echo "Parsed Stats"
 mysql --defaults-file=/home/joshutt/fb.conf joshutt_oldwmffl < $DATA_DIR/out.sql
 
 echo "Read into Database"
-php /home/joshutt/football/admin/updatescores.php
+#php /home/joshutt/football/admin/updatescores.php
+php $SCRIPT_DIR/updatescores.php
 
 mv $SCRIPT_DIR/tmpupdate $FILE_DIR/update.inc
 

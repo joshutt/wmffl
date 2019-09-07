@@ -6,9 +6,10 @@ include dirname(__FILE__)."/../base.php";
 $sql = "select week, season from weekmap where startDate < now() and endDate > now()";
 $results = mysqli_query($conn, $sql) or die ("Unable to get this week: " . mysqli_error($conn));
 list($curWeek, $season) = mysqli_fetch_array($results);
-$curWeek = 0;
+//$curWeek = 0;
 
 for ($week = $curWeek-1; $week <= 17; $week++) { 
+    print $week;
     loadWeekGames($season, $week);
 }
 
@@ -44,12 +45,11 @@ function loadWeekGames($season, $week) {
     $xml = simplexml_load_file($request_url) or die("Feed not loading");
 
     $matchupList = array();
-    print "<pre>";
 
     $block = array();
     $first = true;
     foreach ($xml->matchup as $game) {
-        #print_r($game);
+        //print_r($game);
 
         $kickoff = $game['kickoff'];
         $secRemain = $game['gameSecondsRemaining'];
@@ -92,17 +92,13 @@ function loadWeekGames($season, $week) {
         array_push($block, $string);
     }
 
-    print "</pre>";
-
     print "REPLACE INTO nflgames VALUES ";
     $string = "REPLACE INTO nflgames VALUES ";
     foreach($block as $game) {
         print $game;
         $string .= $game;
     }
-    print "<br/>";
 
     mysqli_query($conn, $string) or die("Dead: " . mysqli_error($conn));
 }
 
-?>

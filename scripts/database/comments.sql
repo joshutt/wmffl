@@ -9,7 +9,7 @@ create table comments
   active tinyint(1) default '0' null,
   parent_id int null,
   constraint comments_comments_comment_id_fk
-  foreign key (parent_id) references joshutt_staging.comments (comment_id)
+  foreign key (parent_id) references comments (comment_id)
 )
 ;
 

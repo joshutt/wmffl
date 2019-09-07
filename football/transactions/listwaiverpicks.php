@@ -5,6 +5,7 @@ if (array_key_exists('week', $_REQUEST)) {
     $week = $_REQUEST['week'];
 } else {
     $week = $currentWeek - 1;
+    $week = $currentWeek;
 }
 if ($currentWeek == 0) {
     $week = 0;

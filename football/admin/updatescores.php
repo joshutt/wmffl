@@ -119,9 +119,9 @@ $gameSelect = "SELECT s.teama, s.teamb, w.season, w.week ";
 $gameSelect .= "FROM schedule s, weekmap w ";
 $gameSelect .= "WHERE s.season=w.season and s.week=w.week ";
 
-if ($week != '') {
+if (!empty($week)) {
     $gameSelect .= "AND w.week=".$week;
-    if ($season != '') {
+    if (!empty($season)) {
         $gameSelect .= " AND w.season=".$season;
     }
 //} elseif (date("w") == 2 && date("H") >= 11) {

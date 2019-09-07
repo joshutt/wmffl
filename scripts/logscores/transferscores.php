@@ -12,7 +12,6 @@ function catchBadFunction($errno, $errstr, $errfile, $errline, $vars) {
     $vars["pts"] = 0;
 }
 
-//require_once "/home/joshutt/football/utils/start.php";
 include "base/scoring.php";
 
 //$week = $currentWeek - 1;
