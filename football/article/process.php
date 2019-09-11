@@ -1,12 +1,13 @@
-<?
+<?php
 require_once "utils/start.php";
 
 function compressImage($url, $currentSeason, $currentWeek) {
+    global $config;
+    $paths = $config["Paths"];
     $maxSize = 600;
-    //$rootLoc = "/home/joshutt/football";
-    $rootLoc = "/home/joshutt/git/football";
-    $newDir = "images/upload";
-    $newName = $currentSeason."wk".$currentWeek.".jpg";
+    $rootLoc = $paths["wwwPath"];
+    //error_log(print_r($config, true));
+    $newDir = $paths["imagesPath"];
     $newName = hash_file('md5', $url).'.jpg';
     global $fail;
 
@@ -97,4 +98,3 @@ $uid = mysqli_insert_id($conn);
 $_REQUEST["uid"] = $uid;
 
 include "preview.php";
-?>
