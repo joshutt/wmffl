@@ -155,9 +155,11 @@ while (id != ord('\x15')) :
 
     if (id == ord('\x0a')) :
         teamid = value
+        #print "teamid %s"%teamid
     elif (id == ord('\x0b')) :
         thePlayers[teamid].stillPlay = value
         thePlayers[teamid].secRemain = 3600
+        #print "still play %s"%value
     elif (id == ord('\x0c')) :
         qRemain = 4-value;
         thePlayers[teamid].secRemain = qRemain*15*60
@@ -165,15 +167,15 @@ while (id != ord('\x15')) :
             thePlayers[teamid].secRemain = qRemain*15*60
         elif (value > 8) :
             thePlayers[teamid].secRemain = 0
+        #print "Q Remain %s"%value
     elif (id == ord('\x14')) :
         thePlayers[teamid].secRemain += value
+        #print "Extra Secs: %s"%value
 
     id = valuate(theFile.read(4))
     #print id
     if (id == 0) : break
     typeCd = ord(theFile.read(1))
-
-
 
 teams = {}
 scorelength = 0
@@ -271,30 +273,36 @@ for x in range(1, 33) :
     player = thePlayers[x]
     playerid = player.id + 600
     rushTD = 0
-    if (thePlayers[x].complete == 1) :
-        inProgArray[2].append(x)
-    elif (thePlayers[x].stillPlay) :
+    #print "id [%s]  Complete  %s   Still  %s " %(playerid, thePlayers[x].complete, thePlayers[x].stillPlay)
+    if (thePlayers[x].stillPlay == 1) :
         inProgArray[1].append(x)
+    elif (thePlayers[x].complete == 1) :
+        inProgArray[2].append(x)
     else :
         inProgArray[0].append(x)
     if (teams.has_key(x)) :
         rushTD = teams[x].rushTD
 
-    print "INSERT INTO stats (statid, season, week, played, yards, sacks, tds) VALUES (%d, %d, %d, %d, %d, %d, %d) ON DUPLICATE KEY UPDATE played=%d, yards=%d, \
-	sacks=%d, tds=%d;"%(playerid, year, player.week, player.stillPlay+player.complete, player.rushYards, player.sackAgt, rushTD, player.stillPlay+player.complete, \
-	player.rushYards, player.sackAgt, rushTD)
+    #print "INSERT INTO stats (statid, season, week, played, yards, sacks, tds) VALUES (%d, %d, %d, %d, %d, %d, %d) ON DUPLICATE KEY UPDATE played=%d, yards=%d, \
+	#sacks=%d, tds=%d;"%(playerid, year, player.week, player.stillPlay+player.complete, player.rushYards, player.sackAgt, rushTD, player.stillPlay+player.complete, \
+	#player.rushYards, player.sackAgt, rushTD)
 
-
+#print inProgArray
 if (len(inProgArray[1]) > 0) :
     #print "UPDATE nflstatus SET status='P' WHERE season=%d AND week=%d and status<>'B' and nflteam in ("%(year, wholeWeek)
     for x in inProgArray[1] :
         #print matchDict[x]
-        print "UPDATE nflgames SET secRemain=%d WHERE season=%d AND week=%d and homeTeam='%s';"%(thePlayers[x].secRemain , year, wholeWeek, matchDict[x])
+        print "UPDATE nflgames SET complete=0, secRemain=%d WHERE season=%d AND week=%d and homeTeam='%s';"%(thePlayers[x].secRemain , year, wholeWeek, matchDict[x])
 
 if (len(inProgArray[2]) > 0) :
     #print "UPDATE nflstatus SET status='F' WHERE season=%d AND week=%d and status<>'B' and nflteam in ("%(year, wholeWeek)
     print "UPDATE nflgames SET complete=1 , secRemain=0 WHERE season=%d AND week=%d and homeTeam in ("%(year, wholeWeek)
     for x in inProgArray[2] :
+        #if hasattr(thePlayers[x], 'secRemain') :
+        #    print "Team [%s]  Time Remain [%s]" % (matchDict[x], thePlayers[x].secRemain)
+        #else :
+        #    print "Team [%s]  Time Remain [%s]" % (matchDict[x], 0)
+
         #print matchDict[x]
         print "'%s', "%matchDict[x]
     print "'XXX');"

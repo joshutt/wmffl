@@ -20,7 +20,7 @@ include "base/menu.php";
 <div class="center">
 
     <?
-    $amt_owed = array( 6=>72.70, 4=>62.05 );
+    $amt_owed = array( 6=>77.70, 4=>67.05 );
 
     if ($isin && array_key_exists($teamnum, $amt_owed)) { ?>
 
@@ -56,13 +56,13 @@ include "base/menu.php";
             <td class="name padded">Crusaders</td>
             <td class="padded">$3.30</td>
             <td class="padded">-</td>
-            <td class="padded">$1.00</td>
+            <td class="padded">$6.00</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
-            <td class="padded"><span class="debt">($72.70)</span></td>
-            <td class="padded">$72.70</td>
+            <td class="padded"><span class="debt">($77.70)</span></td>
+            <td class="padded">$77.70</td>
         </tr>
         <tr class="oddRow">
             <td class="name padded">Fightin' Bitin' Beavers</td>
@@ -152,13 +152,13 @@ include "base/menu.php";
             <td class="name padded">Sean Taylor's Ashes</td>
             <td class="padded">$13.95</td>
             <td class="padded">-</td>
-            <td class="padded">$1.00</td>
+            <td class="padded">$6.00</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
-            <td class="padded"><span class="debt">($62.05)</span></td>
-            <td class="padded">$62.05</td>
+            <td class="padded"><span class="debt">($67.05)</span></td>
+            <td class="padded">$67.05</td>
         </tr>
         <tr class="oddRow">
             <td class="name padded">Testudos Revenge</td>

@@ -50,14 +50,17 @@ while ($teams = mysqli_fetch_array($results)) {
 
 // For each team calculate the offense and defense and overall
 foreach ($teamResults as $teamName) {
-    $off = $teamName["HC"] ?? 0 + $teamName["QB"] ?? 0 + $teamName["RB"] ?? 0 + $teamName["WR"] ?? 0
-        + $teamName["TE"] ?? 0 + $teamName["K"] ?? 0 + $teamName["OL"] ?? 0;
-    $def = $teamName["DL"] ?? 0 + $teamName["LB"] ?? 0 + $teamName["DB"] ?? 0;
+    $off = ($teamName["HC"] ?? 0) + ($teamName["QB"] ?? 0) + ($teamName["RB"] ?? 0) + ($teamName["WR"] ?? 0)
+        + ($teamName["TE"] ?? 0) + ($teamName["K"] ?? 0) + ($teamName["OL"] ?? 0);
+    $def = ($teamName["DL"] ?? 0) + ($teamName["LB"] ?? 0) + ($teamName["DB"] ?? 0);
+    //error_log(print_r($teamName, true));
+    //error_log("Offense: $off");
     $teamName["offense"] = $off;
     $teamName["defense"] = $def;
     $teamName["total"] = $off + $def;
     $teamResults[$teamName["name"]] = $teamName;
 }
+//error_log(print_r($teamResults, true));
 
 $colTitles = array("Team", "HC", "QB", "RB", "WR", "TE", "K", "OL", "DL", "LB", "DB", "Offense", "Defense", "Total<br/>Pts");
 

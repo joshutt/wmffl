@@ -99,10 +99,11 @@ for ($i = 0; $i<2; $i++) {
 
         $gameTime = strtotime($row['kickoff']);
         $now = time();
+        //error_log("Game Time: $gameTime     Now: $now");
         if ($teamnum == 2) {
-#            print_r($row);
-#            print "{$row['kickoff']} = $gameTime<br/>";
-#            print "$gameTime - $now<br/>";
+//            print_r($row);
+//            print "{$row['kickoff']} = $gameTime<br/>";
+//            print "$gameTime - $now<br/>";
         }
         if ($now > strtotime($row['ActivationDue'])) {
             if ($row["GPMe"] == "Me" && $row["GPThem"] != "Them") {
@@ -121,9 +122,9 @@ for ($i = 0; $i<2; $i++) {
                 $offPoints[$i] += $pts;
             }
         }
-#print_r($row);
 
         if ($includePts) {
+            //error_log(print_r($row, true));
             if ($row['illegal']==1 || ($row['teamcheck2']!=$teams[$i] && $row["pos"]!="HC")) {
                 $printString[$i] .= printPlayer($row, "illegal", -2);
                 if ($includePts) {
