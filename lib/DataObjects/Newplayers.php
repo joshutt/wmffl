@@ -1,8 +1,13 @@
-<?php
-/**
- * Table Definition for newplayers
- */
-require_once 'DB/DataObject.php';
+<?php
+
+/**
+
+ * Table Definition for newplayers
+
+ */
+
+require_once 'DB/DataObject.php';
+
 
 class DataObjects_Newplayers extends DB_DataObject 
 {
@@ -74,40 +79,77 @@ class DataObjects_Newplayers extends DB_DataObject
 
 
 
-    function getTeamFromNum($num) {
-        switch($num) {
-            case 1: return 'BUF'; break;
-            case 2: return 'IND'; break;
-            case 3: return 'MIA'; break;
-            case 4: return 'NE'; break;
-            case 5: return 'NYJ'; break;
-            case 6: return 'CIN'; break;
-            case 7: return 'CLE'; break;
-            case 8: return 'TEN'; break;
-            case 9: return 'JAC'; break;
-            case 10: return 'PIT'; break;
-            case 11: return 'DEN'; break;
-            case 12: return 'KC'; break;
-            case 13: return 'OAK'; break;
-            case 14: return 'SD'; break;
-            case 15: return 'SEA'; break;
-            case 16: return 'DAL'; break;
-            case 17: return 'NYG'; break;
-            case 18: return 'PHI'; break;
-            case 19: return 'ARI'; break;
-            case 20: return 'WAS'; break;
-            case 21: return 'CHI'; break;
-            case 22: return 'DET'; break;
-            case 23: return 'GB'; break;
-            case 24: return 'MIN'; break;
-            case 25: return 'TB'; break;
-            case 26: return 'ATL'; break;
-            case 27: return 'CAR'; break;
-            case 28: return 'LA'; break;
-            case 29: return 'NO'; break;
-            case 30: return 'SF'; break;
-            case 31: return 'BAL'; break;
-            case 32: return 'HOU'; break;
-        }
-    }
-}
+    function getTeamFromNum($num) {
+
+        switch($num) {
+
+            case 1: return 'BUF'; break;
+
+            case 2: return 'IND'; break;
+
+            case 3: return 'MIA'; break;
+
+            case 4: return 'NE'; break;
+
+            case 5: return 'NYJ'; break;
+
+            case 6: return 'CIN'; break;
+
+            case 7: return 'CLE'; break;
+
+            case 8: return 'TEN'; break;
+
+            case 9: return 'JAC'; break;
+
+            case 10: return 'PIT'; break;
+
+            case 11: return 'DEN'; break;
+
+            case 12: return 'KC'; break;
+
+            case 13: return 'OAK'; break;
+
+            case 14: return 'SD'; break;
+
+            case 15: return 'SEA'; break;
+
+            case 16: return 'DAL'; break;
+
+            case 17: return 'NYG'; break;
+
+            case 18: return 'PHI'; break;
+
+            case 19: return 'ARI'; break;
+
+            case 20: return 'WAS'; break;
+
+            case 21: return 'CHI'; break;
+
+            case 22: return 'DET'; break;
+
+            case 23: return 'GB'; break;
+
+            case 24: return 'MIN'; break;
+
+            case 25: return 'TB'; break;
+
+            case 26: return 'ATL'; break;
+
+            case 27: return 'CAR'; break;
+
+            case 28: return 'LA'; break;
+
+            case 29: return 'NO'; break;
+
+            case 30: return 'SF'; break;
+
+            case 31: return 'BAL'; break;
+
+            case 32: return 'HOU'; break;
+
+        }
+
+    }
+
+}
+

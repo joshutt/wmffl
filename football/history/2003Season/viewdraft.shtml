@@ -1,16 +1,28 @@
-<HTML>
-<HEAD>
-<TITLE>2003 Draft Picks</TITLE>
-</HEAD>
-
-<!--#include virtual="/base/menu.php"-->
-
-<H1 Align=Center>2003 Draft Picks</H1>
-<HR size = "1"><CENTER>
+<HTML>
+
+<HEAD>
+
+<TITLE>2003 Draft Picks</TITLE>
+
+</HEAD>
+
+
+
+<!--#include virtual="/base/menu.php"-->
+
+
+
+<H1 Align=Center>2003 Draft Picks</H1>
+
+<HR size = "1"><CENTER>
+
 
 <PRE>
 <!--#include file="draftsummary.txt"-->
 </PRE>
-
-
-<!--#include virtual="/base/footer.html"-->
+
+
+
+
+<!--#include virtual="/base/footer.html"-->
+
