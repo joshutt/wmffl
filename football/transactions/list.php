@@ -73,16 +73,31 @@ include_once "base/useful.php";
         die("query: $search$orderby<br/>" . mysqli_error($conn));
         
 
-	} 
+	}
+
+	$javascriptList = array("//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js");
 ?>
 
 <HTML>
 <HEAD>
 <TITLE>WMFFL Players List</TITLE>
+
+    <script language="JavaScript">
+        function addPick($item) {
+            // If current value is empty it means make available, remove from list
+            if ($item.value === "") {
+                $("#hiddenPicks")[0].value = $("#hiddenPicks")[0].value.replace($item.old, "");
+                //alert("Blank "+$item.old);
+            // If current value is not already in list then add it
+            } else if (!$("#hiddenPicks")[0].value.includes($item.value)) {
+                $("#hiddenPicks")[0].value = $("#hiddenPicks")[0].value.concat($item.value + ",");
+                //alert($("#hiddenPicks")[0].value);
+            }
+        }
+    </script>
 </HEAD>
 
-<?
-include  "base/menu.php"; ?>
+<? include  "base/menu.php"; ?>
 
 <H1 ALIGN=Center>List Players</H1>
 <HR size = "1">
@@ -140,7 +155,8 @@ First Name:<INPUT TYPE="text" NAME="First" VALUE="<? print $First; ?>"><BR>
 <OPTION VALUE="HOU"<? if ($Team=="HOU") print " SELECTED "; ?>>Houston</OPTION>
 <OPTION VALUE="JAC"<? if ($Team=="JAC") print " SELECTED "; ?>>Jacksonville</OPTION>
 <OPTION VALUE="KC"<? if ($Team=="KC") print " SELECTED "; ?>>Kansas City</OPTION>
-<OPTION VALUE="LA"<? if ($Team=="LA") print " SELECTED "; ?>>Los Angeles</OPTION>
+<OPTION VALUE="LAC"<? if ($Team=="LAC") print " SELECTED "; ?>>Los Angeles Chargers</OPTION>
+<OPTION VALUE="LAR"<? if ($Team=="LAR") print " SELECTED "; ?>>Los Angeles Rams</OPTION>
 <OPTION VALUE="MIA"<? if ($Team=="MIA") print " SELECTED "; ?>>Miami</OPTION>
 <OPTION VALUE="MIN"<? if ($Team=="MIN") print " SELECTED "; ?>>Minnesota</OPTION>
 <OPTION VALUE="NE"<? if ($Team=="NE") print " SELECTED "; ?>>New England</OPTION>
@@ -150,7 +166,6 @@ First Name:<INPUT TYPE="text" NAME="First" VALUE="<? print $First; ?>"><BR>
 <OPTION VALUE="OAK"<? if ($Team=="OAK") print " SELECTED "; ?>>Oakland</OPTION>
 <OPTION VALUE="PHI"<? if ($Team=="PHI") print " SELECTED "; ?>>Philadelphia</OPTION>
 <OPTION VALUE="PIT"<? if ($Team=="PIT") print " SELECTED "; ?>>Pittsburgh</OPTION>
-<OPTION VALUE="SD"<? if ($Team=="SD") print " SELECTED "; ?>>San Diego</OPTION>
 <OPTION VALUE="SEA"<? if ($Team=="SEA") print " SELECTED "; ?>>Seattle</OPTION>
 <OPTION VALUE="SF"<? if ($Team=="SF") print " SELECTED "; ?>>San Francisco</OPTION>
 <OPTION VALUE="TB"<? if ($Team=="TB") print " SELECTED "; ?>>Tampa Bay</OPTION>
@@ -169,7 +184,8 @@ First Name:<INPUT TYPE="text" NAME="First" VALUE="<? print $First; ?>"><BR>
 </FORM>
 
 <TABLE>
-<FORM ACTION="confirm.php" METHOD="POST">
+<FORM ACTION="confirm.php" METHOD="POST" id="selectListForm">
+    <input type="hidden" id="hiddenPicks" name="picks" value=""/>
 <TR>
 <TD><B><A HREF="list.php?Position=<? print $Position; ?>&Team=<? print $Team; ?>&Available=<? print $Available; ?>&Order=teamname&submit=y&Last=<? print $Last;?>&First=<? print $First;?>">Current Team</A></B></TD><TD>&nbsp;&nbsp;&nbsp;</TD>
 <TD><B><A HREF="list.php?Position=<? print $Position; ?>&Team=<? print $Team; ?>&Available=<? print $Available; ?>&Order=lastname&submit=y&Last=<? print $Last;?>&First=<? print $First;?>">Last Name</A></B></TD><TD>&nbsp;&nbsp;&nbsp;</TD>
@@ -180,7 +196,7 @@ First Name:<INPUT TYPE="text" NAME="First" VALUE="<? print $First; ?>"><BR>
 	if ($theset) {
         while (list($avail, $last, $first, $pos, $team, $id) = mysqli_fetch_row($result)) {
 			if ($avail == "Available") {
-				print "<TR><TD><SELECT NAME=\"pick$id\"><OPTION VALUE=\"\" SELECTED>Available</OPTION><OPTION VALUE=\"$id\">Pick Up</OPTION></SELECT></TD>";
+				print "<TR><TD><SELECT onchange='addPick(this);' onfocus=\"this.old = this.value;\"><OPTION VALUE=\"\" SELECTED>Available</OPTION><OPTION VALUE=\"$id\">Pick Up</OPTION></SELECT></TD>";
 			} else {
 				print "<TR><TD>$avail</TD>";
 			}

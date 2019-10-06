@@ -1,30 +1,22 @@
-<?
+<?php
 function process($array, $word="pick") {
     $playerlist = array();
-	if(is_array($array)) {
-//		print("<ul>\n");
-//		$playerlist = array();
-		while(list($key,$val)=each($array))
-		{
-			if ($val == null || $val == "") continue;
-			if (substr($key, 0, strlen($word)) != $word) continue;
-			$playerlist[] = $val;
-//			print("<li> $val ");
-		}
-	}
-	return $playerlist;
+    $picks = $array["picks"];
+
+    // Reduce multiple commas to a single comma
+    $picks = preg_replace('/,,+/', ',', $picks);
+
+    // remove extra commas a beginning or end
+    $picks = trim($picks, ",");
+
+    //
+    if (trim($picks) === "") {
+        $picks = "0";
+    }
+    error_log($picks);
+    return $picks;
 }
-/*
-function array_keys ($arr, $term="") {
-    $t = array();
-    while (list($k,$v) = each($arr)) {
-        if ($term && $v != $term)
-            continue;
-            $t[] = $k;
-        }
-        return $t;
-}
-*/
+
 // establish connection
 require_once "utils/start.php";
 
@@ -58,24 +50,11 @@ if($submit == "Confirm") {
 				$playercount++;
 			}
 		} else if ($com == "pick" && $val=='y') {
-//			putEnv("TZ=US/Eastern");	
-			//$diff = mktime(12,0,0,8,20,2002) - time();
-			//$diff = mktime(12,15,0,12,21,2002) - time();
-//			$diff = mktime(12,15,0,12,20,2004) - time();
-			//$diff = time()-mktime(12,0,0,8,26,2003);
-//			if ($diff < 0) {
-//				$ErrorMessage = "Pickups are no longer allowed this season";
-				//$ErrorMessage = "Pickups are not allowed until Noon (EDT) on Tuesday, August 26th";
-			//}
-            //if ($week == 0) {
-            //    $ErrorMessage = "Pickups are not allowed until after the draft";
-            //} else if ($week == 16 && $isWaiver == 1) {
             if ($week == 16 && $isWaiver == 1) {
                 $ErrorMessage = "Pickups are no longer allowed this season";
             }
 			$playercount++;
 			$playlist[] = substr($key,4);
-//			$pickup[] = substr($key,4);
 		} else if($com == "prio") {
             $displayWaiver=true;
             if ($val!="n") {
@@ -229,13 +208,15 @@ while ($row = mysqli_fetch_row($result)) {
 
 
 // Generate query to list players
-$thequery = "SELECT playerid, lastname, firstname, team, pos, 0 as 'isWaive' FROM newplayers WHERE playerid in (0 ";
-for ($i=0; $i<sizeof($playlist); $i++) {
-	$thequery .= ", ".$playlist[$i];
-}
+$thequery = "SELECT playerid, lastname, firstname, team, pos, 0 as 'isWaive' FROM newplayers WHERE playerid in ( ";
+//for ($i=0; $i<sizeof($playlist); $i++) {
+$thequery .= $playlist;
+//	$thequery .= ", ".$playlist[$i];
+//}
 $thequery .= ")";
 
 // Get info about players to pickup
+error_log($thequery);
 $result = mysqli_query($conn, $thequery) or die ("Query 1 Failed");
 $i = 0;
 while ($pickups[$i] = mysqli_fetch_row($result)) {
