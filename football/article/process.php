@@ -6,7 +6,7 @@ function compressImage($url, $currentSeason, $currentWeek) {
     $paths = $config["Paths"];
     $maxSize = 600;
     $rootLoc = $paths["wwwPath"];
-    //error_log(print_r($config, true));
+    error_log(print_r($config, true));
     $newDir = $paths["imagesPath"];
     $newName = hash_file('md5', $url).'.jpg';
     global $fail;
@@ -41,6 +41,7 @@ function compressImage($url, $currentSeason, $currentWeek) {
 function logerror($errno, $errstr) {
     global $fail;
     global $errors;
+    error_log("Error [$errno]: $errstr");
     $fail = true;
     array_push($errors, "Provide a full URL to a JPG image");
 }

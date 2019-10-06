@@ -121,3 +121,6 @@ tags
 /football/images/week
 football/transactions/livedraft/check.log
 /football/transactions/livedraft/check.log
+
+# Script data
+/scripts/livescore/data/*

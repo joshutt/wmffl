@@ -99,12 +99,6 @@ for ($i = 0; $i<2; $i++) {
 
         $gameTime = strtotime($row['kickoff']);
         $now = time();
-        //error_log("Game Time: $gameTime     Now: $now");
-        if ($teamnum == 2) {
-//            print_r($row);
-//            print "{$row['kickoff']} = $gameTime<br/>";
-//            print "$gameTime - $now<br/>";
-        }
         if ($now > strtotime($row['ActivationDue'])) {
             if ($row["GPMe"] == "Me" && $row["GPThem"] != "Them") {
                 $pts = 2 * $pts;

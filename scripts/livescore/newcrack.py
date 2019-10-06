@@ -165,11 +165,13 @@ while (id != ord('\x15')) :
         thePlayers[teamid].secRemain = qRemain*15*60
         if (qRemain > 0) :
             thePlayers[teamid].secRemain = qRemain*15*60
+            thePlayers[teamid].stillPlay = 1
         elif (value > 8) :
             thePlayers[teamid].secRemain = 0
         #print "Q Remain %s"%value
     elif (id == ord('\x14')) :
         thePlayers[teamid].secRemain += value
+        thePlayers[teamid].stillPlay = 1
         #print "Extra Secs: %s"%value
 
     id = valuate(theFile.read(4))
@@ -177,6 +179,7 @@ while (id != ord('\x15')) :
     if (id == 0) : break
     typeCd = ord(theFile.read(1))
 
+#sys.exit()
 teams = {}
 scorelength = 0
 while (id != ord('\x0a')) :
@@ -273,8 +276,17 @@ for x in range(1, 33) :
     player = thePlayers[x]
     playerid = player.id + 600
     rushTD = 0
-    #print "id [%s]  Complete  %s   Still  %s " %(playerid, thePlayers[x].complete, thePlayers[x].stillPlay)
-    if (thePlayers[x].stillPlay == 1) :
+    if not hasattr(player, 'secRemain') :
+        if player.stillPlay == 10 :
+            player.secRemain = 0
+            player.complete = 1
+        else :
+            player.secRemain = 3600
+            player.complete = 0
+
+    print "id [%s]  Complete  %s   Still  %s  Remain %s" %(playerid, player.complete, player.stillPlay, player.secRemain)
+    #print dir(thePlayers[x])
+    if (thePlayers[x].stillPlay == 1 or player.secRemain > 0) :
         inProgArray[1].append(x)
     elif (thePlayers[x].complete == 1) :
         inProgArray[2].append(x)
@@ -282,6 +294,8 @@ for x in range(1, 33) :
         inProgArray[0].append(x)
     if (teams.has_key(x)) :
         rushTD = teams[x].rushTD
+
+#sys.exit()
 
     #print "INSERT INTO stats (statid, season, week, played, yards, sacks, tds) VALUES (%d, %d, %d, %d, %d, %d, %d) ON DUPLICATE KEY UPDATE played=%d, yards=%d, \
 	#sacks=%d, tds=%d;"%(playerid, year, player.week, player.stillPlay+player.complete, player.rushYards, player.sackAgt, rushTD, player.stillPlay+player.complete, \
