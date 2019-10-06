@@ -1,5 +1,5 @@
 -- Set to the season just finished
-SET @season := 2018;
+SET @season := 2019;
 
 -- Players that were protected last year and had costs
 insert into protectioncost (playerid, season, years)

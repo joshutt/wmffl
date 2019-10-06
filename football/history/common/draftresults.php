@@ -1,6 +1,7 @@
 <?php
 require_once "utils/start.php";
 
+$extra = "";
 if (isset($round) && $round != 'ALL') {
     $extra .= "and d.round=$round ";
 }
@@ -53,65 +54,10 @@ $nflResult = mysqli_query($conn, $uniqueNfl) or die("Unable to get teams: " . my
 
 
 
+$cssList = array("/base/css/draftresults.css");
 $title = "$season WMFFL Draft Results";
+include "base/menu.php";
 ?>
-<? include "base/menu.php"; ?>
-
-<style>
-
-.report {
-    width: 100%;
-    color: #660000;
-}
-.pick {
-    width: 10%;
-    text-align: center;
-    font-size: 8pt;
-    white-space: nowrap;
-}
-
-.round {
-    width: 10%;
-    text-align: center;
-    font-size: 8pt;
-    white-space: nowrap;
-}
-.franchise {
-    width: 25%;
-    font-size: 8pt;
-    white-space: nowrap;
-}
-.selection {
-    width: 35%;
-    font-size: 8pt;
-    white-space: nowrap;
-}
-.pos {
-    width: 10%;
-    font-size: 8pt;
-    white-space: nowrap;
-    text-align: center;
-}
-.nfl {
-    width: 10%;
-    font-size: 8pt;
-    white-space: nowrap;
-    text-align: center;
-}
-th {
-    background-color: #660000;
-    color: #e2a500;
-    font-style: italic;
-    font-weight: bold;
-    font-size: 8pt;
-}
-body {
-    font-family: Verdana;
-    font-size: 8pt;
-    background-color: #FFFFFF;
-    border: 0px none;
-}
-</style>
 
 <H1 Align=Center>Draft Results</H1>
 <H5 ALIGN=Center><I><?= date_format(date_create(trim($dateSet, "'")), ('M d, Y')); ?></I></H5>
@@ -155,7 +101,7 @@ $results = mysqli_query($conn, $sql) or die("Ug: " . mysqli_error($conn));
 while ($row = mysqli_fetch_assoc($results)) {
 
     print <<<EOD
-                <tr id="pick_{$roundDist}_{$pickDist}">
+                <tr id="pick_{$row["round"]}_{$row["pick"]}">
                     <td class="round">{$row["round"]}</td>
                     <td class="pick">{$row["pick"]}</td>
                     <td class="franchise">{$row["team"]}</td>
