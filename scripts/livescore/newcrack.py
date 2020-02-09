@@ -178,6 +178,7 @@ while (id != ord('\x15')) :
     #print id
     if (id == 0) : break
     typeCd = ord(theFile.read(1))
+    #print 
 
 #sys.exit()
 teams = {}
@@ -284,7 +285,7 @@ for x in range(1, 33) :
             player.secRemain = 3600
             player.complete = 0
 
-    print "id [%s]  Complete  %s   Still  %s  Remain %s" %(playerid, player.complete, player.stillPlay, player.secRemain)
+    #print "id [%s]  Complete  %s   Still  %s  Remain %s" %(playerid, player.complete, player.stillPlay, player.secRemain)
     #print dir(thePlayers[x])
     if (thePlayers[x].stillPlay == 1 or player.secRemain > 0) :
         inProgArray[1].append(x)

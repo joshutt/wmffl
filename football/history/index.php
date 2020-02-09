@@ -99,6 +99,13 @@ include "base/menu.php";
 </TD><TD>
 </TD></TR><TR><TD> </TD></TR>
 
+<TR><TD>
+</TD><TD>
+    <A HREF="2019Season"><IMG SRC="/images/football.jpg" BORDER=0>2019 Season</A><P>
+</TD><TD>
+</TD><TD>
+</TD></TR><TR><TD> </TD></TR>
+
 </TD></TR></TABLE>
 <BR>
 

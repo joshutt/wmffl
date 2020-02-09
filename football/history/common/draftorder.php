@@ -17,7 +17,7 @@ $title = "$season WMFFL Draft Order";
 ?>
 <? include "base/menu.php"; ?>
 
-<H1 Align=Center>Draft Order</H1>
+<H1 Align=Center><?=$season?> Draft Order</H1>
 <HR size = "1">
 <P>
 This is the official draft order for the <?=$season?> Draft.  The order was determined based on reverse order of finish last season.

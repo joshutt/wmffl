@@ -109,6 +109,9 @@ tags
 # Persistent undo
 [._]*.un~
 
+# Compiled Python
+**/*.pyc
+
 
 **/logs/*
 !**/logs/empty
@@ -123,4 +126,6 @@ football/transactions/livedraft/check.log
 /football/transactions/livedraft/check.log
 
 # Script data
-/scripts/livescore/data/*
+/scripts/livescore/data/
+/scripts/updateplayers/data/
+/scripts/livescore/tmpupdate

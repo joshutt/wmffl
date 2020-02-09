@@ -1,9 +1,9 @@
 #!/bin/sh
 
-#SCRIPT_DIR='/home/joshutt/git/scripts/livescore'
-SCRIPT_DIR='/home/joshutt/wmffl/scripts/livescore'
+SCRIPT_DIR='/home/joshutt/git/scripts/livescore'
+#SCRIPT_DIR='/home/joshutt/wmffl/scripts/livescore'
 DATA_DIR=$SCRIPT_DIR'/data'
-FILE_DIR='/home/joshutt/football/activate'
+FILE_DIR='/home/joshutt/git/football/activate'
 FAILURE=1
 
 if test -e $SCRIPT_DIR/tmpFile && `find "$SCRIPT_DIR/tmpFile" -mmin +5`
@@ -56,7 +56,7 @@ then
 fi
 
 echo "Parsed Stats"
-mysql --defaults-file=/home/joshutt/fb.conf joshutt_oldwmffl < $DATA_DIR/out.sql
+#mysql --defaults-file=/home/joshutt/fb.conf joshutt_oldwmffl < $DATA_DIR/out.sql
 
 echo "Read into Database"
 #php /home/joshutt/football/admin/updatescores.php

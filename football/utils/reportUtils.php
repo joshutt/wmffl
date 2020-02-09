@@ -60,5 +60,6 @@ function outputJSON($titles, $content) {
     }   
 
     $json_output = json_encode($jsonArr);
+    header("Content-Type: application/json; charset=UTF-8");
     print $json_output;
 }

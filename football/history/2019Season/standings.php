@@ -3,13 +3,14 @@ require_once "utils/start.php";
 
 $thisWeek = isset($_POST['week']) ? $_POST["week"] : '';
 if ($thisWeek == "") {
-    $thisWeek = $currentWeek;
-    ///$thisWeek = 17;
+    //$thisWeek = $currentWeek;
+    $thisWeek = 17;
 }
 $thisSeason=2019;
 $title = "Standings";
 
-$clinchedList = array();
+$clinchedList = array('Norsemen' => 'y-', 'British Bulldogs' => 't-', 'Fighting Squirrels' => 't-', 'Sean Taylor\'s Ashes' => 'e-', 'Crusaders' => 'y-', 'Testudos Revenge' => 'y-', 'Gallic Warriors' => 'e-',
+                'Sacks on the Beach' => 'e-', 'Richard\'s Lionhearts' => 'x-', 'Amish Electricians' => 'e-', 'Trump Molests Collies' => 'e-', 'MeggaMen' => 'e-');
 
 include "base/menu.php";
 ?>
@@ -28,7 +29,7 @@ if (!empty($clinchedList)) {
 e - eliminated from playoffs<br/>
 x - clinched playoff berth<br/>
 y - clinched division title<br/>
-z - clinched Toilet Bowl berth
+t - clinched Toilet Bowl berth
 </p>
 </center>
 <?php
