@@ -4,8 +4,8 @@ require_once 'playerHelpers.php';
 require_once 'savePlayers.php';
 
 
-$season = 2019;
-$request_url = "https://www.myfantasyleague.com/$season/export?TYPE=players&DETAILS=1";
+$season = 2020;
+$request_url = "https://api.myfantasyleague.com/$season/export?TYPE=players&DETAILS=1";
 
 //testRun($request_url);
 run($request_url);
@@ -15,8 +15,8 @@ run($request_url);
 function loadPlayers($url, &$timestamp) {
 	//$xml = simplexml_load_file($url."&SINCE=1380968340");
 	//$timestamp =1505312780;
-	$xml = simplexml_load_file($url."&SINCE=".$timestamp);
-	//$xml = simplexml_load_file($url);
+	//$xml = simplexml_load_file($url."&SINCE=".$timestamp);
+	$xml = simplexml_load_file($url);
 	
 	// If error exit now
 	if ($xml->getName() == "error") {
