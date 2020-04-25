@@ -6,22 +6,65 @@ function convertHeight($inches) {
 
 function resolveTeam($originalTeam) {
     switch ($originalTeam) {
-        case 'BUF':  case 'IND':  case 'MIA':  case 'NYJ':  case 'CIN':
-        case 'CLE':  case 'TEN':  case 'JAC':  case 'PIT':  case 'DEN':
-        case 'OAK':  case 'SEA':  case 'DAL':  case 'NYG':  case 'PHI':
-        case 'ARI':  case 'WAS':  case 'CHI':  case 'DET':  case 'MIN':
-        case 'ATL':  case 'CAR':  case 'BAL':  case 'HOU':
+        case 'BUF':
+        case 'IND':
+        case 'MIA':
+        case 'NYJ':
+        case 'CIN':
+        case 'CLE':
+        case 'TEN':
+        case 'JAC':
+        case 'PIT':
+        case 'DEN':
+        case 'SEA':
+        case 'DAL':
+        case 'NYG':
+        case 'PHI':
+        case 'ARI':
+        case 'WAS':
+        case 'CHI':
+        case 'DET':
+        case 'MIN':
+        case 'ATL':
+        case 'CAR':
+        case 'BAL':
+        case 'HOU':
             $teamVal = $originalTeam;
             break;
-        case 'NEP': $teamVal = 'NE'; break;
-        case 'KCC': $teamVal = 'KC'; break;
-        case 'SDC': $teamVal = 'SD'; break;
-        case 'GBP': $teamVal = 'GB'; break;
-        case 'TBB': $teamVal = 'TB'; break;
-        case 'NOS': $teamVal = 'NO'; break;
-        case 'SFO': $teamVal = 'SF'; break;
-        case 'RAM': $teamVal = 'LA'; break;
-        default:    $teamVal = '';
+        case 'NEP':
+            $teamVal = 'NE';
+            break;
+        case 'KCC':
+            $teamVal = 'KC';
+            break;
+        case 'OAK':
+        case 'LV':
+        case 'LVR':
+            $teamVal = 'LV';
+            break;
+        case 'SDC':
+        case 'LAC':
+            $teamVal = 'SD';
+            break;
+        case 'GBP':
+            $teamVal = 'GB';
+            break;
+        case 'TBB':
+            $teamVal = 'TB';
+            break;
+        case 'NOS':
+            $teamVal = 'NO';
+            break;
+        case 'SFO':
+            $teamVal = 'SF';
+            break;
+        case 'RAM':
+        case 'LAR':
+        case 'LA':
+            $teamVal = 'LAR';
+            break;
+        default:
+            $teamVal = '';
     }
     return $teamVal;
 }

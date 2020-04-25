@@ -140,17 +140,17 @@ First Name:<INPUT TYPE="text" NAME="First" VALUE="<? print $First; ?>"><BR>
 <OPTION VALUE="HOU"<? if ($Team=="HOU") print " SELECTED "; ?>>Houston</OPTION>
 <OPTION VALUE="JAC"<? if ($Team=="JAC") print " SELECTED "; ?>>Jacksonville</OPTION>
 <OPTION VALUE="KC"<? if ($Team=="KC") print " SELECTED "; ?>>Kansas City</OPTION>
-<OPTION VALUE="LA"<? if ($Team=="LA") print " SELECTED "; ?>>Los Angeles</OPTION>
+<OPTION VALUE="LV"<? if ($Team=="LV") print " SELECTED "; ?>>Las Vegas</OPTION>
+<OPTION VALUE="LAC"<? if ($Team=="LAC") print " SELECTED "; ?>>LA Chargers</OPTION>
+<OPTION VALUE="LAR"<? if ($Team=="LAR") print " SELECTED "; ?>>LA Rams</OPTION>
 <OPTION VALUE="MIA"<? if ($Team=="MIA") print " SELECTED "; ?>>Miami</OPTION>
 <OPTION VALUE="MIN"<? if ($Team=="MIN") print " SELECTED "; ?>>Minnesota</OPTION>
 <OPTION VALUE="NE"<? if ($Team=="NE") print " SELECTED "; ?>>New England</OPTION>
 <OPTION VALUE="NO"<? if ($Team=="NO") print " SELECTED "; ?>>New Orleans</OPTION>
 <OPTION VALUE="NYG"<? if ($Team=="NYG") print " SELECTED "; ?>>New York Giants</OPTION>
 <OPTION VALUE="NYJ"<? if ($Team=="NYJ") print " SELECTED "; ?>>New York Jets</OPTION>
-<OPTION VALUE="OAK"<? if ($Team=="OAK") print " SELECTED "; ?>>Oakland</OPTION>
 <OPTION VALUE="PHI"<? if ($Team=="PHI") print " SELECTED "; ?>>Philadelphia</OPTION>
 <OPTION VALUE="PIT"<? if ($Team=="PIT") print " SELECTED "; ?>>Pittsburgh</OPTION>
-<OPTION VALUE="SD"<? if ($Team=="SD") print " SELECTED "; ?>>San Diego</OPTION>
 <OPTION VALUE="SEA"<? if ($Team=="SEA") print " SELECTED "; ?>>Seattle</OPTION>
 <OPTION VALUE="SF"<? if ($Team=="SF") print " SELECTED "; ?>>San Francisco</OPTION>
 <OPTION VALUE="TB"<? if ($Team=="TB") print " SELECTED "; ?>>Tampa Bay</OPTION>
