@@ -15,8 +15,8 @@ run($request_url);
 function loadPlayers($url, &$timestamp) {
 	//$xml = simplexml_load_file($url."&SINCE=1380968340");
 	//$timestamp =1505312780;
-	//$xml = simplexml_load_file($url."&SINCE=".$timestamp);
-	$xml = simplexml_load_file($url);
+	$xml = simplexml_load_file($url."&SINCE=".$timestamp);
+	//$xml = simplexml_load_file($url);
 	
 	// If error exit now
 	if ($xml->getName() == "error") {
