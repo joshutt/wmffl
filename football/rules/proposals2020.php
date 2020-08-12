@@ -102,7 +102,7 @@ include "base/menu.php";
     Winner at end of season (whenever that is) chooses charity for all entry fees of 2020 to go to.
     <br/>
     <blockquote class="mb-0 mt-2 px-3"><i>For 2020 only rule XI.C is replaced with:<br/>
-        C. The pot will be donated to the 501.c(3) charity of the champion's choice.</i></blockquote>
+        C. The pot will be donated to the 501(c)(3) charity of the champion's choice.</i></blockquote>
 </div>
 
 <? include "base/footer.html"; ?>
