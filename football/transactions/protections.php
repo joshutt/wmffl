@@ -2,7 +2,7 @@
 require_once "utils/connect.php";
 #$isin = true;
 #$teamnum = 2;
-$dateSrc = "2019-08-25 23:59 EDT";
+$dateSrc = "2020-08-24 00:05 EDT";
 $dateTime = new DateTime($dateSrc);
 
 $thequery = "select p.playerid, p.firstname, p.lastname, p.pos, ";
@@ -116,5 +116,4 @@ while (list($playerid, $firstname, $lastname, $pos, $nfl, $year, $cost, $protect
 
 <?php
 	include "base/footer.html";
-?>
 
