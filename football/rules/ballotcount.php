@@ -66,6 +66,9 @@ ballot closes.  <A HREF="ballot">Ballot</A>.</P>
 <P>
 <?
 foreach ($voteNum as $key => $value) {
+    if ($key == "Submit") {
+        continue;
+    }
 	print $value." - ".$voteName[$key]." - ".$voteCast[$key]."<BR/>";
 }
 ?>
