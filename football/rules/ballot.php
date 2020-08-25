@@ -13,7 +13,7 @@ include "base/menu.php";
 if ($isin) {
 
     if (isset($_REQUEST["submit"])) {
-        print "Submitted";
+        include "ballotcount.php";
     } else {
     ?>
 

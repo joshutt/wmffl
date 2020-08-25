@@ -4,12 +4,12 @@ $FAIL_THRES = .51;
 
 	// Include the file that defines the connection information
 // establish connection
-require "base/conn.php";
-require "login/loginglob.php";
-
-if (!$isin) {
-	header("Location: /rules/ballot.php");
-}
+//require "base/conn.php";
+//require "login/loginglob.php";
+//
+//if (!$isin) {
+//	header("Location: /rules/ballot.php");
+//}
 
 
 foreach ($_POST as $key => $value) {
@@ -53,8 +53,8 @@ foreach ($_POST as $key => $value) {
 
 
 <?php
-$title = "WMFFL Ballot" ?>
-<?	include "base/menu.php"; ?>
+//$title = "WMFFL Ballot" ?>
+<?//	include "base/menu.php"; ?>
 
 <H1 ALIGN=Center>Votes Cast</H1>
 <HR>
@@ -71,4 +71,4 @@ foreach ($voteNum as $key => $value) {
 ?>
 </P>
 
-<?	include "base/footer.html";?>
+<?//	include "base/footer.html";?>
