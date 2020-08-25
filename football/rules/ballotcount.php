@@ -52,7 +52,8 @@ foreach ($_POST as $key => $value) {
 ?>
 
 
-<?php include "WMFFL Ballot" ?>
+<?php
+$title = "WMFFL Ballot" ?>
 <?	include "base/menu.php"; ?>
 
 <H1 ALIGN=Center>Votes Cast</H1>
