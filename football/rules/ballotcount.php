@@ -8,7 +8,7 @@ require "base/conn.php";
 require "login/loginglob.php";
 
 if (!$isin) {
-	header("Location: /ballot/ballot.php");
+	header("Location: /rules/ballot.php");
 }
 
 
@@ -60,7 +60,7 @@ foreach ($_POST as $key => $value) {
 
 <P>Your casted votes were recieved.  Below is a record of how you voted.
 If you would like to change you vote, you may do so at any time before the
-ballot closes.  <A HREF="ballot.php">Ballot</A>.</P>
+ballot closes.  <A HREF="ballot">Ballot</A>.</P>
 
 <P>
 <?
