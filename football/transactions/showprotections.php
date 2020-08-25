@@ -16,7 +16,7 @@ if (isset($season)) {
 $query = "select t.name, CONCAT(p.firstname, ' ', p.lastname),
   p.pos, r.nflteamid, pro.cost
 FROM newplayers p
-  JOIN nflrosters r on p.playerid=r.playerid and r.dateon <= concat($lookseason, '-08-15') and (r.dateoff is null or r.dateoff >= concat($lookseason, '-08-15'))
+ LEFT JOIN nflrosters r on p.playerid=r.playerid and r.dateon <= concat($lookseason, '-08-15') and (r.dateoff is null or r.dateoff >= concat($lookseason, '-08-15'))
 JOIN protections pro on p.playerid=pro.playerid
 JOIN teamnames t on t.teamid=pro.teamid and t.season=pro.season
   WHERE pro.season=$lookseason ";
