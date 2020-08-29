@@ -44,13 +44,6 @@ if (sizeof($errors) > 0) {
     exit();
 }
 
-// While the team on the clock has a pick
-$teamId = getTeamOnClock($currentSeason);
-$selection = getPreselection($teamId);
-while ($selection["playerid"]) {
-    makePick($teamId, $selection["playerid"], $currentSeason);
-    $teamId = getTeamOnClock($currentSeason);
-    $selection = getPreselection($teamId);
-}
+checkPreselect($currentSeason);
 
 

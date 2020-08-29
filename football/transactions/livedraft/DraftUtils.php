@@ -138,3 +138,22 @@ function getPreselection($teamid) {
     $results = mysqli_query($conn, $sql) or die ("Unable to get draftPickHold: " . mysqli_error($conn));
     return mysqli_fetch_array($results);
 }
+
+
+/**
+ * If the current team on the clock has a preselection, use it.
+ * Continue as long as teams have preselections
+ *
+ * @param int $currentSeason
+ */
+function checkPreselect(int $currentSeason): void
+{
+// While the team on the clock has a pick
+    $teamId = getTeamOnClock($currentSeason);
+    $selection = getPreselection($teamId);
+    while ($selection["playerid"]) {
+        makePick($teamId, $selection["playerid"], $currentSeason);
+        $teamId = getTeamOnClock($currentSeason);
+        $selection = getPreselection($teamId);
+    }
+}
