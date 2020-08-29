@@ -1,5 +1,6 @@
 <?php
 require_once "utils/start.php";
+require_once "../DraftUtils.php";
 
 // Set every team's clock to draft.clock.allowed
 $query = "update config c1 join config c2 on c2.`key`='draft.clock.allowed' set c1.value=c2.value where c1.key like 'draft.team.%'";
@@ -27,3 +28,4 @@ mysqli_query($conn, $query) or print('Error: '.mysqli_error($conn));
 $query = "delete from draftclockstop where Season=$currentSeason";
 mysqli_query($conn, $query) or print('Error: '.mysqli_error($conn));
 
+checkPreselect($currentSeason);
