@@ -41,7 +41,7 @@ include "base/menu.php";
 <div class="card m-2 p-2 bg-light">
     <b>Proposal 2020.2 - Require Monday Night Activations</b>
     <b>Sponsor: Josh Utterback</b><br/>
-    <span class="ballot">Status: <span class="status">Under consideration</span></span><br/>
+    <span class="ballot">Status: <span class="status">Rejected, 1-8, 3 No Votes</span></span><br/>
     Each week every WMFFL team must activate at least one player whose team plays on Monday night. Failure to do so will
     result
     in that team's flex player being considered an illegal activation.<br/>
@@ -78,7 +78,7 @@ include "base/menu.php";
 <div class="card m-2 p-2 bg-light">
     <b>Proposal 2020.5 - Eliminate entry fee for 2020</b>
     <b>Sponsor: Chris Heywood</b><br/>
-    <span class="ballot">Status: <span class="status">Under consideration</span></span><br/>
+    <span class="ballot">Status: <span class="status">Rejected, 2-7, 3 No Votes</span></span><br/>
     Seems ridiculous to treat this as a “real” year.  Eliminate the entry fee as well as Any “winnings” for this year.
     <br/>
     <blockquote class="mb-0 mt-2 px-3"><i>Section IX of the rules will not apply for the 2020 season<br/>
@@ -89,7 +89,7 @@ include "base/menu.php";
 <div class="card m-2 p-2 bg-light">
     <b>Proposal 2020.6 - Don't count the stats for 2020</b>
     <b>Sponsor: Chris Heywood</b><br/>
-    <span class="ballot">Status: <span class="status">Under consideration</span></span><br/>
+    <span class="ballot">Status: <span class="status">Rejected, 1-8, 3 No Votes</span></span><br/>
     Seems ridiculous to treat this as a “real” year.  Do not record this year’s stats.
     <br/>
     <blockquote class="mb-0 mt-2 px-3"><i>TBD</i></blockquote>
