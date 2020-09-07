@@ -8,7 +8,7 @@ include "base/menu.php";
 <h1 align=center>Current Rule Proposals</h1>
 <hr SIZE="1"/>
 
-<p>This is the list of proposals to be voted on for the 2018 WMFFL season.
+<p>This is the list of proposals to be voted on for the 2020 WMFFL season.
     If you would like to suggest a rule proposal, you may
     do so on the <a href="proposesubmit.php">proposals page</a>. The part of
     each proposal that appears in <i>Italics</i> is what effect this proposal will
@@ -17,7 +17,7 @@ include "base/menu.php";
 <div class="card m-2 p-2 bg-light">
     <b>Proposal 2020.1 - Add Injured Reserve</b>
     <b>Sponsor: Jon Hall </b><br/>
-    <span class="ballot">Status: <span class="status">Under consideration</span></span><br/>
+    <span class="ballot">Status: <span class="status">Passed, 10-2</span></span><br/>
     Add an injured reserve. Any player on the NFL IR may be designated by the WMFFL team as an IR player. If so
     designated
     that player will remain on their roster but will not count towards the 25 rostered players. A player on IR may not
@@ -56,7 +56,7 @@ include "base/menu.php";
 <div class="card m-2 p-2 bg-light">
     <b>Proposal 2020.3 - COVID-19 Opt-out List</b>
     <b>Sponsor: Mike Atlas</b><br/>
-    <span class="ballot">Status: <span class="status">Under consideration</span></span><br/>
+    <span class="ballot">Status: <span class="status">Pulled</span></span><br/>
     There should be some form of COVID list. Teams get one slot to keep a player, at no protection cost or roster spot,
     who is on the "official" opt-out list for 2020. Once identified and put on the list, this player will not be
     available to be activated in 2020 regardless of future decisions in 2020. For the 2021 season, this player will be
@@ -67,7 +67,7 @@ include "base/menu.php";
 <div class="card m-2 p-2 bg-light">
     <b>Proposal 2020.4 - COVID-19 IR List</b>
     <b>Sponsor: Mike Atlas</b><br/>
-    <span class="ballot">Status: <span class="status">Under consideration</span></span><br/>
+    <span class="ballot">Status: <span class="status">Passed, 8-3, 1 abstain</span></span><br/>
     There should be some form of COVID list. Teams get one (or two?) active COVID-IR slots to place a player during the
     season, who is required to quarantine due to COVID by a list we agree upon. Players on this IR do not count against
     your total roster count, but when moved back to active status a roster spot will be required like any addition to
@@ -98,7 +98,7 @@ include "base/menu.php";
 <div class="card m-2 p-2 bg-light">
     <b>Proposal 2020.7 - 2020 winnings go to charity</b>
     <b>Sponsor: Brian Elliff</b><br/>
-    <span class="ballot">Status: <span class="status">Under consideration</span></span><br/>
+    <span class="ballot">Status: <span class="status">Rejected, 5-7</span></span><br/>
     Winner at end of season (whenever that is) chooses charity for all entry fees of 2020 to go to.
     <br/>
     <blockquote class="mb-0 mt-2 px-3"><i>For 2020 only rule XI.C is replaced with:<br/>

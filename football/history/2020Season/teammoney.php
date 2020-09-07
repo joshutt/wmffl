@@ -9,7 +9,7 @@ include "base/menu.php";
 
 
 <H1 ALIGN=Center>Team Finances</H1>
-<H5 ALIGN=Center>Last Updated 8/29/2020</H5>
+<H5 ALIGN=Center>Last Updated 9/7/2020</H5>
 <HR size="1">
 
 <p>
@@ -20,7 +20,7 @@ include "base/menu.php";
 <div class="center">
 
     <?
-    $amt_owed = array( 6=>13.34, 12=>30.50, 4=>79.42 );
+    $amt_owed = array( 12=>36.50, 4=>85.42 );
 
     if ($isin && array_key_exists($teamnum, $amt_owed)) { ?>
 
@@ -67,14 +67,13 @@ include "base/menu.php";
         <tr class="oddRow">
             <td class="name padded">Crusaders</td>
             <td class="padded">$61.66</td>
+            <td class="padded">$13.34<td>
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
-            <td class="padded">-</td>
-            <td class="padded">-</td>
-            <td class="padded"><span class="debt">($13.34)</span></td>
-            <td class="padded">$13.34</td>
+            <td class="padded">$0.00</td>
+            <td class="padded">$0.00</td>
         </tr>
         <tr class="evenRow">
             <td class="name padded">Fighting Squirrels</td>
@@ -128,13 +127,13 @@ include "base/menu.php";
             <td class="name padded">Richard's Lionhearts</td>
             <td class="padded">$44.50</td>
             <td class="padded">-</td>
+            <td class="padded">$6.00</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
-            <td class="padded">-</td>
-            <td class="padded"><span class="debt">($30.50)</span></td>
-            <td class="padded">$30.50</td>
+            <td class="padded"><span class="debt">($36.50)</span></td>
+            <td class="padded">$36.50</td>
         </tr>
         <tr class="oddRow">
             <td class="name padded">Sacks On the Beach</td>
@@ -152,13 +151,13 @@ include "base/menu.php";
             <td class="name padded">Sean Taylor's Ashes</td>
             <td class="padded"><span class="debt">($4.42)</span></td>
             <td class="padded">-</td>
+            <td class="padded">$6.00</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
-            <td class="padded">-</td>
-            <td class="padded"><span class="debt">($79.42)</span></td>
-            <td class="padded">$79.42</td>
+            <td class="padded"><span class="debt">($85.42)</span></td>
+            <td class="padded">$85.42</td>
         </tr>
         <tr class="oddRow">
             <td class="name padded">Testudos Revenge</td>
