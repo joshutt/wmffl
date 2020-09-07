@@ -33,6 +33,11 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
             <li>Add rule V.A.3.d</li>
         </ul>
     </li>
+    <li>2020.4 - COVID IR
+        <ul>
+            <li>Add rule IV.C.4</li>
+        </ul>
+    </li>
 </ul>
 
 <HR size="1">
