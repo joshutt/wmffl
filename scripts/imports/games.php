@@ -8,8 +8,12 @@ $results = mysqli_query($conn, $sql) or die ("Unable to get this week: " . mysql
 list($curWeek, $season) = mysqli_fetch_array($results);
 //$curWeek = 0;
 
+print $season;
 for ($week = $curWeek-1; $week <= 17; $week++) { 
     print $week;
+    if ($week < 1) {
+        continue;
+    }
     loadWeekGames($season, $week);
 }
 
@@ -54,8 +58,9 @@ function determineTeam($teamId) {
             $teamVal = 'LV';
             break;
         case 'SDC':
+        case 'SD':
         case 'LAC':
-            $teamVal = 'SD';
+            $teamVal = 'LAC';
             break;
         case 'GBP':
             $teamVal = 'GB';
@@ -83,13 +88,14 @@ function determineTeam($teamId) {
 
 function loadWeekGames($season, $week) {
     global $conn;
-    $request_url = "http://www.myfantasyleague.com/$season/export?TYPE=nflSchedule&W=$week";
+    $request_url = "https://api.myfantasyleague.com/$season/export?TYPE=nflSchedule&W=$week";
     $xml = simplexml_load_file($request_url) or die("Feed not loading");
 
     $matchupList = array();
 
     $block = array();
     $first = true;
+    //print "Start Loop";
     foreach ($xml->matchup as $game) {
         //print_r($game);
 
@@ -133,6 +139,7 @@ function loadWeekGames($season, $week) {
 
         array_push($block, $string);
     }
+    //print "End Loop\n";
 
     print "REPLACE INTO nflgames VALUES ";
     $string = "REPLACE INTO nflgames VALUES ";

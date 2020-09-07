@@ -43,8 +43,9 @@ function resolveTeam($originalTeam) {
             $teamVal = 'LV';
             break;
         case 'SDC':
+        case 'SD':
         case 'LAC':
-            $teamVal = 'SD';
+            $teamVal = 'LAC';
             break;
         case 'GBP':
             $teamVal = 'GB';
