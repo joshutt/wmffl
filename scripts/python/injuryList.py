@@ -3,8 +3,12 @@ from datetime import datetime
 import mysql.connector
 import requests
 
-from python import utils
-from python.injury import Injury
+import utils
+from injury import Injury
+
+
+# from python import utils
+# from python.injury import Injury
 
 
 def get_week(con):

@@ -75,10 +75,10 @@ A:hover {
 .titleLine2{font-size:16px;color:#CC3300;}
 
 .PQDO {
-    float: right;
+    /*float: right;*/
     color: #FF3300;
     font-style: italic;
-    width: 20px;
+    /*width: 20px;*/
     text-align: center;
     padding: 0px 1px 0px 2px;
 }
