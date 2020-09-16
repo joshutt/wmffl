@@ -49,6 +49,8 @@ def main():
             # Get real player id
             cur.execute(select_string, (inj_obj.id,))
             player_result = cur.fetchone()
+            if player_result is None:
+                continue
             real_id = player_result[0]
 
             # if return date given, use it
