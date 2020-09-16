@@ -245,9 +245,6 @@ while ($pickups[$i] = mysqli_fetch_row($result)) {
     } else {
         //error_log("Pickups: ".print_r($pickups, true));
         $searcher = $pickups[$i][0];
-//        print $searcher;
-//        print array_search($pickups[$i][0], $waiveElgPlayers);
-//        print array_search($searcher, array_reverse($waiveElgPlayers));
         if (array_search($pickups[$i][0], $waiveElgPlayers)) {
     //        print "Inele";
             $pickups[$i][5] = 1;
@@ -259,9 +256,6 @@ while ($pickups[$i] = mysqli_fetch_row($result)) {
     }
 	$i++;
 }
-//print_r($pickups);
-//print_r($waiveElgPlayers);
-//$waveCount += $i;
 
 // Get info about current roster
 $thequery = "select p.playerid, p.lastname, p.firstname, p.team, p.pos from newplayers p, roster r, team t where p.playerid=r.playerid and r.teamid=t.teamid and r.dateoff is null and t.teamid=$teamnum order by p.pos, p.lastname";
@@ -273,8 +267,17 @@ while ($currentroster[$i] = mysqli_fetch_row($result)) {
 
 
 // Get team info
-//$thequery = "select count(*), t.preptsleft-t.ptsleft from roster r, players p, transpoints t where r.playerid=p.playerid and r.teamid=t.teamid and r.teamid=$teamnum and r.dateoff is null and p.position<>'HC' group by t.teamid";
-$thequery = "select count(*), t.totalpts-t.protectionpts-t.transpts from roster r, newplayers p, transpoints t where r.playerid=p.playerid and r.teamid=t.teamid and r.teamid=$teamnum and r.dateoff is null and p.pos<>'HC' and t.season=$season group by t.teamid";
+$thequery = "select count(*), t.totalpts - t.protectionpts - t.transpts
+from newplayers p
+join roster r on r.PlayerID=p.playerid and r.DateOff is null
+join transpoints t on r.TeamID=t.TeamID
+left join ir on p.playerid = ir.playerid and ir.dateoff is null
+where r.teamid = $teamnum
+  and p.pos <> 'HC'
+  and t.season = $season
+and ir.id is null
+group by t.teamid
+";
 $result = mysqli_query($conn, $thequery) or die ("Query 3 Failed");
 list($numplayers, $ptsleft) = mysqli_fetch_row($result);
 ?>
