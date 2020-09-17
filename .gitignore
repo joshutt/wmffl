@@ -129,3 +129,7 @@ football/transactions/livedraft/check.log
 /scripts/livescore/data/
 /scripts/updateplayers/data/
 /scripts/livescore/tmpupdate
+/scripts/python/injury
+/scripts/python/i3
+
+/football/activate/update.inc
