@@ -1,6 +1,7 @@
 <?php
 
-function shortenInjury($injury) {
+function shortenInjury($injury)
+{
     switch ($injury) {
         case 'P':
         case 'Probable':
@@ -64,4 +65,24 @@ function getPQDOLine($injStatus, $injDetail, $ir = 0): string
     }
 
     return $returnLine;
+}
+
+function getIRStatus(): array
+{
+    return ['IR', 'IR-PUP', 'IR-NFI'];
+}
+
+function getIRStatusSql(): string
+{
+    $returnString = "(";
+    $first = TRUE;
+    foreach (getIRStatus() as $status) {
+        if (!$first) {
+            $returnString .= ", ";
+        }
+        $returnString .= "'$status'";
+        $first = FALSE;
+    }
+    $returnString .= ")";
+    return $returnString;
 }
