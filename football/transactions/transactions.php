@@ -135,6 +135,12 @@ AND m.season=$theyear
                     case 'Hire':
                         print "<LI>Hired ";
                         break;
+                    case 'To IR':
+                        print "<li>Moved to IR ";
+                        break;
+                    case 'From IR':
+                        print "<li>Activated from IR ";
+                        break;
                 }
 //			print "<LI>$method ";
                 $oldmethod = $method;
