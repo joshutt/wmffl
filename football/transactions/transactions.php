@@ -117,10 +117,10 @@ AND m.season=$theyear
             if ($oldmethod != $method || $change) {
                 switch ($method) {
                     case 'Cut':
-                        print "<LI>Dropped ";
+                        print "<LI style='white-space: normal'>Dropped ";
                         break;
                     case 'Sign':
-                        print "<LI>Picked Up ";
+                        print "<LI style='white-space: normal;'>Picked Up ";
                         break;
                     case 'Trade':
                         if ($tradeonce) continue 2;
@@ -136,10 +136,10 @@ AND m.season=$theyear
                         print "<LI>Hired ";
                         break;
                     case 'To IR':
-                        print "<li>Moved to IR ";
+                        print "<li style='white-space: normal;'>Moved to IR ";
                         break;
                     case 'From IR':
-                        print "<li>Activated from IR ";
+                        print "<li style='white-space: normal;'>Activated from IR ";
                         break;
                 }
 //			print "<LI>$method ";
