@@ -23,7 +23,7 @@ function trade($teamid, $date)
     //print $tradequery;
     while (list($group, $date, $TeamFrom, $lastname, $firstname, $position, $nflteam, $other) = mysqli_fetch_row($results)) {
         if ($oldgroup != $group) {
-            print "<LI>Traded ";
+            print "<li style='white-space: normal;'>Traded ";
             $oldgroup = $group;
             $firstteam = $TeamFrom;
             $firstplayer = TRUE;
@@ -117,10 +117,10 @@ AND m.season=$theyear
             if ($oldmethod != $method || $change) {
                 switch ($method) {
                     case 'Cut':
-                        print "<LI style='white-space: normal'>Dropped ";
+                        print "<li style='white-space: normal'>Dropped ";
                         break;
                     case 'Sign':
-                        print "<LI style='white-space: normal;'>Picked Up ";
+                        print "<li style='white-space: normal;'>Picked Up ";
                         break;
                     case 'Trade':
                         if ($tradeonce) continue 2;
@@ -130,7 +130,7 @@ AND m.season=$theyear
                         $tradeonce = TRUE;
                         continue 2;
                     case 'Fire':
-                        print "<LI>Fired ";
+                        print "<li style='white-space: normal;'>Fired ";
                         break;
                     case 'Hire':
                         print "<LI>Hired ";

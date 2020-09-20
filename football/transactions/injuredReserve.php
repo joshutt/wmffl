@@ -51,7 +51,7 @@ $eligible = $resource->getIrElgible();
 ?>
 
     <div class="card px-0 m-2 float-left" style="width: 30em;">
-        <div class="card-header font-weight-bold text-center">IR Elgible Players</div>
+        <div class="card-header font-weight-bold text-center">IR Eligible Players</div>
         <div class="card-body">
             <div class="row">
                 <div class="col-3 font-weight-bold">Player</div>
