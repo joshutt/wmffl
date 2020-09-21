@@ -64,96 +64,107 @@ include "base/menu.php";
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col"><a class="btn btn-wmffl" href="transactions?year=<?= $themonth > 8 ? $theyear : $theyear-1 ?>&month=<?= $themonth > 8 ? $themonth-1 : 12 ?>"><< Previous Month</a></div>
-            <div class="col"><a class="btn btn-wmffl" href="transactions?year=<?= $themonth < 12 ? $theyear : $theyear+1 ?>&month=<?= $themonth < 12 ? $themonth+1 : 8 ?>">Next Month >></a></div>
+            <div class="col"><a class="btn btn-wmffl"
+                                href="transactions?year=<?= $themonth > 8 ? $theyear : $theyear - 1 ?>&month=<?= $themonth > 8 ? $themonth - 1 : 12 ?>"><<
+                    Previous Month</a></div>
+            <div class="col"><a class="btn btn-wmffl"
+                                href="transactions?year=<?= $themonth < 12 ? $theyear : $theyear + 1 ?>&month=<?= $themonth < 12 ? $themonth + 1 : 8 ?>">Next
+                    Month >></a></div>
         </div>
         <div class="row py-4">
             <div class="col-12">
 
-        <?php
-        // Create the query
-        $thequery = "SELECT DATE_FORMAT(t.date, '%M %e, %Y'), m.name, t.method, concat(p.firstname, ' ', p.lastname), p.pos, 
+                <?php
+                // Create the query
+                $thequery = "SELECT DATE_FORMAT(t.date, '%M %e, %Y'), m.name, t.method, concat(p.firstname, ' ', p.lastname), p.pos, 
 p.team, m.teamid, DATE_FORMAT(t.date, '%Y-%m-%d') 
 FROM transactions t, teamnames m, newplayers p 
 WHERE t.teamid=m.teamid AND t.playerid=p.playerid
 AND m.season=$theyear 
 ";
 
-        if ($themonth > 8) {
-            $thequery .= "AND t.date BETWEEN '" . $theyear . "-" . $themonth . "-01' AND ";
-            $thequery .= "'" . $theyear . "-" . $themonth . "-31 23:59:59.99999' ";
-        } else {
-            $thequery .= "AND t.date BETWEEN '" . $theyear . "-01-01' AND ";
-            $thequery .= "'" . $theyear . "-08-31 23:59:59.99999' ";
-        }
-        $thequery .= "ORDER BY DATE_FORMAT(t.date, '%Y/%m/%d') DESC, m.name, t.method, p.lastname";
+                if ($themonth > 8) {
+                    $thequery .= "AND t.date BETWEEN '" . $theyear . "-" . $themonth . "-01' AND ";
+                    $thequery .= "'" . $theyear . "-" . $themonth . "-31 23:59:59.99999' ";
+                } else {
+                    $thequery .= "AND t.date BETWEEN '" . $theyear . "-01-01' AND ";
+                    $thequery .= "'" . $theyear . "-08-31 23:59:59.99999' ";
+                }
+                $thequery .= "ORDER BY DATE_FORMAT(t.date, '%Y/%m/%d') DESC, m.name, t.method, p.lastname";
 
-        $results = mysqli_query($conn, $thequery) or die("Error: " . mysqli_error($conn));
-        $first = TRUE;
-        $olddate = "";
-        $oldteam = "";
-        $oldmethod = "";
-        while (list($date, $teamname, $method, $player, $position, $nflteam, $teamid, $rawdate) = mysqli_fetch_row($results)) {
-            $change = FALSE;
-            if ($olddate != $date) {
-                if (!$first) {
-                    print "</UL></UL>";
-                }
-                $first = FALSE;
-                print "<B><I>$date</I></B><UL>";
-                $olddate = $date;
-                $change = TRUE;
-                $firstplayer = TRUE;
-                $tradeonce = FALSE;
-            }
-            if ($oldteam != $teamname || $change) {
-                if (!$change) print "</UL>";
-                print "<LI><B>$teamname</B><UL>";
-                $oldteam = $teamname;
-                $change = TRUE;
-                $firstplayer = TRUE;
-                $tradeonce = FALSE;
-            }
-            if ($oldmethod != $method || $change) {
-                switch ($method) {
-                    case 'Cut':
-                        print "<li style='white-space: normal'>Dropped ";
-                        break;
-                    case 'Sign':
-                        print "<li style='white-space: normal;'>Picked Up ";
-                        break;
-                    case 'Trade':
-                        if ($tradeonce) continue 2;
-                        trade($teamid, $rawdate);
+                $results = mysqli_query($conn, $thequery) or die("Error: " . mysqli_error($conn));
+                $first = TRUE;
+                $olddate = "";
+                $oldteam = "";
+                $oldmethod = "";
+                while (list($date, $teamname, $method, $player, $position, $nflteam, $teamid, $rawdate) = mysqli_fetch_row($results)) {
+                    $change = FALSE;
+                    if ($olddate != $date) {
+                        if (!$first) {
+                            print "</UL></UL>";
+                        }
+                        $first = FALSE;
+                        print "<B><I>$date</I></B><UL>";
+                        $olddate = $date;
                         $change = TRUE;
-                        $oldmethod = "";
-                        $tradeonce = TRUE;
-                        continue 2;
-                    case 'Fire':
-                        print "<li style='white-space: normal;'>Fired ";
-                        break;
-                    case 'Hire':
-                        print "<LI>Hired ";
-                        break;
-                    case 'To IR':
-                        print "<li style='white-space: normal;'>Moved to IR ";
-                        break;
-                    case 'From IR':
-                        print "<li style='white-space: normal;'>Activated from IR ";
-                        break;
-                }
+                        $firstplayer = TRUE;
+                        $tradeonce = FALSE;
+                    }
+                    if ($oldteam != $teamname || $change) {
+                        if (!$change) print "</UL>";
+                        print "<LI><B>$teamname</B><UL>";
+                        $oldteam = $teamname;
+                        $change = TRUE;
+                        $firstplayer = TRUE;
+                        $tradeonce = FALSE;
+                    }
+                    if ($oldmethod != $method || $change) {
+                        switch ($method) {
+                            case 'Cut':
+                                print "<li style='white-space: normal'>Dropped ";
+                                break;
+                            case 'Sign':
+                                print "<li style='white-space: normal;'>Picked Up ";
+                                break;
+                            case 'Trade':
+                                if ($tradeonce) continue 2;
+                                trade($teamid, $rawdate);
+                                $change = TRUE;
+                                $oldmethod = "";
+                                $tradeonce = TRUE;
+                                continue 2;
+                            case 'Fire':
+                                print "<li style='white-space: normal;'>Fired ";
+                                break;
+                            case 'Hire':
+                                print "<LI>Hired ";
+                                break;
+                            case 'To IR':
+                                print "<li style='white-space: normal;'>Moved to IR ";
+                                break;
+                            case 'From IR':
+                                print "<li style='white-space: normal;'>Activated from IR ";
+                                break;
+                            case 'To COVID':
+                                print "<li style='white-space: normal;'>Moved to Covid List ";
+                                break;
+                            case 'From COVID':
+                                print "<li style='white-space: normal;'>Activated Covid List ";
+                                break;
+                        }
 //			print "<LI>$method ";
-                $oldmethod = $method;
-                $change = TRUE;
-                $firstplayer = TRUE;
-            }
-            if (!$firstplayer) print ", ";
-            print "$player ($position-$nflteam)";
-            $firstplayer = FALSE;
-        }
-        ?>
-        </UL></UL>
-            </div></div>
+                        $oldmethod = $method;
+                        $change = TRUE;
+                        $firstplayer = TRUE;
+                    }
+                    if (!$firstplayer) print ", ";
+                    print "$player ($position-$nflteam)";
+                    $firstplayer = FALSE;
+                }
+                ?>
+                </UL></UL>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col"><a class="btn btn-wmffl" href=""><< Previous Month</a></div>
