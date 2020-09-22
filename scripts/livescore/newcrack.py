@@ -152,6 +152,7 @@ while (id != ord('\x15')) :
         value = theFile.read(length)
     elif (typeCd == 4) :
         value = valuate(theFile.read(8))
+    #print "Val: %s" % value
 
     if (id == ord('\x0a')) :
         teamid = value
@@ -175,7 +176,7 @@ while (id != ord('\x15')) :
         #print "Extra Secs: %s"%value
 
     id = valuate(theFile.read(4))
-    #print id
+    #print "ID: %d"%id
     if (id == 0) : break
     typeCd = ord(theFile.read(1))
     #print 
@@ -277,8 +278,10 @@ for x in range(1, 33) :
     player = thePlayers[x]
     playerid = player.id + 600
     rushTD = 0
+    #print "Still play: %s,  Complete: %s " % (thePlayers[x].stillPlay, thePlayers[x].complete)
     if not hasattr(player, 'secRemain') :
-        if player.stillPlay == 10 :
+        if player.stillPlay > 8 or thePlayers[x].complete :
+        #if player.stillPlay == 10 :
             player.secRemain = 0
             player.complete = 1
         else :
@@ -287,7 +290,8 @@ for x in range(1, 33) :
 
     #print "id [%s]  Complete  %s   Still  %s  Remain %s" %(playerid, player.complete, player.stillPlay, player.secRemain)
     #print dir(thePlayers[x])
-    if (thePlayers[x].stillPlay == 1 or player.secRemain > 0) :
+    if (player.secRemain > 0) :
+    #if (thePlayers[x].stillPlay == 1 or player.secRemain > 0) :
         inProgArray[1].append(x)
     elif (thePlayers[x].complete == 1) :
         inProgArray[2].append(x)
@@ -296,11 +300,10 @@ for x in range(1, 33) :
     if (teams.has_key(x)) :
         rushTD = teams[x].rushTD
 
-#sys.exit()
-
-    #print "INSERT INTO stats (statid, season, week, played, yards, sacks, tds) VALUES (%d, %d, %d, %d, %d, %d, %d) ON DUPLICATE KEY UPDATE played=%d, yards=%d, \
-	#sacks=%d, tds=%d;"%(playerid, year, player.week, player.stillPlay+player.complete, player.rushYards, player.sackAgt, rushTD, player.stillPlay+player.complete, \
-	#player.rushYards, player.sackAgt, rushTD)
+    # INSERT OL players
+    print "INSERT INTO stats (statid, season, week, played, yards, sacks, tds) VALUES (%d, %d, %d, %d, %d, %d, %d) ON DUPLICATE KEY UPDATE played=%d, yards=%d, \
+	sacks=%d, tds=%d;"%(playerid, year, player.week, player.stillPlay+player.complete, player.rushYards, player.sackAgt, rushTD, player.stillPlay+player.complete, \
+	player.rushYards, player.sackAgt, rushTD)
 
 #print inProgArray
 if (len(inProgArray[1]) > 0) :
