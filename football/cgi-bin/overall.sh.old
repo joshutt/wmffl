@@ -1,8 +1,0 @@
-#!/bin/bash
-
-`python getzipfile.py > public_html/activate/update.inc`
-`perl unzip.pl`
-`python newcrack.py` 
-`mysql -u wmffl_user -pwmaccess wmffl_football < out.sql`
-#`date -r myzip.zip +%B%e,\ %Y\ at\ %l:%M\ %p > public_html/activate/update.inc`
-`php public_html/admin/updatescores.php`

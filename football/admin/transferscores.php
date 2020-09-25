@@ -1,13 +1,14 @@
 <?
 
-function catchBadFunction($errno, $errstr, $errfile, $errline, $vars) {
+function catchBadFunction($errno, $errstr, $errfile, $errline, $vars)
+{
     error_log("$errstr in $errfile on line $errline");
     if ($errno == FATAL || $errno == ERROR) {
         exit(1);
     }
 //    print_r ($vars);
-    print "Problem with player: ".$vars["player"]["playerid"];
-    print " - Pos: ".$vars["player"]["position"]."\n";
+    print "Problem with player: " . $vars["player"]["playerid"];
+    print " - Pos: " . $vars["player"]["position"] . "\n";
     $vars["pts"] = 0;
 }
 
@@ -29,15 +30,15 @@ $results = mysqli_query($conn, $sql);
 $first = 1;
 set_error_handler("catchBadFunction");
 while ($player = mysqli_fetch_array($results)) {
-    $funcName = "score".$player["position"];
+    $funcName = "score" . $player["position"];
     $pts = call_user_func($funcName, $player);
 
     if ($first != 1) {
         $bigquery .= ", ";
     }
     $first = 0;
-    $bigquery .= "(".$player["playerid"].", ".$player["season"]. ", ";
-    $bigquery .= $player["week"].", ".$pts.") ";
+    $bigquery .= "(" . $player["playerid"] . ", " . $player["season"] . ", ";
+    $bigquery .= $player["week"] . ", " . $pts . ") ";
 
 }
 restore_error_handler();
