@@ -86,23 +86,23 @@ $current = $resource->getCurrentIr();
     <div class="card px-0 m-2 float-left" style="width: 32em;">
         <div class="card-header font-weight-bold text-center">Current IR Players</div>
         <div class="card-body">
-            <div class="row" style="white-space: nowrap">
+            <div class="row justify-content-around" style="white-space: nowrap">
                 <div class="col-3 font-weight-bold">Player</div>
                 <div class="col-1 font-weight-bold">Pos</div>
                 <div class="col-2 font-weight-bold">Since</div>
                 <div class="col-3 font-weight-bold">Exp Return</div>
-                <div class="col-1 font-weight-bold">Off IR</div>
+                <div class="col-2 font-weight-bold">Off IR</div>
             </div>
             <?php
             /** @var IRPlayer $player */
             foreach ($current as $player) {
                 ?>
-                <div class="row" style="white-space: nowrap;">
+                <div class="row justify-content-around" style="white-space: nowrap;">
                     <div class="col-3"><?= $player->firstName ?> <?= $player->lastName ?></div>
                     <div class="col-1"><?= $player->pos ?></div>
                     <div class="col-2"> <?= $player->status ?></div>
                     <div class="col-3"> <?= $player->expReturn ?></div>
-                    <div class="col-1"><label class="switch">
+                    <div class="col-2"><label class="switch">
                             <input type="checkbox" name="irRemove" value="<?= $player->playerid ?>" checked="true"/><span
                                     class="slider round"></span>
                         </label></div>
