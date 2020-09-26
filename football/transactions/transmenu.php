@@ -1,49 +1,9 @@
-<TABLE ALIGN=Center WIDTH=100% BORDER=0>
+<div class="container-fluid">
+<a class="btn btn-wmffl my-2" href="/transactions/list">Perform Transactions</a>
+<a class="btn btn-wmffl my-2" href="/transactions/trades/tradescreen">Trade Offers</a>
+<a class="btn btn-wmffl my-2" href="/transactions/injuredReserve">Injured Reserve</a>
+<a class="btn btn-wmffl my-2" href="/transactions/displayWaiverOrder">Waiver Wire</a>
+<a class="btn btn-wmffl my-2" href="/transactions/transactions">Recent Transactions</a>
+</div>
 
-<TR>
-<TD WIDTH=33%><A HREF="/transactions/list.php">
-<!--<IMG SRC="/images/football.jpg" BORDER=0>-->Perform Transactions</A>
-</TD>
-
-<TD WIDTH=34%><A HREF="/transactions/trades/tradescreen.php">
-<!--<IMG SRC="/images/football.jpg" BORDER=0>-->Trade Offers</A>
-</TD>
-
-<TD WIDTH=33%><A HREF="/transactions/displayWaiverOrder.php">
-<!--<IMG SRC="/images/football.jpg" BORDER=0>-->Waiver Wire</A>
-</TD>
-
-</TR>
-
-<TR>
-<TD WIDTH=33%><A HREF="transactions.php">
-<!--<IMG SRC="/images/football.jpg" BORDER=0>-->Recent Transactions</A>
-</TD>
-
-<TD WIDTH=34%><A HREF="transactions.php?year=<? print $theyear; ?>&month=12">
-<!--<IMG SRC="/images/football.jpg" BORDER=0>-->December Transactions</A>
-</TD>
-
-<TD WIDTH=33%><A HREF="transactions.php?year=<? print $theyear; ?>&month=11">
-<!--<IMG SRC="/images/football.jpg" BORDER=0>-->November Transactions</A>
-</TD>
-
-</TR>
-
-<TR>
-<TD WIDTH=33%><A HREF="transactions.php?year=<? print $theyear; ?>&month=10">
-<!--<IMG SRC="/images/football.jpg" BORDER=0>-->October Transactions</A>
-</TD>
-
-<TD WIDTH=34%><A HREF="transactions.php?year=<? print $theyear; ?>&month=9">
-<!--<IMG SRC="/images/football.jpg" BORDER=0>-->September Transactions</A>
-</TD>
-
-<TD WIDTH=34%><A HREF="transactions.php?year=<? print $theyear; ?>&month=8">
-<!--<IMG SRC="/images/football.jpg" BORDER=0>-->Pre-Season Transactions</A></TD>
-</TR>
-
-
-</TABLE>
-
-<HR size = "1">
+<hr size = "1"/>

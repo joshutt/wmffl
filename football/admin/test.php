@@ -8,6 +8,7 @@
 
 #exec("/home/joshutt/git/scripts/test.sh");
 #exec("/home/joshutt/git/scripts/livescore/livescore.sh");
+
 $host = "/home/joshutt/git/scripts";
 #exec("$host/livescore/livescore.sh >> $host/logs/livelog");
 exec("$host/livescore/livescore.sh", $outArr);

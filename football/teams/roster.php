@@ -1,5 +1,6 @@
 <?php
 include "utils/reportUtils.php";
+include "utils/injuryUtils.php";
 
 $thequery = "select DATE_FORMAT(greatest(max(r.DateOn),max(r.DateOff)), '%M %e, %Y'), tp.TransPts+tp.ProtectionPts, tp.TotalPts, count(r.dateon)-count(r.dateoff)-1 from roster r, team t, transpoints tp where r.teamid=t.teamid and t.teamid=tp.teamid and t.teamid=$viewteam and tp.season=$currentSeason group by t.teamid";
 $result = mysqli_query($conn, $thequery);
@@ -30,14 +31,15 @@ $theDate = mysqli_fetch_row($result);
         $thequery = "select p.lastname, p.pos, p.team, b.week,
        IF(p.firstname <> '', concat(', ',p.firstname), '') as 'firstname',
        r.DateOn, i.status as 'injury', max(pocos.cost) as 'cost', p.dob, TIMESTAMPDIFF(YEAR, p.dob, now()) as 'age',
-       ifnull(ps.pts,0) as 'pts'
+       ifnull(ps.pts,0) as 'pts', ir.current as 'ir'
 from newplayers p
        join roster r on p.playerid=r.playerid and r.dateoff is null
        join team t on r.teamid=t.teamid
        join weekmap wm on wm.StartDate <= now() and wm.EndDate >= now()
        left join nflbyes b on p.team=b.nflteam and b.season=wm.season
-       left join injuries i on i.playerid=p.playerid and i.season=wm.season and i.week=wm.week
-       left join protectioncost pc on p.playerid=pc.playerid and pc.season=if(wm.week <= 1, wm.season, wm.season+1)
+       left join newinjuries i on i.playerid=p.playerid and i.season=wm.season and i.week=wm.week
+       left join ir on p.playerid=ir.playerid and ir.dateoff is null
+       left join protectioncost pc on p.playerid=pc.playerid and pc.season=if(wm.week <= 1, wm.season, wm.season+1)    
        join positioncost pocos on p.pos=pocos.position and pocos.endSeason is null and pocos.years <= ifnull(pc.years, 0)
        left join (
                  select playerid, season, sum(pts) as 'pts'
@@ -52,27 +54,9 @@ order by p.pos, p.lastname";
         $hold = array();
         while ($player = mysqli_fetch_array($result)) {
             $date = date_create($player["DateOn"]);
-            switch ($player["injury"]) {
-                case 'P':
-                    $inj = "Prob";
-                    break;
-                case 'Q':
-                    $inj = "Ques";
-                    break;
-                case 'D':
-                    $inj = "Doub";
-                    break;
-                case 'O':
-                    $inj = "Out";
-                    break;
-                case 'I':
-                    $inj = "IR";
-                    break;
-                case 'S':
-                    $inj = "Susp";
-                    break;
-                default:
-                    $inj = "";
+            $inj = shortenInjury($player["injury"]);
+            if ($player['ir'] == 1) {
+                $inj = "IR";
             }
             $newItem = array("pos" => $player["pos"], "name" => $player["lastname"] . $player["firstname"],
                 "team" => $player["team"], "bye" => $player["week"], "age" => $player["age"], "injury" => $inj,

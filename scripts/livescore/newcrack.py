@@ -290,6 +290,7 @@ for x in range(1, 33):
     player = thePlayers[x]
     playerid = player.id + 600
     rushTD = 0
+
     # print "Still play: %s,  Complete: %s " % (thePlayers[x].stillPlay, thePlayers[x].complete)
     if not hasattr(player, 'secRemain'):
         if player.stillPlay > 8 or thePlayers[x].complete:
@@ -299,6 +300,7 @@ for x in range(1, 33):
         else:
             player.secRemain = 3600
             player.complete = 0
+
 
     # print "id [%s]  Complete  %s   Still  %s  Remain %s" %(playerid, player.complete, player.stillPlay,
     # player.secRemain)

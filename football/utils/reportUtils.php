@@ -2,7 +2,8 @@
 
 $supportedFormats = array("html", "csv", "json", "ajax");
 
-function supportedFormat($format) {
+function supportedFormat($format)
+{
     global $supportedFormats;
     return in_array($format, $supportedFormats);
 }
@@ -13,7 +14,8 @@ function supportedFormat($format) {
  * @param $titles List of the headers for the columns
  * @param $content The data to fill in
  */
-function outputHtml($titles, $content) {
+function outputHtml($titles, $content)
+{
 
     print "<table id=\"statTable\"> <thead> <tr>";
     foreach ($titles as $subj) {
@@ -23,16 +25,17 @@ function outputHtml($titles, $content) {
     foreach ($content as $player) {
         print "<tr>";
         foreach ($player as $item) {
-	    print "<td>$item</td>";
-        }   
-    print "</tr>";
-    } 
+            print "<td>$item</td>";
+        }
+        print "</tr>";
+    }
 
     print "</thbody></table>";
 }
 
 
-function outputCSV($titles, $content, $filename="data.csv") {
+function outputCSV($titles, $content, $filename = "data.csv")
+{
     // output headers so that the file is downloaded rather than d`isplayed
     header('Content-Type: text/csv; charset=utf-8');
     header("Content-Disposition: attachment; filename=$filename");
@@ -43,11 +46,12 @@ function outputCSV($titles, $content, $filename="data.csv") {
     // output the column headings
     fputcsv($output, $titles);
     foreach ($content as $row) {
-	fputcsv($output, $row);
+        fputcsv($output, $row);
     }
 }
 
-function outputJSON($titles, $content) {
+function outputJSON($titles, $content)
+{
     $jsonArr = array();
     foreach ($content as $item) {
         $jsonObj = array();
@@ -57,7 +61,7 @@ function outputJSON($titles, $content) {
             $jsonObj[$titles[$i]] = $item[$key];
         }
         array_push($jsonArr, $jsonObj);
-    }   
+    }
 
     $json_output = json_encode($jsonArr);
     header("Content-Type: application/json; charset=UTF-8");
