@@ -65,14 +65,32 @@ A:hover {
     color: #e2a500;
 }
 
-.row{white-space:nowrap;padding:1px 3px 1px 3px;}
-.c1{background-color:#EFEFEF;}
-/*.c1{background-color:#F8FCCC;}*/
-.C{text-align:center;}
+.row {
+    /*white-space: nowrap;*/
+    padding: 1px 3px 1px 3px;
+}
 
-.titleLine1{font-size:24px;color:#660000; font-weight: bold; white-space: normal;}
+.c1 {
+    background-color: #EFEFEF;
+}
+
+/*.c1{background-color:#F8FCCC;}*/
+.C {
+    text-align: center;
+}
+
+.titleLine1 {
+    font-size: 24px;
+    color: #660000;
+    font-weight: bold;
+    white-space: normal;
+}
+
 /*.titleLine1{font-size:24px;color:#004080;}*/
-.titleLine2{font-size:16px;color:#CC3300;}
+.titleLine2 {
+    font-size: 16px;
+    color: #CC3300;
+}
 
 .PQDO {
     /*float: right;*/
@@ -88,6 +106,7 @@ A:hover {
     padding: 0px;
     border: 1px solid black;
 }
+
 .caption {
     font-size: 8pt;
     color: #e2a500;
@@ -95,7 +114,9 @@ A:hover {
     margin-bottom: 5px;
 }
 
-.rap{white-space:normal;}
+.rap {
+    white-space: normal;
+}
 
 .newsdate {
     font-size: 8pt;
@@ -110,16 +131,17 @@ A:hover {
 
 .mainStory {
     margin-bottom: 5px;
-    font-family:Arial,Helvetica,sans-serif;
-    font-size:11px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
 }
+
 .cat, .catfoot {
     /*	background-image:url('../Local%20Settings/Temporary%20Internet%20Files/Content.IE5/QBCJWFGN/skin/default/images/specific/cellpic1.gif'); */
-    background-color:#660000;
-    color:#e2a500;
-    height:25px;
-    font-weight:700;
-    white-space:nowrap;
+    background-color: #660000;
+    color: #e2a500;
+    height: 25px;
+    font-weight: 700;
+    white-space: nowrap;
     padding: 2px 3px 0px 8px;
 }
 
@@ -152,12 +174,34 @@ A:hover {
     font-size: 14pt
 }
 
-A.sideButton {text-decoration: none; font-size:18px;}
+A.sideButton {
+    text-decoration: none;
+    font-size: 18px;
+}
 
-A.sideButton:link {color:#660000; text-decoration: none; font-weight: bold}
-A.sideButton:active {color:#e2a500; text-decoration: none; font-weight: bold}
-A.sideButton:visited {color:#660000; text-decoration: none; font-weight: bold}
-A.sideButton:hover {color:#e2a500; text-decoration: none; font-weight: bold}
+A.sideButton:link {
+    color: #660000;
+    text-decoration: none;
+    font-weight: bold
+}
+
+A.sideButton:active {
+    color: #e2a500;
+    text-decoration: none;
+    font-weight: bold
+}
+
+A.sideButton:visited {
+    color: #660000;
+    text-decoration: none;
+    font-weight: bold
+}
+
+A.sideButton:hover {
+    color: #e2a500;
+    text-decoration: none;
+    font-weight: bold
+}
 
 div.alert {
     color: #ff0000;
@@ -165,7 +209,12 @@ div.alert {
     text-align: center;
 }
 
-span.quicklink { color: #555555; padding: 5px; float: left; margin: 3px 15px;}
+span.quicklink {
+    color: #555555;
+    padding: 5px;
+    float: left;
+    margin: 3px 15px;
+}
 
 h1 {
     font-family: "Times New Roman", Times, Serif !important;

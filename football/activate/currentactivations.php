@@ -66,7 +66,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         $nameIdMap[$lastName] = $i;
         $printer[$i] = "<div class='card my-4 mx-0' >";
         $printer[$i] .= "<div class='card-header font-weight-bold'>" . $row["name"] . "</div>";
-        $printer[$i] .= "<div class='card-body'>";
+        $printer[$i] .= "<div class='card-body px-1'>";
     }
 
     // Determine is player is locked
@@ -94,9 +94,9 @@ while ($row = mysqli_fetch_assoc($result)) {
     $pqdoLine = getPQDOLine($row["status"], $row["details"], $row["ir"]);
 
     // Build the line to prin
-    $printer[$i] .= "<div class='row my-1'><div class='col-2'>" . $spot . $row["pos"] . "</div>";
-    $printer[$i] .= "<div class='col-4 text-left'>" . $row["firstname"] . " " . $row["lastname"] . "</div>";
-    $printer[$i] .= "<div class='col-3 mr-0'>" . $opp . "</div>";
+    $printer[$i] .= "<div class='row my-1'><div class='col-2 pr-0'>" . $spot . $row["pos"] . "</div>";
+    $printer[$i] .= "<div class='col-4 text-left pl-0'>" . $row["firstname"] . " " . $row["lastname"] . "</div>";
+    $printer[$i] .= "<div class='col-4 mr-0'>" . $opp . "</div>";
     $printer[$i] .= "<div class='col-2 ml-0 pl-0'>$pqdoLine</div>";
     $printer[$i] .= "</div>"; // should close row
     $printer[$i] .= "<!-- close row -->";
