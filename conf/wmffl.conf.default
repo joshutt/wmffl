@@ -4,11 +4,12 @@ userName=[DBUSER]
 password=[DBPASSWORD]
 
 [Paths]
-libPath = /home/joshutt/co/newsite/lib
+libPath = [PATH_TO_LIBOBJ]
+scriptsPath = [PATH_TO_SCRIPTS_DIR]
 
 [DB_DataObject]
 database = mysql://[DBUSER]:[DBPASSWORD]@localhost/[DBNAME]
-schema_location   = /home/jutterback/playground/workspace/WMFFL/lib/DataObjects
-class_location    = /home/jutterback/playground/workspace/WMFFL/lib/DataObjects
+schema_location   = [PATH_TO_DATAOBJECTS_SCHEMA_DIR]
+class_location    = [PATH_TO_DATAOBJECTS_CLASS_DIR]
 require_prefix    = DataObjects/
 class_prefix      = DataObjects_
