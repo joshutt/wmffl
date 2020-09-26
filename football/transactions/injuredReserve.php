@@ -53,7 +53,7 @@ $eligible = $resource->getIrElgible();
     <div class="card px-0 m-2 float-left" style="width: 30em;">
         <div class="card-header font-weight-bold text-center">IR Eligible Players</div>
         <div class="card-body">
-            <div class="row">
+            <div class="row" style="white-space: nowrap">
                 <div class="col-3 font-weight-bold">Player</div>
                 <div class="col-1 font-weight-bold">Pos</div>
                 <div class="col-3 font-weight-bold">Reason</div>
@@ -64,7 +64,7 @@ $eligible = $resource->getIrElgible();
             /** @var IRPlayer $player */
             foreach ($eligible as $player) {
                 ?>
-                <div class="row">
+                <div class="row" style="white-space: nowrap">
                     <div class="col-3"><?= $player->firstName ?> <?= $player->lastName ?></div>
                     <div class="col-1"><?= $player->pos ?></div>
                     <div class="col-3"> <?= $player->details ?></div>
@@ -86,7 +86,7 @@ $current = $resource->getCurrentIr();
     <div class="card px-0 m-2 float-left" style="width: 32em;">
         <div class="card-header font-weight-bold text-center">Current IR Players</div>
         <div class="card-body">
-            <div class="row">
+            <div class="row" style="white-space: nowrap">
                 <div class="col-3 font-weight-bold">Player</div>
                 <div class="col-1 font-weight-bold">Pos</div>
                 <div class="col-2 font-weight-bold">Since</div>
@@ -97,7 +97,7 @@ $current = $resource->getCurrentIr();
             /** @var IRPlayer $player */
             foreach ($current as $player) {
                 ?>
-                <div class="row">
+                <div class="row" style="white-space: nowrap;">
                     <div class="col-3"><?= $player->firstName ?> <?= $player->lastName ?></div>
                     <div class="col-1"><?= $player->pos ?></div>
                     <div class="col-2"> <?= $player->status ?></div>
