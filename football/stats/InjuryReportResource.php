@@ -30,7 +30,7 @@ join teamnames tn on r.TeamID=tn.teamid and tn.season=wm.Season
 where ir.id is null and inj.status in ";
 
     private const FULL_REPORT = "select p.firstname, p.lastname, p.pos, n.nflteamid, t.name, 
-       if(ir.id, 'WMFFL IR', i.status) as 'status', i.details, wm.season, wm.week
+       if(ir.id, if(ir.covid=1, 'COVID', 'WMFFL IR'), i.status) as 'status', i.details, wm.season, wm.week, ir.covid
 from newinjuries i
 join weekmap wm on now() between wm.StartDate and wm.EndDate and i.season=wm.season and i.week=wm.Week
 join newplayers p on i.playerid = p.playerid
