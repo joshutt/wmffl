@@ -69,7 +69,7 @@ function getPQDOLine($injStatus, $injDetail, $ir = 0): string
 
 function getIRStatus(): array
 {
-    return ['IR', 'IR-PUP', 'IR-NFI'];
+    return ['IR', 'IR-PUP', 'IR-NFI', 'IR-R'];
 }
 
 function getIRStatusSql(): string

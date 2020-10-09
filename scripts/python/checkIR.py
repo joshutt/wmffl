@@ -12,7 +12,8 @@ def main():
                    + "left join newinjuries inj on ir.playerid=inj.playerid and " \
                    + "inj.season=wm.Season and inj.week=wm.week " \
                    + "left join roster r on ir.playerid=r.playerid and r.dateoff is null " \
-                   + "where ir.dateoff is null and (inj.id is null or inj.status not in ('IR', 'IR-PUP', 'IR-NFI')) " \
+                   + "where ir.dateoff is null and " \
+                   + "(inj.id is null or inj.status not in ('IR', 'IR-PUP', 'IR-NFI', 'IR-R')) " \
                    + "and ir.covid=0"
 
     update_query = "UPDATE ir SET dateoff=now(), current=0 WHERE dateoff is null and playerid=%s"
