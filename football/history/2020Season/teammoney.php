@@ -9,7 +9,7 @@ include "base/menu.php";
 
 
 <H1 ALIGN=Center>Team Finances</H1>
-<H5 ALIGN=Center>Last Updated 10/1/2020</H5>
+<H5 ALIGN=Center>Last Updated 10/16/2020</H5>
 <HR size="1">
 
 <p>
@@ -20,7 +20,7 @@ include "base/menu.php";
 <div class="center">
 
     <?
-    $amt_owed = array( 12=>41.50, );
+    $amt_owed = array( 12=>38.74, );
 
     if ($isin && array_key_exists($teamnum, $amt_owed)) { ?>
 
@@ -47,9 +47,9 @@ include "base/menu.php";
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
-            <td class="padded">3 x $2.73</td>
+            <td class="padded">4 x $2.76</td>
             <td class="padded">-</td>
-            <td class="padded">$233.21</td>
+            <td class="padded">$236.06</td>
             <td class="padded">$0.00</td>
         </tr>
         <tr class="evenRow">
@@ -59,9 +59,9 @@ include "base/menu.php";
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
-            <td class="padded">1 x $2.73</td>
+            <td class="padded">2 x $2.76</td>
             <td class="padded">-</td>
-            <td class="padded">$8.01</td>
+            <td class="padded">$10.80</td>
             <td class="padded">$0.00</td>
         </tr>
         <tr class="oddRow">
@@ -69,10 +69,10 @@ include "base/menu.php";
             <td class="padded">$61.66</td>
             <td class="padded">$13.34<td>
             <td class="padded">-</td>
-            <td class="padded">1</td>
-            <td class="padded">3 x $2.73</td>
+            <td class="padded">10</td>
+            <td class="padded">4 x $2.76</td>
             <td class="padded">-</td>
-            <td class="padded">$7.19</td>
+            <td class="padded">$1.04</td>
             <td class="padded">$0.00</td>
         </tr>
         <tr class="evenRow">
@@ -82,9 +82,9 @@ include "base/menu.php";
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
-            <td class="padded">1 x $2.73</td>
+            <td class="padded">2 x $2.76</td>
             <td class="padded">-</td>
-            <td class="padded">$2.73</td>
+            <td class="padded">$5.52</td>
             <td class="padded">$0.00</td>
         </tr>
         <tr class="oddRow">
@@ -106,9 +106,9 @@ include "base/menu.php";
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
-            <td class="padded">2 x $2.73</td>
+            <td class="padded">2 x $2.76</td>
             <td class="padded">-</td>
-            <td class="padded">$130.46</td>
+            <td class="padded">$130.52</td>
             <td class="padded">$0.00</td>
         </tr>
         <tr class="oddRow">
@@ -118,9 +118,9 @@ include "base/menu.php";
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
-            <td class="padded">2 x $2.73</td>
+            <td class="padded">3 x $2.76</td>
             <td class="padded">-</td>
-            <td class="padded">$330.06</td>
+            <td class="padded">$332.97</td>
             <td class="padded">$0.00</td>
         </tr>
         <tr class="evenRow">
@@ -130,10 +130,10 @@ include "base/menu.php";
             <td class="padded">$11.00</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
+            <td class="padded">1 x $2.76</td>
             <td class="padded">-</td>
-            <td class="padded">-</td>
-            <td class="padded"><span class="debt">($41.50)</span></td>
-            <td class="padded">$41.50</td>
+            <td class="padded"><span class="debt">($38.74)</span></td>
+            <td class="padded">$38.74</td>
         </tr>
         <tr class="oddRow">
             <td class="name padded">Sacks On the Beach</td>
@@ -142,9 +142,9 @@ include "base/menu.php";
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
-            <td class="padded">1 x $2.73</td>
+            <td class="padded">2 x $2.76</td>
             <td class="padded">-</td>
-            <td class="padded">$165.05</td>
+            <td class="padded">$167.84</td>
             <td class="padded">$0.00</td>
         </tr>
         <tr class="evenRow">
@@ -154,9 +154,9 @@ include "base/menu.php";
             <td class="padded">$6.00</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
-            <td class="padded">3 x $2.73</td>
+            <td class="padded">5 x $2.76</td>
             <td class="padded">-</td>
-            <td class="padded">$2.75</td>
+            <td class="padded">$8.36</td>
             <td class="padded">$0.00</td>
         </tr>
         <tr class="oddRow">
@@ -166,9 +166,9 @@ include "base/menu.php";
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
-            <td class="padded">2 x $2.73</td>
+            <td class="padded">3 x $2.76</td>
             <td class="padded">-</td>
-            <td class="padded">$350.55</td>
+            <td class="padded">$353.37</td>
             <td class="padded">$0.00</td>
         </tr>
         <tr class="evenRow">
@@ -178,9 +178,9 @@ include "base/menu.php";
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
+            <td class="padded">2 x $2.76</td>
             <td class="padded">-</td>
-            <td class="padded">-</td>
-            <td class="padded">$161.81</td>
+            <td class="padded">$167.33</td>
             <td class="padded">$0.00</td>
         </tr>
     </table>
