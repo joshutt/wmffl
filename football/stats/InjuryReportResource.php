@@ -16,7 +16,8 @@ class InjuryReportResource
         join teamnames t on wm.Season = t.season and r.TeamID=t.teamid
         left join newinjuries i on p.playerid = i.playerid and wm.season=i.season and wm.week=i.week
         left join nflrosters nr on nr.playerid=p.playerid and nr.dateoff is null
-        where ir.dateoff is null";
+        where ir.dateoff is null
+        order by t.name, p.pos, p.lastname";
 
     private const ELIGIBLE_IR = "select p.playerid, p.firstname, p.lastname, p.pos, nr.nflteamid, tn.abbrev, inj.status,
        inj.details, inj.expectedReturn

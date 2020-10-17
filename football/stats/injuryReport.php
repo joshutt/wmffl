@@ -1,13 +1,14 @@
 <?php
 
-//use stats\InjuryReportResource;
-
 require_once "utils/start.php";
 require_once "InjuryReportResource.php";
 
 $reportResource = new InjuryReportResource($conn);
 
-$javascriptList = array("//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js", "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js");
+$javascriptList = array("//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
+    "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js",
+    "/base/js/jquery.tablesorter.min.js",
+    "/base/js/injury.js");
 $title = "Injury Report";
 include "base/menu.php";
 ?>
@@ -16,28 +17,12 @@ include "base/menu.php";
     <hr/>
 <?php include "base/statbar.html"; ?>
 
-
-    <script lang="javascript">
-
-        function toggleCurrent() {
-            $('#fullList').hide();
-            $('#currentLists').show();
-        }
-
-        function toggleFull() {
-            $('#fullList').show();
-            $('#currentLists').hide();
-        }
-
-
-    </script>
-
-
     <div class="mx-auto text-center">
         <button type="button" class="btn btn-wmffl mx-4" id="currentLists-tab" data-toggle="tab"
-                onclick="toggleCurrent()">Current Lists
+                onclick="toggleIRCurrent()">Current Lists
         </button>
-        <button type="button" class="btn btn-wmffl mx-4" id="fillList-tab" data-toggle="tab" onclick="toggleFull()">Full
+        <button type="button" class="btn btn-wmffl mx-4" id="fillList-tab" data-toggle="tab" onclick="toggleIRFull()">
+            Full
             Report
         </button>
     </div>
@@ -49,7 +34,7 @@ include "base/menu.php";
                 <div class="card px-0 m-2">
                     <div class="card-header text-center font-weight-bold">Current IR List</div>
                     <div class="card-body">
-                        <table class="table table-hover mb-0">
+                        <table class="table table-hover mb-0 tablesorter" id="irListTable">
                             <thead>
                             <tr>
                                 <th>Player</th>
@@ -94,7 +79,7 @@ include "base/menu.php";
                     <div class="card-header text-center font-weight-bold">Current Covid List</div>
                     <div class="card-body">
 
-                        <table class="table table-hover mb-0">
+                        <table class="table table-hover mb-0 tablesorter">
                             <thead>
                             <tr>
                                 <th>Player</th>
@@ -140,7 +125,7 @@ include "base/menu.php";
                 <div class="card px-0 m-2">
                     <div class="card-header text-center font-weight-bold">IR Eligible</div>
                     <div class="card-body">
-                        <table class="table table-hover mb-0">
+                        <table class="table table-hover mb-0 tablesorter">
                             <thead>
                             <tr>
                                 <th>Player</th>
@@ -196,7 +181,7 @@ include "base/menu.php";
                     <div class="card px-0 m-2">
                         <div class="card-header text-center font-weight-bold"><?= $name ?></div>
                         <div class="card-body">
-                            <table class="table table-hover">
+                            <table class="table table-hover tablesorter">
                                 <thead>
                                 <tr>
                                     <th>Player</th>

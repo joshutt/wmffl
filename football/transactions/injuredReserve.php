@@ -7,38 +7,9 @@ $resource->loadElgiblePlayers();
 $resource->loadCurrentIRPlayers();
 
 $title = "Injured Reserve";
-$javascriptList = array("//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js");
+$javascriptList = array("//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js", "/base/js/injury.js");
 include "base/menu.php";
 ?>
-
-<script>
-    function sub() {
-        let irAdds = document.getElementsByName("irAdd");
-        irAdds.forEach(function(item) {
-            if (item.checked) {
-                $.post("updateIR.php", {
-                    method: "Add",
-                    playerid: item.value
-                });
-            }
-        });
-
-        let irRemove = document.getElementsByName("irRemove");
-        irRemove.forEach(function (item) {
-            if (!item.checked) {
-                $.post("updateIR.php", {
-                    method: "Remove",
-                    playerid: item.value
-                });
-            }
-        });
-        setTimeout(rl, 200);
-    }
-
-    function rl() {
-        location.reload();
-    }
-</script>
 
     <h1 align="center">Injured Reserve</h1>
     <hr/>
@@ -46,9 +17,15 @@ include "base/menu.php";
 <?php
 include "transmenu.php";
 
+if (!$isin) {
+    ?>
+    <div class="text-center font-weight-bold h4">You must be logged in to use this feature</div>
+    <?php
+} else {
+
 // List elgible
-$eligible = $resource->getIrElgible();
-?>
+    $eligible = $resource->getIrElgible();
+    ?>
 
     <div class="card px-0 m-2 float-left" style="width: 30em;">
         <div class="card-header font-weight-bold text-center">IR Eligible Players</div>
@@ -70,7 +47,8 @@ $eligible = $resource->getIrElgible();
                     <div class="col-3"> <?= $player->details ?></div>
                     <div class="col-3"> <?= $player->expReturn ?></div>
                     <div class="col-1"><label class="switch">
-                            <input type="checkbox" name="irAdd" value="<?= $player->playerid ?>"/><span class="slider round"></span>
+                            <input type="checkbox" name="irAdd" value="<?= $player->playerid ?>"/><span
+                                    class="slider round"></span>
                         </label></div>
                 </div>
                 <?php
@@ -79,9 +57,9 @@ $eligible = $resource->getIrElgible();
         </div>
     </div>
 
-<?php
-$current = $resource->getCurrentIr();
-?>
+    <?php
+    $current = $resource->getCurrentIr();
+    ?>
 
     <div class="card px-0 m-2 float-left" style="width: 32em;">
         <div class="card-header font-weight-bold text-center">Current IR Players</div>
@@ -103,7 +81,8 @@ $current = $resource->getCurrentIr();
                     <div class="col-2"> <?= $player->status ?></div>
                     <div class="col-3"> <?= $player->expReturn ?></div>
                     <div class="col-2"><label class="switch">
-                            <input type="checkbox" name="irRemove" value="<?= $player->playerid ?>" checked="true"/><span
+                            <input type="checkbox" name="irRemove" value="<?= $player->playerid ?>"
+                                   checked="true"/><span
                                     class="slider round"></span>
                         </label></div>
                 </div>
@@ -117,4 +96,6 @@ $current = $resource->getCurrentIr();
         <button class="btn btn-wmffl" onclick="sub();">Submit</button>
     </div>
 
-<?php include "base/footer.html";
+    <?php
+}
+include "base/footer.html";
