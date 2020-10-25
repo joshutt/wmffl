@@ -2,7 +2,7 @@
 //$currentSeason = 2004;
 $checkWeek = 17;
 if (array_key_exists('viewseason', $_REQUEST)) {
-    $viewseason = $_REQUEST['viewseason'];
+    $viewseason = (int) $_REQUEST['viewseason'];
 } else {
     $viewseason = $currentSeason;
     $checkWeek = $currentWeek;

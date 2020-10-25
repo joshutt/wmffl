@@ -2,7 +2,7 @@
 require_once "utils/connect.php";
 
 if (array_key_exists('viewteam', $_REQUEST)) {
-    $viewteam = $_REQUEST['viewteam'];
+    $viewteam = (int) $_REQUEST['viewteam'];
 } else {
     $viewteam = 2;
 }

@@ -4,15 +4,15 @@ include "base/scoring.php";
 include "scoreFunctions.php";
 
 // Get Team to show
-$thisTeamID = isset($teamid) ? $teamid : 2;
+$thisTeamID = isset($teamid) ? (int) $teamid : 2;
 
 // Determine season and week to show
 if ($currentWeek < 1) {
-    $thisSeason= isset($season) ? $season : $currentSeason-1;
-    $thisWeek = isset($week) ? $week : 16;
+    $thisSeason= isset($season) ? (int) $season : $currentSeason-1;
+    $thisWeek = isset($week) ? (int) $week : 16;
 } else {
-    $thisSeason = isset($season) ? $season : $currentSeason;
-    $thisWeek = isset($week) ? $week : $currentWeek;
+    $thisSeason = isset($season) ? (int) $season : $currentSeason;
+    $thisWeek = isset($week) ? (int) $week : $currentWeek;
 }
 
 if ($thisSeason == $currentSeason) {
