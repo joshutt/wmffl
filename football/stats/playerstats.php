@@ -23,7 +23,7 @@ if (!isset($_REQUEST["season"]) || $_REQUEST["season"] == "") {
         $season = $currentSeason;
     }
 } else {
-    $season = $_REQUEST["season"];
+    $season = (int) $_REQUEST["season"];
 }
 
 
@@ -71,6 +71,10 @@ foreach ($pLine as $pset) {
     $sql .= "sum($pset), ";
 }
 
+$pos = $conn->real_escape_string($pos);
+$sort = $conn->real_escape_string($sort);
+$season = $conn->real_escape_string($season);
+
 $sql .= <<<EOD
 round(sum(ps.pts)/sum(if(s.played>0,1,0)), 2) as 'ppg'
 FROM  playerscores ps
@@ -87,17 +91,18 @@ ORDER BY `$sort` DESC, `pts` DESC
 EOD;
 
 if (isset($_POST["firstsort"])) {
-    $firstSort = $_POST["firstsort"];
+    $firstSort = $conn->real_escape_string($_POST["firstsort"]);
 }
 
 if (isset($firstSort) && $firstSort != "none") {
     $sql .= "ORDER BY $firstSort ";
-    $secondSort = $_POST["secondsort"];
+    $secondSort = $conn->real_escape_string($_POST["secondsort"]);
     if (isset($secondSort) && $secondSort != "none") {
         $sql .= ", $secondSort ";
     }
 }
 //ORDER  BY  ps.week, p.position, ps.pts DESC, p.lastname, p.firstname";
+//$sql = $conn->real_escape_string($sql);
 
 //print "Last Name,First Name,Pos,NFL,Week,Pts\n";
 $newHold = array();

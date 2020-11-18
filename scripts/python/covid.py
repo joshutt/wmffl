@@ -27,7 +27,7 @@ def main():
                    + "join weekmap wm on now() between wm.StartDate and wm.EndDate " \
                    + "left join newinjuries i on p.playerid = i.playerid and i.week=wm.week and i.season=wm.Season " \
                    + "left join roster r on p.playerid=r.PlayerID and r.dateoff is null " \
-                   + "where ir.covid=1 and i.status not in ('COVID-IR', 'Holdout')"
+                   + "where ir.covid=1 and (i.status is null or i.status not in ('COVID-IR', 'Holdout'))"
     update_covid = "UPDATE ir SET dateoff=now(), current=0 WHERE dateoff is null and playerid=%s"
     ir_insert(conn, covid_remove, update_covid, 'From Covid')
 
