@@ -9,7 +9,7 @@ if ($thisWeek == "") {
 $thisSeason = 2020;
 $title = "Standings";
 
-$clinchedList = array();
+$clinchedList = array('Gallic Warriors' => 'e-');
 
 include "base/menu.php";
 ?>
