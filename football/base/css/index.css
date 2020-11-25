@@ -5,6 +5,7 @@ li {
 }
 
 .boxScore {
+    white-space: nowrap;
 }
 
 .gameBox {
