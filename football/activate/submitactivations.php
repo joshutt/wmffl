@@ -35,19 +35,19 @@ function getInjuryLine($player): string
 }
 
 //print "Set";
-$season = $currentSeason;
+$season = (int) $currentSeason;
 
 if (!isset($week)) {
-    $week = $currentWeek;
+    $week = (int) $currentWeek;
 }
 
 if (isset($_REQUEST["week"])) {
-    $week = $_REQUEST["week"];
+    $week = (int) $_REQUEST["week"];
 }
 
 
 //$week = 7;
-$teamid = $teamnum;
+$teamid = (int) $teamnum;
 $currentTime = time();
 //$currentTime = 1191861900;
 //$currentTime =1220926000 ;

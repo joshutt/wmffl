@@ -1,7 +1,7 @@
 <?
 require_once "utils/start.php";
 
-$thisWeek = $_REQUEST["week"];
+$thisWeek = (int) $_REQUEST["week"];
 if ($thisWeek == "") {
     $thisWeek = $currentWeek;
     //$thisWeek = 17;

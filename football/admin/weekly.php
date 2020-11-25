@@ -15,7 +15,7 @@ function doubleCompare($scoreA, $scoreB1, $scoreB2) {
 }
 
 if ($_REQUEST["week"] != null) {
-    $thisWeek = $_REQUEST["week"];
+    $thisWeek = (int) $_REQUEST["week"];
 } else {
     $thisWeek = $currentWeek-1;
 }

@@ -1,7 +1,7 @@
 <?php
 require_once "utils/start.php";
 
-$thisWeek = $_REQUEST["week"];
+$thisWeek = (int) $_REQUEST["week"];
 $thisSeason = 2005;
 $title = "Week $thisWeek Recap";
 
