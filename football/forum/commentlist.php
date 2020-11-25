@@ -16,11 +16,11 @@ $post->find();
     <?php
 while ($post->fetch()) {
     ?>
-    <div class="boxScore p-1"><a class="NFLHeadline" href="/forum/comments.php#<?= $post->forumid ?>"><?= $post->gettitle() ?></a></div>
+    <div class="headline p-1"><a class="NFLHeadline" href="/forum/comments.php#<?= $post->forumid ?>"><?= $post->gettitle() ?></a></div>
     <?php
 }
 ?>
-    <div class="boxScore p-1"><a href="/forum/blogentry.php" class="comment">Leave Commentary</a></div>
+    <div class="headline p-1"><a href="/forum/blogentry.php" class="comment">Leave Commentary</a></div>
 </div>
 
 

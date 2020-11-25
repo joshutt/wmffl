@@ -8,6 +8,10 @@ li {
     white-space: nowrap;
 }
 
+.headline {
+    white-space: normal;
+}
+
 .gameBox {
     background-color: #eeeeee;
     font-size: 10pt;
