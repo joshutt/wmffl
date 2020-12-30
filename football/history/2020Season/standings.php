@@ -9,7 +9,7 @@ if ($thisWeek == "") {
 $thisSeason = 2020;
 $title = "Standings";
 
-$clinchedList = array('Gallic Warriors' => 'e-', 'Amish Electricians' => 'y-', 'British Bulldogs' => 'e-');
+$clinchedList = array('Gallic Warriors' => 't-', 'Amish Electricians' => 'y-', 'British Bulldogs' => 't-', 'Richard\'s Lionhearts' => 'e-', 'Trump Molests Collies' => 'e-', 'Testudos Revenge' => 'e-', 'Sean Taylor\'s Ashes' => 'x-', 'Norsemen' => 'e-', 'Crusaders' => 'y-', 'Fighting Squirrels' => 'e-', 'MeggaMen' => 'y-', 'Sacks on the Beach' => 'e-');
 
 include "base/menu.php";
 ?>

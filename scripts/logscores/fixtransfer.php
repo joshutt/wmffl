@@ -1,4 +1,5 @@
 <?
+require_once dirname(__FILE__)."/../base.php";
 
 function catchBadFunction($errno, $errstr, $errfile, $errline, $vars) {
     error_log("$errstr in $errfile on line $errline");
@@ -11,20 +12,27 @@ function catchBadFunction($errno, $errstr, $errfile, $errline, $vars) {
     $vars["pts"] = 0;
 }
 
-require_once "/home/joshutt/football/utils/start.php";
-include "/home/joshutt/football/base/scoring.php";
+//require_once "/home/joshutt/football/utils/start.php";
+//include "/home/joshutt/football/base/scoring.php";
+include "base/scoring.php";
 
 $week = $currentWeek - 1;
 //$week = $currentWeek;
+print $week;
+print "\n";
 
-$sql = "select p.playerid, p.pos, s.season, s.* from newplayers p, stats s ";
+$sql = "select p.playerid, p.pos, s.season, s.* ";
+$sql .= "from newplayers p ";
+$sql .= "join stats s on s.statid=p.flmid ";
 $sql .= "left join playerscores ps on ps.playerid=p.playerid and ps.season=s.season and ps.week=s.week ";
-$sql .= "where s.statid=p.flmid and s.season=$currentSeason and s.week=$week";
+$sql .= "where s.season=$currentSeason and s.week=$week";
 $sql .= " and ps.playerid is null ";
 
 $bigquery = "insert into playerscores (playerid, season, week, pts) ";
 $bigquery .= "values ";
 
+print $sql;
+print "\n";
 $results = mysqli_query($conn, $sql);
 $first = 1;
 set_error_handler("catchBadFunction");
