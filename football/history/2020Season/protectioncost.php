@@ -25,21 +25,21 @@ while ($aLine = mysqli_fetch_array($result)) {
 }
 
 $title = "2020 Protection Costs";
+include "base/menu.php";
 ?>
-
-<? include "base/menu.php"; ?>
 
 <H1 Align=Center>Protection Costs</H1>
 <HR size = "1">
 
+<div class="container text-center">
 <p>Any player not listed on the chart below will have a protection cost equal to their position's base:
-<div class="">
-<TABLE BORDER=1>
+
+<div class="row justify-content-around">
+<TABLE BORDER=1 class="text-center by-2">
 <TR><TD>QB</TD><TD>RB</TD><TD>WR</TD><TD>TE</TD><TD>K</TD><TD>OL</TD><TD>DL</TD><TD>LB</TD><TD>DB</TD></TR>
 <TR><TD>10</TD><TD>14</TD><TD>12</TD><TD>4</TD><TD>1</TD><TD>1</TD><TD>3</TD><TD>5</TD><TD>4</TD></TR>
 </TABLE>
 </div>
-</p>
 
 <TABLE WIDTH=100%>
 <TR><TD WIDTH="50%" VALIGN=Top>
@@ -62,9 +62,9 @@ foreach ($page as $teamName=>$val) {
     }
 ?>
 
-<TR><TH COLSPAN=4><? print $teamName; ?></TH></TR>
+<TR><TH COLSPAN=5><? print $teamName; ?></TH></TR>
 <TR><TH>Player Name</TH><TH>Pos</TH><TH>Years</TH><TH>Extra</TH><th>Total Cost</th></TR>
-<? print $val; ?>
+<?= $val; ?>
 <TR><TD>&nbsp;</TD></TR>
 
 <?
@@ -72,9 +72,9 @@ $sumup += $countall[$teamName] + 3;
 }
 $teamName = '';
 ?>
-<TR><TH COLSPAN=4>Not on a Roster</TH></TR>
+<TR><TH COLSPAN=5>Not on a Roster</TH></TR>
 <TR><TH>Player Name</TH><TH>Pos</TH><TH>Years</TH><TH>Extra</TH><th>Total Cost</th></TR>
-<? print $page['']; ?>
+<?= $page['']; ?>
 <TR><TD>&nbsp;</TD></TR>
 
 </TABLE>

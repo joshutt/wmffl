@@ -1,11 +1,12 @@
 <?php
-$title = "WMFFL Past Draft Picks";
-include "base/menu.php";
+$title = 'WMFFL Past Draft Picks';
+include 'base/menu.php';
 ?>
 
 <H1 ALIGN=CENTER>Past #1 Draft Picks of the WMFFL</H1>
 <HR size = "1">
 
+<div class="container">
 <P><TABLE WIDTH=100% BORDER=0 ALIGN=Center>
 <TR><TD ALIGN=Center COLSPAN=5><B>Previous #1 Picks</B></TD></TR>
 <TR><TD ALIGN=Left>1992</TD><TD ALIGN=Left>Legions of Byron</TD><TD>Barry Sanders</TD><TD>RB</TD><TD>DET</TD></TR>
@@ -35,29 +36,32 @@ include "base/menu.php";
 <TR><TD ALIGN=Left>2016</TD><TD ALIGN=Left>Woodland Rangers</TD><TD>Ezekiel Elliott</TD><TD>RB</TD><TD>DAL</TD></TR>
 <TR><TD ALIGN=Left>2017</TD><TD ALIGN=Left>Fightin' Bitin' Beavers</TD><TD>DeAndre Hopkins</TD><TD>WR</TD><TD>HOU</TD></TR>
 <TR><TD ALIGN=Left>2018</TD><TD ALIGN=Left>Trump Molests Collies</TD><TD>Saquon Barkley</TD><TD>RB</TD><TD>NYG</TD></TR>
+<TR><TD ALIGN=Left>2019</TD><TD ALIGN=Left>Amish Electrician</TD><TD>Baker Mayfield</TD><TD>QB</TD><TD>CLE</TD></TR>
+<TR><TD ALIGN=Left>2020</TD><TD ALIGN=Left>Fighting Squirrels</TD><TD>Clyde Edwards-Helaire</TD><TD>RB</TD><TD>KC</TD></TR>
 </TABLE></P>
 
 <P><TABLE WIDTH=100% BORDER=0 ALIGN=Center>
 <TR><TD COLSPAN=3><B>#1 picks by team</B></TD></TR>
-<TR><TD>Fighting Squirrels</TD><TD>4</TD><TD>(1995, 2001, 2006, 2009)</TD></TR>
+<TR><TD>Fighting Squirrels</TD><TD>5</TD><TD>(1995, 2001, 2006, 2009, 2020)</TD></TR>
 <TR><TD>Gallic Warriors</TD><TD>4</TD><TD>(1997, 2007, 2012, 2013)</TD></TR>
 <TR><TD>Trump Molests Collies</TD><TD>4</TD><TD>(1998, 2002, 2004, 2018)</TD></TR>
 <TR><TD>Crusaders</TD><TD>3</TD><TD>(1996, 2003, 2010)</TD></TR>
 <tr><td>Fightin' Bitin' Beavers</td><td>3</td><td>(1999, 2011, 2017)</td></tr>
+<TR><TD>Amish Electricians</TD><TD>3</TD><TD>(1993, 2014, 2019)</TD></TR>
 <TR><TD>Norsemen</TD><TD>2</TD><TD>(1992, 1994)</TD></TR>
 <TR><TD>Lindbergh Baby Casserole</TD><TD>2</TD><TD>(2000, 2005)</TD></TR>
-<TR><TD>Joe Gibbs Good Head</TD><TD>2</TD><TD>(1993, 2014)</TD></TR>
 <tr><td>Woodland Rangers</td><td>2</td><td>(2015, 2016)</td></tr>
 <tr><td>Sacks on the Beach</td><td>1</td><td>(2008)</td></tr>
 </TABLE></P>
 
 <P><TABLE WIDTH=100% BORDER=0 ALIGN=Center>
 <TR><TD COLSPAN=3><B>#1 picks by position</B></TD></TR>
-<TR><TD>Runningback</TD><TD>15</TD><TD>(1992, 1996, 1997, 1998, 2001, 2003, 2005, 2006, 2007, 2008, 2010, 2011, 2014, 2016, 2018)</TD></TR>
+<TR><TD>Runningback</TD><TD>16</TD><TD>(1992, 1996, 1997, 1998, 2001, 2003, 2005, 2006, 2007, 2008, 2010, 2011, 2014, 2016, 2018, 2020)</TD></TR>
 <TR><TD>Wide Receivers</TD><TD>7</TD><TD>(1993, 1999, 2000, 2004, 2009, 2015, 2017)</TD></TR>
-<TR><TD>Quarterbacks</TD><TD>5</TD><TD>(1994, 1995, 2002, 2012, 2013)</TD></TR>
+<TR><TD>Quarterbacks</TD><TD>6</TD><TD>(1994, 1995, 2002, 2012, 2013, 2019)</TD></TR>
 </TABLE></P>
+</div>
 
 
 <?php
-include "base/footer.html";
+include 'base/footer.html';

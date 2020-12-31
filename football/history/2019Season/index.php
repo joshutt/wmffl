@@ -1,6 +1,6 @@
 <?php
-$title = "2019 WMFFL Season";
-include "base/menu.php"; 
+$title = '2019 WMFFL Season';
+include 'base/menu.php';
 ?>
 
 <H1 ALIGN=CENTER>The 2019 Season</H1>
@@ -18,7 +18,7 @@ include "base/menu.php";
 </td>
 
 <td>
-<A HREF="/stats/leaders">
+<A HREF="/stats/leaders?season=2019">
 <IMG SRC="/images/football.jpg" BORDER=0>League Leaders</A>
 </td>
 
@@ -68,8 +68,8 @@ include "base/menu.php";
 $thisSeason = 2019;
 $thisWeek = 17;
 $clinchedList = array(  'Fighting Squirrels' => 't-',  'Crusaders' => 'y-', 'Norsemen' => 'y-', 'British Bulldogs' => 't-', 'Richard\'s Lionhearts' => 'x-',  'Testudos Revenge' => 'y-');
-include "../common/weekstandings.php";
+include '../common/weekstandings.php';
 ?>
 </center>
 
-<?php include "base/footer.html"; ?>
+<?php include 'base/footer.html'; ?>

@@ -1,17 +1,17 @@
 <?php
-require_once "utils/start.php";
+require_once 'utils/start.php';
 
-$thisWeek = isset($_REQUEST['week']) ? $_REQUEST["week"] : '';
-if ($thisWeek == "") {
+$thisWeek = isset($_REQUEST['week']) ? $_REQUEST['week'] : '';
+if ($thisWeek == '') {
     //$thisWeek = $currentWeek;
     $thisWeek = 17;
 }
 $thisSeason = 2020;
-$title = "Standings";
+$title = 'Standings';
 
 $clinchedList = array('Gallic Warriors' => 't-', 'Amish Electricians' => 'y-', 'British Bulldogs' => 't-', 'Richard\'s Lionhearts' => 'e-', 'Trump Molests Collies' => 'e-', 'Testudos Revenge' => 'e-', 'Sean Taylor\'s Ashes' => 'x-', 'Norsemen' => 'e-', 'Crusaders' => 'y-', 'Fighting Squirrels' => 'e-', 'MeggaMen' => 'y-', 'Sacks on the Beach' => 'e-');
 
-include "base/menu.php";
+include 'base/menu.php';
 ?>
 
 
@@ -22,7 +22,7 @@ include "base/menu.php";
 </table>
 <center>
     <?php
-    include "../common/weekstandings.php";
+    include '../common/weekstandings.php';
 
     if (!empty($clinchedList)) {
     ?>
@@ -37,5 +37,5 @@ include "base/menu.php";
 <?php
 }
 
-include "base/footer.html";
+include 'base/footer.html';
 ?>

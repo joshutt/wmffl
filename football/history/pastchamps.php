@@ -1,6 +1,6 @@
 <?php
-$title = "WMFFL Past Champions";
-include "base/menu.php";
+$title = 'WMFFL Past Champions';
+include 'base/menu.php';
 ?>
 
 
@@ -8,7 +8,7 @@ include "base/menu.php";
 <HR size = "1">
 
 <P>
-<TABLE WIDTH=100%>
+<TABLE WIDTH=100% class="container">
 <TR><TD valign="bottom">
 <B>Blue Division Champions</B>
 <TABLE WIDTH=*>
@@ -96,6 +96,7 @@ include "base/menu.php";
 </TD></TR></TABLE>
 
 <BR><BR>
+<div class="container">
 <B>League Champions</B>
 <TABLE WIDTH=100%>
 <TR><TD><B>Year</B></TD><TD><B>Winner</B></TD><TD><B>Score</B></TD><TD><B>Loser</B></TD> <TD><B>Score</B></TD><TD><B>MVP</B></TD></TR>
@@ -127,9 +128,13 @@ include "base/menu.php";
 <TR><TD>2017</TD><TD>Amish Electricians</TD><TD>24</TD><TD>Sacks on the Beach</TD><TD>10</TD><TD>Marshon Lattimore</TD></TR>
 <TR><TD>2018</TD><TD>Trump Molests Collies</TD><TD>56</TD><TD>Norsemen</TD><TD>50</TD><TD>Deshaun Watson</TD></TR>
 <TR><TD>2019</TD><TD>Norsemen</TD><TD>114</TD><TD>Testudos Revenge</TD><TD>23</TD><TD>Fred Warner</TD></TR>
+<TR><TD>2020</TD><TD>Amish Electricians</TD><TD>58</TD><TD>Sean Taylor's Ashes</TD><TD>26</TD><TD>Davante Adams</TD></TR>
 </TABLE>
+</div>
 
 <BR><BR>
+
+<div class="container">
 <B>Toilet Bowl Games</B>
 <TABLE WIDTH=100%>
 <TR><TD><B>Year</B></TD><TD><B>Winner</B></TD><TD><B>Score</B></TD><TD><B>Loser</B></TD> <TD><B>Score</B></TD></TR>
@@ -154,6 +159,8 @@ include "base/menu.php";
 <TR><TD>2017</TD><TD>Tim Always Pulls Out Late</TD><TD>88</TD><TD>Sean Taylor's Ashes</TD><TD>0</TD></TR>
 <TR><TD>2018</TD><TD>Amish Electricians</TD><TD>41</TD><TD>Fighting Squirrels</TD><TD>0</TD></TR>
 <TR><TD>2019</TD><TD>Fighting Squirrels</TD><TD>34</TD><TD>British Bulldogs</TD><TD>8</TD></TR>
+<TR><TD>2020</TD><TD>British Bulldogs</TD><TD>60</TD><TD>Gallic Warriors</TD><TD>56</TD></TR>
 </TABLE>
+</div>
 
-<?php include "base/footer.html"; ?>
+<?php include 'base/footer.html'; ?>
