@@ -1,21 +1,23 @@
 <?php
 //namespace transactions\injury;
 //use InjuryPlayer;
+use transactions\injury\InjuryPlayer;
+
 require_once 'InjuryPlayer.php';
 require_once 'utils/reportUtils.php';
 
-$title = "Injury Report";
-include "base/menu.php";
+$title = 'Injury Report';
+include 'base/menu.php';
 
 // Start with current season and week as default
 $evalSeason = $currentSeason;
 $evalWeek = $currentWeek;
 
 // Use passed in season or week if available
-if (isset($_REQUEST["season"])) {
+if (isset($_REQUEST['season'])) {
     $evalSeason = $_REQUEST['season'];
 }
-if (isset($_REQUEST["week"])) {
+if (isset($_REQUEST['week'])) {
     $evalWeek = $_REQUEST['week'];
 }
 
@@ -33,9 +35,9 @@ order by i.status
 ";
 
 // Execute the query
-$stmt = $conn->prepare($sql) or die("Error: " . mysqli_error($conn));
+$stmt = $conn->prepare($sql) or die('Error: ' . mysqli_error($conn));
 $stmt->bind_param('ii', $evalSeason, $evalWeek);
-$stmt->execute() or die("Error: " . mysqli_error($conn));
+$stmt->execute() or die('Error: ' . mysqli_error($conn));
 $results = $stmt->get_result();
 
 try {
@@ -45,10 +47,10 @@ try {
         if (!array_key_exists($status, $injuries)) {
             $injuries[$status] = array();
         }
-        $injPlayer = \transactions\injury\InjuryPlayer::loadAssocArray($row);
+        $injPlayer = InjuryPlayer::loadAssocArray($row);
         array_push($injuries[$status], $injPlayer);
     }
-} catch (\Exception $e) {
+} catch (Exception $e) {
     echo 'Message: ' . $e->getMessage();
 }
 
@@ -154,4 +156,4 @@ foreach ($IRList as $player) {
     </div>
 
 <?php
-include "base/footer.html";
+include 'base/footer.html';

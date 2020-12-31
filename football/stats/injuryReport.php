@@ -1,21 +1,21 @@
 <?php
 
-require_once "utils/start.php";
-require_once "InjuryReportResource.php";
+require_once 'utils/start.php';
+require_once 'InjuryReportResource.php';
 
 $reportResource = new InjuryReportResource($conn);
 
-$javascriptList = array("//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
-    "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js",
-    "/base/js/jquery.tablesorter.min.js",
-    "/base/js/injury.js");
-$title = "Injury Report";
-include "base/menu.php";
+$javascriptList = array('//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js',
+    'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js',
+    '/base/js/jquery.tablesorter.min.js',
+    '/base/js/injury.js');
+$title = 'Injury Report';
+include 'base/menu.php';
 ?>
 
     <h1 align="center"><?= $title ?></h1>
     <hr/>
-<?php include "base/statbar.html"; ?>
+<?php include 'base/statbar.html'; ?>
 
     <div class="mx-auto text-center">
         <button type="button" class="btn btn-wmffl mx-4" id="currentLists-tab" data-toggle="tab"
@@ -214,4 +214,4 @@ include "base/menu.php";
         </div>
 
 <?php
-include "base/footer.html";
+include 'base/footer.html';
