@@ -55,7 +55,7 @@ include 'base/menu.php';
 $thisSeason = 2020;
 $thisWeek = 17;
 $clinchedList = array('Gallic Warriors' => 't-', 'Amish Electricians' => 'y-', 'British Bulldogs' => 't-',  'Sean Taylor\'s Ashes' => 'x-', 'Crusaders' => 'y-', 'MeggaMen' => 'y-');
-include '../common/weekstandings.php';
+include 'history/common/weekstandings.php';
 ?>
 </div>
 </div>

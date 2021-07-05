@@ -2,6 +2,7 @@
 require_once 'utils/start.php';
 $title = 'WMFFL History';
 include 'base/menu.php';
+
 ?>
 
 <H1 ALIGN=Center>League History</H1>
@@ -42,9 +43,9 @@ include 'base/menu.php';
         <li class="nav-item  m-2"><a class="nav-link" href="2015Season.php">2015 Season</a></li>
         <li class="nav-item  m-2"><a class="nav-link" href="2016Season.php">2016 Season</a></li>
         <li class="nav-item  m-2"><a class="nav-link" href="2017Season.php">2017 Season</a></li>
-        <li class="nav-item  m-2"><a class="nav-link" href="2018Season">2018 Season</a></li>
-        <li class="nav-item  m-2"><a class="nav-link" href="2019Season">2019 Season</a></li>
-        <li class="nav-item  m-2"><a class="nav-link" href="2020Season">2020 Season</a></li>
+        <li class="nav-item  m-2"><a class="nav-link" href="2018Season/">2018 Season</a></li>
+        <li class="nav-item  m-2"><a class="nav-link" href="2019Season/">2019 Season</a></li>
+        <li class="nav-item  m-2"><a class="nav-link" href="2020Season/">2020 Season</a></li>
     </ul>
 </div>
 

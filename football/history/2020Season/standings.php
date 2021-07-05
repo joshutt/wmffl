@@ -22,7 +22,7 @@ include 'base/menu.php';
 </table>
 <center>
     <?php
-    include '../common/weekstandings.php';
+    include 'history/common/weekstandings.php';
 
     if (!empty($clinchedList)) {
     ?>
