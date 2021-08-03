@@ -61,4 +61,4 @@ if (array_key_exists('teamone', $_REQUEST) && array_key_exists('teamtwo', $_REQU
 }
 ?>
 </CENTER>
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

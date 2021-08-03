@@ -88,4 +88,4 @@ $title = "Change Password";
 </form>
 
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

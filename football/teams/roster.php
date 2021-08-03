@@ -1,6 +1,6 @@
 <?php
-include "utils/reportUtils.php";
-include "utils/injuryUtils.php";
+include 'utils/reportUtils.php';
+include 'utils/injuryUtils.php';
 
 $thequery = "select DATE_FORMAT(greatest(max(r.DateOn),max(r.DateOff)), '%M %e, %Y'), tp.TransPts+tp.ProtectionPts, tp.TotalPts, count(r.dateon)-count(r.dateoff)-1 from roster r, team t, transpoints tp where r.teamid=t.teamid and t.teamid=tp.teamid and t.teamid=$viewteam and tp.season=$currentSeason group by t.teamid";
 $result = mysqli_query($conn, $thequery);
@@ -12,19 +12,19 @@ $theDate = mysqli_fetch_row($result);
 <div class="roster d-flex justify-content-center row">
     <div class="row text-center">
         <div class="col-12 font-weight-bold h4">Current Roster</div>
-        <div class="col-6"><?
+        <div class="col-6"><?php
             $ptsLeft = $theDate[2] - $theDate[1];
             if ($ptsLeft > 0) {
                 print "$ptsLeft Remaining Free Transactions";
             } else {
-                print abs($ptsLeft) . " extra transactions used";
+                print abs($ptsLeft) . ' extra transactions used';
             }
             ?>
         </div>
         <div class="col-6"><?= $theDate[3] ?> players on roster</div>
     </div>
     <div class="col-12 d-flex justify-content-center">
-        <?
+        <?php
         //$teamname = $_POST["teamname"];
         //	print "Team name: ".$teamname;
         //$thequery = "select p.lastname, p.pos, p.team, IF(p.firstname <> '', concat(', ',p.firstname), '') from newplayers p, roster r, team t where p.playerid=r.playerid and r.teamid=t.teamid and r.dateoff is null and t.teamid=$viewteam order by p.pos, p.lastname";
@@ -53,15 +53,15 @@ order by p.pos, p.lastname";
         $result = mysqli_query($conn, $thequery) or die(mysqli_error($conn));
         $hold = array();
         while ($player = mysqli_fetch_array($result)) {
-            $date = date_create($player["DateOn"]);
-            $inj = shortenInjury($player["injury"]);
+            $date = date_create($player['DateOn']);
+            $inj = shortenInjury($player['injury']);
             if ($player['ir'] == 1) {
-                $inj = "IR";
+                $inj = 'IR';
             }
-            $newItem = array("pos" => $player["pos"], "name" => $player["lastname"] . $player["firstname"],
-                "team" => $player["team"], "bye" => $player["week"], "age" => $player["age"], "injury" => $inj,
-                "date" => date_format($date, "M j, Y"), "cost" => $player["cost"],
-                "pts" => $player["pts"]);
+            $newItem = array('pos' => $player['pos'], 'name' => $player['lastname'] . $player['firstname'],
+                'team' => $player['team'], 'bye' => $player['week'], 'age' => $player['age'], 'injury' => $inj,
+                'date' => date_format($date, 'M j, Y'), 'cost' => $player['cost'],
+                'pts' => $player['pts']);
             array_push($hold, $newItem);
         }
         mysqli_close($conn);
@@ -72,7 +72,7 @@ order by p.pos, p.lastname";
             $proSeason = $currentSeason;
             $ptsSeason = $currentSeason - 1;
         }
-        $titles = array("Pos", "Name", "Team", "Bye<br/>Week", "Age", "Injury", "Aquired", "$proSeason<br/>Cost", "$ptsSeason<br/>Pts");
+        $titles = array('Pos', 'Name', 'Team', 'Bye<br/>Week', 'Age', 'Injury', 'Aquired', "$proSeason<br/>Cost", "$ptsSeason<br/>Pts");
         outputHtml($titles, $hold);
         ?>
     </div>

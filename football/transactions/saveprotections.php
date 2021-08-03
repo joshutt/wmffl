@@ -121,6 +121,6 @@ if ($isin) {
 } else {
 	print "<P><B>You must be logged in to save protections</B></P>";
 }
-	include "base/footer.html";
+	include "base/footer.php";
 ?>
 

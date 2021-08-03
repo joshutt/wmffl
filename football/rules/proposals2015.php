@@ -62,4 +62,4 @@ Increase the number of free transactions from 5 to 15.  With limited rosters, in
 </p>
 
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

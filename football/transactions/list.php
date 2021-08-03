@@ -235,5 +235,5 @@ if ($isin) {
     <div class="text-center font-weight-bold h4">You must be logged in to use this feature</div>
 
 <? }
-include "base/footer.html";
+include "base/footer.php";
 ?>

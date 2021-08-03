@@ -150,4 +150,4 @@ foreach ($luckRe as $name=>$diff) {
 ?>
 </TABLE>
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

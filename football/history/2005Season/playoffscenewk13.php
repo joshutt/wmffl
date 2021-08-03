@@ -63,4 +63,4 @@ What?  Are you suicidal?  Isn't the above complicated enough for you?  Your head
 </ul>
 
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

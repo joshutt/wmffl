@@ -49,21 +49,18 @@ while (list($team, $name, $pos, $nfl, $cost) = mysqli_fetch_row($result)) {
 }
 
 
-$title = 'WMFFL Protections';
-?>
-
-<?php
+$title = "$lookseason Protections";
 include 'base/menu.php';
-?>
+?>      
 
-<H1 ALIGN=Center>Protections</H1>
+<H1 ALIGN=Center><?= $lookseason ?> Protections</H1>
 <HR size="1">
 
-<P ALIGN=Center><a class="btn btn-wmffl" href="showprotections.php?order=team&season=<?= $lookseason ?>">By Team</a>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <A class="btn btn-wmffl" HREF="showprotections.php?order=pos&season=<?= $lookseason ?>">By Position</a>
-</P>
+<ul class="nav nav-pills nav-fill col m-2 p-1 justify-content-center">
+    <li class="nav-item m-2 col-2"><a class="nav-link" href="showprotections?order=team&season=<?= $lookseason ?>">By Team</a></li>
+    <li class="nav-item m-2 col-2"><a class="nav-link" href="showprotections?order=pos&season=<?= $lookseason ?>">By Position</a></li>
+</ul>
+
 
 <div class="container-fluid">
 <div class="row">

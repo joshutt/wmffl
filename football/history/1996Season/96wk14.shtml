@@ -159,4 +159,4 @@ DB: Thomas,Orlando      MIN  1     DB: Griffith,Robert     MIN 10
 
 </PRE>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

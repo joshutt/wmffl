@@ -233,4 +233,4 @@ DB: Brown,Eric          DEN   7     DB: Sehorn,Jason        NYG   6
 
 </PRE>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

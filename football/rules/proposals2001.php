@@ -102,4 +102,4 @@ protect."<BR>
 Repeal rule X.C</I></BLOCKQUOTE>
 </P>
 
-<?php include "/base/footer.html" ?>
+<?php include "/base/footer.php" ?>

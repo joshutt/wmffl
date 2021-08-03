@@ -159,7 +159,7 @@ if (isset($_REQUEST["format"])) {
 // Display output
 if ($format == "html" || !supportedFormat($format)) {
     $title = "Week By Week";
-    $javascriptList = array("//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js", "/base/js/jquery.tablesorter.min.js", "week.js");
+    $javascriptList = array("//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js", "/base/vendor/js/jquery.tablesorter.min.js", "week.js");
     $cssList = array("week.css", "stats.css");
     include_once "base/menu.php";
     ?>
@@ -174,7 +174,7 @@ if ($format == "html" || !supportedFormat($format)) {
     print "<div id=\"mainTable\" class='row col-12 justify-content-center'>";
     outputHtml($titles, $newHold);
     print "</div></div>";
-    include "base/footer.html";
+    include "base/footer.php";
 } else if ($format == "ajax") {
     outputHtml($titles, $newHold);
 } else if ($format == "csv") {

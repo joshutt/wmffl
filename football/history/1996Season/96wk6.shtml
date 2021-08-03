@@ -141,4 +141,4 @@ DB: Green,Victor        NYJ  7     DB: Pope,Marquez        SF   2
 
 </PRE>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

@@ -54,4 +54,4 @@ include "base/menu.php";
 </TD></TR>
 </TABLE>
 
-<?php include "/base/footer.html" ?>
+<?php include "/base/footer.php" ?>

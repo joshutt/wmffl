@@ -199,4 +199,4 @@ DB: Milloy,Lawyer       NE    5     DB: Shade,Sam           WAS  14
 
 </PRE>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

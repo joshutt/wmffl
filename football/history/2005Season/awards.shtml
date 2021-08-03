@@ -33,4 +33,4 @@ Listed are each of the Award Winners.  For a complete description and breakdown 
 <TR><TD><A HREF="breakdown.shtml#MVP">Owner of the Year</A></TD><TD>Bug Stompers</TR>
 </TABLE><P>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

@@ -64,4 +64,4 @@ Players aquired after activations are due in week 14 may not be activated in the
 </i></blockquote>
 </p>
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

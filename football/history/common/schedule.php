@@ -28,15 +28,15 @@ order by wm.week, t.name
 EOD;
 
 $byeResults = mysqli_query($conn, $byeSQL);
-$lastName = "";
+$lastName = '';
 $lastWeek = 0;
 $byeList = array();
-$string = "";
+$string = '';
 while ($rows = mysqli_fetch_assoc($byeResults)) {
     $week = $rows['week'];
     $teamName = $rows['name'];
     if ($teamName == 'New York' or $teamName == 'Los Angeles') {
-        $teamName .= " ".$rows['nickname'];
+        $teamName .= ' ' .$rows['nickname'];
     }
     
     if ($lastWeek == $week) {
@@ -50,19 +50,19 @@ while ($rows = mysqli_fetch_assoc($byeResults)) {
 }
 $byeList[$lastWeek] = $string;
 
-$title = "WMFFL Schedule";
-$cssList = array("/base/css/schedule.css");
-include "base/menu.php";
+$title = 'WMFFL Schedule';
+$cssList = array('/base/css/schedule.css');
+include 'base/menu.php';
 ?>
 
-<H1 Align=Center><? print $thisSeason;?> Schedule</H1>
-<HR size = "1"><CENTER>
+<h1 class="full"><?= $thisSeason;?> Schedule</h1>
+<div align="center">
 
-<?
+    <?php
 $results = mysqli_query($conn, $sql);
 
 $listWeek = 0;
-$lastLabel = "";
+$lastLabel = '';
 while ($row = mysqli_fetch_array($results)) {
     if ($row[0] != $listWeek || $row[11] != $lastLabel) {
         if ($listWeek != 0) {
@@ -75,14 +75,14 @@ while ($row = mysqli_fetch_array($results)) {
         }
 
         
-        $anchorName = str_replace(" ","",$row[5]);
+        $anchorName = str_replace(' ', '',$row[5]);
         $displayWeek = $row[5];
-        if ($row[11] != "") {
+        if ($row[11] != '') {
             $displayWeek = $row[11];
         }
 
 ?>
-        <a name="$anchorName"/>
+        <a name="<?= $anchorName ?>"/>
         <div class="SLTables1">
 <table width="550" cellspacing="1" cellpadding="2" border="0" class="SLTables1">
     <tbody>
@@ -148,4 +148,4 @@ while ($row = mysqli_fetch_array($results)) {
 </tbody></table>
 </div><br/>
 
-<? include "base/footer.html"; ?>
+    <?php include 'base/footer.php'; ?>

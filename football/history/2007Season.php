@@ -78,5 +78,5 @@ include "base/menu.php";
 <?
 $thisSeason = 2007;
 $thisWeek = 17;
-include "base/footer.html";
+include "base/footer.php";
 ?>

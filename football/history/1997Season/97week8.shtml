@@ -142,4 +142,4 @@ DB: SEHORN,JASON        NYG  5     DB: MCDONALD,TIM        SF   1
         Defensive Points =  31             Defensive Points =  26
 </PRE>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

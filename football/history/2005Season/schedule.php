@@ -115,4 +115,4 @@ Playoff Winner #1 vs Playoff Winner #2
 <P>
 
 -->
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

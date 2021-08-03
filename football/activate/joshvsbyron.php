@@ -599,4 +599,4 @@ foreach ($weekList as $row) {
 </td></tr>
 </table>
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

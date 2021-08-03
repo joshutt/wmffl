@@ -60,4 +60,4 @@ include "base/menu.php";
 </ul>
 
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

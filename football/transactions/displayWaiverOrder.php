@@ -65,4 +65,4 @@ include "base/menu.php";
 
 <? include "listwaiverpicks.php"; ?>
 </div>
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

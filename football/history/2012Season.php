@@ -63,5 +63,5 @@ include "base/menu.php";
 $thisSeason = 2012;
 $thisWeek = 17;
 include "common/weekstandings.php";
-include "base/footer.html";
+include "base/footer.php";
 ?>

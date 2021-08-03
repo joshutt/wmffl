@@ -45,4 +45,4 @@ is below.</P>
 <TR><TD>19t</TD><TD>Wine Spritzers</TD><TD>0</TD><TD>0</TD></TR>
 </TABLE></P>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

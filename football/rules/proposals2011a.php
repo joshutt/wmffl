@@ -87,4 +87,4 @@ increase a position's cost if too many players are protected.
 </i></blockquote>
 </p>
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

@@ -1,15 +1,19 @@
 <?php
-include "utils/start.php";
+include 'utils/start.php';
 
-$title = "WMFFL Teams";
-include "base/menu.php";
+$title = 'WMFFL Teams';
+$cssList = array('/base/css/team.css');
 
-$divisionSQL = "SELECT t.teamid, t.name as 'team', d.name as 'division'
-FROM team t, division d
-WHERE t.divisionid=d.divisionid and $currentSeason between d.startYear and d.endYear
+include 'base/menu.php';
+
+$divisionSQL = "SELECT t.teamid, t.name as 'team', d.name as 'division', d.divisionid, u.name as 'owner'
+FROM team t
+JOIN user u on u.TeamID=t.TeamID
+JOIN division d on t.divisionid = d.divisionid
+WHERE $currentSeason between d.startYear and d.endYear
 ORDER BY d.name, t.name";
 
-$results = mysqli_query($conn, $divisionSQL) or die("Error in query: " . mysqli_error($conn));
+$results = mysqli_query($conn, $divisionSQL) or die('Error in query: ' . mysqli_error($conn));
 $teamList = array();
 while ($teamInfo = mysqli_fetch_array($results)) {
     if (!array_key_exists($teamInfo['division'], $teamList)) {
@@ -23,35 +27,70 @@ while ($teamInfo = mysqli_fetch_array($results)) {
 <h1 align="center">The Teams</h1>
 <hr size = "1">
 
-<table width="100%">
-<tr valign="TOP">
-            
-
-<?
-ksort($teamList);
-foreach ($teamList as $divisionName => $division) {
-    print "<td>";
-    print "<table><th>$divisionName</th>";
-    foreach ($division as $teamInfo) {
-        print "<tr><td><a href=\"teamroster.php?viewteam=${teamInfo['teamid']}\">";
-        print "${teamInfo['team']}</a></td></tr>";
+<div class="row">
+    <?php
+    ksort($teamList);
+    foreach ($teamList as $divisionName => $division) {
+        ?>
+        <div class="col-12 col-md-4">
+            <div class="my-2 shadow card bg-div-<?= $division[0]['divisionid'] ?>">
+                <div class="font-weight-bold text-center h3 card-title m-2"><?= $divisionName ?></div>
+                <div class="card-body">
+                    <ul class="list-group w-100">
+                        <?php
+                        foreach ($division as $teamInfo) {
+                            ?>
+                            <a href="/teams/teamroster?viewteam=<?= $teamInfo['teamid'] ?>" class="my-2 shadow list-group-item-action list-group-item">
+                            <div class="font-weight-bold"><?= $teamInfo['team'] ?></div>
+                            <div class="small"><?= $teamInfo['owner'] ?></div>
+                            </a>
+                            <?php
+                        }
+                        ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <?php
     }
-    print "</table></td>";
-}
-?>
+    ?>
+</div>
 
-<td><table>
-<th>Defunct Teams</th>
-<tr><td><a href="squirrels.php">The Fighting Squirrels</a></td></tr>
-<tr><td>Kingsmen</td></tr>
-</table></td>
+<div class="row justify-content-around">
+    <div class="col-12 col-md-4">
+        <div class="my-2 shadow card">
+            <div class="font-weight-bold text-center h3 card-title m-2">Defunct Teams</div>
+            <div class="card-body">
+                <ul class="list-group w-100">
+                    <a href="/teams/squirrels"
+                       class="my-2 shadow list-group-item-action list-group-item">
+                        <div class="font-weight-bold">Fighting Squirrels</div>
+                    </a>
+                    <div class="my-2 shadow list-group-item-action list-group-item">
+                        <div class="font-weight-bold">Kingsmen</div>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
 
-</tr><tr>
-<td>&nbsp;</td></tr>
-<tr><td colspan=3><b>Other Features</b></td></tr>
-<tr><td><a href="compareteams.php">Compare Rosters</a></td>
-<td><a href="/transactions/displayWaiverOrder.php">Waiver Wire Order</a></td>
+    <div class="col-12 col-md-4">
+        <div class="my-2 shadow card">
+            <div class="font-weight-bold text-center h3 card-title m-2">Other Features</div>
+            <div class="card-body">
+                <ul class="list-group w-100">
+                    <a href="/teams/compareteams"
+                       class="my-2 shadow list-group-item-action list-group-item">
+                        <div class="font-weight-bold">Compare Rosters</div>
+                    </a>
+                    <a href="/transactions/displayWaiverOrder"
+                       class="my-2 shadow list-group-item-action list-group-item">
+                        <div class="font-weight-bold">Waiver Wire Order</div>
+                    </a>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
-</tr></table>
-
-<? include "base/footer.html"; ?>
+<?php include 'base/footer.php'; ?>

@@ -149,4 +149,4 @@ DB: PERRY,DARREN        PIT  5     DB: SEHORN,JASON        NYG  5
         Defensive Points =  24             Defensive Points =  45
 </PRE>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

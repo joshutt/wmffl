@@ -138,6 +138,6 @@ taken by either party.</P>
 
 <P>Return to <A HREF="tradescreen.php">trade screen</A></P>
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>
 </BODY>
 </HTML>

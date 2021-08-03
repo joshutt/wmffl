@@ -92,5 +92,5 @@ include "base/menu.php";
 </TABLE></P>
 
 <?
-include "base/footer.html";
+include "base/footer.php";
 ?>

@@ -124,4 +124,4 @@ Add rule IX.F.1</br>
 </i></blockquote></p>
 
 
-<?php include "/base/footer.html" ?>
+<?php include "/base/footer.php" ?>

@@ -110,4 +110,4 @@ Season to taste, but just a general idea.
 </i></blockquote>
 </p>
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>
