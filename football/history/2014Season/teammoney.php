@@ -287,4 +287,4 @@ include "base/menu.php";
 </table>
 </div>
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

@@ -192,5 +192,5 @@ Gallic Warriors<br/>
 </tr>
 </table>
 <?
-include "base/footer.html";
+include "base/footer.php";
 ?>

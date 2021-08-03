@@ -22,4 +22,4 @@ Thanks.</P>
 
 <BR CLEAR="all">
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

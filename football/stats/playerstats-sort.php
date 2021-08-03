@@ -96,7 +96,7 @@ if (isset($firstSort) && $firstSort != "none") {
 ?>
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script type="text/javascript" src="/base/js/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="/base/vendor/js/jquery.tablesorter.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
   $('#statTable').tablesorter(); 
@@ -211,4 +211,4 @@ EOD;
 
 <p><div align="right"><a href="statcsv.php?pos=<? print "$pos&sort=$sort&season=$season";?>"><img src="/images/csv.gif" border="0"></a></div><p>
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

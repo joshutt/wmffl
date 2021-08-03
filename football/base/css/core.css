@@ -222,10 +222,41 @@ h1 {
     font-weight: bold !important;
 }
 
+h1 {
+    color: #660000;
+    margin-top: 1rem !important;
+    margin-bottom: .5rem;
+    text-align: center;
+}
+
+h1.full {
+    border-bottom: 1px solid;
+    padding-bottom: .5rem;
+}
+
 body {
     margin: 8px;
-    background-color: #660000;
+    background-color: #eee;
     font-family: "Times New Roman", Times, Serif;
+}
+
+main {
+    background-color: #fff;
+    /*border: 1px solid #660000;*/
+}
+
+.navbar {
+    background-color: #440000 !important;
+}
+
+.nav-link {
+    color: rgb(226, 165, 0, .8) !important;
+}
+
+.nav-link:hover {
+    color: rgb(226, 165, 0, 1);
+    /*font-weight: bolder;*/
+    border: 1px solid;
 }
 
 .btn-wmffl.focus, .btn-wmffl:focus, .btn-wmffl:not(:disabled):not(.disabled).active:focus, .btn-wmffl:not(:disabled):not(.disabled):active:focus, .show > .btn-wmffl.dropdown-toggle:focus {
@@ -243,7 +274,7 @@ a.btn.disabled, fieldset:disabled a.btn {
 .btn-wmffl {
     color: #e2a500;
     background-color: #660000;
-    border-color: #660000;
+    border: 1px solid #e2a500;
 }
 
 .btn-wmffl:hover {
@@ -279,12 +310,13 @@ a.btn.disabled, fieldset:disabled a.btn {
 .nav-pills .nav-link {
     color: #e2a500;
     background-color: #660000;
-    border: 4px solid #660000;
+    border: 2px solid #e2a500;
 }
 
 .nav-pills .nav-link:hover {
-    color: #660000;
+    color: #660000 !important;
     background-color: #e2a500;
+    border: 2px solid #660000;
 }
 
 .nav-pills .nav-link.active {
@@ -292,6 +324,13 @@ a.btn.disabled, fieldset:disabled a.btn {
     background-color: #660000;
     border: 4px solid #e2a500;
 }
+
+.nav-pills .nav-link.active:hover {
+    color: #660000;
+    background-color: #e2a500;
+    border: 4px solid #660000;
+}
+
 
 .list-group {
     display: inline-block;

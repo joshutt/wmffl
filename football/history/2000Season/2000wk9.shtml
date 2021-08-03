@@ -199,4 +199,4 @@ DB: Rice,Ron            DET   9     DB: Dishman,Cris        MIN   5
 
 </PRE>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

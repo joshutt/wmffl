@@ -266,4 +266,4 @@ The Owner of the Year Award is given to the team who produced the best overall m
 <TR><TD>Nominee</TD><TD>Josh Utterback - Werewolves</TD></TR>
 </TABLE><P>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

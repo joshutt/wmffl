@@ -65,4 +65,4 @@ $thisWeek = 17;
 $clinchedList = array('Lindbergh Baby Casserole' => 'y-', 'Sacks on the Beach' => 'x-', 'Crusaders' => 'y-',
     'Norsemen' => 'x-', 'Fighting Squirrels' => 'z-', "Pretend I'm Not Here" => 'z-');
 include "common/weekstandings.php";
-include "base/footer.html";
+include "base/footer.php";

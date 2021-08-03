@@ -174,4 +174,4 @@ DB: Griffith,Robert     MIN  7     DB: Pope,Marquez        SF   1
 
 </PRE>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

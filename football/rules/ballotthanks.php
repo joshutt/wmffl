@@ -13,4 +13,4 @@ considered for addition to the ballot.
 If you would like to make additional proposals you may do so
 <A HREF="/rules/proposesubmit.php">here</A>.</P>
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

@@ -63,6 +63,6 @@ while (list($date, $fulldate, $attend) = mysqli_fetch_row($results)) {
 <CENTER><B>You must be logged in to use this feature</B></CENTER>
 
 <? }
-include "base/footer.html";
+include "base/footer.php";
 ?>
 

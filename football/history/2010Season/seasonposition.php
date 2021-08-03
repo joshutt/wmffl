@@ -45,5 +45,5 @@ extra game matchups for next season.</P>
 </ul></p>
 
 <?
-include "base/footer.html";
+include "base/footer.php";
 ?>

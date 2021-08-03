@@ -1,1 +1,2 @@
-<? include "activations.php"; ?>
+<?php
+include 'activations.php';

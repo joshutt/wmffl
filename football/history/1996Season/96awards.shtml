@@ -66,4 +66,4 @@ Player</A> | |<A HREF="#MVP"> Most Valuable Player</A><BR>
 <tr><td> DB</TD><td>Victor Green</TD><td>Slayers</TD></TR>
 </table>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

@@ -72,4 +72,4 @@ include '../common/weekstandings.php';
 ?>
 </center>
 
-<?php include 'base/footer.html'; ?>
+<?php include 'base/footer.php'; ?>

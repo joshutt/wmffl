@@ -89,7 +89,7 @@ $toiletBowlArray = getRecList('and postseason=1 and playoffs=0', $currentSeason)
 
 $javascriptList = array('//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js',
     'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js',
-    '/base/js/jquery.tablesorter.min.js',
+    '/base/vendor/js/jquery.tablesorter.min.js',
     '/base/js/table.base.js');
 $title = 'WMFFL ALL-Time Records';
 include 'base/menu.php';
@@ -235,4 +235,4 @@ include 'base/menu.php';
     </div>
 </div>
 
-<?php include 'base/footer.html' ?>
+<?php include 'base/footer.php' ?>

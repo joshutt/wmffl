@@ -127,4 +127,4 @@ votes will be confirmed.</P>
 <INPUT TYPE="Submit" VALUE="Drink Up">
 </FORM>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

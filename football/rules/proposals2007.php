@@ -111,4 +111,4 @@ After the draft every team receives an additional 5 transaction points.<br/>
 </p>
 
 
-<?php include "/base/footer.html" ?>
+<?php include "/base/footer.php" ?>

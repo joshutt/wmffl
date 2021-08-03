@@ -114,5 +114,5 @@ while ($player = mysqli_fetch_array($results)) {
 
 <?
 
-include "base/footer.html";
+include "base/footer.php";
 ?>

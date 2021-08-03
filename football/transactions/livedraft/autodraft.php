@@ -71,5 +71,5 @@ while ($row = mysqli_fetch_assoc($results)) {
     print "<a href=\"autodraft.php?teamid=${row[teamid]}\">${row[name]}</a> - ";
 }
 
-include "base/footer.html";
+include "base/footer.php";
 ?>

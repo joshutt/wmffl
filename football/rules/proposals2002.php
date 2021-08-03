@@ -163,4 +163,4 @@ offensive players.<BR>
 Amend rule X.E.2.b to read "K, OL, DL, LB and DB"
 </I></BLOCKQUOTE></P>
 
-<?php include "/base/footer.html" ?>
+<?php include "/base/footer.php" ?>

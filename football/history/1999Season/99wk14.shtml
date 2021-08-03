@@ -247,4 +247,4 @@ DB: Williams,Aeneas     ARI   4     DB: Milloy,Lawyer       NE    5
 
 </PRE>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

@@ -79,4 +79,4 @@ Add blocked kicks as a statistic for all positions other than QB, K or OL<br/>
 </i></blockquote>
 </p>
 
-<?php include "/base/footer.html" ?>
+<?php include "/base/footer.php" ?>

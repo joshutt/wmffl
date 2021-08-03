@@ -64,4 +64,4 @@ $title = "Playoff Preview";
 <li>LBC are favored by 3</li>
 </ul></p>
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

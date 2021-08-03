@@ -13,4 +13,4 @@ This is the complete list of up-to-the-minute draft picks.
 <? include "draftsummary.txt"; ?>
 </PRE>
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

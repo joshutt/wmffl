@@ -113,4 +113,4 @@ Offensive Line's sacks against.  <br/>
 </i></blockquote>
 </p>
 
-<?php include "/base/footer.html" ?>
+<?php include "/base/footer.php" ?>

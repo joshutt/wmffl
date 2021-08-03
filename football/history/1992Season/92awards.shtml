@@ -23,4 +23,4 @@ Chris Doleman - DL - Archers<p><BR>
 <h4> Most Valuable Player</h4>
 Jim Kelly - QB - Renegades<p>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

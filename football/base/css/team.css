@@ -119,3 +119,15 @@ hr {
 .teamnav > li > a > img {
     padding-right: 4px;
 }
+
+.bg-div-1 {
+    background-color: rgba(68, 0, 0, .7);
+}
+
+.bg-div-2 {
+    background-color: rgba(226, 165, 0, .7);
+}
+
+.bg-div-3 {
+    background-color: rgba(255, 255, 255, 0.7);
+}

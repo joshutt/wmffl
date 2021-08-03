@@ -56,4 +56,4 @@ Vick (QB-ATL), Alge Crumpler (TE-ATL) and Atlanta OL still to play.</p>
 </ul>
 
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

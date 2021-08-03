@@ -121,4 +121,4 @@ Adjust auto draft to draft starters before backups and a single backup before mu
     </i></blockquote>
 </p>
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

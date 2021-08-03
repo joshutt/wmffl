@@ -11,4 +11,4 @@ include "base/menu.php";
 
 <p>Your password has been changed.  You should received a confirmation email shortly.</p>
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

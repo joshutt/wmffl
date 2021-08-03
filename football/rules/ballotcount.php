@@ -76,4 +76,4 @@ foreach ($voteNum as $key => $value) {
 </P>
 </div>
 
-<?//	include "base/footer.html";?>
+<?//	include "base/footer.php";?>

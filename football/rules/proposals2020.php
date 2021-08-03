@@ -105,4 +105,4 @@ include "base/menu.php";
         C. The pot will be donated to the 501(c)(3) charity of the champion's choice.</i></blockquote>
 </div>
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

@@ -9,4 +9,4 @@ include "teamheader.php";
 <? include "history.php"; ?>
 </table>
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

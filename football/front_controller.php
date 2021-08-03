@@ -1,14 +1,18 @@
 <?php
-$page = $_SERVER['SCRIPT_URL'];
+//$page = $_SERVER['SCRIPT_URL'];
+$page = $_SERVER['REDIRECT_URL'];
 $docRoot = $_SERVER['DOCUMENT_ROOT'];
 
 $curDir = getcwd();
 $parent = dirname($curDir, 1);
-set_include_path(get_include_path().":/home/joshutt/php:$curDir:$parent/lib:$parent/conf");
-#set_include_path(".:/usr/lib/php;/usr/local/lib/php;/usr/share/php:/home/joshutt/php:$curDir:$parent/lib:$parent/conf");
+//print "** $curDir **";
+//print "** $parent **";
+//print "*** ".get_include_path()." **";
+set_include_path(get_include_path().PATH_SEPARATOR."/home/joshutt/php".PATH_SEPARATOR.$curDir.PATH_SEPARATOR.$parent."/lib".PATH_SEPARATOR.$parent."/conf");
 #set_include_path(".:/usr/lib/php;/usr/local/lib/php;/usr/share/php:/home/joshutt/php:/home/joshutt/git/football:/home/joshutt/git/lib:/home/joshutt/git/conf");
 ini_set('error_log', "$parent/logs/wmffl.log");
 ini_set('log_errors', 1);
+//print "*** ".get_include_path()." **";
 
 $orgPage = $page;
 error_log($page);
@@ -26,10 +30,10 @@ if (substr($page, -3) !== 'php') {
 
 $path = $docRoot.$page;
 #print "** $docRoot$orgPage **";
-#print "<pre>";
-#print_r($_SERVER);
-#print $path;
-#print "</pre>";
+//print "<pre>";
+//print_r($_SERVER);
+//print $path;
+//print "</pre>";
 #
 #if (is_dir($docRoot.$orgPage)) {
 #    $p = "TRUE";

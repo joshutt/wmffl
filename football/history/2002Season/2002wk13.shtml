@@ -241,4 +241,4 @@ DB: Williams,Roy        DAL  16     DB: Marion,Brock        MIA   5
 
 </PRE>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

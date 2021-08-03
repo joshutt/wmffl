@@ -257,17 +257,9 @@ if ($actingHC) {
 
     <h1 align=Center>Activations</H1>
     <hr size="1">
-    <table align=Center width=100% border=0>
-        <tr>
-            <td width=33%><a href="activations.php"><img src="../images/football.jpg" border=0>Current Activations</a>
-            </td>
-            <td width=34%></td>
-            <td width=33%><a href="#Submit"><img src="../images/football.jpg" border=0>Submit Activations</a></td>
-        </tr>
-    </table>
+<?php
 
-    <hr size="1">
-<?
+include 'activationButtons.php';
 
 if ($isin) {
 
@@ -389,4 +381,4 @@ if ($isin) {
 
     <?php
 }
-include "base/footer.html";
+include "base/footer.php";

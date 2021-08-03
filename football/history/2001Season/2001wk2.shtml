@@ -216,4 +216,4 @@ DB: Rolle,Samari        TEN  14     DB: Walker,Brian        MIA   2
 
 </PRE>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

@@ -15,4 +15,4 @@ include "base/menu.php";
     <a class="btn btn-wmffl" href="/history/2018Season/teammoney">Accounting</a>
 </div>
 
-<?php include "base/footer.html"; ?>
+<?php include "base/footer.php"; ?>

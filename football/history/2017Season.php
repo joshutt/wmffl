@@ -65,5 +65,5 @@ $thisSeason = 2017;
 $thisWeek = 17;
 $clinchedList = array( 'Sean Taylor\'s Ashes' => 'z-', 'Crusaders' => 'y-', "Fightin' Bitin' Beavers" => 'y-', 'Amish Electricians' => 'y-', "Tim Always Pulls Out Late" => 'z-', 'Sacks on the Beach' => 'x-');
 include "common/weekstandings.php";
-include "base/footer.html";
+include "base/footer.php";
 ?>

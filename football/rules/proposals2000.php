@@ -92,4 +92,4 @@ the best bench player at each of the 6 individual positions is counted.  The
 second tie-breaker would be the head coach scored.  The final tie-breaker is
 the better seed wins (home-field).</P>
 
-<?php include "/base/footer.html" ?>
+<?php include "/base/footer.php" ?>

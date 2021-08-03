@@ -55,4 +55,4 @@ include "base/menu.php";
 
 <p>Return to <a href="index.php">word submit</a> page</p>
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

@@ -118,4 +118,4 @@ be able to find out how much each player will cost to protect.</P>
 
 </TABLE>
 </TD></TR></TABLE>
-<?php include "base/footer.html"; ?>
+<?php include "base/footer.php"; ?>

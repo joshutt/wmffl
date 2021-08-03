@@ -30,5 +30,5 @@ table of every team's draft positions.</P>
 </TABLE></P>
 
 <?
-include "base/footer.html";
+include "base/footer.php";
 ?>
