@@ -2,7 +2,7 @@
 require_once "utils/connect.php";
 #$isin = true;
 #$teamnum = 2;
-$dateSrc = "2020-08-24 00:05 EDT";
+$dateSrc = "2021-08-23 00:05 EDT";
 $dateTime = new DateTime($dateSrc);
 
 $thequery = "select p.playerid, p.firstname, p.lastname, p.pos, ";

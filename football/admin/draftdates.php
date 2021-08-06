@@ -1,8 +1,8 @@
 <?
 require_once "base/conn.php";
 
-$nflStartDate = '2020-09-08';
-$season=2020;
+$nflStartDate = '2021-09-09';
+$season=2021;
 
 $query = "SELECT t.name, d.date, min( d.attend ) as attend
 FROM  `draftdate` d, user u, team t
