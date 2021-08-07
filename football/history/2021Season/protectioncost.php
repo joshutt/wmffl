@@ -48,6 +48,25 @@ include 'base/menu.php';
     </div>
 </div>
 
+
+<div class="card px-0 m-2">
+    <div class="card-header text-center font-weight-bold">Amish Electricians</div>
+    <div class="card-body">
+        <table class="table table-hover mb-0 tablesorter" id="irListTable">
+            <thead>
+            <tr>
+                <th>Player Name</th>
+                <th>Pos</th>
+                <th>Years</th>
+                <th>Extra</th>
+                <th>Total Cost</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+
 <TABLE WIDTH=100%>
     <TR>
         <TD WIDTH="50%" VALIGN=Top>
