@@ -1,6 +1,6 @@
 <?php
-$title = "WMFFL Rules";
-include "base/menu.php";
+$title = 'WMFFL Rules';
+include 'base/menu.php';
 ?>
 
 <style>
@@ -721,4 +721,4 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 </OL>
 
 </div>
-<? include "base/footer.php"; ?>
+<? include 'base/footer.php'; ?>

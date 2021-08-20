@@ -1,12 +1,12 @@
-<?
-require_once "DataObjects/Articles.php";
+<?php
+require_once 'DataObjects/Articles.php';
 
 
 function printComment($comment, $depth=0) {
 ?>
 <div class="w3-container w3-col l<?= 12 - $depth ?> w3-border-top w3-padding-16 w3-right">
     <div class="w3-medium" style="font-weight: bold"><?= $comment->getLink('author_id')->Name ?></div>
-    <div class="w3-small" style="color: #aaa"><?= date("m/d/y h:i a", strtotime($comment->date_created)) ?></div>
+    <div class="w3-small" style="color: #aaa"><?= date('m/d/y h:i a', strtotime($comment->date_created)) ?></div>
     <div class="w3-container w3-padding w3-medium"><?= $comment->comment_text ?></div>
 </div>
     <div class="w3-rest w3-left"></div>
@@ -17,19 +17,7 @@ function printComment($comment, $depth=0) {
 }
 
 
-$article = new DataObjects_Articles;
-if (array_key_exists("uid", $_REQUEST) && $_REQUEST["uid"] != null) {
-    $article->articleId = $uid;
-} else {
-    $article->active = 1;
-    $article->orderBy('displayDate desc');
-    $article->orderBy('priority desc');
-    $article->limit(1);
-//    print_r($article);
-}
-$article->find(true);
-$article->getLinks('comments');
-$artid = $article->articleId;
+$article = getArticle($uid);
 
 $comments = new DataObjects_Comments;
 $comments->article_id = $article->articleId;
@@ -56,8 +44,8 @@ print_r($commentOut);
 print "</pre>";
 */
 
-$dateFormat = "d M Y";
-$dateFormat = "M d, Y";
+$dateFormat = 'd M Y';
+$dateFormat = 'M d, Y';
 $dateString = date($dateFormat, strtotime($article->displayDate));
 ?>
 

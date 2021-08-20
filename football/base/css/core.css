@@ -80,7 +80,7 @@ A:hover {
 }
 
 .titleLine1 {
-    font-size: 24px;
+    font-size: 32px;
     color: #660000;
     font-weight: bold;
     white-space: normal;
@@ -119,9 +119,15 @@ A:hover {
 }
 
 .newsdate {
-    font-size: 8pt;
+    font-size: 12px;
     font-weight: 700;
     color: #660000;
+}
+
+.byline {
+    font-size: 12px;
+    font-weight: 700;
+    color: #757575;
 }
 
 .inelig {
@@ -132,7 +138,7 @@ A:hover {
 .mainStory {
     margin-bottom: 5px;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 11px;
+    font-size: 20px;
 }
 
 .cat, .catfoot {
@@ -165,8 +171,14 @@ A:hover {
     color: #660000;
 }
 
-.footer {
-    float: left;
+.footerBar {
+    color: #660000;
+    border-bottom: 1px solid;
+}
+
+.page-footer {
+    background-color: #440000;
+    color: rgb(226, 165, 0, .8);
 }
 
 .SectionHeader {
@@ -406,4 +418,16 @@ input:checked + .slider:before {
 
 .slider.round:before {
     border-radius: 50%;
+}
+
+.article-img {
+    /*max-width: 400px;*/
+    /*max-height: 250px;*/
+    /*width: auto;*/
+    height: auto;
+    /*align-content: center;*/
+}
+
+.article-card {
+    border-color: #440000;
 }
