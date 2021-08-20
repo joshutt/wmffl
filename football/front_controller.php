@@ -40,7 +40,7 @@ $path = $docRoot.$page;
 #} else {
 #    $p = "FALSE";
 #}
-#print "** $p **";
+//print "** $p **";
 chdir(dirname($path));
 #print getcwd();
 

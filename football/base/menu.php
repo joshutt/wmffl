@@ -62,6 +62,7 @@ if (!isset($title)) {
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active"> <a class="nav-link pl-2" href="/">Home <span class="sr-only">(current)</span></a> </li>
+            <li class="nav-item"> <a class="nav-link pl-2" href="/article/list">News</a> </li>
             <li class="nav-item"> <a class="nav-link pl-2" href="/activate/activations">Activations</a> </li>
             <li class="nav-item"> <a class="nav-link pl-2" href="/teams/">Teams</a> </li>
             <li class="nav-item"> <a class="nav-link pl-2" href="/stats/leaders">Stats</a> </li>
@@ -116,5 +117,5 @@ if (!isset($title)) {
     </div>
 </div>
 
-<main role="main" class="fluid-container px-4 pb-4">
+<main role="main" class="fluid-container px-4 pb-1 mb-3">
     <div class="starter-template">

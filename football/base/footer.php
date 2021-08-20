@@ -13,10 +13,21 @@
 
 <!--&lt;!&ndash; End footer.php &ndash;&gt;-->
 
+<hr class="footerBar"/>
+
 
 </div>
 
 </main><!-- /.container -->
+
+<footer class="page-footer font-small pt-4">
+    <div class="text-center">
+        <a class="navbar-brand" href="/"><img src="/images/test.png"></a>
+    </div>
+    <div class="footer-copyright text-center py-3">
+        &copy; 1992-<?= date("Y") ?> WMFFL
+    </div>
+</footer>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->

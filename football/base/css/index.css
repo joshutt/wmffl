@@ -38,3 +38,7 @@ a.comment {
 a.comment:hover {
     color: Brown
 }
+
+.centerpiece {
+    max-width: 695px;
+}

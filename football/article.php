@@ -1,39 +1,23 @@
 <?php
-require_once "DataObjects/Articles.php";
+require_once 'article/articleUtils.php';
 
-// Get the infomation for the main article
-#$article = DB_DataObject::factory('articles');
-$article = new DataObjects_Articles;
-// If given an Id use that one, otherwise most current
-if (array_key_exists("uid", $_REQUEST) && $_REQUEST["uid"] != null) {
-    $article->articleId = $uid;
-} else {
-    if (array_key_exists("artSeason", $_REQUEST) && $_REQUEST["artSeason"] != null) {
-        $artSeason = $_REQUEST["artSeason"];
-        $article->whereAdd('displayDate <= \'' . $artSeason . '-12-31\'');
-    }
-    $article->active = 1;
-    $article->orderBy('displayDate desc');
-    $article->orderBy('priority desc');
-    $article->limit(1);
-}
-$article->find(true);
+$article = getArticle();
 $artid = $article->articleId;
 
 // Format Dates
-$dateString = date("M d, Y", strtotime($article->displayDate));
+$dateString = date('M d, Y', strtotime($article->displayDate));
 //$dateString = date("d M Y", strtotime($article->displayDate));
-if (isset($_REQUEST["artSeason"]) && $_REQUEST["artSeason"] != null) {
-    $artSeason = $_REQUEST["artSeason"];
+if (isset($_REQUEST['artSeason']) && $_REQUEST['artSeason'] != null) {
+    $artSeason = $_REQUEST['artSeason'];
 } else {
-    $artSeason = date("Y", strtotime($article->displayDate));
+    $artSeason = date('Y', strtotime($article->displayDate));
 }
 
 // Get the Preview articles
 $previewArts = new  DataObjects_Articles;
 $previewArts->active = 1;
-$previewArts->orderBy("displayDate desc");
-$previewArts->orderBy("priority desc");
+$previewArts->orderBy('displayDate desc');
+$previewArts->orderBy('priority desc');
 $previewArts->whereAdd("displayDate >= '$artSeason-01-01'");
 $previewArts->whereAdd("displayDate <= '$artSeason-12-31'");
 $previewArts->find();
@@ -59,11 +43,11 @@ $previewArts->find();
     <select id="news" class="m-1" onchange="changenews()">
         <?php
         while ($previewArts->fetch()) {
-            $dateString = date("d M Y", strtotime($previewArts->displayDate));
+            $dateString = date('d M Y', strtotime($previewArts->displayDate));
             if ($previewArts->articleId == $artid) {
                 $selectString = " selected=\"selected\" ";
             } else {
-                $selectString = " ";
+                $selectString = ' ';
             }
             print "<option value=\"{$previewArts->articleId}\" $selectString>$dateString - {$previewArts->title}</option>";
         }
@@ -74,7 +58,7 @@ $previewArts->find();
         $years = array(2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009, 2008, 2007, 2006);
 
         foreach ($years as $y) {
-            $st = "";
+            $st = '';
             if ($y == $artSeason) {
                 $st = "selected=\"true\"";
             }
