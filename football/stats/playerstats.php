@@ -1,29 +1,29 @@
-<?
-require_once "utils/connect.php";
-include "utils/reportUtils.php";
-include_once "utils/teamList.php";
-$title = "Player Stats";
+<?php
+require_once 'utils/connect.php';
+include 'utils/reportUtils.php';
+include_once 'utils/teamList.php';
+$title = 'Player Stats';
 
-if (!isset($_REQUEST["pos"]) || $_REQUEST["pos"] == "") {
-    $pos = "QB";
+if (!isset($_REQUEST['pos']) || $_REQUEST['pos'] == '') {
+    $pos = 'QB';
 } else {
-    $pos = $_REQUEST["pos"];
+    $pos = $_REQUEST['pos'];
 }
 
-if (!isset($_REQUEST["sort"]) || $_REQUEST["sort"] == "") {
-    $sort = "ppg";
+if (!isset($_REQUEST['sort']) || $_REQUEST['sort'] == '') {
+    $sort = 'ppg';
 } else {
-    $sort = $_REQUEST["sort"];
+    $sort = $_REQUEST['sort'];
 }
 
-if (!isset($_REQUEST["season"]) || $_REQUEST["season"] == "") {
+if (!isset($_REQUEST['season']) || $_REQUEST['season'] == '') {
     if ($currentWeek == 0) {
         $season = $currentSeason - 1;
     } else {
         $season = $currentSeason;
     }
 } else {
-    $season = (int) $_REQUEST["season"];
+    $season = (int) $_REQUEST['season'];
 }
 
 
@@ -90,14 +90,14 @@ GROUP BY p.playerid
 ORDER BY `$sort` DESC, `pts` DESC
 EOD;
 
-if (isset($_POST["firstsort"])) {
-    $firstSort = $conn->real_escape_string($_POST["firstsort"]);
+if (isset($_POST['firstsort'])) {
+    $firstSort = $conn->real_escape_string($_POST['firstsort']);
 }
 
-if (isset($firstSort) && $firstSort != "none") {
+if (isset($firstSort) && $firstSort != 'none') {
     $sql .= "ORDER BY $firstSort ";
-    $secondSort = $conn->real_escape_string($_POST["secondsort"]);
-    if (isset($secondSort) && $secondSort != "none") {
+    $secondSort = $conn->real_escape_string($_POST['secondsort']);
+    if (isset($secondSort) && $secondSort != 'none') {
         $sql .= ", $secondSort ";
     }
 }
@@ -106,16 +106,16 @@ if (isset($firstSort) && $firstSort != "none") {
 
 //print "Last Name,First Name,Pos,NFL,Week,Pts\n";
 $newHold = array();
-$results = mysqli_query($conn, $sql) or die("There was an error in the query: " . mysqli_error());
+$results = mysqli_query($conn, $sql) or die('There was an error in the query: ' . mysqli_error());
 while ($playList = mysqli_fetch_array($results)) {
     //print $playList[0].",".$playList[1].",".$playList[2].",";
     //print $playList[3].",".$playList[4].",".$playList[5];
     //print "\n";
-    $numGames = $playList["games"];
+    $numGames = $playList['games'];
     if ($numGames == 0) {$numGames=1;}
-    $ppg = round($playList["pts"]/$numGames,2);
-    $id = $playList["playerid"];
-    $newHold[$id] = array($playList["name"], $playList["team"], $playList["bye"], $playList["ffteam"], $numGames, $playList["pts"], $ppg);
+    $ppg = round($playList['pts']/$numGames,2);
+    $id = $playList['playerid'];
+    $newHold[$id] = array($playList['name'], $playList['team'], $playList['bye'], $playList['ffteam'], $numGames, $playList['pts'], $ppg);
 
     foreach ($posMap[$pos] as $pset) {
         array_push($newHold[$id], $playList["sum($pset)"]);
@@ -124,26 +124,26 @@ while ($playList = mysqli_fetch_array($results)) {
 }
 
 // Get the labels
-$labels = array("Name", "NFL Team", "Bye", "FF Team", "G", "Pts", "PPG");
+$labels = array('Name', 'NFL Team', 'Bye', 'FF Team', 'G', 'Pts', 'PPG');
 $labels = array_merge($labels, $posLabels[$pos]);
 
 
 // Determine the format
-$format = "html";
-if (isset($_REQUEST["format"])) {
-    $format = strtolower($_REQUEST["format"]);
+$format = 'html';
+if (isset($_REQUEST['format'])) {
+    $format = strtolower($_REQUEST['format']);
 }
 
 // Display output
-if ($format == "html" || !supportedFormat($format)) {
-    $javascriptList = array("//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js", "/base/vendor/js/jquery.tablesorter.min.js", "playerstats.js");
-    $cssList = array("stats.css");
-    include "base/menu.php"; ?>
+if ($format == 'html' || !supportedFormat($format)) {
+    $javascriptList = array('//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js', '/base/vendor/js/jquery.tablesorter.min.js', 'playerstats.js');
+    $cssList = array('stats.css');
+    include 'base/menu.php'; ?>
 
 
     <h1 align="center">Player Stats</h1>
     <hr/>
-    <? include "base/statbar.html"; ?>
+    <?php include 'base/statbar.html'; ?>
 
     <div id="tblblock" class="container">
 
@@ -154,7 +154,7 @@ if ($format == "html" || !supportedFormat($format)) {
                     if ($setPos == $pos) {
                         $selected = "selected=\"true\" ";
                     } else {
-                        $selected = "";
+                        $selected = '';
                     }
                     print "<option value=\"$setPos\" $selected>$setPos</option>";
                 }
@@ -169,15 +169,15 @@ if ($format == "html" || !supportedFormat($format)) {
     </div>
 
 
-    <? include "base/footer.php"; ?>
+    <?php include 'base/footer.php'; ?>
 
 
     <?php
-} else if ($format == "csv") {
+} else if ($format == 'csv') {
     outputCSV($labels, $newHold, "playerstats-$pos.csv");
-} else if ($format == "json") {
+} else if ($format == 'json') {
     outputJSON($labels, $newHold);
-} else if ($format == "ajax") {
+} else if ($format == 'ajax') {
     outputHtml($labels, $newHold);
 }
 ?>
