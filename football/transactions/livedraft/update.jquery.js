@@ -56,8 +56,11 @@ function loadPicks( data ) {
                 $("#"+spot+" td.franchise").text(pickDetails["franchise"]["name"]);
             }
             // If there is a player there update it
-            if (pickDetails["player"] != null || (pickDetails["player"] == null && $("#"+spot+" td.selection").text().trim() != "")) {
+            if (pickDetails["player"] != null) {
                 $("#"+spot+" td.selection").text(pickDetails["player"]["name"]);
+            } else if (pickDetails["player"] == null && $("#"+spot+" td.selection").text().trim() !== "") {
+                // If No player in data but on page then clear it
+                $("#"+spot+" td.selection").text("");
             }
         });
     });

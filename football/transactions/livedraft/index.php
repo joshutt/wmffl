@@ -139,7 +139,7 @@ $draftPicks->find();
                 </div>
                 <div class="col-lg-7 col-md-12 pr-0">
                     <div class="card">
-                        <span class="text-center">Join the Google <a href="https://meet.google.com/khy-sfap-uqz">Hangout</a></span>
+                        <span class="text-center">Join the Google <a href="https://meet.google.com/cxa-pmsn-wuz">Hangout</a></span>
                     </div>
 
                     <div class="card mb-2">
