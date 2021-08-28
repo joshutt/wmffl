@@ -9,7 +9,7 @@ class Clock {
 function getPreviousPickTime() {
     global $conn;
     // Get the previous pick time
-    $sql = "SELECT max(pickTime) as 'pickTime', max(c.value) as 'startTime'  FROM draftpicks p JOIN config c ON c.key='draft.full.start'";
+    $sql = "SELECT max(CONVERT_TZ(pickTime, 'SYSTEM', 'America/New_York')) as 'pickTime', max(c.value) as 'startTime'  FROM draftpicks p JOIN config c ON c.key='draft.full.start'";
     $results = mysqli_query($conn, $sql) or die ("Unable to get max time: " . mysqli_error($conn));
     $rows = mysqli_fetch_assoc($results);
     $pickTime = strtotime($rows["pickTime"]);
@@ -90,12 +90,12 @@ function getTotalTimeUsed($season, $round=0, $pick=0) {
     
     //print "Time: ".time();
     //print "Extra: $extra";
-    //error_log("Time: ".time()."\n", 3, "check.log");
-    //error_log("Extra: ".$extra."\n", 3, "check.log");
+//    error_log("Time: ".time()."\n", 3, "check.log");
+//    error_log("Extra: ".$extra."\n", 3, "check.log");
     $prev = getPreviousPickTime();
-    //error_log("Previous: ".$prev."\n", 3, "check.log");
+//    error_log("Previous: ".$prev."\n", 3, "check.log");
     $totalTime = time() - $prev - $extra;
-    //error_log("Total Time: ".$totalTime."\n", 3, "check.log");
+//    error_log("Total Time: ".$totalTime."\n", 3, "check.log");
 
     return $totalTime;
 }
