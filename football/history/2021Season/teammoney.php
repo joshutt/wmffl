@@ -9,7 +9,7 @@ include 'base/menu.php';
 
 
 <H1 ALIGN=Center>Team Finances</H1>
-<H5 ALIGN=Center>Last Updated 08/29/2021</H5>
+<H5 ALIGN=Center>Last Updated 09/03/2021</H5>
 <HR size="1">
 
 <p>
@@ -20,7 +20,7 @@ include 'base/menu.php';
 <div class="center">
 
     <?php
-    $amt_owed = array( 1 => 54.37, 6=>20.91, 9 => 65.79, 12 => 79.34);
+    $amt_owed = array( );
 
     if ($isin && array_key_exists($teamnum, $amt_owed)) { ?>
 
@@ -55,25 +55,25 @@ include 'base/menu.php';
         <tr class="evenRow">
             <td class="name padded">British Bulldogs</td>
             <td class="padded">$20.63</td>
-            <td class="padded">-</td>
-            <td class="padded">-</td>
-            <td class="padded">-</td>
-            <td class="padded">-</td>
-            <td class="padded">-</td>
-            <td class="padded">-</td>
-            <td class="padded"><span class="debt">($54.37)</span></td>
             <td class="padded">$54.37</td>
+            <td class="padded">-</td>
+            <td class="padded">-</td>
+            <td class="padded">-</td>
+            <td class="padded">-</td>
+            <td class="padded">-</td>
+            <td class="padded">$0.00</td>
+            <td class="padded">$0.00</td>
         </tr>
         <tr class="oddRow">
             <td class="name padded">Crusaders</td>
+            <td class="padded">$54.09</td>
             <td class="padded">$20.91</td>
-            <td class="padded">-<td>
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
-            <td class="padded"><span class="debt">($20.91)</span></td>
-            <td class="padded">$20.91</td>
+            <td class="padded">$0.00</td>
+            <td class="padded">$0.00</td>
         </tr>
         <tr class="evenRow">
             <td class="name padded">Fighting Squirrels</td>
@@ -90,14 +90,14 @@ include 'base/menu.php';
         <tr class="oddRow">
             <td class="name padded">Gallic Warriors</td>
             <td class="padded">$9.21</td>
-            <td class="padded">-</td>
-            <td class="padded">-</td>
-            <td class="padded">-</td>
-            <td class="padded">-</td>
-            <td class="padded">-</td>
-            <td class="padded">-</td>
-            <td class="padded"><span class="debt">($65.79)</span></td>
             <td class="padded">$65.79</td>
+            <td class="padded">-</td>
+            <td class="padded">-</td>
+            <td class="padded">-</td>
+            <td class="padded">-</td>
+            <td class="padded">-</td>
+            <td class="padded">$0.00</td>
+            <td class="padded">$0.00</td>
         </tr>
         <tr class="evenRow">
             <td class="name padded">MeggaMen</td>
@@ -126,14 +126,14 @@ include 'base/menu.php';
         <tr class="evenRow">
             <td class="name padded">Richard's Lionhearts</td>
             <td class="padded"><span class="debt">($4.34)</span></td>
-            <td class="padded">-</td>
-            <td class="padded">-</td>
-            <td class="padded">-</td>
-            <td class="padded">-</td>
-            <td class="padded">-</td>
-            <td class="padded">-</td>
-            <td class="padded"><span class="debt">($79.34)</span></td>
             <td class="padded">$79.34</td>
+            <td class="padded">-</td>
+            <td class="padded">-</td>
+            <td class="padded">-</td>
+            <td class="padded">-</td>
+            <td class="padded">-</td>
+            <td class="padded">$0.00</td>
+            <td class="padded">$0.00</td>
         </tr>
         <tr class="oddRow">
             <td class="name padded">Sacks On the Beach</td>

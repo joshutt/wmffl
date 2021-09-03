@@ -2,12 +2,15 @@
 // establish connection
 require "base/conn.php";
 
+$team = $_REQUEST['team'];
+$player = $_REQUEST['player'];
+
 $updateQuery1 = <<<EOD
 INSERT INTO transactions (teamid, playerid, method, Date)
 SELECT r.teamid, p.playerid, 'Fire', now()
-FROM roster r, newplayers p
-WHERE r.playerid=p.playerid AND r.dateoff is null
-and p.pos='HC' AND r.teamid=$team;
+FROM roster r
+JOIN newplayers p on r.playerid=p.playerid AND r.dateoff is null
+WHERE p.pos='HC' AND r.teamid=$team;
 EOD;
 
 $updateQuery2 = <<<EOD
@@ -29,10 +32,10 @@ EOD;
 
 
 #print $updateQuery;
-mysqli_query($conn, $updateQuery1) or die("Dead: " . mysqli_error($conn));
-mysqli_query($conn, $updateQuery2) or die("Dead: " . mysqli_error($conn));
-mysqli_query($conn, $updateQuery3) or die("Dead: " . mysqli_error($conn));
-mysqli_query($conn, $updateQuery4) or die("Dead: " . mysqli_error($conn));
+mysqli_query($conn, $updateQuery1) or die("Dead1: " . mysqli_error($conn) . " -- " . $updateQuery1);
+mysqli_query($conn, $updateQuery2) or die("Dead2: " . mysqli_error($conn));
+mysqli_query($conn, $updateQuery3) or die("Dead3: " . mysqli_error($conn));
+mysqli_query($conn, $updateQuery4) or die("Dead4: " . mysqli_error($conn));
 
 ?>
 <b>Head Coach Changed</b><br/>
