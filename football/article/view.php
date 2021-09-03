@@ -2,7 +2,11 @@
 require_once 'utils/start.php';
 require_once 'articleUtils.php';
 
-$article = getArticle();
+$uid = null;
+if (array_key_exists('uid', $_REQUEST) && $_REQUEST['uid'] != null) {
+    $uid = $_REQUEST['uid'];
+}
+$article = getArticle($uid);
 
 // Format Dates
 $dateString = date('M d, Y', strtotime($article->displayDate));
