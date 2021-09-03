@@ -7,17 +7,13 @@ include 'base/menu.php';
 
 ?>
 
-<div class="row border">
+<div class="row">
     <div class="col-8">
 
-        <div class="card m-2">
-            <img src="/images/week/2012/92d0932ece0084f5f632739f2c8f72e0.jpg" class="centerpiece" />
-            <h3>Really Late Week 1 Recap</h3>
+        <div class="m-2">
+            <?php include 'aarticle.php' ?>
         </div>
 
-        <div class="card m-1">
-            <?php include 'article.php' ?>
-        </div>
         <div class="card m-1">
             <?php include 'forum/commentlist.php' ?>
         </div>

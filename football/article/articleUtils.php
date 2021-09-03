@@ -4,11 +4,11 @@ require_once 'DataObjects/Articles.php';
 /**
  * @return DataObjects_Articles
  */
-function getArticle(): DataObjects_Articles
+function getArticle($uid = null): DataObjects_Articles
 {
     $article = new DataObjects_Articles;
-    if (array_key_exists('uid', $_REQUEST) && $_REQUEST['uid'] != null) {
-        $article->articleId = $_REQUEST['uid'];
+    if (!empty($uid)) {
+        $article->articleId = $uid;
     } else {
         $article->active = 1;
         $article->orderBy('displayDate desc');
@@ -23,15 +23,33 @@ function getArticle(): DataObjects_Articles
 }
 
 
+function getArticles($num, $start=null ): DataObjects_Articles
+{
+    $article = new DataObjects_Articles;
+    $article->active = 1;
+    $article->orderBy('displayDate desc');
+    $article->orderBy('priority desc');
+    $article->limit($num);
+
+    if (!empty($start)) {
+        $article->whereAdd('articleId < '.$start);
+    }
+
+    $article->find();
+    $article->getLinks('author');
+    return $article;
+}
+
+
 function printArticleCard($article): string
 {
-    $articleId = $article['articleId'];
-    $link = $article['link'];
-    $title = $article['title'];
-    $date = date('M d, Y', strtotime($article['displayDate']));
-    $name = $article['Name'];
+    $articleId = $article->articleId;
+    $link = $article->link;
+    $title = $article->title;
+    $date = date('M d, Y', strtotime($article->displayDate));
+    $name = $article->getLink('author')->Name;
 
-    $returnString = <<< EOT
+    return <<< EOT
  <div class="card mb-4 article-card">
                     <a href="/article/view?uid=$articleId">
                     <img class="card-img-top article-img" src="/$link"/>
@@ -42,6 +60,4 @@ function printArticleCard($article): string
                     </a>
                 </div>
 EOT;
-
-    return $returnString;
 }

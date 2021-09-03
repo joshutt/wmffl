@@ -2,18 +2,12 @@
 require_once 'utils/start.php';
 require 'articleUtils.php';
 
-$query = 'select articleId, title, link, displayDate, u.Name
-from articles a
-join user u on a.author=u.UserID ';
-
+$artPerPage = 24;
+$start = null;
 if (array_key_exists('start', $_REQUEST) && !empty($_REQUEST['start'])) {
-    $query .= ' where articleId < '.$_REQUEST['start'];
+    $start = $_REQUEST['start'];
 }
-
-$query .= ' order by displayDate desc, priority asc
-limit 24';
-
-$result = mysqli_query($conn, $query);
+$article = getArticles($artPerPage, $start);
 
 $title = 'Latest News';
 include 'base/menu.php';
@@ -27,11 +21,11 @@ include 'base/menu.php';
             $i = 1;
             $first = null;
             $last = null;
-            while ($article = mysqli_fetch_array($result)) {
+            while ($article->fetch()) {
                 if ($i === 1) {
-                    $first = $article['articleId'] + 24;
+                    $first = $article->articleId + $artPerPage;
                 }
-                $last = $article['articleId'];
+                $last = $article->articleId;
                 print printArticleCard($article);
 
                 if ($i % 1 === 0) {
@@ -55,7 +49,7 @@ include 'base/menu.php';
         </div>
 
     <div class="py-2 row justify-content-between">
-        <div class="float-left"><a class="btn btn-wmffl" href="list?start=<?= $last ?>">&lt;&lt;&lt;
+        <div class="float-left"><a class="btn btn-wmffl" href="list?start=<?= $last-1 ?>">&lt;&lt;&lt;
                 Older</a></div>
         <div class="float-right"><a class="btn btn-wmffl" href="list?start=<?= $first ?>">Newer &gt;&gt;&gt;</a>
         </div>
