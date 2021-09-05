@@ -4,7 +4,7 @@ require_once 'playerHelpers.php';
 require_once 'savePlayers.php';
 
 
-$season = 2020;
+$season = 2021;
 $request_url = "https://api.myfantasyleague.com/$season/export?TYPE=players&DETAILS=1";
 
 //testRun($request_url);

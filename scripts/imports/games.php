@@ -9,7 +9,7 @@ list($curWeek, $season) = mysqli_fetch_array($results);
 //$curWeek = 0;
 
 print $season;
-for ($week = $curWeek-1; $week <= 17; $week++) { 
+for ($week = $curWeek-1; $week <= 18; $week++) { 
     print $week;
     if ($week < 1) {
         continue;

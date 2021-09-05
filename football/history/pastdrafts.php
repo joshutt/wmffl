@@ -38,6 +38,7 @@ include 'base/menu.php';
 <TR><TD ALIGN=Left>2018</TD><TD ALIGN=Left>Trump Molests Collies</TD><TD>Saquon Barkley</TD><TD>RB</TD><TD>NYG</TD></TR>
 <TR><TD ALIGN=Left>2019</TD><TD ALIGN=Left>Amish Electrician</TD><TD>Baker Mayfield</TD><TD>QB</TD><TD>CLE</TD></TR>
 <TR><TD ALIGN=Left>2020</TD><TD ALIGN=Left>Fighting Squirrels</TD><TD>Clyde Edwards-Helaire</TD><TD>RB</TD><TD>KC</TD></TR>
+<TR><TD ALIGN=Left>2021</TD><TD ALIGN=Left>Richard's Lionhearts</TD><TD>Ezekiel Elliott</TD><TD>RB</TD><TD>DAL</TD></TR>
 </TABLE></P>
 
 <P><TABLE WIDTH=100% BORDER=0 ALIGN=Center>
@@ -52,11 +53,12 @@ include 'base/menu.php';
 <TR><TD>Lindbergh Baby Casserole</TD><TD>2</TD><TD>(2000, 2005)</TD></TR>
 <tr><td>Woodland Rangers</td><td>2</td><td>(2015, 2016)</td></tr>
 <tr><td>Sacks on the Beach</td><td>1</td><td>(2008)</td></tr>
+<tr><td>Richard's Lionhearts</td><td>1</td><td>(2021)</td></tr>
 </TABLE></P>
 
 <P><TABLE WIDTH=100% BORDER=0 ALIGN=Center>
 <TR><TD COLSPAN=3><B>#1 picks by position</B></TD></TR>
-<TR><TD>Runningback</TD><TD>16</TD><TD>(1992, 1996, 1997, 1998, 2001, 2003, 2005, 2006, 2007, 2008, 2010, 2011, 2014, 2016, 2018, 2020)</TD></TR>
+<TR><TD>Runningback</TD><TD>17</TD><TD>(1992, 1996, 1997, 1998, 2001, 2003, 2005, 2006, 2007, 2008, 2010, 2011, 2014, 2016, 2018, 2020, 2021)</TD></TR>
 <TR><TD>Wide Receivers</TD><TD>7</TD><TD>(1993, 1999, 2000, 2004, 2009, 2015, 2017)</TD></TR>
 <TR><TD>Quarterbacks</TD><TD>6</TD><TD>(1994, 1995, 2002, 2012, 2013, 2019)</TD></TR>
 </TABLE></P>
