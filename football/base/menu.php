@@ -53,7 +53,7 @@ if (!isset($title)) {
 <!-- Begin Menu.html -->
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-2">
     <a class="navbar-brand" href="/"><img src="/images/test.png"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
