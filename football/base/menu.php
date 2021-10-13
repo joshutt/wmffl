@@ -1,11 +1,12 @@
 <?php
 // This is temporary, but maybe it's not such a bad idea
-require_once "utils/start.php";
+require_once 'utils/start.php';
 if (!isset($title)) {
-    $title = "WMFFL";
+    $title = 'WMFFL';
 }
 ?>
 
+<!DOCTYPE HTML>
 <html>
 <head>
     <title><?= $title; ?></title>
@@ -23,12 +24,12 @@ if (!isset($title)) {
 
     // If no cssList then add it, otherwise add core.css
     if (isset($cssList)) {
-        array_unshift($cssList, "/base/css/core.css?v12");
+        array_unshift($cssList, '/base/css/core.css?v12');
 //        array_unshift($cssList, "/base/vendor/css/bootstrap.min.css");
-        array_unshift($cssList, "https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css");
+        array_unshift($cssList, 'https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css');
     } else {
 //        $cssList = array("/base/vendor/css/bootstrap.min.css", "/base/css/core.css");
-        $cssList = array("https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css", "/base/css/core.css");
+        $cssList = array('https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css', '/base/css/core.css');
     }
 
     // Print out the css
