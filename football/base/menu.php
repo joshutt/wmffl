@@ -76,7 +76,7 @@ if (!isset($title)) {
         <?php
         if ($isin) {
             ?>
-            <button class="btn btn-wmffl my-2 my-sm-0" data-toggle="modal" data-target="#loginModal">Already In</button>
+            <button class="btn btn-wmffl my-2 my-sm-0" data-toggle="modal" data-target="#profileModal"><?= $fullname ?></button>
             <?php
         } else {
             ?>
@@ -114,6 +114,38 @@ if (!isset($title)) {
             </div>
                 <div class="mx-auto my-2 text-center"><a href="/login/forgotpassword">Forgot Password?</a></div>
             </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Profile Modal -->
+<div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title mt-0" id="loginModalLabel">Profile <?= $fullname ?></h1>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <a class="btn btn-lg btn-wmffl btn-block" href="/login/newpassword" role="button">Change Password</a>
+                </div>
+            <?php
+            if ($isin && $teamnum == 2) {
+                ?>
+                <div class="modal-body">
+                    <a class="btn btn-lg btn-wmffl btn-block" href="/admin" role="button">Commish</a>
+                </div>
+            <?php
+            }
+            ?>
+                <div class="modal-footer">
+                    <form class="form-signin" method="post" action="/login/logout">
+                        <button type="submit" class="btn btn-lg btn-wmffl btn-block">Log Out</button>
+                    </form>
+                </div>
         </div>
     </div>
 </div>
