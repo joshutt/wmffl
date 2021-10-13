@@ -3,7 +3,7 @@ require_once 'utils/start.php';
 
 $title = 'Leave Comment';
 
-$javascriptList = array('/base/vendor/js/tiny_mce/tiny_mce.js', '/base/js/comments.js');
+$javascriptList = array('/base/vendor/js/tiny_mce_5_0/tinymce.min.js', '/base/js/comments.js');
 include 'base/menu.php';
 ?>
 
@@ -21,11 +21,11 @@ if (!$isin) {
         <form action="processEntry.php" method="post">
             <div class="form-group">
                 <label for="subject">Subject:</label>
-                <input type="text" class="form-control" id="subject"/>
+                <input type="text" class="form-control" id="subject" name="subject"/>
             </div>
             <div class="form-group">
                 <label for="body">Body:</label>
-                <textarea class="form-control" id="body" rows="20"></textarea>
+                <textarea class="form-control" id="body" name="body" rows="20"></textarea>
             </div>
             <div class="text-center">
                 <input type="submit" class="btn btn-wmffl" value="Submit Entry"/>
