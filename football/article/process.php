@@ -1,13 +1,13 @@
 <?php
-require_once "utils/start.php";
+require_once 'utils/start.php';
 
 function compressImage($url, $currentSeason, $currentWeek) {
     global $config;
-    $paths = $config["Paths"];
+    $paths = $config['Paths'];
     $maxSize = 600;
-    $rootLoc = $paths["wwwPath"];
+    $rootLoc = $paths['wwwPath'];
     error_log(print_r($config, true));
-    $newDir = $paths["imagesPath"];
+    $newDir = $paths['imagesPath'];
     $newName = hash_file('md5', $url).'.jpg';
     global $fail;
 
@@ -38,34 +38,34 @@ function compressImage($url, $currentSeason, $currentWeek) {
     return $shortname;
 }
 
-function logerror($errno, $errstr) {
+function logerror($errno, $errstr, $errfile, $errline) {
     global $fail;
     global $errors;
-    error_log("Error [$errno]: $errstr");
+    error_log("Error [$errno]: $errstr in file $errfile on line $errline");
     $fail = true;
-    array_push($errors, "Provide a full URL to a JPG image");
+    array_push($errors, 'Provide a full URL to a JPG image');
 }
 
 
-$title = $_POST["title"];
-$url = $_POST["url"];
-$caption = $_POST["caption"];
-$article = $_POST["article"];
+$title = $_REQUEST['title'];
+$url = $_REQUEST['url'];
+$caption = $_REQUEST['caption'];
+$article = $_REQUEST['article'];
 
 global $fail;
 $fail = false;
 global $errors;
 $errors = array();
-if (!isset($title) || empty($title)) {
-    array_push($errors, "Must include a title");
+if (empty($title)) {
+    array_push($errors, 'Must include a title');
     $fail = true;
 }
-if (!isset($url) || empty($url)) {
-    array_push($errors, "Must include an image URL");
+if (empty($url)) {
+    array_push($errors, 'Must include an image URL');
     $fail = true;
 }
-if (!isset($article) || empty($article)) {
-    array_push($errors, "Come on!  Put something in the message");
+if (empty($article)) {
+    array_push($errors, 'Come on!  Put something in the message');
     $fail = true;
 }
 
@@ -76,7 +76,7 @@ if (!$fail) {
 
 
 if ($fail) {
-    include "publish.php";
+    include 'publish.php';
     exit();
 }
 
@@ -94,8 +94,8 @@ VALUES
 EOD;
 
 //print $sql;
-$result = mysqli_query($conn, $sql) or die("Failed: " . mysqli_error($conn));
+$result = mysqli_query($conn, $sql) or die('Failed: ' . mysqli_error($conn));
 $uid = mysqli_insert_id($conn);
-$_REQUEST["uid"] = $uid;
+$_REQUEST['uid'] = $uid;
 
-include "preview.php";
+include 'preview.php';
