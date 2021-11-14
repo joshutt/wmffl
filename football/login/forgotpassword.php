@@ -9,6 +9,7 @@ if (isset($Username)) {
     $result = mysqli_query($conn, $thequery);
     $email = mysqli_fetch_row($result);
     $numrow = mysqli_num_rows($result);
+    $closed = false;
     if ($numrow == 0) {
         $ErrorMessage = "Invalid Account";
     } else {
@@ -29,12 +30,15 @@ if (isset($Username)) {
         error_log("Mail to: " . $email[1]);
         error_log("Mail From: webmaster@" . $_SERVER['SERVER_NAME']);
         error_log("Mail Body: $body");
-        mail($email[1], "WMFFL New Password", $body, "From: webmaster@" . $_SERVER['SERVER_NAME']);
-        mysqli_close($conn);
+        //mail($email[1], "WMFFL New Password", $body, "From: webmaster@" . $_SERVER['SERVER_NAME']) or die("Failed to send");
+        mail($email[1], "WMFFL New Password", $body, "From: webmaster@wmffl.com") or die("Failed to send");
+        $closed = mysqli_close($conn);
         header("Location: thanksnew.php");
     }
 
-    mysqli_close($conn);
+    if (!$closed) {
+        mysqli_close($conn);
+    }
 }
 
 $title = "Generate New Password";
@@ -55,7 +59,7 @@ include "base/menu.php";
     <TABLE>
         <TR>
             <TD>Username:</TD>
-            <TD><INPUT TYPE="Text" NAME="Username" VALUE="<?= $_COOKIE["user"]; ?>"></TD>
+            <TD><INPUT TYPE="Text" NAME="Username" VALUE="<?= $_COOKIE["user"] ?? '' ?>"></TD>
         </TR>
         <TR>
             <TD></TD>
