@@ -9,7 +9,7 @@ include 'base/menu.php';
 
 
 <H1 ALIGN=Center>Team Finances</H1>
-<H5 ALIGN=Center>Last Updated 11/13/2021</H5>
+<H5 ALIGN=Center>Last Updated 1/8/2022</H5>
 <HR size="1">
 
 <p>
@@ -38,7 +38,7 @@ include 'base/menu.php';
             <th>Wins</th>
             <th>Playoffs</th>
             <th>Balance</th>
-            <th>2021 Fee</th>
+            <th>2022 Fee</th>
         <tr>
         <tr class="oddRow">
             <td class="name padded">Amish Electricians</td>
@@ -46,10 +46,10 @@ include 'base/menu.php';
             <td class="padded"><span class="debt">($234.89)</span></td>
             <td class="padded">-</td>
             <td class="padded">-</td>
-            <td class="padded">2</td>
-            <td class="padded">2.5 x $2.83</td>
+            <td class="padded">6</td>
+            <td class="padded">5.5 x $3.02</td>
             <td class="padded">-</td>
-            <td class="padded">$230.08</td>
+            <td class="padded">$235.61</td>
             <td class="padded">$0.00</td>
         </tr>
         <tr class="evenRow">
@@ -59,10 +59,10 @@ include 'base/menu.php';
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
-            <td class="padded">5 x $2.83</td>
+            <td class="padded">7 x $3.02</td>
             <td class="padded">-</td>
-            <td class="padded">$14.15</td>
-            <td class="padded">$0.00</td>
+            <td class="padded">$21.14</td>
+            <td class="padded">$53.86</td>
         </tr>
         <tr class="oddRow">
             <td class="name padded">Crusaders</td>
@@ -70,11 +70,11 @@ include 'base/menu.php';
             <td class="padded">$20.91</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
-            <td class="padded">13</td>
-            <td class="padded">4 x $2.83</td>
+            <td class="padded">18</td>
+            <td class="padded">6 x $3.02</td>
             <td class="padded">-</td>
-            <td class="padded"><span class="debt">($1.68)</span></td>
-            <td class="padded">$0.00</td>
+            <td class="padded">$0.12</td>
+            <td class="padded">$74.88</td>
         </tr>
         <tr class="evenRow">
             <td class="name padded">Fighting Squirrels</td>
@@ -83,10 +83,10 @@ include 'base/menu.php';
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
-            <td class="padded">4 x $2.83</td>
+            <td class="padded">6 x $3.02</td>
             <td class="padded">-</td>
-            <td class="padded">$11.32</td>
-            <td class="padded">$0.00</td>
+            <td class="padded">$18.12</td>
+            <td class="padded">$56.88</td>
         </tr>
         <tr class="oddRow">
             <td class="name padded">Gallic Warriors</td>
@@ -94,11 +94,11 @@ include 'base/menu.php';
             <td class="padded">$65.79</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
+            <td class="padded">1</td>
+            <td class="padded">5.5 x $3.02</td>
             <td class="padded">-</td>
-            <td class="padded">4.5 x $2.83</td>
-            <td class="padded">-</td>
-            <td class="padded">$12.74</td>
-            <td class="padded">$0.00</td>
+            <td class="padded">$15.61</td>
+            <td class="padded">$59.39</td>
         </tr>
         <tr class="evenRow">
             <td class="name padded">MeggaMen</td>
@@ -106,10 +106,10 @@ include 'base/menu.php';
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
-            <td class="padded">16</td>
-            <td class="padded">7 x $2.83</td>
-            <td class="padded">-</td>
-            <td class="padded">$103.69</td>
+            <td class="padded">25</td>
+            <td class="padded">11 x $3.02</td>
+            <td class="padded">Division Title - $25.40<br/>Playoff Team - $25.40<br/>First Round Win - $101.60</td>
+            <td class="padded">$260.50</td>
             <td class="padded">$0.00</td>
         </tr>
         <tr class="oddRow">
@@ -118,10 +118,10 @@ include 'base/menu.php';
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">3</td>
-            <td class="padded">-</td>
-            <td class="padded">7 x $2.83</td>
-            <td class="padded">-</td>
-            <td class="padded">$280.04</td>
+            <td class="padded">20</td>
+            <td class="padded">10 x $3.02</td>
+            <td class="padded">Division Title - $25.40<br/>Playoff Team - $25.40<br/>First Round Win - $101.60<br/>Championship - $127.00</td>
+            <td class="padded">$549.83</td>
             <td class="padded">$0.00</td>
         </tr>
         <tr class="evenRow">
@@ -130,11 +130,11 @@ include 'base/menu.php';
             <td class="padded">$79.34</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
+            <td class="padded">8</td>
+            <td class="padded">6 x $3.02</td>
             <td class="padded">-</td>
-            <td class="padded">4 x $2.83</td>
-            <td class="padded">-</td>
-            <td class="padded">$11.32</td>
-            <td class="padded">$0.00</td>
+            <td class="padded">$10.12</td>
+            <td class="padded">$64.88</td>
         </tr>
         <tr class="oddRow">
             <td class="name padded">Sacks On the Beach</td>
@@ -142,10 +142,10 @@ include 'base/menu.php';
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
-            <td class="padded">10</td>
-            <td class="padded">3 x $2.83</td>
+            <td class="padded">16</td>
+            <td class="padded">5 x $3.02</td>
             <td class="padded">-</td>
-            <td class="padded">$93.23</td>
+            <td class="padded">$93.84</td>
             <td class="padded">$0.00</td>
         </tr>
         <tr class="evenRow">
@@ -154,10 +154,10 @@ include 'base/menu.php';
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
-            <td class="padded">8</td>
-            <td class="padded">5 x $2.83</td>
-            <td class="padded">-</td>
-            <td class="padded">$74.99</td>
+            <td class="padded">17</td>
+            <td class="padded">8 x $3.02</td>
+            <td class="padded">Playoff Team - $25.40</td>
+            <td class="padded">$101.40</td>
             <td class="padded">$0.00</td>
         </tr>
         <tr class="oddRow">
@@ -166,10 +166,10 @@ include 'base/menu.php';
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
+            <td class="padded">2</td>
+            <td class="padded">6 x $3.02</td>
             <td class="padded">-</td>
-            <td class="padded">3 x $2.83</td>
-            <td class="padded">-</td>
-            <td class="padded">$293.00</td>
+            <td class="padded">$300.63</td>
             <td class="padded">$0.00</td>
         </tr>
         <tr class="evenRow">
@@ -179,9 +179,9 @@ include 'base/menu.php';
             <td class="padded">-</td>
             <td class="padded">-</td>
             <td class="padded">-</td>
-            <td class="padded">5 x $2.83</td>
-            <td class="padded">-</td>
-            <td class="padded">$116.31</td>
+            <td class="padded">8 x $3.02</td>
+            <td class="padded">Division Title - $25.40<br/>Division Title - $25.40</td>
+            <td class="padded">$177.12</td>
             <td class="padded">$0.00</td>
         </tr>
     </table>

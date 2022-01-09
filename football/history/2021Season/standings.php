@@ -9,7 +9,7 @@ if ($thisWeek == '') {
 $thisSeason = 2021;
 $title = 'Standings';
 
-$clinchedList = array('Gallic Warriors' => '', 'Amish Electricians' => '', 'British Bulldogs' => '', 'Richard\'s Lionhearts' => '', 'Trump Molests Collies' => '', 'Testudos Revenge' => '', 'Sean Taylor\'s Ashes' => '', 'Norsemen' => '', 'Crusaders' => '', 'Fighting Squirrels' => '', 'MeggaMen' => '', 'Sacks on the Beach' => '');
+$clinchedList = array('Gallic Warriors' => 't-', 'Amish Electricians' => '', 'British Bulldogs' => '', 'Richard\'s Lionhearts' => '', 'Trump Molests Collies' => 'y-', 'Testudos Revenge' => '', 'Sean Taylor\'s Ashes' => 'x-', 'Norsemen' => 'y-', 'Crusaders' => '', 'Fighting Squirrels' => '', 'MeggaMen' => 'y-', 'Sacks on the Beach' => 't-');
 
 include 'base/menu.php';
 ?>
