@@ -1,5 +1,6 @@
 tinyMCE.init({
-    selector: 'textarea#article',
+    selector: '.editableArticle',
+    // selector: 'textarea#article',
     // theme : "advanced",
     // plugins : "autolink,lists,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,imagemanager,filemanager",
     plugins : "autolink,lists,spellchecker,pagebreak,table,save,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,template,lists,charmap,emoticons,hr,image,link,wordcount",
@@ -26,4 +27,5 @@ tinyMCE.init({
     target_list: false,
     menubar: false,
     statusbar: false,
+    inline: true,
 });

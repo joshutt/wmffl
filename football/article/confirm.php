@@ -1,4 +1,4 @@
-<?
+<?php
 require_once 'utils/start.php';
 
 $uid = $_REQUEST['uid'];
@@ -11,7 +11,8 @@ if (!empty($edit)) {
     $result = mysqli_query($conn, $sql) or die ('Dead query: ' . mysqli_error($conn));
     $row = mysqli_fetch_array($result);
     $artTitle = $row['title'];
-    $url = 'http://wmffl.com/' .$row['link'];
+//    $url = 'http://wmffl.com/' .$row['link'];
+    $url = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . '/' .$row['link'];
     $caption = $row['caption'];
     $article = $row['articleText'];
 

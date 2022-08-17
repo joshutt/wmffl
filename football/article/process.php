@@ -1,56 +1,46 @@
 <?php
 require_once 'utils/start.php';
+require_once 'utils/ImageProcessor.php';
 
-function compressImage($url, $currentSeason, $currentWeek) {
+function compressImage($url, $currentSeason, $currentWeek)
+{
     global $config;
     $paths = $config['Paths'];
     $maxSize = 600;
-    $rootLoc = $paths['wwwPath'];
-    error_log(print_r($config, true));
-    $newDir = $paths['imagesPath'];
-    $newName = hash_file('md5', $url).'.jpg';
-    global $fail;
 
     set_error_handler(logerror);
-    $image = imagecreatefromjpeg($url);
-    if ($fail) { return null; }
-    $width = imagesx($image);
-    if ($fail) { return null; }
-    $height = imagesy($image);
-    if ($fail) { return null; }
-    $percent = 1.0;
-    if ($width >= $height && $width > $maxSize) {
-        $percent = $maxSize / $width;
-    } elseif ($height > $maxSize) {
-        $percent = $maxSize / $height;
-    }
-    $newwidth = $width * $percent;
-    $newheight = $height * $percent;
-    $thumb = imagecreatetruecolor($newwidth, $newheight);
-    if ($fail) { return null; }
-    imagecopyresampled($thumb, $image, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-    if ($fail) { return null; }
-    $shortname = "$newDir/$newName";
-    $fullName = "$rootLoc/$shortname";
-    imagejpeg($thumb, $fullName);
-    if ($fail) { return null; }
+    $processor = new \utils\ImageProcessor($paths);
+    $processor->createImageFromURL($url, $maxSize);
+    $processor->saveImage();
+
     restore_error_handler();
-    return $shortname;
+    return $processor->getImageFileName();
 }
 
-function logerror($errno, $errstr, $errfile, $errline) {
+function logerror($errno, $errstr, $errfile, $errline)
+{
     global $fail;
     global $errors;
     error_log("Error [$errno]: $errstr in file $errfile on line $errline");
     $fail = true;
-    array_push($errors, 'Provide a full URL to a JPG image');
+    array_push($errors, 'Provide a full URL to a JPEG, GIF or PNG image');
 }
+
+//print_r($_REQUEST);
 
 
 $title = $_REQUEST['title'];
 $url = $_REQUEST['url'];
 $caption = $_REQUEST['caption'];
-$article = $_REQUEST['article'];
+$articleList = $_REQUEST['article'];
+$article = '';
+
+foreach ($articleList as $subArt) {
+    if (empty($subArt)) {
+        continue;
+    }
+    $article .= $subArt;
+}
 
 global $fail;
 $fail = false;
@@ -86,7 +76,7 @@ $useURL = mysqli_real_escape_string($conn, $fullName);
 $useCaption = mysqli_real_escape_string($conn, $caption);
 $useArticle = mysqli_real_escape_string($conn, $article);
 
-$sql =<<<EOD
+$sql = <<<EOD
 INSERT INTO articles
 (title, link, caption, articleText, displayDate, active, author)
 VALUES

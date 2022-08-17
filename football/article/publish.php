@@ -3,11 +3,16 @@ $title = 'Publish Article';
 
 $javascriptList = array('/base/vendor/js/tiny_mce_5_0/tinymce.min.js', '/base/js/article.js');
 include 'base/menu.php';
+?>
 
+<h1 class="full"><?=$title?></h1>
+
+<?php
 if (!$isin) {
-    print "You Shouldn't Be here";
-    exit();
-}
+    ?>
+    <div class="text-center font-weight-bold h4">You must be logged in to use this feature</div>
+    <?php
+} else {
 
 if (isset($errors)) {
     foreach ($errors as $name) {
@@ -33,7 +38,7 @@ if (!isset($article)) {
 ?>
 
 
-    <form method="POST" action="process.php">
+    <form method="POST" action="process">
 
         <div class="form-group ">
             <label class="col-sm-2 col-form-label col-form-label-lg" for="title">Title:</label>
@@ -56,7 +61,7 @@ if (!isset($article)) {
         <div class="form-group ">
             <label class="col-sm-2 col-form-label col-form-label-lg" for="article">Article:</label>
             <div class="col-sm-10">
-                <textarea id="article" rows="40" name="article"><?= $article ?></textarea>
+                <div class="editableArticle border p-1" id="article[]" name="article"><?= $article ?></div>
             </div>
         </div>
         <div class="text-center">
@@ -65,4 +70,5 @@ if (!isset($article)) {
     </form>
 
 <?php
+}
 include 'base/footer.php';
