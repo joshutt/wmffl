@@ -46,8 +46,12 @@ global $fail;
 $fail = false;
 global $errors;
 $errors = array();
+// Validate input
 if (empty($title)) {
     array_push($errors, 'Must include a title');
+    $fail = true;
+} else if (strlen($title) >= 75) {
+    array_push($errors, 'Title can\'t be longer than 75 characters');
     $fail = true;
 }
 if (empty($url)) {
