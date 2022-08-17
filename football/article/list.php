@@ -15,6 +15,17 @@ include 'base/menu.php';
 
     <h1 class="full"><?= $title ?></h1>
 
+<?php
+if ($isin) {
+?>
+    <div class="py-2 row justify-content-between">
+        <div class="float-right"><a class="btn btn-wmffl" href="publish">Write Article</a>
+        </div>
+    </div>
+    <?php
+}
+    ?>
+
     <div class="container-fluid">
         <div class="card-deck">
             <?php
