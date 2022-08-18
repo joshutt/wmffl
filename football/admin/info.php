@@ -1,10 +1,25 @@
 <?php 
 //putenv("TZ=US/Eastern");
 
-print date("D M j G:i:s Y");
+class GenerateInfo {
+    
+    public function getDate() {
+        return date("D M j G:i:s Y");
+    }
 
-phpinfo();
+    public function getInfo() {
+        phpinfo();
+    }
 
-print microtime(true);
+    public function getTime() {
+        return microtime(true);
+    }
+
+}
+
+$info = new GenerateInfo;
+print $info->getDate();
+$info->getInfo();
+print $info->getTime();
 
 ?>

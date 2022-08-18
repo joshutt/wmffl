@@ -1,8 +1,15 @@
-<?
-require_once "base/conn.php";
+<?php
+//require_once "/base/conn.php";
+//
+//require_once "/utils/setup.php";
+$ini = parse_ini_file("wmffl.conf");
 
-$nflStartDate = '2021-09-09';
-$season=2021;
+// Database connection information
+$conn = mysqli_connect('localhost', $ini['userName'], $ini['password'], $ini['dbName']);
+//
+
+$nflStartDate = '2022-09-09';
+$season=2022;
 
 $query = "SELECT t.name, d.date, min( d.attend ) as attend
 FROM  `draftdate` d, user u, team t
@@ -10,11 +17,19 @@ WHERE u.userid = d.userid AND u.teamid=t.teamid AND d.date >  '$season-01-01'
 GROUP  BY u.teamid, d.date
 ORDER BY d.date";
 
+//print "*";
+//print_r($conn);
+//print "*";
 $results = mysqli_query($conn, $query);
 $date = "";
 $dateList = array();
 
+//print "a";
+//print "*";
+//print_r($results);
+//print "*";
 while ($arrayList = mysqli_fetch_array($results)) {
+    //print "b";
     if ($date != $arrayList["date"]) {
         $date = $arrayList["date"];
         $dateArray = array();

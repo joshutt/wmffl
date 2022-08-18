@@ -47,6 +47,7 @@ include 'base/menu.php';
         <li class="nav-item  m-2"><a class="nav-link" href="2019Season/">2019 Season</a></li>
         <li class="nav-item  m-2"><a class="nav-link" href="2020Season/">2020 Season</a></li>
         <li class="nav-item  m-2"><a class="nav-link" href="2021Season/">2021 Season</a></li>
+        <li class="nav-item  m-2"><a class="nav-link" href="2022Season/">2022 Season</a></li>
     </ul>
 </div>
 
