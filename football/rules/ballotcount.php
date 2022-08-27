@@ -59,6 +59,7 @@ foreach ($_POST as $key => $value) {
 <H1 ALIGN=Center>Votes Cast</H1>
 <HR>
 
+<div class="container">
 <P>Your casted votes were recieved.  Below is a record of how you voted.
 If you would like to change you vote, you may do so at any time before the
 ballot closes.  <A HREF="ballot">Ballot</A>.</P>
@@ -69,9 +70,10 @@ foreach ($voteNum as $key => $value) {
     if ($key === "submit") {
         continue;
     }
-	print $value." - ".$voteName[$key]." - ".$voteCast[$key]."<BR/>";
+	print "<p>".$value." - ".$voteName[$key]." - ".$voteCast[$key]."</p>";
 }
 ?>
 </P>
+</div>
 
 <?//	include "base/footer.html";?>

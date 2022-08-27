@@ -9,6 +9,8 @@ include "base/menu.php";
 <H1 ALIGN=Center>Ballot</H1>
 <HR size="1">
 
+<div class="container">
+
 <?
 if ($isin) {
 
@@ -20,10 +22,11 @@ if ($isin) {
     <P>
         For each of the ballot items below your current vote, please select your vote,
         then press the "VOTE" button to have you vote counted. To review the issues in question you may go to the <A
-                HREF="/rules/proposals2016.php">proposals page</A>
+                HREF="/rules/proposals2022.php">proposals page</A>
     </P>
 
-    <TABLE>
+
+
         <FORM ACTION="ballot" METHOD=POST>
             <?
 
@@ -58,73 +61,40 @@ if ($isin) {
                     }
                 }
                 ?>
-                <TR>
-                    <TH COLSPAN=3 ALIGN="Left">
-                        <? print $issuenum; ?> - <? print $issuename; ?>
-                    </TH>
-                </TR>
-                <TR>
-                    <TD COLSPAN=3><? print $descr; ?></TD>
-                </TR>
-                <TR>
-                    <TD></TD>
-                    <TD COLSPAN=2><I>
-                            <? if ($vote != "") {
+<div class="card m-3 p-2 bg-light">
+    <div class="card-header">
+    <b>Proposal <?= $issuenum; ?> - <?= $issuename ?></b>
+    </div>
+    <div class="card-body">
+    <p><?= $descr; ?></p>
+    <p><i>
+                            <?php if ($vote != "") {
                                 print "Your current vote is to $votelabel this proposal";
                                 //if ($vote == "1") print "approve this proposal";
                                 //else print "reject this proposal";
                             } else {
                                 print "You have not voted on this proposal";
                             }
-                            ?>
-                        </I></TD>
-                </TR>
-                <TR>
-                    <TD></TD>
-                    <TD>
-                        <INPUT TYPE="radio" NAME="<? print $issueid; ?>"
-                               VALUE="Accept" <? if ($vote == "Accept") print "CHECKED"; ?>>
-                    </TD>
-                    <TD><? print $accept; ?></TD>
-                </TR>
-                <TR>
-                    <TD></TD>
-                    <TD>
-                        <INPUT TYPE="radio" NAME="<? print $issueid; ?>"
-                               VALUE="Reject" <? if ($vote == "Reject") print "CHECKED"; ?>>
-                    </TD>
-                    <TD><? print $reject; ?></TD>
-                </TR>
-                <TR>
-                    <TD></TD>
-                    <TD>
-                        <INPUT TYPE="radio" NAME="<? print $issueid; ?>"
-                               VALUE="Abstain" <? if ($vote == "Abstain") print "CHECKED"; ?>>
-                    </TD>
-                    <TD><? print $abstain; ?></TD>
-                </TR>
-                <TR>
-                    <TD>&nbsp;</TD>
-                </TR>
+                            ?></i></p>
+<p><INPUT TYPE="radio" NAME="<?= $issueid; ?>" VALUE="Accept" <? if ($vote == "Accept") print "CHECKED"; ?>> <?= $accept; ?></p>
+<p><INPUT TYPE="radio" NAME="<?= $issueid; ?>" VALUE="Reject" <? if ($vote == "Reject") print "CHECKED"; ?>> <?= $reject; ?></p>
+<p><INPUT TYPE="radio" NAME="<?= $issueid; ?>" VALUE="Abstain" <? if ($vote == "Abstain") print "CHECKED"; ?>> <?= $abstain; ?></p>
+                            </div>
+</div>
+<?php } ?>
 
-                <?
-            }
+<div align="center"><input type="submit" value="Vote" name="submit" class="btn btn-wmffl text-align-center"/></div>
 
-            ?>
-            <TR>
-                <TD COLSPAN=3 ALIGN=Center><INPUT TYPE="SUBMIT" VALUE="VOTE" name="submit"><INPUT TYPE="RESET"></TD>
-            </TR>
         </FORM>
-    </TABLE>
 
-    <?
-    }
+    <?php }
 } else {
     ?>
 
     <CENTER><B>You must be logged in to cast your votes </B></CENTER>
 
-<? }
-include "base/footer.html";
-?>
+<?php } ?>
+</div>
+
+<?php include "base/footer.html"; ?>
 

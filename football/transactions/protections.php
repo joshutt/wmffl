@@ -4,6 +4,7 @@ require_once "utils/connect.php";
 #$teamnum = 2;
 $dateSrc = "2022-08-22 00:05 EDT";
 $dateTime = new DateTime($dateSrc);
+$dateTime->sub(DateInterval::createFromDateString('6 min'));
 
 $thequery = "select p.playerid, p.firstname, p.lastname, p.pos, ";
 $thequery .= "p.team, ";
