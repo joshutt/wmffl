@@ -15,6 +15,7 @@ if (!isset($title)) {
 
     <?php
     // Include any Javascript
+    print '<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>';
     if (isset($javascriptList)) {
         foreach ($javascriptList as $sheet) {
             print "<script src=\"$sheet\"></script>";
@@ -46,6 +47,30 @@ if (!isset($title)) {
             }
             Cookies.remove('showlogin');
         });
+
+        function submitContactForm() {
+            var url = "/login/login";
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("form.form-signin").serialize(),
+                success: function(data)
+                {
+                    // if request successful
+                    alert('Success');
+                },
+                error: function(data) {
+                    // if request unsuccessful
+                    alert('Failure');
+                },
+            });
+            // e.preventDefault(); // avoid actually submition of form
+        };
+
+        // $("#loginModal").submit(function(e) {
+        //    alert("Submitted");
+        // });
 
     </script>
 
@@ -91,7 +116,7 @@ if (!isset($title)) {
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form class="form-signin" method="post" action="/login/login">
+            <form class="form-signin" method="post">
             <div class="modal-header">
                 <h1 class="modal-title mt-0" id="loginModalLabel">Log In</h1>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -110,7 +135,7 @@ if (!isset($title)) {
                     </div>
                 </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-lg btn-wmffl btn-block">Log In</button>
+                <button type="button" onclick="submitContactForm();" class="btn btn-lg btn-wmffl btn-block">Log In</button>
             </div>
                 <div class="mx-auto my-2 text-center"><a href="/login/forgotpassword">Forgot Password?</a></div>
             </form>
@@ -142,7 +167,7 @@ if (!isset($title)) {
             }
             ?>
                 <div class="modal-footer">
-                    <form class="form-signin" method="post" action="/login/logout">
+                    <form class="form-signout" method="post" action="/login/logout">
                         <button type="submit" class="btn btn-lg btn-wmffl btn-block">Log Out</button>
                     </form>
                 </div>
