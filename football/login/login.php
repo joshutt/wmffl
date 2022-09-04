@@ -17,8 +17,9 @@ if ($numrow == 0) {
     $expire = time() + 300;
 //    header('Set-Cookie: showlogin=1; expires=$expires; path=/');
     setcookie('showlogin', '1', $expire);
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
-    exit();
+//    header('Location: ' . $_SERVER['HTTP_REFERER']);
+//    exit();
+    echo "err";
 } else {
     $team = mysqli_fetch_row($result);
     $_SESSION['isin'] = True;
@@ -32,6 +33,7 @@ if ($numrow == 0) {
     #$thequery = "update user set lastlog=now() where username='$username'";
     $result = mysqli_query($conn, $thequery);
     setcookie('showlogin', '0', time()-3600);
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
-    exit();
+//    header('Location: ' . $_SERVER['HTTP_REFERER']);
+//    exit();
+    echo "Ok";
 }
