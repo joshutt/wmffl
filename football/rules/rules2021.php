@@ -12,7 +12,6 @@ include "base/menu.php";
 <H1 ALIGN=CENTER>Rules of the WMFFL</H1>
 <H5 ALIGN=CENTER><I>Last Updated: September 7, 2020</I></H5>
 <HR size="1">
-<div class="container">
 Section 1: <A HREF="#I">Divisions and Schedules</A>; <A HREF="#II">Who Makes the Playoffs</A>; <A HREF="#III">The
     Playoffs</A><BR>
 Section 2: <A HREF="#IV">Team Rosters</A>; <A HREF="#V">Scoring</A><BR>
@@ -20,12 +19,26 @@ Section 3: <A HREF="#VI">Draft Order</A>; <A HREF="#VII">Drafting</A>; <A HREF="
 <BR>
 Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules</A><BR>
 
-<!--
 <HR size="1">
-<P>Rules added or changed that will take effect for the 2022 season are indicated in <B>Bold</B>.</P>
+<P>Rules added or changed that will take effect for the 2020 season are indicated in <B>Bold</B>.</P>
 <ul>
+    <li>Automatic change triggered by X.E.5
+        <ul>
+            <li>Rule X.E.1.b.i incremented to 15 pts, due to 17 RB being protected in 2020, takes effect in 2021</li>
+        </ul>
+    </li>
+    <li>2020.1 - Add Injured Reserve
+        <ul>
+            <li>Add rule IV.C</li>
+            <li>Add rule V.A.3.d</li>
+        </ul>
+    </li>
+    <li>2020.4 - COVID IR
+        <ul>
+            <li>Add rule IV.C.4</li>
+        </ul>
+    </li>
 </ul>
--->
 
 <HR size="1">
 
@@ -151,7 +164,7 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
                 <LI>Defensive Backs (includes cornerbacks and safties)
                 <LI>Head Coach
             </OL>
-        <LI class="">Any player listed by the NFL as being on injured reserve, may be played on IR by the WMFFL
+        <LI class="newrule">Any player listed by the NFL as being on injured reserve, may be played on IR by the WMFFL
             team
             <ol type="1">
                 <li>The WMFFL team must explicitly designate a player as being on IR</li>
@@ -200,7 +213,7 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
                             violation</LI>
                         <LI>Activating the incorrect number of players will result in a $1 fine and a 2 point penalty
                             per violation</LI>
-                        <li class="">Activating a player on IR will result in a $1 fine and a 2 point penalty per
+                        <li class="newrule">Activating a player on IR will result in a $1 fine and a 2 point penalty per
                             violation
                         </li>
                     </OL>
@@ -596,7 +609,7 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
                             <OL TYPE="i">
                                 <LI>10 pts
                             </OL>
-                        <LI class="">RB
+                        <LI class="newrule">RB
                             <OL TYPE="i">
                                 <LI>15 pts</li>
                             </OL>
@@ -718,5 +731,4 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
     </OL>
 </OL>
 
-</div>
 <? include "base/footer.html"; ?>
