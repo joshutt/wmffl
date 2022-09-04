@@ -1,8 +1,8 @@
 <?php
-$title = "WMFFL Rule Proposals";
+$title = 'WMFFL Rule Proposals';
 
-$cssList = array("rules.css");
-include "base/menu.php";
+$cssList = array('rules.css');
+include 'base/menu.php';
 ?>
 
 <h1 align=center>Current Rule Proposals</h1>
@@ -17,7 +17,7 @@ include "base/menu.php";
 <div class="card m-3 p-2 bg-light">
     <b>Proposal 2022.1 - Reduce 60 yard FG points</b>
     <b>Sponsor: Richard Lawson</b><br/>
-    <span class="ballot">Status: <span class="status">Under Discussion</span></span><br/>
+    <span class="ballot">Status: <span class="status">On Ballot</span></span><br/>
     Reduce the number of points a 60+ yard field goal from 10 pts to 6 pts
     <blockquote class="mb-0 mt-2 px-3"><i>Change rule V.B.5.b.iv to read: Made 60+ yards = 6 pts<br/>
         </i></blockquote>
@@ -26,7 +26,7 @@ include "base/menu.php";
 <div class="card m-3 p-2 bg-light">
     <b>Proposal 2022.2a - All missed FG get -1 pt</b>
     <b>Sponsor: Richard Lawson</b><br/>
-    <span class="ballot">Status: <span class="status">Under Discussion</span></span><br/>
+    <span class="ballot">Status: <span class="status">Rejected, 1-10, 1 Abstain</span></span><br/>
     Make it so that all missed FG get -1 pt.  Not just extra points and FGs under 30 yards.
     <blockquote class="mb-0 mt-2 px-3"><i>Change rule V.B.5.b.v to read: Missed = -1 pt<br/>
         </i></blockquote>
@@ -36,7 +36,7 @@ include "base/menu.php";
 <div class="card m-3 p-2 bg-light">
     <b>Proposal 2022.2b - All missed FG under 50 yards get -1 pt</b>
     <b>Sponsor: Tom Marsh</b><br/>
-    <span class="ballot">Status: <span class="status">Under Discussion</span></span><br/>
+    <span class="ballot">Status: <span class="status">On Ballot</span></span><br/>
     Make it so that all missed FG under 50 yuards get -1 pt.  Not just extra points and FGs under 30 yards.
     <blockquote class="mb-0 mt-2 px-3"><i>Change rule V.B.5.b.v to read: Missed 0-50 yards = -1 pt<br/>
         </i></blockquote>
@@ -45,7 +45,7 @@ include "base/menu.php";
 <div class="card m-3 p-2 bg-light">
     <b>Proposal 2022.3 - Game Changing FG points</b>
     <b>Sponsor: Richard Lawson</b><br/>
-    <span class="ballot">Status: <span class="status">Under Discussion</span></span><br/>
+    <span class="ballot">Status: <span class="status">Rejected, 3-9</span></span><br/>
     Bonus 5 points if your kicker kicks a field goal that either:
     <ul><li>Changes the outcome of a game in the last 20 seconds of regulation (e.g. a kick that changes a tie to a win or a loss to a tie/win)
     <ul><li>If A vs B is tied w 20secs left and A kicks a FG they get bonus 5 points. If B then kicks a field goal to tie with say 4 seconds left they get 5 points. If A then kicks a FG to walkoff in OT they get 5 more points. This is the most extreme example that will hardly ever happen</li>
@@ -60,7 +60,7 @@ include "base/menu.php";
 <div class="card m-3 p-2 bg-light">
     <b>Proposal 2022.4 - Roster Plus IR Limits to 28</b>
     <b>Sponsor: Richard Lawson</b><br/>
-    <span class="ballot">Status: <span class="status">Under Discussion</span></span><br/>
+    <span class="ballot">Status: <span class="status">Passed, 8-3, 1 abstain</span></span><br/>
     At one point Norseman had a squad size of 34. It's too many. I suggest to keep the existing squad size of 25 and keep the existing IR/COVID setup we have but have a rule that the total of the squad + IR/COVID can only be maximum 28. It could be 20 squad and 8 IR/COVID if desired
     <blockquote class="mb-0 mt-2 px-3"><i>Add rule IV.C.5 reading:<br/>
         5. No team may have more the 28 players combined between the IR and active roster.
@@ -70,7 +70,7 @@ include "base/menu.php";
 <div class="card m-3 p-2 bg-light">
     <b>Proposal 2022.5 - Add a 15th Game to the Season</b>
     <b>Sponsor: Richard Lawson</b><br/>
-    <span class="ballot">Status: <span class="status">Under Discussion</span></span><br/>
+    <span class="ballot">Status: <span class="status">Rejected, 5-6, 1 Abstain</span></span><br/>
      As the regular season gets 1 week longer should our season. I think it is worth discussion having a 15 week reg season.  I would suggest that the extra game be defined as:<br/>
      <p><blockquote><p>
      In even number years<br/>
@@ -93,4 +93,16 @@ include "base/menu.php";
         </i></blockquote>
 </div>
 
-<? include "base/footer.html"; ?>
+<div class="card m-3 p-2 bg-light">
+    <b>Proposal 2022.6 - Change voting to 50% + 1</b>
+    <b>Sponsor: Chris Heywood</b><br/>
+    <span class="ballot">Status: <span class="status">On Ballot</span></span><br/>
+    Change the threshold needed to pass a new rule to 50% + 1 of the vote
+    <blockquote class="mb-0 mt-2 px-3"><i>Update rule XII.B to read:<br/>
+            <blockquote>B. If 50% plus one of voting owners approve the proposal then it will become a rule.</blockquote>
+        Update rule XII.E to read:<br/>
+            <blockquote>E. A rule will be removed from the ballot if 50% of voting owners reject it</blockquote>
+        </i></blockquote>
+</div>
+
+<?php include 'base/footer.html'; ?>

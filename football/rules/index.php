@@ -10,7 +10,7 @@ include "base/menu.php";
 </style>
 
 <H1 ALIGN=CENTER>Rules of the WMFFL</H1>
-<H5 ALIGN=CENTER><I>Last Updated: September 7, 2020</I></H5>
+<H5 ALIGN=CENTER><I>Last Updated: September 4, 2022</I></H5>
 <HR size="1">
 <div class="container">
 Section 1: <A HREF="#I">Divisions and Schedules</A>; <A HREF="#II">Who Makes the Playoffs</A>; <A HREF="#III">The
@@ -20,12 +20,13 @@ Section 3: <A HREF="#VI">Draft Order</A>; <A HREF="#VII">Drafting</A>; <A HREF="
 <BR>
 Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules</A><BR>
 
-<!--
 <HR size="1">
 <P>Rules added or changed that will take effect for the 2022 season are indicated in <B>Bold</B>.</P>
 <ul>
+    <li>Roster plus IR limited to 28 players
+        <ul><li>Added rule IV.C.5</li></ul>
+    </li>
 </ul>
--->
 
 <HR size="1">
 
@@ -158,6 +159,7 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
                 <li>Any player on IR will not be counted towards the roster limits in rule IV.A.</li>
                 <li>When the NFL removes a player from IR, the will be removed from the WMFFL IR</li>
                 <li>Any player on the NFL Covid list will be placed on the WMFFL Covid IR</li>
+                <li class="newrule">No team may have more the 28 players combined between the IR and active roster.</li>
             </ol>
         </LI>
         <LI>A player can only be placed in the position that his NFL team lists him as.
