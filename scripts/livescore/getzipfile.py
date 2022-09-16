@@ -10,7 +10,6 @@ import sys, time, os
 nowTime = time.localtime()
 week = (nowTime[7] - 252)/7 + 1
 year = (nowTime[0])
-#print week
 #week=2 
 
 if (len(sys.argv) >= 2) :
@@ -21,6 +20,7 @@ if (len(sys.argv) >= 2) :
             year = int(sys.argv[3])
 else :
     outputFile = "myzip.zip"
+print week
 
 class myClass :
 	def __init__ (self) :
@@ -69,7 +69,8 @@ conn = httplib.HTTPConnection("www.fflm.com")
 ##filename = 'f06%02d%s.fs0'%(week,id)
 #conn.close()
 
-conn.request("GET", "/gameday/gameday.zip")
+#conn.request("GET", "/gameday/gameday.zip")
+conn.request("GET", "/gameday/gameday%02d.zip"%week)
 #conn.request("GET", "/files/nfl/%s"%filename)
 response = conn.getresponse()
 savData = response.read()

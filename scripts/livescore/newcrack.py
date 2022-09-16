@@ -44,10 +44,11 @@ def valuate(b_arr):
 # Determine input and output files
 inputFile = "indstats.nfl"
 outputFile = "out.sql"
+expWeek = 0;
 if len(sys.argv) >= 2:
     inputFile = sys.argv[1]
     if len(sys.argv) >= 3:
-        outputFile = sys.argv[2]
+        expWeek = int(sys.argv[2])
 
 # Open file and read data
 indFile = open(inputFile, "r")
@@ -67,6 +68,10 @@ wholeWeek = valuate(theFile.read(4))
 theFile.read(4)
 date = valuate(theFile.read(4))
 theFile.read(20)
+
+# If file isn't for the right week, return with failure
+if (wholeWeek != expWeek):
+    sys.exit(1)
 
 thePlayers = {}
 field_id = valuate(theFile.read(4))

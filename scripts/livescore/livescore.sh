@@ -12,13 +12,17 @@ then
 fi
 touch $SCRIPT_DIR/tmpFile
 
+WEEK=`php getweek.php`
+ZIPFILE="${DATA_DIR}/zip${WEEK}.zip"
+
 echo 
 echo "---------------------------------"
 echo "Live Scores"
 echo `date`
+echo "Week: $WEEK"
 echo "---------------------------------"
 
-python $SCRIPT_DIR/getzipfile.py $DATA_DIR/myzip.zip > $SCRIPT_DIR/tmpupdate
+python $SCRIPT_DIR/getzipfile.py $ZIPFILE > $SCRIPT_DIR/tmpupdate
 if [ `diff $SCRIPT_DIR/tmpupdate $FILE_DIR/update.inc | wc -l` -eq '0' ]
 then
   echo "No Changes"
@@ -28,14 +32,15 @@ then
 fi
 
 echo "Got Zip File"
-if [ ! -e $DATA_DIR/myzip.zip ]
+if [ ! -e $ZIPFILE ]
 then
     echo "Zip file not present"
     echo "---------------------------------"
     rm $SCRIPT_DIR/tmpFile
     exit 0
 fi
-/usr/bin/unzip -o $DATA_DIR/myzip.zip indstats.nfl -d $DATA_DIR
+
+/usr/bin/unzip -o $ZIPFILE indstats.nfl -d $DATA_DIR
 if [ "$?" -eq "$FAILURE" ]
 then
     echo "Unable to unzip"
@@ -45,7 +50,7 @@ then
 fi
 
 echo "Unzipped File"
-python $SCRIPT_DIR/newcrack.py $DATA_DIR/indstats.nfl > $DATA_DIR/out.sql
+python $SCRIPT_DIR/newcrack.py $DATA_DIR/indstats.nfl $WEEK > $DATA_DIR/out.sql
 retval=$?
 if [ "$retval" -eq "$FAILURE" ]
 then
@@ -56,7 +61,7 @@ then
 fi
 
 echo "Parsed Stats"
-#mysql --defaults-file=/home/joshutt/fb.conf joshutt_oldwmffl < $DATA_DIR/out.sql
+mysql --defaults-file=/home/joshutt/git/conf/script.conf < $DATA_DIR/out.sql
 
 echo "Read into Database"
 #php /home/joshutt/football/admin/updatescores.php
