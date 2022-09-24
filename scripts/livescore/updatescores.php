@@ -1,9 +1,10 @@
 <?php
-include dirname(__FILE__)."/../base.php";
-include $paths['wwwPath']."/base/useful.php";
-include $paths['wwwPath']."/base/scoring.php";
+include dirname(__FILE__) . '/../base.php';
+include $paths['wwwPath'] . '/base/useful.php';
+include $paths['wwwPath'] . '/base/scoring.php';
 
-function generateSelect($thisTeamID, $currentSeason, $currentWeek) {
+function generateSelect($thisTeamID, $currentSeason, $currentWeek)
+{
     $select = <<<EOD
         SELECT p.pos, p.lastname, p.firstname, r.teamid, g.kickoff, g.secRemain, p.flmid, s.*, 
         if (r.dateon is null and p.pos<>'HC', 1, 0) as 'illegal', gp1.side as 'Me', gp2.side as 'Them', wm.ActivationDue
@@ -25,7 +26,7 @@ EOD;
 
 function determinePoints($teamid, $season, $week, $conn) {
     $statSelect = generateSelect($teamid, $season, $week);
-    $results = mysqli_query($conn, $statSelect) or die ("Dead: " . mysqli_error($conn));
+    $results = mysqli_query($conn, $statSelect) or die ('Dead: ' . mysqli_error($conn));
 
     $totalPoints = 0;
     $offPoints = 0;
@@ -37,16 +38,16 @@ function determinePoints($teamid, $season, $week, $conn) {
 
         // Add game planning factor
         $factor = 1.0;
-        if (time() > strtotime($row["ActivationDue"])) {
-            if ($row["Me"] == "Me" && $row["Them"] != "Them") {
+        if (time() > strtotime($row['ActivationDue'])) {
+            if ($row['Me'] == 'Me' && $row['Them'] != 'Them') {
                 $factor = 2.0;
-            } elseif ($row["Them"] == "Them" && $row["Me"] != "Me") {
+            } elseif ($row['Them'] == 'Them' && $row['Me'] != 'Me') {
                 $factor = 0.5;
             }
         }
 
         // Determine Number of Points
-        if ($row['illegal']==1) {
+        if ($row['illegal'] == 1) {
             $penalty += 2;
         } elseif ($row['kickoff'] == null && $row['pos'] != 'HC') {
             $penalty += 2;
@@ -96,7 +97,7 @@ function determinePoints($teamid, $season, $week, $conn) {
         //print "${row["firstname"]} ${row["lastname"]} = $pts \n";
 
         $totalPoints += ceil($pts * $factor);
-        $secRemain += $row["secRemain"];
+        $secRemain += $row['secRemain'];
         //print "Total Pts: $totalPoints  Offensive: $offPoints   Defense: $defPoints \n";
     }
     //print "$teamid-$totalPoints-$offPoints-$defPoints-$penalty<br>";
@@ -104,7 +105,8 @@ function determinePoints($teamid, $season, $week, $conn) {
 }
 
 
-function updateScore($teamA, $teamB, $season, $week, $aScore, $bScore, $conn) {
+function updateScore($teamA, $teamB, $season, $week, $aScore, $bScore, $conn)
+{
     $update = "UPDATE schedule SET scorea=$aScore, scoreb=$bScore ";
     $update .= "WHERE season=$season and week=$week and ";
     $update .= "teama=$teamA and teamb=$teamB";
@@ -112,20 +114,20 @@ function updateScore($teamA, $teamB, $season, $week, $aScore, $bScore, $conn) {
 }
 
 
-$gameSelect = "SELECT s.teama, s.teamb, w.season, w.week ";
-$gameSelect .= "FROM schedule s, weekmap w ";
-$gameSelect .= "WHERE s.season=w.season and s.week=w.week ";
+$gameSelect = 'SELECT s.teama, s.teamb, w.season, w.week ';
+$gameSelect .= 'FROM schedule s, weekmap w ';
+$gameSelect .= 'WHERE s.season=w.season and s.week=w.week ';
 
 if (!empty($week)) {
-    $gameSelect .= "AND w.week=".$week;
+    $gameSelect .= 'AND w.week=' . $week;
     if ($season != '') {
-        $gameSelect .= " AND w.season=".$season;
+        $gameSelect .= ' AND w.season=' . $season;
     }
 //} elseif (date("w") == 2 && date("H") >= 11) {
 //    $gameSelect .= "AND w.week=".($currentWeek-1);
 //    $gameSelect .= " AND w.season=".$currentSeason;
-} else { 
-    $gameSelect .= "and now() between w.startdate and w.enddate ";
+} else {
+    $gameSelect .= 'and now() between w.startdate and w.enddate ';
 }
 //print $gameSelect;
 $gameResults = mysqli_query($conn, $gameSelect);
