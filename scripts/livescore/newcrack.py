@@ -1,5 +1,5 @@
-import StringIO
 import sys
+import StringIO
 
 from players import Player
 from players import Score

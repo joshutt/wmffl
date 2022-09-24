@@ -30,6 +30,10 @@ foreach ($_REQUEST as $key => $val) {
 $ini = parse_ini_file("wmffl.conf");
 $conn = mysqli_connect('localhost', $ini['userName'], $ini['password'], $ini['dbName']);
 
+// Make sure timezone is correct
+$tzQuery = "SET time_zone = 'America/New_York';";
+$tzResult = mysqli_query($conn, $tzQuery);
+
 $dateQuery = "SELECT season, week, weekname FROM weekmap ";
 $dateQuery .= "WHERE now() BETWEEN startDate and endDate ";
 $dateResult = mysqli_query($conn, $dateQuery);

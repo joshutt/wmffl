@@ -1,12 +1,7 @@
-<?
-#require_once "/home/wmffl/public_html/base/conn.php";
-#include "/home/wmffl/public_html/base/useful.php";
-#include "/home/wmffl/public_html/base/scoring.php";
-#require_once "/home/joshutt/football/base/conn.php";
-
+<?php
 include dirname(__FILE__)."/../base.php";
-include "/home/joshutt/football/base/useful.php";
-include "/home/joshutt/football/base/scoring.php";
+include $paths['wwwPath']."/base/useful.php";
+include $paths['wwwPath']."/base/scoring.php";
 
 function generateSelect($thisTeamID, $currentSeason, $currentWeek) {
     $select = <<<EOD
@@ -153,6 +148,6 @@ while ($gameRow = mysqli_fetch_array($gameResults)) {
     }
     //print $gameRow['week'];
     updateScore($gameRow['teama'], $gameRow['teamb'], $gameRow['season'], $gameRow['week'], $aFinal, $bFinal, $conn);
-    // print "Updated ".$gameRow['teama']." vs ".$gameRow['teamb']."\n";
+    // print "Updated ".$gameRow['teama']." ($aFinal) vs ".$gameRow['teamb']." ($bFinal)\n";
 }
 
