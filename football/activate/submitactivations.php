@@ -149,6 +149,8 @@ if (isset($isin) && $isin) {
         $player["injuryDetail"] = $rowSet["details"];
         $player["ir"] = $rowSet["ir"];
 
+//        print_r($rowSet);
+
         if ($rowSet["nflteamid"] == "") {
             $player["opp"] = "";
         } else if ($rowSet["kickoff"] == null) {
@@ -190,7 +192,7 @@ if (isset($isin) && $isin) {
             $starters[] = $player;
         }
 
-        if ($player["pos"] == "HC" && $deadLine == 0) {
+        if ($player["pos"] == "HC" && $deadLine == 0 && $player['nfl'] != null) {
             $actingHC = true;
         }
     }

@@ -1,6 +1,7 @@
 #!/bin/sh
 
-source ../../conf/livescore.conf
+SCRIPT=$( dirname $0)
+source $SCRIPT/../../conf/livescore.conf
 FAILURE=1
 
 if test -e $SCRIPT_DIR/tmpFile && `find "$SCRIPT_DIR/tmpFile" -mmin +5`
@@ -9,7 +10,7 @@ then
 fi
 touch $SCRIPT_DIR/tmpFile
 
-WEEK=`php getweek.php`
+WEEK=`/usr/local/bin/php $SCRIPT_DIR/getweek.php`
 ZIPFILE="${DATA_DIR}/zip${WEEK}.zip"
 
 echo 

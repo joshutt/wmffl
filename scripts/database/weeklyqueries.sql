@@ -11,7 +11,7 @@ JOIN (
              join weekmap wm
              join roster r on t.teamid = r.teamid and r.dateon <= wm.ActivationDue and r.dateoff is null
              join newplayers p on r.PlayerID = p.playerid
-             left join ir on p.playerid = ir.playerid
+             left join ir on p.playerid = ir.playerid and ir.dateoff is null
     WHERE now() between wm.StartDate and wm.EndDate
       and p.pos != 'HC'
     group by t.TeamID
@@ -30,7 +30,7 @@ JOIN (
              join weekmap wm
              join roster r on t.teamid = r.teamid and r.dateon <= wm.ActivationDue and r.dateoff is null
              join newplayers p on r.PlayerID = p.playerid
-             left join ir on p.playerid = ir.playerid
+             left join ir on p.playerid = ir.playerid and ir.dateoff is null
         WHERE now() between wm.StartDate and wm.EndDate
       and p.pos != 'HC'
         group by t.TeamID
