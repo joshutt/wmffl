@@ -50,10 +50,12 @@ if ($submit == 'Confirm') {
         if ($com == 'keep' || $com == 'injr') {
             if ($val == 'n') {
                 $droparray[] = substr($key, 4);
-            } else if ($com != 'injr') {
-                $playercount++;
+            } else {
+                if ($com != 'injr') {
+                    $playercount++;
+                }
+                $fullCount++;
             }
-            $fullCount++;
         } else if ($com == 'pick' && $val == 'y') {
 //			putEnv("TZ=US/Eastern");	
             //$diff = mktime(12,0,0,8,20,2002) - time();
