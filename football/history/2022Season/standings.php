@@ -1,7 +1,7 @@
 <?php
 require_once 'utils/start.php';
 
-$thisWeek = isset($_REQUEST['week']) ? $_REQUEST['week'] : '';
+$thisWeek = $_REQUEST['week'] ?? '';
 if ($thisWeek == '') {
     $thisWeek = $currentWeek;
     //$thisWeek = 17;
@@ -37,5 +37,5 @@ include 'base/menu.php';
 <?php
 }
 
-include 'base/footer.html';
+include 'base/footer.php';
 ?>

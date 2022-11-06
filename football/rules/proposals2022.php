@@ -105,4 +105,4 @@ include 'base/menu.php';
         </i></blockquote>
 </div>
 
-<?php include 'base/footer.html'; ?>
+<?php include 'base/footer.php'; ?>

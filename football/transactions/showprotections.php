@@ -105,7 +105,7 @@ foreach ($displayArray as $key => $teamArray) {
 ?>
 </div></div>
 <?php
-include 'base/footer.html';
+include 'base/footer.php';
 ?>
 
 
