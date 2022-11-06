@@ -58,7 +58,14 @@ if (!isset($title)) {
                 success: function(data)
                 {
                     // if request successful
-                    alert('Success');
+                    if (data.startsWith('err')) {
+                        let msg = data.substring(data.indexOf('-') + 1).trim();
+                        $("#loginAlert")[0].textContent = msg;
+                        $("#loginAlert").show();
+                    } else {
+                        $("#loginAlert").hide();
+                        location.reload();
+                    }
                 },
                 error: function(data) {
                     // if request unsuccessful
@@ -124,6 +131,7 @@ if (!isset($title)) {
                 </button>
             </div>
                 <div class="modal-body">
+                    <div class="alert alert-danger collapse" id="loginAlert" role="alert">Some Text</div>
                     <div class="username-container">
                         <label for="username" class="sr-only">Username</label>
                         <input type="text" name="username" class="form-control" placeholder="Username" required
