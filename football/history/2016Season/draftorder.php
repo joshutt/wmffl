@@ -1,15 +1,14 @@
-<?
-require_once "utils/start.php";
+<?php
+require_once 'utils/start.php';
 
 $sql = "SELECT d.round, d.pick, (t.name) as 'name', ";
 $sql .= "if(d.teamid<>d.orgTeam, '*', '') as 'flag' ";
-$sql .= "FROM draftpicks d, team t ";
-$sql .= "WHERE d.season=2016 and d.teamid=t.teamid ";
-$sql .= "ORDER BY Round, Pick";
+$sql .= 'FROM draftpicks d, team t ';
+$sql .= 'WHERE d.season=2016 and d.teamid=t.teamid ';
+$sql .= 'ORDER BY Round, Pick';
 
-$title = "2016 WMFFL Draft Order";
-?>
-<? include "base/menu.php"; ?>
+$title = '2016 WMFFL Draft Order';
+include 'base/menu.php'; ?>
 
 <H1 Align=Center>Draft Order</H1>
 <H5 ALIGN=Center><I>February 6, 2016</I></H5>
@@ -21,26 +20,26 @@ This is the official draft order for the 2016 Draft.  The order was determined b
 <P>
 <TABLE WIDTH=100%>
 
-<?
-$results = mysqli_query($conn, $sql) or die("Database error: " . mysqli_error($conn));
+    <?php
+$results = mysqli_query($conn, $sql) or die('Database error: ' . mysqli_error($conn));
 
 $round = 0;
 while ($pick = mysqli_fetch_array($results)) {
-    if ($round <> $pick["round"]) {
+    if ($round <> $pick['round']) {
         if ($round > 0) {
-            print "</ol></td>";
+            print '</ol></td>';
             if ($round % 3 == 0) {
-                print "</tr>";
+                print '</tr>';
             }
         }
         if ($round % 3 == 0) {
             print "<tr valign=\"top\">";
         }
-        $round = $pick["round"];
+        $round = $pick['round'];
         print "<td width=\"26\"><b>Round $round</b>";
-        print "<ol>";
+        print '<ol>';
     }
-    print "<li>${pick["name"]} <a href=\"#Notes\">${pick["flag"]}</a></li>";
+    print "<li>${pick['name']} <a href=\"#Notes\">${pick['flag']}</a></li>";
 }
 ?>
 
@@ -81,4 +80,4 @@ while ($pick = mysqli_fetch_array($results)) {
 </TABLE>
 </P>
 
-<!--#include virtual="/base/footer.html"-->
+<?php include 'base/footer.php'; ?>

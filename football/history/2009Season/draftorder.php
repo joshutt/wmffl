@@ -78,4 +78,4 @@ while ($pick = mysqli_fetch_array($results)) {
 </TABLE>
 </P>
 
-<!--#include virtual="/base/footer.html"-->
+<?php include 'base/footer.php'; ?>
