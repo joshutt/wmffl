@@ -9,7 +9,7 @@ include 'base/menu.php';
 
 
 <H1 ALIGN=Center>Team Finances</H1>
-<H5 ALIGN=Center>Last Updated 12/23/2022</H5>
+<H5 ALIGN=Center>Last Updated 2/19/2023</H5>
 <HR size="1">
 
 <p>
