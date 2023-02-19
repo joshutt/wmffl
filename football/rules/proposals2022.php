@@ -17,7 +17,7 @@ include 'base/menu.php';
 <div class="card m-3 p-2 bg-light">
     <b>Proposal 2022.1 - Reduce 60 yard FG points</b>
     <b>Sponsor: Richard Lawson</b><br/>
-    <span class="ballot">Status: <span class="status">On Ballot</span></span><br/>
+    <span class="ballot">Status: <span class="status">Rejected, 5-6</span></span><br/>
     Reduce the number of points a 60+ yard field goal from 10 pts to 6 pts
     <blockquote class="mb-0 mt-2 px-3"><i>Change rule V.B.5.b.iv to read: Made 60+ yards = 6 pts<br/>
         </i></blockquote>
@@ -36,7 +36,7 @@ include 'base/menu.php';
 <div class="card m-3 p-2 bg-light">
     <b>Proposal 2022.2b - All missed FG under 50 yards get -1 pt</b>
     <b>Sponsor: Tom Marsh</b><br/>
-    <span class="ballot">Status: <span class="status">On Ballot</span></span><br/>
+    <span class="ballot">Status: <span class="status">Rejected, 5-6</span></span><br/>
     Make it so that all missed FG under 50 yuards get -1 pt.  Not just extra points and FGs under 30 yards.
     <blockquote class="mb-0 mt-2 px-3"><i>Change rule V.B.5.b.v to read: Missed 0-50 yards = -1 pt<br/>
         </i></blockquote>

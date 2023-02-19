@@ -42,6 +42,8 @@ include 'base/menu.php';
 <TR><TD>2018</TD><TD>Norsemen</TD></TR>
 <TR><TD>2019</TD><TD>Norsemen</TD></TR>
 <TR><TD>2020</TD><TD>Amish Electricians</TD></TR>
+<TR><TD>2021</TD><TD>Norsemen</TD></TR>
+<TR><TD>2022</TD><TD>Norsemen</TD></TR>
 </TABLE>
 </TD><TD valign="bottom">
 <B>Orange Division Champions</B>
@@ -76,6 +78,8 @@ include 'base/menu.php';
 <TR><TD>2018</TD><TD>Trump Molests Collies</TD></TR>
 <TR><TD>2019</TD><TD>Crusaders</TD></TR>
 <TR><TD>2020</TD><TD>Crusaders</TD></TR>
+<TR><TD>2021</TD><TD>Trump Molests Collies</TD></TR>
+<TR><TD>2022</TD><TD>Trump Molests Collies</TD></TR>
 </TABLE>
 </TD><TD valign="bottom">
 <B>White Division Champions</B>
@@ -92,6 +96,8 @@ include 'base/menu.php';
 <TR><TD>2018</TD><TD>Fightin' Bitin' Beavers</TD></TR>
 <TR><TD>2019</TD><TD>Testudos Revenge</TD></TR>
 <TR><TD>2020</TD><TD>MeggaMen</TD></TR>
+<TR><TD>2021</TD><TD>MeggaMen</TD></TR>
+<TR><TD>2022</TD><TD>MeggaMen</TD></TR>
 </table>
 </TD></TR></TABLE>
 
@@ -129,6 +135,8 @@ include 'base/menu.php';
 <TR><TD>2018</TD><TD>Trump Molests Collies</TD><TD>56</TD><TD>Norsemen</TD><TD>50</TD><TD>Deshaun Watson</TD></TR>
 <TR><TD>2019</TD><TD>Norsemen</TD><TD>114</TD><TD>Testudos Revenge</TD><TD>23</TD><TD>Fred Warner</TD></TR>
 <TR><TD>2020</TD><TD>Amish Electricians</TD><TD>58</TD><TD>Sean Taylor's Ashes</TD><TD>26</TD><TD>Davante Adams</TD></TR>
+<TR><TD>2021</TD><TD>Norsemen</TD><TD>49</TD><TD>MeggaMen</TD><TD>40</TD><TD>Patrick Mahomes</TD></TR>
+<TR><TD>2022</TD><TD>Trump Molests Collies</TD><TD>48</TD><TD>MeggaMen</TD><TD>42</TD><TD>TJ Hockenson</TD></TR>
 </TABLE>
 </div>
 
@@ -160,6 +168,8 @@ include 'base/menu.php';
 <TR><TD>2018</TD><TD>Amish Electricians</TD><TD>41</TD><TD>Fighting Squirrels</TD><TD>0</TD></TR>
 <TR><TD>2019</TD><TD>Fighting Squirrels</TD><TD>34</TD><TD>British Bulldogs</TD><TD>8</TD></TR>
 <TR><TD>2020</TD><TD>British Bulldogs</TD><TD>60</TD><TD>Gallic Warriors</TD><TD>56</TD></TR>
+<TR><TD>2021</TD><TD>Gallic Warriors</TD><TD>24</TD><TD>Sacks on the Beach</TD><TD>11</TD></TR>
+<TR><TD>2022</TD><TD>Crusaders</TD><TD>56</TD><TD>Richard's Lionhearts</TD><TD>27</TD></TR>
 </TABLE>
 </div>
 

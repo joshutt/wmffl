@@ -46,7 +46,7 @@ if ($submit == 'Confirm') {
     $listcount = 0;
     while (list($key, $val) = each($_POST)) {
         $com = substr($key, 0, 4);
-              print "$key - $com - $val<br>";
+        //      print "$key - $com - $val<br>";
         if ($com == 'keep' || $com == 'injr') {
             if ($val == 'n') {
                 $droparray[] = substr($key, 4);
@@ -490,7 +490,6 @@ if ($isin) {
 
     <CENTER><B>You must be logged in to perform transactions</B></CENTER>
 </div>
-
 <?php }
-include 'base/footer.php';
+include 'base/footer.html';
 ?>

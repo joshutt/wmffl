@@ -23,10 +23,10 @@ table of every team's draft positions.</div>
 <TR><TD>Sean Taylor's Ashes</TD><td></td><TD>6th</TD></TR>
 <TR><TD>Sacks on the Beach</TD><td></td><TD>7th</TD></TR>
 <TR><TD>British Bulldogs</TD><td></td><TD>8th</TD></TR>
-<TR><TD>Trump Molests Collies</TD><td></td><TD>9th or 12th</TD></TR>
-<TR><TD>Testudos Revenge</TD><td></td><TD>9th or 10th</TD></TR>
-<TR><TD>MeggaMen</TD><td></td><TD>10th or 12th</TD></TR>
+<TR><TD>Testudos Revenge</TD><td></td><TD>9th</TD></TR>
+<TR><TD>MeggaMen</TD><td></td><TD>10th </TD></TR>
 <TR><TD>Norsemen</TD><td></td><TD>11th</TD></TR>
+<TR><TD>Trump Molests Collies</TD><td></td><TD>12th</TD></TR>
 </TABLE></div>
 
 <?php include "base/footer.html"; ?>
