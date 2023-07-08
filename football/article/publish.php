@@ -41,25 +41,25 @@ if (!isset($article)) {
     <form method="POST" action="process">
 
         <div class="form-group ">
-            <label class="col-sm-2 col-form-label col-form-label-lg" for="title">Title:</label>
+            <label class="col-sm-2 col-form-label col-form-label-lg font-weight-bold" for="title">Title:</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="title" name="title" value="<?= $artTitle ?>"/>
             </div>
         </div>
         <div class="form-group ">
-            <label class="col-sm-2 col-form-label col-form-label-lg" for="url">Image URL:</label>
+            <label class="col-sm-2 col-form-label col-form-label-lg font-weight-bold" for="url">Image URL:</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="url" name="url" value="<?= $url ?>"/>
             </div>
         </div>
         <div class="form-group ">
-            <label class="col-sm-2 col-form-label col-form-label-lg" for="caption">Caption:</label>
+            <label class="col-sm-2 col-form-label col-form-label-lg font-weight-bold" for="caption">Caption:</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="caption" name="caption" value="<?= $caption ?>"/>
             </div>
         </div>
         <div class="form-group ">
-            <label class="col-sm-2 col-form-label col-form-label-lg" for="article">Article:</label>
+            <label class="col-sm-2 col-form-label col-form-label-lg font-weight-bold" for="article">Article:</label>
             <div class="col-sm-10">
                 <div class="editableArticle border p-1" id="article[]" name="article"><?= $article ?></div>
             </div>
