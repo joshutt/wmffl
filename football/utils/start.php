@@ -53,7 +53,7 @@ foreach ($_SESSION as $key => $value) {
     error_log("WHAR: [$key] [$value]");
 }
 
-if (!isset($isin) || empty($isin)) {
+if (empty($isin)) {
     $isin = false;
 }
 

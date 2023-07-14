@@ -2,7 +2,7 @@
 require_once 'utils/start.php';
 require_once 'utils/ImageProcessor.php';
 
-function compressImage($url, $currentSeason, $currentWeek)
+function compressImage($conn, string $url)
 {
     global $config;
     $paths = $config['Paths'];
@@ -11,7 +11,7 @@ function compressImage($url, $currentSeason, $currentWeek)
     set_error_handler(logerror);
     $processor = new \utils\ImageProcessor($paths);
     $processor->createImageFromURL($url, $maxSize);
-    $processor->saveImage();
+    $processor->saveImage($conn);
 
     restore_error_handler();
     return $processor->getImageFileName();
@@ -23,7 +23,7 @@ function logerror($errno, $errstr, $errfile, $errline)
     global $errors;
     error_log("Error [$errno]: $errstr in file $errfile on line $errline");
     $fail = true;
-    array_push($errors, 'Provide a full URL to a JPEG, GIF or PNG image');
+    $errors[] = 'Provide a full URL to a JPEG, GIF or PNG image';
 }
 
 //print_r($_REQUEST);
@@ -48,23 +48,23 @@ global $errors;
 $errors = array();
 // Validate input
 if (empty($title)) {
-    array_push($errors, 'Must include a title');
+    $errors[] = 'Must include a title';
     $fail = true;
 } else if (strlen($title) >= 75) {
-    array_push($errors, 'Title can\'t be longer than 75 characters');
+    $errors[] = 'Title can\'t be longer than 75 characters';
     $fail = true;
 }
 if (empty($url)) {
-    array_push($errors, 'Must include an image URL');
+    $errors[] = 'Must include an image URL';
     $fail = true;
 }
 if (empty($article)) {
-    array_push($errors, 'Come on!  Put something in the message');
+    $errors[] = 'Come on!  Put something in the message';
     $fail = true;
 }
 
 if (!$fail) {
-    $fullName = compressImage($url, $currentSeason, $currentWeek);
+    $fullName = compressImage($conn, $url);
     //$fullName = compressImage($url, $currentSeason, $currentWeek-1);
 }
 
