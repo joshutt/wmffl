@@ -29,11 +29,16 @@ function getArticles($num, $start=null ): DataObjects_Articles
     $article->active = 1;
     $article->orderBy('displayDate desc');
     $article->orderBy('priority desc');
-    $article->limit($num);
 
-    if (!empty($start)) {
-        $article->whereAdd('articleId < '.$start);
+    if (empty($start)) {
+        $start = 0;
     }
+    $article->limit($start*$num, $num);
+
+//    if (!empty($start)) {
+//        $article->whereAdd('articleId <= '.$start);
+//        $start * $num;
+//    }
 
     $article->find();
     $article->getLinks('author');
