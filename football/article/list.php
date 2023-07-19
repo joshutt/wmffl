@@ -30,26 +30,20 @@ if ($isin) {
         <div class="card-deck">
             <?php
             $i = 1;
-            $first = null;
-            $last = null;
             while ($article->fetch()) {
-                if ($i === 1) {
-                    $first = $article->articleId + $artPerPage;
-                }
-                $last = $article->articleId;
                 print printArticleCard($article);
 
-                if ($i % 1 === 0) {
+                if ($i % 2 === 0) {
                     ?>
                     <div class="w-100 d-none d-sm-block d-md-none"><!-- wrap every 2 on sm--></div>
                     <?php
                 }
-                if ($i % 2 === 0) {
+                if ($i % 3 === 0) {
                     ?>
                     <div class="w-100 d-none d-md-block d-lg-none"><!-- wrap every 3 on md--></div>
                     <?php
                 }
-                if ($i % 3 === 0) {
+                if ($i % 4 === 0) {
                     ?>
                     <div class="w-100 d-none d-lg-block"><!-- wrap every 4 on lg--></div>
                     <?php
@@ -60,9 +54,13 @@ if ($isin) {
         </div>
 
     <div class="py-2 row justify-content-between">
-        <div class="float-left"><a class="btn btn-wmffl" href="list?start=<?= $last-1 ?>">&lt;&lt;&lt;
+        <div class="float-left"><a class="btn btn-wmffl" href="list?start=<?= $start+1 ?>">&lt;&lt;&lt;
                 Older</a></div>
-        <div class="float-right"><a class="btn btn-wmffl" href="list?start=<?= $first ?>">Newer &gt;&gt;&gt;</a>
+        <?php
+            if ($start > 0) {
+                ?>
+        <div class="float-right"><a class="btn btn-wmffl" href="list?start=<?= $start-1 ?>">Newer &gt;&gt;&gt;</a>
+            <?php } ?>
         </div>
     </div>
 
