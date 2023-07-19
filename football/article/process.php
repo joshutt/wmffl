@@ -26,11 +26,13 @@ function logerror($errno, $errstr, $errfile, $errline)
     $errors[] = 'Provide a full URL to a JPEG, GIF or PNG image';
 }
 
-//print_r($_REQUEST);
-
+//print_r($_FILES);
+//exit;
 
 $title = $_REQUEST['title'];
 $url = $_REQUEST['url'];
+$upload = $_FILES['upload'];
+$uploadFile = $upload['name'];
 $caption = $_REQUEST['caption'];
 $articleList = $_REQUEST['article'];
 $article = '';
@@ -54,17 +56,26 @@ if (empty($title)) {
     $errors[] = 'Title can\'t be longer than 75 characters';
     $fail = true;
 }
-if (empty($url)) {
-    $errors[] = 'Must include an image URL';
+if (empty($url) && empty($uploadFile)) {
+    $errors[] = 'Must include either an image URL or upload file';
+    $fail = true;
+} else if (!empty($url) && !empty($uploadFile)) {
+    $errors[] = 'Only include one of image URL and image upload file';
     $fail = true;
 }
+
 if (empty($article)) {
     $errors[] = 'Come on!  Put something in the message';
     $fail = true;
 }
 
 if (!$fail) {
-    $fullName = compressImage($conn, $url);
+    $file = $url;
+    if (empty($file)) {
+        $file = $upload['tmp_name'];
+    }
+    error_log("File Name [$file]" );
+    $fullName = compressImage($conn, $file);
     //$fullName = compressImage($url, $currentSeason, $currentWeek-1);
 }
 

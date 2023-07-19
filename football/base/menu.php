@@ -10,8 +10,8 @@ if (!isset($title)) {
 <html>
 <head>
     <title><?= $title; ?></title>
-    <link rel="icon" href="/images/test.png" type="image/png"/>
-    <link rel="SHORTCUT ICON" href="/images/test.png"/>
+    <link rel="icon" href="/images/logo.png" type="image/png"/>
+    <link rel="SHORTCUT ICON" href="/images/logo.png"/>
 
     <?php
     // Include any Javascript
@@ -87,7 +87,7 @@ if (!isset($title)) {
 <body>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-2">
-    <a class="navbar-brand" href="/"><img src="/images/test.png"></a>
+    <a class="navbar-brand" href="/"><img src="/images/logo.png"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>

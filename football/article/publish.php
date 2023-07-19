@@ -28,6 +28,9 @@ if (!isset($artTitle)) {
 if (!isset($url)) {
     $url = $_REQUEST['url'];
 }
+if (!isset($upload)) {
+    $upload = $_REQUEST['upload'];
+}
 if (!isset($caption)) {
     $caption = $_REQUEST['caption'];
 }
@@ -38,18 +41,22 @@ if (!isset($article)) {
 ?>
 
 
-    <form method="POST" action="process">
+    <form method="POST" action="process" enctype="multipart/form-data">
 
-        <div class="form-group ">
+    <div class="form-group ">
             <label class="col-sm-2 col-form-label col-form-label-lg font-weight-bold" for="title">Title:</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="title" name="title" value="<?= $artTitle ?>"/>
             </div>
         </div>
-        <div class="form-group ">
+        <div class="form-group border pb-4 pr-1">
             <label class="col-sm-2 col-form-label col-form-label-lg font-weight-bold" for="url">Image URL:</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="url" name="url" value="<?= $url ?>"/>
+            </div>
+            <label class="col-sm-2 col-form-label col-form-label-lg font-weight-bold" for="upload">Image Upload:</label>
+            <div class="col-sm-10">
+                <input type="file" class="form-control pt-1 pl-1" id="upload" name="upload" value="<?= $upload ?>"/>
             </div>
         </div>
         <div class="form-group ">

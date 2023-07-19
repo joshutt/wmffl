@@ -119,7 +119,7 @@ tags
 **/*.log
 
 # Uploaded images
-/football/images
+#/football/images
 /football/images/articles
 /football/images/week
 football/transactions/livedraft/check.log

@@ -22,7 +22,7 @@
 
 <footer class="page-footer font-small pt-4">
     <div class="text-center">
-        <a class="navbar-brand" href="/"><img src="/images/test.png"></a>
+        <a class="navbar-brand" href="/"><img src="/images/logo.png"></a>
     </div>
     <div class="footer-copyright text-center py-3">
         &copy; 1992-<?= date("Y") ?> WMFFL
