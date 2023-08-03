@@ -3,13 +3,13 @@ require_once 'utils/start.php';
 
 $thisWeek = $_REQUEST['week'] ?? '';
 if ($thisWeek == '') {
-    $thisWeek = $currentWeek;
-    //$thisWeek = 17;
+    //$thisWeek = $currentWeek;
+    $thisWeek = 17;
 }
 $thisSeason = 2022;
 $title = 'Standings';
 
-$clinchedList = array('Gallic Warriors' => '', 'Amish Electricians' => '', 'British Bulldogs' => '', 'Richard\'s Lionhearts' => '', 'Trump Molests Collies' => '', 'Testudos Revenge' => '', 'Sean Taylor\'s Ashes' => '', 'Norsemen' => '', 'Crusaders' => '', 'Fighting Squirrels' => '', 'MeggaMen' => '', 'Sacks on the Beach' => '');
+$clinchedList = array('Gallic Warriors' => 'e-', 'Amish Electricians' => 'e-', 'British Bulldogs' => 'e-', 'Richard\'s Lionhearts' => 't-', 'Trump Molests Collies' => 'y-', 'Testudos Revenge' => 'x-', 'Sean Taylor\'s Ashes' => 'e-', 'Norsemen' => 'y-', 'Crusaders' => 't-', 'Fighting Squirrels' => 'e-', 'MeggaMen' => 'y-', 'Sacks on the Beach' => 'e-');
 
 include 'base/menu.php';
 ?>

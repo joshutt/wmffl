@@ -39,12 +39,13 @@ include 'base/menu.php';
 <TR><TD ALIGN=Left>2019</TD><TD ALIGN=Left>Amish Electrician</TD><TD>Baker Mayfield</TD><TD>QB</TD><TD>CLE</TD></TR>
 <TR><TD ALIGN=Left>2020</TD><TD ALIGN=Left>Fighting Squirrels</TD><TD>Clyde Edwards-Helaire</TD><TD>RB</TD><TD>KC</TD></TR>
 <TR><TD ALIGN=Left>2021</TD><TD ALIGN=Left>Richard's Lionhearts</TD><TD>Ezekiel Elliott</TD><TD>RB</TD><TD>DAL</TD></TR>
+<TR><TD ALIGN=Left>2022</TD><TD ALIGN=Left>Gallic Warriors</TD><TD>James Conner</TD><TD>RB</TD><TD>ARI</TD></TR>
 </TABLE></P>
 
 <P><TABLE WIDTH=100% BORDER=0 ALIGN=Center>
 <TR><TD COLSPAN=3><B>#1 picks by team</B></TD></TR>
 <TR><TD>Fighting Squirrels</TD><TD>5</TD><TD>(1995, 2001, 2006, 2009, 2020)</TD></TR>
-<TR><TD>Gallic Warriors</TD><TD>4</TD><TD>(1997, 2007, 2012, 2013)</TD></TR>
+<TR><TD>Gallic Warriors</TD><TD>5</TD><TD>(1997, 2007, 2012, 2013, 2022)</TD></TR>
 <TR><TD>Trump Molests Collies</TD><TD>4</TD><TD>(1998, 2002, 2004, 2018)</TD></TR>
 <TR><TD>Crusaders</TD><TD>3</TD><TD>(1996, 2003, 2010)</TD></TR>
 <tr><td>Fightin' Bitin' Beavers</td><td>3</td><td>(1999, 2011, 2017)</td></tr>
@@ -58,7 +59,7 @@ include 'base/menu.php';
 
 <P><TABLE WIDTH=100% BORDER=0 ALIGN=Center>
 <TR><TD COLSPAN=3><B>#1 picks by position</B></TD></TR>
-<TR><TD>Runningback</TD><TD>17</TD><TD>(1992, 1996, 1997, 1998, 2001, 2003, 2005, 2006, 2007, 2008, 2010, 2011, 2014, 2016, 2018, 2020, 2021)</TD></TR>
+<TR><TD>Runningback</TD><TD>18</TD><TD>(1992, 1996, 1997, 1998, 2001, 2003, 2005, 2006, 2007, 2008, 2010, 2011, 2014, 2016, 2018, 2020, 2021, 2022)</TD></TR>
 <TR><TD>Wide Receivers</TD><TD>7</TD><TD>(1993, 1999, 2000, 2004, 2009, 2015, 2017)</TD></TR>
 <TR><TD>Quarterbacks</TD><TD>6</TD><TD>(1994, 1995, 2002, 2012, 2013, 2019)</TD></TR>
 </TABLE></P>

@@ -1,4 +1,4 @@
-set @season := 2021; -- The season that just ended
+set @season := 2022; -- The season that just ended
 set @transpoints := 55; -- Number of transaction points a team gets each year
 
 insert into teamnames

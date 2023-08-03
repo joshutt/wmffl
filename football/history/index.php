@@ -13,7 +13,7 @@ include 'base/menu.php';
     <ul class="nav nav-pills nav-fill col m-2 p-1">
         <li class="nav-item m-2"><a class="nav-link" href="pastchamps.php">Past Champions</a></li>
         <li class="nav-item m-2"><a class="nav-link" href="pastdrafts.php">Past #1 Draft Picks</a></li>
-        <li class="nav-item m-2"><a class="nav-link" href="paststreaks.php">Past Streaks</a></li>
+        <li class="nav-item m-2 d-none"><a class="nav-link" href="paststreaks.php">Past Streaks</a></li>
         <li class="nav-item m-2"><a class="nav-link" href="alltimerecords.php">All-Time Records</a></li>
         <li class="nav-item m-2"><a class="nav-link" href="recordsweek">Player Single Week Records</a></li>
         <li class="nav-item m-2"><a class="nav-link" href="recordseason">Player Single Season Records</a></li>
