@@ -421,13 +421,14 @@ input:checked + .slider:before {
 }
 
 .article-img {
-    /*max-width: 400px;*/
+    max-width: 100%;
     max-height: 250px;
-    /*width: auto;*/
+    width: auto;
     height: auto;
     /*align-content: center;*/
 }
 
 .article-card {
     border-color: #440000;
+    align-items: center;
 }

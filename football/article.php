@@ -8,7 +8,7 @@ $article->fetch();
 
 <div class="container">
 <div class="row">
-    <div class="col"><?= printArticleCard($article) ?></div>
+    <div class="col main-art"><?= printArticleCard($article) ?></div>
 </div>
 
 <div class="row mx-0">
