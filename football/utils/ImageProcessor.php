@@ -169,6 +169,9 @@ class ImageProcessor
 //            $fileName = md5($image_data) . ".$format";
             $fileName = md5($image_data);
             $stmt = $conn->prepare('INSERT INTO images (url, fullImage, smallImage) VALUES (?, ?, ?)');
+            error_log("Filename: $fileName");
+            error_log("Null: $null");
+            error_log("Small Data: $small_data");
             $stmt->bind_param('sbb', $fileName, $null, $small_data);
             $stmt->send_long_data(1, utf8_encode($image_data));
             $stmt->execute();

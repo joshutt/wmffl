@@ -13,8 +13,6 @@ $result = mysqli_stmt_get_result($stmt);
 
 $numrow = mysqli_num_rows($result);
 error_log("Num Row: $numrow");
-error_log("Username $username");
-error_log("Password $password");
 
 if ($numrow == 0) {
     $errorMsg = 'Invalid Username/Password';
