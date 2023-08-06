@@ -182,4 +182,4 @@ number indicates a negative balance or debit.</P>
 <TR BGCOLOR="#999999"><TD><B>Totals</B></TD><TD ALIGN=Right><B><FONT COLOR="#FF0000">$60.00</FONT></B></TD><TD ALIGN=Right><B>$60.79</B></TD></TR>
 
 </TABLE>
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

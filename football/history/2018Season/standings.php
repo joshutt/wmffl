@@ -34,5 +34,5 @@ z - clinched Toilet Bowl berth
 <?php
 }
 
-include "base/footer.html";
+include "base/footer.php";
 ?>

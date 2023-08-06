@@ -1,8 +1,9 @@
-<?
+<?php
 $title = "Owner's Commentary";
-$cssList = array("blog.css");
-include "base/menu.php"; ?>
+$cssList = array('blog.css');
+include 'base/menu.php';
+?>
 
-<div style="left: 180px;"><? include "blog.php" ?></div>
+<div style="left: 180px;"><?php include 'blog.php' ?></div>
 
-<? include "base/footer.html" ?>
+<?php include 'base/footer.php' ?>

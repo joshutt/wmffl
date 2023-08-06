@@ -120,4 +120,4 @@ be able to find out how much each player will cost to protect.</P>
 
 </TABLE>
 </TD></TR></TABLE>
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

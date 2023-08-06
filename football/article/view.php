@@ -1,19 +1,37 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: Josh
- * Date: 10/17/2017
- * Time: 11:46 AM
- */
+require_once 'utils/start.php';
+require_once 'articleUtils.php';
 
-$cssList = array("/base/css/w3.css", "https://fonts.googleapis.com/icon?family=Material+Icons",
-    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
-include "base/menu.php";
+$uid = null;
+if (array_key_exists('uid', $_REQUEST) && $_REQUEST['uid'] != null) {
+    $uid = $_REQUEST['uid'];
+}
+$article = getArticle($uid);
+
+// Format Dates
+$dateString = date('M d, Y', strtotime($article->displayDate));
+
+
+include 'base/menu.php';
 ?>
-<div class="w3-twothird w3-margin-top">
-<?php include "article.php"; ?>
-</div>
+
+    <div id="articleBlock" class="container">
+        <h1 class="text-center titleLine1 p-1"><?= $article->title ?></h1>
+        <figure class="figure col text-center p-1"><img class="figure-img img-responsive" src="/<?= $article->link ?>"/>
+            <div class="figure-caption caption "><?= $article->caption ?></div>
+        </figure>
+        <div>
+            <span class="newsdate">Published: <?= $dateString ?></span>
+        </div>
+        <div>
+            <?php if (!empty($article->author)) { ?>
+                <span class="byLine">By <?= $article->getLink('author')->Name ?></span>
+            <?php } ?>
+        </div>
+        <div class="mainStory">
+            <div class="mt-2"><?= $article->articleText ?></div>
+        </div>
+    </div>
 
 <?php
-
-include "base/footer.html";
+include 'base/footer.php';

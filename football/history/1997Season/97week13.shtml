@@ -161,4 +161,4 @@ DB: TURNER,ERIC           8     DB: BUCKLEY,TERRELL       6
      Defensive Points =  27          Defensive Points =  31
 </PRE>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

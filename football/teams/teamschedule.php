@@ -10,4 +10,4 @@ if (array_key_exists('vsTeam', $_REQUEST)) {
     include "indschedule.php";
 }
 
-include "base/footer.html";
+include "base/footer.php";

@@ -68,4 +68,4 @@ Install Brian Elliff as the new owner of the Fighting Squirrels.
 <blockquote><i>No rule change required</i></blockquote>
 </p>
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

@@ -156,4 +156,4 @@ This means that the orignal scoring, was correct.  The corrections
 are made in this week's standings.
 </PRE>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

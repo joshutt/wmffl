@@ -203,4 +203,4 @@ look like.  <A HREF="proposals2002.shtml">Return to proposals</A></P>
 </I></BLOCKQUOTE>
 </P>
 
-<?php include "/base/footer.html" ?>
+<?php include "/base/footer.php" ?>

@@ -194,4 +194,4 @@ DB: Williams,Aeneas     ARI   8     DB: Griffith,Robert     MIN   7
 
 </PRE>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

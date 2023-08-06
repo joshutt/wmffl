@@ -74,4 +74,4 @@ while ($pick = mysqli_fetch_array($results)) {
 </TABLE>
 </P>
 
-<?php include "base/footer.html" ?>
+<?php include "base/footer.php" ?>

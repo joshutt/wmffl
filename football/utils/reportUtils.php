@@ -1,8 +1,8 @@
 <?php
 
-$supportedFormats = array("html", "csv", "json", "ajax");
+$supportedFormats = array('html', 'csv', 'json', 'ajax');
 
-function supportedFormat($format)
+function supportedFormat($format): bool
 {
     global $supportedFormats;
     return in_array($format, $supportedFormats);
@@ -21,20 +21,20 @@ function outputHtml($titles, $content)
     foreach ($titles as $subj) {
         print "<th>$subj</th>";
     }
-    print "</tr> </thead> <tbody>";
+    print '</tr> </thead> <tbody>';
     foreach ($content as $player) {
-        print "<tr>";
+        print '<tr>';
         foreach ($player as $item) {
             print "<td>$item</td>";
         }
-        print "</tr>";
+        print '</tr>';
     }
 
-    print "</thbody></table>";
+    print '</thbody></table>';
 }
 
 
-function outputCSV($titles, $content, $filename = "data.csv")
+function outputCSV($titles, $content, $filename = 'data.csv')
 {
     // output headers so that the file is downloaded rather than d`isplayed
     header('Content-Type: text/csv; charset=utf-8');
@@ -64,6 +64,6 @@ function outputJSON($titles, $content)
     }
 
     $json_output = json_encode($jsonArr);
-    header("Content-Type: application/json; charset=UTF-8");
+    header('Content-Type: application/json; charset=UTF-8');
     print $json_output;
 }

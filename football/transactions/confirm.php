@@ -490,6 +490,7 @@ if ($isin) {
 
     <CENTER><B>You must be logged in to perform transactions</B></CENTER>
 </div>
+
 <?php }
-include 'base/footer.html';
+include 'base/footer.php';
 ?>

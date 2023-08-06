@@ -1,68 +1,81 @@
-<?
-$title = "Publish Article";
+<?php
+$title = 'Publish Article';
 
-include "base/menu.php";
-
-if (!$isin) {
-    print "You Shouldn't Be here";
-    exit();
-}
+$javascriptList = array('/base/vendor/js/tiny_mce_5_0/tinymce.min.js', '/base/js/article.js');
+include 'base/menu.php';
 ?>
-    <script type="text/javascript" src="javascript/tiny_mce/tiny_mce.js"></script>
 
-    <script type="text/javascript">
-tinyMCE.init({
-        mode : "textareas",
-        theme : "advanced",
-        plugins : "autolink,lists,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,imagemanager,filemanager",
-    
-        // Theme options
-        theme_advanced_buttons1 : "newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,formatselect,fontselect,fontsizeselect",
-        theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
-        theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
-    theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,spellchecker,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,blockquote,pagebreak,|,insertfile,insertimage",
-        theme_advanced_toolbar_location : "top",
-        theme_advanced_toolbar_align : "left",
-        theme_advanced_statusbar_location : "bottom",
-        theme_advanced_resizing : true,
-        remove_linebreaks: true
-});
-    </script>
+<h1 class="full"><?=$title?></h1>
 
-<?
+<?php
+if (!$isin) {
+    ?>
+    <div class="text-center font-weight-bold h4">You must be logged in to use this feature</div>
+    <?php
+} else {
+
 if (isset($errors)) {
     foreach ($errors as $name) {
-        print "<span style=\"color: red; weight: bold\">$name</span><br/>";
+        ?>
+        <div class="alert alert-danger" role="alert"><?= $name ?></div>
+        <?php
     }
 }
 
 if (!isset($artTitle)) {
-    $artTitle = $_POST["title"];
+    $artTitle = $_REQUEST['title'];
 }
 if (!isset($url)) {
-    $url = $_POST["url"];
+    $url = $_REQUEST['url'];
+}
+if (!isset($upload)) {
+    $upload = $_REQUEST['upload'];
 }
 if (!isset($caption)) {
-    $caption = $_POST["caption"];
+    $caption = $_REQUEST['caption'];
 }
 if (!isset($article)) {
-    $article = $_POST["article"];
+    $article = $_REQUEST['article'];
 }
 
 ?>
 
 
-<table>
-<form method="POST" action="process.php">
-<tr><th>Title:</th><td><input type="text" name="title" size="75" value="<?= $artTitle ?>"/></td></tr>
-<tr><th>Image URL:</th><td><input type="text" name="url" size="75" value="<?= $url ?>"/></td></tr>
-<tr><th>Caption:</th><td><input type="text" name="caption" size="75" value="<?= $caption ?>"/></td></tr>
-<tr><th>Article: </th><td><textarea name="article" cols="80" rows="30"><?= $article ?></textarea></td></tr>
-<tr><th><input type="submit" name="submit" value="Preview"/></th></tr>
-</form>
-</table>
+    <form method="POST" action="process" enctype="multipart/form-data">
 
+    <div class="form-group ">
+            <label class="col-sm-2 col-form-label col-form-label-lg font-weight-bold" for="title">Title:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="title" name="title" value="<?= $artTitle ?>"/>
+            </div>
+        </div>
+        <div class="form-group border pb-4 pr-1">
+            <label class="col-sm-2 col-form-label col-form-label-lg font-weight-bold" for="url">Image URL:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="url" name="url" value="<?= $url ?>"/>
+            </div>
+            <label class="col-sm-2 col-form-label col-form-label-lg font-weight-bold" for="upload">Image Upload:</label>
+            <div class="col-sm-10">
+                <input type="file" class="form-control pt-1 pl-1" id="upload" name="upload" value="<?= $upload ?>"/>
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="col-sm-2 col-form-label col-form-label-lg font-weight-bold" for="caption">Caption:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="caption" name="caption" value="<?= $caption ?>"/>
+            </div>
+        </div>
+        <div class="form-group ">
+            <label class="col-sm-2 col-form-label col-form-label-lg font-weight-bold" for="article">Article:</label>
+            <div class="col-sm-10">
+                <div class="editableArticle border p-1" id="article[]" name="article"><?= $article ?></div>
+            </div>
+        </div>
+        <div class="text-center">
+            <input class="btn btn-wmffl" type="submit" name="submit" value="Preview"/>
+        </div>
+    </form>
 
-<?
-include "base/footer.html";
-?>
+<?php
+}
+include 'base/footer.php';

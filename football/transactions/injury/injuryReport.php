@@ -156,4 +156,4 @@ foreach ($IRList as $player) {
     </div>
 
 <?php
-include 'base/footer.html';
+include 'base/footer.php';

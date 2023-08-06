@@ -67,4 +67,4 @@ years.</P>
 <TR BGCOLOR="#CCCCCC"><TD>&nbsp;&nbsp;&nbsp;Champion</TD><TD>&nbsp;</TD><TD>1 @ $148.50</TD></TR>
 </TABLE>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

@@ -96,7 +96,7 @@ include 'base/menu.php';
 <div class="card m-3 p-2 bg-light">
     <b>Proposal 2022.6 - Change voting to 50% + 1</b>
     <b>Sponsor: Chris Heywood</b><br/>
-    <span class="ballot">Status: <span class="status">On Ballot</span></span><br/>
+    <span class="ballot">Status: <span class="status">Passed, 8-1, 3 Abstain</span></span><br/>
     Change the threshold needed to pass a new rule to 50% + 1 of the vote
     <blockquote class="mb-0 mt-2 px-3"><i>Update rule XII.B to read:<br/>
             <blockquote>B. If 50% plus one of voting owners approve the proposal then it will become a rule.</blockquote>
@@ -105,4 +105,4 @@ include 'base/menu.php';
         </i></blockquote>
 </div>
 
-<?php include 'base/footer.html'; ?>
+<?php include 'base/footer.php'; ?>

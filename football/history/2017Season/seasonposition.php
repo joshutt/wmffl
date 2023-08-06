@@ -32,5 +32,5 @@ table of every team's draft positions.</P>
 * - Penalized 4 positions due to failing to pay 2016 entry fee by week 8.
 
 <?
-include "base/footer.html";
+include "base/footer.php";
 ?>

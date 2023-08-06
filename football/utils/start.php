@@ -24,7 +24,7 @@ $conn = mysqli_connect('localhost', $ini['userName'], $ini['password'], $ini['db
 //mysqli_select_db($conn, $ini["dbName"]);
 
 // Make sure timezone is correct
-$tzQuery = "SET time_zone = 'America/New_York'";
+$tzQuery = "SET time_zone = 'America/New_York';";
 $tzResult = mysqli_query($conn, $tzQuery);
 
 // Determine the current season and current week, but not every time, use cachin
@@ -53,7 +53,7 @@ foreach ($_SESSION as $key => $value) {
     error_log("WHAR: [$key] [$value]");
 }
 
-if (!isset($isin) || empty($isin)) {
+if (empty($isin)) {
     $isin = false;
 }
 

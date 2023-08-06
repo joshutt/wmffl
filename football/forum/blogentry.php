@@ -1,49 +1,41 @@
-<?
-require_once "utils/start.php";
+<?php
+require_once 'utils/start.php';
+
+$title = 'Leave Comment';
+
+$javascriptList = array('/base/vendor/js/tiny_mce_5_0/tinymce.min.js', '/base/js/comments.js');
+include 'base/menu.php';
 ?>
 
-<html>
-<head>
-    <title>Leave Comment</title>
-    <script type="text/javascript" src="javascript/tiny_mce/tiny_mce.js"></script>
+<h1 class="full">Enter Comment</h1>
 
-    <script type="text/javascript">
-tinyMCE.init({
-        mode : "textareas",
-        theme : "advanced",
-            remove_linebreaks: true
-});
-    </script>
-
-</head>
-
-<? include "base/menu.php"; ?>
-
-<h1 align="center">Enter Comment</h1>
-<hr/>
-
-<?
+<?php
 if (!$isin) {
-?>
-<b>You must be logged in to submit a Trash Talk entry</b>
-<?
+    ?>
+    <b>You must be logged in to submit a Trash Talk entry</b>
+    <?php
 } else {
-?>
+    ?>
 
-<form action="processEntry.php" method="post">
-    <b>Subject:</b><br/>
-<input type="text" size="60" name="subject"/><br/>
-<b>Body:</b><br/>
-<textarea name="body" cols="60" rows="20">
-</textarea><br/>
-<center>
-<input type="submit" value="Submit Entry"/>
-</center>
+    <div class="container align-content-center">
+        <form action="processEntry.php" method="post">
+            <div class="form-group">
+                <label for="subject">Subject:</label>
+                <input type="text" class="form-control" id="subject" name="subject"/>
+            </div>
+            <div class="form-group">
+                <label for="body">Body:</label>
+                <textarea class="form-control" id="body" name="body" rows="20"></textarea>
+            </div>
+            <div class="text-center">
+                <input type="submit" class="btn btn-wmffl" value="Submit Entry"/>
+            </div>
 
-</form>
+        </form>
+    </div>
 
-<?
+    <?php
 }
 ?>
 
-<? include "base/footer.html"; ?>
+<?php include 'base/footer.php'; ?>

@@ -44,4 +44,4 @@ AEE 11-10-97
 </TABLE>
 
 
-<?php include "base/footer.html"; ?>
+<?php include "base/footer.php"; ?>

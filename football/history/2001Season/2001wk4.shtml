@@ -200,4 +200,4 @@ DB: Brown,Eric          DEN   3     DB: Smoot,Fred          WAS   5
 
 </PRE>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

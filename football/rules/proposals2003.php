@@ -91,4 +91,4 @@ Restructure Article VIII as Section E of Article VI.  No change to any wording w
 Ownership of Barbarians would be transfered from Keppy Plitt to Warren Allen.<BR>
 <BLOCKQUOTE><I>No changes to the rules would be necessary</I></BLOCKQUOTE></P>
 
-<?php include "/base/footer.html" ?>
+<?php include "/base/footer.php" ?>

@@ -104,6 +104,6 @@ foreach ($you as $value) {
 </CENTER>
 </FORM>
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>
 </BODY>
 </HTML>

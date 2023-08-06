@@ -96,5 +96,5 @@ print "</TABLE></TD>";
 </TABLE>
 
 <?
-include "base/footer.html";
+include "base/footer.php";
 ?>

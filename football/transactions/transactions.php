@@ -1,17 +1,17 @@
 <?
-require_once "utils/start.php";
+require_once 'utils/start.php';
 
 function trade($teamid, $date)
 {
     global $conn;
-    $tradequery = "select t1.tradegroup, t1.date, tm1.name as TeamFrom, ";
-    $tradequery .= "p.lastname, p.firstname, p.pos, p.team, t1.other ";
-    $tradequery .= "from trade t1 ";
-    $tradequery .= "left join trade t2 on t1.tradegroup=t2.tradegroup and t1.teamfromid<>t2.teamfromid ";
-    $tradequery .= "join teamnames tm1 on t1.teamfromid=tm1.teamid ";
-    $tradequery .= "left join team tm2 on t2.teamfromid=tm2.teamid ";
-    $tradequery .= "join weekmap wm on tm1.season=wm.season ";
-    $tradequery .= "left join newplayers p on p.playerid=t1.playerid ";
+    $tradequery = 'select t1.tradegroup, t1.date, tm1.name as TeamFrom, ';
+    $tradequery .= 'p.lastname, p.firstname, p.pos, p.team, t1.other ';
+    $tradequery .= 'from trade t1 ';
+    $tradequery .= 'left join trade t2 on t1.tradegroup=t2.tradegroup and t1.teamfromid<>t2.teamfromid ';
+    $tradequery .= 'join teamnames tm1 on t1.teamfromid=tm1.teamid ';
+    $tradequery .= 'left join team tm2 on t2.teamfromid=tm2.teamid ';
+    $tradequery .= 'join weekmap wm on tm1.season=wm.season ';
+    $tradequery .= 'left join newplayers p on p.playerid=t1.playerid ';
     $tradequery .= "where (t1.TeamFromid=$teamid or t1.TeamToid=$teamid) ";
     $tradequery .= "and t1.date='$date' ";
     $tradequery .= "and '$date' between wm.startDate and wm.enddate ";
@@ -34,7 +34,7 @@ function trade($teamid, $date)
             $firstteam = $TeamFrom;
         }
         if (!$firstplayer) {
-            print ", ";
+            print ', ';
         }
         if ($other) {
             print $other;
@@ -48,19 +48,19 @@ $thequery = "SELECT DATE_FORMAT(max(date), '%m/%e/%Y'), DATE_FORMAT(max(date),'%
 $results = mysqli_query($conn, $thequery);
 list($lastupdate, $themonth, $theyear) = mysqli_fetch_row($results);
 
-if (isset($_REQUEST["month"])) $themonth = $_REQUEST["month"];
-if (isset($_REQUEST["year"])) $theyear = $_REQUEST["year"];
+if (isset($_REQUEST['month'])) $themonth = $_REQUEST['month'];
+if (isset($_REQUEST['year'])) $theyear = $_REQUEST['year'];
 //	if (!isset($_GET["year"])) $_GET["year"]=2002;
 
-$title = "WMFFL Transactions";
-include "base/menu.php";
+$title = 'WMFFL Transactions';
+include 'base/menu.php';
 ?>
 
     <H1 ALIGN=Center>Transactions</H1>
-    <H5 ALIGN=Center>Last Updated <? print $lastupdate; ?></H5>
+    <H5 ALIGN=Center>Last Updated <?= $lastupdate; ?></H5>
     <HR size="1">
 
-<?php include "transactions/transmenu.php"; ?>
+<?php include 'transactions/transmenu.php'; ?>
 
     <div class="container-fluid">
         <div class="row">
@@ -84,24 +84,24 @@ AND m.season=$theyear
 ";
 
                 if ($themonth > 8) {
-                    $thequery .= "AND t.date BETWEEN '" . $theyear . "-" . $themonth . "-01' AND ";
-                    $thequery .= "'" . $theyear . "-" . $themonth . "-31 23:59:59.99999' ";
+                    $thequery .= "AND t.date BETWEEN '" . $theyear . '-' . $themonth . "-01' AND ";
+                    $thequery .= "'" . $theyear . '-' . $themonth . "-31 23:59:59.99999' ";
                 } else {
                     $thequery .= "AND t.date BETWEEN '" . $theyear . "-01-01' AND ";
                     $thequery .= "'" . $theyear . "-08-31 23:59:59.99999' ";
                 }
                 $thequery .= "ORDER BY DATE_FORMAT(t.date, '%Y/%m/%d') DESC, m.name, t.method, p.lastname";
 
-                $results = mysqli_query($conn, $thequery) or die("Error: " . mysqli_error($conn));
+                $results = mysqli_query($conn, $thequery) or die('Error: ' . mysqli_error($conn));
                 $first = TRUE;
-                $olddate = "";
-                $oldteam = "";
-                $oldmethod = "";
+                $olddate = '';
+                $oldteam = '';
+                $oldmethod = '';
                 while (list($date, $teamname, $method, $player, $position, $nflteam, $teamid, $rawdate) = mysqli_fetch_row($results)) {
                     $change = FALSE;
                     if ($olddate != $date) {
                         if (!$first) {
-                            print "</UL></UL>";
+                            print '</UL></UL>';
                         }
                         $first = FALSE;
                         print "<B><I>$date</I></B><UL>";
@@ -111,7 +111,7 @@ AND m.season=$theyear
                         $tradeonce = FALSE;
                     }
                     if ($oldteam != $teamname || $change) {
-                        if (!$change) print "</UL>";
+                        if (!$change) print '</UL>';
                         print "<LI><B>$teamname</B><UL>";
                         $oldteam = $teamname;
                         $change = TRUE;
@@ -130,14 +130,14 @@ AND m.season=$theyear
                                 if ($tradeonce) continue 2;
                                 trade($teamid, $rawdate);
                                 $change = TRUE;
-                                $oldmethod = "";
+                                $oldmethod = '';
                                 $tradeonce = TRUE;
                                 continue 2;
                             case 'Fire':
                                 print "<li style='white-space: normal;'>Fired ";
                                 break;
                             case 'Hire':
-                                print "<LI>Hired ";
+                                print '<LI>Hired ';
                                 break;
                             case 'To IR':
                                 print "<li style='white-space: normal;'>Moved to IR ";
@@ -157,7 +157,7 @@ AND m.season=$theyear
                         $change = TRUE;
                         $firstplayer = TRUE;
                     }
-                    if (!$firstplayer) print ", ";
+                    if (!$firstplayer) print ', ';
                     print "$player ($position-$nflteam)";
                     $firstplayer = FALSE;
                 }
@@ -172,5 +172,5 @@ AND m.season=$theyear
         </div>
     </div>
 
-<?php include "base/footer.html";
+<?php include 'base/footer.php';
 

@@ -731,4 +731,4 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
     </OL>
 </OL>
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

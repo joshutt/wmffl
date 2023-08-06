@@ -58,4 +58,4 @@ a team with a poorer record to appear high in the rankings and vice versa.
 </TABLE>
 </P>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

@@ -131,4 +131,4 @@ Each team limited to four players per position on their roster.
 </i></blockquote>
 </p>
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

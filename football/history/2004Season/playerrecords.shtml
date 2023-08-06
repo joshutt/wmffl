@@ -66,5 +66,5 @@
 <tr><td>HC</td><td>Bill Belichick</td><td>51</td><td>3rd (tie)</td></tr>
 </TABLE></CENTER></P>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->
 

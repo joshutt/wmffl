@@ -73,4 +73,4 @@
 <P><SUBSCRIPT> x - Wild Card Team<BR>
 y - Division Champion</SUBSCRIPT><P>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

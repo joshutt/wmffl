@@ -236,4 +236,4 @@ DB: Marion,Brock        MIA  10     DB: Tongue,Reggie       SEA   7
 
 </PRE>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

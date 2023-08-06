@@ -29,4 +29,4 @@ table of every team's draft positions.</div>
 <TR><TD>Amish Electricians</TD><td></td><TD>11th or 12th</TR>
 </TABLE></div>
 
-<?php include "base/footer.html"; ?>
+<?php include "base/footer.php"; ?>

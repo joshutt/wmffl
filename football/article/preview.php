@@ -1,10 +1,10 @@
-<?
-include "base/menu.php";
+<?php
+include 'base/menu.php';
 
 ?>
 <table width="100%" border="0">
 <TR><TD VALIGN="top" width="100%">
-        <? include "article.php"; ?>
+        <?php include 'article.php'; ?>
 </TD>
 
 <td align="right" valign="top" width="244">
@@ -19,10 +19,11 @@ include "base/menu.php";
 
 <form action="confirm.php" method="post">
 <input type="hidden" name="uid" value="<?= $uid ?>" />
-<input type="submit" name="Edit" value="Edit"/>
-<input type="submit" name="Publish" value="Publish"/>
+    <div class="text-center">
+<input type="submit" class="btn btn-wmffl" name="Edit" value="Edit"/>
+<input type="submit" class="btn btn-wmffl" name="Publish" value="Publish"/>
+    </div>
 </form>
 
-<?
-include "base/footer.html";
-?>
+<?php
+include 'base/footer.php';

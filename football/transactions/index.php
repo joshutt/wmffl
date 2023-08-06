@@ -1,1 +1,1 @@
-<? include "transactions/transactions.php"; ?>
+<?php include 'transactions/transactions.php'; ?>

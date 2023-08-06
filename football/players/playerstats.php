@@ -39,5 +39,5 @@ while ($player = mysqli_fetch_array($results)) {
 }
 print "</table>";
 
-include "base/footer.html";
+include "base/footer.php";
 ?>

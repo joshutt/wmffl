@@ -34,5 +34,5 @@ You must be logged in to submit rule proposals.
 <?
 }
 
-include "base/footer.html";
+include "base/footer.php";
 ?>

@@ -60,4 +60,4 @@ include 'history/common/weekstandings.php';
 </div>
 </div>
 
-<?php include 'base/footer.html'; ?>
+<?php include 'base/footer.php'; ?>

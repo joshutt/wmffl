@@ -41,4 +41,4 @@ z - clinched Toliet Bowl berth
 </center>
 
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

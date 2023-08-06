@@ -25,4 +25,4 @@ $_POST["week"] = $Week;
 ?>
 </CENTER>
 
-<?php include "base/footer.html"; ?>
+<?php include "base/footer.php"; ?>

@@ -1,5 +1,5 @@
 <?php
-require_once "utils/connect.php";
+require_once 'utils/connect.php';
 
 
 if ($currentWeek < 1) {
@@ -35,29 +35,27 @@ $results = mysqli_query($conn, $sql) or die("Dead: $sql <br/>" . mysqli_error($c
 ?>
 
 <div class="cat text-center"><?= strtoupper($weekname) ?> SCORES</div>
-<div class="container">
+<div class="container gameBox">
     <?php
 
     while (list($weekname, $week, $team1, $leader, $leadscore, $trail, $trailscore, $label, $ot) = mysqli_fetch_row($results)) {
         ?>
-        <div class="gameBox border-top border-bottom row py-1">
-            <?php
-            if ($label != "") {
-                ?>
-                <div class="boxScore text-center col-12"><?= $label ?></div>
-
+        <div class="border-top border-bottom p-1">
+            <a class="row m-0" href="/activate/currentscore?teamid=<?= $team1 ?>&week=<?= $week ?>">
                 <?php
-                //break;
-            }
-            $otInd = $ot ? "OT" : "";
-            ?>
-            <div class="boxScore col-8 px-0 text-left text-truncate"><?= $leader ?><br/> <?= $trail ?></div>
-            <div class="boxScore col-1 px-0 text-center"><?= $leadscore ?><br/><?= $trailscore ?>
-                <span class="align-top"><?= $otInd ?></span></div>
-            <div class="boxScore col-3 align-middle px-0 text-center pt-1"><a class="NFLHeadline"
-                                                                              href="/activate/currentscore.php?teamid=<?= $team1 ?>&week=<?= $week ?>">Box
-                    Score</a></div>
+                if ($label != '') {
+                    ?>
+                    <div class="boxScore text-center col-12"><?= $label ?></div>
 
+                    <?php
+                    //break;
+                }
+                $otInd = $ot ? 'OT' : '';
+                ?>
+                <div class="boxScore col-10 px-0 text-left text-truncate"><?= $leader ?><br/> <?= $trail ?></div>
+                <div class="boxScore col-2 px-0 text-center"><?= $leadscore ?><br/><?= $trailscore ?>
+                    <span class="align-top"><?= $otInd ?></span></div>
+            </a>
         </div>
         <?php
     }

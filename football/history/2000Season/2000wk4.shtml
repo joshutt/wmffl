@@ -217,4 +217,4 @@ DB: Rice,Ron            DET   6     DB: Parrish,Tony        CHI   7
 
 </PRE>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

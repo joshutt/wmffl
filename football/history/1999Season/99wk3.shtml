@@ -153,4 +153,4 @@ DB: Griffith,Robert     MIN   5     DB: Williams,Aeneas     ARI   2
 
 </PRE>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

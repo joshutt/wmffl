@@ -291,6 +291,6 @@ for ($i=1; $i<=$NUM_PTS_DISPLAY; $i++) {
 
 </FORM>
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>
 </BODY>
 </HTML>

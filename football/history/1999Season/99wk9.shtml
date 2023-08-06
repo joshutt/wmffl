@@ -185,4 +185,4 @@ DB: Griffith,Robert     MIN   3     DB: Shade,Sam           WAS   5
 
 </PRE>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

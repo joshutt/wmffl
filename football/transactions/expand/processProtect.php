@@ -54,4 +54,4 @@ mysqli_query($conn, $sql) or die ("Unable to save your protections: " . mysqli_e
 
 <p><a href="protectList.php">Return to Protections page</a></p>
 
-<? include "base/footer.html"; ?>
+<? include "base/footer.php"; ?>

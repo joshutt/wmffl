@@ -1,82 +1,87 @@
 <?php
-require_once "utils/start.php";
+require_once 'utils/start.php';
+require_once 'utils/ImageProcessor.php';
 
-function compressImage($url, $currentSeason, $currentWeek) {
+function compressImage($conn, string $url)
+{
     global $config;
-    $paths = $config["Paths"];
+    $paths = $config['Paths'];
     $maxSize = 600;
-    $rootLoc = $paths["wwwPath"];
-    error_log(print_r($config, true));
-    $newDir = $paths["imagesPath"];
-    $newName = hash_file('md5', $url).'.jpg';
-    global $fail;
 
     set_error_handler(logerror);
-    $image = imagecreatefromjpeg($url);
-    if ($fail) { return null; }
-    $width = imagesx($image);
-    if ($fail) { return null; }
-    $height = imagesy($image);
-    if ($fail) { return null; }
-    $percent = 1.0;
-    if ($width >= $height && $width > $maxSize) {
-        $percent = $maxSize / $width;
-    } elseif ($height > $maxSize) {
-        $percent = $maxSize / $height;
-    }
-    $newwidth = $width * $percent;
-    $newheight = $height * $percent;
-    $thumb = imagecreatetruecolor($newwidth, $newheight);
-    if ($fail) { return null; }
-    imagecopyresampled($thumb, $image, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-    if ($fail) { return null; }
-    $shortname = "$newDir/$newName";
-    $fullName = "$rootLoc/$shortname";
-    imagejpeg($thumb, $fullName);
-    if ($fail) { return null; }
+    $processor = new \utils\ImageProcessor($paths);
+    $processor->createImageFromURL($url, $maxSize);
+    $processor->saveImage($conn);
+
     restore_error_handler();
-    return $shortname;
+    return $processor->getImageFileName();
 }
 
-function logerror($errno, $errstr) {
+function logerror($errno, $errstr, $errfile, $errline)
+{
     global $fail;
     global $errors;
-    error_log("Error [$errno]: $errstr");
+    error_log("Error [$errno]: $errstr in file $errfile on line $errline");
     $fail = true;
-    array_push($errors, "Provide a full URL to a JPG image");
+    $errors[] = 'Provide a full URL to a JPEG, GIF or PNG image';
 }
 
+//print_r($_FILES);
+//exit;
 
-$title = $_POST["title"];
-$url = $_POST["url"];
-$caption = $_POST["caption"];
-$article = $_POST["article"];
+$title = $_REQUEST['title'];
+$url = $_REQUEST['url'];
+$upload = $_FILES['upload'];
+$uploadFile = $upload['name'];
+$caption = $_REQUEST['caption'];
+$articleList = $_REQUEST['article'];
+$article = '';
+
+foreach ($articleList as $subArt) {
+    if (empty($subArt)) {
+        continue;
+    }
+    $article .= $subArt;
+}
 
 global $fail;
 $fail = false;
 global $errors;
 $errors = array();
-if (!isset($title) || empty($title)) {
-    array_push($errors, "Must include a title");
+// Validate input
+if (empty($title)) {
+    $errors[] = 'Must include a title';
+    $fail = true;
+} else if (strlen($title) >= 75) {
+    $errors[] = 'Title can\'t be longer than 75 characters';
     $fail = true;
 }
-if (!isset($url) || empty($url)) {
-    array_push($errors, "Must include an image URL");
+if (empty($url) && empty($uploadFile)) {
+    $errors[] = 'Must include either an image URL or upload file';
+    $fail = true;
+} else if (!empty($url) && !empty($uploadFile)) {
+    $errors[] = 'Only include one of image URL and image upload file';
     $fail = true;
 }
-if (!isset($article) || empty($article)) {
-    array_push($errors, "Come on!  Put something in the message");
+
+if (empty($article)) {
+    $errors[] = 'Come on!  Put something in the message';
     $fail = true;
 }
 
 if (!$fail) {
-    $fullName = compressImage($url, $currentSeason, $currentWeek);
+    $file = $url;
+    if (empty($file)) {
+        $file = $upload['tmp_name'];
+    }
+    error_log("File Name [$file]" );
+    $fullName = compressImage($conn, $file);
     //$fullName = compressImage($url, $currentSeason, $currentWeek-1);
 }
 
 
 if ($fail) {
-    include "publish.php";
+    include 'publish.php';
     exit();
 }
 
@@ -86,7 +91,7 @@ $useURL = mysqli_real_escape_string($conn, $fullName);
 $useCaption = mysqli_real_escape_string($conn, $caption);
 $useArticle = mysqli_real_escape_string($conn, $article);
 
-$sql =<<<EOD
+$sql = <<<EOD
 INSERT INTO articles
 (title, link, caption, articleText, displayDate, active, author)
 VALUES
@@ -94,8 +99,8 @@ VALUES
 EOD;
 
 //print $sql;
-$result = mysqli_query($conn, $sql) or die("Failed: " . mysqli_error($conn));
+$result = mysqli_query($conn, $sql) or die('Failed: ' . mysqli_error($conn));
 $uid = mysqli_insert_id($conn);
-$_REQUEST["uid"] = $uid;
+$_REQUEST['uid'] = $uid;
 
-include "preview.php";
+include 'preview.php';

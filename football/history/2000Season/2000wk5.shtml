@@ -222,4 +222,4 @@ DB: Parrish,Tony        CHI   7     DB: Milloy,Lawyer       NE    5
 
 </PRE>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

@@ -244,4 +244,4 @@ DB: Evans,Doug          CAR  10     DB: Walker,Brian        MIA   7
 
 </PRE>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->

@@ -194,5 +194,5 @@
 
 
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->
 

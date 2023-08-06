@@ -12,4 +12,4 @@
 <!--#include virtual="0407_Standings.txt"-->
 </PRE>
 
-<!--#include virtual="/base/footer.html"-->
+<!--#include virtual="/base/footer.php"-->
