@@ -40,4 +40,4 @@ include '../common/draftorder.php';
 </TABLE>
 </div>
 
-<?php include 'base/footer.html'; ?>
+<?php include 'base/footer.php'; ?>
