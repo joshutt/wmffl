@@ -2,7 +2,7 @@
 require_once 'utils/connect.php';
 #$isin = true;
 #$teamnum = 2;
-$dateSrc = "2022-08-22 00:05 EDT";
+$dateSrc = '2023-08-23 00:05 EDT';
 $dateTime = new DateTime($dateSrc);
 $dateTime->sub(DateInterval::createFromDateString('6 min'));
 
