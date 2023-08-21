@@ -2,14 +2,14 @@
 //require_once "/base/conn.php";
 //
 //require_once "/utils/setup.php";
-$ini = parse_ini_file("wmffl.conf");
+$ini = parse_ini_file('wmffl.conf');
 
 // Database connection information
 $conn = mysqli_connect('localhost', $ini['userName'], $ini['password'], $ini['dbName']);
 //
 
-$nflStartDate = '2022-09-09';
-$season=2022;
+$nflStartDate = '2023-09-10';
+$season=2023;
 
 $query = "SELECT t.name, d.date, min( d.attend ) as attend
 FROM  `draftdate` d, user u, team t
@@ -21,7 +21,7 @@ ORDER BY d.date";
 //print_r($conn);
 //print "*";
 $results = mysqli_query($conn, $query);
-$date = "";
+$date = '';
 $dateList = array();
 
 //print "a";
@@ -30,17 +30,17 @@ $dateList = array();
 //print "*";
 while ($arrayList = mysqli_fetch_array($results)) {
     //print "b";
-    if ($date != $arrayList["date"]) {
-        $date = $arrayList["date"];
+    if ($date != $arrayList['date']) {
+        $date = $arrayList['date'];
         $dateArray = array();
-        $dateArray["yes"] = 0;
-        $dateArray["no"] = 0;
+        $dateArray['yes'] = 0;
+        $dateArray['no'] = 0;
     }
 
-    if ($arrayList["attend"] == "Y") {
-        $dateArray["yes"]++;
+    if ($arrayList['attend'] == 'Y') {
+        $dateArray['yes']++;
     } else {
-        $dateArray["no"]++;
+        $dateArray['no']++;
     }
     $dateList[$date] = $dateArray;
 }
@@ -49,10 +49,10 @@ while ($arrayList = mysqli_fetch_array($results)) {
 $max = 0;
 $maxArray = array();
 foreach ($dateList as $date => $dateArray) {
-    if ($dateArray["yes"] > $max) {
-        $max = $dateArray["yes"];
+    if ($dateArray['yes'] > $max) {
+        $max = $dateArray['yes'];
         $maxArray=array($date);
-    } else if ($dateArray["yes"] == $max) {
+    } else if ($dateArray['yes'] == $max) {
         array_push($maxArray, $date);
     }
 }
@@ -68,36 +68,36 @@ group by o.teamid
 having max(dv.lastUpdate) is null
 EOD;
 
-$results = mysqli_query($conn, $secondQuery) or die("Error: " . mysqli_error($conn));
+$results = mysqli_query($conn, $secondQuery) or die('Error: ' . mysqli_error($conn));
 
 $teamArray = array();
 while ($arrayList = mysqli_fetch_array($results)) {
-    array_push($teamArray, $arrayList["name"]);
+    array_push($teamArray, $arrayList['name']);
 }
 
 /* The Display */
 print "<table border=\"1\">";
-print "<tr><th>Date</th><th>Yes</th><th>No</th></tr>";
+print '<tr><th>Date</th><th>Yes</th><th>No</th></tr>';
 foreach($dateList as $date => $dateArray) {
-    if ($dateArray["yes"] == $max) {
-        print "<tr><td><b>$date</b></td><td><b>{$dateArray["yes"]}</b></td><td><b>{$dateArray["no"]}</b></td></tr>";
+    if ($dateArray['yes'] == $max) {
+        print "<tr><td><b>$date</b></td><td><b>{$dateArray['yes']}</b></td><td><b>{$dateArray['no']}</b></td></tr>";
     } else {
-        print "<tr><td>$date</td><td>{$dateArray["yes"]}</td><td>{$dateArray["no"]}</td></tr>";
+        print "<tr><td>$date</td><td>{$dateArray['yes']}</td><td>{$dateArray['no']}</td></tr>";
     }
 }
-print "</table>";
+print '</table>';
 
 
 print "<p>The max is $max</p>";
 
 if (sizeof($teamArray)) {
-    print "<p>Teams not voting</p>";
+    print '<p>Teams not voting</p>';
     foreach ($teamArray as $name) {
         print "$name<br/>";
     }
 
 } else {
-    print "<p>All teams have voted</p>";
+    print '<p>All teams have voted</p>';
 }
 
 ?>
