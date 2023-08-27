@@ -22,7 +22,7 @@ if ($isin) {
     <P>
         For each of the ballot items below your current vote, please select your vote,
         then press the "VOTE" button to have you vote counted. To review the issues in question you may go to the <A
-                HREF="/rules/proposals2022.php">proposals page</A>
+                HREF="/rules/proposals2023.php">proposals page</A>
     </P>
 
 

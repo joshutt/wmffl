@@ -77,10 +77,12 @@ include 'base/menu.php';
                 <?php
                 // Create the query
                 $thequery = "SELECT DATE_FORMAT(t.date, '%M %e, %Y'), m.name, t.method, concat(p.firstname, ' ', p.lastname), p.pos, 
-p.team, m.teamid, DATE_FORMAT(t.date, '%Y-%m-%d') 
-FROM transactions t, teamnames m, newplayers p 
-WHERE t.teamid=m.teamid AND t.playerid=p.playerid
-AND m.season=$theyear 
+COALESCE(r.nflteamid, ''), m.teamid, DATE_FORMAT(t.date, '%Y-%m-%d') 
+FROM transactions t
+JOIN teamnames m on t.teamid=m.teamid
+JOIN newplayers p on p.playerid=t.playerid
+LEFT JOIN nflrosters r on p.playerid=r.playerid AND r.dateon<=t.Date and (r.dateoff >= t.date or r.dateoff is null)
+WHERE m.season=$theyear 
 ";
 
                 if ($themonth > 8) {
