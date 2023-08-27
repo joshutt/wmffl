@@ -26,6 +26,22 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
     <li>Proposals pass with 50% + 1
         <ul><li>Updates rules XII.B and XII.E</li></ul>
     </li>
+    <li>Automatic change triggered by X.E.5
+        <ul>
+            <li>Rule X.E.1.c.i incremented to 13 pts, due to 20 WR being protected in 2023, takes effect in 2024</li>
+        </ul>
+    </li>
+    <li>Unprotected Players Reset Protection Modifier
+        <ul>
+            <li>Changes rule X.E.3</li>
+        </ul>
+    </li>
+    <li>Activations Due 5 minutes before kickoff
+        <ul>
+            <li>Change rule V.A.1</li>
+        </ul>
+
+    </li>
 </ul>
 
 <HR size="1">
@@ -182,7 +198,7 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
         <LI>Each week, every team must turn in an activation roster to the commissioner, or a duly appointed
             representative
             <OL TYPE="1">
-                <LI>Any player listed as active 30 minutes prior to kickoff of their team's NFL game will be considered
+                <LI class="newrule">Any player listed as active 5 minutes prior to kickoff of their team's NFL game will be considered
                     an active player for that week.
                     <OL TYPE="a">
                         <LI>The activation status of a player may not be changed after that deadline.</li>
@@ -604,7 +620,7 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
                             </OL>
                         <LI>WR
                             <OL TYPE="i">
-                                <LI class="">12 pts</li>
+                                <LI class="newrule">13 pts</li>
                             </OL>
                         <LI>TE
                             <OL TYPE="i">
@@ -642,13 +658,7 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
                                 <LI>+1 for every 2 years, rounded up</li>
                             </OL>
                     </OL>
-                <LI>If a player is left unprotected his modifier will be reduced by 2 and his previous protections will
-                    be reduced to that level
-                    <OL TYPE="a">
-                        <LI>A modifier may never be less than 0
-                        <LI>If a player has his modifier reduced to a level where multiple years are possible, he will
-                            assume the higher of those years
-                    </OL>
+                <LI class="newrule">If a player is left unprotected his modifier will be reduced to 0.</LI>
                 <LI>Unused protection are converted to transaction points immediatly following the draft
                 <li>If more than 16 players are protected in the same year at the same position then the cost of that
                     position in rule X.E.1 will be increased by 1, to take effect the following season

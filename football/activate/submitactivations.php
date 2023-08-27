@@ -1,37 +1,56 @@
 <?php
-$javascriptList = array("/base/js/activations.js");
-$cssList = array("/base/css/activate.css");
+$javascriptList = array('/base/js/activations.js');
+$cssList = array('/base/css/activate.css');
 //$cssList = array("/base/css/w3.css", "/base/css/activate.css");
 
 
-require_once "utils/start.php";
-require_once "utils/injuryUtils.php";
+require_once 'utils/start.php';
+require_once 'utils/injuryUtils.php';
 //require_once "login/loginglob.php";
 
 /**
  * @param $player
- * @return string[]
+ * @return string
  */
 function getInjuryLine($player): string
 {
-    $injuryLine = "";
-    $status = "";
+    $injuryLine = '';
+    $status = '';
     // Get injury status from injury table
-    if ($player["injuryStatus"] != "") {
-        $status = shortenInjury($player["injuryStatus"]);
+    if ($player['injuryStatus'] != '') {
+        $status = shortenInjury($player['injuryStatus']);
     }
 
     // If on the IR then make status IR
-    if ($player["ir"] === "1") {
-        $status = "IR";
+    if ($player['ir'] === '1') {
+        $status = 'IR';
     }
 
     // Print out the injury Line
-    if ($status !== "") {
-        $injuryLine = "<span class=\"PQDO\" title=\"{$player["injuryDetail"]}\">($status)</span>";
+    if ($status !== '') {
+        $injuryLine = "<span class=\"PQDO\" title=\"{$player['injuryDetail']}\">($status)</span>";
     }
 
     return $injuryLine;
+}
+
+/**
+ * @param array $rowSet
+ * @return string
+ */
+function getPlayerOpp(array $rowSet): string
+{
+    $returnVal = null;
+    if ($rowSet['nflteamid'] == '') {
+        $returnVal = '';
+    } else if ($rowSet['kickoff'] == null) {
+        $returnVal = 'Bye';
+    } else if ($rowSet['nflteamid'] == $rowSet['homeTeam']) {
+        $returnVal = 'vs ' . $rowSet['roadTeam'];
+    } else if ($rowSet['nflteamid'] == $rowSet['roadTeam']) {
+        $returnVal = '@ ' . $rowSet['homeTeam'];
+    }
+    return $returnVal;
 }
 
 //print "Set";
@@ -41,16 +60,13 @@ if (!isset($week)) {
     $week = $currentWeek;
 }
 
-if (isset($_REQUEST["week"])) {
-    $week = $_REQUEST["week"];
+if (isset($_REQUEST['week'])) {
+    $week = $_REQUEST['week'];
 }
 
 
-//$week = 7;
 $teamid = $teamnum;
 $currentTime = time();
-//$currentTime = 1191861900;
-//$currentTime =1220926000 ;
 
 //print "Read";
 $sql = <<<EOD
@@ -110,11 +126,11 @@ EOD;
 
 $weekSql = "SELECT week, weekname FROM weekmap WHERE Season=$season AND EndDate>now()";
 
-$weekResults = mysqli_query($conn, $weekSql) or die("Unable to get Weeks: " . mysqli_error($conn));
+$weekResults = mysqli_query($conn, $weekSql) or die('Unable to get Weeks: ' . mysqli_error($conn));
 
-$weekList = "";
+$weekList = '';
 while ($theWeek = mysqli_fetch_assoc($weekResults)) {
-    $checked = "";
+    $checked = '';
     if ($week == $theWeek['week']) {
         $checked = "selected=\"true\"";
     }
@@ -122,18 +138,19 @@ while ($theWeek = mysqli_fetch_assoc($weekResults)) {
 }
 
 
-$title = "Submit Activations";
-include "base/menu.php";
+$title = 'Submit Activations';
+include 'base/menu.php';
 
 $actingHC = false;
+
 if (isset($isin) && $isin) {
 
-    $results = mysqli_query($conn, $sql) or die("Ug: " . mysqli_error($conn));
+    $results = mysqli_query($conn, $sql) or die('Ug: ' . mysqli_error($conn));
 
     $starters = array();
     $reserve = array();
 
-    putenv("TZ=US/Eastern");
+    putenv('TZ=US/Eastern');
     $maxDate = 0;
     //print_r($_REQUEST);
     $reserveCount = 0;
@@ -141,33 +158,26 @@ if (isset($isin) && $isin) {
     while ($rowSet = mysqli_fetch_assoc($results)) {
 
         $player = array();
-        $player["name"] = $rowSet["name"];
-        $player["pos"] = $rowSet["pos"];
-        $player["nfl"] = $rowSet["nflteamid"];
-        $player["playerid"] = $rowSet["playerid"];
-        $player["injuryStatus"] = $rowSet["status"];
-        $player["injuryDetail"] = $rowSet["details"];
-        $player["ir"] = $rowSet["ir"];
+        $player['name'] = $rowSet['name'];
+        $player['pos'] = $rowSet['pos'];
+        $player['nfl'] = $rowSet['nflteamid'];
+        $player['playerid'] = $rowSet['playerid'];
+        $player['injuryStatus'] = $rowSet['status'];
+        $player['injuryDetail'] = $rowSet['details'];
+        $player['ir'] = $rowSet['ir'];
 
 //        print_r($rowSet);
 
-        if ($rowSet["nflteamid"] == "") {
-            $player["opp"] = "";
-        } else if ($rowSet["kickoff"] == null) {
-            $player["opp"] = "Bye";
-        } else if ($rowSet["nflteamid"] == $rowSet["homeTeam"]) {
-            $player["opp"] = "vs " . $rowSet["roadTeam"];
-        } else if ($rowSet["nflteamid"] == $rowSet["roadTeam"]) {
-            $player["opp"] = "@ " . $rowSet["homeTeam"];
-        }
+        $player['opp'] = getPlayerOpp($rowSet);
 
         $format = '%Y-%m-%d %H:%M:%S';
         $realTime = strtotime($rowSet['kickoff']) - 2 * 60 * 60;
         # print "$deadLine - $currentTime<br/>";
-        if ($rowSet['kickoff'] == "") {
+        if ($rowSet['kickoff'] == '') {
             $deadLine = 0;
         } else {
-            $deadLine = strtotime($rowSet['kickoff']) - 30 * 60;
+            // Change to 5 minutes before kickoff, proposal 2023.2
+            $deadLine = strtotime($rowSet['kickoff']) - 5 * 60;
         }
         if ($deadLine > $maxDate) {
             $maxDate = $deadLine;
@@ -175,24 +185,24 @@ if (isset($isin) && $isin) {
 
         # print $rowSet['kickoff'] ." - $deadLine - ".strtotime($rowSet['kickoff'])." - $currentTime<br/>";
         if ($currentTime > $deadLine && $deadLine > 0) {
-            $player["lock"] = true;
+            $player['lock'] = true;
         } else {
-            $player["lock"] = false;
+            $player['lock'] = false;
         }
 
 
         $old = error_reporting(!E_WARNING);
-        $posActive = $_REQUEST[$player["pos"]];
-        $checked = array_search($player["playerid"], $posActive);
+        $posActive = $_REQUEST[$player['pos']];
+        $checked = array_search($player['playerid'], $posActive);
         error_reporting($old);
-        if ($checked == false && $rowSet["activeId"] == null) {
+        if (!$checked && $rowSet['activeId'] == null) {
             $reserve[] = $player;
-            $reserveIds[$reserveCount++] = $player["playerid"];
+            $reserveIds[$reserveCount++] = $player['playerid'];
         } else {
             $starters[] = $player;
         }
 
-        if ($player["pos"] == "HC" && $deadLine == 0 && $player['nfl'] != null) {
+        if ($player['pos'] == 'HC' && $deadLine == 0 && $player['nfl'] != null) {
             $actingHC = true;
         }
     }
@@ -204,51 +214,43 @@ if (isset($isin) && $isin) {
     }
 
 
-    $noActiveResults = mysqli_query($conn, $noActivateSql) or die("Die on No activate: " . mysqli_error($conn));
+    $noActiveResults = mysqli_query($conn, $noActivateSql) or die('Die on No activate: ' . mysqli_error($conn));
     while ($rowSet = mysqli_fetch_assoc($noActiveResults)) {
-        $key = array_search($rowSet["playerid"], $reserveIds);
+        $key = array_search($rowSet['playerid'], $reserveIds);
         if ($key !== FALSE) {
             $player = $reserve[$key];
-            $player["lock"] = true;
+            $player['lock'] = true;
             $reserve[$key] = $player;
         }
     }
 
-    $oppRosterResults = mysqli_query($conn, $opponentRoster) or die("Die on opponent roster: " . mysqli_error($conn));
+    $oppRosterResults = mysqli_query($conn, $opponentRoster) or die('Die on opponent roster: ' . mysqli_error($conn));
     while ($rowSet = mysqli_fetch_assoc($oppRosterResults)) {
         $player = array();
-        $player["name"] = $rowSet["name"];
-        $player["pos"] = $rowSet["pos"];
-        $player["nfl"] = $rowSet["nflteamid"];
-        $player["playerid"] = $rowSet["playerid"];
+        $player['name'] = $rowSet['name'];
+        $player['pos'] = $rowSet['pos'];
+        $player['nfl'] = $rowSet['nflteamid'];
+        $player['playerid'] = $rowSet['playerid'];
     }
 }
 
 if ($actingHC) {
-    $HCResults = mysqli_query($conn, $actingHCsql) or die("Unable to get active HC: " . mysqli_error($conn));
+    $HCResults = mysqli_query($conn, $actingHCsql) or die('Unable to get active HC: ' . mysqli_error($conn));
     $hcArray = array();
     while ($rowSet = mysqli_fetch_assoc($HCResults)) {
         $player = array();
-        $player["name"] = $rowSet["name"];
-        $player["pos"] = $rowSet["pos"];
-        $player["nfl"] = $rowSet["nflteamid"];
-        $player["playerid"] = $rowSet["playerid"];
+        $player['name'] = $rowSet['name'];
+        $player['pos'] = $rowSet['pos'];
+        $player['nfl'] = $rowSet['nflteamid'];
+        $player['playerid'] = $rowSet['playerid'];
 
-        if ($rowSet["activeId"] != null) {
-            $player["activeId"] = $rowSet["activeId"];
+        if ($rowSet['activeId'] != null) {
+            $player['activeId'] = $rowSet['activeId'];
         }
 
-        if ($rowSet["nflteamid"] == "") {
-            $player["opp"] = "";
-        } else if ($rowSet["kickoff"] == null) {
-            $player["opp"] = "Bye";
-        } else if ($rowSet["nflteamid"] == $rowSet["homeTeam"]) {
-            $player["opp"] = "vs " . $rowSet["roadTeam"];
-        } else if ($rowSet["nflteamid"] == $rowSet["roadTeam"]) {
-            $player["opp"] = "@ " . $rowSet["homeTeam"];
-        }
+        $player['opp'] = getPlayerOpp($rowSet);
 
-        array_push($hcArray, $player);
+        $hcArray[] = $player;
     }
 }
 
@@ -268,8 +270,8 @@ if ($isin) {
 
     <form action="processActivations.php" method="POST" name="activeForm">
 
-        <?
-        if (isset($activeMessage) && $activeMessage != "") {
+        <?php
+        if (isset($activeMessage) && $activeMessage != '') {
             print "<div class=\"alert\">$activeMessage</div>";
         }
         ?>
@@ -277,8 +279,10 @@ if ($isin) {
         <table align="center" id="subAct">
 
             <tr>
-                <td colspan="5" class="text-center">Week: <select name="week"
-                                                                  onChange="swapActivations(this);"><? print $weekList; ?></select>
+                <td colspan="5" class="text-center">Week: <label>
+                        <select name="week"
+                                                                          onChange="swapActivations(this);"><?php print $weekList; ?></select>
+                    </label>
                 </td>
             </tr>
             <tr>
@@ -286,46 +290,46 @@ if ($isin) {
             </tr>
 
 
-            <?
+            <?php
             if ($actingHC) {
-                print "<tr>";
-                print "<td><input name=\"actHC\" value=\"on\" type=\"checkbox\" checked=\"true\" /></td>";
-                print "<td>{$player["pos"]}</td><td colspan=\"3\"><select name=\"actHCid\">";
+                print '<tr>';
+                print "<td><input name=\"actHC\" value=\"on\" type=\"checkbox\" checked=\"checked\" /></td>";
+                print "<td>{$player['pos']}</td><td colspan=\"3\"><select name=\"actHCid\">";
                 foreach ($hcArray as $hc) {
-                    if (!array_key_exists("activeId", $hc) || $hc["activeId"] == null) {
-                        $checked = "";
+                    if (!array_key_exists('activeId', $hc) || $hc['activeId'] == null) {
+                        $checked = '';
                     } else {
                         $checked = "selected=\"TRUE\"";
                     }
-                    print "<option value=\"{$hc["playerid"]}\" $checked>{$hc["name"]} - {$hc["nfl"]} {$hc["opp"]}</option>";
+                    print "<option value=\"{$hc['playerid']}\" $checked>{$hc['name']} - {$hc['nfl']} {$hc['opp']}</option>";
                 }
-                print "</select></td>";
-                print "</tr>";
+                print '</select></td>';
+                print '</tr>';
             }
 
             foreach ($starters as $player) {
-                $lock = $player["lock"];
+                $lock = $player['lock'];
                 if ($allLock) {
                     $lock = true;
                 }
-                $injuryLine = getPQDOLine($player["injuryStatus"], $player["injuryDetail"], $player["ir"]);
+                $injuryLine = getPQDOLine($player['injuryStatus'], $player['injuryDetail'], $player['ir']);
 
-                print "<tr>";
+                print '<tr>';
                 if ($lock) { ?>
                     <td class="p-1 mx-2">
-                        <input type="hidden" name="<?= $player["pos"] ?>[]" value="<?= $player["playerid"] ?>"/>
-                        <img src="/images/lock-clipart2.gif" height="16" width="16" align="right"/>
+                        <input type="hidden" name="<?= $player['pos'] ?>[]" value="<?= $player['playerid'] ?>"/>
+                        <img src="/images/lock-clipart2.gif" height="16" width="16" align="right" alt="locked"/>
                     </td>
                 <?php } else { ?>
                     <td class="p-1 mx-2">
-                        <input name="<?= $player["pos"] ?>[]" value="<?= $player["playerid"] ?>" type="checkbox"
-                               checked="true"/>
+                        <input name="<?= $player['pos'] ?>[]" value="<?= $player['playerid'] ?>" type="checkbox"
+                               checked="checked"/>
                     </td>
                 <?php } ?>
-                <td class="p-1 mx-2"><?= $player["pos"] ?> </td>
-                <td class="p-1 mx-2"><?= $player["name"] ?></td>
-                <td class="p-1 mx-2"><?= $player["nfl"] ?></td>
-                <td class="p-1 mx-2"><?= $player["opp"] ?></td>
+                <td class="p-1 mx-2"><?= $player['pos'] ?> </td>
+                <td class="p-1 mx-2"><?= $player['name'] ?></td>
+                <td class="p-1 mx-2"><?= $player['nfl'] ?></td>
+                <td class="p-1 mx-2"><?= $player['opp'] ?></td>
                 <td class="p-1 mx-2"><?= $injuryLine ?></td>
                 </tr>
             <?php } ?>
@@ -337,28 +341,28 @@ if ($isin) {
                 <th colspan="6" class="text-center">Reserves</th>
             </tr>
 
-            <?
+            <?php
             foreach ($reserve as $player) {
-                $lock = $player["lock"];
+                $lock = $player['lock'];
                 if ($allLock) {
                     $lock = true;
                 }
-                $injuryLine = getPQDOLine($player["injuryStatus"], $player["injuryDetail"], $player["ir"]);
+                $injuryLine = getPQDOLine($player['injuryStatus'], $player['injuryDetail'], $player['ir']);
 
-                print "<tr>";
+                print '<tr>';
                 if ($lock) { ?>
                     <td class="p-1 mx-2">
-                        <img src="/images/lock-clipart2.gif" height="16" width="16" align="left"/>
+                        <img src="/images/lock-clipart2.gif" height="16" width="16" align="left" alt="locked"/>
                     </td>
                 <?php } else { ?>
                     <td class="p-1 mx-2">
-                        <input name="<?= $player["pos"] ?>[]" type="checkbox" value="<?= $player["playerid"] ?>"/>
+                        <input name="<?= $player['pos'] ?>[]" type="checkbox" value="<?= $player['playerid'] ?>"/>
                     </td>
                 <?php } ?>
-                <td class="p-1 mx-2"><?= $player["pos"] ?></td>
-                <td class="p-1 mx-2"><?= $player["name"] ?></td>
-                <td class="p-1 mx-2"><?= $player["nfl"] ?></td>
-                <td class="p-1 mx-2"><?= $player["opp"] ?></td>
+                <td class="p-1 mx-2"><?= $player['pos'] ?></td>
+                <td class="p-1 mx-2"><?= $player['name'] ?></td>
+                <td class="p-1 mx-2"><?= $player['nfl'] ?></td>
+                <td class="p-1 mx-2"><?= $player['opp'] ?></td>
                 <td class="p-1 mx-2"><?= $injuryLine ?></td>
                 </tr>
             <?php } ?>
@@ -381,4 +385,4 @@ if ($isin) {
 
     <?php
 }
-include "base/footer.php";
+include 'base/footer.php';
