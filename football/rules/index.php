@@ -10,7 +10,7 @@ include 'base/menu.php';
 </style>
 
 <H1 ALIGN=CENTER>Rules of the WMFFL</H1>
-<H5 ALIGN=CENTER><I>Last Updated: April 4, 2023</I></H5>
+<H5 ALIGN=CENTER><I>Last Updated: August 28, 2023</I></H5>
 <HR size="1">
 <div class="container">
 Section 1: <A HREF="#I">Divisions and Schedules</A>; <A HREF="#II">Who Makes the Playoffs</A>; <A HREF="#III">The

@@ -114,8 +114,7 @@ $title = "Single Game Records";
 include "base/menu.php";
 ?>
 
-<h1 align="center">Player Single Game Records</h1>
-<hr size="1"/>
+<h1 class="full"><?= $title ?></h1>
 
 <div class="posList"><? printRankList($sql, "QB", $currentSeason, $qbList); ?></div>
 <div class="posList"><? printRankList($sql, "RB", $currentSeason, $rbList); ?></div>
@@ -127,4 +126,4 @@ include "base/menu.php";
 <div class="posList"><? printRankList($sql, "LB", $currentSeason, $lbList); ?></div>
 <div class="posList"><? printRankList($sql, "DB", $currentSeason, $dbList); ?></div>
 
-<?php include "base/footer.php"; ?>
+<?php include 'base/footer.php'; ?>

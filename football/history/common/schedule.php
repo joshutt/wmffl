@@ -128,17 +128,17 @@ while ($row = mysqli_fetch_array($results)) {
 <?php
     if ($row[0] < $thisWeek) {
 ?>
-    <td align="left" width="235"><?=$winName?></td>
+    <td align="left" width="245"><?=$winName?></td>
     <td align="center" width="40"><?=$winScore?></td>
     <td align="left" width="20">&nbsp;</td>
-    <td align="left" width="235"><?=$loseName?></td>
+    <td align="left" width="245"><?=$loseName?></td>
     <td align="center" width="40"><?=$loseScore?></td>
 <?php
     } else {
 ?>
-        <td align="left" width="235"><?=$winName?></td><td width="40">&nbsp;</td>
+        <td align="left" width="245"><?=$winName?></td><td width="40">&nbsp;</td>
         <td align="left" width="20">vs</td><td width="40">&nbsp;</td>
-        <td align="left" width="235"><?=$loseName?></td>
+        <td align="left" width="245"><?=$loseName?></td>
 <?php } ?>
     </tr>
 <?php
