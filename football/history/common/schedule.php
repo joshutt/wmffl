@@ -84,7 +84,7 @@ while ($row = mysqli_fetch_array($results)) {
 ?>
         <a name="<?= $anchorName ?>"/>
         <div class="SLTables1">
-<table width="550" cellspacing="1" cellpadding="2" border="0" class="SLTables1">
+<table width="580" cellspacing="1" cellpadding="2" border="0" class="SLTables1">
     <tbody>
     <tr class="bg0" align="center">
         <td class="bg0" colspan="6">
@@ -128,17 +128,17 @@ while ($row = mysqli_fetch_array($results)) {
 <?php
     if ($row[0] < $thisWeek) {
 ?>
-    <td align="left" width="245"><?=$winName?></td>
+    <td align="left" width="270"><?=$winName?></td>
     <td align="center" width="40"><?=$winScore?></td>
     <td align="left" width="20">&nbsp;</td>
-    <td align="left" width="245"><?=$loseName?></td>
+    <td align="left" width="270"><?=$loseName?></td>
     <td align="center" width="40"><?=$loseScore?></td>
 <?php
     } else {
 ?>
-        <td align="left" width="245"><?=$winName?></td><td width="40">&nbsp;</td>
+        <td align="left" width="270"><?=$winName?></td><td width="40">&nbsp;</td>
         <td align="left" width="20">vs</td><td width="40">&nbsp;</td>
-        <td align="left" width="245"><?=$loseName?></td>
+        <td align="left" width="270"><?=$loseName?></td>
 <?php } ?>
     </tr>
 <?php
