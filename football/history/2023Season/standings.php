@@ -9,7 +9,7 @@ if ($thisWeek == '') {
 $thisSeason = 2023;
 $title = 'Standings';
 
-$clinchedList = array();
+$clinchedList = array('Amish Electricians' => 'e-', "Sigourney's Weaver's" => 'e-', 'Gallic Warriors' => 'e-', 'British Bulldogs' => 'x-', 'Sacks on the Beach' => 'e-');
 
 include 'base/menu.php';
 ?>
