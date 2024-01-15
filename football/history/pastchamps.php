@@ -44,6 +44,7 @@ include 'base/menu.php';
 <TR><TD>2020</TD><TD>Amish Electricians</TD></TR>
 <TR><TD>2021</TD><TD>Norsemen</TD></TR>
 <TR><TD>2022</TD><TD>Norsemen</TD></TR>
+<TR><TD>2023</TD><TD>Richard's Lionhearts</TD></TR>
 </TABLE>
 </TD><TD valign="bottom">
 <B>Orange Division Champions</B>
@@ -80,6 +81,7 @@ include 'base/menu.php';
 <TR><TD>2020</TD><TD>Crusaders</TD></TR>
 <TR><TD>2021</TD><TD>Trump Molests Collies</TD></TR>
 <TR><TD>2022</TD><TD>Trump Molests Collies</TD></TR>
+<TR><TD>2023</TD><TD>Trump Molests Collies</TD></TR>
 </TABLE>
 </TD><TD valign="bottom">
 <B>White Division Champions</B>
@@ -98,6 +100,7 @@ include 'base/menu.php';
 <TR><TD>2020</TD><TD>MeggaMen</TD></TR>
 <TR><TD>2021</TD><TD>MeggaMen</TD></TR>
 <TR><TD>2022</TD><TD>MeggaMen</TD></TR>
+<TR><TD>2023</TD><TD>British Bulldogs</TD></TR>
 </table>
 </TD></TR></TABLE>
 
@@ -137,6 +140,7 @@ include 'base/menu.php';
 <TR><TD>2020</TD><TD>Amish Electricians</TD><TD>58</TD><TD>Sean Taylor's Ashes</TD><TD>26</TD><TD>Davante Adams</TD></TR>
 <TR><TD>2021</TD><TD>Norsemen</TD><TD>49</TD><TD>MeggaMen</TD><TD>40</TD><TD>Patrick Mahomes</TD></TR>
 <TR><TD>2022</TD><TD>Trump Molests Collies</TD><TD>48</TD><TD>MeggaMen</TD><TD>42</TD><TD>TJ Hockenson</TD></TR>
+<TR><TD>2023</TD><TD>MeggaMen</TD><TD>79</TD><TD>British Bulldogs</TD><TD>21</TD><TD>Derrick Henry</TD></TR>
 </TABLE>
 </div>
 
@@ -170,6 +174,7 @@ include 'base/menu.php';
 <TR><TD>2020</TD><TD>British Bulldogs</TD><TD>60</TD><TD>Gallic Warriors</TD><TD>56</TD></TR>
 <TR><TD>2021</TD><TD>Gallic Warriors</TD><TD>24</TD><TD>Sacks on the Beach</TD><TD>11</TD></TR>
 <TR><TD>2022</TD><TD>Crusaders</TD><TD>56</TD><TD>Richard's Lionhearts</TD><TD>27</TD></TR>
+<TR><TD>2023</TD><TD>Amish Electricians</TD><TD>51</TD><TD>Sigourney's Weaver's</TD><TD>0</TD></TR>
 </TABLE>
 </div>
 
