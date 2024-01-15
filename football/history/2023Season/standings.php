@@ -9,7 +9,7 @@ if ($thisWeek == '') {
 $thisSeason = 2023;
 $title = 'Standings';
 
-$clinchedList = array('Amish Electricians' => 'e-', "Sigourney's Weaver's" => 'e-', 'Gallic Warriors' => 'e-', 'British Bulldogs' => 'x-', 'Sacks on the Beach' => 'e-');
+$clinchedList = array('Amish Electricians' => 't-', "Sigourney's Weaver's" => 't-', 'Gallic Warriors' => 'e-', 'British Bulldogs' => 'y-', 'Sacks on the Beach' => 'e-', 'Aint Nothing But a Jew Thing' => 'e-', 'Crusaders' => 'e-', 'Testudos Revenge' => 'e-', 'MeggaMen' => 'x-', 'Trump Molests Collies' => 'y-', 'Norsemen' => 'e-', "Richard's Lionhearts" => 'y-');
 
 include 'base/menu.php';
 ?>
