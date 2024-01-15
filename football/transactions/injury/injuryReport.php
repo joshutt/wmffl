@@ -55,13 +55,9 @@ try {
 }
 
 
-// Get COVID IR
-$covidIR = $injuries['COVID-IR'];
-$optOut = $injuries['Holdout'];
-
 $IRList = array_merge($injuries['IR'], $injuries['IR-NFI'], $injuries['IR-PUP']);
 
-array_reduce()
+array_reduce();
 
 print_r(array_keys($injuries));
 
@@ -78,56 +74,12 @@ foreach ($IRList as $player) {
     <div class="container">
         <div class="row"><?= $title ?> - <?= $evalSeason ?> - <?= $evalWeek ?></div>
         <div class="row m-2">
-            <button class="button mx-2 p-1">COVID List</button>
             <button class="button mx-2 p-1">IR</button>
             <button class="button mx-2 p-1">Full List</button>
         </div>
         <div class="row m-2">
             <button class="button mx-2 p-1">By WMFFL Team</button>
             <button class="button mx-2 p-1">By NFL Team</button>
-        </div>
-    </div>
-
-    <div class="row" id="covidList">
-        <div class="col">
-            <div class="container-fluid">
-                <div class="row justify-content-around">
-                    <div class="col text-center"><h4>Opt-Outs</h4></div>
-                </div>
-                <?php
-                foreach ($optOut as $player) {
-                    ?>
-                    <div class="row justify-content-around">
-                        <div class="col-4"><?= $player->getFirstName() ?> <?= $player->getLastName() ?></div>
-                        <div class="col-1"><?= $player->getPos() ?></div>
-                        <div class="col-1"><?= $player->getNflTeam() ?></div>
-                        <div class="col-1"><?= $player->getTeam() ?></div>
-                        <div class="col-3"><?= $player->getStatus()->getDetails() ?></div>
-                    </div>
-                    <?php
-                }
-                ?>
-            </div>
-        </div>
-        <div class="col">
-            <div class="container-fluid">
-                <div class="row justify-content-between">
-                    <div class="col text-center"><h4>COVID IR</h4></div>
-                </div>
-                <?php
-                foreach ($covidIR as $player) {
-                    ?>
-                    <div class="row justify-content-around">
-                        <div class="col-4"><?= $player->getFirstName() ?> <?= $player->getLastName() ?></div>
-                        <div class="col-1"><?= $player->getPos() ?></div>
-                        <div class="col-1"><?= $player->getNflTeam() ?></div>
-                        <div class="col-1"><?= $player->getTeam() ?></div>
-                        <div class="col-3"><?= $player->getStatus()->getDetails() ?></div>
-                    </div>
-                    <?php
-                }
-                ?>
-            </div>
         </div>
     </div>
 

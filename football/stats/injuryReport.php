@@ -73,52 +73,6 @@ include 'base/menu.php';
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-around">
-
-                <div class="card px-0 m-2">
-                    <div class="card-header text-center font-weight-bold">Current Covid List</div>
-                    <div class="card-body">
-
-                        <table class="table table-hover mb-0 tablesorter">
-                            <thead>
-                            <tr>
-                                <th>Player</th>
-                                <th>Pos</th>
-                                <th>NFL</th>
-                                <th>Team</th>
-                                <th>Date On</th>
-                                <th>Exp Return</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php
-                            $covidList = $reportResource->getCovidList();
-                            if (sizeof($covidList) == 0) {
-                                ?>
-                                <tr>
-                                    <td colspan="6" class="font-weight-bold">No Players Current on Covid List</td>
-                                </tr>
-                                <?php
-                            }
-                            foreach ($covidList as $player) {
-                                ?>
-                                <tr>
-                                    <td><?= $player->firstname ?> <?= $player->lastname ?></td>
-                                    <td><?= $player->pos ?></td>
-                                    <td><?= $player->nflteamid ?></td>
-                                    <td><?= $player->abbrev ?></td>
-                                    <td><?= date_format(new DateTime($player->dateon), 'n-d-Y') ?></td>
-                                    <td><?= date_format(new DateTime($player->expectedReturn), 'n-d-Y') ?></td>
-                                </tr>
-                                <?php
-                            }
-                            ?>
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-            </div>
 
             <div class="row justify-content-around">
 
