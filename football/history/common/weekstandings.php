@@ -1,6 +1,7 @@
 <?php
-
-include "lib/Team.php";
+//include 'lib/TEAMID.php';
+//use lib\Team;
+use WMFFL\Team;
 
 $query = <<<EOD
 SELECT tn.name as 'team', d.name as 'division', t.teamid as 'teamid',
@@ -47,38 +48,53 @@ EOD;
 
 //error_log($query);
 //print $query;
-$results = mysqli_query($conn, $query) or die("Error: " . mysqli_error($conn));
+$results = mysqli_query($conn, $query) or die('Error: ' . mysqli_error($conn));
 $count = 0;
 $teamArray = array();
 while ($row = mysqli_fetch_array($results)) {
-    $t = new Team($row["team"], $row["division"], $row["teamid"]);
-    $rec = array($row["win"], $row["lose"], $row["tie"]);
-    $div = array($row["divwin"], $row["divlose"], $row["divtie"]);
+//    print '<pre>';
+//    print_r($row);
+//    print ' ** TEAM: '.$row['team'].' **';
+//    print ' ** DIVISION: '.$row['division'].' **';
+//    print ' ** TEAMID: '.$row['teamid'].' **';
+//    print '</pre>';
+    $t = new Team($row['team'], $row['division'], $row['teamid']);
+//    print '*** TEAM ***';
+//    print '<pre>';
+//    print_r($t);
+//    print '</pre>';
+
+    $rec = array($row['win'], $row['lose'], $row['tie']);
+    $div = array($row['divwin'], $row['divlose'], $row['divtie']);
 //    $t->record = $rec;
     $t->divRecord = $div;
 //    $t->ptsFor = $row["ptsfor"];
 //    $t->ptsAgt = $row["ptsagt"];
-    $t->divPtsFor = $row["divpf"];
-    $t->divPtsAgt = $row["divpa"];
+    $t->divPtsFor = $row['divpf'];
+    $t->divPtsAgt = $row['divpa'];
     $t->allRef = &$teamArray;
     $t->allRefKeys = array_keys($teamArray);
-    $teamArray[$row["teamid"]] = $t;
+    $teamArray[$row['teamid']] = $t;
     //array_push($teamArray, $t);
 }
 
+//print '<pre>';
+//print_r($teamArray);
+////print_r($row);
+//print '</pre>';
 
-$results = mysqli_query($conn, $secondQuery) or die("Second Error: " . mysqli_error($conn));
+$results = mysqli_query($conn, $secondQuery) or die('Second Error: ' . mysqli_error($conn));
 while ($row = mysqli_fetch_array($results)) {
     //print_r($row);
-    $teamid = $row["teamid"];
-    $opp = $row["oppid"];
-    $pts = $row["ptsfor"];
-    $agst = $row["ptsagt"];
+    $teamid = $row['teamid'];
+    $opp = $row['oppid'];
+    $pts = $row['ptsfor'];
+    $agst = $row['ptsagt'];
     //   print "$teamid - ";
     $teamArray[$teamid]->addGame($opp, $pts, $agst, 99);
 }
 
-usort($teamArray, "orderteam");
+usort($teamArray, 'WMFFL\Team::orderteam');
 
 if (!isset($clinchedList)) {
     $clinchedList = array();
@@ -111,26 +127,26 @@ if (!isset($display) or $display == 1) {
         }
 
         if ($count % 2 == 0) {
-            $bgcolor = "dddddd";
+            $bgcolor = 'dddddd';
         } else {
-            $bgcolor = "ffffff";
+            $bgcolor = 'ffffff';
         }
         $count++;
 
         if ($t->record[2] > 0) {
-            $records[$t->name] = sprintf("(%d-%d-%d)", $t->record[0], $t->record[1], $t->record[2]);
+            $records[$t->name] = sprintf('(%d-%d-%d)', $t->record[0], $t->record[1], $t->record[2]);
         } else {
-            $records[$t->name] = sprintf("(%d-%d)", $t->record[0], $t->record[1]);
+            $records[$t->name] = sprintf('(%d-%d)', $t->record[0], $t->record[1]);
         }
         ?>
 
         <tr bgcolor="<?= $bgcolor ?>">
-            <td><?= array_key_exists($t->name, $clinchedList) ? $clinchedList[$t->name] : "" ?><a
+            <td><?= array_key_exists($t->name, $clinchedList) ? $clinchedList[$t->name] : '' ?><a
                         href="/teams/teamschedule.php?viewteam=<?= $t->teamid ?>"><?= $t->name ?></a></td>
             <td align="center"><?= $t->record[0] ?></td>
             <td align="center"><?= $t->record[1] ?></td>
             <td align="center"><?= $t->record[2] ?></td>
-            <td><?= sprintf("%5.3f", $t->getWinPCT()) ?></td>
+            <td><?= sprintf('%5.3f', $t->getWinPCT()) ?></td>
 
             <td>&nbsp;</td>
             <td align="center"><?= $t->divRecord[0] ?></td>

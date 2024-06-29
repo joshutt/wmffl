@@ -167,6 +167,7 @@ if (isset($isin) && $isin) {
         $player['ir'] = $rowSet['ir'];
 
 //        print_r($rowSet);
+//        print_r($player);
 
         $player['opp'] = getPlayerOpp($rowSet);
 
@@ -192,7 +193,10 @@ if (isset($isin) && $isin) {
 
 
         $old = error_reporting(!E_WARNING);
-        $posActive = $_REQUEST[$player['pos']];
+        $posActive = array();
+        if (!empty($_REQUEST) && !empty($player) && isset($player['pos'])) {
+            $posActive = $_REQUEST[$player['pos']];
+        }
         $checked = array_search($player['playerid'], $posActive);
         error_reporting($old);
         if (!$checked && $rowSet['activeId'] == null) {

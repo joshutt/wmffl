@@ -73,7 +73,7 @@ include 'base/menu.php';
             <td class="padded">-</td>
             <td class="padded">12 x $2.95</td>
             <td class="padded">Division Title - $24.80<br/>Playoff Team - $24.80<br/>First Round Win - $99.20</td>
-            <td class="padded">$183.20</td>
+            <tdmg class="padded">$183.20</tdmg>
             <td class="padded">$0.00</td>
         </tr>
         <tr class="evenRow">

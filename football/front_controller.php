@@ -1,6 +1,7 @@
 <?php
+require __DIR__ . '/../vendor/autoload.php';
 $page = $_SERVER['REDIRECT_URL'];
-if (array_key_exists('SCRIPT_URL')) {
+if (array_key_exists('SCRIPT_URL', $_SERVER)) {
     $page = $_SERVER['SCRIPT_URL'];
 }
 $docRoot = $_SERVER['DOCUMENT_ROOT'];

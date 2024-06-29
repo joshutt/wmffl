@@ -1,18 +1,18 @@
-<?
-require_once "base/conn.php";
-require_once "utils/start.php";
-require_once "utils/injuryUtils.php";
+<?php
+require_once 'base/conn.php';
+require_once 'utils/start.php';
+require_once 'utils/injuryUtils.php';
 
 // Set Week variable
-if (isset($_REQUEST["week"])) {
-    $week = $_REQUEST["week"];
+if (isset($_REQUEST['week'])) {
+    $week = $_REQUEST['week'];
 } else if (!isset($week)) {
     $week = $currentWeek;
 }
 
 // Set Season variable
-if (isset($_REQUEST["season"])) {
-    $season = $_REQUEST["season"];
+if (isset($_REQUEST['season'])) {
+    $season = $_REQUEST['season'];
 } else if (!isset($season)) {
     $season = $currentSeason;
 }
@@ -34,79 +34,79 @@ where s.season=$season and s.week=$week
 order by s.gameid, a.teamid, p.pos, p.lastname, p.playerid
 EOD;
 
-$result = mysqli_query($conn, $select) or die("Select: " . mysqli_error($conn));
+$result = mysqli_query($conn, $select) or die('Select: ' . mysqli_error($conn));
 
 // Popuolate records
-$lastTeam = "";
-$printer = array();
+$lastTeam = '';
+$printer = array(0 => '');
 $gpLine = array();
 $nameIdMap = array();
 $i = 0;
 //print "<br/>";
 $actDue = null;
-$lastName = "";
+$lastName = '';
 
 
 while ($row = mysqli_fetch_assoc($result)) {
-    if ($row["remain"] < -30 * 60) {
+    if ($row['remain'] < -30 * 60) {
         $lock = false;
     } else {
         $lock = true;
     }
 
     // Get the players name
-    if ($row["name"] != $lastName) {
-        if ($lastName !== "") {
-            $printer[$i] .= "</div>";
-            $printer[$i] .= "</div>";
+    if ($row['name'] != $lastName) {
+        if ($lastName !== '') {
+            $printer[$i] .= '</div>';
+            $printer[$i] .= '</div>';
 //            $printer[$i] .= "</div>";  // Closes previous card
         }
         $i++;
-        $lastName = $row["name"];
+        $lastName = $row['name'];
         $nameIdMap[$lastName] = $i;
         $printer[$i] = "<div class='card my-4 mx-0' >";
-        $printer[$i] .= "<div class='card-header font-weight-bold'>" . $row["name"] . "</div>";
+        $printer[$i] .= "<div class='card-header font-weight-bold'>" . $row['name'] . '</div>';
         $printer[$i] .= "<div class='card-body px-1'>";
     }
 
     // Determine is player is locked
     if ($lock) {
-        $spot = "*";
+        $spot = '*';
     } else {
-        $spot = "";
+        $spot = '';
     }
 
     // Set Act Due
     if (!isset($actDue)) {
-        $actDue = $row["ActivationDue"];
+        $actDue = $row['ActivationDue'];
     }
 
     // Determine opponent
-    $opp = "Bye";
-    if ($row["nflteamid"] == $row["homeTeam"]) {
-        $opp = $row["nflteamid"] . " vs " . $row["roadTeam"];
-    } else if ($row["nflteamid"] == $row["roadTeam"]) {
-        $opp = $row["nflteamid"] . " @ " . $row["homeTeam"];
+    $opp = 'Bye';
+    if ($row['nflteamid'] == $row['homeTeam']) {
+        $opp = $row['nflteamid'] . ' vs ' . $row['roadTeam'];
+    } else if ($row['nflteamid'] == $row['roadTeam']) {
+        $opp = $row['nflteamid'] . ' @ ' . $row['homeTeam'];
     }
 
 
     // Determine injury status
-    $pqdoLine = getPQDOLine($row["status"], $row["details"], $row["ir"]);
+    $pqdoLine = getPQDOLine($row['status'], $row['details'], $row['ir']);
 
     // Build the line to prin
-    $printer[$i] .= "<div class='row my-1'><div class='col-2 pr-0'>" . $spot . $row["pos"] . "</div>";
-    $printer[$i] .= "<div class='col-4 text-left pl-0'>" . $row["firstname"] . " " . $row["lastname"] . "</div>";
-    $printer[$i] .= "<div class='col-4 mr-0'>" . $opp . "</div>";
+    $printer[$i] .= "<div class='row my-1'><div class='col-2 pr-0'>" . $spot . $row['pos'] . '</div>';
+    $printer[$i] .= "<div class='col-4 text-left pl-0'>" . $row['firstname'] . ' ' . $row['lastname'] . '</div>';
+    $printer[$i] .= "<div class='col-4 mr-0'>" . $opp . '</div>';
     $printer[$i] .= "<div class='col-2 ml-0 pl-0'>$pqdoLine</div>";
-    $printer[$i] .= "</div>"; // should close row
-    $printer[$i] .= "<!-- close row -->";
+    $printer[$i] .= '</div>'; // should close row
+    $printer[$i] .= '<!-- close row -->';
 
 }
-$printer[$i] .= "</div></div>";  // close the last card
+$printer[$i] .= '</div></div>';  // close the last card
 
 ?>
 
-<!--<tr><td colspan=3 align=center><b>Current Activations for Week --><? //= $week ?><!--</b></td></tr>-->
+<!--<tr><td colspan=3 align=center><b>Current Activations for Week --><?php //= $week ?><!--</b></td></tr>-->
 
 <?php
 for ($i = 1;

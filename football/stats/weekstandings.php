@@ -1,6 +1,6 @@
 <table cellpadding="5" cellspacing="1">
-<?
-include "lib/Team.php";
+    <?php
+include 'lib/Team.php';
 
 //$thisSeason = 2004;
 //$thisWeek = 5;
@@ -50,32 +50,36 @@ AND s.week<=14
 EOD;
 
 
-$results = mysqli_query($conn, $query) or die("Error: " . mysqli_error($conn));
+$results = mysqli_query($conn, $query) or die('Error: ' . mysqli_error($conn));
 $count =0;
 $teamArray = array();
 while ($row = mysqli_fetch_array($results)) {
-    $t = new Team($row["team"], $row["division"], $row["teamid"]);
-    $rec = array($row["win"], $row["lose"], $row["tie"]);
-    $div = array($row["divwin"], $row["divlose"], $row["divtie"]);
+    $t = new Team($row['team'], $row['division'], $row['teamid']);
+    error_log(t);
+    $rec = array($row['win'], $row['lose'], $row['tie']);
+    $div = array($row['divwin'], $row['divlose'], $row['divtie']);
 //    $t->record = $rec;
     $t->divRecord = $div;
 //    $t->ptsFor = $row["ptsfor"];
 //    $t->ptsAgt = $row["ptsagt"];
-    $t->divPtsFor = $row["divpf"];
-    $t->divPtsAgt = $row["divpa"];
-    $teamArray[$row["teamid"]] = $t;
+    $t->divPtsFor = $row['divpf'];
+    $t->divPtsAgt = $row['divpa'];
+    $teamArray[$row['teamid']] = $t;
     //array_push($teamArray, $t);
 }
 
-//print_r($teamArray);
+print '<pre>';
+print_r($teamArray);
+print '</pre>';
+error_log($teamArray);
 
-$results = mysqli_query($conn, $secondQuery) or die("Second Error: " . mysqli_error($conn));
+$results = mysqli_query($conn, $secondQuery) or die('Second Error: ' . mysqli_error($conn));
 while ($row = mysqli_fetch_array($results)) {
     //print_r($row);
-    $teamid = $row["teamid"];
-    $opp = $row["oppid"];
-    $pts = $row["ptsfor"];
-    $agst = $row["ptsagt"];
+    $teamid = $row['teamid'];
+    $opp = $row['oppid'];
+    $pts = $row['ptsfor'];
+    $agst = $row['ptsagt'];
  //   print "$teamid - ";
     $teamArray[$teamid]->addGame($opp, $pts, $agst, 99);
 }
@@ -85,7 +89,7 @@ print "<pre>";
 print_r($teamArray);
 print "</pre>";
 */
-usort($teamArray, "orderteam");
+usort($teamArray, 'orderteam');
 //print_r($teamArray);
 $records = array();
 foreach($teamArray as $t) {
@@ -112,16 +116,16 @@ EOD;
     }
 
     if ($count % 2 == 0) {
-        $bgcolor = "dddddd";
+        $bgcolor = 'dddddd';
     } else {
-        $bgcolor = "ffffff";
+        $bgcolor = 'ffffff';
     }
     $count++;
 
     if ($t->record[2] > 0) {
-        $records[$t->name] = sprintf("(%d-%d-%d)", $t->record[0], $t->record[1], $t->record[2]);
+        $records[$t->name] = sprintf('(%d-%d-%d)', $t->record[0], $t->record[1], $t->record[2]);
     } else {
-        $records[$t->name] = sprintf("(%d-%d)", $t->record[0], $t->record[1]);
+        $records[$t->name] = sprintf('(%d-%d)', $t->record[0], $t->record[1]);
     }
 
     print <<< EOD
@@ -130,7 +134,7 @@ EOD;
 <td align="center">{$t->record[1]}</td>
 <td align="center">{$t->record[2]}</td>
 EOD;
-    printf ("<td>%5.3f</td>",($t->getWinPCT()));
+    printf ('<td>%5.3f</td>',($t->getWinPCT()));
     print <<< EOD
 
 <td>&nbsp;</td>
