@@ -5,9 +5,10 @@ function process($array, $word = 'pick'): array
     if (is_array($array)) {
 //		print("<ul>\n");
 //		$playerlist = array();
-        while (list($key, $val) = each($array)) {
+//        while (list($key, $val) = each($array)) {
+        foreach ($array as $key => $val) {
             if ($val == null || $val == '') continue;
-            if (substr($key, 0, strlen($word)) != $word) continue;
+            if (!str_starts_with($key, $word)) continue;
             $playerlist[] = $val;
 //			print("<li> $val ");
         }
@@ -44,7 +45,7 @@ if ($submit == 'Confirm') {
     $playercount = 0;
     $fullCount  = 0;
     $listcount = 0;
-    while (list($key, $val) = each($_POST)) {
+    foreach ($_POST as $key => $val) {
         $com = substr($key, 0, 4);
         //      print "$key - $com - $val<br>";
         if ($com == 'keep' || $com == 'injr') {
@@ -256,8 +257,6 @@ while ($pickups[$i] = mysqli_fetch_row($result)) {
             //        print "Inele";
             $pickups[$i][5] = 1;
             $waveCount++;
-        } else {
-            //          print "Nope";
         }
 
     }
@@ -417,7 +416,6 @@ if ($isin) {
                     </TR>
                     </thead>
                     <?php
-                    $i = 0;
                     for ($i = 0; $i < count($wavePlayers); $i++) {
 //while (list($id, $last, $first, $team, $pos, $priority) = $wavePlayers[$i]) {
                         list($id, $last, $first, $team, $pos, $priority) = $wavePlayers[$i];
