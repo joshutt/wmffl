@@ -1,12 +1,13 @@
-<?
-require_once "utils/start.php";
+<?php
+require_once 'utils/start.php';
 if ($currentWeek >= 1) {
     $thisSeason = $currentSeason;
 } else {
     $thisSeason = $currentSeason - 1;
 }
 
-function powersort($a, $b) {
+function powersort($a, $b): int
+{
     $aar = array_reverse($a);
     $bar = array_reverse($b);
     for ($i=0; $i<sizeof($aar); $i++) {
@@ -33,13 +34,13 @@ $results = mysqli_query($conn, $sql);
 $potPts = array();
 $actPts = array();
 
-$curTeam = "";
-$curPos = "";
+$curTeam = '';
+$curPos = '';
 while ($row = mysqli_fetch_array($results)) {
-    $week = $row["week"];
-    $teamName = $row["name"];
+    $week = $row['week'];
+    $teamName = $row['name'];
     if ($curTeam != $teamName) {
-        $curPos = "";
+        $curPos = '';
         $curTeam = $teamName;
         $count = 0;
         if (!array_key_exists($teamName, $potPts)) {
@@ -51,12 +52,12 @@ while ($row = mysqli_fetch_array($results)) {
         $holdplp = 0;
     }
 
-    $plp = $row["pts"];
-    $pla = $row["active"];
+    $plp = $row['pts'];
+    $pla = $row['active'];
     $apt += $pla;
-    if ($curPos != $row["pos"]) {
+    if ($curPos != $row['pos']) {
         $ppt += $plp;
-        $curPos = $row["pos"];
+        $curPos = $row['pos'];
         $count = 0;
     }
   //  if (($curPos == 'RB' || $curPos == 'WR' || $curPos == 'DL' ||
@@ -107,15 +108,15 @@ foreach($potPts as $team=>$teamArray) {
         $finalPower = ($power+$flat)/2.0;
         $finalPow[$week] = $finalPower;
     }
-    $powerArray{$team}=$finalPow;
+    $powerArray[$team] =$finalPow;
 }
 
 $week = max(array_keys($teamArray));
-uasort($powerArray, "powersort");
+uasort($powerArray, 'powersort');
 
-$lineSQL = "SELECT t1.name, t2.name FROM schedule s, team t1, team t2 ";
+$lineSQL = 'SELECT t1.name, t2.name FROM schedule s, team t1, team t2 ';
 $lineSQL .= "WHERE s.teama=t1.teamid AND s.teamb=t2.teamid AND s.season=$thisSeason ";
-$lineSQL .= "AND s.week=".($week+1);
+$lineSQL .= 'AND s.week=' .($week+1);
 
 $results = mysqli_query($conn, $lineSQL);
 $arra = array();
@@ -125,15 +126,15 @@ while (list($ta, $tb) = mysqli_fetch_row($results)) {
     array_push($arrb, $tb);
 }
 
-$title = "Power Rankings";
+$title = 'Power Rankings';
 ?>
 
-<? include "base/menu.php"; ?>
+<?php include 'base/menu.php'; ?>
 
 <H1 ALIGN=Center>Power Rankings</H1>
-<H5 ALIGN=Center><I>Through Week <?print $week;?></I></H5>
+<H5 ALIGN=Center><I>Through Week <?php print $week;?></I></H5>
 <HR>
-<? include "base/statbar.html"; ?>
+<?php include 'base/statbar.html'; ?>
 
 <P>The current power rankings as well as the rankings for the previous two
 weeks are listed below.  Power rankings are intended to be an indication of
@@ -146,17 +147,17 @@ purposes only.  </P>
 <CENTER>
 <TABLE>
 <TR><TH ALIGN="Left">Team</TH><TH></TH><TH>Current Rating</TH>
-<?
+    <?php
 if ($week >= 2) {
-    print "<th></th><th>Last Week</th>";
+    print '<th></th><th>Last Week</th>';
 }
 if ($week >= 3) {
-    print "<th></th><th>Week ".($week-2)."</th>";
+    print '<th></th><th>Week ' .($week-2). '</th>';
 }
 ?>
 </TR>
 
-<?
+    <?php
 foreach($powerArray as $team=>$finalPow) {
     print "<TR><TD>$team</TD><TD>&nbsp;</TD>";
     printf ("<TD ALIGN=\"center\">%6.2f</TD><TD>&nbsp;</TD>", $finalPow[$week]);
@@ -171,22 +172,22 @@ foreach($powerArray as $team=>$finalPow) {
 </TABLE></CENTER><BR>
 
 <TABLE ALIGN=Center>
-<TR><TH COLSPAN=5>Week <?print ($week+1);?> Lines</TH></TR>
+<TR><TH COLSPAN=5>Week <?php print ($week+1);?> Lines</TH></TR>
 <TR><TH>Favorite</TH><TH></TH><TH>Line</TH><TH></TH><TH>Underdog</TH></TR>
-<?
+    <?php
 
 for ($i=0; $i<sizeof($arra); $i++) {
 $teama = $arra[$i];
 $teamb = $arrb[$i];
 
-if ($powerArray{$teama}[$week] > $powerArray{$teamb}[$week]) {
-    $line = $powerArray{$teama}[$week] - $powerArray{$teamb}[$week];
+if ($powerArray[$teama][$week] > $powerArray[$teamb][$week]) {
+    $line = $powerArray[$teama][$week] - $powerArray[$teamb][$week];
     $line *= 2;
     $line = round($line);
     $line /= 2;
     print "<TR><TD>$teama</TD><TD>&nbsp;</TD><TD>$line</TD><TD>&nbsp;</TD><TD>$teamb</TD></TR>";
 } else {
-    $line = $powerArray{$teamb}[$week] - $powerArray{$teama}[$week];
+    $line = $powerArray[$teamb][$week] - $powerArray[$teama][$week];
     $line *= 2;
     $line = round($line);
     $line /= 2;
@@ -196,4 +197,4 @@ if ($powerArray{$teama}[$week] > $powerArray{$teamb}[$week]) {
 ?>
 </TABLE>
 
-<? include "base/footer.php";?>
+<?php include 'base/footer.php';?>

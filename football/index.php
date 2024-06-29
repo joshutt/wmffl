@@ -5,13 +5,15 @@ $cssList = array('base/css/index.css');
 $javascriptList = array('base/js/front.js');
 include 'base/menu.php';
 
+print $currentWeek;
+print $currentSeason;
 ?>
 
 <div class="row">
     <div class="col-md-8 col">
 
         <div class="m-2">
-            <?php include 'article.php' ?>
+<!--            --><?php //include 'article.php' ?>
         </div>
 
 
@@ -45,7 +47,7 @@ include 'base/menu.php';
         </div>
 
         <div class="card m-1 mb-2">
-            <?php include 'forum/commentlist.php' ?>
+<!--            --><?php //include 'forum/commentlist.php' ?>
         </div>
         <div class="card m-1">
             <?php include 'quicklinks.php'; ?>

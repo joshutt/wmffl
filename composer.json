@@ -1,0 +1,17 @@
+{
+  "name": "wmffl/wmffl",
+  "require": {
+    "monolog/monolog": "^3.7"
+  },
+  "autoload": {
+    "psr-4": {
+      "WMFFL\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Josh",
+      "email": "3430+joshutt@users.noreply.github.com"
+    }
+  ]
+}
