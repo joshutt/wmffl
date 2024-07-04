@@ -28,7 +28,6 @@
 <B>League Management</B>
 <UL>
 <LI><A HREF="presendtransactions.php">Send Transactions</A>
-<LI><A HREF="currentactivationsnum.php">Send Activations</A>
 <LI><A HREF="updatescores.php">Recalculate Scores</A>
 <li><a href="headcoach.php">Head Coach Change</a>
     <li><a href="/login/simulatelogin">Become a team</a></li>

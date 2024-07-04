@@ -1,9 +1,12 @@
 <?php
+/**
+ * @var $conn mysqli
+ */
 require_once 'utils/start.php';
 
 $uid = $_REQUEST['uid'];
-$edit = $_REQUEST['Edit'];
-$publish = $_REQUEST['Publish'];
+$edit = $_REQUEST['Edit'] ?? '';
+$publish = $_REQUEST['Publish'] ?? '';
 
 if (!empty($edit)) {
     // set title, url, caption, article

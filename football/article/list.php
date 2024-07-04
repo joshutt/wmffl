@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var $isin boolean
+ */
+
 require_once 'utils/start.php';
 require 'articleUtils.php';
 
@@ -7,7 +11,7 @@ $start = null;
 if (array_key_exists('start', $_REQUEST) && !empty($_REQUEST['start'])) {
     $start = $_REQUEST['start'];
 }
-$article = getArticles($artPerPage, $start);
+$articles = getArticles($artPerPage, $start);
 
 $title = 'Latest News';
 include 'base/menu.php';
@@ -15,22 +19,34 @@ include 'base/menu.php';
 
     <h1 class="full"><?= $title ?></h1>
 
-<?php
-if ($isin) {
-?>
+
     <div class="py-2 row justify-content-between">
-        <div class="float-right"><a class="btn btn-wmffl" href="publish">Write Article</a>
+        <div class="float-left"><a class="btn btn-wmffl" href="list?start=<?= $start + 1 ?>">&lt;&lt;&lt;
+                Older</a></div>
+        <?php
+
+        if ($isin) {
+            ?>
+
+            <div class="float-right"><a class="btn btn-wmffl" href="publish">Write Article</a>
+            </div>
+
+            <?php
+        }
+
+
+        if ($start > 0) {
+        ?>
+        <div class="float-right"><a class="btn btn-wmffl" href="list?start=<?= $start - 1 ?>">Newer &gt;&gt;&gt;</a>
+            <?php } ?>
         </div>
     </div>
-    <?php
-}
-    ?>
-
     <div class="container-fluid">
         <div class="card-deck">
             <?php
             $i = 1;
-            while ($article->fetch()) {
+            //            while ($article->fetch()) {
+            foreach ($articles as $article) {
                 print printArticleCard($article);
 
                 if ($i % 2 === 0) {
@@ -53,17 +69,16 @@ if ($isin) {
             ?>
         </div>
 
-    <div class="py-2 row justify-content-between">
-        <div class="float-left"><a class="btn btn-wmffl" href="list?start=<?= $start+1 ?>">&lt;&lt;&lt;
-                Older</a></div>
-        <?php
+        <div class="py-2 row justify-content-between">
+            <div class="float-left"><a class="btn btn-wmffl" href="list?start=<?= $start + 1 ?>">&lt;&lt;&lt;
+                    Older</a></div>
+            <?php
             if ($start > 0) {
-                ?>
-        <div class="float-right"><a class="btn btn-wmffl" href="list?start=<?= $start-1 ?>">Newer &gt;&gt;&gt;</a>
-            <?php } ?>
+            ?>
+            <div class="float-right"><a class="btn btn-wmffl" href="list?start=<?= $start - 1 ?>">Newer &gt;&gt;&gt;</a>
+                <?php } ?>
+            </div>
         </div>
-    </div>
 
     </div>
-<?php
-include 'base/footer.php';
+<?php include 'base/footer.php';

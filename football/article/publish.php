@@ -1,4 +1,7 @@
 <?php
+/**
+ * @var $isin boolean
+ */
 $title = 'Publish Article';
 
 $javascriptList = array('/base/vendor/js/tiny_mce_5_0/tinymce.min.js', '/base/js/article.js');
@@ -23,19 +26,43 @@ if (isset($errors)) {
 }
 
 if (!isset($artTitle)) {
-    $artTitle = $_REQUEST['title'];
+    if (array_key_exists('title', $_REQUEST)) {
+        $artTitle = $_REQUEST['title'];
+    } else {
+        $artTitle = '';
+    }
 }
+
 if (!isset($url)) {
-    $url = $_REQUEST['url'];
+    if (array_key_exists('url', $_REQUEST)) {
+        $url = $_REQUEST['url'];
+    } else {
+        $url = '';
+    }
 }
+
 if (!isset($upload)) {
-    $upload = $_REQUEST['upload'];
+    if (array_key_exists('upload', $_REQUEST)) {
+        $upload = $_REQUEST['upload'];
+    } else {
+        $upload = '';
+    }
 }
+
 if (!isset($caption)) {
-    $caption = $_REQUEST['caption'];
+    if (array_key_exists('caption', $_REQUEST)) {
+        $caption = $_REQUEST['caption'];
+    } else {
+        $caption = '';
+    }
 }
+
 if (!isset($article)) {
-    $article = $_REQUEST['article'];
+    if (array_key_exists('article', $_REQUEST)) {
+        $article = $_REQUEST['article'];
+    } else {
+        $article = '';
+    }
 }
 
 ?>
