@@ -1,7 +1,10 @@
 {
   "name": "wmffl/wmffl",
   "require": {
-    "monolog/monolog": "^3.7"
+    "monolog/monolog": "^3.7",
+    "doctrine/orm": "^3.2",
+    "doctrine/dbal": "^4.0",
+    "symfony/cache": "^7.1"
   },
   "autoload": {
     "psr-4": {
@@ -13,5 +16,8 @@
       "name": "Josh",
       "email": "3430+joshutt@users.noreply.github.com"
     }
-  ]
+  ],
+  "require-dev": {
+    "symfony/maker-bundle": "^1.60"
+  }
 }
