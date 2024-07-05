@@ -1,6 +1,7 @@
 <?php
 namespace WMFFL\orm;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -21,11 +22,11 @@ class Article
     #[ORM\Column(type: 'string')]
     private string $caption;
 
-    #[ORM\Column(name: 'articleText', type: 'string')]
+    #[ORM\Column(name: 'articleText', type: 'text')]
     private string $text;
 
     #[ORM\Column(type: 'datetime')]
-    private \DateTime $displayDate;
+    private DateTime $displayDate;
 
     #[ORM\Column(type: 'boolean')]
     private bool $active;
@@ -87,12 +88,12 @@ class Article
         $this->text = $text;
     }
 
-    public function getDisplayDate(): \DateTime
+    public function getDisplayDate(): DateTime
     {
         return $this->displayDate;
     }
 
-    public function setDisplayDate(\DateTime $displayDate): void
+    public function setDisplayDate(DateTime $displayDate): void
     {
         $this->displayDate = $displayDate;
     }

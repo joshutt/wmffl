@@ -48,7 +48,7 @@ include 'base/menu.php';
         </div>
 
         <div class="card m-1 mb-2">
-<!--            --><?php //include 'forum/commentlist.php' ?>
+            <?php include 'forum/commentlist.php' ?>
         </div>
         <div class="card m-1">
             <?php include 'quicklinks.php'; ?>

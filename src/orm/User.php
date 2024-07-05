@@ -13,8 +13,9 @@ class User
     #[ORM\GeneratedValue]
     private int $id;
 
-    #[ORM\Column(name: 'TeamID', type: 'integer')]
-    private int|null $teamId;
+    #[ORM\ManyToOne(targetEntity: Team::class)]
+    #[ORM\JoinColumn(name: 'TeamID', referencedColumnName: 'TeamID')]
+    private Team|null $team;
 
     #[ORM\Column(name: 'Username', type: 'string')]
     private string $username;
@@ -50,14 +51,14 @@ class User
         $this->id = $id;
     }
 
-    public function getTeamId(): ?int
+    public function getTeam(): ?Team
     {
-        return $this->teamId;
+        return $this->team;
     }
 
-    public function setTeamId(?int $teamId): void
+    public function setTeam(?Team $teamId): void
     {
-        $this->teamId = $teamId;
+        $this->team = $teamId;
     }
 
     public function getUsername(): string
