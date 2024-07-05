@@ -18,6 +18,7 @@
     }
   ],
   "require-dev": {
-    "symfony/maker-bundle": "^1.60"
+    "symfony/maker-bundle": "^1.60",
+    "symfony/console": "^7.1"
   }
 }

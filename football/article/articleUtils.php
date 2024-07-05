@@ -6,13 +6,13 @@
 use Doctrine\ORM\EntityManager;
 use WMFFL\orm\Article as Article;
 
-//require_once 'DataObjects/Articles.php';
 require_once 'bootstrap.php';
 
-//$article = $entityManager->find('WMFFL\orm\Article', 225);
-//print_r($article);
-
-
+/**
+ * Given an id return the Article associated with it.  If no id is provided return the most recent one
+ * @param $uid
+ * @return Article
+ */
 function getArticle($uid = null): Article
 {
     global $entityManager;
@@ -31,25 +31,17 @@ function getArticle($uid = null): Article
 
     $query = $qb->getQuery();
     return $query->getSingleResult();
-//
-//    $article = new DataObjects_Articles;
-//    if (!empty($uid)) {
-//        $article->articleId = $uid;
-//    } else {
-//        $article->active = 1;
-//        $article->orderBy('displayDate desc');
-//        $article->orderBy('priority desc');
-//        $article->limit(1);
-////    print_r($article);
-//    }
-//    $article->find(true);
-//    $article->getLinks('comments');
-//    $artid = $article->articleId;
-//    return $article;
 }
 
 
-function getArticles($num, $start=null )
+/**
+ * Return a Doctrine set of results of Articles.  The number returned is specified by $num.  Will return the most
+ * recent items, unless the $start parameter is provided.  Then it will be the items starting at that point.
+ * @param $num
+ * @param $start
+ * @return mixed
+ */
+function getArticles($num, $start=null ): mixed
 {
     global $entityManager;
 
@@ -61,41 +53,21 @@ function getArticles($num, $start=null )
         $query->setFirstResult($start*$num);
     }
 
-    $articles = $query->getResult();
-
-    return $articles;
-
-
-//
-//    $article = new DataObjects_Articles;
-//    $article->active = 1;
-//    $article->orderBy('displayDate desc');
-//    $article->orderBy('priority desc');
-//
-//    if (empty($start)) {
-//        $start = 0;
-//    }
-//    $article->limit($start*$num, $num);
-//
-////    if (!empty($start)) {
-////        $article->whereAdd('articleId <= '.$start);
-////        $start * $num;
-////    }
-//
-//    $article->find();
-//    $article->getLinks('author');
-//    return $article;
+    return $query->getResult();
 }
 
 
+/**
+ * Given an Article converts it into a printable string and returns that string
+ * @param Article $article
+ * @return string
+ */
 function printArticleCard(Article $article): string
 {
     $articleId = $article->getId();
     $link = $article->getLink();
     $title = $article->getTitle();
     $date = $article->getDisplayDate()->format('M d, Y');
-//    $date = date('M d, Y', strtotime($article->getDisplayDate()));
-//    $name = $article->getLink('author')->Name;
     $name = $article->getAuthor()->getName();
 
     return <<< EOT

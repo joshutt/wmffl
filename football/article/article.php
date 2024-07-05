@@ -1,5 +1,7 @@
 <?php
-//require_once 'DataObjects/Articles.php';
+/**
+ * @var $uid int
+ */
 require 'articleUtils.php';
 
 

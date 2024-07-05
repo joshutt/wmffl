@@ -1,4 +1,7 @@
 <?php
+/**
+ * @var $isin boolean
+ */
 require_once 'utils/start.php';
 
 $title = 'Leave Comment';
