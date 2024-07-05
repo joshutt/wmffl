@@ -1,18 +1,18 @@
-<?
-require_once "loadTrades.inc.php";
+<?php
+require_once 'loadTrades.inc.php';
 
 class Team {
     var $name;
     var $id;
 
-    function Team($newName, $newID) {
+    function __construct($newName, $newID) {
         $this->setName($newName);
         $this->setID($newID);
     }
     function setName($newName) {$this->name=$newName;}
-    function setID($newID) { $this->ID = $newID; }
+    function setID($newID) { $this->id = $newID; }
     function getName() {return $this->name;}
-    function getID() {return $this->ID;}
+    function getID() {return $this->id;}
 }
 
 class Player {
@@ -21,7 +21,7 @@ class Player {
     var $pos;
     var $nflTeam;
 
-    function Player($newName, $newID) {
+    function __construct($newName, $newID) {
         $this->setName($newName);
         $this->setID($newID);
     }
@@ -42,7 +42,7 @@ class Pick {
     var $round;
     var $orgOwner;
     
-    function Pick($newSeason, $newRound, $newOrgOwn) {
+    function __construct($newSeason, $newRound, $newOrgOwn) {
         $this->setSeason($newSeason);
         $this->setRound($newRound);
         $this->setOrgOwner($newOrgOwn);
@@ -60,7 +60,7 @@ class Points {
     var $numPts;
     var $season;
 
-    function Points($newPts, $newSeason) {
+    function __construct($newPts, $newSeason) {
         $this->setPts($newPts);
         $this->setSeason($newSeason);
     }
@@ -87,7 +87,7 @@ class Trade {
     var $pointsTo = array();
     var $pointsFrom = array();
 
-    function Trade($newID, $newStatus="Pending", $newDate="1970-01-01") {
+    function __construct($newID, $newStatus="Pending", $newDate="1970-01-01") {
         $this->setID($newID);
         $this->setStatus($newStatus);
         $this->setDateOffered($newDate);
@@ -125,4 +125,3 @@ class Trade {
     function getPointsFrom() {return $this->pointsFrom;}
 }
 
-?>

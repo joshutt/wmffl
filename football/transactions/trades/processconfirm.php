@@ -1,8 +1,11 @@
-<?
-require_once "utils/start.php";
+<?php
+/**
+ * @var $isin boolean
+ */
+require_once 'utils/start.php';
 
 if (!$isin) {
-    header("Location: tradescreen.php");
+    header('Location: tradescreen.php');
     exit;
 }
 
@@ -24,8 +27,8 @@ function buildObjectArray($they) {
     return $theyItems;
 }
 
-if (isset($_POST["cancel"])) {
-	header("Location: tradescreen.php");
+if (isset($_POST['cancel'])) {
+	header('Location: tradescreen.php');
     exit();
 }
 
@@ -56,22 +59,22 @@ $fromPlay = array();
 $fromPts = array();
 foreach ($theyItems as $theyO) {
     $objType = get_class($theyO);
-    if (strtolower($objType) == "player") {
-        array_push($toPlay, $theyO);
-    } else if (strtolower($objType) == "points") {
-        array_push($toPts, $theyO);
+    if (strtolower($objType) == 'player') {
+        $toPlay[] = $theyO;
+    } else if (strtolower($objType) == 'points') {
+        $toPts[] = $theyO;
     } else {
-        array_push($toPicks, $theyO);
+        $toPicks[] = $theyO;
     }
 }
 foreach ($youItems as $theyO) {
     $objType = get_class($theyO);
-    if (strtolower($objType) == "player") {
-        array_push($fromPlay, $theyO);
-    } else if (strtolower($objType) == "points") {
-        array_push($fromPts, $theyO);
+    if (strtolower($objType) == 'player') {
+        $fromPlay[] = $theyO;
+    } else if (strtolower($objType) == 'points') {
+        $fromPts[] = $theyO;
     } else {
-        array_push($fromPicks, $theyO);
+        $fromPicks[] = $theyO;
     }
 }
 $theTrade->setPlayersTo($toPlay);
@@ -111,13 +114,13 @@ while (list($emailAdd, $fromTeam) = mysqli_fetch_array($addyResults)) {
     $first = false;
     if ($fromTeam == $teamnum) {
         if (!$replyFirst) {
-            $replyTo .= ", ";
+            $replyTo .= ', ';
         }
         $replyTo .= $emailAdd;
         $replyFirst = false;
     }
 }
-mail($address, $subject, $mailmessage, "From: webmaster@wmffl.com\r\n$replyTo");
+@mail($address, $subject, $mailmessage, "From: webmaster@wmffl.com\r\n$replyTo");
 
 $title = "Trades";
 include "base/menu.php"; 
@@ -128,8 +131,8 @@ include "base/menu.php";
 
 <P>The following offer terms have been submitted:</P>
 
-<P><B><?print $myTeam->getName();?></B> offer <? print printList($youItems);?><BR>
-to the <B><?print $otherTeam->getName();?></B> in exchange for <? print printList($theyItems); ?>
+<P><B><?php print $myTeam->getName();?></B> offer <?php print printList($youItems);?><BR>
+to the <B><?php print $otherTeam->getName();?></B> in exchange for <?php print printList($theyItems); ?>
 
 <P>This trade will become offical when the other team agrees to these terms.  
 Either team may amend or withdraw this offer at any time prior to its approval.
@@ -138,6 +141,6 @@ taken by either party.</P>
 
 <P>Return to <A HREF="tradescreen.php">trade screen</A></P>
 
-<? include "base/footer.php"; ?>
+<?php include "base/footer.php"; ?>
 </BODY>
 </HTML>
