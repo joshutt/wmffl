@@ -20,7 +20,8 @@ function _array_search ($needle, $haystick) {
    return(false); 
 }
 
-function loadTeam($teamID) {
+function loadTeam($teamID): Team
+{
     global $conn;
     $sql = "SELECT name FROM team WHERE teamid=$teamID";
     $resultlt = mysqli_query($conn, $sql);
@@ -129,9 +130,9 @@ function getPlural($count) {
 }
 
 
-function loadRoster($team) {
+function loadRoster(Team $team) {
     global $conn;
-    $sql = "select * from newplayers p, roster r ";
+    $sql = 'select * from newplayers p, roster r ';
     $sql .= "where p.playerid=r.playerid and r.dateoff is null ";
     $sql .= "and r.teamid=".$team->getID();
     $sql .= " order by p.pos, p.lastname";

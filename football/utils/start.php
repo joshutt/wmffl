@@ -52,7 +52,7 @@ list($_SESSION['currentSeason'], $_SESSION['currentWeek'], $_SESSION['weekName']
 foreach ($_SESSION as $key => $value) {
     ${$key} = $value;
     $GLOBALS[$key] = $value;
-    error_log("WHAR: [$key] [$value]");
+//    error_log("WHAR: [$key] [$value]");
 }
 
 if (empty($isin)) {

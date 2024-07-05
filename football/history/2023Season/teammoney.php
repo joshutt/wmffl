@@ -66,14 +66,14 @@ include 'base/menu.php';
         </tr>
         <tr class="oddRow">
             <td class="name padded">British Bulldogs</td>
-            <td class="padded">$21.77</td>
+            <td class="padded">$21.14</td>
             <td class="padded">$53.23</td>
             <td class="padded">-</td>
             <td class="padded">1</td>
             <td class="padded">-</td>
             <td class="padded">12 x $2.95</td>
             <td class="padded">Division Title - $24.80<br/>Playoff Team - $24.80<br/>First Round Win - $99.20</td>
-            <tdmg class="padded">$183.20</tdmg>
+            <td class="padded">$182.57</td>
             <td class="padded">$0.00</td>
         </tr>
         <tr class="evenRow">

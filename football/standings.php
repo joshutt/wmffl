@@ -1,6 +1,9 @@
 <?php
+/**
+ * @var $currentSeason int
+ * @var $currentWeek int
+ */
 require_once 'utils/connect.php';
-
 
 $thisSeason = $currentSeason;
 $thisWeek = $currentWeek;
