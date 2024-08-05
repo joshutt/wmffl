@@ -37,7 +37,7 @@ while ($teaminfo = mysqli_fetch_array($results)) {
     $ownerSince = $teaminfo['season'];
     $teammotto = '';
     if ($teaminfo['motto'] != null) {
-        $teammotto = "\"${teaminfo['motto']}\"";
+        $teammotto = ${teaminfo['motto']};
     }
 //    $fulllogo = $teaminfo['fulllogo'];
     $logo = $teaminfo['logo'];
@@ -53,7 +53,7 @@ $titleSQL = "SELECT season FROM titles WHERE teamid=$viewteam AND type='League'"
 $results = mysqli_query($conn, $titleSQL) or die('Error: ' . mysqli_error($conn));
 $champyear = array();
 while (list($newSeason) = mysqli_fetch_array($results)) {
-    array_push($champyear, $newSeason);
+    $champyear[] = $newSeason;
 }
 
 $cssList = array('/stats/stats.css', '/base/css/team.css');

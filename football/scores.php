@@ -1,6 +1,10 @@
 <?php
+/**
+ * @var $currentSeason int
+ * @var $currentWeek int
+ * @var $conn mysqli
+ */
 require_once 'utils/connect.php';
-
 
 if ($currentWeek < 1) {
     $thisSeason = $currentSeason - 1;

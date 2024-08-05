@@ -1,58 +1,74 @@
 <?php
-require_once 'DataObjects/Articles.php';
+/**
+ * @var $entityManager EntityManager
+ */
+
+use Doctrine\ORM\EntityManager;
+use WMFFL\orm\Article as Article;
+
+require_once 'bootstrap.php';
 
 /**
- * @return DataObjects_Articles
+ * Given an id return the Article associated with it.  If no id is provided return the most recent one
+ * @param $uid
+ * @return Article
  */
-function getArticle($uid = null): DataObjects_Articles
+function getArticle($uid = null): Article
 {
-    $article = new DataObjects_Articles;
+    global $entityManager;
+
+    $qb = $entityManager->createQueryBuilder();
+    $qb->select('a') -> from('WMFFL\orm\Article', 'a');
     if (!empty($uid)) {
-        $article->articleId = $uid;
+        $qb->where('a.id = :uid')
+            ->setParameter('uid', $uid);
     } else {
-        $article->active = 1;
-        $article->orderBy('displayDate desc');
-        $article->orderBy('priority desc');
-        $article->limit(1);
-//    print_r($article);
+        $qb->where('a.active = 1')
+            ->orderBy('a.displayDate desc')
+            ->orderBy('a.priority desc')
+            ->setMaxResults(1);
     }
-    $article->find(true);
-    $article->getLinks('comments');
-    $artid = $article->articleId;
-    return $article;
+
+    $query = $qb->getQuery();
+    return $query->getSingleResult();
 }
 
 
-function getArticles($num, $start=null ): DataObjects_Articles
+/**
+ * Return a Doctrine set of results of Articles.  The number returned is specified by $num.  Will return the most
+ * recent items, unless the $start parameter is provided.  Then it will be the items starting at that point.
+ * @param $num
+ * @param $start
+ * @return mixed
+ */
+function getArticles($num, $start=null ): mixed
 {
-    $article = new DataObjects_Articles;
-    $article->active = 1;
-    $article->orderBy('displayDate desc');
-    $article->orderBy('priority desc');
+    global $entityManager;
 
-    if (empty($start)) {
-        $start = 0;
+    $dql = 'SELECT a from WMFFL\orm\Article a where a.active=1 order by a.displayDate desc, a.priority desc';
+    $query = $entityManager->createQuery($dql);
+    $query->setMaxResults($num);
+
+    if (!empty($start)) {
+        $query->setFirstResult($start*$num);
     }
-    $article->limit($start*$num, $num);
 
-//    if (!empty($start)) {
-//        $article->whereAdd('articleId <= '.$start);
-//        $start * $num;
-//    }
-
-    $article->find();
-    $article->getLinks('author');
-    return $article;
+    return $query->getResult();
 }
 
 
-function printArticleCard($article): string
+/**
+ * Given an Article converts it into a printable string and returns that string
+ * @param Article $article
+ * @return string
+ */
+function printArticleCard(Article $article): string
 {
-    $articleId = $article->articleId;
-    $link = $article->link;
-    $title = $article->title;
-    $date = date('M d, Y', strtotime($article->displayDate));
-    $name = $article->getLink('author')->Name;
+    $articleId = $article->getId();
+    $link = $article->getLink();
+    $title = $article->getTitle();
+    $date = $article->getDisplayDate()->format('M d, Y');
+    $name = $article->getAuthor()->getName();
 
     return <<< EOT
  <div class="card mb-4 article-card">

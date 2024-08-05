@@ -168,12 +168,13 @@ class ImageProcessor
             $null = NULL;
 //            $fileName = md5($image_data) . ".$format";
             $fileName = md5($image_data);
-            $stmt = $conn->prepare('INSERT INTO images (url, fullImage, smallImage) VALUES (?, ?, ?)');
+            $stmt = $conn->prepare('INSERT INTO images (url, fullImage, smallImage) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE smallImage=?');
             error_log("Filename: $fileName");
             error_log("Null: $null");
             error_log("Small Data: $small_data");
-            $stmt->bind_param('sbb', $fileName, $null, $small_data);
-            $stmt->send_long_data(1, utf8_encode($image_data));
+            $stmt->bind_param('sbbb', $fileName, $null, $small_data, $small_data);
+//            $stmt->send_long_data(1, utf8_encode($image_data));
+            $stmt->send_long_data(1, mb_convert_encoding($image_data, 'UTF-8', 'ISO-8859-1'));
             $stmt->execute();
 
             error_log($stmt->affected_rows . ' rows inserted');
@@ -195,8 +196,8 @@ class ImageProcessor
         }
 
         // Determine new sizes, create new image to that size
-        $newwidth = $currentWidth * $percent;
-        $newheight = $currentHeight * $percent;
+        $newwidth = (int) ($currentWidth * $percent);
+        $newheight = (int) ($currentHeight * $percent);
         $newImage = imagecreatetruecolor($newwidth, $newheight);
 
         // scale old image to new image

@@ -1,10 +1,13 @@
 <?php
+/**
+ * @var int $currentWeek
+ * @var int $currentSeason
+ */
 $title = 'The WMFFL Fantasy Football League';
 
 $cssList = array('base/css/index.css');
 $javascriptList = array('base/js/front.js');
 include 'base/menu.php';
-
 ?>
 
 <div class="row">

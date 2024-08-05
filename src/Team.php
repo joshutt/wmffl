@@ -1,11 +1,13 @@
 <?php
-require_once "utils/start.php";
+
+namespace WMFFL;
+require_once 'utils/start.php';
 
 class Team {
     
     var $name;
     var $division;
-    var $record;
+    var array $record;
     var $divRecord;
     var $ptsFor;
     var $ptsAgt;
@@ -15,8 +17,9 @@ class Team {
     var $teamid;
     var $allRef;
     var $allRefKeys;
-    
-    function Team($newName, $newDiv, $newID) {
+
+    public function __construct($newName, $newDiv, $newID)
+    {
         $this->name = $newName;
         $this->division = $newDiv;
         $this->teamid = $newID;
@@ -29,10 +32,100 @@ class Team {
         $this->games = array();
     }
 
+    public static function orderteam($a, $b)
+    {
+        if ($a === $b) {
+            return 0;
+        }
+        if ($a->division < $b->division) {
+            return -1;
+        } elseif ($a->division > $b->division) {
+            return 1;
+        }
+        if ($a->getWinPCT() > $b->getWinPCT()) {
+            return -1;
+        } elseif ($a->getWinPCT() < $b->getWinPCT()) {
+            return 1;
+        }
+        $games = $a->games;
+        /*
+        print "<pre>";
+        //print_r($games);
+        print "</pre>";
+        */
+        $h2h = array(0, 0, 0, 0, 0);
+        foreach ($games as $game) {
+            if ($game[0] == $b->teamid) {
+                $pFor = $game[1];
+                $pAgt = $game[2];
+                if ($pFor > $pAgt) {
+                    $h2h[0]++;
+                } elseif ($pFor < $pAgt) {
+                    $h2h[1]++;
+                } else {
+                    $h2h[2]++;
+                }
+                $h2h[3] += $pFor;
+                $h2h[4] += $pAgt;
+            }
+        }
+        //print $a->name."-".$b->name."-".$h2h[0]."-".$h2h[1]."<br/>";
+        if ($h2h[0] > $h2h[1]) {
+            return -1;
+        } elseif ($h2h[0] < $h2h[1]) {
+            return 1;
+        }
+
+        if ($a->division == $b->division) {
+            if ($a->getDivWinPCT() > $b->getDivWinPCT()) {
+                return -1;
+            } elseif ($a->getDivWinPCT() < $b->getDivWinPCT()) {
+                return 1;
+            }
+        }
+        /*
+        if ($a->ptsFor-$a->ptsAgt > $b->ptsFor-$b->ptsAgt) {
+            return -1;
+        } elseif ($a->ptsFor-$a->ptsAgt < $b->ptsFor-$b->ptsAgt) {
+            return 1;
+        }
+        */
+        /*
+        */
+
+        /*
+        print "<!-- Tie ".$a->name.": ".$a->getSOV($a->games)." <br/> ".$b->name.": ".$b->getSOV($b->games)." -->";
+        print "<!-- {$a->name} games: ";
+        print_r($a->games);
+        print "-->";
+        */
+
+//    error_log(print_r($a, TRUE));
+        if ($a->getSOV() > $b->getSOV()) {
+            return -1;
+        } elseif ($a->getSOV() < $b->getSOV()) {
+            return 1;
+        }
+
+        if ($h2h[3] > $h2h[4]) {
+            return -1;
+        } elseif ($h2h[3] < $h2h[4]) {
+            return 1;
+        }
+        if ($a->name > $b->name) {
+            return 1;
+        } elseif ($a->name < $b->name) {
+            return -1;
+        }
+        return 0;
+    }
+
     function addGame($opp, $ptsFor, $ptsAgt, $oppDiv) {
-        if ($ptsFor == "" || $ptsAgt == "") {return;}
+        if ($ptsFor == '' || $ptsAgt == '') {
+            return;
+        }
 //        print "here";
-        array_push($this->games, array($opp, $ptsFor, $ptsAgt));
+        $this->games[] = array($opp, $ptsFor, $ptsAgt);
         if ($this->division == $oppDiv) {
             $this->divPtsFor += $ptsFor;
             $this->divPtsAgt += $ptsAgt;
@@ -55,7 +148,8 @@ class Team {
         }
     }
 
-    function getWinPCT() {
+    function getWinPCT(): float
+    {
         if ($this->record[0]+$this->record[2] == 0) {
             return 0.000;
         } else {
@@ -81,7 +175,7 @@ class Team {
         }
         //error_log(print_r($teamArray, true));
         $rec = array(0,0,0);
-        $keyList = array_map("getTeamId", $teamArray);
+        $keyList = array_map('WMFFL\Team::getTeamId', $teamArray);
         $keyList = array_flip($keyList);
         // Loop through each game and if you won, add that teams record
 //        error_log(print_r($keyList, true));
@@ -116,110 +210,24 @@ class Team {
 
     function getPrintSOV($teamArray) {
         $sov = $this->getSOV($teamArray);
-        return sprintf("%5.3f", $sov);
+        return sprintf('%5.3f', $sov);
     }
 
     function getPrintRecord() {
-        return sprintf("%s &nbsp;&nbsp;&nbsp;%5.3f", $this->printShortRecord(), $this->getWinPCT());
+        return sprintf('%s &nbsp;&nbsp;&nbsp;%5.3f', $this->printShortRecord(), $this->getWinPCT());
     }
 
     function printShortRecord()
     {
         if ($this->record[2] > 0) {
-            return sprintf("%d - %d - %d", $this->record[0], $this->record[1], $this->record[2]);
+            return sprintf('%d - %d - %d', $this->record[0], $this->record[1], $this->record[2]);
         } else {
-            return sprintf("%d - %d", $this->record[0], $this->record[1]);
+            return sprintf('%d - %d', $this->record[0], $this->record[1]);
         }
     }
-}
 
-function orderteam($a, $b) {
-    if ($a === $b) {return 0;}
-    if ($a->division < $b->division) {
-        return -1;
-    } elseif ($a->division > $b->division) {
-        return 1;
+    public static function getTeamId($t)
+    {
+        return $t->teamid;
     }
-    if ($a->getWinPCT() > $b->getWinPCT()) {
-        return -1;
-    } elseif ($a->getWinPCT() < $b->getWinPCT()) {
-        return 1;
-    }
-    $games = $a->games;
-    /*
-    print "<pre>";
-    //print_r($games);
-    print "</pre>";
-    */
-    $h2h = array(0,0,0,0,0);
-    foreach ($games as $game) {
-        if ($game[0] == $b->teamid) {
-            $pFor = $game[1];
-            $pAgt = $game[2];
-            if ($pFor > $pAgt) {
-                $h2h[0]++;
-            } elseif ($pFor < $pAgt) {
-                $h2h[1]++;
-            } else {
-                $h2h[2]++;
-            }
-            $h2h[3] += $pFor;
-            $h2h[4] += $pAgt;
-        }
-    }
-    //print $a->name."-".$b->name."-".$h2h[0]."-".$h2h[1]."<br/>";
-    if ($h2h[0] > $h2h[1]) {
-        return -1;
-    } elseif ($h2h[0] < $h2h[1]) {
-        return 1;
-    }
-
-    if ($a->division == $b->division) {
-        if ($a->getDivWinPCT() > $b->getDivWinPCT()) {
-            return -1;
-        } elseif ($a->getDivWinPCT() < $b->getDivWinPCT()) {
-            return 1;
-        }
-    }
-    /*
-    if ($a->ptsFor-$a->ptsAgt > $b->ptsFor-$b->ptsAgt) {
-        return -1;
-    } elseif ($a->ptsFor-$a->ptsAgt < $b->ptsFor-$b->ptsAgt) {
-        return 1;
-    }
-    */
-    /*
-    */
-
-    /*
-    print "<!-- Tie ".$a->name.": ".$a->getSOV($a->games)." <br/> ".$b->name.": ".$b->getSOV($b->games)." -->";
-    print "<!-- {$a->name} games: ";
-    print_r($a->games);
-    print "-->";
-    */
-
-//    error_log(print_r($a, TRUE));
-    if ($a->getSOV() > $b->getSOV()) {
-        return -1;
-    } elseif ($a->getSOV() < $b->getSOV()) {
-        return 1;
-    }
-
-    if ($h2h[3] > $h2h[4]) {
-        return -1;
-    } elseif ($h2h[3] < $h2h[4]) {
-        return 1;
-    }
-    if ($a->name > $b->name) {
-        return 1;
-    } elseif ($a->name < $b->name) {
-        return -1;
-    }
-    return 0;
-}
-
-
-function getTeamId($t)
-{
-    return $t->teamid;
 }

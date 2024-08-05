@@ -16,16 +16,18 @@ if (isset($conn) && get_class($conn) == 'mysqli') {
     return;
 }
 
-// Start the session, so that every page is in session
+// Start the session, so that every page is in sess29Gion
 session_start();
 
 // establish Database connection information
 $conn = mysqli_connect('localhost', $ini['userName'], $ini['password'], $ini['dbName']);
+//$conn = new mysqli('localhost', $ini['userName'], $ini['password'], $ini['dbName']);
 //mysqli_select_db($conn, $ini["dbName"]);
 
 // Make sure timezone is correct
-$tzQuery = "SET time_zone = 'America/New_York';";
-$tzResult = mysqli_query($conn, $tzQuery);
+//$tzQuery = "SET time_zone = 'America/New_York';";
+//$tzQuery = "SET time_zone = 'US/Eastern';";
+//$tzResult = mysqli_query($conn, $tzQuery);
 
 // Determine the current season and current week, but not every time, use cachin
 //if (!isset($_SESSION["lastFetch"]) || time() > $lastFetch + 60 * 60) {
@@ -50,7 +52,7 @@ list($_SESSION['currentSeason'], $_SESSION['currentWeek'], $_SESSION['weekName']
 foreach ($_SESSION as $key => $value) {
     ${$key} = $value;
     $GLOBALS[$key] = $value;
-    error_log("WHAR: [$key] [$value]");
+//    error_log("WHAR: [$key] [$value]");
 }
 
 if (empty($isin)) {

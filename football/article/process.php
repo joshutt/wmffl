@@ -2,13 +2,23 @@
 require_once 'utils/start.php';
 require_once 'utils/ImageProcessor.php';
 
+
+function logerror($errno, $errstr, $errfile, $errline): void
+{
+    global $fail;
+    global $errors;
+    error_log("Error [$errno]: $errstr in file $errfile on line $errline");
+    $fail = true;
+    $errors[] = 'Provide a full URL to a JPEG, GIF or PNG image';
+}
+
 function compressImage($conn, string $url)
 {
     global $config;
     $paths = $config['Paths'];
     $maxSize = 600;
 
-    set_error_handler(logerror);
+    set_error_handler('logerror');
     $processor = new \utils\ImageProcessor($paths);
     $processor->createImageFromURL($url, $maxSize);
     $processor->saveImage($conn);
@@ -17,14 +27,6 @@ function compressImage($conn, string $url)
     return $processor->getImageFileName();
 }
 
-function logerror($errno, $errstr, $errfile, $errline)
-{
-    global $fail;
-    global $errors;
-    error_log("Error [$errno]: $errstr in file $errfile on line $errline");
-    $fail = true;
-    $errors[] = 'Provide a full URL to a JPEG, GIF or PNG image';
-}
 
 //print_r($_FILES);
 //exit;

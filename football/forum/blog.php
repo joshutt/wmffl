@@ -1,16 +1,26 @@
 <?php
+/**
+ * @var $isin boolean
+ * @var $entityManager EntityManager
+ */
+
+use Doctrine\ORM\EntityManager;
+use WMFFL\orm\Forum;
+
 require_once 'utils/setup.php';
+require_once 'bootstrap.php';
 
-require 'DataObjects/Forum.php';
-
-$posts = new DataObjects_Forum;
-$posts->orderBy('createTime DESC');
-$posts->limit(20);
+// Get the 20 comments
+$qb = $entityManager->createQueryBuilder();
+$qb -> select('f')
+    -> from('\WMFFL\orm\Forum', 'f')
+    -> orderBy('f.createTime', 'DESC')
+    -> setMaxResults(20);
 if (array_key_exists('start', $_REQUEST)) {
-    $posts->whereAdd('forumid < '.$start);
+    $qb->where('f.id < '.$_REQUEST['start']);
 }
+$posts = $qb->getQuery()->getResult();
 
-$posts->find();
 ?>
 
 
@@ -33,12 +43,13 @@ if ($isin) {
 <?php
 $lastDay = '';
 $first = null;
-while($posts->fetch()) {
-    $user = $posts->getLink('userid');
-    $team = $user->getLink('TeamID');
-    $dtObj = new DateTime($posts->createTime);
+/* @var $post Forum */
+foreach ($posts as $post) {
+    $user = $post->getUser();
+    $team = $user->getTeam();
+    $dtObj = $post->getCreateTime();
     if (!isset($first)) {
-        $first = $posts->forumid + 20;
+        $first = $post->getId() + 20;
     }
     //print_r( $dtObj);
 
@@ -56,10 +67,10 @@ while($posts->fetch()) {
         $lastDay = $day;
     }
     print <<<EOD
-    <div class="post p-1"><a name="{$posts->forumid}"></a>
-        <div class="post-title">{$posts->title}</div>
-		  <strong>posted by {$user->Name}, {$team->Name} at $time</strong>
-        <div class="post-body my-2"> {$posts->body}  </div>
+    <div class="post p-1"><a name="{$post->getId()}"></a>
+        <div class="post-title">{$post->getTitle()}</div>
+		  <strong>posted by {$user->getName()}, {$team->getName()} at $time</strong>
+        <div class="post-body my-2"> {$post->getBody()}  </div>
         </div>
 
       </div>
@@ -69,7 +80,7 @@ EOD;
 
 ?>
 <div class="py-2 row justify-content-between">
-<div class="float-left"><a class="btn btn-wmffl" href="comments.php?start=<?= $posts->forumid ?>">&lt;&lt;&lt; Older</a></div>
+<div class="float-left"><a class="btn btn-wmffl" href="comments.php?start=<?= $post->getId() ?>">&lt;&lt;&lt; Older</a></div>
 <div class="float-right"><a class="btn btn-wmffl" href="comments.php?start=<?= $first ?>">Newer &gt;&gt;&gt;</a></div>
 </div>
 

@@ -1,29 +1,35 @@
 <?php
+/**
+ * @var $isin boolean
+ * @var $conn mysqli
+ * @var $usernum int
+ * @var $entityManager EntityManager
+ */
+
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\OptimisticLockException;
+use WMFFL\orm\Forum;
+
 require_once 'utils/start.php';
+require_once 'bootstrap.php';
 
 if (!$isin) {
     header('Location: blogentry.php');
     exit;
 }
 
-require 'DataObjects/Forum.php';
-
-$post = new DataObjects_Forum;
-
-$subject = stripslashes(mysqli_real_escape_string($conn, $_POST['subject']));
-$body = stripslashes(mysqli_real_escape_string($conn, str_replace("\r\n", '', $_POST['body'])));
-
-print "$subject <br/>";
-print_r($_REQUEST);
-
-$post->settitle($subject);
-$post->setbody($body);
-$post->setuserid($usernum);
-$post->setcreateTime(date('Y-n-d G:i:s'));
-$id = $post->insert();
-print $id;
-
-//print_r($post);
+try {
+    $post = new Forum();
+    $author = $entityManager->find('WMFFL\orm\User', $usernum);
+    $post->setTitle($_POST['subject']);
+    $post->setBody(str_replace('\r\n', '', $_POST['body']));
+    $post->setUser($author);
+    $post->setCreateTime(new DateTime());
+    $entityManager->persist($post);
+    $entityManager->flush();
+} catch (OptimisticLockException|ORMException $e) {
+}
 
 header('Location: comments.php');
 exit;
