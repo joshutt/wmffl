@@ -1,15 +1,11 @@
 <?php
-//require_once "/base/conn.php";
-//
-//require_once "/utils/setup.php";
 $ini = parse_ini_file('wmffl.conf');
 
 // Database connection information
 $conn = mysqli_connect('localhost', $ini['userName'], $ini['password'], $ini['dbName']);
-//
 
-$nflStartDate = '2023-09-10';
-$season=2023;
+$nflStartDate = '2024-09-05';
+$season=2024;
 
 $query = "SELECT t.name, d.date, min( d.attend ) as attend
 FROM  `draftdate` d, user u, team t
@@ -53,7 +49,7 @@ foreach ($dateList as $date => $dateArray) {
         $max = $dateArray['yes'];
         $maxArray=array($date);
     } else if ($dateArray['yes'] == $max) {
-        array_push($maxArray, $date);
+        $maxArray[] = $date;
     }
 }
 
@@ -72,7 +68,7 @@ $results = mysqli_query($conn, $secondQuery) or die('Error: ' . mysqli_error($co
 
 $teamArray = array();
 while ($arrayList = mysqli_fetch_array($results)) {
-    array_push($teamArray, $arrayList['name']);
+    $teamArray[] = $arrayList['name'];
 }
 
 /* The Display */
@@ -100,5 +96,5 @@ if (sizeof($teamArray)) {
     print '<p>All teams have voted</p>';
 }
 
-?>
+
 
