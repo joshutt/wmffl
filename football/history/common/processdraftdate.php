@@ -1,5 +1,11 @@
-<?
-require_once "utils/start.php";
+<?php
+/**
+ * @var $isin boolean
+ * @var $currentSeason int
+ * @var $usernum int
+ * @var $conn mysqli
+ */
+require_once 'utils/start.php';
 
 if (!$isin) {
     header("Location: /history/{$currentSeason}Season/draftdate.php");
@@ -7,7 +13,7 @@ if (!$isin) {
 
 $numNo = 0;
 foreach ($_POST as $key => $value) {
-    if ($value == "N") {
+    if ($value == 'N') {
         $numNo++;
     }
 }
@@ -32,17 +38,17 @@ EOD;
     foreach ($_POST as $key => $value) {
         //print "$key - $value <BR>";
         $thequery = "UPDATE draftdate SET attend='$value' ";
-        $thequery.= "WHERE date='$season-".substr($key,0,2)."-".substr($key,2,2)."' ";
+        $thequery.= "WHERE date='$season-".substr($key,0,2). '-' .substr($key,2,2)."' ";
         $thequery .= "AND userid = $usernum"; 
         
         #print $thequery."<BR>";
-        mysqli_query($conn, $thequery) or die("Error: " . mysqli_error($conn));
+        mysqli_query($conn, $thequery) or die('Error: ' . mysqli_error($conn));
         
 
     }
 
     $newQuery = "UPDATE draftvote SET lastUpdate=now() where season=$season and userid=$usernum";
-    mysqli_query($conn, $newQuery) or die("Error: " . mysqli_error($conn));
+    mysqli_query($conn, $newQuery) or die('Error: ' . mysqli_error($conn));
 
     $draftMessage = <<<EOD
     <div class="container">
@@ -56,4 +62,4 @@ EOD;
 }
     
 include "../{$currentSeason}Season/draftdate.php";
-?>
+

@@ -1,11 +1,11 @@
 <?php
+/**
+ * @var $thisSeason int
+ * @var $conn mysqli|null
+ */
 require_once 'utils/start.php';
 
-if (isset($_REQUEST['season'])) {
-    $season = $_REQUEST['season'];
-} else {
-    $season = $thisSeason;
-}
+$season = $_REQUEST['season'] ?? $thisSeason;
 
 $sql = "SELECT d.round, d.pick, (t.name) as 'name', ";
 $sql .= "if(d.teamid<>d.orgTeam, '*', '') as 'flag' ";
@@ -45,7 +45,7 @@ while ($pick = mysqli_fetch_array($results)) {
         print "<td width=\"26\"><b>Round $round</b>";
         print '<ol>';
     }
-    print "<li>${pick['name']} <a href=\"#Notes\">${pick['flag']}</a></li>";
+    print "<li>{$pick['name']} <a href=\"#Notes\">{$pick['flag']}</a></li>";
 }
 ?>
 

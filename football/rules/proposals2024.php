@@ -55,5 +55,14 @@ include 'base/menu.php';
         </i></blockquote>
 </div>
 
+    <div class="card m-3 p-2 bg-light">
+        <b>Proposal 2024.4 - Reduce 60+ yard field goal points</b>
+        <b>Sponsor: Tom Marsh</b><br/>
+        <span class="ballot">Status: <span class="status">Under Discussion</span></span><br/>
+        Reduce over 60 yard field goal points from 10 to 7
+        <blockquote class="mb-0 mt-2 px-3"><i>Change text in rule V.B.5.b.iv from "10 pts" to "7 pts"
+            </i></blockquote>
+    </div>
+
 </div>
 <?php include 'base/footer.php'; ?>
