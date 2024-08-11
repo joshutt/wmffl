@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var $currentSeason int
+ * @var $conn mysqli
+ */
 require_once 'utils/start.php';
 
 $lookseason = $season ?? $currentSeason;
@@ -28,6 +32,9 @@ if (!isset($order) || $order == 'team') {
 
 $displayArray = array();
 $result = mysqli_query($conn, $query) or die('Error: ' . mysqli_error($conn));
+$oldteam = null;
+$oldpos = null;
+$labels = array();
 while (list($team, $name, $pos, $nfl, $cost) = mysqli_fetch_row($result)) {
     if ($teamcheck) {
         $labels = array('Name' => 6, 'Pos' => 2, 'NFL' => 2, 'Cost' => 2);
@@ -36,7 +43,7 @@ while (list($team, $name, $pos, $nfl, $cost) = mysqli_fetch_row($result)) {
             $displayArray[$team] = array();
             $oldteam = $team;
         }
-        array_push($displayArray[$team], array($name, $pos, $nfl, $cost));
+        $displayArray[$team][] = array($name, $pos, $nfl, $cost);
     } else {
         $labels = array('Team' => 4, 'Name' => 4, 'NFL' => 2, 'Cost' => 2);
         if ($oldpos != $pos) {
@@ -44,7 +51,7 @@ while (list($team, $name, $pos, $nfl, $cost) = mysqli_fetch_row($result)) {
             $displayArray[$pos] = array();
             $oldpos = $pos;
         }
-        array_push($displayArray[$pos], array($team, $name, $nfl, $cost));
+        $displayArray[$pos][] = array($team, $name, $nfl, $cost);
     }
 }
 

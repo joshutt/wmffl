@@ -1,35 +1,42 @@
 <?php
+/**
+ * @var $currentSeason int
+ * @var $teamnum int
+ * @var $isin boolean
+ * @var $conn mysqli
+ */
 require_once 'utils/connect.php';
-#$isin = true;
-#$teamnum = 2;
-$dateSrc = '2023-08-24 12:05 EDT';
-$dateTime = new DateTime($dateSrc);
+
+// Determine deadline and publish date based on true expiration
+$dateSrc = '2024-08-19 00:05 EDT';
+$dateTime = null;
+try {
+    $dateTime = new DateTime($dateSrc);
+} catch (Exception $e) {
+}
 $dateTime->sub(DateInterval::createFromDateString('6 min'));
 
-$thequery = 'select p.playerid, p.firstname, p.lastname, p.pos, ';
-$thequery .= 'p.team, ';
-$thequery .= "if (pc.years is null, 0, pc.years) as 'Years', ";
-$thequery .= "max(pos.cost) as 'Cost', ";
-$thequery .= "if (pro.cost is null, 0, 1) as 'Protected' ";
-$thequery .= 'from newplayers p ';
-$thequery .= 'join roster r on p.playerid=r.playerid and r.dateoff is null ';
-$thequery .= "join positioncost pos on p.pos=pos.position and pos.startSeason<=$currentSeason and pos.endSeason is null ";
-$thequery .= 'left join protectioncost pc ';
-$thequery .= 'on p.playerid=pc.playerid ';
-$thequery .= "and pc.season=$currentSeason ";
-$thequery .= 'left join protections pro ';
-//$thequery .= "on pro.playerid=p.playerid and pro.teamid=r.teamid ";
-$thequery .= 'on pro.playerid=p.playerid ';
-$thequery .= "and pro.season=$currentSeason ";
-//$thequery .= "and pro.season=pc.season ";
-$thequery .= "where r.teamid=$teamnum ";
-$thequery .= 'and (pos.years<=pc.years or pos.years=0) ';
-$thequery .= 'GROUP BY p.playerid ';
-$thequery .= 'ORDER BY p.pos, p.lastname, p.firstname';
+if (!$isin) {
+    $teamnum=0;
+}
 
-//$ptsQuery = "select PrePtsLeft, PtsLeft from transpoints where teamid=$teamnum";
+// Query to get the team and costs
+$thequery = <<<EOD
+select p.playerid, p.firstname, p.lastname, p.pos, p.team, if (pc.years is null, 0, pc.years) as 'Years', 
+    max(pos.cost) as 'Cost', if (pro.cost is null, 0, 1) as 'Protected' 
+from newplayers p 
+join roster r on p.playerid=r.playerid and r.dateoff is null 
+join positioncost pos on p.pos=pos.position and pos.startSeason<=$currentSeason and pos.endSeason is null 
+left join protectioncost pc on p.playerid=pc.playerid and pc.season=$currentSeason 
+left join protections pro on pro.playerid=p.playerid and pro.season=$currentSeason 
+where r.teamid=$teamnum and (pos.years<=pc.years or pos.years=0) 
+GROUP BY p.playerid 
+ORDER BY p.pos, p.lastname, p.firstname
+EOD;
+
+
+// Query for total available points
 $ptsQuery = "select TotalPts, ProtectionPts from transpoints where teamid=$teamnum and season=$currentSeason";
-//$ptsQuery = "select TotalPts, ProtectionPts from newtranspoints where teamid=$teamnum and season=2003";
 
 $title = 'WMFFL Protections';
 include 'base/menu.php';
