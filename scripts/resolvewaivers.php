@@ -1,12 +1,17 @@
 <?php
-require_once "base.php";
+/**
+ * @var $conn mysqli
+ * @var $currentSeason int
+ * @var $currentWeek int
+ */
+require_once 'base.php';
 
-$sql = "SELECT t.teamid, p.playerid
+$sql = 'SELECT t.teamid, p.playerid
 FROM waiverorder t, waiverpicks p, weekmap wp
 WHERE t.teamid=p.teamid AND t.season=p.season AND t.week=p.week
 AND t.season=wp.season AND t.week=wp.week
 AND DATE_SUB(now(), INTERVAL 4 HOUR) BETWEEN wp.startdate AND wp.enddate
-ORDER BY t.ordernumber, p.priority";
+ORDER BY t.ordernumber, p.priority';
 
 /*
 $waiverOrder = "SELECT wo.teamid, wo.week FROM waiverorder wo, weekmap wp 
@@ -46,7 +51,7 @@ if ($currentTeam != 0) {
 }
 
 // Determine the exact waiver order
-$orderResults = mysqli_query($conn, $waiverOrder) or die($waiverOrder . "<br/>" . mysqli_error($conn));
+$orderResults = mysqli_query($conn, $waiverOrder) or die($waiverOrder . '<br/>' . mysqli_error($conn));
 $orderList = array();
 $allowedTrans = array();
 while (list($teamid, $week, $transRemain, $paid) = mysqli_fetch_row($orderResults)) {
@@ -62,7 +67,7 @@ while (list($teamid, $week, $transRemain, $paid) = mysqli_fetch_row($orderResult
 
 
 // Get the list of players on roster
-$currentPlayers = "SELECT playerid FROM roster WHERE dateoff is null";
+$currentPlayers = 'SELECT playerid FROM roster WHERE dateoff is null';
 $results = mysqli_query($conn, $currentPlayers);
 $taken = array();
 while (list($playerid) = mysqli_fetch_row($results)) {
@@ -108,9 +113,9 @@ while (count($teamList) > 0) {
 //print_r($orderList);
 //print "</pre>";
 
-$rostQuery = "INSERT INTO roster (teamid, playerid, dateon) VALUES ";
-$tranQuery = "INSERT INTO transactions (teamid, playerid, date, method) VALUES ";
-$awardQuery = "INSERT INTO waiveraward (season, week, pick, teamid, playerid) VALUES ";
+$rostQuery = 'INSERT INTO roster (teamid, playerid, dateon) VALUES ';
+$tranQuery = 'INSERT INTO transactions (teamid, playerid, date, method) VALUES ';
+$awardQuery = 'INSERT INTO waiveraward (season, week, pick, teamid, playerid) VALUES ';
 $firstPlayer = true;
 $firstTeam = true;
 foreach ($waivePicks as $teamid=>$aqArray) {
@@ -118,9 +123,9 @@ foreach ($waivePicks as $teamid=>$aqArray) {
     foreach ($aqArray as $playerid) {
         //print "Reconfirm $teamid got $playerid<br/>";
         if (!$firstPlayer) {
-            $rostQuery .= ", ";
-            $tranQuery .= ", ";
-            $awardQuery .= ", ";
+            $rostQuery .= ', ';
+            $tranQuery .= ', ';
+            $awardQuery .= ', ';
         } else {
             $firstPlayer = false;
         }
@@ -148,12 +153,12 @@ if (!$firstTeam) {
 }
 
 $counter = 1;
-$nextWeekSQL = "INSERT INTO waiverorder (season, week, ordernumber, teamid) VALUES ";
+$nextWeekSQL = 'INSERT INTO waiverorder (season, week, ordernumber, teamid) VALUES ';
 //$week++;
 foreach ($orderList as $teamid) {
     if ($teamid != null) {
         if ($counter != 1) {
-            $nextWeekSQL .= ", ";
+            $nextWeekSQL .= ', ';
         }
         //print "$counter - $teamid<br/>";
         $nextWeekSQL .= "($currentSeason, ".($currentWeek).", $counter, $teamid)";
@@ -161,6 +166,6 @@ foreach ($orderList as $teamid) {
         $counter++;
     }
 }
-//print $nextWeekSQL."\n";
+print $nextWeekSQL."\n";
 mysqli_query($conn, $nextWeekSQL) or die("Dead on Next Week: $nextWeekSQL\n " . mysqli_error($conn));
-?>
+

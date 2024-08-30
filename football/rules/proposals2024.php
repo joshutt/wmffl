@@ -20,7 +20,7 @@ include 'base/menu.php';
 <div class="card m-3 p-2 bg-light">
     <b>Proposal 2024.1 - Get rid of IR and increase roster to 26</b>
     <b>Sponsor: Richard Lawson</b><br/>
-    <span class="ballot">Status: <span class="status">Under Discussion</span></span><br/>
+    <span class="ballot">Status: <span class="status">Rejected as is, revised into 2024.1b</span></span><br/>
     I like IR as a concept but I just feel it is too inconsistent to manage.<br/>
     Couple of occasions where players have been activated Sunday morning on the site and resulted in dropping players from squads. Jason Myers for Bulldogs and De'Von Achane for Lionhearts. That is fine but I feel it is inconsistent.<br/>
     Irregardless I think it's too tricky to navigate for us and I think I would shelve it and go 26 man leagues....up to you if you hold on to players who are injured on not.
@@ -29,10 +29,20 @@ include 'base/menu.php';
         </i></blockquote>
 </div>
 
-<div class="card m-3 p-2 bg-light">
+    <div class="card m-3 p-2 bg-light">
+        <b>Proposal 2024.1b - Limit IR to 1 player</b>
+        <b>Sponsor: Tom Marsh</b><br/>
+        <span class="ballot">Status: <span class="status">Passed, 9-0, 3 No Votes</span></span><br/>
+        Main concern with 2024.1 is size of rosters.  Limit IR to a single player.
+        <blockquote class="mb-0 mt-2 px-3"><i>Change text in rule IV.C.5 from '28' to '26'<br/>
+            </i></blockquote>
+    </div>
+
+
+    <div class="card m-3 p-2 bg-light">
     <b>Proposal 2024.2 - Dealing with players coming off IR late in week</b>
     <b>Sponsor: Josh Utterback</b><br/>
-    <span class="ballot">Status: <span class="status">Under Discussion</span></span><br/>
+    <span class="ballot">Status: <span class="status">Passed, 10-0, 2 No Votes</span></span><br/>
     There has been a lot of inconsiency with when players come off IR causing teams to be unexpectantly over roster limits.  To prevent this
     any player coming off of IR on Saturday or Sunday (due to removal from NFL IR) will not count against the roster limit for that week, unless that player was activated
     by the WMFFL team.  (Also removes obsolete COVID list rule)
@@ -47,7 +57,7 @@ include 'base/menu.php';
 <div class="card m-3 p-2 bg-light">
     <b>Proposal 2024.3 - Increase Penalties for Bad Activations</b>
     <b>Sponsor: Josh Utterback</b><br/>
-    <span class="ballot">Status: <span class="status">Under Discussion</span></span><br/>
+    <span class="ballot">Status: <span class="status">Passed, 7-3, 2 No Votes</span></span><br/>
     Increase the bye week penalty to 5 points<br/>
     Increase all other activations violations to $5 fines and 10 point penalties
     <blockquote class="mb-0 mt-2 px-3"><i>Change text in rule V.A.3.a from "2 point penalty" to "5 point penalty"<br/>
@@ -58,7 +68,7 @@ include 'base/menu.php';
     <div class="card m-3 p-2 bg-light">
         <b>Proposal 2024.4 - Reduce 60+ yard field goal points</b>
         <b>Sponsor: Tom Marsh</b><br/>
-        <span class="ballot">Status: <span class="status">Under Discussion</span></span><br/>
+        <span class="ballot">Status: <span class="status">Passed, 7-3, 2 No Votes</span></span><br/>
         Reduce over 60 yard field goal points from 10 to 7
         <blockquote class="mb-0 mt-2 px-3"><i>Change text in rule V.B.5.b.iv from "10 pts" to "7 pts"
             </i></blockquote>

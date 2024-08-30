@@ -15,7 +15,8 @@ $action = $_POST["action"];
 #print $action;
 
 if ($action == "Amend" || $action == "Counter") {
-	header("Location: edittrade.php?offerid=$tradeID");
+    include "edittrade.php";
+    exit(0);
 }
 
 $question = "";

@@ -29,6 +29,10 @@ $conn = mysqli_connect('localhost', $ini['userName'], $ini['password'], $ini['db
 //$tzQuery = "SET time_zone = 'US/Eastern';";
 //$tzResult = mysqli_query($conn, $tzQuery);
 
+// Make sure timezone is correct
+$tzQuery = "SET time_zone = 'America/New_York';";
+$tzResult = mysqli_query($conn, $tzQuery);
+
 // Determine the current season and current week, but not every time, use cachin
 //if (!isset($_SESSION["lastFetch"]) || time() > $lastFetch + 60 * 60) {
     $dateQuery = "SELECT w1.season, w1.week, w1.weekname, w2.weekname as 'previous' FROM weekmap w1, weekmap w2 ";

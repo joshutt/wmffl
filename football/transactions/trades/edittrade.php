@@ -69,9 +69,10 @@ include_once "trade.class.php";
 include_once "loadTrades.inc.php";
 include_once "base/useful.php";
 
-//$currentSeason =2003;
 $thisTeam = loadTeam($teamnum);
-
+if (isset($_POST["offerid"])) {
+    $offerid = $_POST["offerid"];
+}
 if (isset($offerid) && $offerid != 0) {
     $trade = loadTradeByID($offerid, $thisTeam);
 

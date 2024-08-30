@@ -13,7 +13,7 @@ $lookseason = $season ?? $currentSeason;
 //$query .= "WHERE p.playerid=pro.playerid ";
 //$query .= "AND pro.season=$lookseason and t.teamid=pro.teamid and t.season=pro.season ";
 
-$query = "select t.name, CONCAT(p.firstname, ' ', p.lastname),
+$query = "select t.name, t.abbrev, CONCAT(p.firstname, ' ', p.lastname),
   p.pos, r.nflteamid, pro.cost
 FROM newplayers p
  LEFT JOIN nflrosters r on p.playerid=r.playerid and r.dateon <= concat($lookseason, '-08-15') and (r.dateoff is null or r.dateoff >= concat($lookseason, '-08-15'))
@@ -35,7 +35,7 @@ $result = mysqli_query($conn, $query) or die('Error: ' . mysqli_error($conn));
 $oldteam = null;
 $oldpos = null;
 $labels = array();
-while (list($team, $name, $pos, $nfl, $cost) = mysqli_fetch_row($result)) {
+while (list($team, $abbv, $name, $pos, $nfl, $cost) = mysqli_fetch_row($result)) {
     if ($teamcheck) {
         $labels = array('Name' => 6, 'Pos' => 2, 'NFL' => 2, 'Cost' => 2);
         if ($oldteam != $team) {
@@ -45,13 +45,13 @@ while (list($team, $name, $pos, $nfl, $cost) = mysqli_fetch_row($result)) {
         }
         $displayArray[$team][] = array($name, $pos, $nfl, $cost);
     } else {
-        $labels = array('Team' => 4, 'Name' => 4, 'NFL' => 2, 'Cost' => 2);
+        $labels = array('Name' => 6, 'Team' => 2, 'NFL' => 2, 'Cost' => 2);
         if ($oldpos != $pos) {
             $teamArray = array();
             $displayArray[$pos] = array();
             $oldpos = $pos;
         }
-        $displayArray[$pos][] = array($team, $name, $nfl, $cost);
+        $displayArray[$pos][] = array($name, $abbv, $nfl, $cost);
     }
 }
 

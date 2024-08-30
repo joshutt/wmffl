@@ -1,5 +1,9 @@
 <?php
-// This is temporary, but maybe it's not such a bad idea
+/**
+ * @var $isin boolean
+ * @var $fullname string
+ * @var $teamnum int
+ */
 require_once 'utils/start.php';
 if (!isset($title)) {
     $title = 'WMFFL';
@@ -99,8 +103,8 @@ if (!isset($title)) {
             <li class="nav-item"> <a class="nav-link pl-2" href="/activate/activations">Activations</a> </li>
             <li class="nav-item"> <a class="nav-link pl-2" href="/teams/">Teams</a> </li>
             <li class="nav-item"> <a class="nav-link pl-2" href="/stats/leaders">Stats</a> </li>
-            <li class="nav-item"> <a class="nav-link pl-2" href="/history/2023Season/schedule">Schedule</a> </li>
-            <li class="nav-item"> <a class="nav-link pl-2" href="/history/2023Season/standings#">Standings</a> </li>
+            <li class="nav-item"> <a class="nav-link pl-2" href="/history/2024Season/schedule">Schedule</a> </li>
+            <li class="nav-item"> <a class="nav-link pl-2" href="/history/2024Season/standings#">Standings</a> </li>
             <li class="nav-item"> <a class="nav-link pl-2" href="/transactions/transactions">Transactions</a> </li>
             <li class="nav-item"> <a class="nav-link pl-2" href="/rules/">Rules</a> </li>
             <li class="nav-item"> <a class="nav-link pl-2" href="/history/">History</a> </li>

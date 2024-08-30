@@ -93,7 +93,7 @@ class Trade {
         $this->setDateOffered($newDate);
     }
 
-    function setID($newID) {$this->ID=$newID;}
+    function setID($newID) {$this->offerID=$newID;}
     function setStatus($newStatus) {$this->status=$newStatus;}
     function setDateOffered($newDate) {$this->dateOffered=strtotime($newDate);}
     function setOtherTeam($newTeam) {$this->otherTeam=$newTeam;}
@@ -110,7 +110,7 @@ class Trade {
     function setPointsTo($newPts) {$this->pointsTo=$newPts;}
     function setPointsFrom($newPts) {$this->pointsFrom=$newPts;}
 
-    function getID() {return $this->ID;}
+    function getID() {return $this->offerID;}
     function getStatus() {return $this->status;}
     function getDateOffered() {return $this->dateOffered;}
     function getDateExpires() {return $this->dateOffered+(7*24*60*60);}

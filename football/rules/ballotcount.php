@@ -1,4 +1,8 @@
-<?
+<?php
+/**
+ * @var $conn mysqli
+ * @var $teamnum int
+ */
 $PASS_THRES = .67;
 $FAIL_THRES = .51;
 
@@ -11,9 +15,9 @@ $FAIL_THRES = .51;
 //	header("Location: /rules/ballot.php");
 //}
 
-
 foreach ($_POST as $key => $value) {
-	$thequery = "update ballot set vote='".$value."' where issueid=".$key." and teamid=".$teamnum;
+    if ($key === 'submit') continue;
+	$thequery = "update ballot set vote='$value' where issueid='$key' and teamid=$teamnum";
     mysqli_query($conn, $thequery);
 
 	$checkpassfail = "select sum(if(vote='Accept',1,0))/sum(if(vote<>'Abstain',1,0)) as Pass, sum(if(vote='Reject',1,0))/sum(if(vote<>'Abstain',1,0)) as Reject from ballot where issueid=".$key;
@@ -29,19 +33,10 @@ foreach ($_POST as $key => $value) {
 		mail ("commish@wmffl.com", "Proposal Results", $body, "From: webmaster@wmffl.com");
 	}
 	
-	$anotherquery = "select IssueNum, IssueName from issues where issueid=".$key;
+	$anotherquery = "select IssueNum, IssueName from issues where issueid=$key";
     $result = mysqli_query($conn, $anotherquery);
     list($voteNum[$key], $voteName[$key]) = mysqli_fetch_row($result);
 	$voteCast[$key] = $value;
-	
-    if ($key == 87) {
-        switch ($voteCast[$key]) {
-            case "Accept" : $voteCast[$key]="10 Teams"; break;
-            case "Reject" : $voteCast[$key]="12 Teams"; break;
-            case "Abstain" : $voteCast[$key]="No Preference"; break;
-        }
-    }
-
 }
 // For each key in HTTP_POST_VARS
 	// key is issueid, value is result
@@ -50,11 +45,6 @@ foreach ($_POST as $key => $value) {
 	// check for passage or rejection if so send email
 	
 ?>
-
-
-<?php
-//$title = "WMFFL Ballot" ?>
-<?//	include "base/menu.php"; ?>
 
 <H1 ALIGN=Center>Votes Cast</H1>
 <HR>
@@ -65,15 +55,14 @@ If you would like to change you vote, you may do so at any time before the
 ballot closes.  <A HREF="ballot">Ballot</A>.</P>
 
 <P>
-<?
+    <?php
 foreach ($voteNum as $key => $value) {
     if ($key === "submit") {
         continue;
     }
-	print "<p>".$value." - ".$voteName[$key]." - ".$voteCast[$key]."</p>";
+	print '<p>' .$value." - ".$voteName[$key]." - ".$voteCast[$key]."</p>";
 }
 ?>
 </P>
 </div>
 
-<?//	include "base/footer.php";?>

@@ -177,7 +177,7 @@ function saveOffer($trade) {
     $teamAID = $teamA->getID();
     $teamBID = $teamB->getID();
     $lastID = $trade->getID();
-    if (!isset($lastID) || $lastID == 0) {
+    if (!isset($lastID) || empty($lastID) || $lastID == 0) {
         $lastID = "NULL";
     } else {
         $oldUpdate = "UPDATE offer SET Status='Modified' WHERE OfferID=$lastID";

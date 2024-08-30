@@ -1,5 +1,13 @@
-<?
-require_once "utils/start.php";
+<?php
+/**
+ * @var $currentWeek int
+ * @var $currentSeason int
+ * @var $weekName string
+ * @var $isin boolean
+ * @var $teamnum int
+ * @var $conn mysqli
+ */
+require_once 'utils/start.php';
 
 #if ($currentWeek == 0) {
 #    $week = 1;
@@ -9,50 +17,47 @@ $week = $currentWeek;
 #$currentSeason = 2018;
 #}
 
-$title = "Waiver Order";
-?>
-
-<?
-include "base/menu.php";
+$title = 'Waiver Order';
+include 'base/menu.php';
 ?>
 
 <h1 align="center">Waiver Wire</h1>
 <hr/>
 
-<?php include "transmenu.php"; ?>
+<?php include 'transmenu.php'; ?>
 
 <div class="container">
 <table>
     <tr>
         <td width="45%" valign="top">
-            The waiver selection order for <? print $weekName; ?>.
+            The waiver selection order for <?php print $weekName; ?>.
 
-            <?
+            <?php
             $sql = "SELECT t.name as 'name' FROM team t, waiverorder w WHERE t.teamid=w.teamid AND w.season=$currentSeason AND w.week=$week ORDER BY w.ordernumber";
             $results = mysqli_query($conn, $sql);
             #print $sql;
-            print "<ol>";
+            print '<ol>';
             while (list($teamSet) = mysqli_fetch_row($results)) {
-                print "<li>" . $teamSet . "</li>";
+                print '<li>' . $teamSet . '</li>';
             }
-            print "</ol>";
+            print '</ol>';
             ?>
         </td>
         <td width="10%"></td>
         <td width="45%" valign="top">
-            <? if ($isin) { ?>
+            <?php if ($isin) { ?>
 
                 Your current waiver priority for this week:
 
-                <?
+                <?php
                 $sql = "select p.firstname, p.lastname, p.pos, p.team from waiverpicks wp join newplayers p on wp.playerid=p.playerid where wp.season=$currentSeason and wp.week=$week and wp.teamid=$teamnum order by wp.priority";
                 $results = mysqli_query($conn, $sql);
 //print $sql;
-                print "<ol>";
+                print '<ol>';
                 while (list($firstname, $lastName, $pos, $team) = mysqli_fetch_row($results)) {
                     print "<li>$firstname $lastName ($pos-$team)</li>";
                 }
-                print "</ol>";
+                print '</ol>';
             }
             ?>
 
@@ -63,6 +68,6 @@ include "base/menu.php";
 
 <p>Last Week's waiver pickups</p>
 
-<? include "listwaiverpicks.php"; ?>
+    <?php include 'listwaiverpicks.php'; ?>
 </div>
-<? include "base/footer.php"; ?>
+<?php include 'base/footer.php'; ?>
