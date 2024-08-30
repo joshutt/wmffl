@@ -46,6 +46,7 @@ while (list($teamid, $playerid) = mysqli_fetch_row($results)) {
     //$reqArray = $newTeam[1];
     array_push($reqArray, $playerid);
 }
+
 if ($currentTeam != 0) {
     array_push($teamList, array($currentTeam, $reqArray));
 }

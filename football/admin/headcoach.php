@@ -1,8 +1,11 @@
-<?
+<?php
+/**
+ * @var $conn mysqli
+ */
 // establish connection
-require "base/conn.php";
+require 'base/conn.php';
 
-$teamsql = "SELECT t.teamid, t.name FROM team t ORDER BY t.name";
+$teamsql = 'SELECT t.teamid, t.name FROM team t ORDER BY t.name';
 $teamResults = mysqli_query($conn, $teamsql);
 
 $coachsql = <<<EOD
@@ -17,28 +20,28 @@ EOD;
 
 $results = mysqli_query($conn, $coachsql);
 print "<form action=\"headcoachprocess.php\">";
-print "<table>";
+print '<table>';
 
 print "<tr><td colspan=\"4\" align=\"center\">";
 print "<select name=\"team\">";
 while ($team = mysqli_fetch_array($teamResults)) {
-    print "<option value=\"{$team["teamid"]}\">{$team["name"]}</option>";
+    print "<option value=\"{$team['teamid']}\">{$team['name']}</option>";
 }
-print "</select>";
-print "</td></tr>";
+print '</select>';
+print '</td></tr>';
 
 while ($coach = mysqli_fetch_array($results)) {
     print <<<EOD
 <tr>
-    <td><input type="radio" name="player" value="{$coach["playerid"]}"/></td>
-    <td>{$coach["name"]}</td>
-    <td>{$coach["team"]}</td>
-    <td>{$coach["wmfflteam"]}</td>
+    <td><input type="radio" name="player" value="{$coach['playerid']}"/></td>
+    <td>{$coach['name']}</td>
+    <td>{$coach['team']}</td>
+    <td>{$coach['wmfflteam']}</td>
 </tr>
 EOD;
 }
 ?>
 
-<tr><td colspan="4" align="center"><input type="submit"></td></td>
+<tr><td colspan="4" align="center"><input type="submit"></td></tr>
 </table>
 </form>

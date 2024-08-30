@@ -1,14 +1,12 @@
 -- Set to the season just finished
-SET @season := 2021;
+SET @season := 2024;
 
--- Players that were protected last year and had costs
+-- Players that were protectoed last year and had costs
 insert into protectioncost (playerid, season, years)
 select c.playerid, @season + 1, c.years + 1
-from protectioncost c,
-     protections p
-where c.playerid = p.playerid
-  and c.season = p.season
-  and c.season = @season;
+from protectioncost c
+         join protections p on c.playerid = p.playerid and c.season = p.season
+where c.season = @season;
 
 -- Players that were protected last year w/ year 1
 insert into protectioncost (playerid, season, years)
