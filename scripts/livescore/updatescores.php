@@ -1,11 +1,16 @@
 <?php
+/**
+ * @var $paths array
+ * @var $season int
+ * @var $conn mysqli
+ */
 include dirname(__FILE__) . '/../base.php';
 include $paths['wwwPath'] . '/base/useful.php';
 include $paths['wwwPath'] . '/base/scoring.php';
 
-function generateSelect($thisTeamID, $currentSeason, $currentWeek)
+function generateSelect($thisTeamID, $currentSeason, $currentWeek): string
 {
-    $select = <<<EOD
+    return <<<EOD
         SELECT p.pos, p.lastname, p.firstname, r.teamid, g.kickoff, g.secRemain, p.flmid, s.*, 
         if (r.dateon is null and p.pos<>'HC', 1, 0) as 'illegal', gp1.side as 'Me', gp2.side as 'Them', wm.ActivationDue
         FROM newplayers p
@@ -19,8 +24,6 @@ function generateSelect($thisTeamID, $currentSeason, $currentWeek)
   LEFT JOIN gameplan gp2 ON wm.season=gp2.season and wm.week=gp2.week and p.playerid=gp2.playerid and gp2.side='Them'
         WHERE a.teamid=$thisTeamID AND a.season=$currentSeason AND a.week=$currentWeek
 EOD;
-    
-    return $select;
 }
 
 
@@ -36,16 +39,6 @@ function determinePoints($teamid, $season, $week, $conn) {
     while ($row = mysqli_fetch_array($results)) {
         $pts = 0;
 
-        // Add game planning factor
-        $factor = 1.0;
-        if (time() > strtotime($row['ActivationDue'])) {
-            if ($row['Me'] == 'Me' && $row['Them'] != 'Them') {
-                $factor = 2.0;
-            } elseif ($row['Them'] == 'Them' && $row['Me'] != 'Me') {
-                $factor = 0.5;
-            }
-        }
-
         // Determine Number of Points
         if ($row['illegal'] == 1) {
             $penalty += 2;
@@ -55,48 +48,39 @@ function determinePoints($teamid, $season, $week, $conn) {
             switch ($row['pos']) {
                 case 'HC' :
                     $pts = scoreHC($row);
-                    if ($pts < 0 && $factor == 0.5) { $factor = 1.0; }
-                    $offPoints += ceil($pts * $factor);
+                    $offPoints += $pts;
                     break;
                 case 'QB' :
                     $pts = scoreQB($row);
-                    if ($pts < 0 && $factor == 0.5) { $factor = 1.0; }
-                    $offPoints += ceil($pts * $factor);
+                    $offPoints += $pts;
                     break;
                 case 'RB' :
                 case 'WR' :
                      $pts = scoreOffense($row);
-                    if ($pts < 0 && $factor == 0.5) { $factor = 1.0; }
-                     $offPoints += ceil($pts * $factor);
+                $offPoints += $pts;
                      break;
                 case 'TE' :    
                      $pts = scoreTE($row);
-                    if ($pts < 0 && $factor == 0.5) { $factor = 1.0; }
-                     $offPoints += ceil($pts * $factor);
+                    $offPoints += $pts;
                      break;
                 case 'K' :
                     $pts = scoreK($row);
-                    if ($pts < 0 && $factor == 0.5) { $factor = 1.0; }
-                    $offPoints += ceil($pts * $factor);
+                    $offPoints += $pts;
                     break;
                 case 'OL' :
                     $pts = scoreOL($row);
-                    if ($pts < 0 && $factor == 0.5) { $factor = 1.0; }
-                    $offPoints += ceil($pts * $factor);
+                    $offPoints += $pts;
                      break;
                 case 'DL' :
                 case 'LB' :
                 case 'DB' :
                      $pts = scoreDefense($row);
-                    if ($pts < 0 && $factor == 0.5) { $factor = 1.0; }
-                     $defPoints += ceil($pts * $factor);
+                $defPoints += $pts;
                      break;
             }
         }
 
-        //print "${row["firstname"]} ${row["lastname"]} = $pts \n";
-
-        $totalPoints += ceil($pts * $factor);
+        $totalPoints += $pts;
         $secRemain += $row['secRemain'];
         //print "Total Pts: $totalPoints  Offensive: $offPoints   Defense: $defPoints \n";
     }
@@ -105,7 +89,7 @@ function determinePoints($teamid, $season, $week, $conn) {
 }
 
 
-function updateScore($teamA, $teamB, $season, $week, $aScore, $bScore, $conn)
+function updateScore($teamA, $teamB, $season, $week, $aScore, $bScore, $conn): void
 {
     $update = "UPDATE schedule SET scorea=$aScore, scoreb=$bScore ";
     $update .= "WHERE season=$season and week=$week and ";

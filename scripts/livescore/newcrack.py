@@ -1,5 +1,5 @@
-import sys
 import StringIO
+import sys
 
 from players import Player
 from players import Score
@@ -44,7 +44,7 @@ def valuate(b_arr):
 # Determine input and output files
 inputFile = "indstats.nfl"
 outputFile = "out.sql"
-expWeek = 0;
+expWeek = 0
 if len(sys.argv) >= 2:
     inputFile = sys.argv[1]
     if len(sys.argv) >= 3:
@@ -70,7 +70,7 @@ date = valuate(theFile.read(4))
 theFile.read(20)
 
 # If file isn't for the right week, return with failure
-if (wholeWeek != expWeek):
+if wholeWeek != expWeek:
     sys.exit(1)
 
 thePlayers = {}
@@ -253,13 +253,13 @@ for playerid in thePlayers.keys():
         continue
     player = thePlayers[playerid]
 
-    print "INSERT INTO stats (statid, season, week, played, yards, intthrow, rec, fum, tackles, sacks, intcatch, " \
-          "passdefend, returnyards, fumrec, forcefum, tds, 2pt, specTD, Safety, XP, MissXP, FG30, FG40, FG50, FG60, " \
-          "MissFG30, blockpunt, blockfg, blockxp) VALUES (%d, %d, %d, %d, %d, %d, %d, %d, %d, %3.1f, %d, %d, %d, %d, " \
-          "%d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d) ON DUPLICATE KEY UPDATE played=%d, yards=%d, " \
-          "intthrow=%d, rec=%d, fum=%d, tackles=%d, sacks=%3.1f, intcatch=%d, passdefend=%d, returnyards=%d, " \
-          "fumrec=%d, forcefum=%d, tds=%d, 2pt=%d, specTD=%d, Safety=%d, XP=%d, MissXP=%d, FG30=%d, FG40=%d, FG50=%d," \
-          "FG60=%d, MissFG30=%d, blockpunt=%d, blockfg=%d, blockxp=%d ;" \
+    print("INSERT INTO stats (statid, season, week, played, yards, intthrow, rec, fum, tackles, sacks, intcatch, "
+          "passdefend, returnyards, fumrec, forcefum, tds, 2pt, specTD, Safety, XP, MissXP, FG30, FG40, FG50, FG60, "
+          "MissFG30, blockpunt, blockfg, blockxp) VALUES (%d, %d, %d, %d, %d, %d, %d, %d, %d, %3.1f, %d, %d, %d, %d, "
+          "%d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d) ON DUPLICATE KEY UPDATE played=%d, yards=%d, "
+          "intthrow=%d, rec=%d, fum=%d, tackles=%d, sacks=%3.1f, intcatch=%d, passdefend=%d, returnyards=%d, "
+          "fumrec=%d, forcefum=%d, tds=%d, 2pt=%d, specTD=%d, Safety=%d, XP=%d, MissXP=%d, FG30=%d, FG40=%d, FG50=%d,"
+          "FG60=%d, MissFG30=%d, blockpunt=%d, blockfg=%d, blockxp=%d ;"
           % (
               player.id, year, player.week, player.stillPlay + player.complete,
               (player.passYards + player.rushYards + player.recYards), player.intThrow, player.receptions,
@@ -275,7 +275,7 @@ for playerid in thePlayers.keys():
               player.num_2pts(), player.num_special_teams(), player.num_saftey(), player.num_xpts()[0],
               player.num_xpts()[1],
               player.num_fg()[0], player.num_fg()[1], player.num_fg()[2], player.num_fg()[3], player.num_fg()[4],
-              player.blockPunt, player.blockFG, player.blockXP)
+              player.blockPunt, player.blockFG, player.blockXP))
 
 # Values for the HC
 for x in range(1, 33):
@@ -283,11 +283,11 @@ for x in range(1, 33):
     if teamplay != 0:
         margin = thePlayers[x].pts - thePlayers[teamplay].pts
 
-        print "INSERT INTO stats (statid, season, week, played, ptdiff, penalties) VALUES (%d, %d, %d, %d, %d, %d) " \
-              "ON DUPLICATE KEY UPDATE played=%d, ptdiff=%d, penalties=%d; " \
+        print("INSERT INTO stats (statid, season, week, played, ptdiff, penalties) VALUES (%d, %d, %d, %d, %d, %d) "
+              "ON DUPLICATE KEY UPDATE played=%d, ptdiff=%d, penalties=%d; "
               % (thePlayers[x].hcid, year, thePlayers[x].week, thePlayers[x].stillPlay + thePlayers[x].complete, margin,
                  thePlayers[x].penalties,
-                 thePlayers[x].stillPlay + thePlayers[x].complete, margin, thePlayers[x].penalties)
+                 thePlayers[x].stillPlay + thePlayers[x].complete, margin, thePlayers[x].penalties))
 
 # Values for the OL
 inProgArray = ([], [], [])
@@ -306,7 +306,6 @@ for x in range(1, 33):
             player.secRemain = 3600
             player.complete = 0
 
-
     # print "id [%s]  Complete  %s   Still  %s  Remain %s" %(playerid, player.complete, player.stillPlay,
     # player.secRemain)
     # print dir(thePlayers[x])
@@ -321,10 +320,10 @@ for x in range(1, 33):
         rushTD = teams[x].rushTD
 
     # INSERT OL players
-    print "INSERT INTO stats (statid, season, week, played, yards, sacks, tds) VALUES (%d, %d, %d, %d, %d, %d, %d) " \
+    print("INSERT INTO stats (statid, season, week, played, yards, sacks, tds) VALUES (%d, %d, %d, %d, %d, %d, %d) "
           "ON DUPLICATE KEY UPDATE played=%d, yards=%d, sacks=%d, tds=%d;" % (
               playerid, year, player.week, player.stillPlay + player.complete, player.rushYards, player.sackAgt, rushTD,
-              player.stillPlay + player.complete, player.rushYards, player.sackAgt, rushTD)
+              player.stillPlay + player.complete, player.rushYards, player.sackAgt, rushTD))
 
 # print inProgArray
 if len(inProgArray[1]) > 0:
@@ -332,14 +331,14 @@ if len(inProgArray[1]) > 0:
     # wholeWeek)
     for x in inProgArray[1]:
         # print matchDict[x]
-        print "UPDATE nflgames SET complete=0, secRemain=%d WHERE season=%d AND week=%d and homeTeam='%s';" % (
-            thePlayers[x].secRemain, year, wholeWeek, matchDict[x])
+        print("UPDATE nflgames SET complete=0, secRemain=%d WHERE season=%d AND week=%d and homeTeam='%s';" % (
+            thePlayers[x].secRemain, year, wholeWeek, matchDict[x]))
 
 if len(inProgArray[2]) > 0:
     # print "UPDATE nflstatus SET status='F' WHERE season=%d AND week=%d and status<>'B' and nflteam in ("%(year,
     # wholeWeek)
-    print "UPDATE nflgames SET complete=1 , secRemain=0 WHERE season=%d AND week=%d and homeTeam in (" % (
-        year, wholeWeek)
+    print("UPDATE nflgames SET complete=1 , secRemain=0 WHERE season=%d AND week=%d and homeTeam in (" % (
+        year, wholeWeek))
     for x in inProgArray[2]:
         # if hasattr(thePlayers[x], 'secRemain') :
         #    print "Team [%s]  Time Remain [%s]" % (matchDict[x], thePlayers[x].secRemain)
@@ -347,5 +346,5 @@ if len(inProgArray[2]) > 0:
         #    print "Team [%s]  Time Remain [%s]" % (matchDict[x], 0)
 
         # print matchDict[x]
-        print "'%s', " % matchDict[x]
-    print "'XXX');"
+        print("'%s', " % matchDict[x])
+    print("'XXX');")
