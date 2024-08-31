@@ -15,7 +15,7 @@ JOIN (
     WHERE now() between wm.StartDate and wm.EndDate
       and p.pos != 'HC'
     group by t.TeamID
-    having count(p.playerid) > 28
+    having count(p.playerid) > 26
         or (count(p.playerid) - count(ir.playerid)) > 25
 ) ov ON r.teamid=ov.teamid
 WHERE now() BETWEEN wm.StartDate and wm.EndDate and p.pos != 'HC';
@@ -34,7 +34,7 @@ JOIN (
         WHERE now() between wm.StartDate and wm.EndDate
       and p.pos != 'HC'
         group by t.TeamID
-        having count(p.playerid) > 28
+        having count(p.playerid) > 26
             or (count(p.playerid) - count(ir.playerid)) > 25
 ) ov ON r.teamid=ov.teamid
 SET r.dateoff=wm.ActivationDue
