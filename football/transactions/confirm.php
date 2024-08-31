@@ -1,5 +1,19 @@
 <?php
-function process($array, $word = 'pick'): array
+/**
+ * @var $conn mysqli
+ * @var $teamnum int
+ * @var $currentSeason int
+ * @var $currentWeek int
+ * @var $isin boolean
+ */
+
+
+/**
+ * @param $array
+ * @param string $word
+ * @return array
+ */
+function process($array, string $word = 'pick'): array
 {
     $playerlist = array();
     if (is_array($array)) {
@@ -20,7 +34,7 @@ function process($array, $word = 'pick'): array
 require_once 'utils/start.php';
 
 $MAXPLAYERS = 25;
-$TOTALROSTER = 28;
+$TOTALROSTER = 26;
 
 if (!isset($ErrorMessage)) {
     $ErrorMessage = '';
@@ -40,10 +54,11 @@ $displayWaiver = false;
 $playlist = array();
 $waiveList = array();
 $droparray = array();
+/** @var $submit string */
 if ($submit == 'Confirm') {
 //    print "In Confirm<br>";
     $playercount = 0;
-    $fullCount  = 0;
+    $fullCount = 0;
     $listcount = 0;
     foreach ($_POST as $key => $val) {
         $com = substr($key, 0, 4);
@@ -294,22 +309,17 @@ group by t.teamid
 ";
 $result = mysqli_query($conn, $thequery) or die ('Query 3 Failed');
 list($totPlayers, $irPlayers, $numplayers, $ptsleft) = mysqli_fetch_row($result);
+
+$title = 'Confirm Transaction';
+include 'base/menu.php';
 ?>
 
-
-<HTML>
-<HEAD>
-    <TITLE>Confirm Transaction</TITLE>
-</HEAD>
-
-<?php include 'base/menu.php'; ?>
-
 <div class="container">
-<H1 ALIGN=Center>Confirm Transaction</H1>
-<HR size="1">
+    <H1 ALIGN=Center>Confirm Transaction</H1>
+    <HR size="1">
 
     <?php
-if ($isin) {
+    if ($isin) {
     ?>
 
     <div class="hidden">
@@ -336,13 +346,13 @@ if ($isin) {
         <P><FONT COLOR="Red"><B><?= $ErrorMessage; ?></B></FONT></P>
 
         <P>You currently have <?= $numplayers; ?> players on your roster, <?= $irPlayers ?> are on the IR.
-            That leaves you with <?= min($TOTALROSTER - $totPlayers, $MAXPLAYERS-$numplayers ); ?> available slots.<BR>
+            That leaves you with <?= min($TOTALROSTER - $totPlayers, $MAXPLAYERS - $numplayers); ?> available slots.<BR>
             You have <?= $ptsleft; ?> points left.</P>
 
         <P>Confirm that these are the players you would like to pick up</P>
 
-        <TABLE class="mx-4">
-            <FORM METHOD="POST" ACTION="confirm.php">
+        <FORM METHOD="POST" ACTION="confirm.php">
+            <TABLE class="mx-4">
                 <thead>
                 <TR class="p-1 px-2">
                     <TD class="p-1 px-2"><B>Add</B></TD>
@@ -478,8 +488,8 @@ if ($isin) {
                 <TR>
                     <TD COLSPAN=5 ALIGN=Center><INPUT TYPE="Submit" VALUE="Confirm" NAME="submit"></TD>
                 </TR>
-            </FORM>
-        </TABLE>
+            </TABLE>
+        </FORM>
     </div>
 </div>
 <?php
@@ -487,7 +497,7 @@ if ($isin) {
     ?>
 
     <CENTER><B>You must be logged in to perform transactions</B></CENTER>
-</div>
+    </div>
 
 <?php }
 include 'base/footer.php';
