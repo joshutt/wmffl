@@ -12,6 +12,3 @@ python injuryList.py
 
 # clean up IR
 python checkIR.py
-
-# update COVID list
-python covid.py
