@@ -1,7 +1,12 @@
 <?php
-require_once "utils/connect.php";
-include "base/scoring.php";
-include "scoreFunctions.php";
+/**
+ * @var $conn mysqli
+ * @var $currentWeek int
+ * @var $currentSeason int
+ */
+require_once 'utils/connect.php';
+include 'base/scoring.php';
+include 'scoreFunctions.php';
 
 // Get Team to show
 $thisTeamID = isset($teamid) ? (int) $teamid : 2;
@@ -23,13 +28,13 @@ if ($thisSeason == $currentSeason) {
 $results = mysqli_query($conn, $weekListSQL);
 $weekList = array();
 while ($row = mysqli_fetch_array($results)) {
-    array_push($weekList, $row);
+    $weekList[] = $row;
 }
 
 $weekLabel = $weekList[$thisWeek - 1][1];
-$title = "Current Scores";
-$cssList = array("score.css");
-include "base/menu.php";
+$title = 'Current Scores';
+$cssList = array('score.css');
+include 'base/menu.php';
 ?>
 
 
@@ -39,17 +44,18 @@ include "base/menu.php";
 
 <div class="statbox">
 <table class="liveTable">
-<tr><td colspan="6" align="center" class="othertitle"><? print $weekLabel; ?> Scores</td></tr>
+<tr><td colspan="6" align="center" class="othertitle"><?= $weekLabel; ?> Scores</td></tr>
 <tr><td class="buffer">&nbsp;</td></tr>
 <tr><td>
-<?
+        <?php
 $teams = getOtherTeam($thisTeamID, $thisWeek, $thisSeason, $conn);
 
-$javascriptString = "";
+$javascriptString = '';
+// Loop for each team
 for ($i = 0; $i<2; $i++) {
     $select = generateReserves($teams[$i], $thisSeason, $thisWeek);
-	$printString[$i] = "";
-	$reserveString[$i] = "";
+	$printString[$i] = '';
+	$reserveString[$i] = '';
     $timeRemain = 0;
 
     $results = mysqli_query($conn, $select) or die(mysqli_error($conn));
@@ -58,11 +64,14 @@ for ($i = 0; $i<2; $i++) {
     $offPoints[$i] = 0;
     $defPoints[$i] = 0;
     $penalty[$i] = 0;
+    // Each player in the line up
     while ($row = mysqli_fetch_array($results)) {
-        if ($row["teamcheck1"] != null && $row["teamcheck1"]!=$teams[$i]) {
+        // Skip players not activated by this team
+        if ($row['teamcheck1'] != null && $row['teamcheck1']!=$teams[$i]) {
             continue;
         }
 
+        // Calculate this players score
         $pts = 0;
         switch ($row['pos']) {
             case 'HC' :
@@ -90,6 +99,8 @@ for ($i = 0; $i<2; $i++) {
 				 $pts = scoreDefense($row);
 				 break;
         }
+
+        // Determine if this player is a starter
         if ($row['startPos'] != null) {
             $includePts = true;
             $timeRemain += $row['secRemain'];
@@ -97,18 +108,11 @@ for ($i = 0; $i<2; $i++) {
             $includePts = false;
         }
 
+        // Determine kickoff and current time
         $gameTime = strtotime($row['kickoff']);
         $now = time();
-        if ($now > strtotime($row['ActivationDue'])) {
-            if ($row["GPMe"] == "Me" && $row["GPThem"] != "Them") {
-                $pts = 2 * $pts;
-            } else if ($row["GPThem"] == "Them" && $row["GPMe"] != "Me") {
-                if ($pts > 0) {
-                    $pts = ceil($pts/2.0);
-                }
-            }
-        }
 
+        // If a starter add their points to correct side of ball
         if ($includePts) {
             if ($row['pos'] == 'DL' || $row['pos']=='LB' || $row['pos']=='DB') {
                 $defPoints[$i] += $pts;
@@ -119,46 +123,32 @@ for ($i = 0; $i<2; $i++) {
 
         if ($includePts) {
             //error_log(print_r($row, true));
-            if ($row['illegal']==1 || ($row['teamcheck2']!=$teams[$i] && $row["pos"]!="HC")) {
-                $printString[$i] .= printPlayer($row, "illegal", -2);
-                if ($includePts) {
-                    $penalty[$i] += 2;
-                    if ($row["pos"]=='DL' || $row["pos"]=='LB' || $row["pos"]=="DB") {
-                        $defPoints[$i] -= $pts;
-                    } else {$offPoints[$i] -= $pts;}
-                    $totalPoints[$i] -= $pts;
-                }
-            } elseif ($row['kickoff']==null && $row['pos']!='HC') {
-                $printString[$i] .= printPlayer($row, "bye", -2);
-                if ($includePts) {
-                    $penalty[$i] += 2;
-                    if ($row["pos"]=='DL' || $row["pos"]=='LB' || $row["pos"]=="DB") {
-                        $defPoints[$i] -= $pts;
-                    } else {$offPoints[$i] -= $pts;}
-                    $totalPoints[$i] -= $pts;
-                }
+            // If player is not on roster then this is an illegal activation
+            if ($row['illegal']==1 || ($row['teamcheck2']!=$teams[$i] && $row['pos']!= 'HC')) {
+                $printString[$i] .= penalizePlayer('illegal', 10, $row, $pts, $penalty[$i], $defPoints[$i], $offPoints[$i], $totalPoints[$i]);
+            } elseif ($row['kickoff']==null && $row['pos']!='HC') {  // Player is on a bye this week
+                $printString[$i] .= penalizePlayer('bye', 5, $row, $pts, $penalty[$i], $defPoints[$i], $offPoints[$i], $totalPoints[$i]);
             } elseif ($row['complete']==1) {
-                $printString[$i] .= printPlayer($row, "final", $pts);
+                $printString[$i] .= printPlayer($row, 'final', $pts);
             } elseif ($now>$gameTime && $row['kickoff']!=null) {
-                $printString[$i] .= printPlayer($row, "current", $pts);
+                $printString[$i] .= printPlayer($row, 'current', $pts);
             } elseif ($now<=$gameTime) {
-                $printString[$i] .= printPlayer($row, "later", $pts);
+                $printString[$i] .= printPlayer($row, 'later', $pts);
             } else {
-                $printString[$i] .= printPlayer($row, "final", 0);
+                $printString[$i] .= printPlayer($row, 'final', 0);
             }
 
             $totalPoints[$i] += $pts;
         } else {
+            // Players on starting
             if ($row['kickoff']==null) {
-                $reserveString[$i] .= printPlayer($row, "final", "-", "showReserve");
+                $reserveString[$i] .= printPlayer($row, 'final', '-', 'showReserve');
             } elseif ($row['complete']==1) {
-                $reserveString[$i] .= printPlayer($row, "final", $pts, "showReserve");
-            } else if ($now>$gameTime && $row['kickoff']!=null) {
-                $reserveString[$i] .= printPlayer($row, "current", $pts, "showReserve");
-            } elseif ($now<=$gameTime) {
-                $reserveString[$i] .= printPlayer($row, "later", $pts, "showReserve");
+                $reserveString[$i] .= printPlayer($row, 'final', $pts, 'showReserve');
+            } else if ($now>$gameTime) {
+                $reserveString[$i] .= printPlayer($row, 'current', $pts, 'showReserve');
             } else {
-                $reserveString[$i] .= printPlayer($row, "final", 0, "showReserve");
+                $reserveString[$i] .= printPlayer($row, 'later', $pts, 'showReserve');
             }
         }
         
@@ -173,25 +163,25 @@ for ($i = 0; $i<2; $i++) {
     }
     $hrRemain = floor($timeRemain / 60);
     $secRemain = $timeRemain % 60;
-    $printTime = $hrRemain . ":" . str_pad($secRemain, 2, "0", STR_PAD_LEFT);
+    $printTime = $hrRemain . ':' . str_pad($secRemain, 2, '0', STR_PAD_LEFT);
     $printString[$i] .= "<tr><td class=\"c1 c1pts\">Time Remaining</td><td class=\"c2 c2pts\">$printTime</tr>";
 }
 
 $startPoints[0] = $offPoints[0] - $defPoints[1] - $penalty[0];
 $startPoints[1] = $offPoints[1] - $defPoints[0] - $penalty[1];
 
-$printString[0] = "<TR><TH>".$teams[2]."</TH><th>".$startPoints[0]."</th></TR>".$printString[0]."<tr><td></td></tr><tr><td class=\"reserve\"><a onClick=\"showReserves('sr0');\" class=\"reserve\">Reserves (+)</a></td></tr><tr><td colspan=\"2\"><table class=\"showReserve\" id=\"sr0\">".$reserveString[0]."</table></td></tr>";
-$printString[1] = "<TR><TH>".$teams[3]."</TH><th>".$startPoints[1]."</th></TR>".$printString[1]."<tr><td></td></tr><tr><td class=\"reserve\"><a onClick=\"showReserves('sr1');\" class=\"reserve\">Reserves (+)</a></td></tr><tr><td colspan=\"2\"><table class=\"showReserve\" id=\"sr1\">".$reserveString[1]."</table></td></tr>";
+$printString[0] = '<TR><TH>' .$teams[2]. '</TH><th>' .$startPoints[0]. '</th></TR>' .$printString[0]."<tr><td></td></tr><tr><td class=\"reserve\"><a onClick=\"showReserves('sr0');\" class=\"reserve\">Reserves (+)</a></td></tr><tr><td colspan=\"2\"><table class=\"showReserve\" id=\"sr0\">".$reserveString[0]. '</table></td></tr>';
+$printString[1] = '<TR><TH>' .$teams[3]. '</TH><th>' .$startPoints[1]. '</th></TR>' .$printString[1]."<tr><td></td></tr><tr><td class=\"reserve\"><a onClick=\"showReserves('sr1');\" class=\"reserve\">Reserves (+)</a></td></tr><tr><td colspan=\"2\"><table class=\"showReserve\" id=\"sr1\">".$reserveString[1]. '</table></td></tr>';
 
 
 ?>
 
 <td width="5%" valign="top">
 </td><td width="40%" valign="top">
-    <table class="forumline"><? print $printString[0]; ?></table>
+    <table class="forumline"><?php print $printString[0]; ?></table>
 </td> <td width="25px" valign="top">
 </td> <td width="40%" valign="top">
-    <table class="forumline"><? print $printString[1]; ?></table>
+    <table class="forumline"><?php print $printString[1]; ?></table>
 </td> <td width="5%" valign="top">
 </td></tr>
 </table>
@@ -234,28 +224,19 @@ $printString[1] = "<TR><TH>".$teams[3]."</TH><th>".$startPoints[1]."</th></TR>".
 
 
 <script language="javascript">
-<!--- 
 
 function showReserves(elementId) {
-    var element = document.getElementById(elementId);
-    var display = element.style.display;
-    if (display == "table") {
-        if (element.style.setAttribute) {
-            element.style.setAttribute('display', 'none');
-        } else {
-            element.style.display = 'none';
-        }
+    let element = document.getElementById(elementId);
+    const display = element.style.display;
+    if (display === "table") {
+        element.style.display = 'none';
     } else {
-        if (element.style.setAttribute) {
-            element.style.setAttribute('display', 'table');
-        } else {
-            element.style.display = 'table';
-        }
+        element.style.display = 'table';
     }
 }
 
 function pad (num, length) {
-    var str = '' + num;
+    let str = '' + num;
     while (str.length < length) {
         str = '0' + str;
     }
@@ -263,7 +244,7 @@ function pad (num, length) {
 }
 
 
-var clRed = '#CC3333';
+const clRed = '#CC3333';
 
 function ply (identifier, score, timeRem, name, position, nflteam, details)
 {
@@ -277,29 +258,29 @@ function ply (identifier, score, timeRem, name, position, nflteam, details)
 }
 
 
-var player = new Object();
-<?
+let player = {};
+<?php
     print $javascriptString;
 ?>
 
-var mugname   = document.getElementById("mugname").childNodes[0];
-var plpos  = document.getElementById("pos").childNodes[0];
-var prmatchup = document.getElementById("prmatchup").childNodes[0];
-var prscore   = document.getElementById("prscore").childNodes[0];
-var prminleft = document.getElementById("prminleft").childNodes[0];
-var ping      = document.getElementById("ping");
-var statline  = document.getElementById("statline");
+let mugname   = document.getElementById("mugname").childNodes[0];
+let plpos  = document.getElementById("pos").childNodes[0];
+let prmatchup = document.getElementById("prmatchup").childNodes[0];
+let prscore   = document.getElementById("prscore").childNodes[0];
+let prminleft = document.getElementById("prminleft").childNodes[0];
+let ping      = document.getElementById("ping");
+let statline  = document.getElementById("statline");
 
 function update_breakdown (tagID, detailString)
 {
-	var breaknode = document.getElementById(tagID);
-	var n;
-	var nindex;
-	var numKids = 0;
+	let breaknode = document.getElementById(tagID);
+	let n;
+	let nindex;
+	let numKids = 0;
 	if (breaknode.hasChildNodes())
 	{
 		numKids = breaknode.childNodes.length;
-		var numGrandKids, k, y;
+		let numGrandKids, k, y;
 		for (k = numKids - 1; k >= 0; k--)
 		{
 			if (breaknode.childNodes[k].hasChildNodes())
@@ -312,11 +293,11 @@ function update_breakdown (tagID, detailString)
 			}
 		}
 	}
-	var descriptNode;
-	var subscoreNode;
+	let descriptNode;
+	let subscoreNode;
 
-	var encoded_details = detailString.split("^");
-	var numDetails = (encoded_details.length > 1) ? (encoded_details.length / 2) : 0;
+	let encoded_details = detailString.split("^");
+	let numDetails = (encoded_details.length > 1) ? (encoded_details.length / 2) : 0;
 	for (n = 0; n < numDetails; n++)
 	{
 		nindex = n * 2;
@@ -401,8 +382,6 @@ function Q (index)
 
 	//Qid_matrix[last_gid] = index;
 }
-
-// --->
 </script>
 
 
@@ -412,45 +391,45 @@ function Q (index)
 
 <tr><td class="othertitle" colspan="3" align="center">WMFFL Scores</td></tr>
 
-<?
+    <?php
 $gameresults = getOtherGames($thisTeamID, $thisWeek, $thisSeason, $conn);
 $count = 0;
 while ($row = mysqli_fetch_array($gameresults)) {
     $count++;
-    if ($row["scorea"] >= $row["scoreb"]) {
-        $winningName = $row["aname"];
-        $winningScore = $row["scorea"];
-        $linkId = $row["teamA"];
-        $losingName = $row["bname"];
-        $losingScore = $row["scoreb"];
+    if ($row['scorea'] >= $row['scoreb']) {
+        $winningName = $row['aname'];
+        $winningScore = $row['scorea'];
+        $linkId = $row['teamA'];
+        $losingName = $row['bname'];
+        $losingScore = $row['scoreb'];
     } else {
-        $winningName = $row["bname"];
-        $winningScore = $row["scoreb"];
-        $linkId = $row["teamA"];
-        $losingName = $row["aname"];
-        $losingScore = $row["scorea"];
+        $winningName = $row['bname'];
+        $winningScore = $row['scoreb'];
+        $linkId = $row['teamA'];
+        $losingName = $row['aname'];
+        $losingScore = $row['scorea'];
     }
-        if ($winningScore == "") {
+        if ($winningScore == '') {
             $winningScore = 0;
         }
-        if ($losingScore == "") {
+        if ($losingScore == '') {
             $losingScore = 0;
         }
 ?>
     <tr><td class="buffer" colspan="3"></td></tr>
-    <div id="AA<? print $count; ?>">
-    <tr><td class="othername" align="left"><div class="othername"><? print $winningName; ?></div></td>
-    <td class="otherscore" align="center"><div class="otherscore"><? print $winningScore; ?></div></td>
+    <div id="AA<?php print $count; ?>">
+    <tr><td class="othername" align="left"><div class="othername"><?php print $winningName; ?></div></td>
+    <td class="otherscore" align="center"><div class="otherscore"><?php print $winningScore; ?></div></td>
     <td class="boxlink" align="center" rowspan="2">
-        <? print "<a href=\"?teamid=$linkId&week=$thisWeek&season=$thisSeason\" class=\"boxlink\">"; ?>
+        <?php print "<a href=\"?teamid=$linkId&week=$thisWeek&season=$thisSeason\" class=\"boxlink\">"; ?>
         Box Score</a>
-        <? if ($row["overtime"] > 0) { print "<div class=\"otherscore\">OT</div>"; } ?>
+        <?php if ($row['overtime'] > 0) { print "<div class=\"otherscore\">OT</div>"; } ?>
     </td></tr>
-    <tr><td class="othername" align="left"><div class="othername"><? print $losingName; ?></div></td>
-    <td class="otherscore" align="center"><div class="otherscore"><? print $losingScore; ?></div></td>
+    <tr><td class="othername" align="left"><div class="othername"><?php print $losingName; ?></div></td>
+    <td class="otherscore" align="center"><div class="otherscore"><?php print $losingScore; ?></div></td>
     </td></tr>
     </div>
-<?
+    <?php
 }
 ?>
 
@@ -458,14 +437,14 @@ while ($row = mysqli_fetch_array($gameresults)) {
 
         <div class="mt-2 justify-content-center text-center"><p><b>Previous Weeks</b>
 <form action="currentscore.php" method="post">
-<input type="hidden" name="season" value="<? print $thisSeason; ?>"/>
-<input type="hidden" name="teamid" value="<? print $thisTeamID; ?>"/>
+<input type="hidden" name="season" value="<?php print $thisSeason; ?>"/>
+<input type="hidden" name="teamid" value="<?php print $thisTeamID; ?>"/>
 <select name="week" onchange="submit();">
     <option value="" selected>Select Week</option>
-<?
+    <?php
 foreach ($weekList as $row) {
-    $weekID = $row["week"];
-    $thisWeekName = $row["weekname"];
+    $weekID = $row['week'];
+    $thisWeekName = $row['weekname'];
     print "<option value=\"$weekID\">$thisWeekName</option>";
 }
 ?>
@@ -476,4 +455,4 @@ foreach ($weekList as $row) {
 </td></tr>
 </table>
 
-<? include "base/footer.php"; ?>
+<?php include 'base/footer.php'; ?>

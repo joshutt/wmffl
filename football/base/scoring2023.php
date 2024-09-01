@@ -110,7 +110,7 @@ function scoreK($scoreArray) {
 	$pts += $scoreArray['FG30']*3;
 	$pts += $scoreArray['FG40']*4;
 	$pts += $scoreArray['FG50']*5;
-	$pts += $scoreArray['FG60']*7;
+	$pts += $scoreArray['FG60']*10;
 	$pts -= $scoreArray['MissFG30'];
     $pts += $scoreArray['specTD'] * 12;
 	return $pts;
@@ -301,7 +301,7 @@ function scoreString($score, $pos): string
             if ($tds > 0) {$returnString .= "^$tds field goals (50-59 yards)^$pts";}
 
             $tds = $score['FG60'];
-            $pts = $tds * 7;
+            $pts = $tds * 10;
             if ($tds > 0) {$returnString .= "^$tds field goals (60+ yards)^$pts";}
 
             $tds = $score['MissFG30'];

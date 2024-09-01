@@ -1,13 +1,14 @@
-<?
-#require_once "/home/wmffl/public_html/base/conn.php";
-#include "/home/wmffl/public_html/base/useful.php";
-#include "/home/wmffl/public_html/base/scoring.php";
-require_once "/home/joshutt/football/base/conn.php";
-include "/home/joshutt/football/base/useful.php";
-include "/home/joshutt/football/base/scoring.php";
+<?php
+/**
+ * @var $conn mysqli
+ */
+require_once '/home/joshutt/football/base/conn.php';
+include '/home/joshutt/football/base/useful.php';
+include '/home/joshutt/football/base/scoring.php';
 
-function generateSelect($thisTeamID, $currentSeason, $currentWeek) {
-    $select = <<<EOD
+function generateSelect($thisTeamID, $currentSeason, $currentWeek): string
+{
+    return <<<EOD
         SELECT p.pos, p.lastname, p.firstname, r.teamid, g.kickoff, g.secRemain, p.flmid, s.*, 
         if (r.dateon is null and p.pos<>'HC', 1, 0) as 'illegal', gp1.side as 'Me', gp2.side as 'Them', wm.ActivationDue
         FROM newplayers p
@@ -21,14 +22,12 @@ function generateSelect($thisTeamID, $currentSeason, $currentWeek) {
   LEFT JOIN gameplan gp2 ON wm.season=gp2.season and wm.week=gp2.week and p.playerid=gp2.playerid and gp2.side='Them'
         WHERE a.teamid=$thisTeamID AND a.season=$currentSeason AND a.week=$currentWeek
 EOD;
-    
-    return $select;
 }
 
 
 function determinePoints($teamid, $season, $week, $conn) {
     $statSelect = generateSelect($teamid, $season, $week);
-    $results = mysqli_query($conn, $statSelect) or die ("Dead: " . mysqli_error($conn));
+    $results = mysqli_query($conn, $statSelect) or die ('Dead: ' . mysqli_error($conn));
 
     $totalPoints = 0;
     $offPoints = 0;
@@ -37,16 +36,6 @@ function determinePoints($teamid, $season, $week, $conn) {
     $secRemain = 0;
     while ($row = mysqli_fetch_array($results)) {
         $pts = 0;
-
-        // Add game planning factor
-        $factor = 1.0;
-        if (time() > strtotime($row["ActivationDue"])) {
-            if ($row["Me"] == "Me" && $row["Them"] != "Them") {
-                $factor = 2.0;
-            } elseif ($row["Them"] == "Them" && $row["Me"] != "Me") {
-                $factor = 0.5;
-            }
-        }
 
         // Determine Number of Points
         if ($row['illegal']==1) {
@@ -57,49 +46,42 @@ function determinePoints($teamid, $season, $week, $conn) {
             switch ($row['pos']) {
                 case 'HC' :
                     $pts = scoreHC($row);
-                    if ($pts < 0 && $factor == 0.5) { $factor = 1.0; }
-                    $offPoints += ceil($pts * $factor);
+                    $offPoints += $pts;
                     break;
                 case 'QB' :
                     $pts = scoreQB($row);
-                    if ($pts < 0 && $factor == 0.5) { $factor = 1.0; }
-                    $offPoints += ceil($pts * $factor);
+                    $offPoints += $pts;
                     break;
                 case 'RB' :
                 case 'WR' :
                      $pts = scoreOffense($row);
-                    if ($pts < 0 && $factor == 0.5) { $factor = 1.0; }
-                     $offPoints += ceil($pts * $factor);
+                     $offPoints += $pts;
                      break;
                 case 'TE' :    
                      $pts = scoreTE($row);
-                    if ($pts < 0 && $factor == 0.5) { $factor = 1.0; }
-                     $offPoints += ceil($pts * $factor);
+                     $offPoints += $pts;
                      break;
                 case 'K' :
                     $pts = scoreK($row);
-                    if ($pts < 0 && $factor == 0.5) { $factor = 1.0; }
-                    $offPoints += ceil($pts * $factor);
+                    $offPoints += $pts;
                     break;
                 case 'OL' :
                     $pts = scoreOL($row);
-                    if ($pts < 0 && $factor == 0.5) { $factor = 1.0; }
-                    $offPoints += ceil($pts * $factor);
+                    $offPoints += $pts;
                      break;
                 case 'DL' :
                 case 'LB' :
                 case 'DB' :
                      $pts = scoreDefense($row);
-                    if ($pts < 0 && $factor == 0.5) { $factor = 1.0; }
-                     $defPoints += ceil($pts * $factor);
+                     $defPoints += $pts;
                      break;
             }
         }
 
         //print "${row["firstname"]} ${row["lastname"]} = $pts \n";
 
-        $totalPoints += ceil($pts * $factor);
-        $secRemain += $row["secRemain"];
+        $totalPoints += $pts;
+        $secRemain += $row['secRemain'];
         //print "Total Pts: $totalPoints  Offensive: $offPoints   Defense: $defPoints \n";
     }
     //print "$teamid-$totalPoints-$offPoints-$defPoints-$penalty<br>";
@@ -107,7 +89,8 @@ function determinePoints($teamid, $season, $week, $conn) {
 }
 
 
-function updateScore($teamA, $teamB, $season, $week, $aScore, $bScore, $conn) {
+function updateScore($teamA, $teamB, $season, $week, $aScore, $bScore, $conn): void
+{
     $update = "UPDATE schedule SET scorea=$aScore, scoreb=$bScore ";
     $update .= "WHERE season=$season and week=$week and ";
     $update .= "teama=$teamA and teamb=$teamB";
@@ -115,20 +98,20 @@ function updateScore($teamA, $teamB, $season, $week, $aScore, $bScore, $conn) {
 }
 
 
-$gameSelect = "SELECT s.teama, s.teamb, w.season, w.week ";
-$gameSelect .= "FROM schedule s, weekmap w ";
-$gameSelect .= "WHERE s.season=w.season and s.week=w.week ";
+$gameSelect = 'SELECT s.teama, s.teamb, w.season, w.week ';
+$gameSelect .= 'FROM schedule s, weekmap w ';
+$gameSelect .= 'WHERE s.season=w.season and s.week=w.week ';
 
 if (!empty($week)) {
-    $gameSelect .= "AND w.week=".$week;
+    $gameSelect .= 'AND w.week=' .$week;
     if (!empty($season)) {
-        $gameSelect .= " AND w.season=".$season;
+        $gameSelect .= ' AND w.season=' .$season;
     }
 //} elseif (date("w") == 2 && date("H") >= 11) {
 //    $gameSelect .= "AND w.week=".($currentWeek-1);
 //    $gameSelect .= " AND w.season=".$currentSeason;
 } else { 
-    $gameSelect .= "and now() between w.startdate and w.enddate ";
+    $gameSelect .= 'and now() between w.startdate and w.enddate ';
 }
 //print $gameSelect;
 $gameResults = mysqli_query($conn, $gameSelect);
