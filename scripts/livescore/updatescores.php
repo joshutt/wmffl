@@ -41,9 +41,11 @@ function determinePoints($teamid, $season, $week, $conn) {
 
         // Determine Number of Points
         if ($row['illegal'] == 1) {
-            $penalty += 2;
+            // Illegal activations
+            $penalty += 10;
         } elseif ($row['kickoff'] == null && $row['pos'] != 'HC') {
-            $penalty += 2;
+            // Bye Week activations
+            $penalty += 5;
         } else {
             switch ($row['pos']) {
                 case 'HC' :
@@ -91,9 +93,9 @@ function determinePoints($teamid, $season, $week, $conn) {
 
 function updateScore($teamA, $teamB, $season, $week, $aScore, $bScore, $conn): void
 {
-    $update = "UPDATE schedule SET scorea=$aScore, scoreb=$bScore ";
-    $update .= "WHERE season=$season and week=$week and ";
-    $update .= "teama=$teamA and teamb=$teamB";
+    $update = "UPDATE schedule SET scorea=$aScore, scoreb=$bScore "
+        . "WHERE season=$season and week=$week and "
+        . "teama=$teamA and teamb=$teamB";
     mysqli_query($conn, $update);
 }
 

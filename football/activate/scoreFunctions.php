@@ -50,7 +50,7 @@ function getOtherGames($thisTeamID, $thisWeek, $thisSeason, $conn)
 
 function generateReserves($thisTeamID, $currentSeason, $currentWeek)
 {
-    $select = <<<EOD
+    return <<<EOD
 select p.pos, p.lastname, p.firstname, nr.nflteamid as 'team', n.kickoff as 'kickoff', n.secRemain, n.complete, p.flmid, s.*, 
 if ((r.dateon is null and p.pos<>'HC') or (p.playerid=2637 and wm.season=2018 and wm.week=14), 1, 0) as 'illegal', a.pos as 'startPos', a.teamid as 'teamcheck1', 
 r.teamid as 'teamcheck2', n.secRemain, gp1.side as 'GPMe', gp2.side as 'GPThem', CONVERT_TZ(wm.ActivationDue, 'SYSTEM', '+0:00') as 'ActivationDue'
@@ -66,11 +66,10 @@ left join nflgames n on n.week=wm.week and n.season=wm.season and nr.nflteamid i
 WHERE wm.season=$currentSeason and wm.week=$currentWeek and (r.teamid=$thisTeamID or a.teamid=$thisTeamID)
 order by p.pos, p.lastname, p.firstname
 EOD;
-    return $select;
 }
 
 
-function printPlayer($row, $color, $score, $reserveClass = "")
+function printPlayer($row, $color, $score, $reserveClass = ""): string
 {
     $printString = "<tr><td class=\"c1 c1$color\"><div class=\"posprefix px-1\">{$row['pos']}</div>";
     $printString .= "<div class=\"PQDO\"> </div>";
@@ -99,4 +98,17 @@ function playerJavaScript($row, $score)
     $scoreString = scoreString($row, $row['pos']);
     $javascriptLine .= "\"$scoreString\");\n";
     return $javascriptLine;
+}
+
+
+function penalizePlayer(string $penType, int $penPts, array $player, int $pts, int &$penalty, int &$defPts, int &$offPts, int &$totalPts): string
+{
+    $penalty += $penPts;
+    if ($player['pos'] == 'DL' || $player['pos'] == 'LB' || $player['pos'] == 'DB') {
+        $defPts -= $pts;
+    } else {
+        $offPts -= $pts;
+    }
+    $totalPts -= $pts;
+    return printPlayer($player, $penType, -$penPts);
 }
