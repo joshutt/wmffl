@@ -1,6 +1,11 @@
-<?
-require_once "utils/start.php";
-include "utils/reportUtils.php";
+<?php
+/**
+ * @var $conn mysqli
+ * @var $currentWeek int
+ * @var $currentSeason int
+ */
+require_once 'utils/start.php';
+include 'utils/reportUtils.php';
 
 
 // If a player has fewer weeks than max fill with nulls
@@ -24,13 +29,13 @@ function moveTot($player)
     $team = array_shift($player);
     $tot = array_shift($player);
     array_unshift($player, $name, $pos, $nfl, $team);
-    array_push($player, $tot);
+    $player[] = $tot;
     return $player;
 }
 
-function checkForAllNull($player)
+function checkForAllNull($player): bool
 {
-    if ($player["tot"] != 0) {
+    if ($player['tot'] != 0) {
         return true;
     }
     for ($i = 5; $i < sizeof($player); $i++) {
@@ -45,32 +50,33 @@ function checkForAllNull($player)
 }
 
 
-function cmp($a, $b)
+function cmp($a, $b): bool|int
 {
-    if ($a["tot"] == $b["tot"]) {
-        return ($a["name"] > $b["name"]);
+    if ($a['tot'] == $b['tot']) {
+        return ($a['name'] > $b['name']);
     }
-    return ($a["tot"] > $b["tot"]) ? -1 : 1;
+    return ($a['tot'] > $b['tot']) ? -1 : 1;
 }
 
 
 // Search by Team
 $byPos = false;
-if (isset($_REQUEST["team"]) && $_REQUEST["team"] != "") {
-    $searchTeam = $_REQUEST["team"];
-} else if (isset($_REQUEST["pos"]) && $_REQUEST["pos"] != "") {
-    $searchPos = mysqli_real_escape_string($conn, $_REQUEST["pos"]);
+$searchPos = '';
+if (isset($_REQUEST['team']) && $_REQUEST['team'] != '') {
+    $searchTeam = $_REQUEST['team'];
+} else if (isset($_REQUEST['pos']) && $_REQUEST['pos'] != '') {
+    $searchPos = mysqli_real_escape_string($conn, $_REQUEST['pos']);
     $byPos = true;
-} else if (array_key_exists('teamnum', $_SESSION) && $_SESSION["teamnum"] != "") {
-    $searchTeam = $_SESSION["teamnum"];
+} else if (array_key_exists('teamnum', $_SESSION) && $_SESSION['teamnum'] != '') {
+    $searchTeam = $_SESSION['teamnum'];
 } else {
     $searchTeam = 1;
 }
 
 
 // Determine the season to use
-if (isset($_REQUEST["season"])) {
-    $season = $_REQUEST["season"];
+if (isset($_REQUEST['season'])) {
+    $season = $_REQUEST['season'];
 } else if ($currentWeek == 0) {
     $season = $currentSeason - 1;
 } else {
@@ -79,7 +85,7 @@ if (isset($_REQUEST["season"])) {
 
 
 // Search by Position
-
+$sql = '';
 if (isset($searchTeam)) {
 
     $sql = <<<EOD
@@ -106,19 +112,20 @@ EOD;
 
 }
 
-$results = mysqli_query($conn, $sql) or die("There was an error in the query: " . mysqli_error($conn));
+$results = mysqli_query($conn, $sql) or die('There was an error in the query: ' . mysqli_error($conn));
 $newHold = array();
 $max = 0;
+$lastNum = 0;
 while ($playList = mysqli_fetch_array($results)) {
     // If the new player isn't already in array add it
-    $id = $playList["playerid"];
+    $id = $playList['playerid'];
     if (sizeof($newHold) == 0 || !array_key_exists($id, $newHold)) {
-        $newHold[$id] = array("name" => $playList["firstname"] . " " . $playList["lastname"], "pos" => $playList["pos"], "nfl" => $playList["nfl"], "team" => $playList["abbrev"], "tot" => 0);
+        $newHold[$id] = array('name' => $playList['firstname'] . ' ' . $playList['lastname'], 'pos' => $playList['pos'], 'nfl' => $playList['nfl'], 'team' => $playList['abbrev'], 'tot' => 0);
         $lastNum = 0;
     }
 
     // Fill in blank weeks
-    $week = $playList["week"];
+    $week = $playList['week'];
     if ($week == null) {
         $week = 1;
     }
@@ -129,8 +136,8 @@ while ($playList = mysqli_fetch_array($results)) {
     }
 
     // Add the week
-    $newHold[$id][$week] = $playList["pts"];
-    $newHold[$id]["tot"] += $playList["pts"];
+    $newHold[$id][$week] = $playList['pts'];
+    $newHold[$id]['tot'] += $playList['pts'];
     $lastNum = $week;
     if ($week > $max) {
         $max = $week;
@@ -138,48 +145,48 @@ while ($playList = mysqli_fetch_array($results)) {
 }
 
 if ($byPos) {
-    $newHold = array_filter($newHold, "checkForAllNull");
-    usort($newHold, "cmp");
+    $newHold = array_filter($newHold, 'checkForAllNull');
+    usort($newHold, 'cmp');
 }
-$newHold = array_map("checkMaxGames", $newHold, array_fill(1, sizeof($newHold), $max));
-$newHold = array_map("moveTot", $newHold);
+$newHold = array_map('checkMaxGames', $newHold, array_fill(1, sizeof($newHold), $max));
+$newHold = array_map('moveTot', $newHold);
 
 // Build titles
-$titles = array("Name", "Pos", "NFL", "Team");
+$titles = array('Name', 'Pos', 'NFL', 'Team');
 //$titles = array_merge($titles, range(1, 16));
 $titles = array_merge($titles, range(1, $max));
-array_push($titles, "Tot");
+$titles[] = 'Tot';
 
 // Determine the format
-$format = "html";
-if (isset($_REQUEST["format"])) {
-    $format = strtolower($_REQUEST["format"]);
+$format = 'html';
+if (isset($_REQUEST['format'])) {
+    $format = strtolower($_REQUEST['format']);
 }
 
 // Display output
-if ($format == "html" || !supportedFormat($format)) {
-    $title = "Week By Week";
-    $javascriptList = array("//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js", "/base/vendor/js/jquery.tablesorter.min.js", "week.js");
-    $cssList = array("week.css", "stats.css");
-    include_once "base/menu.php";
+if ($format == 'html' || !supportedFormat($format)) {
+    $title = 'Week By Week';
+    $javascriptList = array('//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js', '/base/vendor/js/jquery.tablesorter.min.js', 'week.js');
+    $cssList = array('week.css', 'stats.css');
+    include_once 'base/menu.php';
     ?>
     <h1 align="center"><?= $title ?></h1>
     <hr size="1">
 
 
-    <?
-    include "base/statbar.html";
+    <?php
+    include 'base/statbar.html';
     print "<div id=\"tblblock\" class='container justify-content-center'>";
-    include "weekbyweekinc.php";
+    include 'weekbyweekinc.php';
     print "<div id=\"mainTable\" class='row col-12 justify-content-center'>";
     outputHtml($titles, $newHold);
-    print "</div></div>";
-    include "base/footer.php";
-} else if ($format == "ajax") {
+    print '</div></div>';
+    include 'base/footer.php';
+} else if ($format == 'ajax') {
     outputHtml($titles, $newHold);
-} else if ($format == "csv") {
-    outputCSV($titles, $newHold, "weekbyweek.csv");
-} else if ($format == "json") {
+} else if ($format == 'csv') {
+    outputCSV($titles, $newHold, 'weekbyweek.csv');
+} else if ($format == 'json') {
     outputJSON($titles, $newHold);
 }
 ?>

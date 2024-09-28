@@ -36,7 +36,6 @@ if (substr($page, 0, 5) == '/img/') {
     $_REQUEST['size']=substr($orgPage, 5, 1);
 }
 
-
 if (is_dir($docRoot.$page) && substr($page, -1) !== '/') {
     $page .= '/';
 }
