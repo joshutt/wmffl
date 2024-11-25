@@ -30,6 +30,9 @@ class Paid
     #[ORM\Column(type: 'float')]
     private float $late_fee;
 
+    #[ORM\Column(name: 'amtPaid', type: 'float')]
+    private float $amt_paid;
+
     #[ORM\Column(type: 'boolean')]
     private bool $paid;
 
@@ -91,6 +94,16 @@ class Paid
     public function setLateFee(float $late_fee): void
     {
         $this->late_fee = $late_fee;
+    }
+
+    public function getAmtPaid(): float
+    {
+        return $this->amt_paid;
+    }
+
+    public function setAmtPaid(float $amt_paid): void
+    {
+        $this->amt_paid = $amt_paid;
     }
 
     public function isPaid(): bool
