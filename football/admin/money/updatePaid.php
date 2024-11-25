@@ -30,6 +30,7 @@ $paid = $entityManager->getRepository('WMFFL\orm\Paid')->findBy(array('season' =
                 <th scope="col">Previous</th>
                 <th scope="col">Entry Fee</th>
                 <th scope="col">Late Fee</th>
+                <th scope="col">Amt Paid</th>
                 <th scope="col">Paid?</th>
             </tr>
             </thead>
@@ -46,6 +47,7 @@ $paid = $entityManager->getRepository('WMFFL\orm\Paid')->findBy(array('season' =
                     <td><?= $fmt->formatCurrency($p->getPrevious(), 'USD') ?></td>
                     <td><?= $fmt->formatCurrency($p->getEntry(), 'USD') ?></td>
                     <td><span id="late-<?= $p->getId() ?>" class="editable-span"><?= $fmt->formatCurrency($p->getLateFee(), 'USD') ?></span></td>
+                    <td><span id="amt-<?= $p->getId() ?>" class="editable-span"><?= $fmt->formatCurrency($p->getAmtPaid(), 'USD') ?></span></td>
                     <td>
                         <label class="switch">
                             <input type="checkbox" onchange="toggleChange(event);" id="paid-<?= $p->getId() ?>"
