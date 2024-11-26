@@ -11,10 +11,10 @@ function supportedFormat($format): bool
 
 /**
  * Given an array of titles and the content print out in a table
- * @param $titles List of the headers for the columns
- * @param $content The data to fill in
+ * @param $titles array List of the headers for the columns
+ * @param array $content The data to fill in
  */
-function outputHtml($titles, $content)
+function outputHtml(array $titles, array $content): void
 {
 
     print "<table id=\"statTable\"> <thead> <tr>";

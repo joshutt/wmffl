@@ -41,6 +41,7 @@
 <li><a href="tooManyPlayers.php">Too Many Players  Report</a></li>
 <li><a href="weekly.php">Player of the Week</a></li>
 <li><a href="mvp.php">MVP List</a></li>
+<li><a href="money/updatePaid">Update Payments</a></li>
 </ul>
 
 </BODY>
