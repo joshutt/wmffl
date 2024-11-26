@@ -158,14 +158,13 @@ include 'base/menu.php';
                 Now</a></h2>
     <?php } ?>
 
-    <table class="report table table-striped table-hover">
+    <table class="report">
         <tr class="titleRow">
             <th>Team</th>
             <th>Previous</th>
             <th>Paid</th>
             <th>Late Fees</th>
             <th>Illegal<br/>Lineup</th>
-            <th>Bye Week<br/>Activation</th>
             <th>Extra<br/>Transactions</th>
             <th>Wins</th>
             <th>Playoffs</th>
