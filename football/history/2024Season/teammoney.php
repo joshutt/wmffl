@@ -71,33 +71,13 @@ foreach ($paidArr as $p) {
     $teamRow[$id]['playoffs'] = array();
 }
 
-//// Temp for testing
-//$pt = array_rand($teamRow, 4);
-//foreach($pt as $p) {
-//    $teamRow[$p]['playoffs'][] = 'p';
-//}
-//
-//$div = array_rand(array_flip($pt), 3);
-//foreach($div as $d) {
-//    $teamRow[$d]['playoffs'][] = 'd';
-//}
-//
-//$finals = array_rand(array_flip($pt), 2);
-//foreach($finals as $f) {
-//    $teamRow[$f]['playoffs'][] = 'f';
-//}
-//
-//$champ = array_rand(array_flip($finals), 1);
-//    $teamRow[$champ]['playoffs'][] = 'c';
-
-
 // Calulated values for wins
 $totalPot = $entryFee * sizeof($teamRow) + $fullNeg;
 $perWin = round($totalPot * $winPercent / $numOfGames, 2);
 $playoffPot = $totalPot * $postPercent;
 $divsionWin = round($playoffPot * $divPercent, 2);
 $playoffApp = round($playoffPot * $playoffPercent, 2);
-$champApp = round($playoffPot * ($finalPercent - $playoffApp), 2);
+$champApp = round($playoffPot * ($finalPercent - $playoffPercent), 2);
 $champWin = round($playoffPot * ($champPercent - $finalPercent), 2);
 
 // Calculate each team's balance
@@ -192,6 +172,17 @@ include 'base/menu.php';
         <?php } ?>
     </table>
     <p>Previous column is based on <a href="/history/2023Season/teammoney">2023 results</a></p>
+
+    <span>
+        <div>Payouts</div>
+        Total Pot: <?= format($totalPot) ?><br/>
+        Per Win: <?= format($perWin) ?><br/>
+        Division Title: <?= format($divsionWin) ?><br/>
+        Playoff Appearance: <?= format($playoffApp) ?><br/>
+        Finalist: <?= format($champApp) ?><br/>
+        Champion: <?= format($champWin) ?>
+
+    </span>
 
 </div>
 
