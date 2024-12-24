@@ -68,3 +68,4 @@ $paid = $entityManager->getRepository('WMFFL\orm\Paid')->findBy(array('season' =
     </div>
 
     <a href="../index">Menu</a>
+</div>
