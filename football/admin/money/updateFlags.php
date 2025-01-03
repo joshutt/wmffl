@@ -9,7 +9,8 @@ use Doctrine\ORM\EntityManager;
 require_once 'utils/start.php';
 require_once 'bootstrap.php';
 
-$flags = $entityManager->getRepository('WMFFL\orm\SeasonFlags')->findBy(array('season' => $currentSeason));
+$season = $_GET['season'] ?? $currentSeason;
+$flags = $entityManager->getRepository('WMFFL\orm\SeasonFlags')->findBy(array('season' => $season));
 ?>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -17,7 +18,7 @@ $flags = $entityManager->getRepository('WMFFL\orm\SeasonFlags')->findBy(array('s
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
 
 <div class="card px-0 m-2 float-left container">
-    <div class="card-header font-weight-bold text-center">Season Flags</div>
+    <div class="card-header font-weight-bold text-center"><?= $season ?> Season Flags</div>
     <div class="card-body">
         <form action="processFlags" method="post">
             <table class="table table-striped table-hover table-sm text-center" id="paidTable">
@@ -55,6 +56,7 @@ $flags = $entityManager->getRepository('WMFFL\orm\SeasonFlags')->findBy(array('s
             </table>
         </form>
     </div>
-    <a href="../index">Menu</a>
+    <div><a href="updateFlags?season=<?= $season-1 ?>">Previous Year</a></div>
+    <div><a href="../index">Menu</a></div>
 </div>
 
