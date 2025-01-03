@@ -84,6 +84,18 @@ EOD;
     return performQuery($em, $query, $currentSeason);
 }
 
+
+function getSeasonFlags(\Doctrine\ORM\EntityManager $em, int $currentSeason): ?array {
+    $query = <<<EOD
+SELECT *
+FROM season_flags  sf
+where sf.season=:season
+EOD;
+
+    return performQuery($em, $query, $currentSeason);
+}
+
+
 /**
  * @param \Doctrine\ORM\EntityManager $em
  * @param string $query
@@ -102,7 +114,7 @@ function performQuery(\Doctrine\ORM\EntityManager $em, string $query, int $curre
             $returnArr[$r['teamid']] = $r;
         }
     } catch (\Doctrine\DBAL\Exception $e) {
-        error_log('Exception getting Extra charges', $e);
+        error_log('Exception getting Extra charges'. $e);
         return null;
     } finally {
 //        $stmt->closeCursor();
