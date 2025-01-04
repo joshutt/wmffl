@@ -12,7 +12,6 @@ if ($thisWeek == '') {
 $thisSeason = 2024;
 $title = 'Standings';
 
-
 $clinchedList = array();
 $query = "SELECT t.name, sf.flags FROM season_flags sf join teamnames t on t.season=sf.season and t.teamid=sf.teamid WHERE sf.season=$thisSeason";
 $results = mysqli_query($conn, $query) or die('Error: ' . mysqli_error($conn));
@@ -21,7 +20,6 @@ while ($row = mysqli_fetch_array($results)) {
         $clinchedList[$row['name']] = $row['flags'] . '-';
     }
 }
-
 
 include 'base/menu.php';
 ?>
