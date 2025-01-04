@@ -9,7 +9,7 @@ if ($thisWeek == '') {
 $thisSeason = 2024;
 $title = 'Standings';
 
-$clinchedList = array( "Sigourney's Beaver" => 'e-' );
+$clinchedList = array( "Sigourney's Beaver" => 't-', 'Amish Electricians' => 't-', 'MeggaMen'=>'e-', 'British Bulldogs' => 'e-', 'Crusaders' => 'e-', 'Norsemen' => 'e-', 'Gallic Warriors' => 'e-', 'Trump Molests Collies' => 'y-', "Richard's Lionhearts" => 'y-', 'Testudos Revenge' => 'x-', 'Aint Nothing But a Jew Thing' => 'x-', 'Sacks on the Beach' => 'e-' );
 
 include 'base/menu.php';
 ?>

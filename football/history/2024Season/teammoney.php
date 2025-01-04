@@ -14,6 +14,8 @@ require_once 'bootstrap.php';
 
 require_once '../common/moneyUtil.php';
 
+$season = $week == 0 ? $currentSeason-1 : $currentSeason;
+
 // Get Paid Objects for this season, sorted by team name
 $qb = $entityManager->createQueryBuilder();
 $query = $qb->select('p')
@@ -21,12 +23,12 @@ $query = $qb->select('p')
     ->join('p.team', 't')
     ->where('p.season = :season')
     ->orderBy('t.name', 'ASC')
-    ->setParameter('season', $currentSeason)
+    ->setParameter('season', $season)
     ->getQuery();
 $paidArr = $query->getResult();
 
-$rows = getExtraCharges($entityManager, $currentSeason);
-$wins = getWins($entityManager, $currentSeason);
+$rows = getExtraCharges($entityManager, $season);
+$wins = getWins($entityManager, $season);
 //print '<pre>';
 //print_r($wins);
 //print '</pre>';
