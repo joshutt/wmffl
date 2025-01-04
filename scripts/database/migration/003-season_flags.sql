@@ -1,3 +1,12 @@
+alter table team
+    engine =InnoDB;
+
+alter table team
+    collate = utf8mb4_unicode_ci;
+
+alter table team
+    charset = utf8mb4;
+
 create table season_flags
 (
     id              int auto_increment,
@@ -17,15 +26,6 @@ create table season_flags
 ) ENGINE = InnoDB
   CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
-
-alter table team
-    engine =InnoDB;
-
-alter table team
-    collate = utf8mb4_unicode_ci;
-
-alter table team
-    charset = utf8mb4;
 
 INSERT INTO season_flags (id, season, teamid, flags, division_winner, playoff_team, finalist, champion)
 VALUES (1, 2024, 1, 'e', 0, 0, 0, 0);
