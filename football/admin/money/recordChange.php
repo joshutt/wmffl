@@ -30,6 +30,10 @@ try {/** @var Paid $paid */
             $v =  filter_var($val, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
             $paid->setLateFee($v);
             break;
+        case 'amt':
+            $v =  filter_var($val, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+            $paid->setAmtPaid($v);
+            break;
         default:
             break;
     }
