@@ -4,17 +4,22 @@
  * @var $teamnum int
  * @var $entityManager EntityManager
  * @var int $currentSeason
+ * @var $currentWeek int
  * @var $conn mysqli
  */
 
+use Doctrine\ORM\Query\Expr\Join;
 use WMFFL\orm\Paid;
+use WMFFL\orm\SeasonFlags;
 
 require_once 'utils/start.php';
 require_once 'bootstrap.php';
 
 require_once '../common/moneyUtil.php';
 
-$season = $week == 0 ? $currentSeason-1 : $currentSeason;
+$season = $_GET['season'] ?? $currentSeason;
+$season = $currentWeek == 0 && $season==$currentSeason ? $currentSeason - 1 : $season;
+$showNextSeasonFee = $season != $currentSeason;
 
 // Get Paid Objects for this season, sorted by team name
 $qb = $entityManager->createQueryBuilder();
@@ -25,12 +30,14 @@ $query = $qb->select('p')
     ->orderBy('t.name', 'ASC')
     ->setParameter('season', $season)
     ->getQuery();
+
 $paidArr = $query->getResult();
 
 $rows = getExtraCharges($entityManager, $season);
 $wins = getWins($entityManager, $season);
+$flags = getSeasonFlags($entityManager, $season);
 //print '<pre>';
-//print_r($wins);
+//print_r($flags);
 //print '</pre>';
 
 // Magic Numbers
@@ -54,7 +61,7 @@ $fullNeg = 0;
 foreach ($paidArr as $p) {
     $id = $p->getTeam()->getId();
     $fines = $rows[$id];
-    $overage = $fines['Remaining'] < 0 ? -$fines['Remaining']*$extraTransactions : 0;
+    $overage = $fines['Remaining'] < 0 ? -$fines['Remaining'] * $extraTransactions : 0;
 
     $teamRow[$id]['name'] = $fines['name'];
     $teamRow[$id]['deliquent'] = !$p->isPaid();
@@ -71,27 +78,22 @@ foreach ($paidArr as $p) {
     $teamRow[$id]['byeWeek'] = $fines['byeWeek'];
     $teamRow[$id]['wins'] = $wins[$id]['wins'] + $wins[$id]['ties'] / 2;
     $teamRow[$id]['playoffs'] = array();
+
+    // Get playoff flags
+    $teamFlags = $flags[$id];
+    if ($teamFlags['division_winner']) {
+        $teamRow[$id]['playoffs'][] = 'd';
+    }
+    if ($teamFlags['playoff_team']) {
+        $teamRow[$id]['playoffs'][] = 'p';
+    }
+    if ($teamFlags['finalist']) {
+        $teamRow[$id]['playoffs'][] = 'f';
+    }
+    if ($teamFlags['champion']) {
+        $teamRow[$id]['playoffs'][] = 'c';
+    }
 }
-
-//// Temp for testing
-//$pt = array_rand($teamRow, 4);
-//foreach($pt as $p) {
-//    $teamRow[$p]['playoffs'][] = 'p';
-//}
-//
-//$div = array_rand(array_flip($pt), 3);
-//foreach($div as $d) {
-//    $teamRow[$d]['playoffs'][] = 'd';
-//}
-//
-//$finals = array_rand(array_flip($pt), 2);
-//foreach($finals as $f) {
-//    $teamRow[$f]['playoffs'][] = 'f';
-//}
-//
-//$champ = array_rand(array_flip($finals), 1);
-//    $teamRow[$champ]['playoffs'][] = 'c';
-
 
 // Calulated values for wins
 $totalPot = $entryFee * sizeof($teamRow) + $fullNeg;
@@ -99,7 +101,7 @@ $perWin = round($totalPot * $winPercent / $numOfGames, 2);
 $playoffPot = $totalPot * $postPercent;
 $divsionWin = round($playoffPot * $divPercent, 2);
 $playoffApp = round($playoffPot * $playoffPercent, 2);
-$champApp = round($playoffPot * ($finalPercent - $playoffApp), 2);
+$champApp = round($playoffPot * ($finalPercent - $playoffPercent), 2);
 $champWin = round($playoffPot * ($champPercent - $finalPercent), 2);
 
 // Calculate each team's balance
@@ -131,8 +133,15 @@ foreach ($teamRow as $id => &$t) {
     if ($t['balance'] >= 0) {
         $t['deliquent'] = false;
     }
-    $t['stillOwe'] = $t['deliquent'] ? -$t['balance'] : 0;
     $t['playoffStr'] = empty($playoffStr) ? '-' : $playoffStr;
+
+    if ($showNextSeasonFee) {
+        $owe = $t['balance'] - $entryFee;
+        $t['stillOwe'] = $owe < 0 ? -$owe : 0;
+    } else {
+        $t['stillOwe'] = $t['deliquent'] ? -$t['balance'] : 0;
+    }
+
     if ($t['stillOwe'] > 0) {
         $amt_owed[$id] = $t['stillOwe'];
     }
@@ -172,7 +181,7 @@ include 'base/menu.php';
             <th>Wins</th>
             <th>Playoffs</th>
             <th>Balance</th>
-            <th>2024 Fee</th>
+            <th><?= $showNextSeasonFee ? $season+1 : $season ?> Fee</th>
         </tr>
         <?php
         // Print each row
@@ -194,6 +203,22 @@ include 'base/menu.php';
         <?php } ?>
     </table>
     <p>Previous column is based on <a href="/history/2023Season/teammoney">2023 results</a></p>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="border border-secondary rounded p-4">
+                    <div class="font-weight-bold">Payouts</div>
+                    Total Pot: <?= format($totalPot) ?><br/>
+                    Per Win: <?= format($perWin) ?><br/>
+                    Division Title: <?= format($divsionWin) ?><br/>
+                    Playoff Appearance: <?= format($playoffApp) ?><br/>
+                    Finalist: <?= format($champApp) ?><br/>
+                    Champion: <?= format($champWin) ?>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 
