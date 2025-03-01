@@ -77,7 +77,7 @@ select t.teamid, sum(if(tw.Result='W', 1, 0)) as 'wins',
        sum(if(tw.Result='T', 1, 0)) as 'ties'
 from team t
 join team_wins tw on t.teamid=tw.Team
-where tw.season=:season
+where tw.season=:season and tw.week <= 14
 group by t.teamid
 EOD;
 
