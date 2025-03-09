@@ -9,6 +9,10 @@
   },
   "autoload": {
     "psr-4": {
+      "": [
+        "football/",
+        "lib/"
+      ],
       "WMFFL\\": "src/"
     }
   },
