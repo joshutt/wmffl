@@ -67,8 +67,9 @@ $colTitles = array("Team", "HC", "QB", "RB", "WR", "TE", "K", "OL", "DL", "LB", 
 
 if ($format == "html" || !supportedFormat($format)) {
 
-    $javascriptList = array("//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js", "/base/vendor/js/jquery.tablesorter.min.js", "leaders.js");
-    $cssList = array("stats.css");
+    $javascriptList = array("//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js", "/base/vendor/js/jquery.tablesorter.min.js", "/base/js/leaders.js");
+    $cssList = array("/base/css/stats.css");
+    
     $title = "League Leaders";
     include "base/menu.php";
     ?>

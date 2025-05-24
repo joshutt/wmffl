@@ -136,8 +136,8 @@ if (isset($_REQUEST['format'])) {
 
 // Display output
 if ($format == 'html' || !supportedFormat($format)) {
-    $javascriptList = array('//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js', '/base/vendor/js/jquery.tablesorter.min.js', 'playerstats.js');
-    $cssList = array('stats.css');
+    $javascriptList = array('//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js', '/base/vendor/js/jquery.tablesorter.min.js', '/base/js/playerstats.js');
+    $cssList = array('/base/css/stats.css');
     include 'base/menu.php'; ?>
 
 

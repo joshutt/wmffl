@@ -17,13 +17,14 @@ $( document ).ready(function() {
 */
 
     // Show the correct selected options
-    $( '#' + $('#display option:selected').val() ).show();
-    var current = '#' + $('#display option:selected').val();
+    const displaySelector = $('#display option:selected');
+    $( '#' + displaySelector.val() ).show();
+    let current = '#' + displaySelector.val();
 
     $('#display').change(function() {
-        $( '#' + $('#display option:selected').val() ).show();
+        $( '#' + displaySelector.val() ).show();
         $( current ).hide();
-        current = '#' + $('#display option:selected').val();
+        current = '#' +displaySelector.val();
     });
 });
 
@@ -34,25 +35,25 @@ $.tablesorter.addParser({
         return false;
     },
     format: function(s) {
-        if (s.toUpperCase() == "HC") {
+        if (s.toUpperCase() === "HC") {
             return 0;
-	} else if (s.toUpperCase() == "QB") {
+	} else if (s.toUpperCase() === "QB") {
 	    return 1;
-	} else if (s.toUpperCase() == "RB") {
+	} else if (s.toUpperCase() === "RB") {
 	    return 2;
-	} else if (s.toUpperCase() == "WR") {
+	} else if (s.toUpperCase() === "WR") {
 	    return 3;
-	} else if (s.toUpperCase() == "TE") {
+	} else if (s.toUpperCase() === "TE") {
 	    return 4;
-	} else if (s.toUpperCase() == "K") {
+	} else if (s.toUpperCase() === "K") {
 	    return 5;
-	} else if (s.toUpperCase() == "OL") {
+	} else if (s.toUpperCase() === "OL") {
 	    return 6;
-	} else if (s.toUpperCase() == "DL") {
+	} else if (s.toUpperCase() === "DL") {
 	    return 7;
-	} else if (s.toUpperCase() == "LB") {
+	} else if (s.toUpperCase() === "LB") {
 	    return 8;
-	} else if (s.toUpperCase() == "DB") {
+	} else if (s.toUpperCase() === "DB") {
 	    return 9;
 	}
     },
@@ -83,7 +84,7 @@ function reloadTable(data) {
 function refresh() {
     var display = $("#display").val();
     var frmt = "ajax";
-    if (display == "team") {
+    if (display === "team") {
         var teamLoad = $("#team").val();
   	$.post("weekbyweek", {team: teamLoad, format: frmt}, reloadTable);
     } else {
@@ -98,7 +99,7 @@ function csv(frmt="csv") {
     form.append($("<input/>", {name: "format", value: frmt}));
 
     var display = $("#display").val();
-    if (display == "team") {
+    if (display === "team") {
         form.append($("<input/>", {name: "team", value: $("#team").val()}));
     } else {
         form.append($("<input/>", {name: "pos", value: $("#pos").val()}));

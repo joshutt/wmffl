@@ -1,8 +1,11 @@
 <?php
+/**
+ * @var $entityManager EntityManager
+ */
 require 'article/articleUtils.php';
 
 $numArt = 4;
-$article = getArticles($numArt);
+$article = getArticles($entityManager, $numArt);
 //print_r($article);
 //$article->fetch();
 ?>

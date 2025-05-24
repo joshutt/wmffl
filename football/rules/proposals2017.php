@@ -2,7 +2,7 @@
 session_start();
 $title = "WMFFL Rule Proposals";
 
-$cssList = array("rules.css");
+$cssList = array("/base/css/rules.css");
 include "base/menu.php"; 
 ?>
 

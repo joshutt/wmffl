@@ -33,7 +33,7 @@ while ($row = mysqli_fetch_array($results)) {
 
 $weekLabel = $weekList[$thisWeek - 1][1];
 $title = 'Current Scores';
-$cssList = array('score.css');
+$cssList = array('/base/css/score.css');
 include 'base/menu.php';
 ?>
 

@@ -2,7 +2,7 @@
 namespace WMFFL\orm;
 
 use Doctrine\ORM\Mapping as ORM;
-use WMFFL\enum\YNEnumType;
+//use WMFFL\enum\YNEnumType;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'user')]

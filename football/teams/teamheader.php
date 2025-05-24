@@ -56,7 +56,7 @@ while (list($newSeason) = mysqli_fetch_array($results)) {
     $champyear[] = $newSeason;
 }
 
-$cssList = array('/stats/stats.css', '/base/css/team.css');
+$cssList = array('/base/css/stats.css', '/base/css/team.css');
 $javascriptList = array('//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js', '/base/vendor/js/jquery.tablesorter.min.js', '/base/js/team.js');
 include 'base/menu.php';
 ?>

@@ -166,8 +166,8 @@ if (isset($_REQUEST['format'])) {
 // Display output
 if ($format == 'html' || !supportedFormat($format)) {
     $title = 'Week By Week';
-    $javascriptList = array('//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js', '/base/vendor/js/jquery.tablesorter.min.js', 'week.js');
-    $cssList = array('week.css', 'stats.css');
+    $javascriptList = array('//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js', '/base/vendor/js/jquery.tablesorter.min.js', '/base/js/week.js');
+    $cssList = array('/base/css/week.css', '/base/css/stats.css');
     include_once 'base/menu.php';
     ?>
     <h1 align="center"><?= $title ?></h1>
