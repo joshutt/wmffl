@@ -1,10 +1,8 @@
 <?php
 
-$supportedFormats = array('html', 'csv', 'json', 'ajax');
-
 function supportedFormat($format): bool
 {
-    global $supportedFormats;
+    $supportedFormats = array('html', 'csv', 'json', 'ajax');
     return in_array($format, $supportedFormats);
 }
 

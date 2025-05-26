@@ -1,4 +1,10 @@
 <?php
+/**
+ * @var $currentWeek int
+ * @var $currentSeason int
+ * @var $conn mysqli
+ */
+
 require_once 'utils/connect.php';
 include 'utils/reportUtils.php';
 include_once 'utils/teamList.php';
@@ -97,7 +103,7 @@ if (isset($_POST['firstsort'])) {
 if (isset($firstSort) && $firstSort != 'none') {
     $sql .= "ORDER BY $firstSort ";
     $secondSort = $conn->real_escape_string($_POST['secondsort']);
-    if (isset($secondSort) && $secondSort != 'none') {
+    if ($secondSort != 'none') {
         $sql .= ", $secondSort ";
     }
 }
@@ -106,7 +112,7 @@ if (isset($firstSort) && $firstSort != 'none') {
 
 //print "Last Name,First Name,Pos,NFL,Week,Pts\n";
 $newHold = array();
-$results = mysqli_query($conn, $sql) or die('There was an error in the query: ' . mysqli_error());
+$results = mysqli_query($conn, $sql) or die('There was an error in the query: ' . mysqli_error($conn));
 while ($playList = mysqli_fetch_array($results)) {
     //print $playList[0].",".$playList[1].",".$playList[2].",";
     //print $playList[3].",".$playList[4].",".$playList[5];
@@ -118,7 +124,7 @@ while ($playList = mysqli_fetch_array($results)) {
     $newHold[$id] = array($playList['name'], $playList['team'], $playList['bye'], $playList['ffteam'], $numGames, $playList['pts'], $ppg);
 
     foreach ($posMap[$pos] as $pset) {
-        array_push($newHold[$id], $playList["sum($pset)"]);
+        $newHold[$id][] = $playList["sum($pset)"];
     }
 
 }
