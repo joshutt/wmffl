@@ -156,10 +156,10 @@ for ($i = 0; $i<2; $i++) {
     }
 
     $printString[$i] .= "<tr><td class=\"c1buffer\"></td></tr>";
-    $printString[$i] .= "<tr><td class=\"c1 c1pts\">Offensive Points</td><td class=\"c2 c2pts\">{$offPoints[$i]}</tr>";
-    $printString[$i] .= "<tr><td class=\"c1 c1pts\">Defensive Points</td><td class=\"c2 c2pts\">{$defPoints[$i]}</tr>";
+    $printString[$i] .= "<tr><td class=\"c1 c1pts\">Offensive Points</td><td class=\"c2 c2pts\">$offPoints[$i]</tr>";
+    $printString[$i] .= "<tr><td class=\"c1 c1pts\">Defensive Points</td><td class=\"c2 c2pts\">$defPoints[$i]</tr>";
     if ($penalty[$i] > 0) {
-        $printString[$i] .= "<tr><td class=\"c1 c1pts\">Penalties</td><td class=\"c2 c2pts\">-{$penalty[$i]}</tr>";
+        $printString[$i] .= "<tr><td class=\"c1 c1pts\">Penalties</td><td class=\"c2 c2pts\">-$penalty[$i]</tr>";
     }
     $hrRemain = floor($timeRemain / 60);
     $secRemain = $timeRemain % 60;
