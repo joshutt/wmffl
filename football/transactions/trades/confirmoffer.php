@@ -1,47 +1,53 @@
-<?
-require_once "utils/start.php";
+<?php
+/**
+ * @var $isin boolean
+ * @var $conn mysqli
+ * @var $teamnum int
+ */
+require_once 'utils/start.php';
 if (!$isin) {
-    header("Location: tradescreen.php");
+    header('Location: tradescreen.php');
     exit;
 }
 
 //$teamid = 2;
-require_once "loadTrades.inc.php";
+require_once 'loadTrades.inc.php';
 
-function buildObjectArray($they) {
+function buildObjectArray(mysqli $conn, $they): array
+{
     $theyItems = array();
     foreach ($they as $value) {
-        if (substr($value, 0, 4) == "play") {
-            array_push($theyItems, loadPlayer(substr($value, 4)));
-        } else if (substr($value, 0, 4) == "pick") {
+        if (str_starts_with($value, 'play')) {
+            $theyItems[] = loadPlayer($conn, substr($value, 4));
+        } else if (str_starts_with($value, 'pick')) {
             $newPick = new Pick(substr($value, 4, 4), substr($value, 8, 2), 0);
-            array_push($theyItems, $newPick);
-        } else if (substr($value, 0, 3) == "pts") {
+            $theyItems[] = $newPick;
+        } else if (str_starts_with($value, 'pts')) {
             $newPts = new Points(substr($value, 7, 2), substr($value, 3, 4));
-            array_push($theyItems, $newPts);
+            $theyItems[] = $newPts;
         }
     }
     return $theyItems;
 }
 
-$offerid = $_GET["offerid"];
+$offerid = $_GET['offerid'];
 
-$they = $_SESSION["they"];
+$they = $_SESSION['they'];
 //print_r($they);
-$you = $_SESSION["you"];
-$theyItems = buildObjectArray($they);
-$youItems = buildObjectArray($you);
+$you = $_SESSION['you'];
+$theyItems = buildObjectArray($conn, $they);
+$youItems = buildObjectArray($conn, $you);
 
-$teamto = $_SESSION["teamto"];
-$otherTeam = loadTeam($teamto);
-$myTeam = loadTeam($teamnum);
+$teamto = $_SESSION['teamto'];
+$otherTeam = loadTeam($conn, $teamto);
+$myTeam = loadTeam($conn, $teamnum);
 
-$title = "Trades";
+$title = 'Trades';
 ?>
 
-<? 
+<?php
 //$teamid = 0;
-include "base/menu.php"; 
+include 'base/menu.php';
 ?>
 
 <H1 ALIGN=Center>Confirm Offer</H1>
@@ -59,15 +65,15 @@ If no action is taken for seven days the offer will automaticlly become void.
 
 <H3 ALIGN=Center>Current Offer</H3>
 
-<P><B><?print $myTeam->getName();?></B> offer <? print printList($youItems);?><BR>
-to the <B><?print $otherTeam->getName();?></B> in exchange for <? print printList($theyItems); ?>
-<?
+<P><B><?php print $myTeam->getName();?></B> offer <?php print printList($youItems);?><BR>
+to the <B><?php print $otherTeam->getName();?></B> in exchange for <?php print printList($theyItems); ?>
+    <?php
 ?>
 </P>
 
 <FORM ACTION="edittrade.php" METHOD="POST">
 <CENTER><INPUT TYPE="submit" NAME="edit" VALUE="Edit Offer">
-<?
+    <?php
 foreach ($they as $value) {
     print "<input type=\"hidden\" name=\"they[]\" value=\"$value\">";
 }
@@ -75,17 +81,17 @@ foreach ($you as $value) {
     print "<input type=\"hidden\" name=\"you[]\" value=\"$value\">";
 }
 ?>
-<INPUT TYPE="hidden" NAME="offerid" VALUE="<? print $offerid;?>">
-<input type="hidden" name="teamto" value="<? print $teamto; ?>"/>
+<INPUT TYPE="hidden" NAME="offerid" VALUE="<?php print $offerid;?>">
+<input type="hidden" name="teamto" value="<?php print $teamto; ?>"/>
 </CENTER>
 </FORM>
 
 <FORM ACTION="processconfirm.php" METHOD="POST">
 Comments:<BR>
 <CENTER>
-<input type="hidden" name="offerid" value="<? print $offerid;?>">
-<input type="hidden" name="teamto" value="<? print $teamto; ?>"/>
-<?
+<input type="hidden" name="offerid" value="<?php print $offerid;?>">
+<input type="hidden" name="teamto" value="<?php print $teamto; ?>"/>
+    <?php
 foreach ($they as $value) {
     print "<input type=\"hidden\" name=\"they[]\" value=\"$value\">";
 }
@@ -104,6 +110,6 @@ foreach ($you as $value) {
 </CENTER>
 </FORM>
 
-<? include "base/footer.php"; ?>
+<?php include 'base/footer.php'; ?>
 </BODY>
 </HTML>

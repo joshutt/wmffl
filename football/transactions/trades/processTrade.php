@@ -1,102 +1,107 @@
 <?php
-require_once "utils/start.php";
-include_once "trade.class.php";
-include_once "loadTrades.inc.php";
+/**
+ * @var $isin boolean
+ * @var $conn mysqli
+ * @var $teamnum int
+ */
+require_once 'utils/start.php';
+include_once 'trade.class.php';
+include_once 'loadTrades.inc.php';
 
 if (!$isin) {
-    header("Location: tradescreen.php");
+    header('Location: tradescreen.php');
     exit;
 }
 //$teamid = 2;
-$tradeID = $_POST["offerid"];
-$action = $_POST["action"];
+$tradeID = $_POST['offerid'];
+$action = $_POST['action'];
 
 #print $tradeID;
 #print $action;
 
-if ($action == "Amend" || $action == "Counter") {
-    include "edittrade.php";
+if ($action == 'Amend' || $action == 'Counter') {
+    include 'edittrade.php';
     exit(0);
 }
 
-$question = "";
+$question = '';
 switch($action) {
 	case 'Accept':
-		$question = "Are you sure you would like to accept this offer?";
+		$question = 'Are you sure you would like to accept this offer?';
 		break;
 	case 'Reject':
-		$question = "Are you sure you would like to reject this offer?";
+		$question = 'Are you sure you would like to reject this offer?';
 		break;
 	case 'Withdraw':
-		$question = "Are you sure you would like to withdraw this offer?";
+		$question = 'Are you sure you would like to withdraw this offer?';
 		break;
 }
 
-$thisTeam = loadTeam($teamnum);
-$trade = loadTradeByID($tradeID, $thisTeam);
+$thisTeam = loadTeam($conn, $teamnum);
+$trade = loadTradeByID($conn, $tradeID, $thisTeam);
 
-$thisTeamString = "<B>".$thisTeam->getName()."</B> receive ";
+$thisTeamString = '<B>' .$thisTeam->getName(). '</B> receive ';
 $totalCount = sizeof($trade->getPlayersTo()) + sizeof($trade->getPicksTo()) + sizeof($trade->getPointsTo());
 $count = 0;
 foreach ($trade->getPlayersTo() as $player) {
     $count++;
     if ($count == $totalCount && $count != 1) {
-        $thisTeamString .= " and ";
+        $thisTeamString .= ' and ';
     } else if ($count > 1) {
-        $thisTeamString .= ", ";
+        $thisTeamString .= ', ';
     }
-    $thisTeamString .= $player->getName()." (".$player->getPos()."-".$player->getNFLTeam().") ";
+    $thisTeamString .= $player->getName(). ' (' .$player->getPos(). '-' .$player->getNFLTeam(). ') ';
 }
 foreach ($trade->getPicksTo() as $pick) {
     $count++;
     if ($count == $totalCount && $count != 1) {
-        $thisTeamString .= " and ";
+        $thisTeamString .= ' and ';
     } else if ($count > 1) {
-        $thisTeamString .= ", ";
+        $thisTeamString .= ', ';
     }
-    $thisTeamString .= "a ".$pick->getRound().OrdinalEnding($pick->getRound());
-    $thisTeamString .= " round pick in ".$pick->getSeason();
+    $thisTeamString .= 'a ' .$pick->getRound().OrdinalEnding($pick->getRound());
+    $thisTeamString .= ' round pick in ' .$pick->getSeason();
 }
 foreach ($trade->getPointsTo() as $point) {
     $count++;
-    if ($count == $totalCount && $count != $totalCount) {
-        $thisTeamString .= " and ";
+    if ($count == $totalCount && $count != 1) {
+        $thisTeamString .= ' and ';
     } else if ($count > 1) {
-        $thisTeamString .= ", ";
+        $thisTeamString .= ', ';
     }
-    $thisTeamString .= $point->getPts()." Transaction Points in ".$point->getSeason();
+    $thisTeamString .= $point->getPts(). ' Transaction Points in ' .$point->getSeason();
 }
 $otherTeam = $trade->getOtherTeam();
-$otherTeamString = "<B>".$otherTeam->getName()."</B> receive ";
+$otherTeamString = '<B>' .$otherTeam->getName(). '</B> receive ';
 $totalCount = sizeof($trade->getPlayersFrom()) + sizeof($trade->getPicksFrom()) + sizeof($trade->getPointsFrom());
 $count = 0;
 foreach ($trade->getPlayersFrom() as $player) {
     $count++;
     if ($count == $totalCount && $count != 1) {
-        $otherTeamString .= " and ";
+        $otherTeamString .= ' and ';
     } else if ($count > 1) {
-        $otherTeamString .= ", ";
+        $otherTeamString .= ', ';
     }
-    $otherTeamString .= $player->getName()." (".$player->getPos()."-".$player->getNFLTeam().") ";
+    $otherTeamString .= $player->getName(). ' (' .$player->getPos(). '-' .$player->getNFLTeam(). ') ';
 }
 foreach ($trade->getPicksFrom() as $pick) {
     $count++;
     if ($count == $totalCount && $count != 1) {
-        $otherTeamString .= " and ";
+        $otherTeamString .= ' and ';
     } else if ($count > 1) {
-        $otherTeamString .= ", ";
+        $otherTeamString .= ', ';
     }
-    $otherTeamString .= "a ".$pick->getRound().OrdinalEnding($pick->getRound());
-    $otherTeamString .= " round pick in ".$pick->getSeason();
+    $otherTeamString .= 'a ' .$pick->getRound().OrdinalEnding($pick->getRound());
+    $otherTeamString .= ' round pick in ' .$pick->getSeason();
 }
 foreach ($trade->getPointsFrom() as $point) {
     $count++;
     if ($count == $totalCount && $count != 1) {
-        $otherTeamString .= " and ";
+        $otherTeamString .= ' and ';
     } else if ($count > 1) {
-        $otherTeamString .= ", ";
+        $otherTeamString .= ', ';
     }
-    $otherTeamString .= $point->getPts()." Transaction Points in ".$point->getSeason();
+    $otherTeamString .= $point->getPts(). ' Transaction Points in ' .$point->getSeason();
 }
 ?>
 
@@ -105,11 +110,11 @@ foreach ($trade->getPointsFrom() as $point) {
 <TITLE>Trades</TITLE>
 </HEAD>
 
-<? 
+<?php
 //$teamid = 0;
-include "base/menu.php"; ?>
+include 'base/menu.php'; ?>
 
-<H1 ALIGN=Center><? print $action;?> Trade Offer</H1>
+<H1 ALIGN=Center><?= $action;?> Trade Offer</H1>
 <HR>
 
 <CENTER>
@@ -132,6 +137,6 @@ include "base/menu.php"; ?>
 </FORM>
 </CENTER>
 
-<? include "base/footer.php"; ?>
+<?php include 'base/footer.php'; ?>
 </BODY>
 </HTML>

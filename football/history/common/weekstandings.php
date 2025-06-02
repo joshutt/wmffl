@@ -1,4 +1,10 @@
 <?php
+/**
+ * @var $thisSeason int
+ * @var $thisWeek int
+ * @var $conn myslqi
+ */
+
 //include 'lib/TEAMID.php';
 //use lib\Team;
 use WMFFL\Team;
@@ -52,17 +58,8 @@ $results = mysqli_query($conn, $query) or die('Error: ' . mysqli_error($conn));
 $count = 0;
 $teamArray = array();
 while ($row = mysqli_fetch_array($results)) {
-//    print '<pre>';
-//    print_r($row);
-//    print ' ** TEAM: '.$row['team'].' **';
-//    print ' ** DIVISION: '.$row['division'].' **';
-//    print ' ** TEAMID: '.$row['teamid'].' **';
-//    print '</pre>';
     $t = new Team($row['team'], $row['division'], $row['teamid']);
-//    print '*** TEAM ***';
-//    print '<pre>';
-//    print_r($t);
-//    print '</pre>';
+
 
     $rec = array($row['win'], $row['lose'], $row['tie']);
     $div = array($row['divwin'], $row['divlose'], $row['divtie']);

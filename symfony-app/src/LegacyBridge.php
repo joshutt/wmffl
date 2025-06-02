@@ -3,6 +3,7 @@
 // src/LegacyBridge.php
 namespace App;
 
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,7 +19,9 @@ class LegacyBridge
      *
      * If your mapping is complicated, you may want to write unit tests
      * to verify your logic, hence this is public static.
-     * @throws \Exception
+     * @param Request $request
+     * @return string
+     * @throws Exception
      */
     public static function getLegacyScript(Request $request): string
     {
@@ -95,7 +98,7 @@ class LegacyBridge
             chdir(dirname($path));
             return $path;
         } else {
-            throw new \Exception("Unhandled legacy mapping for $requestPathInfo");
+            throw new Exception("Unhandled legacy mapping for $requestPathInfo");
         }
 
 
@@ -115,7 +118,7 @@ class LegacyBridge
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public static function handleRequest(Request $request, Response $response, string $publicDirectory): void
     {

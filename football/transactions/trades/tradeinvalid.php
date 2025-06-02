@@ -9,7 +9,7 @@ if (!$isin) {
 }
 
 $offerid = $_GET["offerid"];
-rejectTrade($offerid);
+rejectTrade($conn, $offerid);
 ?>
 
 <html>

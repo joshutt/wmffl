@@ -47,7 +47,7 @@ foreach ($you as $ch) {
     if (substr($ch, 0, 4) == "play") {
         $trPlayID = substr($ch, 4);
   //      print "$trPlayID<br/>";
-        array_push($trFrPlayArr, loadPlayer($trPlayID));
+        array_push($trFrPlayArr, loadPlayer($conn, $trPlayID));
     } else if (substr($ch, 0, 4) == "pick") {
         $trYear = substr($ch, 4, 4);
         $trRnd = substr($ch, 8);
@@ -77,7 +77,7 @@ $trToPickArr = array();
 foreach ($they as $ch) {
     if (substr($ch, 0, 4) == "play") {
         $trPlayID = substr($ch, 4);
-        array_push($trToPlayArr, loadPlayer($trPlayID));
+        array_push($trToPlayArr, loadPlayer($conn, $trPlayID));
     } else if (substr($ch, 0, 4) == "pick") {
         $trYear = substr($ch, 4, 4);
         $trRnd = substr($ch, 8);

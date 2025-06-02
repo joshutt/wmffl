@@ -1,9 +1,11 @@
-<?
+<?php
+/**
+ * @var $conn
+ */
 require_once 'utils/start.php';
 
-function trade($teamid, $date)
+function trade($conn, $teamid, $date): void
 {
-    global $conn;
     $tradequery = 'select t1.tradegroup, t1.date, tm1.name as TeamFrom, ';
     $tradequery .= 'p.lastname, p.firstname, p.pos, p.team, t1.other ';
     $tradequery .= 'from trade t1 ';
@@ -21,7 +23,9 @@ function trade($teamid, $date)
     $oldgroup = 0;
     //print mysqli_num_rows($results);
     //print $tradequery;
-    while (list($group, $date, $TeamFrom, $lastname, $firstname, $position, $nflteam, $other) = mysqli_fetch_row($results)) {
+    $firstteam = null;
+    $firstplayer = null;
+    while (list($group, $tdate, $TeamFrom, $lastname, $firstname, $position, $nflteam, $other) = mysqli_fetch_row($results)) {
         if ($oldgroup != $group) {
             print "<li style='white-space: normal;'>Traded ";
             $oldgroup = $group;
@@ -99,6 +103,8 @@ WHERE m.season=$theyear
                 $olddate = '';
                 $oldteam = '';
                 $oldmethod = '';
+                $tradeonce = null;
+                $firstplayer = null;
                 while (list($date, $teamname, $method, $player, $position, $nflteam, $teamid, $rawdate) = mysqli_fetch_row($results)) {
                     $change = FALSE;
                     if ($olddate != $date) {
@@ -130,7 +136,7 @@ WHERE m.season=$theyear
                                 break;
                             case 'Trade':
                                 if ($tradeonce) continue 2;
-                                trade($teamid, $rawdate);
+                                trade($conn, $teamid, $rawdate);
                                 $change = TRUE;
                                 $oldmethod = '';
                                 $tradeonce = TRUE;

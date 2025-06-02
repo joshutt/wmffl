@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var $conn mysqli
+ * @var $currentSeason int
+ */
 require_once 'utils/start.php';
 
 $sql = <<<EOD
@@ -15,7 +19,7 @@ EOD;
 //print $sql;
 
 // Output the players role
-function printPlayer($player, $count, $hlSeason)
+function printPlayer($player, $count, $hlSeason): void
 {
     if ($player['season'] == $hlSeason) {
         $class = 'currentSeason';
@@ -28,10 +32,8 @@ function printPlayer($player, $count, $hlSeason)
     print "<td>{$player['pts']}</td></tr>";
 }
 
-function printRankList($sql, $pos, $hlSeason = 2016, $extraList = array())
+function printRankList(mysqli $conn, string $sql, string $pos, int $hlSeason = 2016, $extraList = array()): void
 {
-
-    global $conn;
     $result = mysqli_query($conn, sprintf($sql, $pos)) or die('Unable to run query: ' . mysqli_error($conn));
 
     $posArray = array();
@@ -134,16 +136,16 @@ include 'base/menu.php';
 <h1 class="full"><?= $title ?></h1>
 
 <div class="row">
-    <div class="card"><?php printRankList($sql, 'HC', $currentSeason); ?></div>
-    <div class="card"><?php printRankList($sql, 'QB', $currentSeason, $qbList); ?></div>
-    <div class="card"><?php printRankList($sql, 'RB', $currentSeason, $rbList); ?></div>
-    <div class="card"><?php printRankList($sql, 'WR', $currentSeason, $wrList); ?></div>
-    <div class="card"><?php printRankList($sql, 'TE', $currentSeason, $teList); ?></div>
-    <div class="card"><?php printRankList($sql, 'K', $currentSeason, $kList); ?></div>
-    <div class="card"><?php printRankList($sql, 'OL', $currentSeason, $olList); ?></div>
-    <div class="card"><?php printRankList($sql, 'DL', $currentSeason, $dlList); ?></div>
-    <div class="card"><?php printRankList($sql, 'LB', $currentSeason, $lbList); ?></div>
-    <div class="card"><?php printRankList($sql, 'DB', $currentSeason, $dbList); ?></div>
+    <div class="card"><?php printRankList($conn, $sql, 'HC', $currentSeason); ?></div>
+    <div class="card"><?php printRankList($conn, $sql, 'QB', $currentSeason, $qbList); ?></div>
+    <div class="card"><?php printRankList($conn, $sql, 'RB', $currentSeason, $rbList); ?></div>
+    <div class="card"><?php printRankList($conn, $sql, 'WR', $currentSeason, $wrList); ?></div>
+    <div class="card"><?php printRankList($conn, $sql, 'TE', $currentSeason, $teList); ?></div>
+    <div class="card"><?php printRankList($conn, $sql, 'K', $currentSeason, $kList); ?></div>
+    <div class="card"><?php printRankList($conn, $sql, 'OL', $currentSeason, $olList); ?></div>
+    <div class="card"><?php printRankList($conn, $sql, 'DL', $currentSeason, $dlList); ?></div>
+    <div class="card"><?php printRankList($conn, $sql, 'LB', $currentSeason, $lbList); ?></div>
+    <div class="card"><?php printRankList($conn, $sql, 'DB', $currentSeason, $dbList); ?></div>
 </div>
 
 <?php include 'base/footer.php'; ?>
