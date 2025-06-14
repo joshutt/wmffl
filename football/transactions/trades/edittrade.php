@@ -66,11 +66,9 @@ if (isset($_POST['they']) && isset($_POST['you'])) {
 
 if (!$ambigous && isset($_POST['confirm'])) {
     //session_start();
-    //$_SESSION["ab"] = "AlphaBeta";
-    $_SESSION['they'] = $_POST['they'];
-    //print_r($_SESSION["they"]);
-    $_SESSION['you'] = $_POST['you'];
-    $_SESSION['teamto'] = $_POST['teamto'];
+    $_SESSION['they'] = $_POST['they'] ?? [];
+    $_SESSION['you'] = $_POST['you'] ?? [];
+    $_SESSION['teamto'] = $_POST['teamto'] ?? null;
     $offerid = $_POST['offerid'];
 	//header("Location: ambigouspick.php?offerid=$offerid");
 	header("Location: confirmoffer.php?offerid=$offerid");
