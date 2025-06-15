@@ -17,14 +17,24 @@ $( document ).ready(function() {
 */
 
     // Show the correct selected options
-    const displaySelector = $('#display option:selected');
+    let displaySelector = $('#display option:selected');
     $( '#' + displaySelector.val() ).show();
     let current = '#' + displaySelector.val();
 
     $('#display').change(function() {
-        $( '#' + displaySelector.val() ).show();
+        let changeVal = '#' + $('#display option:selected').val();
+        $( changeVal ).show();
         $( current ).hide();
-        current = '#' +displaySelector.val();
+        current = changeVal;
+        refresh();
+    });
+
+    $('#team').change(function () {
+        refresh();
+    });
+
+    $('#pos').change(function () {
+        refresh();
     });
 });
 
@@ -86,10 +96,10 @@ function refresh() {
     var frmt = "ajax";
     if (display === "team") {
         var teamLoad = $("#team").val();
-  	$.post("weekbyweek", {team: teamLoad, format: frmt}, reloadTable);
+        $.post("weekbyweek", {team: teamLoad, format: frmt}, reloadTable);
     } else {
         var pos = $("#pos").val();
-  	$.post("weekbyweek", {pos: pos, format: frmt}, reloadTable);
+        $.post("weekbyweek", {pos: pos, format: frmt}, reloadTable);
     }  
 }
 
