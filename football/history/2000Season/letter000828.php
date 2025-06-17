@@ -1,0 +1,51 @@
+<HTML>
+<HEAD>
+<TITLE>Letter to the League - August 28, 2000</TITLE>
+</HEAD>
+
+<?php include 'base/menu.php'; ?>
+
+<H1 ALIGN=Center>Letter from the Commissioner</H1>
+<H5 ALIGN=Center><I>August 28, 2000</I></H5>
+<HR size = "1">
+
+<P>A couple of things... </P>
+
+<P>First, the team-by-team rosters are finally up on the web page.  They are
+updated through right . . . now.  The transaction list is updated as well.
+Remember that everyone has 4 pre-season transaction that will disappear
+Sunday at 12:00 if unused.  Also, remember that transaction points are used
+when you pick a player up, not when you drop them.</P>
+
+<P>
+Remember activations for week 1 are due by noon on Sunday.  The full
+schedule can been seen on the web page. </P>
+
+<P>
+Once again this season, I strongly urge everyone to make use of the FLM
+software's Owners Assistant.  It lets you get the full stats for every
+player, see who is available, etc.  More information is available on the web
+page.  The league file is also up there available for downloading.  This
+year, you will need to unzip the league file.  Also, if you use the
+software, make sure that you have the Owner's Version, otherwise it will
+expire after week 6.</P>
+
+<P>
+Now for a brief moment for public humilation.  The following people still
+own entry fees to the league, as usual the fee will be increased $5 each
+month until they pay and they will be inelgible for the playoffs if they
+haven't payed.  You can pay via PayPal to ************** or you can mail me
+a check at <BLOCKQUOTE>&lt;address omitted from web page&gt;</BLOCKQUOTE>
+The people are: Warren owes $56, Keppy owes $47.47, Ira owes $56 and Bryan
+Jones owes $56.</P>
+
+
+<P>Now for more public humilation.  Bryan Jones still doesn't have a head coach
+or a team name.  Everyone should laugh at him and mock him until he does.
+Until then his team will informally be called the Losers Without a Name. </P>
+
+<P>
+<B>Josh <BR>
+Commissioner WMFFL</B></P>
+
+<?php include 'base/footer.php'; ?>

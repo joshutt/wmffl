@@ -8,7 +8,7 @@ include "base/menu.php";
 
 <P>In an effort to clean up the messy and unorganized rule V, proposal
 2002.6 was offered up.  If passed this is what the new rule V would
-look like.  <A HREF="proposals2002.shtml">Return to proposals</A></P>
+look like.  <A HREF="proposals2002.php">Return to proposals</A></P>
 
 <P><BLOCKQUOTE><I>
 <OL TYPE="I"><LI VALUE="5">Scoring

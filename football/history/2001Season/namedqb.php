@@ -1,0 +1,47 @@
+<HTML>
+<HEAD>
+<TITLE>2002 Named Quarterbacks</TITLE>
+</HEAD>
+
+<?php include 'base/menu.php'; ?>
+
+<H1 ALIGN=Center>Named Quarterbacks</H1>
+<H5 ALIGN=Center>Last Updated 1/24/2002</H5>
+<HR size = "1">
+
+<P>
+As we convert from team Quarterbacks to individual Quarterbacks everyone is
+expected to pick a quarterback from each team whose QB they have to make the 
+individual QB that they have on roster.  Below you will find a list for each
+team with the QB unit that they currently have and either the individual QB
+that they picked or the default one, which will take that position if the
+owner fails to change it.  So if you don't like the individual QB that you
+have, change it before it is too late.  The deadline to change is the Super
+Bowl, so February 3, 2002.</P>
+
+<P>
+<TABLE WIDTH=100%>
+<TR><TH>Team</TH><TH>QB Unit</TH><TH>Named QB</TH><TH>Default</TH></TR>
+<TR><TD>Barbarians</TD><TD>NY Giants</TD><TD></TD><TD>Kerry Collins</TD></TR>
+<TR><TD></TD><TD>Washington</TD><TD></TD><TD>Tony Banks</TD></TR>
+<TR><TD>Crusaders</TD><TD>St. Louis</TD><TD>Kurt Warner (Duh!)</TD><TD></TD></TR>
+<TR><TD>Freezer Burn</TD><TD>Philadelphia</TD><TD>Donvan McNabb</TD><TD></TD></TR>
+<TR><TD>Green Wave</TD><TD>Chicago</TD><TD>Jim Miller</TD><TD></TD></TR>
+<TR><TD></TD><TD>Minnesota</TD><TD>Dante Culpepper</TD><TD></TD></TR>
+<TR><TD>Hempaholics</TD><TD>Cleveland</TD><TD></TD><TD>Tim Couch</TD></TR>
+<TR><TD></TD><TD>Green Bay</TD><TD></TD><TD>Brett Favre</TD></TR>
+<TR><TD>MeggaMen</TD><TD>New England</TD><TD></TD><TD>Tom Brady</TD></TR>
+<TR><TD></TD><TD>San Francisco</TD><TD></TD><TD>Jeff Garcia</TD></TR>
+<TR><TD>Norsemen</TD><TD>Buffalo</TD><TD></TD><TD>Alex Van Pelt</TD></TR>
+<TR><TD></TD><TD>Indianapolis</TD><TD></TD><TD>Peyton Manning</TD></TR>
+<TR><TD></TD><TD>Oakland</TD><TD></TD><TD>Rich Gannon</TD></TR>
+<TR><TD>War Eagles</TD><TD>Kansas City</TD><TD>Trent Green</TD><TD></TD></TR>
+<TR><TD></TD><TD>New Orleans</TD><TD>Aaron Brooks</TD><TD></TD></TR>
+<TR><TD>Werewolves</TD><TD>Atlanta</TD><TD>Michael Vick</TD><TD></TD></TR>
+<TR><TD></TD><TD>Tennessee</TD><TD>Steve McNair</TD><TD></TD></TR>
+<TR><TD>ZEN</TD><TD>Denver</TD><TD></TD><TD>Brian Griese</TD></TR>
+<TR><TD></TD><TD>NY Jets</TD><TD></TD><TD>Vinny Testaverde</TD></TR>
+</TABLE>
+
+</P>
+<?php include 'base/footer.php'; ?>

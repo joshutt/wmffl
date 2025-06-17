@@ -1,0 +1,54 @@
+<HTML>
+<HEAD>
+<TITLE>ZEN Team Owner Retires - May 15, 2002</TITLE>
+</HEAD>
+
+<?php include 'base/menu.php'; ?>
+
+<H1 ALIGN=Center>ZEN Team Owner Retires</H1>
+<H3 ALIGN=Center>Denies World Cup Conflict</H3>
+<HR size = "1">
+
+<P><I>Saturday, May 11, 2002 (Newark, DE) - </I>
+The sordid and checkered past of the
+fantasy franchise Team ZEN comes to an end, as the team packs up the newly
+relocated training camp and calls it a victorious day.  The two-time league
+runners-up and winner of the Blue Division in 1996 will close shop after 9
+exciting seasons of participating in arguably the finest private fantasy
+league in existence.</P>
+
+<P>After denying rumors of conflict of schedule between fantasy ownership and
+World Cup addiction treatment, the owner, manager, and head cheerleader of
+the now-defunct team released the following statement:
+<BLOCKQUOTE>"...dry, with extra olives.  Oh! Hi. Yes, it is true that I am withdrawing
+Team ZEN from competition in the WMFFL.  It was a hard decision, as it has
+been an important social ritual for lo these past nine years.  Although the
+watching of (and gambling on) the World Cup of Soccer will occupy many days
+this summer, the reasons why I must withdraw have nothing to do with The
+Beautiful Game.</BLOCKQUOTE>
+<BLOCKQUOTE>
+"With the fetters associated with an increased course load and having to
+continue working fulltime, I just felt it better to end on a high note than
+to continue with detrimentally-minimal participation. I have not ruled out a
+return to franchise ownership in the future, and will remain on the mailing
+list to instigate trash-talking and point and laugh."
+</BLOCKQUOTE>
+</P>
+
+<P>
+When reminded that his "high note" is a 1-0 victory in the Toilet Bowl, the
+former owner, who made Troy Aikman a #1 pick in the franchise's first draft,
+got increasingly belligerent.  "At least we WON the Toilet Bowl.  Besides,
+it's not about that one season, it's about being part of a great fantasy
+league with a great group of friends, run by one of the smartest guys on the
+planet.  I'll miss the draft day drama, the rule bickering, and especially
+the trash talking.  I was also looking forward to celebrating the 10-year
+anniversary, and potentially more ruined #1 draft picks (hey, at least I
+didn't draft Lawrence Philips)."</P>
+
+<P>Five or 8 drink later, the owner allegedly mumbled, "you guys are the
+greatest.  Go team!" And fell over and broke his martini glass.  Thus ends
+the era of Team ZEN.</P>
+
+
+<?php include 'base/footer.php'; ?>

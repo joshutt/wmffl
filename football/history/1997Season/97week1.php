@@ -1,0 +1,187 @@
+<HTML>
+<HEAD>
+<TITLE>WMFFL 1997 Week 1 Newsletter</TITLE>
+</HEAD>
+
+<?php include 'base/menu.php'; ?>
+
+<H1 ALIGN=CENTER>1997 Season - Week 1</H1>
+<HR size = "1">
+<PRE>
+Watkins Mill Fantasy Football League Scores for WEEK #1
+=======================================================
+
+Crusaders         ( 36)  Zen               ( 31)
+Werewolves        ( 48)  Barbarians        (  8)
+Archers Who Say Ni( 30)  Iradicators       ( 60)
+Hempaholics       ( 39)  Norsemen          ( 15)
+
+
+Watkins Mill Fantasy Football League Standings after WEEK #1
+============================================================
+                    Record    Pts   Pts
+Blue Division       W  L  T   For Agnst
+---------------------------------------
+Iradicators         1  0  0    60    30
+Zen                 0  1  0    31    36
+Archers Who Say Ni  0  1  0    30    60
+Barbarians          0  1  0     8    48
+
+                    Record    Pts   Pts
+Orange Division     W  L  T   For Agnst
+---------------------------------------
+Werewolves          1  0  0    48     8
+Hempaholics         1  0  0    39    15
+Crusaders           1  0  0    36    31
+Norsemen            0  1  0    15    39
+
+
+Next Week's Fantasy Schedule
+==========================================
+  Norsemen           at Zen
+  Iradicators        at Barbarians
+  Werewolves         at Archers Who Say Ni
+  Hempaholics        at Crusaders
+
+
+This Week's Transactions
+===============================================================
+  Werewolves         Dropped MIAMI TEAM QB
+  Iradicators        Dropped GREEN BAY KICKER
+  Zen                Traded JACKSON,MICHAEL to Hempaholics
+  Hempaholics        Traded FREEMAN,ANTONIO to Zen
+  Crusaders          Traded TENNESSEE OFFENSE    to Barbarians
+  Barbarians         Traded NEW ENGLAND OFFENSE  to Crusaders
+  Iradicators        Traded SANDERS,DEION to Zen
+  Zen                Traded PHILADELPHIA KICKER  to Iradicators
+  Crusaders          Traded MUHAMMAD,MUHSIN to Barbarians
+  Crusaders          Traded MCCARDELL,KEENAN to Barbarians
+  Barbarians         Traded REED,JAKE to Crusaders
+  Zen                Dropped VERMEIL,DICK
+  Hempaholics        Dropped ROSS,BOBBY
+  Hempaholics        Picked Up COUGHLIN,TOM
+  Zen                Picked Up CAPERS,DOM
+  Zen                Traded CHMURA,MARK to Hempaholics
+  Hempaholics        Traded JONES,BRENT to Zen
+  Barbarians         Dropped DOLEMAN,CHRIS
+  Barbarians         Dropped SAN FRAN OFFENSE
+  Barbarians         Picked Up PHILADELPHIA OFFENSE
+  Werewolves         Dropped BELSER,JASON
+
+
+Watkins Mill Fantasy Football League Top Point Scorers by Position
+(1997 Week #1)
+                        Fantasy            Str
+   Player               Team               Pts
+==============================================
+QB NEW ENGLAND TEAM QB  Werewolves          30
+RB George,Eddie         Hempaholics         23
+RB Allen,Terry          Crusaders           20
+WR Brown,Tim            Zen                 31
+WR Irvin,Michael        Iradicators         24
+TE Coates,Ben           Zen                  6
+TE Walls,Wesley         Werewolves           6
+ K DENVER KICKER        Norsemen            15
+OL WASHINGTON OFFENSE   Werewolves          13
+DL Swann,Eric           Iradicators          9
+DL Randle,John          Hempaholics          7
+LB Brady,Jeff           Barbarians          18
+LB Kirkland,Levon       Werewolves           7
+LB Barrow,Micheal       Zen                  7
+LB Phifer,Roman         Crusaders            7
+DB Turner,Eric          Archers Who Say Ni   9
+DB Harrison,Rodney      Crusaders            9
+
+
+Watkins Mill Fantasy Football League Scoring Breakdown for WEEK #1
+==================================================================
+Zen                             Crusaders
+===========================     ===========================
+HC: CAPERS,DOM            0     HC: HOLMGREN,MIKE         4
+QB: CINCINNATI TEAM QB    9     QB: BALTIMORE TEAM QB    17
+RB: DAVIS,TROY            0     RB: ALLEN,TERRY          20
+RB: MURRELL,ADRIAN        7     RB: WARREN,CHRIS          0
+WR: BROWN,TIM            31     WR: BRUCE,ISAAC           0
+WR: FREEMAN,ANTONIO       0     WR: PICKENS,CARL         11
+TE: COATES,BEN            6     TE: DUDLEY,RICKEY         0
+K : DETROIT KICKER        4     K : NEW ENGLAND KICKER   11
+OL: DENVER OFFENSE        7     OL: PITTSBURGH OFFENSE    0
+DL: DOUGLAS,HUGH          2     DL: MARTIN,WAYNE          5
+DL: MAMULA,MIKE           2     DL: MCCRARY,MICHAEL       0
+LB: BARROW,MICHEAL        7     LB: MILLS,SAM             6
+LB: SPIELMAN,CHRIS        5     LB: PHIFER,ROMAN          7
+DB: LANGHAM,ANTONIO       4     DB: HARRISON,RODNEY       9
+DB: MILLOY,LAWYER         7     DB: SEHORN,JASON          6
+---------------------------     ---------------------------
+       Starter Points =  31            Starter Points =  36
+     Offensive Points =  64          Offensive Points =  63
+     Defensive Points =  27          Defensive Points =  33
+
+Barbarians                      Werewolves
+===========================     ===========================
+HC: SCHOTTENHEIMER,MARTY  0     HC: MARIUCCI,STEVE        0
+QB: SAN FRAN TEAM QB     -2     QB: NEW ENGLAND TEAM QB  30
+RB: JOHNSON,ANTHONY       8     RB: ANDERSON,JAMAL        6
+RB: SALAAM,RASHAAN        0     RB: SANDERS,BARRY         0
+WR: CARTER,CRIS          22     WR: FRYAR,IRVING          0
+WR: MCCARDELL,KEENAN      4     WR: SMITH,JIMMY          18
+TE: SHARPE,SHANNON        0     TE: WALLS,WESLEY          6
+K : SEATTLE KICKER        3     K : SAN FRAN KICKER       7
+OL: PHILADELPHIA OFFENSE-11     OL: WASHINGTON OFFENSE   13
+DL: HARMON,ANDY           2     DL: KENNEDY,CORTEZ        1
+DL: WILKINSON,DAN         2     DL: YOUNG,BRYANT          4
+LB: BRADY,JEFF           18     LB: KIRKLAND,LEVON        7
+LB: HARVEY,KEN            3     LB: THOMAS,ZACH           0
+DB: WOODSON,ROD           4     DB: BLACKMON,ROBERT       1
+DB: WOOLFORD,DONNELL      3     DB: GREEN,VICTOR          3
+---------------------------     ---------------------------
+       Starter Points =   8            Starter Points =  48
+     Offensive Points =  24          Offensive Points =  80
+     Defensive Points =  32          Defensive Points =  16
+
+Iradicators                     Archers Who Say Ni
+===========================     ===========================
+HC: JOHNSON,JIMMY         3     HC: LEVY,MARV             0
+QB: JACKSONVILLE TEAM QB 23     QB: OAKLAND TEAM QB      22
+RB: SMITH,EMMITT          3     RB: KIRBY,TERRY           0
+RB: THOMAS,THURMAN        6     RB: WATTERS,RICKY        13
+WR: GLENN,TERRY           7     WR: ALEXANDER,DERRICK     0
+WR: IRVIN,MICHAEL        24     WR: MOORE,HERMAN         20
+TE: ASHER,JAMIE           0     TE: DILGER,KEN            0
+K : PHILADELPHIA KICKER   6     K : CAROLINA KICKER       6
+OL: CAROLINA OFFENSE      8     OL: SEATTLE OFFENSE       2
+DL: MCGLOCKTON,CHESTER    2     DL: BENNETT,TONY          1
+DL: SWANN,ERIC            9     DL: WHITE,REGGIE          4
+LB: NORTON,KEN            4     LB: JONES,ROBERT          2
+LB: TUGGLE,JESSIE         4     LB: STEPHENS,ROD          0
+DB: DISHMAN,CRIS          7     DB: RICHARD,STANLEY       4
+DB: WILLIAMS,AENEAS       7     DB: TURNER,ERIC           9
+---------------------------     ---------------------------
+       Starter Points =  60            Starter Points =  30
+     Offensive Points =  80          Offensive Points =  63
+     Defensive Points =  33          Defensive Points =  20
+
+Norsemen                        Hempaholics
+===========================     ===========================
+HC: COWHER,BILL           0     HC: COUGHLIN,TOM          3
+QB: GREEN BAY TEAM QB    14     QB: DENVER TEAM QB        3
+RB: DAVIS,TERRELL        11     RB: BETTIS,JEROME         0
+RB: MARTIN,CURTIS         3     RB: GEORGE,EDDIE         23
+WR: MARTIN,TONY           0     WR: JACKSON,MICHAEL      18
+WR: RICE,JERRY            0     WR: PERRIMAN,BRETT        0
+TE: WYCHECK,FRANK         0     TE: CHMURA,MARK           0
+K : DENVER KICKER        15     K : ATLANTA KICKER        5
+OL: OAKLAND OFFENSE       0     OL: DALLAS OFFENSE        5
+DL: FARR,D'MARCO          2     DL: LANG,KENARD           3
+DL: MCGINEST,WILLIE       0     DL: RANDLE,JOHN           7
+LB: BROWN,CHAD            2     LB: JONES,MIKE            2
+LB: COX,BRYAN             5     LB: SLADE,CHRIS           3
+DB: BUTLER,LEROY          3     DB: BRAXTON,TYRONE        6
+DB: PERRY,DARREN          6     DB: MCDONALD,TIM          7
+---------------------------     ---------------------------
+       Starter Points =  15            Starter Points =  39
+     Offensive Points =  43          Offensive Points =  57
+     Defensive Points =  18          Defensive Points =  28
+</PRE>
+
+<?php include 'base/footer.php'; ?>

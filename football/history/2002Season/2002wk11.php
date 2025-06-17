@@ -1,0 +1,213 @@
+<HTML>
+
+<HEAD>
+<TITLE>WMFFL 2002 Week 11 Newsletter</TITLE>
+</HEAD>
+
+<?php include 'base/menu.php'; ?>
+
+<H1 ALIGN=Center>2002 Week 11</H1>
+<HR size = "1">
+<P>
+<PRE>
+
+WMFFL Newsletter Week #11
+Home Page: http://wmffl.com
+=======================================================
+Week 10 Record Performances
+  -  Tommy Maddox (QB-PIT) of the Crusaders scored 34 points last 
+     week.  This ties him with the 4th best QB performance ever, with
+     Steve Young (week 7 of 1998) and Trent Green (week 11 of 2000).
+
+2002 Season Records (through this week)
+  -  With his 12 points this week, Priest Holmes (RB-KC) has scored 
+     203 points this season, tied with Barry Sanders' 1997 season for
+     the 5th best RB season ever.  He is 6 points behind Marshall 
+     Faulk's 2000 season for 4th.  He needs 59 points to set the all-
+     time record.
+
+WMFFL Scores for 2002 Week #11
+==============================
+
+Freezer Burn( 52) War Eagles  (  0)
+Illuminati  ( 46) Green Wave  (  9)
+Norsemen    ( 34) Werewolves  (  1)
+Crusaders   ( 89) Rednecks    ( 16)
+MeggaMen    ( 45) Barbarians  (  0)
+
+
+
+WMFFL Standings after 2002 Week #11
+===================================
+Blue Division
+-------------
+              Record   Win  Division   Pts   Pts
+              W  L  T  Pct   W  L  T   For Agnst
+------------------------------------------------
+Illuminati    8  3  0 .727   3  3  0   419   181
+Norsemen      7  3  1 .682   5  1  0   341   272
+Werewolves    7  4  0 .636   5  2  0   247   287
+Freezer Burn  5  6  0 .455   2  4  0   314   226
+z-War Eagles  2  9  0 .182   1  6  0   198   371
+
+Orange Division
+---------------
+              Record   Win  Division   Pts   Pts
+              W  L  T  Pct   W  L  T   For Agnst
+------------------------------------------------
+MeggaMen      9  2  0 .818   6  1  0   354   164
+Green Wave    7  4  0 .636   3  2  0   349   255
+Barbarians    4  7  0 .364   3  4  0   293   395
+Crusaders     3  7  1 .318   3  4  0   275   349
+Rednecks      2  9  0 .182   1  5  0   194   484
+
+
+Next Week's Fantasy Schedule
+============================
+  Crusaders    at Freezer Burn
+  Werewolves   at Illuminati
+  Norsemen     at War Eagles
+  MeggaMen     at Green Wave
+  Rednecks     at Barbarians
+
+
+Week #12 NFL Schedule
+=====================
+  San Diego Chargers     at Miami Dolphins         Sun  1:00pm
+  St. Louis Rams         at Washington Redskins    Sun  1:00pm
+  Atlanta Falcons        at Carolina Panthers      Sun  1:00pm
+  Detroit Lions          at Chicago Bears          Sun  1:00pm
+  Buffalo Bills          at New York Jets          Sun  1:00pm
+  Cincinnati Bengals     at Pittsburgh Steelers    Sun  1:00pm
+  Minnesota Vikings      at New England Patriots   Sun  1:00pm
+  Tennessee Titans       at Baltimore Ravens       Sun  1:00pm
+  Jacksonville Jaguars   at Dallas Cowboys         Sun  1:00pm
+  Cleveland Browns       at New Orleans Saints     Sun  1:00pm
+  Oakland Raiders        at Arizona Cardinals      Sun  4:05pm
+  Kansas City Chiefs     at Seattle Seahawks       Sun  4:05pm
+  New York Giants        at Houston Texans         Sun  4:15pm
+  Green Bay Packers      at Tampa Bay Buccaneers   Sun  4:15pm
+  Indianapolis Colts     at Denver Broncos         Sun  8:30pm
+  Philadelphia Eagles    at San Francisco 49ers    Mon  9:00pm
+
+
+WMFFL Scoring Breakdown for 2002 Week #11
+=========================================
+War Eagles                          Freezer Burn
+===============================     ===============================
+HC: Reid,Andy           PHI   5     HC: Mariucci,Steve      SF    0
+QB: Green,Trent         KC    7     QB: McNabb,Donovan      PHI  23
+RB: Bennett,Michael     MIN   7     RB: Martin,Curtis       NYJ   8
+RB: McAllister,Deuce    NO    1     RB: Tomlinson,Ladainian SD   10
+WR: Patten,David        NE    0     WR: Mason,Derrick       TEN   4
+WR: Toomer,Amani        NYG  13     WR: Owens,Terrell       SF   26
+TE: McMichael,Randy     MIA   1     TE: Fauria,Christian    NE    1
+K : Vinatieri,Adam      NE    8     K : Akers,David         PHI   8
+Off St. Louis           STL   1     Off Jacksonville        JAX   3
+DL: Glover,La' roi      DAL   3     DL: Rice,Simeon         TB   11
+DL: Kerney,Patrick      ATL   2     DL: Stroud,Marcus       JAX   3
+LB: Quarles,Shelton     TB    8     LB: Brooking,Keith      ATL  12
+LB: Wayne,Nate          GB    3     LB: Sharper,Jamie       HOU  11
+DB: Darius,Donovin      JAX   4     DB: Dawkins,Brian       PHI   3
+DB: Kelly,Brian         TB   11     DB: Woodson,Rod         OAK   4
+-------------------------------     -------------------------------
+        Offensive Points =   43             Offensive Points =   83
+        Defensive Points =   31             Defensive Points =   44
+     Team (Bonus) Points =    0          Team (Bonus) Points =    0
+       Total Points For =     0            Total Points For =    52
+
+Green Wave                          Illuminati
+===============================     ===============================
+HC: Callahan,Bill       OAK   3     HC: Haslett,Jim         NO    0
+QB: Bulger,Marc         STL  14     QB: Favre,Brett         GB   10
+RB: Dillon,Corey        CIN   5     RB: Holmes,Priest       KC   12
+RB: Faulk,Marshall      STL   0     RB: Williams,Ricky      MIA  20
+WR: Burress,Plaxico     PIT   0     WR: Bruce,Isaac         STL  10
+WR: Porter,Jerry        OAK   0     WR: Conway,Curtis       SD   12
+TE: Pollard,Marcus      IND   0     TE: Shockey,Jeremy      NYG  10
+K : Longwell,Ryan       GB    3     K : Mare,Olindo         MIA  10
+Off Green Bay           GB    6     Off Atlanta             ATL   7
+DL: Douglas,Hugh        PHI   7     DL: Carter,Kevin        TEN   1
+DL: Rucker,Mike         CAR   9     DL: Ferguson,Jason      NYJ   0
+LB: Coakley,Dexter      DAL   4     LB: Porter,Joey         PIT   6
+LB: Fletcher,London     BUF   8     LB: Urlacher,Brian      CHI   8
+DB: Bailey,Champ        WAS  13     DB: Reed,Edward         BAL   4
+DB: Marion,Brock        MIA   4     DB: Smoot,Fred          WAS   3
+-------------------------------     -------------------------------
+        Offensive Points =   31             Offensive Points =   91
+        Defensive Points =   45             Defensive Points =   22
+     Team (Bonus) Points =    0          Team (Bonus) Points =    0
+       Total Points For =     9            Total Points For =    46
+
+Norsemen                            Werewolves
+===============================     ===============================
+HC: Gruden,Jon          TB    4     HC: Martz,Mike          STL   3
+QB: Manning,Peyton      IND  13     QB: Brady,Tom           NE   -2
+RB: Green,Ahman         GB   14     RB: Garner,Charlie      OAK   9
+RB: Jones,Thomas        ARI   0     RB: Williams,Moe        MIN   6
+WR: Booker,Marty        CHI   3     WR: Holt,Torry          STL   0
+WR: Moss,Randy          MIN  13     WR: Smith,Rod           DEN   7
+TE: Gonzalez,Tony       KC    1     TE: Lewis,Chad          PHI   0
+K : Carney,John         NO    5     K : Andersen,Morten     KC    5
+Off Minnesota           MIN  15     Off San Fran            SF    6
+DL: Peppers,Julius      CAR   7     DL: Mixon,Kenny         MIN   1
+DL: Wistrom,Grant       STL   6     DL: Strahan,Michael     NYG  11
+LB: Colvin,Rosevelt     CHI   9     LB: Bell,Marcus         SEA   5
+LB: Gold,Ian            DEN   5     LB: Claiborne,Chris     DET   7
+DB: Lucas,Ken           SEA   4     DB: Knight,Sammy        NO    7
+DB: Robinson,Damien     NYJ   2     DB: Scott,Chad          PIT   3
+-------------------------------     -------------------------------
+        Offensive Points =   68             Offensive Points =   34
+        Defensive Points =   33             Defensive Points =   34
+     Team (Bonus) Points =    0          Team (Bonus) Points =    0
+       Total Points For =    34            Total Points For =     1
+
+Rednecks                            Crusaders
+===============================     ===============================
+HC: Cowher,Bill         PIT   0     HC: Shanahan,Mike       DEN   5
+QB: Bledsoe,Drew        BUF   6     QB: Maddox,Tommy        PIT   1
+RB: Portis,Clinton      DEN  12     RB: Davis,Stephen       WAS   0
+RB: Stewart,James       DET   4     RB: Staley,Duce         PHI  21
+WR: Coles,Laveranues    NYJ  10     WR: Harrison,Marvin     IND  29
+WR: Johnson,Chad        CIN  10     WR: Ward,Hines          PIT  30
+TE: Miller,Billy        HOU   2     TE: Becht,Anthony       NYJ   7
+K : Elam,Jason          DEN   8     K : Hollis,Mike         BUF  10
+Off New Orleans         NO    0     Off Miami               MIA  10
+DL: Gbaja-Biamila,KabeerGB    4     DL: Abraham,John        NYJ   5
+DL: Haggans,Clark       PIT   2     DL: Walker,Darwin       PHI   2
+LB: Armstead,Jessie     WAS   4     LB: Bulluck,Keith       TEN   9
+LB: Gildon,Jason        PIT   6     LB: Maslowski,Mike      KC   10
+DB: Barber,Ronde        TB    3     DB: Archuleta,Adam      STL  10
+DB: Glenn,Aaron         HOU   5     DB: Woodson,Darren      DAL   0
+-------------------------------     -------------------------------
+        Offensive Points =   52             Offensive Points =  113
+        Defensive Points =   24             Defensive Points =   36
+     Team (Bonus) Points =    0          Team (Bonus) Points =    0
+       Total Points For =    16            Total Points For =    89
+
+MeggaMen                            Barbarians
+===============================     ===============================
+HC: Spurrier,Steve      WAS   0     HC: Tice,Mike           MIN   4
+QB: Garcia,Jeff         SF   17     QB: Gannon,Rich         OAK   9
+RB: Henry,Travis        BUF  10     RB: Barber,Tiki         NYG   0
+RB: Taylor,Fred         JAX   0     RB: Lewis,Jamal         BAL   1
+WR: Driver,Donald       GB   12     WR: Brown,Tim           OAK   2
+WR: Moulds,Eric         BUF   6     WR: Horn,Joe            NO   13
+TE: Franks,Bubba        GB    8     TE: Sharpe,Shannon      DEN   0
+K : Janikowski,SebastianOAK   9     K : Feely,Jay           ATL   7
+Off Tennessee           TEN  10     Off Kansas City         KC    7
+DL: Carter,Andre        SF    1     DL: Ellis,Greg          DAL   5
+DL: Sapp,Warren         TB    4     DL: Lang,Kenard         CLE   0
+LB: Arrington,Lavar     WAS  12     LB: Lewis,Ray           BAL   6
+LB: Brooks,Derrick      TB   12     LB: Thomas,Zach         MIA   5
+DB: Brown,Mike          CHI  11     DB: Dyson,Andre         TEN   5
+DB: O'Neal,Deltha       DEN  19     DB: Williams,Tyrone     GB    6
+-------------------------------     -------------------------------
+        Offensive Points =   72             Offensive Points =   43
+        Defensive Points =   59             Defensive Points =   27
+     Team (Bonus) Points =    0          Team (Bonus) Points =    0
+       Total Points For =    45            Total Points For =     0
+
+</PRE>
+
+<?php include 'base/footer.php'; ?>

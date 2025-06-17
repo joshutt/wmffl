@@ -1,0 +1,225 @@
+<HTML>
+<HEAD>
+<TITLE>WMFFL 2000 Week 5 Newsletter</TITLE>
+</HEAD>
+
+<?php include 'base/menu.php'; ?>
+
+<H1 ALIGN=Center>2000 Week 5</H1>
+<HR size = "1">
+<P>
+<PRE>
+
+WMFFL Newsletter Week #5
+Home Page: http://wmffl.com
+=======================================================
+If you are using the league software and have been
+getting errors that say that the data file is corrupt,
+make sure that you are using the most recent version of
+the owners software (Version B).  It may be downloaded
+at http://www.fflm.com and the league file is on our
+site.
+
+The following teams were fined $1 for activating
+players on byes:
+   Archers Who Say Ni
+   Werewolves
+
+The following teams still owe their entry fee.  The
+next round of $5 fines is on October 14th.
+   ZEN            $55.10
+
+These charges can be mailed to me at
+    Josh Utterback
+    43511 Blacksmith Sq
+    Ashburn, Virginia    20147
+
+WMFFL Scores for 2000 WEEK #5
+=============================
+
+Barbarians        (  7)  Norsemen          ( 43)
+Hempaholics       ( 13)  Werewolves        ( 26)
+ZEN               (  5)  Archers Who Say Ni(  0)
+MeggaMen          ( 54)  Freezer Burn      ( 16)
+Green Wave        ( 80)  Crusaders         ( 89)
+
+
+WMFFL Standings after 2000 WEEK #5
+==================================
+                    Record   Win  Division   Pts   Pts
+Blue Division       W  L  T  Pct   W  L  T   For Agnst
+------------------------------------------------------
+Norsemen            5  0  0 1.00   3  0  0   218    50
+Werewolves          3  2  0 .600   1  1  0   136    87
+Hempaholics         2  3  0 .400   2  2  0    60   119
+Freezer Burn        1  4  0 .200   0  1  0    90   145
+Archers Who Say Ni  1  4  0 .200   0  2  0    51   112
+
+                    Record   Win  Division   Pts   Pts
+Orange Division     W  L  T  Pct   W  L  T   For Agnst
+------------------------------------------------------
+Crusaders           4  1  0 .800   3  0  0   258   181
+ZEN                 4  1  0 .800   1  1  0   105    74
+Green Wave          2  3  0 .400   2  1  0   175   178
+Barbarians          2  3  0 .400   0  2  0   117   140
+MeggaMen            1  4  0 .200   0  2  0    56   180
+
+
+Current Week's Transactions
+===========================
+  Freezer Burn       Dropped WR HAKIM,AZ-ZAHIR (STL)
+  Freezer Burn       Picked Up WR WILKINS,TERRENCE (IND)
+  Green Wave         Dropped DL JOHNSON,RAYLEE (SD)
+  Green Wave         Picked Up DL BURNETT,ROB (BAL)
+  Archers Who Say Ni Dropped TENNESSEE TEAM QB
+  Archers Who Say Ni Picked Up DALLAS TEAM QB
+  Archers Who Say Ni Dropped WR DWIGHT,TIM (ATL)
+  Archers Who Say Ni Picked Up WR HILLIARD,IKE (NYG)
+  Archers Who Say Ni Picked Up TE LEWIS,CHAD (PHI)
+  Archers Who Say Ni Picked Up ATLANTA KICKER
+  Archers Who Say Ni Picked Up DL ARMSTRONG,TRACE (MIA)
+  Archers Who Say Ni Dropped TE WILLIAMS,ROLAND (STL)
+  Archers Who Say Ni Picked Up LB THOMAS,WILLIAM (OAK)
+  Crusaders          Dropped TE BJORNSON,ERIC (NE)
+  Crusaders          Picked Up TE DILGER,KEN (IND)
+  Crusaders          Dropped LB ARMSTEAD,JESSIE (NYG)
+  Crusaders          Picked Up LB FLETCHER,LONDON (STL)
+  Crusaders          Dropped INDIANAPOLIS OFFENSE
+  Crusaders          Picked Up BALTIMORE OFFENSE
+  Hempaholics        Dropped LB MORRIS,ROB (IND)
+  Hempaholics        Picked Up RB CENTERS,LARRY (WAS)
+  Hempaholics        Dropped WR MAYES,DERRICK (SEA)
+  Hempaholics        Picked Up WR JACKSON,DARRELL (SEA)
+  Barbarians         Picked Up DL HICKS,ERIC (KC)
+  Freezer Burn       Dropped ARIZONA KICKER
+  Freezer Burn       Picked Up PHILADELPHIA TEAM QB
+  Freezer Burn       Dropped TAMPA BAY TEAM QB
+  Freezer Burn       Picked Up TENNESSEE TEAM QB
+
+
+Next Week's Fantasy Schedule
+============================
+  Freezer Burn       at Norsemen
+  Archers Who Say Ni at Werewolves
+  Green Wave         at Hempaholics
+  Crusaders          at ZEN
+  MeggaMen           at Barbarians
+
+  NFL Byes: St. Louis Rams, Kansas City Chiefs and Dallas Cowgirls
+
+WMFFL Scoring Breakdown for 2000 WEEK #5
+========================================
+Barbarians                          Norsemen
+===============================     ===============================
+HC: Green,Dennis        MIN   3     HC: Dungy,Tony          TB    0
+QB: Washington Team Qb  WAS   3     QB: Indianapolis Team QbIND  11
+RB: Barber,Tiki         NYG   1     RB: Chancey,Robert      SD    0
+RB: Garner,Charlie      SF   15     RB: James,Edgerrin      IND   6
+WR: Carter,Cris         MIN   0     WR: Bruce,Isaac         STL  27
+WR: Scott,Darnay        CIN   0     WR: Morris,Sylvester    KC    0
+TE: Sharpe,Shannon      BAL   5     TE: Gonzalez,Tony       KC    7
+K : Washington Kicker   WAS   8     K : St. Louis Kicker    STL  23
+Off Washington Offense  WAS   6     Off Jacksonville OffenseJAX  -5
+DL: Ellis,Greg          DAL   2     DL: Bratzke,Chad        IND   7
+DL: Hicks,Eric          KC   12     DL: Kearse,Jevon        TEN   1
+LB: Hardy,Kevin         JAX   6     LB: Boyd,Stephen        DET   6
+LB: Thomas,Zach         MIA   0     LB: Spikes,Takeo        CIN  10
+DB: Sanders,Deion       WAS   4     DB: Griffith,Robert     MIN   7
+DB: Williams,Willie     SEA   2     DB: Springs,Shawn       SEA   3
+-------------------------------     -------------------------------
+        Offensive Points =   41             Offensive Points =   69
+        Defensive Points =   26             Defensive Points =   34
+       Total Points For =     7            Total Points For =    43
+
+Hempaholics                         Werewolves
+===============================     ===============================
+HC: Coughlin,Tom        JAX   0     HC: Martz,Mike          STL   5
+QB: Carolina Team Qb    CAR   0     QB: Kansas City Team Qb KC   15
+RB: Centers,Larry       WAS  10     RB: Anderson,Jamal      ATL   0
+RB: George,Eddie        TEN  15     RB: Smith,Lamar         MIA   6
+WR: Connell,Albert      WAS   0     WR: Brown,Tim           OAK   0
+WR: Price,Peerless      BUF   0     WR: Holt,Torry          STL   6
+TE: Franks,Bubba        GB    2     TE: Harris,Jackie       DAL   3
+K : San Diego Kicker    SD    7     K : Tampa Bay Kicker    TB    6
+Off Tennessee Offense   TEN   8     Off San Fran Offense    SF    8
+DL: Rice,Simeon         ARI   0     DL: McGinest,Willie     NE   11
+DL: Strahan,Michael     NYG   3     DL: Sapp,Warren         TB    4
+LB: Arrington,Lavar     WAS   6     LB: Biekert,Greg        OAK   0
+LB: Rainer,Wali         CLE   7     LB: Seau,Junior         SD    4
+DB: Bailey,Champ        WAS   4     DB: Buchanan,Ray        ATL  10
+DB: Vincent,Troy        PHI   3     DB: Knight,Sammy        NO    0
+-------------------------------     -------------------------------
+        Offensive Points =   42             Offensive Points =   49
+        Defensive Points =   23             Defensive Points =   29
+       Total Points For =    13            Total Points For =    26
+
+ZEN                                 Archers Who Say Ni
+===============================     ===============================
+HC: Mora,Jim            IND   3     HC: Phillips,Wade       BUF   0
+QB: Ny Giants Team Qb   NYG   3     QB: Dallas Team Qb      DAL  -2
+RB: Dayne,Ron           NYG   0     RB: Rhett,Errict        CLE   0
+RB: Taylor,Fred         JAX   0     RB: Watters,Ricky       SEA   1
+WR: Freeman,Antonio     GB    6     WR: Ismail,Raghib       DAL   0
+WR: Smith,Jimmy         JAX   0     WR: Owens,Terrell       SF    0
+TE: Riemersma,Jay       BUF   0     TE: Drayton,Troy        KC    0
+K : Detroit Kicker      DET   6     K : Atlanta Kicker      ATL   5
+Off Denver Offense      DEN   0     Off Seattle Offense     SEA   8
+DL: Brown,Courtney      CLE   7     DL: Armstrong,Trace     MIA   0
+DL: Holliday,Vonnie     GB    0     DL: Wistrom,Grant       STL   4
+LB: Lewis,Ray           BAL  10     LB: Rudd,Dwayne         MIN   2
+LB: Simmons,Brian       CIN   0     LB: Thomas,William      OAK   0
+DB: Barber,Ronde        TB    4     DB: Madison,Sam         MIA   3
+DB: Carter,Marty        ATL   5     DB: Sharper,Darren      GB    4
+-------------------------------     -------------------------------
+        Offensive Points =   18             Offensive Points =   12
+        Defensive Points =   26             Defensive Points =   13
+       Total Points For =     5            Total Points For =     0
+
+MeggaMen                            Freezer Burn
+===============================     ===============================
+HC: Billick,Brian       BAL   4     HC: Fassel,Jim          NYG   0
+QB: San Fran Team Qb    SF    9     QB: Green Bay Team Qb   GB   22
+RB: Anderson,Mike       DEN   0     RB: Smith,Emmitt        DAL  14
+RB: Bettis,Jerome       PIT  15     RB: Staley,Duce         PHI  -2
+WR: Crowell,Germane     DET  12     WR: Boston,David        ARI   9
+WR: McCaffrey,Ed        DEN  10     WR: Hayes,Donald        CAR   0
+TE: Wycheck,Frank       TEN  14     TE: Alexander,Stephen   WAS   1
+K : Miami Kicker        MIA   8     K : Indianapolis Kicker IND   5
+Off St. Louis Offense   STL   9     Off Minnesota Offense   MIN  10
+DL: Brackens,Tony       JAX   7     DL: McKenzie,Keith      GB    3
+DL: Jones,Cedric        NYG   7     DL: Smith,Bruce         WAS   4
+LB: Brooks,Derrick      TB   11     LB: Patton,Marvcus      KC   12
+LB: Edwards,Donnie      KC    9     LB: Trotter,Jeremiah    PHI   5
+DB: Beasley,Aaron       JAX   9     DB: Abraham,Donnie      TB    0
+DB: Rice,Ron            DET   0     DB: Dishman,Cris        MIN   3
+-------------------------------     -------------------------------
+        Offensive Points =   81             Offensive Points =   59
+        Defensive Points =   43             Defensive Points =   27
+       Total Points For =    54            Total Points For =    16
+
+Green Wave                          Crusaders
+===============================     ===============================
+HC: Fisher,Jeff         TEN   4     HC: Ross,Bobby          DET   0
+QB: Minnesota Team Qb   MIN  22     QB: St. Louis Team Qb   STL  41
+RB: Faulk,Kevin         NE    0     RB: Biakabutuka,Tim     CAR   9
+RB: Faulk,Marshall      STL  25     RB: Davis,Stephen       WAS  14
+WR: Robinson,Marcus     CHI  18     WR: Harrison,Marvin     IND   6
+WR: Smith,Rod           DEN  19     WR: McCardell,Keenan    JAX  20
+TE: Carswell,Dwayne     DEN   1     TE: Dilger,Ken          IND   1
+K : Baltimore Kicker    BAL  14     K : Jacksonville Kicker JAX   8
+Off Dallas Offense      DAL  10     Off Baltimore Offense   BAL  11
+DL: Burnett,Rob         BAL   2     DL: Douglas,Hugh        PHI   6
+DL: Pryce,Trevor        DEN   5     DL: McCrary,Michael     BAL   2
+LB: Kirkland,Levon      PIT   2     LB: Fletcher,London     STL   4
+LB: Nickerson,Hardy     JAX   1     LB: Tubbs,Winfred       SF    4
+DB: Law,Ty              NE    4     DB: Harrison,Rodney     SD   12
+DB: Parrish,Tony        CHI   7     DB: Milloy,Lawyer       NE    5
+-------------------------------     -------------------------------
+        Offensive Points =  113             Offensive Points =  110
+        Defensive Points =   21             Defensive Points =   33
+       Total Points For =    80            Total Points For =    89
+
+
+</PRE>
+
+<?php include 'base/footer.php'; ?>

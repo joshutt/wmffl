@@ -1,0 +1,214 @@
+<HTML>
+<HEAD>
+<TITLE>WMFFL 2001 Week 13 Newsletter</TITLE>
+</HEAD>
+
+<?php include 'base/menu.php'; ?>
+
+<H1 ALIGN=Center>2001 Week 13</H1>
+<HR size = "1">
+<P>
+<PRE>
+
+WMFFL Newsletter Week #13
+Home Page: http://wmffl.com
+=======================================================
+ZEN played this week with a bye week player.
+
+There is a Saturday game this week so activations are due
+accordingly.
+
+The playoff races are mostly wrapped up.  The Freezer
+Burn have clinched the Blue Division and the number one
+seed.  The Crusaders win the Orange division and get the
+number 2 seed.  The Hempaholics lock up the number 3 seed.
+The Norsemen and ZEN will meet in Toliet Bowl III.  The
+last remaining playoff spot will be either the Werewolves
+or the War Eagles.  (The Barbarians can't get it because
+they would lose a 7-7 tie breaker to the Werewolves).  The
+Werewolves get in with a win or a War Eagle loss or both
+teams tying.  The War Eagles get in with a win and
+Werewolves loss or tie OR a tie and a Werewolves loss.
+
+
+WMFFL Scores for 2001 Week #13
+==============================
+
+Werewolves  ( 14) Norsemen    ( 38)
+War Eagles  (  9) Hempaholics ( 12)
+MeggaMen    (  0) Freezer Burn( 15)
+Barbarians  ( 33) Crusaders   ( 27)
+Green Wave  ( 63) ZEN         (  7)
+
+
+
+WMFFL Standings after 2001 Week #13
+===================================
+Blue Division
+-------------
+              Record   Win  Division   Pts   Pts
+              W  L  T  Pct   W  L  T   For Agnst
+------------------------------------------------
+y-Freezer Bu 10  3  0 .769   6  1  0   395   228
+x-Hempaholic  9  4  0 .692   4  3  0   339   231
+Werewolves    7  6  0 .538   3  5  0   236   197
+War Eagles    7  6  0 .538   2  5  0   279   205
+z-Norsemen    5  8  0 .385   3  4  0   232   294
+
+Orange Division
+---------------
+              Record   Win  Division   Pts   Pts
+              W  L  T  Pct   W  L  T   For Agnst
+------------------------------------------------
+y-Crusaders   8  5  0 .615   5  2  0   317   186
+Barbarians    6  7  0 .462   4  3  0   188   298
+Green Wave    5  8  0 .385   5  2  0   277   361
+MeggaMen      5  8  0 .385   2  5  0   164   247
+z-ZEN         3 10  0 .231   2  6  0   119   299
+
+
+Current Week's Transactions
+===========================
+  Freezer Burn Dropped RB SMITH,MAURICE (ATL)
+  Freezer Burn Dropped TE CHAMBERLAIN,BYRON (MIN)
+  Freezer Burn Picked Up WR MASON,DERRICK (TEN)
+  Freezer Burn Picked Up PHILADELPHIA KICKER
+  War Eagles   Dropped DB ARCHULETA,ADAM (STL)
+  War Eagles   Picked Up DL ELLIS,GREG (DAL)
+  War Eagles   Dropped RB MCALLISTER,DEUCE (NO)
+  War Eagles   Picked Up RB DAVIS,TERRELL (DEN)
+  Freezer Burn Traded Future Pick 2002-6.01 to MeggaMen
+  MeggaMen     Traded TE WYCHECK,FRANK (TEN) to Freezer Burn
+  Green Wave   Dropped WR PATTEN,DAVID (NE)
+  Green Wave   Picked Up MIAMI KICKER
+  Freezer Burn Dropped TE BECHT,ANTHONY (NYJ)
+  Werewolves   Dropped ARIZONA TEAM QB
+  Werewolves   Picked Up TE BECHT,ANTHONY (NYJ)
+
+
+Next Week's Fantasy Schedule
+============================
+  Hempaholics  at Norsemen
+  ZEN          at Werewolves
+  Freezer Burn at War Eagles
+  MeggaMen     at Crusaders
+  Barbarians   at Green Wave
+
+  NFL Byes: Carolina Panthers
+
+
+WMFFL Scoring Breakdown for 2001 Week #13
+=========================================
+Werewolves                          Norsemen
+===============================     ===============================
+HC: Martz,Mike          STL   4     HC: Dungy,Tony          TB    3
+QB: Tennessee Team Qb   TEN  15     QB: Indianapolis Team QbIND  -6
+RB: Stewart,James       DET   1     RB: Green,Ahman         GB   17
+RB: Tomlinson,Ladainian SD   -4     RB: James,Edgerrin      IND   0
+WR: Holt,Torry          STL   1     WR: Conway,Curtis       SD    0
+WR: Price,Peerless      BUF   6     WR: Moss,Randy          MIN  18
+TE: Becht,Anthony       NYJ   0     TE: Gonzalez,Tony       KC    8
+K : New Orleans Kicker  NO    4     K : St. Louis Kicker    STL   9
+Off San Fran Offense    SF    4     Off Tennessee Offense   TEN  10
+DL: Rogers,Shaun        DET   3     DL: Hamilton,Bobby      NE    3
+DL: Strahan,Michael     NYG   6     DL: Kearse,Jevon        TEN   1
+LB: Barrow,Michael      NYG   3     LB: Brown,Chad          SEA   4
+LB: Mobley,John         DEN   2     LB: Lewis,Mo            NYJ   2
+DB: Knight,Sammy        NO    5     DB: Green,Victor        NYJ   5
+DB: McCutcheon,Daylon   CLE   2     DB: Moore,Damon         PHI   2
+-------------------------------     -------------------------------
+        Offensive Points =   31             Offensive Points =   59
+        Defensive Points =   21             Defensive Points =   17
+       Total Points For =    14            Total Points For =    38
+
+War Eagles                          Hempaholics
+===============================     ===============================
+HC: Reid,Andy           PHI   4     HC: Haslett,Jim         NO    4
+QB: New Orleans Team Qb NO   10     QB: Green Bay Team Qb   GB    5
+RB: Alexander,Shaun     SEA   0     RB: Holmes,Priest       KC   34
+RB: Dillon,Corey        CIN   8     RB: Williams,Ricky      NO    9
+WR: Boston,David        ARI   9     WR: Bruce,Isaac         STL   0
+WR: Schroeder,Bill      GB    0     WR: Smith,Jimmy         JAX  16
+TE: Clark,Desmond       DEN   7     TE: Jones,Freddie       SD    2
+K : New England Kicker  NE   11     K : San Diego Kicker    SD    2
+Off New Orleans Offense NO    4     Off St. Louis Offense   STL   3
+DL: Ellis,Greg          DAL   9     DL: Glover,La' roi      NO    9
+DL: Taylor,Jason        MIA   9     DL: Johnson,Joe         NO    6
+LB: Miller,Jamir        CLE  10     LB: Porter,Joey         PIT   3
+LB: Morgan,Dan          CAR   9     LB: Urlacher,Brian      CHI  16
+DB: Fuller,Corey        CLE  23     DB: Bailey,Champ        WAS   4
+DB: Williams,Shaun      NYG   3     DB: Buchanan,Ray        ATL   6
+-------------------------------     -------------------------------
+        Offensive Points =   53             Offensive Points =   75
+        Defensive Points =   63             Defensive Points =   44
+       Total Points For =     9            Total Points For =    12
+
+MeggaMen                            Freezer Burn
+===============================     ===============================
+HC: Billick,Brian       BAL   0     HC: Fassel,Jim          NYG   0
+QB: San Fran Team Qb    SF    2     QB: Philadelphia Team QbPHI  11
+RB: Hearst,Garrison     SF    6     RB: Dunn,Warrick        TB    5
+RB: Pittman,Michael     ARI   3     RB: Martin,Curtis       NYJ  10
+WR: Freeman,Antonio     GB    6     WR: Chambers,Chris      MIA  12
+WR: Jackson,Darrell     SEA  10     WR: Owens,Terrell       SF    0
+TE: Franks,Bubba        GB    1     TE: Wycheck,Frank       TEN   9
+K : Oakland Kicker      OAK   4     K : Philadelphia Kicker PHI   6
+Off Chicago Offense     CHI   6     Off Pittsburgh Offense  PIT   7
+DL: Lang,Kenard         WAS   6     DL: Brackens,Tony       JAX   8
+DL: Sapp,Warren         TB    8     DL: Porcher,Robert      DET   3
+LB: Arrington,Lavar     WAS  15     LB: Brooking,Keith      ATL   7
+LB: Brooks,Derrick      TB    3     LB: Trotter,Jeremiah    PHI   9
+DB: Brown,Mike          CHI   6     DB: Lassiter,Kwamie     ARI  11
+DB: Milloy,Lawyer       NE    7     DB: McQuarters,R.W.     CHI   1
+-------------------------------     -------------------------------
+        Offensive Points =   38             Offensive Points =   60
+        Defensive Points =   45             Defensive Points =   39
+       Total Points For =     0            Total Points For =    15
+
+Barbarians                          Crusaders
+===============================     ===============================
+HC: Green,Dennis        MIN   4     HC: Shanahan,Mike       DEN   4
+QB: Ny Giants Team Qb   NYG   0     QB: St. Louis Team Qb   STL  15
+RB: Barber,Tiki         NYG   5     RB: Centers,Larry       BUF   0
+RB: Garner,Charlie      OAK   0     RB: Davis,Stephen       WAS  11
+WR: Brown,Tim           OAK  12     WR: Booker,Marty        CHI   0
+WR: Horn,Joe            NO   16     WR: Harrison,Marvin     IND   5
+TE: Carswell,Dwayne     DEN   1     TE: Pollard,Marcus      IND   1
+K : Carolina Kicker     CAR   6     K : Pittsburgh Kicker   PIT  11
+Off Green Bay Offense   GB    9     Off Miami Offense       MIA  14
+DL: Hicks,Eric          KC    5     DL: Abraham,John        NYJ   2
+DL: Jackson,Grady       OAK   3     DL: Douglas,Hugh        PHI   0
+LB: Patton,Marvcus      KC    6     LB: Farrior,James       NYJ   7
+LB: Thomas,Zach         MIA   2     LB: Fletcher,London     STL   3
+DB: Bellamy,Jay         NO   14     DB: Mathis,Kevin        NO    3
+DB: Brown,Eric          DEN   4     DB: Minter,Mike         CAR   5
+-------------------------------     -------------------------------
+        Offensive Points =   53             Offensive Points =   61
+        Defensive Points =   34             Defensive Points =   20
+       Total Points For =    33            Total Points For =    27
+
+Green Wave                          ZEN
+===============================     ===============================
+HC: Gruden,Jon          OAK   3     HC: Mora,Jim            IND   0
+QB: Minnesota Team Qb   MIN  30     QB: Denver Team Qb      DEN   8
+RB: Faulk,Marshall      STL  17     RB: Bettis,Jerome       PIT   0
+RB: Smith,Emmitt        DAL   6     RB: Staley,Duce         PHI  11
+WR: Brown,Troy          NE   17     WR: Morton,Johnnie      DET   0
+WR: Muhammad,Muhsin     CAR   4     WR: Moulds,Eric         BUF   0
+TE: Sloan,David         DET   0     TE: Riemersma,Jay       BUF   2
+K : Miami Kicker        MIA   4     K : Tennessee Kicker    TEN   6
+Off Indianapolis OffenseIND   2     Off Denver Offense      DEN   8
+DL: Parrella,John       SD    2     DL: Gbaja-Biamila,KabeerGB    1
+DL: Rucker,Mike         CAR   1     DL: Pryce,Trevor        DEN   6
+LB: Coakley,Dexter      DAL   2     LB: Boulware,Peter      BAL   0
+LB: Mitchell,Keith      NO    3     LB: McKinnon,Ronald     ARI   4
+DB: Evans,Doug          CAR   5     DB: Barber,Ronde        TB    6
+DB: Williams,Aeneas     STL  15     DB: Warfield,Eric       KC    3
+-------------------------------     -------------------------------
+        Offensive Points =   83             Offensive Points =   35
+        Defensive Points =   28             Defensive Points =   20
+       Total Points For =    63            Total Points For =     7
+
+</PRE>
+
+<?php include 'base/footer.php'; ?>

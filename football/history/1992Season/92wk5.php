@@ -1,0 +1,102 @@
+<HTML>
+<HEAD>
+<TITLE>WMFFL 1992 Week 5 Newsletter</TITLE>
+</HEAD>
+
+<?php include 'base/menu.php'; ?>
+
+<H1 ALIGN=CENTER>1992 Season - Week 5</H1>
+<HR size = "1">
+<PRE>
+GAMES FOR THE WEEK OF OCTOBER 4, 1992
+
+TEAM       W    L   T    PCT    PF    PA
+
+Archers	   5	0   0   1.000   140   80
+Renegades  3    2   0    .600   119   114
+Legions    1    4   0    .200   67    101
+Slayers    1    4   0    .200   65    96
+
+ARCHERS   31   -   RENEGADES  17
+LEGIONS   6    -   SLAYERS    5
+
+TEAM      MONEY
+Jon	  -$4.00
+Mike	   $0.00
+Byron	  -$8.00
+Josh	  -$8.00
+
+
+THIS WEEKS LEADERS
+HIGH SCORER:	P. Stoyanovich	K   Renegades	13 points
+HIGH PASSER:	2 Players Tied			1 Pass
+HIGH RECIEVER:	Andre Rison	WR  Renegades	2 Catches**
+HIGH RUNNER:	2 Players Tied			2 TD Runs
+HIGH X. POINT:	P. Stoyanovich	K   Renegades	4 Extra Points
+HIGH FG:	P. Stoyanovich	K   Renegades	3 Field Goals
+HIGH INT THROW:	Jim Kelly	QB  Renegades	4 Interceptions*
+HIGH DEFENSE:	Brad Edwards	    Legions	1.4 Defense
+HIGH TACKLES:	Deion Sanders	    Slayers	6 Tackles
+HIGH SACKS:	2 Players Tied			2 Sacks
+HIGH INT:	2 Players Tied			1 Interception*
+
+
+SEASON LEADERS
+HIGH SCORER:	P. Stoyanovich	K   Renegades	48 points
+HIGH PASSER:	Jim Kelley	QB  Renegades	11 TD Passes
+HIGH RECIEVER:	2 Players Tied			3 TD Receptions
+HIGH RUNNER:	Thurman Thomas	RB  Archers	5 TD Runs
+HIGH X. POINT:	Steve Christie	K   Slayers	11 Extra Points
+HIGH FG:	P. Stoyanovich	K   Renegades	13 Field Goals
+HIGH INT THROW:	Jim Kelly	QB  Renegades	4 Interception
+HIGH DEFENSE:	Brad Edwards	    Legions	3.7 Defensive
+HIGH TACKLES:	Chris Doleman	    Archers	23 Tackles
+HIGH SACKS:	2 Players Tied		 	5 Sacks
+HIGH INT:	2 Players Tied			2 Interceptions
+
+NEXT WEEKS GAMES
+Renegades (3-2) VS. Legions of Byron (1-4)
+Slayers (1-4) VS. Archers (5-0)
+
+
+
+	ARCHERS			RENEGADES
+12	Steve Young		Jim Kelly		-1
+0	Jerry Rice		Emmitt Smith		0
+0	Thurman Thomas		Neil Anderson		0
+0	Art Monk		Rodney Hampton		0
+0	Keith Jackson		Eric Martin		0
+6	Brad Baxter		Andre Rison		6
+2	Ken Willis		Ethan Horton		0
+12	Ernest Byner		Pete Stoyanovich	13
+32	OFFENSIVE SCORE		OFFENSIVE SCORE		18
+
+0-0-0	Williams Perry		Pat Swilling		3-2-0
+5-1-0	Chris Doleman		David Fulcher		0-0-0
+N/A	Reggie White		Clyde Simmons		N/A
+1	DEFENSIVE SCORE		DEFENSIVE SCORE		1
+
+31	FINAL SCORE		FINAL SCORE		17
+
+
+	LEGIONS OF BYRON	SLAYERS
+5	Randall Cunningham	Mark Rypien		0
+0	Barry Sanders		Ricky Ervins		0
+0	Micheal Irvin		James Lofton		0
+0	Barry Word		Fred Barnett		0
+0	Tom Rathman		Christian Okoye		0
+3	Andre Reed		Pete Metzellaars	0
+0	Jay Novacheck		Sterling Sharpe		3
+1	Elliot			Steve Christie		4
+9	OFFENSIVE SCORE		OFFENSIVE SCORE		7
+
+4-0-1	Brad Edwards		Martin Mayhew		3-0-1
+3-1-0	Kurt Gouviea		Deion Sanders		6-0-0
+1-0-0	Derrick Thomas		Charles Mann		4-2-0
+2	DEFENSIVE SCORE		DEFENSIVE SCORE		3
+
+6	FINAL SCORE		FINAL SCORE		5
+
+</PRE>
+
+<?php include 'base/footer.php'; ?>

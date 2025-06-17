@@ -30,4 +30,4 @@ if ($empty) {
 ?>
 
 
-<p><a href="index.shtml">Return to Index</a></p>
+<p><a href="index.php">Return to Index</a></p>

@@ -96,7 +96,7 @@ that case and the 0-0 tie would remain.<BR>
 Article V is an absolute mess.  This proposal would reorganize it, without
 changings its meaning or interpretation.  It would also add the explict
 statement that activations rollover from week to week.<BR>
-<BLOCKQUOTE><I><A HREF="proposals20026detail.shtml">Details</A></I></BLOCKQUOTE></P>
+<BLOCKQUOTE><I><A HREF="proposals20026detail.php">Details</A></I></BLOCKQUOTE></P>
 
 <P><B>Proposal 2002.7 - Offensive Player Fumble Recovery Points</B><BR>
 <FONT COLOR="red">Status: Rejected 2-6 with 2 No Votes</FONT><BR>

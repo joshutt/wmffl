@@ -143,4 +143,4 @@ print "</table>";
 ?>
 
 
-<p><a href="index.shtml">Return to Admin Page</a></p>
+<p><a href="index.php">Return to Admin Page</a></p>

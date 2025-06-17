@@ -1,0 +1,142 @@
+<HTML>
+<HEAD>
+<TITLE>WMFFL 1993 Week 2 Newsletter</TITLE>
+</HEAD>
+
+<?php include 'base/menu.php'; ?>
+
+<H1 ALIGN=CENTER>1993 Season - Week 2</H1>
+<HR size = "1">
+<PRE>
+WATKINS MILL FANTASY FOOTBALL LEAGUE
+September 12, 1993
+
+     BLUE DIVISION                          ORANGE DIVISION
+
+TEAM       W    L  PCT     PTS       TEAM      	W   L    PCT    PTS
+
+Barbarians 2	0  1.000   163	     Slayers	2   0	1.000	172
+Archers    1	1  0.500   125	     Tsunami	1   1	0.500	121
+Zebus      1	1  0.500   97        Pitbulls	1   1	0.500	99
+Warriors   0	2  0.000   113       Renegades	0   2	0.000	87
+
+     Barbarians	101			Slayers	  82
+     Warriors	60			Renegades 33
+
+     Pitbulls	48			Tsunami   63
+     Archers	33			Zebus     28
+
+                               Next Weeks Games
+     Barbarians vs Archers                     Slayers vs Pitbulls
+     Warriors vs Tsunami                       Renegades vs Zebus
+
+
+                   LEADING POINT SCORERS BY POSITION
+
+QB      Miami                   Slayers	         34 pts
+RB      Barry Sanders           Barbarians       21 pts
+	Rodney Hampton		Tsunami		 16 pts
+WR      Micheal Haynes		Barbarians	 27 pts
+	Sterling Sharpe		Slayers		 25 pts
+TE      Keith Jackson           Archers          19 pts
+K       New Orleans		Archers	   	 27 pts
+OL      Philadelphia            Pitbulls          7 pts
+DB      Rod Woodson             Barbarians       22 pts
+	Darrell Green		Slayers		 17 pts
+DL      Bruce Smith		Zebus	         13 pts
+	Leslie O'Neal		Slayers		 11 pts
+LB      Jack Del Rio            Slayers          21 pts
+	Ken Norton		Slayers		 14 pts
+HC	Wayne Fontes		Barbarians	  6 pts
+	Marv Levy		Tsunami		  6 pts
+
+
+	BARBARIANS		WARRIORS
+
+5	Houston QB		Dallas QB		1
+10	Barry Sanders		Ricky Watters		7
+13	Chris Warren		Rod Bernstien		6
+27	Micheal Haynes		Eric Martin		3
+4 	Jerry Rice   		Carl Pickens   		0
+2	Kerry Cash		Jim Johnson		0
+4	Minnesota K		Indianapolis K		12
+2	Green Bay OL		Cleveland OL		0
+11	Henry Jones		Dale Carter		5
+8	Rod Woodson		Donnell Woolford	6
+7	Carl Mecklenberg	Marco Coleman		6
+2	Derrick Thomas		Joe Nash		na
+1	Chris Mims		Junior Seau		8
+2	Cross			Byron Evans		7
+3	Wayne Fontes		Richie Petibone		0
+
+101	Final Score		Final Score		61
+
+
+
+	PITBULLS		ARCHERS
+
+6	Minnesota QB		Buffalo QB		4
+0	Earnest Byner		Barry Foster		0
+7	Cleveland Gary		Neal Anderson		1
+1	Andre Rison		Fred Barnett		0
+0	Jeff Graham		Earnest Givins		0
+6	Jackie Harris		Keith Jackson		6
+8	Philadelphia K		New Orleans K		11
+1	San Fransico OL		Denver OL		2
+2	Brian Washington	Kurt Gouviea		5
+na	Eddie Anderson		James Washington	0
+7	Neil Smith		Chris Doleman		4
+5	Steve McMicheal		Anthony Smith		na
+na	Mike Johnson		Tony Bennett		0
+5	Vincient Brown		Pepper Johsnon		0
+0	Bobby Ross		Chuck Knox		0
+
+48	Final Score		Final Score		33
+
+
+
+	SLAYERS			RENEGADES
+
+16	Miami QB		San Fransico QB		-2
+2	Heath Sherman		Thurman Thomas		2
+6	Lorenzo White		Blair Thomas		0
+10	Sterling Sharpe		Haywood Jeffries	0
+0	Jerrod Bunch		Anthony Miller		1
+0	Shannon Sharpe		Jay Novacheck		8
+8	Buffalo K		Miami K			2
+6	Detroit OL		Pittsburgh OL		0
+5	Steve Entman		Scott Case 		7
+5	Leslie O'Neal		Jason Besler		6
+na	Tim McDonald		Clyde Simmons		0
+8	Darrell Green		Wayne Martin		4
+10	Jack Del Rio		Simon Fletcher		5
+6	Ken Norton		Rufus Porter		na
+0	George Seyfirt		Jimmy Johnson		0
+
+82	Final Score		Final Score		33
+
+
+
+	TSUNAMI			ZEBUS
+
+14	Denver QB		Kansas City QB		-4
+1	Brian Mitchell		Hershal Walker		0
+14	Rodney Hampton		Marion Butts		0
+2	Greg McMurty		Micheal Irvin		9
+0	Waddle			Gary Clark		5
+0	Brent Jones		Danta Whitaker		0
+5	Dallas K		Washington K		4
+0	Houston OL		Cincinnati OL		0
+5	Eric Allen		Martin Mayhew		0
+0	Brian Kelso		Steve Atwater		8
+na	Cortez Kennedy		Bruce Smith		3
+8	Reggie White		Leonard Marshall	0
+6	Chris Spielman		Pat Swilling		3
+5	Brian Cox		Lawrence Taylor		0
+3	Marv Levy		Don Shula		0
+
+63	Final Score		Final Score		28
+
+</PRE>
+
+<?php include 'base/footer.php'; ?>
