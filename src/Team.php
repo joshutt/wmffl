@@ -52,7 +52,7 @@ class Team {
         //print_r($games);
         print "</pre>";
         */
-        $h2h = array(0, 0, 0, 0, 0);
+//        $h2h = array(0, 0, 0, 0, 0);
         $h2h = ['wins' => 0, 'losses' => 0, 'ties' => 0, 'ptsFor' => 0, 'ptsAgt' => 0];
         foreach ($games as $game) {
             if ($game[0] == $b->teamid) {
@@ -109,7 +109,7 @@ class Team {
 
         if ($h2h['ptsFor'] > $h2h['ptsAgt']) {
             return -1;
-        } elseif ($h2h[3] < $h2h[4]) {
+        } elseif ($h2h['ptsFor'] < $h2h['ptsAgt']) {
             return 1;
         }
         if ($a->name > $b->name) {

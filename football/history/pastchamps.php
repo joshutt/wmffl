@@ -12,7 +12,7 @@ include 'base/menu.php';
 <TR><TD valign="bottom">
 <B>Blue Division Champions</B>
 <TABLE WIDTH=*>
-<TR><TD><B>Year</B></TD><TD><B>Winner</B></TD></TR>
+<TR><TD width="33%"><B>Year</B></TD><TD width="*"><B>Winner</B></TD></TR>
 <TR><TD>1993</TD><TD>Barbarians</TD></TR>
 <TR><TD>1994</TD><TD>Barbarians</TD></TR>
 <TR><TD>1995</TD><TD>Barbarians</TD></TR>
@@ -45,11 +45,12 @@ include 'base/menu.php';
 <TR><TD>2021</TD><TD>Norsemen</TD></TR>
 <TR><TD>2022</TD><TD>Norsemen</TD></TR>
 <TR><TD>2023</TD><TD>Richard's Lionhearts</TD></TR>
+<TR><TD>2024</TD><TD>Richard's Lionhearts</TD></TR>
 </TABLE>
 </TD><TD valign="bottom">
 <B>Orange Division Champions</B>
 <TABLE WIDTH=*>
-<TR><TD><B>Year</B></TD><TD><B>Winner</B></TD></TR>
+<TR><TD width="33%"><B>Year</B></TD><TD><B>Winner</B></TD></TR>
 <TR><TD>1993</TD><TD>Slayers</TD></TR>
 <TR><TD>1994</TD><TD>Slayers</TD></TR>
 <TR><TD>1995</TD><TD>Tsunami</TD></TR>
@@ -82,11 +83,12 @@ include 'base/menu.php';
 <TR><TD>2021</TD><TD>Trump Molests Collies</TD></TR>
 <TR><TD>2022</TD><TD>Trump Molests Collies</TD></TR>
 <TR><TD>2023</TD><TD>Trump Molests Collies</TD></TR>
+<TR><TD>2024</TD><TD>Trump Molests Collies</TD></TR>
 </TABLE>
 </TD><TD valign="bottom">
 <B>White Division Champions</B>
 <TABLE WIDTH=*>
-<TR><TD><B>Year</B></TD><TD><B>Winner</B></TD></TR>
+<TR><TD width="33%"><B>Year</B></TD><TD><B>Winner</B></TD></TR>
 <TR><TD>2010</TD><TD>MeggaMen</TD></TR>
 <TR><TD>2011</TD><TD>Sacks on the Beach</TD></TR>
 <TR><TD>2012</TD><TD>Sacks on the Beach</TD></TR>
@@ -101,6 +103,7 @@ include 'base/menu.php';
 <TR><TD>2021</TD><TD>MeggaMen</TD></TR>
 <TR><TD>2022</TD><TD>MeggaMen</TD></TR>
 <TR><TD>2023</TD><TD>British Bulldogs</TD></TR>
+<TR><TD>2024</TD><TD>Aint Nothing But a Jew Thing</TD></TR>
 </table>
 </TD></TR></TABLE>
 
@@ -141,6 +144,7 @@ include 'base/menu.php';
 <TR><TD>2021</TD><TD>Norsemen</TD><TD>49</TD><TD>MeggaMen</TD><TD>40</TD><TD>Patrick Mahomes</TD></TR>
 <TR><TD>2022</TD><TD>Trump Molests Collies</TD><TD>48</TD><TD>MeggaMen</TD><TD>42</TD><TD>TJ Hockenson</TD></TR>
 <TR><TD>2023</TD><TD>MeggaMen</TD><TD>79</TD><TD>British Bulldogs</TD><TD>21</TD><TD>Derrick Henry</TD></TR>
+<TR><TD>2024</TD><TD>Aint Nothing But a Jew Thing</TD><TD>66</TD><TD>Testudos Revenge</TD><TD>35</TD><TD>Indianapolis OL</TD></TR>
 </TABLE>
 </div>
 
@@ -175,6 +179,7 @@ include 'base/menu.php';
 <TR><TD>2021</TD><TD>Gallic Warriors</TD><TD>24</TD><TD>Sacks on the Beach</TD><TD>11</TD></TR>
 <TR><TD>2022</TD><TD>Crusaders</TD><TD>56</TD><TD>Richard's Lionhearts</TD><TD>27</TD></TR>
 <TR><TD>2023</TD><TD>Amish Electricians</TD><TD>51</TD><TD>Sigourney's Weaver's</TD><TD>0</TD></TR>
+<TR><TD>2024</TD><TD>Amish Electricians</TD><TD>27</TD><TD>Sigourney's Beaver</TD><TD>0</TD></TR>
 </TABLE>
 </div>
 
