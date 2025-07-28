@@ -14,17 +14,17 @@ Player</A> | |<A HREF="#MVP"> Most Valuable Player</A><BR>
 <HR size = "1">
 
 <H4><A NAME="FRST">Best 1st First Round Pick</H4>
-<IMG SRC="../../players/1208gall.jpg" align="bottom">
+<IMG SRC="/images/players/1208gall.jpg" align="bottom">
 <br>Joey Galloway - WR - Warriors<P>
 
 <A NAME="DEF">
 <h4> Best Defensive Player</h4>
-<img src="../../players/pp_zthom.gif" align="bottom">
+<img src="/images/players/pp_zthom.gif" align="bottom">
 <br>Zach Thomas - LB - Slayers<p>
 
 <a name="MVP">
 <h4> Most Valuable Player</h4>
-<img src="../../players/favre3.jpg" align="bottom">
+<img src="/images/players/favre3.jpg" align="bottom">
 <br>Green Bay Quarterback - Norsemen<p>
 <HR size = "1">
 <a name="ABT">

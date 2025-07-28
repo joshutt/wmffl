@@ -77,16 +77,16 @@ include 'base/menu.php';
         <button type="submit" class="btn btn-lg btn-wmffl">Submit</button>
     </form>
 
-    <TABLE>
-        <TR>
-            <TD>Username:</TD>
-            <TD><INPUT TYPE="Text" NAME="Username" VALUE="<?= $_COOKIE["user"]; ?>"></TD>
-        </TR>
-        <TR>
-            <TD></TD>
-            <TD><INPUT TYPE="Submit" VALUE="Get New Password"></TD>
-        </TR>
-    </TABLE>
+<!--    <TABLE>-->
+<!--        <TR>-->
+<!--            <TD>Username:</TD>-->
+<!--            <TD><INPUT TYPE="Text" NAME="Username" VALUE="--><?php //= $_COOKIE["user"] ?? ''; ?><!--"></TD>-->
+<!--        </TR>-->
+<!--        <TR>-->
+<!--            <TD></TD>-->
+<!--            <TD><INPUT TYPE="Submit" VALUE="Get New Password"></TD>-->
+<!--        </TR>-->
+<!--    </TABLE>-->
 
 </div>
 

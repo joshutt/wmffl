@@ -1,4 +1,4 @@
-<?
+<?php
 $title = "File Not Found";
 include "base/menu.php";
 ?>
@@ -9,4 +9,4 @@ include "base/menu.php";
 The file you attempted to access could not be found.  If you followed a link to get here, please notify the webmaster.<BR>
 </center>
 
-<? include "base/footer.php"; ?>
+<?php include "base/footer.php"; ?>
