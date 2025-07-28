@@ -41,6 +41,7 @@ if (isset($_POST['username'])) {
             error_log("Mail Body: $body");
             mail($email, 'WMFFL New Password', $body, 'From: webmaster@' . $_SERVER['SERVER_NAME']);
 
+
             // Close things out
             header('Location: thanksnew.php');
         }
