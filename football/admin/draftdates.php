@@ -5,8 +5,8 @@ $ini = parse_ini_file('wmffl.conf');
 // Database connection information
 $conn = mysqli_connect('localhost', $ini['userName'], $ini['password'], $ini['dbName']);
 
-$nflStartDate = '2024-09-05';
-$season=2024;
+$nflStartDate = '2025-09-04';
+$season=2025;
 
 $query = "SELECT t.name, d.date, min( d.attend ) as attend
 FROM  `draftdate` d, user u, team t
