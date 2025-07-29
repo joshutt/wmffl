@@ -3,6 +3,7 @@
  * @var $conn mysqli
  */
 	// Include the file that defines the connection information
+include 'check.inc.php';
 // establish connection
 require 'base/conn.php';
 

@@ -1,4 +1,5 @@
 <?
+include 'check.inc.php';
 require_once "utils/setup.php";
 $host = $config["Paths"]["scriptsPath"];
 exec("$host/livescore/livescore.sh", $outArr);

@@ -1,3 +1,4 @@
+<?php include '../check.inc.php';?>
 <form action="image.php" method="post">
 
 <b>Path:</b><input type="text" name="path"/><br/>

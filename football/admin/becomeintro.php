@@ -1,4 +1,5 @@
 <?
+include 'check.inc.php';
 require_once "base/conn.php";
 
 $sql = "SELECT teamid, name FROM team ORDER BY name";

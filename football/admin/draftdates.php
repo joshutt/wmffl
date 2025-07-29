@@ -1,4 +1,5 @@
 <?php
+include 'check.inc.php';
 $ini = parse_ini_file('wmffl.conf');
 
 // Database connection information

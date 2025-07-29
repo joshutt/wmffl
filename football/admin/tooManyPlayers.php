@@ -1,4 +1,5 @@
 <?
+include 'check.inc.php';
 require_once "utils/start.php";
 #require_once "base/conn.php";
 #require_once "base/useful.php";

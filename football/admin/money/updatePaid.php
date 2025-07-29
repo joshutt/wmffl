@@ -7,6 +7,7 @@
 use Doctrine\ORM\EntityManager;
 use WMFFL\orm\Paid as Paid;
 
+include '../check.inc.php';
 require_once 'utils/start.php';
 require_once 'bootstrap.php';
 

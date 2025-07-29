@@ -1,4 +1,5 @@
 <?
+include 'check.inc.php';
 require_once "utils/start.php";
 
 function singleCompare($scoreA, $scoreB) {

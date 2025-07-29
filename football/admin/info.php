@@ -1,4 +1,5 @@
-<?php 
+<?php
+include 'check.inc.php';
 //putenv("TZ=US/Eastern");
 
 class GenerateInfo {

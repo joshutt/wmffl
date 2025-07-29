@@ -2,6 +2,7 @@
 /**
  * @var $conn mysqli
  */
+include 'check.inc.php';
 // establish connection
 require 'base/conn.php';
 
@@ -19,17 +20,22 @@ ORDER BY p.lastname
 EOD;
 
 $results = mysqli_query($conn, $coachsql);
-print "<form action=\"headcoachprocess.php\">";
-print '<table>';
 
-print "<tr><td colspan=\"4\" align=\"center\">";
-print "<select name=\"team\">";
+?>
+
+<h3>(Change Head Coach)</h3>
+<form action="headcoachprocess.php">
+<select name="team">
+
+<?php
 while ($team = mysqli_fetch_array($teamResults)) {
     print "<option value=\"{$team['teamid']}\">{$team['name']}</option>";
 }
-print '</select>';
-print '</td></tr>';
+?>
+</select>
 
+<table>
+    <?php
 while ($coach = mysqli_fetch_array($results)) {
     print <<<EOD
 <tr>
@@ -41,7 +47,8 @@ while ($coach = mysqli_fetch_array($results)) {
 EOD;
 }
 ?>
-
-<tr><td colspan="4" align="center"><input type="submit"></td></tr>
 </table>
+
+    <input type="submit" value="Submit">
 </form>
+<a href="index">Return to Admin page</a>

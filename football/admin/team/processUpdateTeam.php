@@ -4,7 +4,8 @@
  * @var $currentSeason int
  */
 // establish connection
-require 'utils/start.php';
+include '../check.inc.php';
+require 'base/conn.php';
 
 $query = <<<EOD
 select tn.teamid, tn.season, tn.name, tn.abbrev, tn.divisionId, t.logo, t.fulllogo
@@ -67,5 +68,8 @@ foreach ($updates as $update) {
     mysqli_real_query($conn, $update);
     $counter++;
 }
-print "$counter successful updates";
-print '<a href="updateTeamInfo.php">Back</a>';
+?>
+
+<p><?= $counter ?> successful updates</p>
+<p><a href="updateTeamInfo.php">Back</a></p>
+<p><a href="/admin">Return to Admin Page</a></p>

@@ -94,6 +94,12 @@ class LegacyBridge
 
         error_log("Path: $path");
         error_log('Real path: '.realpath($path));
+
+        // Check if the path contains 'admin' and log it
+        if ($requestPathInfo && str_contains($requestPathInfo, 'admin')) {
+            error_log("Admin path accessed: $requestPathInfo");
+        }
+
         if (is_dir($path) || is_file($path)) {
             chdir(dirname($path));
             return $path;

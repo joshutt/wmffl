@@ -2,9 +2,10 @@
 /**
  * @var $conn mysqli
  */
-require_once '/home/joshutt/football/base/conn.php';
-include '/home/joshutt/football/base/useful.php';
-include '/home/joshutt/football/base/scoring.php';
+include 'check.inc.php';
+require_once 'base/conn.php';
+include 'base/useful.php';
+include 'base/scoring.php';
 
 function generateSelect($thisTeamID, $currentSeason, $currentWeek): string
 {
@@ -91,16 +92,19 @@ function determinePoints($teamid, $season, $week, $conn) {
 
 function updateScore($teamA, $teamB, $season, $week, $aScore, $bScore, $conn): void
 {
-    $update = "UPDATE schedule SET scorea=$aScore, scoreb=$bScore ";
-    $update .= "WHERE season=$season and week=$week and ";
-    $update .= "teama=$teamA and teamb=$teamB";
-    mysqli_query($conn, $update);
+    $update = <<<EOD
+        UPDATE schedule SET scorea=$aScore, scoreb=$bScore
+        WHERE season=$season and week=$week and teama=$teamA and teamb=$teamB
+EOD;
+    mysqli_query($conn, $update) or die ('Dead: ' . mysqli_error($conn));
 }
 
 
-$gameSelect = 'SELECT s.teama, s.teamb, w.season, w.week ';
-$gameSelect .= 'FROM schedule s, weekmap w ';
-$gameSelect .= 'WHERE s.season=w.season and s.week=w.week ';
+$gameSelect = <<<EOD
+SELECT s.teama, s.teamb, w.season, w.week
+FROM schedule s, weekmap w
+WHERE s.season=w.season and s.week=w.week
+EOD;
 
 if (!empty($week)) {
     $gameSelect .= 'AND w.week=' .$week;
@@ -136,4 +140,3 @@ while ($gameRow = mysqli_fetch_array($gameResults)) {
     updateScore($gameRow['teama'], $gameRow['teamb'], $gameRow['season'], $gameRow['week'], $aFinal, $bFinal, $conn);
     // print "Updated ".$gameRow['teama']." vs ".$gameRow['teamb']."\n";
 }
-
