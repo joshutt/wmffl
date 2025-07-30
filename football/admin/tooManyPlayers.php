@@ -1,4 +1,9 @@
-<?
+<?php
+/**
+ * @var $conn mysqli
+ * @var $currentSeason int
+ */
+
 include 'check.inc.php';
 require_once "utils/start.php";
 #require_once "base/conn.php";
