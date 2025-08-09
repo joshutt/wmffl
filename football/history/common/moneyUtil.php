@@ -96,6 +96,27 @@ EOD;
 }
 
 
+function getLastUpdate(\Doctrine\ORM\EntityManager $em): ?string {
+    $query = <<<EOD
+select DATE_FORMAT(greatest(t.Date, max(wm.EndDate), (c.value)), '%b %e, %Y') as 'lastUpdate'
+from transactions t
+join weekmap wm
+join config c on c.`key`='money.update'
+where wm.EndDate < now()
+EOD;
+
+    try {
+        // fetchOne() gets the value from the first column of the first row.
+        // It returns false if no row is found, which will be cast to null by the return type.
+        return $em->getConnection()->executeQuery($query)->fetchOne();
+    } catch (\Doctrine\DBAL\Exception $e) {
+
+        error_log('DBAL Exception in getLastUpdate: ' . $e->getMessage());
+        return null;
+    }
+}
+
+
 /**
  * @param \Doctrine\ORM\EntityManager $em
  * @param string $query
@@ -117,8 +138,7 @@ function performQuery(\Doctrine\ORM\EntityManager $em, string $query, int $curre
         error_log('Exception getting Extra charges'. $e);
         return null;
     } finally {
-//        $stmt->closeCursor();
-        $conn->close();
+//        $conn->close();
     }
 
     return $returnArr;

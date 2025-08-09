@@ -135,7 +135,16 @@ include 'base/menu.php';
             </i></blockquote>
     </div>
 
-
+    <div class="card m-3 p-2 bg-light">
+        <b>Proposal 2025.9 - FG yardage points</b>
+        <b>Sponsor: Richard Lawson</b><br/>
+        <span class="ballot">Status: <span class="status">In Disucssion</span></span><br/>
+        <p>3pts for all FG and 2pt bonus for every 75yds of successful FGs (PATs just 1 pt and not included in yardage).</p>
+        <blockquote class="mb-0 mt-2 px-3"><i>Update rule V.B.5.b.i to remove the words '0-30 yards'<br/>
+                Change rule V.B.5.b.ii to read "Every 75 yards of combined FG distance = 1 pt"<br/>
+                Repeal rules V.B.5.b.iii and V.B.5.b.iv
+            </i></blockquote>
+    </div>
 
 
 </div>

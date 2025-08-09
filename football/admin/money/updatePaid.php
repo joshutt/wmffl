@@ -18,7 +18,7 @@ $paid = $entityManager->getRepository('WMFFL\orm\Paid')->findBy(array('season' =
 ?>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="money.js"></script>
+<script src="/base/js/admin/money.js"></script>
 <link rel="stylesheet" type="text/css" href="/base/css/core.css"/>
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>
 

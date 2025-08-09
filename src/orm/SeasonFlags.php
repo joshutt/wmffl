@@ -20,7 +20,7 @@ class SeasonFlags
     private Team $team;
 
     #[ORM\Column(type: 'string', length: 3, nullable: true)]
-    private string $flags;
+    private ?string $flags;
 
     #[ORM\Column(name: 'division_winner', type: 'boolean')]
     private bool $divisionWinner = false;
