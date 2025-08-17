@@ -47,7 +47,7 @@ if (false === $response->isNotFound()) {
     // Symfony successfully handled the route.
     $response->send();
 } else {
-    LegacyBridge::handleRequest($request, $response, __DIR__);
+    LegacyBridge::handleRequest($request, $response, $kernel->getContainer(), __DIR__);
 }
 
 $kernel->terminate($request, $response);

@@ -4,6 +4,7 @@
 namespace App;
 
 use Exception;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -126,9 +127,13 @@ class LegacyBridge
     /**
      * @throws Exception
      */
-    public static function handleRequest(Request $request, Response $response, string $publicDirectory): void
+    public static function handleRequest(Request $request, Response $response, ContainerInterface $container, string $publicDirectory): void
     {
         $legacyScriptFilename = LegacyBridge::getLegacyScript($request);
+
+        // Make the Symfony entity manager available to the legacy script's scope.
+        // This variable will be accessible by the required file below.
+        $symEntityManager = $container->get('doctrine')->getManager();
 
         // Possibly (re-)set some env vars (e.g. to handle forms
         // posting to PHP_SELF):
