@@ -56,8 +56,10 @@ $lastCompletedPick = null;
 /** @var DraftPick $draftPickObj */
 foreach ($draftPicksResult as $draftPickObj) {
     // Determine and set-up round and pick
-    $roundDist = sprintf("%02d", $draftPickObj->getRound());
-    $pickDist = sprintf("%02d", $draftPickObj->getPick());
+//    $roundDist = sprintf("%02d", $draftPickObj->getRound());
+//    $pickDist = sprintf("%02d", $draftPickObj->getPick());
+    $roundDist = $draftPickObj->getRound();
+    $pickDist = $draftPickObj->getPick();
     if ($roundDist != $round) {
         if ($round != 0) {
             $pickList[$round] = $roundArray;
