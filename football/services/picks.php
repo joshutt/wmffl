@@ -87,7 +87,7 @@ foreach ($draftPicksResult as $draftPickObj) {
     
     if ($player != null) {
         $posValue = $player->getPos()?->value ?? '';
-        $playerName = $player->getFirstname().' '.$player->getLastname().' ('.$posValue.'-'.$player->getTeam().')';
+        $playerName = $player->getFirstname().' '.$player->getLastname();
         $playerId = $player->getFlmid();
         $playerPos = $player->getPos();
         $playerTeam = $player->getTeam();
