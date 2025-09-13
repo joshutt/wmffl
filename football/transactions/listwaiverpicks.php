@@ -1,10 +1,16 @@
-<?
+<?php
+/**
+ * @var $currentWeek int
+ * @var $currentSeason int
+ * @var $conn mysqli
+ */
+
 require_once "utils/start.php";
 
 if (array_key_exists('week', $_REQUEST)) {
     $week = $_REQUEST['week'];
 } else {
-    $week = $currentWeek - 1;
+//    $week = $currentWeek - 1;
     $week = $currentWeek;
 }
 if ($currentWeek == 0) {
@@ -31,4 +37,4 @@ if (mysqli_num_rows($results) == 0) {
     print "</table>";
 }
 
-?>
+

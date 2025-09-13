@@ -10,7 +10,7 @@ include 'base/menu.php';
 </style>
 
 <H1 ALIGN=CENTER>Rules of the WMFFL</H1>
-<H5 ALIGN=CENTER><I>Last Updated: August 24, 2025</I></H5>
+<H5 ALIGN=CENTER><I>Last Updated: August 27, 2024</I></H5>
 <HR size="1">
 <div class="container">
     Section 1: <A HREF="#I">Divisions and Schedules</A>; <A HREF="#II">Who Makes the Playoffs</A>; <A HREF="#III">The
@@ -21,11 +21,26 @@ include 'base/menu.php';
     Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules</A><BR>
 
     <HR size="1">
-    <P>Rules added or changed that will take effect for the 2025 season are indicated in <B>Bold</B>.</P>
+    <P>Rules added or changed that will take effect for the 2023 season are indicated in <B>Bold</B>.</P>
     <ul>
-        <li>All missed kicks are -1
+        <li>Better handling of players coming off IR
             <ul>
-                <li>Updates rules <a href="#V.B.5.b.v">V.B.5.b.v</a></li>
+                <li>Updates rules <a href="#IV.C.4">IV.C.4</a></li>
+            </ul>
+        </li>
+        <li>Increase penalties for bad activations
+            <ul>
+                <li>Change penalities in <a href="#V.A.3">V.A.3</a></li>
+            </ul>
+        </li>
+        <li>Reduce 60+ yard FG points
+            <ul>
+                <li>Changes rule <a href="#V.B.5.b.iv">V.B.5.b.iv</a></li>
+            </ul>
+        </li>
+        <li>Limit IR to 1 player
+            <ul>
+                <li>Change rule <a href="#IV.C.5">IV.C.5</a></li>
             </ul>
         </li>
     </ul>
@@ -167,13 +182,13 @@ include 'base/menu.php';
                         <li>The WMFFL team must explicitly designate a player as being on IR</li>
                         <li>Any player on IR will not be counted towards the roster limits in rule IV.A.</li>
                         <li>When the NFL removes a player from IR, they will be removed from the WMFFL IR</li>
-                        <li id="IV.C.4">Any player on the IR on Friday and removed from the NFL IR on
+                        <li class="newrule" id="IV.C.4">Any player on the IR on Friday and removed from the NFL IR on
                             Saturday or Sunday of
                             a given week, will not count against the roster limits in IV.A for that given week unless
                             they are
                             activated as a starter by the WMFFL team.
                         </li>
-                        <li id="IV.C.5">No team may have more the 26 players combined between the IR and
+                        <li class="newrule" id="IV.C.5">No team may have more the 26 players combined between the IR and
                             active roster.
                         </li>
                     </ol>
@@ -214,7 +229,7 @@ include 'base/menu.php';
                             additional
                             player at either RB, WR or TE.
                         </li>
-                        <LI id="V.A.3">Submitting incomplete lineups can result in penalties and fines
+                        <LI class="newrule" id="V.A.3">Submitting incomplete lineups can result in penalties and fines
                             <OL TYPE="a">
                                 <LI>Activating players on NFL bye weeks will result in a $1 fine and a 5 point penalty
                                     per
@@ -343,7 +358,7 @@ include 'base/menu.php';
                                         <li>Fumbles Lost = -2 pts</li>
                                     </OL>
                             </OL>
-                        <LI id="V.B.5">Kickers
+                        <LI>Kickers
                             <OL TYPE="a">
                                 <LI>Extra points
                                     <OL TYPE="i">
@@ -355,8 +370,8 @@ include 'base/menu.php';
                                         <li>Made 0-39 yards = 3 pts</li>
                                         <li>Made 40-49 yards = 4 pts</li>
                                         <li>Made 50-59 yards = 5 pts</li>
-                                        <li id="V.B.5.b.iv">Made 60+ yards = 7 pts</li>
-                                        <li class="newrule" id="V.B.5.b.v">Missed = -1 pt</li>
+                                        <li class="newrule" id="V.B.5.b.iv">Made 60+ yards = 7 pts</li>
+                                        <li>Missed 0-30 yards = -1 pt</li>
                                     </OL>
                             </OL>
                         <LI>Offensive Line

@@ -16,7 +16,7 @@ include 'base/menu.php';
     <div class="card m-3 p-2 bg-light">
         <b>Proposal 2025.1 - Reduce Kicker Points</b>
         <b>Sponsor: Thomas Marsh</b><br/>
-        <span class="ballot">Status: <span class="status">In Disucssion</span></span><br/>
+        <span class="ballot">Status: <span class="status">Failed 4-4, 3 abstain</span></span><br/>
         <p>Reducing the kicker points to below.</p>
 
         <p>
@@ -43,7 +43,7 @@ include 'base/menu.php';
     <div class="card m-3 p-2 bg-light">
         <b>Proposal 2025.2 - All FG Worth 3 Pts</b>
         <b>Sponsor: Chris Heywood</b><br/>
-        <span class="ballot">Status: <span class="status">In Disucssion</span></span><br/>
+        <span class="ballot">Status: <span class="status">Failed, 3-7, 1 abstain</span></span><br/>
         <p>We should not give kickers more or less points than the kick was actually worth. Who cares how long the
             kick was. It really doesn’t make a difference. Short kicks can be great too. I say all kicks are worth three
             regardless of distance. PATs are still worth one.</p>
@@ -60,7 +60,7 @@ include 'base/menu.php';
     <div class="card m-3 p-2 bg-light">
         <b>Proposal 2025.3 - Eliminate Head Coaches</b>
         <b>Sponsor: Chris Heywood</b><br/>
-        <span class="ballot">Status: <span class="status">In Disucssion</span></span><br/>
+        <span class="ballot">Status: <span class="status">Failed, 5-6</span></span><br/>
         <p>I propose eliminating the head coach position. In the past, I supported the head coach. But, I changed my
             mind.
             There has Coach has nothing to do with penalties and point differentials. It is real just an a bet on the
@@ -79,7 +79,7 @@ include 'base/menu.php';
     <div class="card m-3 p-2 bg-light">
         <b>Proposal 2025.4 - Make DL a Team Unit</b>
         <b>Sponsor: Chris Heywood</b><br/>
-        <span class="ballot">Status: <span class="status">In Disucssion</span></span><br/>
+        <span class="ballot">Status: <span class="status">Failed, 2-9</span></span><br/>
         <p> I propose changing the selection of individual defensive lineman to simply selecting a defensive line from
             an
             NFL team. Same as we do with offensive lines. Why are we treating offensive lines and defensive lines
@@ -93,7 +93,7 @@ include 'base/menu.php';
     <div class="card m-3 p-2 bg-light">
         <b>Proposal 2025.5 - Make TE a flex position</b>
         <b>Sponsor: Chris Heywood</b><br/>
-        <span class="ballot">Status: <span class="status">In Disucssion</span></span><br/>
+        <span class="ballot">Status: <span class="status">Failed, 3-8</span></span><br/>
         <p>I propose that we changed the tight end position to a flex position. There are simply not enough good tight
             ends to go around. And only a few teams benefit from this position. Instead of having to select a tight end,
             we should be able to select either an additional running back, an additional wide receiver or a tight
@@ -106,7 +106,7 @@ include 'base/menu.php';
     <div class="card m-3 p-2 bg-light">
         <b>Proposal 2025.6 - Add flex DL</b>
         <b>Sponsor: Warren Allen</b><br/>
-        <span class="ballot">Status: <span class="status">In Disucssion</span></span><br/>
+        <span class="ballot">Status: <span class="status">Failed, 3-8</span></span><br/>
         <p>I would very much support adding a DT position, or changing the DL rule to something like our flex rule on
             offense, where you pick, say, 3 DLs and one must be listed as a DT.</p>
         <blockquote class="mb-0 mt-2 px-3"><i>Change text in rule IV.B.7 to read 'Defensive Line (sub-designated as defensive ends and defensive tackles)'<br/>
@@ -118,7 +118,7 @@ include 'base/menu.php';
     <div class="card m-3 p-2 bg-light">
         <b>Proposal 2025.7 - Add LB/Secondard flex</b>
         <b>Sponsor: Warren Allen</b><br/>
-        <span class="ballot">Status: <span class="status">In Disucssion</span></span><br/>
+        <span class="ballot">Status: <span class="status">Failed, 3-8</span></span><br/>
         <p> I would also support a LB/Secondary flex where we pick 5 players at S, CB, or LB with the a rule that you
         must have at least one of each.</p>
         <blockquote class="mb-0 mt-2 px-3"><i>Change text in rule IV.B.9 to read 'Defensive Backs (sub-designated as cornerbacks and safeties)'<br/>
@@ -129,7 +129,7 @@ include 'base/menu.php';
     <div class="card m-3 p-2 bg-light">
         <b>Proposal 2025.8 - All Missed Kicks are -1</b>
         <b>Sponsor: Richard Lawson</b><br/>
-        <span class="ballot">Status: <span class="status">In Disucssion</span></span><br/>
+        <span class="ballot">Status: <span class="status">Passed, 7-3, 1 abstain</span></span><br/>
         <p>Will add another - any missed kick = -1</p>
         <blockquote class="mb-0 mt-2 px-3"><i>Update rule V.B.5.b.v to remove the words '0-30 yards'
             </i></blockquote>
@@ -138,7 +138,7 @@ include 'base/menu.php';
     <div class="card m-3 p-2 bg-light">
         <b>Proposal 2025.9 - FG yardage points</b>
         <b>Sponsor: Richard Lawson</b><br/>
-        <span class="ballot">Status: <span class="status">In Disucssion</span></span><br/>
+        <span class="ballot">Status: <span class="status">Failed, 3-6, 2 abstain</span></span><br/>
         <p>3pts for all FG and 2pt bonus for every 75yds of successful FGs (PATs just 1 pt and not included in yardage).</p>
         <blockquote class="mb-0 mt-2 px-3"><i>Update rule V.B.5.b.i to remove the words '0-30 yards'<br/>
                 Change rule V.B.5.b.ii to read "Every 75 yards of combined FG distance = 1 pt"<br/>

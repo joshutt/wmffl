@@ -19,7 +19,6 @@ include 'base/scoring.php';
 $week = $currentWeek;
 
 $sql = 'select p.playerid, p.pos, s.season, s.* from newplayers p, stats s ';
-$sql .= "where s.statid=p.flmid and s.played=1 and s.season=$currentSeason and week=$week";
 
 $bigquery = 'insert into playerscores (playerid, season, week, pts) ';
 $bigquery .= 'values ';

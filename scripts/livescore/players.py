@@ -192,7 +192,7 @@ class Player:
                     counts[1] = counts[1] + 1
                 elif yards >= 0:
                     counts[0] = counts[0] + 1
-                elif yards >= -30:
+                elif yards < 0:
                     counts[4] = counts[4] + 1
         return counts
 
