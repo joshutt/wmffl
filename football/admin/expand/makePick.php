@@ -1,4 +1,5 @@
-<?
+<?php
+include '../check.inc.php';
 require_once "utils/start.php";
 
 $sql = <<<EOD

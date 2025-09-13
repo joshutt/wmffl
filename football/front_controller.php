@@ -12,7 +12,7 @@ $docRoot = $_SERVER['DOCUMENT_ROOT'];
 //print $page;
 //exit;
 $curDir = getcwd();
-$parent = dirname($curDir, 1);
+$parent = dirname($curDir);
 $includePath = '/home/joshutt/php';
 $includePath .= PATH_SEPARATOR.$curDir;
 $includePath .= PATH_SEPARATOR.$parent;
@@ -28,7 +28,7 @@ ini_set('log_errors', 1);
 $orgPage = $page;
 error_log("PAGE: $page");
 
-if (substr($page, 0, 5) == '/img/') {
+if (str_starts_with($page, '/img/')) {
     $orgPage = $page;
     $page = '/img.php';
 //    $_REQUEST['url']='d19d9ad38fa48172373146a4a3136425';
@@ -36,15 +36,15 @@ if (substr($page, 0, 5) == '/img/') {
     $_REQUEST['size']=substr($orgPage, 5, 1);
 }
 
-if (is_dir($docRoot.$page) && substr($page, -1) !== '/') {
+if (is_dir($docRoot.$page) && !str_ends_with($page, '/')) {
     $page .= '/';
 }
 
-if (substr($page, -1) === '/') {
+if (str_ends_with($page, '/')) {
     $page .= 'index.php';
 }
 
-if (substr($page, -3) !== 'php') {
+if (!str_ends_with($page, 'php')) {
     $page .= '.php';
 }
 

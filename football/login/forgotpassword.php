@@ -41,6 +41,7 @@ if (isset($_POST['username'])) {
             error_log("Mail Body: $body");
             mail($email, 'WMFFL New Password', $body, 'From: webmaster@' . $_SERVER['SERVER_NAME']);
 
+
             // Close things out
             header('Location: thanksnew.php');
         }
@@ -77,16 +78,16 @@ include 'base/menu.php';
         <button type="submit" class="btn btn-lg btn-wmffl">Submit</button>
     </form>
 
-    <TABLE>
-        <TR>
-            <TD>Username:</TD>
-            <TD><INPUT TYPE="Text" NAME="Username" VALUE="<?= $_COOKIE["user"]; ?>"></TD>
-        </TR>
-        <TR>
-            <TD></TD>
-            <TD><INPUT TYPE="Submit" VALUE="Get New Password"></TD>
-        </TR>
-    </TABLE>
+<!--    <TABLE>-->
+<!--        <TR>-->
+<!--            <TD>Username:</TD>-->
+<!--            <TD><INPUT TYPE="Text" NAME="Username" VALUE="--><?php //= $_COOKIE["user"] ?? ''; ?><!--"></TD>-->
+<!--        </TR>-->
+<!--        <TR>-->
+<!--            <TD></TD>-->
+<!--            <TD><INPUT TYPE="Submit" VALUE="Get New Password"></TD>-->
+<!--        </TR>-->
+<!--    </TABLE>-->
 
 </div>
 

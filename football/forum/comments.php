@@ -1,6 +1,6 @@
 <?php
 $title = "Owner's Commentary";
-$cssList = array('blog.css');
+$cssList = array('/base/css/blog.css');
 include 'base/menu.php';
 ?>
 

@@ -1,4 +1,5 @@
 <?
+include 'check.inc.php';
 
 print "start<br/>";
 require_once "utils/start.php";

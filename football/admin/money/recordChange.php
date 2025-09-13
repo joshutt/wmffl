@@ -6,6 +6,7 @@
 use Doctrine\ORM\EntityManager;
 use WMFFL\orm\Paid as Paid;
 
+include '../check.inc.php';
 require_once 'utils/start.php';
 require_once 'bootstrap.php';
 
@@ -37,6 +38,7 @@ try {/** @var Paid $paid */
         default:
             break;
     }
+    $entityManager->getConnection()->executeStatement("UPDATE config SET value=now() WHERE `key`='money.update'");
     $entityManager->flush();
 } catch (\Doctrine\ORM\OptimisticLockException|\Doctrine\ORM\Exception\ORMException $e) {
     print "Error: $e";

@@ -1,4 +1,5 @@
 <?
+include 'check.inc.php';
 require_once "base/conn.php";
 session_start();
 	$thequery = "select teamid, password, name, username from user where teamid=$teamchangeid";

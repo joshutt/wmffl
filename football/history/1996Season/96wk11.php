@@ -1,0 +1,163 @@
+<HTML>
+<HEAD>
+<TITLE>WMFFL 1996 Week 11 Newsletter</TITLE>
+</HEAD>
+
+<?php include 'base/menu.php'; ?>
+
+<H1 ALIGN=CENTER>1996 Season - Week 11</H1>
+<HR size = "1">
+<PRE>
+Watkins Mill Fantasy Football League Scores for WEEK #11
+========================================================
+
+Warriors          ( 22)  Barbarians        ( 55)
+Iradicators       ( 33)  Archers Who Say Ni( 10)
+Fighting Squirrels( 26)  Slayers           ( 35)
+Renegades         ( 60)  Tsunami           ( 10)
+
+
+Watkins Mill Fantasy Football League Standings after WEEK #11
+=============================================================
+                    Record
+Blue Division       W  L  T
+---------------------------
+Barbarians          5  4  0
+Warriors            5  5  0
+Iradicators         4  5  0
+Archers Who Say Ni  1  9  0
+
+                    Record
+Orange Division     W  L  T
+---------------------------
+Renegades           9  1  0
+Norsemen            9  1  0
+Slayers             5  5  0
+Tsunami             4  6  0
+Fighting Squirrels  2  8  0
+
+
+This Week's Transactions
+================================================================
+  Slayers            Dropped Thigpen,Yancey
+  Slayers            Dropped Davis,Willie
+  Slayers            Picked Up Kirkland,Levon
+  Slayers            Dropped Lewis,Mo
+  Slayers            Picked Up Fryar,Irving
+  Slayers            Picked Up Alexander,Derrick
+
+
+Next Week's Fantasy Schedule
+==========================================
+  Slayers            at Barbarians
+  Norsemen           at Tsunami
+  Fighting Squirrels at Iradicators
+  Renegades          at Warriors
+
+
+Notes From The Commissioner
+===================================
+The was an error in the original schedule.  For Week 13, instead of
+Norsemen vs. Renegades and Iradicators vs. Fighting Squirrels.  It
+should read Norsemen vs. Iradicators and Renegades vs. Fighting
+Squirrels.  I believe that everything else is correct.
+
+The transaction deadline has passed.  No additional transactions will
+be allowed.
+
+ Byes
+The remaining byes this season are as follows:
+Week 12    Archers Who Say Ni
+Week 13    Warriors
+Week 14    Fighting Squirrels
+
+
+Watkins Mill Fantasy Football League Scoring Breakdown for WEEK #11
+===================================================================
+Barbarians                         Warriors
+==============================     ==============================
+HC: Schottenheimer,MartyKC   3     HC: Brooks,Rich         STL  3
+QB: SAN FRAN TEAM QB    SF   2     QB: CINCINNATI TEAM QB  CIN  4
+RB: Abdul-jabbar,Karim  MIA 13     RB: Anderson,Jamal      ATL  6
+RB: Smith,Emmitt        DAL  3     RB: Murrell,Adrian      NYJ 19
+WR: Carter,Cris         MIN 11     WR: Brown,Tim           OAK  3
+WR: Early,Quinn         BUF  6     WR: Galloway,Joey       SEA 13
+TE: Sharpe,Shannon      DEN 10     TE: Coates,Ben          NE   6
+K : HOUSTON KICKER      HOU  7     K : DETROIT KICKER      DET  3
+OL: KANSAS CITY OFFENSE KC  11     OL: DENVER OFFENSE      DEN  2
+DL: O'neal,Leslie       STL  7     DL: Saleaumua,Dan       KC   1
+DL: Thomas,Henry        DET  4     DL: Sinclair,Michael    SEA  0
+LB: Harvey,Ken          WAS  4     LB: Lathon,Lamar        CAR  1
+LB: Thomas,Derrick      KC   9     LB: Seau,Junior         SD   1
+DB: Lumpkin,Sean        NO   0     DB: Parker,Anthony      STL  1
+DB: Woodson,Rod         PIT 13     DB: Woolford,Donnell    CHI  7
+------------------------------     ------------------------------
+          Starter Points = 103               Starter Points =  70
+        Total Points For =  55             Total Points For =  22
+
+Archers Who Say Ni                 Iradicators
+==============================     ==============================
+HC: Levy,Marv           BUF  3     HC: Johnson,Jimmy       MIA  3
+QB: ATLANTA TEAM QB     ATL 11     QB: JACKSONVILLE TEAM QBJAC 21
+RB: Watters,Ricky       PHI  4     RB: Faulk,Marshall      IND  0
+RB: Zellars,Ray         NO   0     RB: Stewart,James       JAC 12
+WR: Chrebet,Wayne       NYJ  0     WR: Irvin,Michael       DAL  4
+WR: Sanders,Chris       HOU  6     WR: Jackson,Michael     BAL  6
+TE: Jackson,Keith       GB   0     TE: Asher,Jamie         WAS  0
+K : CAROLINA KICKER     CAR 10     K : GREEN BAY KICKER    GB   9
+OL: SEATTLE OFFENSE     SEA 11     OL: MIAMI OFFENSE       MIA  4
+DL: Bennett,Tony        IND  4     DL: Smith,Bruce         BUF  8
+DL: Jones,Sean          GB   0     DL: Swann,Eric          ARI  7
+LB: Jones,Robert        STL  0     LB: Norton,Ken          SF   9
+LB: Stephens,Rod        WAS  1     LB: Tuggle,Jessie       ATL  7
+DB: Richard,Stanley     WAS 13     DB: Lyght,Todd          STL  3
+DB: Turner,Eric         BAL  8     DB: Sanders,Deion       DAL  1
+------------------------------     ------------------------------
+          Starter Points =  71               Starter Points =  94
+        Total Points For =  10             Total Points For =  33
+
+Slayers                            Fighting Squirrels
+==============================     ==============================
+HC: Seifert,George      SF   0     HC: Holmgren,Mike       GB   0
+QB: OAKLAND TEAM QB     OAK  4     QB: MINNESOTA TEAM QB   MIN 23
+RB: Allen,Marcus        KC   0     RB: Garner,Charlie      PHI  1
+RB: Sanders,Barry       DET 12     RB: Pegram,Erric        PIT  0
+WR: Alexander,Derrick   BAL  6     WR: Glenn,Terry         NE  12
+WR: Fryar,Irving        PHI 13     WR: Stewart,Kordell     PIT  6
+TE: Walls,Wesley        CAR  3     TE: Glover,Andrew       OAK  0
+K : PITTSBURGH KICKER   PIT  7     K : WASHINGTON KICKER   WAS 12
+OL: WASHINGTON OFFENSE  WAS 16     OL: PHILADELPHIA OFFENSEPHI  1
+DL: Gilbert,Sean        WAS  2     DL: Doleman,Chris       SF   7
+DL: Tolbert,Tony        DAL  2     DL: Jones,Cedric        NYG  1
+LB: Kirkland,Levon      PIT  3     LB: Greene,Kevin        CAR  1
+LB: Thomas,Zach         MIA  6     LB: Woodall,Lee         SF   8
+DB: Green,Victor        NYJ 12     DB: Brown,Larry         OAK  0
+DB: Griffith,Robert     MIN  4     DB: Woodson,Darren      DAL  9
+------------------------------     ------------------------------
+          Starter Points =  90               Starter Points =  81
+        Total Points For =  35             Total Points For =  26
+
+Tsunami                            Renegades
+==============================     ==============================
+HC: Ross,Bobby          SD   3     HC: Switzer,Barry       DAL  3
+QB: DENVER TEAM QB      DEN  7     QB: BALTIMORE TEAM QB   BAL 21
+RB: Bettis,Jerome       PIT 17     RB: Allen,Terry         WAS 19
+RB: George,Eddie        HOU  9     RB: Thomas,Thurman      BUF  9
+WR: Ellard,Henry        WAS  0     WR: Mathis,Terance      ATL  1
+WR: Reed,Andre          BUF  0     WR: Pickens,Carl        CIN 12
+TE: Galbraith,Scott     WAS  0     TE: Dudley,Rickey       OAK  0
+K : SAN DIEGO KICKER    SD   9     K : NEW ENGLAND KICKER  NE   7
+OL: DALLAS OFFENSE      DAL  1     OL: PITTSBURGH OFFENSE  PIT  6
+DL: Bankston,Michael    ARI  5     DL: Martin,Wayne        NO   6
+DL: Kennedy,Cortez      SEA  0     DL: Strahan,Michael     NYG  4
+LB: Slade,Chris         NE   2     LB: Mills,Sam           CAR  8
+LB: Spielman,Chris      BUF  3     LB: Phifer,Roman        STL  4
+DB: Carter,Dale         KC   3     DB: Lynch,Lorenzo       OAK  3
+DB: Mcdonald,Tim        SF   5     DB: Pope,Marquez        SF  11
+------------------------------     ------------------------------
+          Starter Points =  64               Starter Points = 114
+        Total Points For =  10             Total Points For =  60
+
+</PRE>
+
+<?php include 'base/footer.php'; ?>

@@ -1,22 +1,27 @@
-<?
+<?php
+/**
+ * @var $teamnum int
+ * @var $offerid int
+ * @var $conn mysqli
+ */
 session_start();
-require_once "checkambigous.inc.php";
-require_once "loadTrades.inc.php";
+require_once 'checkambigous.inc.php';
+require_once 'loadTrades.inc.php';
 
 //$teamid = 2;
 $transArray = array();
-$ambigous = checkTransactions($teamnum, $transArray);
-$ambigous = $ambigous | checkDraft();
+$ambigous = checkTransactions($conn, $teamnum, $transArray, $_POST);
+$ambigous = $ambigous | checkDraft($conn, $teamnum, $transArray, $_POST);
 
 if (!$ambigous) {
     header("Location: confirmoffer.php?offerid=$offerid");
 }
 
-$they = $_SESSION["they"];
-$you = $_SESSION["you"];
-$teamto = $_SESSION["teamto"];
-$otherTeam = loadTeam($teamto);
-$myTeam = loadTeam($teamnum);
+$they = $_SESSION['they'];
+$you = $_SESSION['you'];
+$teamto = $_SESSION['teamto'];
+$otherTeam = loadTeam($conn, $teamto);
+$myTeam = loadTeam($conn, $teamnum);
 $mapping = array($teamto => $otherTeam->getName(), $teamnum => $myTeam->getName());
 ?>
 
@@ -26,14 +31,14 @@ $mapping = array($teamto => $otherTeam->getName(), $teamnum => $myTeam->getName(
 <TITLE>Trades</TITLE>
 </HEAD>
 
-<? 
-include "base/menu.php"; 
+<?php
+include 'base/menu.php';
 ?>
 
 <H1 ALIGN=Center>Edit Offer</H1>
 
 <form action="edittrade.php" method="post">
-<?
+    <?php
 foreach ($they as $value) {
     print "<input type=\"hidden\" name=\"they[]\" value=\"$value\">";
 }
@@ -41,7 +46,7 @@ foreach ($you as $value) {
     print "<input type=\"hidden\" name=\"you[]\" value=\"$value\">";
 }
 ?>
-<input type="hidden" name="offerid" value="<? print $offerid;?>">
+<input type="hidden" name="offerid" value="<?php print $offerid;?>">
 <input type="hidden" name="edit" value="1"/>
 
 <HR>
@@ -62,14 +67,14 @@ which pick to use.</P>
 <INPUT TYPE="submit" VALUE="Edit Trade">
 
 
-<?
+    <?php
 if (count($transArray) > 0) {
 ?>
 
 <hr/>
 <font color="red">Invalid Transaction Points</font><br/>
 
-<?
+    <?php
 foreach ($transArray as $invalidTran) {
     $teamName = $mapping[$invalidTran->team];
     $ptsGiven = $invalidTran->pts;
@@ -80,12 +85,12 @@ foreach ($transArray as $invalidTran) {
 
 ?>
 <input type="submit" value="Edit Trade">
-<?
+    <?php
 }
 ?>
 
 </form>
 
-<? include "base/footer.php"; ?>
+<?php include 'base/footer.php'; ?>
 </BODY>
 </HTML>

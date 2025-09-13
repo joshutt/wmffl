@@ -1,4 +1,12 @@
 <?php
+/**
+ * @var $conn mysqli
+ * @var $config array
+ * @var $usernum int
+ */
+
+use utils\ImageProcessor;
+
 require_once 'utils/start.php';
 require_once 'utils/ImageProcessor.php';
 
@@ -12,14 +20,21 @@ function logerror($errno, $errstr, $errfile, $errline): void
     $errors[] = 'Provide a full URL to a JPEG, GIF or PNG image';
 }
 
-function compressImage($conn, string $url)
+
+/**
+ * Compresses and saves an image from a given URL.
+ * @param mysqli $conn Database connection object.
+ * @param string $url The URL or temporary file path of the image.
+ * @param array $config Configuration array containing paths.
+ * @return string The filename of the saved image.
+ */
+function compressImage(mysqli $conn, string $url, array $config): string
 {
-    global $config;
     $paths = $config['Paths'];
     $maxSize = 600;
 
     set_error_handler('logerror');
-    $processor = new \utils\ImageProcessor($paths);
+    $processor = new ImageProcessor($paths);
     $processor->createImageFromURL($url, $maxSize);
     $processor->saveImage($conn);
 
@@ -39,6 +54,7 @@ $caption = $_REQUEST['caption'];
 $articleList = $_REQUEST['article'];
 $article = '';
 
+
 foreach ($articleList as $subArt) {
     if (empty($subArt)) {
         continue;
@@ -50,8 +66,9 @@ global $fail;
 $fail = false;
 global $errors;
 $errors = array();
+
 // Validate input
-if (empty($title)) {
+if (empty($title) || strlen(trim($title)) < 2) {
     $errors[] = 'Must include a title';
     $fail = true;
 } else if (strlen($title) >= 75) {
@@ -65,33 +82,34 @@ if (empty($url) && empty($uploadFile)) {
     $errors[] = 'Only include one of image URL and image upload file';
     $fail = true;
 }
-
-if (empty($article)) {
-    $errors[] = 'Come on!  Put something in the message';
+if (empty($article) || strlen(trim($article)) < 200) {
+    $errors[] = 'Must include an article of at least 200 characters';
     $fail = true;
 }
 
+// If entry errors, then try compressing the image
 if (!$fail) {
     $file = $url;
     if (empty($file)) {
         $file = $upload['tmp_name'];
     }
     error_log("File Name [$file]" );
-    $fullName = compressImage($conn, $file);
+    $fullName = compressImage($conn, $file, $config);
     //$fullName = compressImage($url, $currentSeason, $currentWeek-1);
 }
 
-
+// If there was an error, reshow the publish page
 if ($fail) {
     include 'publish.php';
     exit();
 }
 
 
-$useTitle = mysqli_real_escape_string($conn, $title);
+// Safe escapore all of the values before going to DB
+$useTitle = mysqli_real_escape_string($conn, trim($title));
 $useURL = mysqli_real_escape_string($conn, $fullName);
-$useCaption = mysqli_real_escape_string($conn, $caption);
-$useArticle = mysqli_real_escape_string($conn, $article);
+$useCaption = mysqli_real_escape_string($conn, trim($caption));
+$useArticle = mysqli_real_escape_string($conn, trim($article));
 
 $sql = <<<EOD
 INSERT INTO articles

@@ -1,0 +1,56 @@
+<HTML>
+<HEAD>
+<TITLE>WMFFL 1993 Championship Newsletter</TITLE>
+</HEAD>
+
+<?php include 'base/menu.php'; ?>
+
+<H1 ALIGN=CENTER>1993 Season - Championship</H1>
+<HR size = "1">
+<PRE>
+WATKINS MILL FANTASY FOOTBALL LEAGUE
+Championship 1993
+
+			BARBARIANS
+			    85
+QB  New York Giants	2 td	166 yds	   0 int	12 pts
+RB  Emmitt Smith	0 td	102 yds	   2 rec	 4 pts
+RB  Chris Warren	1 td	168 yds	   0 rec	16 pts
+WR  Jerry Rice		1 td	132 yds	   4 rec	13 pts
+WR  Micheal Haynes	0 td	 63 yds	   5 rec	 1 pt
+TE  Marv Cook		0 td	  7 yds	   1 rec	 0 pts
+K   Kansas City		4 xp				 4 pts
+OL  Miami		23 yds	  3 sacks		 0 pts
+DB  Rod Woodson		6 t				 6 pts
+DB  Henry Jones		3 t				 3 pts
+DL  John Randle		4 t	  1 s			 3 pts
+DL  Tim Johnson		5 t				 5 pts
+LB  Hardy Nickerson	7 t				 7 pts
+LB  Roman Phifer	8 t				 8 pts
+HC  Wayne Fontes	0 				 0 pts
+
+
+			TSUNAMI
+			   67
+QB  Denver		0 td	121 yds	   0 int	 0 pts
+RB  Rodney Hampton	0 td	 78 yds	   1 rec	 1 pt
+RB  Terry Kirby		1 td	154 yds    9 rec	20 pts
+WR  Anthony Carter	0 td	 26 yds	   3 rec	 0 pts
+WR  Ricky Proehl	0 td	 75 yds	   6 rec	 3 pts
+TE  Brent Jones		0 td	 51 yds	   3 rec	 0 pts
+K   Houston		2 xp	  4 30y			14 pts
+OL  Dallas		129 yds	  3 scks		 0 pts
+DB  Eric Allen		1 t				 1 pt
+DB  Darrell Williams	4 t				 4 pts
+DL  Reggie White	2 t				 2 pts
+DL  Cortez Kennedy	5 t	  1 s			 7 pts
+LB  Chris Spielman	10 t				10 pts
+LB  Jesse Tuggle	2 t				 2 pts
+HC  Marv Levy		1 w				 3 pts
+
+		BARBARIANS WIN FANTASY BOWL II
+		           85 - 67
+		    MVP - CHRIS WARREN
+</PRE>
+
+<?php include 'base/footer.php'; ?>

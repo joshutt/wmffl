@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var $conn mysqli
+ * @var $currentSeason int
+ */
 require_once 'utils/start.php';
 
 function cmp($a, $b): int
@@ -20,9 +24,8 @@ function cmp($a, $b): int
     }
 }
 
-function displayBlock($array, $wties = true)
+function displayBlock($array, $wties = true): void
 {
-    $count = 0;
     foreach ($array as $team) {
         $disPCT = sprintf('%3.3f', $team['pct']);
         if ($team['active'] == 0) {
@@ -33,7 +36,6 @@ function displayBlock($array, $wties = true)
             $ced = '';
         }
 
-        $count++;
         if ($wties) {
             print <<<EOD
     <TR><TD class="text-left">$dec{$team['name']}$ced</TD>
@@ -51,9 +53,8 @@ EOD;
     }
 }
 
-function getRecList($addWhere, $season): array
+function getRecList(mysqli $conn, $addWhere, $season): array
 {
-    global $conn;
     $alltimeQuery = <<<EOD
         select t.name, t.active, count(s.gameid) as 'games',
         sum(if(t.teamid=s.TeamA, if(s.scorea>s.scoreb, 1, 0), if(s.scoreb>s.scorea, 1, 0))) as 'wins',
@@ -72,19 +73,19 @@ EOD;
     while ($team = mysqli_fetch_array($result)) {
         $pct = ($team['wins'] + $team['ties'] / 2.0) / $team['games'];
         $team['pct'] = $pct;
-        array_push($recordsArray, $team);
+        $recordsArray[] = $team;
     }
     usort($recordsArray, 'cmp');
     return array_reverse($recordsArray);
 }
 
 
-$allTimeArray = getRecList('', $currentSeason);
-$regSeasonArray = getRecList('and postseason=0', $currentSeason);
-$postSeasonArray = getRecList('and postseason=1', $currentSeason);
-$playoffArray = getRecList('and playoffs=1', $currentSeason);
-$championshipArray = getRecList('and championship=1', $currentSeason);
-$toiletBowlArray = getRecList('and postseason=1 and playoffs=0', $currentSeason);
+$allTimeArray = getRecList($conn, '', $currentSeason);
+$regSeasonArray = getRecList($conn, 'and postseason=0', $currentSeason);
+$postSeasonArray = getRecList($conn, 'and postseason=1', $currentSeason);
+$playoffArray = getRecList($conn, 'and playoffs=1', $currentSeason);
+$championshipArray = getRecList($conn, 'and championship=1', $currentSeason);
+$toiletBowlArray = getRecList($conn, 'and postseason=1 and playoffs=0', $currentSeason);
 
 
 $javascriptList = array('//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js',

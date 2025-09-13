@@ -1,7 +1,9 @@
-<?
-$title = "2007 WMFFL Season";
-include "base/menu.php"; 
-?>
+<HTML>
+<HEAD>
+<TITLE>2007 WMFFL Season</TITLE>
+</HEAD>
+
+<?php include 'base/menu.php'; ?>
 
 <H1 ALIGN=CENTER>The 2007 Season</H1>
 <HR size = "1">
@@ -27,8 +29,7 @@ include "base/menu.php";
 </td>
 
 <td>
-<A HREF="2007Season/leaders.php">
-<IMG SRC="/images/football.jpg" BORDER=0>League Leaders</A>
+<!-- <A HREF="/transactions/transactions.php?year=2007"><IMG SRC="/images/football.jpg" BORDER=0>Transactions</A> -->
 </td>
 
 <td ALIGN=Left><A HREF="#standings"><IMG SRC="/images/football.jpg" BORDER=0>Final Standings</A></td>
@@ -75,8 +76,4 @@ include "base/menu.php";
 
 <br/>
 
-<?
-$thisSeason = 2007;
-$thisWeek = 17;
-include "base/footer.php";
-?>
+<?php include 'base/footer.php'; ?>

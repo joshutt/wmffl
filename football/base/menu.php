@@ -103,8 +103,8 @@ if (!isset($title)) {
             <li class="nav-item"> <a class="nav-link pl-2" href="/activate/activations">Activations</a> </li>
             <li class="nav-item"> <a class="nav-link pl-2" href="/teams/">Teams</a> </li>
             <li class="nav-item"> <a class="nav-link pl-2" href="/stats/leaders">Stats</a> </li>
-            <li class="nav-item"> <a class="nav-link pl-2" href="/history/2024Season/schedule">Schedule</a> </li>
-            <li class="nav-item"> <a class="nav-link pl-2" href="/history/2024Season/standings#">Standings</a> </li>
+            <li class="nav-item"> <a class="nav-link pl-2" href="/history/2025Season/schedule">Schedule</a> </li>
+            <li class="nav-item"> <a class="nav-link pl-2" href="/history/2025Season/standings#">Standings</a> </li>
             <li class="nav-item"> <a class="nav-link pl-2" href="/transactions/transactions">Transactions</a> </li>
             <li class="nav-item"> <a class="nav-link pl-2" href="/rules/">Rules</a> </li>
             <li class="nav-item"> <a class="nav-link pl-2" href="/history/">History</a> </li>
@@ -161,7 +161,7 @@ if (!isset($title)) {
     <div class="modal-dialog" role="document">
         <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title mt-0" id="loginModalLabel">Profile <?= $fullname ?></h1>
+                    <h1 class="modal-title mt-0" id="loginModalLabel">Profile <?= $fullname ?? '' ?></h1>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

@@ -1,6 +1,8 @@
+<?php include 'check.inc.php' ?>
 <HTML>
 <HEAD>
 <TITLE>WMFFL Admin Page</TITLE>
+    <base href="/admin/" />
 </HEAD>
 
 <BODY>

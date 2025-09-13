@@ -134,3 +134,4 @@ football/transactions/livedraft/check.log
 /scripts/python/i3
 
 /football/activate/update.inc
+**/.phpunit.result.cache

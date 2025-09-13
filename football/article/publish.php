@@ -8,7 +8,7 @@ $javascriptList = array('/base/vendor/js/tiny_mce_5_0/tinymce.min.js', '/base/js
 include 'base/menu.php';
 ?>
 
-<h1 class="full"><?=$title?></h1>
+    <h1 class="full"><?= $title ?></h1>
 
 <?php
 if (!$isin) {
@@ -17,60 +17,42 @@ if (!$isin) {
     <?php
 } else {
 
-if (isset($errors)) {
-    foreach ($errors as $name) {
-        ?>
-        <div class="alert alert-danger" role="alert"><?= $name ?></div>
-        <?php
+    if (isset($errors)) {
+        foreach ($errors as $name) {
+            ?>
+            <div class="alert alert-danger" role="alert"><?= $name ?></div>
+            <?php
+        }
     }
-}
 
-if (!isset($artTitle)) {
-    if (array_key_exists('title', $_REQUEST)) {
-        $artTitle = $_REQUEST['title'];
+    if (!isset($artTitle)) {
+        $artTitle = $_REQUEST['title'] ?? '';
+    }
+
+    if (!isset($url)) {
+        $url = $_REQUEST['url'] ?? '';
+    }
+
+    if (!isset($upload)) {
+        $upload = $_REQUEST['upload'] ?? '';
     } else {
-        $artTitle = '';
+        $upload = $upload['name'];
     }
-}
 
-if (!isset($url)) {
-    if (array_key_exists('url', $_REQUEST)) {
-        $url = $_REQUEST['url'];
-    } else {
-        $url = '';
+    if (!isset($caption)) {
+        $caption = $_REQUEST['caption'] ?? '';
     }
-}
 
-if (!isset($upload)) {
-    if (array_key_exists('upload', $_REQUEST)) {
-        $upload = $_REQUEST['upload'];
-    } else {
-        $upload = '';
+    if (!isset($article)) {
+        $article = $_REQUEST['article'] ?? '';
     }
-}
 
-if (!isset($caption)) {
-    if (array_key_exists('caption', $_REQUEST)) {
-        $caption = $_REQUEST['caption'];
-    } else {
-        $caption = '';
-    }
-}
-
-if (!isset($article)) {
-    if (array_key_exists('article', $_REQUEST)) {
-        $article = $_REQUEST['article'];
-    } else {
-        $article = '';
-    }
-}
-
-?>
+    ?>
 
 
     <form method="POST" action="process" enctype="multipart/form-data">
 
-    <div class="form-group ">
+        <div class="form-group ">
             <label class="col-sm-2 col-form-label col-form-label-lg font-weight-bold" for="title">Title:</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="title" name="title" value="<?= $artTitle ?>"/>
@@ -103,6 +85,6 @@ if (!isset($article)) {
         </div>
     </form>
 
-<?php
+    <?php
 }
 include 'base/footer.php';

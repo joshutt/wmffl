@@ -1,0 +1,145 @@
+<HTML>
+<HEAD>
+<TITLE>WMFFL 1997 Week 8 Newsletter</TITLE>
+</HEAD>
+
+<?php include 'base/menu.php'; ?>
+
+<H1 ALIGN=CENTER>1997 Season - Week 8</H1>
+<HR size = "1">
+<PRE>
+Watkins Mill Fantasy Football League Scores for WEEK #8
+League Web Page: <A HREF=http://www.geocities.com/Colosseum/5415> http://www.geocities.com/Colosseum/5415</A>
+=======================================================
+
+Werewolves        ( 42)  Zen               (  0)
+Iradicators       ( 27)  Barbarians        ( 39)
+Norsemen          (  1)  Archers Who Say Ni( 46)
+Hempaholics       ( 27)  Crusaders         ( 18)
+
+
+Watkins Mill Fantasy Football League Standings after WEEK #8
+============================================================
+                    Record    Pts   Pts
+Blue Division       W  L  T   For Agnst
+---------------------------------------
+Zen                 3  5  0   164   262
+Archers Who Say Ni  2  6  0   187   256
+Barbarians          2  6  0   105   229
+Iradicators         1  6  1   143   224
+
+                    Record    Pts   Pts
+Orange Division     W  L  T   For Agnst
+---------------------------------------
+Crusaders           6  1  1   299   192
+Werewolves          6  2  0   371   125
+Hempaholics         6  2  0   264   224
+Norsemen            5  3  0   216   237
+
+
+Next Week's Fantasy Schedule
+==========================================
+  Iradicators        at Zen
+  Hempaholics        at Barbarians
+  Werewolves         at Archers Who Say Ni
+  Crusaders          at Norsemen
+
+
+Next Week's NFL Byes
+==========================================
+Detroit and New York Jets
+
+
+
+Watkins Mill Fantasy Football League Scoring Breakdown for WEEK #8
+==================================================================
+Zen                                Werewolves
+==============================     ==============================
+HC: CAPERS,DOM          CAR  4     HC: MARIUCCI,STEVE      SF   3
+QB: CINCINNATI TEAM QB  CIN -4     QB: NEW ENGLAND TEAM QB NE  15
+RB: LEVENS,DORSEY       GB   0     RB: KAUFMAN,NAPOLEON    OAK 22
+RB: MURRELL,ADRIAN      NYJ  6     RB: SANDERS,BARRY       DET 12
+WR: FREEMAN,ANTONIO     GB   0     WR: FRYAR,IRVING        PHI  3
+WR: KENNISON,EDDIE      STL  0     WR: SMITH,JIMMY         JAC  6
+TE: COATES,BEN          NE   6     TE: WALLS,WESLEY        CAR  0
+K : DETROIT KICKER      DET  8     K : SAN FRAN KICKER     SF   3
+OL: ARIZONA OFFENSE     ARI -5     OL: WASHINGTON OFFENSE  WAS  2
+DL: ARCHAMBEAU,LESTER   ATL  1     DL: HENNINGS,CHAD       DAL  0
+DL: MAMULA,MIKE         PHI  4     DL: YOUNG,BRYANT        SF   7
+LB: BARROW,MICHEAL      CAR 12     LB: KIRKLAND,LEVON      PIT  7
+LB: SPIELMAN,CHRIS      BUF  3     LB: THOMAS,ZACH         MIA  3
+DB: GRIFFITH,ROBERT     MIN  0     DB: GREEN,VICTOR        NYJ  8
+DB: SANDERS,DEION       DAL  4     DB: WOODSON,DARREN      DAL  3
+------------------------------     ------------------------------
+          Starter Points = -13               Starter Points =  42
+        Offensive Points =  15             Offensive Points =  66
+        Defensive Points =  24             Defensive Points =  28
+
+Barbarians                         Iradicators
+==============================     ==============================
+HC: SCHOTTENHEIMER,MARTYKC   5     HC: JOHNSON,JIMMY       MIA  4
+QB: INDIANAPOLIS TEAM QBIND  0     QB: NY JETS TEAM QB     NYJ  9
+RB: ABDUL-JABBAR,KARIM  MIA 24     RB: FAULK,MARSHALL      IND  5
+RB: JOHNSON,ANTHONY     CAR  7     RB: SMITH,EMMITT        DAL  9
+WR: CARTER,CRIS         MIN  0     WR: GLENN,TERRY         NE   0
+WR: MCCARDELL,KEENAN    JAC 15     WR: IRVIN,MICHAEL       DAL  0
+TE: MITCHELL,PETE       JAC  1     TE: ASHER,JAMIE         WAS  0
+K : SEATTLE KICKER      SEA  5     K : NY JETS KICKER      NYJ  6
+OL: PHILADELPHIA OFFENSEPHI  5     OL: TAMPA BAY OFFENSE   TB   0
+DL: WILKINS,GABE        GB   0     DL: SMITH,BRUCE         BUF  8
+DL: WILKINSON,DAN       CIN  4     DL: SWANN,ERIC          ARI  2
+LB: BRADY,JEFF          MIN  0     LB: ARMSTEAD,JESSIE     NYG  4
+LB: BROOKS,DERRICK      TB   0     LB: LLOYD,GREG          PIT  1
+DB: EVANS,DOUG          GB   0     DB: DISHMAN,CRIS        WAS  4
+DB: WOODSON,ROD         SF   2     DB: WILLIAMS,AENEAS     ARI  4
+------------------------------     ------------------------------
+          Starter Points =  39               Starter Points =  27
+        Offensive Points =  62             Offensive Points =  33
+        Defensive Points =   6             Defensive Points =  23
+
+Archers Who Say Ni                 Norsemen
+==============================     ==============================
+HC: LEVY,MARV           BUF  3     HC: COWHER,BILL         PIT  4
+QB: OAKLAND TEAM QB     OAK 10     QB: GREEN BAY TEAM QB   GB   0
+RB: KIRBY,TERRY         SF  19     RB: CENTERS,LARRY       ARI  0
+RB: WATTERS,RICKY       PHI 12     RB: MARTIN,CURTIS       NE   6
+WR: ALEXANDER,DERRICK   BAL  9     WR: CHREBET,WAYNE       NYJ  0
+WR: MOORE,HERMAN        DET  5     WR: REED,ANDRE          BUF  0
+TE: DILGER,KEN          IND  0     TE: WYCHECK,FRANK       TEN  0
+K : CAROLINA KICKER     CAR  7     K : TENNESSEE KICKER    TEN  4
+OL: SEATTLE OFFENSE     SEA  5     OL: OAKLAND OFFENSE     OAK 17
+DL: BENNETT,TONY        IND  0     DL: FARR,D'MARCO        STL  4
+DL: WHITE,REGGIE        GB   0     DL: MCGINEST,WILLIE     NE   1
+LB: JONES,ROBERT        STL  1     LB: COX,BRYAN           CHI  0
+LB: STEPHENS,ROD        WAS  0     LB: PATTON,MARVCUS      WAS 11
+DB: RICHARD,STANLEY     WAS 11     DB: BUTLER,LEROY        GB   0
+DB: TURNER,ERIC         OAK 18     DB: PERRY,DARREN        PIT  8
+------------------------------     ------------------------------
+          Starter Points =  46               Starter Points =   1
+        Offensive Points =  70             Offensive Points =  31
+        Defensive Points =  30             Defensive Points =  24
+
+Crusaders                          Hempaholics
+==============================     ==============================
+HC: HOLMGREN,MIKE       GB   0     HC: COUGHLIN,TOM        JAC  0
+QB: BALTIMORE TEAM QB   BAL 12     QB: DENVER TEAM QB      DEN 13
+RB: HEARST,GARRISON     SF   4     RB: BETTIS,JEROME       PIT 13
+RB: SMITH,ANTOWAIN      BUF  0     RB: GEORGE,EDDIE        TEN 18
+WR: BRUCE,ISAAC         STL  2     WR: GRAHAM,JEFF         NYJ  3
+WR: SMITH,ROD           DEN  2     WR: JACKSON,MICHAEL     BAL  5
+TE: DUDLEY,RICKEY       OAK  6     TE: BRUENER,MARK        PIT  0
+K : NEW ENGLAND KICKER  NE   5     K : SAN DIEGO KICKER    SD   3
+OL: PITTSBURGH OFFENSE  PIT 13     OL: DETROIT OFFENSE     DET  3
+DL: MARTIN,WAYNE        NO   5     DL: RICE,SIMEON         ARI  7
+DL: MCCRARY,MICHAEL     BAL  5     DL: SINCLAIR,MICHAEL    SEA  2
+LB: TUBBS,WINFRED       NO  10     LB: SLADE,CHRIS         NE   3
+LB: WELLS,DEAN          SEA  4     LB: THOMAS,WILLIAM      PHI 10
+DB: HARRISON,RODNEY     SD   2     DB: BRAXTON,TYRONE      DEN  3
+DB: SEHORN,JASON        NYG  5     DB: MCDONALD,TIM        SF   1
+------------------------------     ------------------------------
+          Starter Points =  18               Starter Points =  27
+        Offensive Points =  44             Offensive Points =  58
+        Defensive Points =  31             Defensive Points =  26
+</PRE>
+
+<?php include 'base/footer.php'; ?>

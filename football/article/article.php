@@ -1,11 +1,15 @@
 <?php
 /**
  * @var $uid int
+ * @var $entityManager EntityManager
  */
+
+use Doctrine\ORM\EntityManager;
+
 require 'articleUtils.php';
 
 
-function printComment($comment, $depth=0): void
+function printComment($comment, int $depth=0): void
 {
 ?>
 <div class="w3-container w3-col l<?= 12 - $depth ?> w3-border-top w3-padding-16 w3-right">
@@ -21,7 +25,7 @@ function printComment($comment, $depth=0): void
 }
 
 
-$article = getArticle($uid);
+$article = getArticle($entityManager, $uid);
 error_log('Article: ' .print_r($article, true));
 
 include 'view-snip.php';

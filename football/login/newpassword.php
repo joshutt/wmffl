@@ -54,7 +54,7 @@ $title = 'Change Password';
 <hr size="1"/>
 
 <p><font color="red" size="+1" align="center">
-        <?php print $errorMessage; ?></font></p>
+        <?php print $errorMessage ?? ''; ?></font></p>
 
 <form method="post" action="newpassword.php">
     <input type="hidden" name="change" value="true"/>

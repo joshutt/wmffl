@@ -6,6 +6,7 @@
 use Doctrine\ORM\EntityManager;
 use WMFFL\orm\SeasonFlags as Flags;
 
+include '../check.inc.php';
 require_once 'utils/start.php';
 require_once 'bootstrap.php';
 

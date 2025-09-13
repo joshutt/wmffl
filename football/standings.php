@@ -2,6 +2,7 @@
 /**
  * @var $currentSeason int
  * @var $currentWeek int
+ * @var $teamArray array
  */
 require_once 'utils/connect.php';
 

@@ -8,7 +8,7 @@
 require_once 'utils/connect.php';
 
 // Determine deadline and publish date based on true expiration
-$dateSrc = '2024-08-19 00:05 EDT';
+$dateSrc = '2025-08-17 00:05 EDT';
 $dateTime = null;
 try {
     $dateTime = new DateTime($dateSrc);
@@ -36,7 +36,13 @@ EOD;
 
 
 // Query for total available points
-$ptsQuery = "select TotalPts, ProtectionPts from transpoints where teamid=$teamnum and season=$currentSeason";
+$ptsQuery = <<<EOD
+select tp.TotalPts, tp.ProtectionPts, (p1.paid | p2.paid) as 'paid'
+from transpoints tp
+JOIN paid p1 on tp.season=p1.season and tp.teamid=p1.teamid
+JOIN paid p2 on tp.season-1=p2.season and tp.teamid=p2.teamid
+where tp.teamid=$teamnum and tp.season=$currentSeason
+EOD;
 
 $title = 'WMFFL Protections';
 include 'base/menu.php';
@@ -84,9 +90,12 @@ if ($isin) {
             ?>
             <P><B><FONT COLOR="red">Sorry, The Deadline For Changing Protections
                         has Passed</FONT></B></P>
-            <?php
-        } else {
-            ?>
+        <?php } else if ($pts[2] != 1) { ?>
+            <div class="alert alert-secondary" role="alert">
+                <p>Your account is in arrears.  You must be in good standing to submit Protections</p>
+                <p><a  class="btn btn-wmffl" href="/history/teammoney">View Account Balance</a> </p>
+            </div>
+        <?php } else { ?>
 
             <form name="protform" action="saveprotections" method="POST">
 

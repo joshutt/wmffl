@@ -1,0 +1,79 @@
+<HTML>
+<HEAD>
+<TITLE>WMFFL 1997 Playoffs Newsletter</TITLE>
+</HEAD>
+
+<?php include 'base/menu.php'; ?>
+
+<H1 ALIGN=CENTER>1997 Season - Playoffs</H1>
+<HR size = "1">
+<PRE>
+Watkins Mill Fantasy Football League Scores for Playoffs
+League Web Page: <A HREF=http://www.geocities.com/Colosseum/5415>http://bounce.to/wmffl</A>
+========================================================
+
+Werewolves        ( 18)  Hempaholics       (  6)
+Crusaders         ( 62)  Zen               (  1)
+
+Next Week's Fantasy Schedule
+==========================================
+  Werewolves         at Crusaders
+     The Crusaders won both meetings this season
+     The Crusaders have been to 1 Championship Game, they won in 1992
+     The Werewolves have been to 1 Championship Game, they lost in 1994
+     The Crusaders lead the all-time series 10-4
+
+NOTE: These two teams are our representatives to the International
+Fantasy Football Championship, so when they turn in activations,
+they should include a defensive team.  More on this later.  Also
+remember to rank your players when you turn in your activations.
+
+
+Watkins Mill Fantasy Football League Scoring Breakdown for WEEK #15
+===================================================================
+Hempaholics                        Werewolves
+==============================     ==============================
+HC: COUGHLIN,TOM        JAC  0     HC: MARIUCCI,STEVE      SF   4
+QB: DENVER TEAM QB      DEN 13     QB: NEW ENGLAND TEAM QB NE  14
+RB: BETTIS,JEROME       PIT  6     RB: KAUFMAN,NAPOLEON    OAK  0
+RB: GEORGE,EDDIE        TEN  0     RB: SANDERS,BARRY       DET 13
+WR: BROOKS,ROBERT       GB   7     WR: FRYAR,IRVING        PHI  7
+WR: JACKSON,MICHAEL     BAL  0     WR: SMITH,JIMMY         JAC  1
+TE: CHMURA,MARK         GB   1     TE: WALLS,WESLEY        CAR  0
+K : SAN DIEGO KICKER    SD   3     K : DALLAS KICKER       DAL  8
+OL: DETROIT OFFENSE     DET  8     OL: GREEN BAY OFFENSE   GB   5
+DL: RANDLE,JOHN         MIN  4     DL: BRACKENS,TONY       JAC  1
+DL: SINCLAIR,MICHAEL    SEA  3     DL: HENNINGS,CHAD       DAL  4
+LB: SLADE,CHRIS         NE   7     LB: KIRKLAND,LEVON      PIT  6
+LB: THOMAS,WILLIAM      PHI  4     LB: NICKERSON,HARDY     TB  10
+DB: BRAXTON,TYRONE      DEN  4     DB: GORDON,DARRIEN      DEN  7
+DB: BUCKLEY,TERRELL     MIA 12     DB: MCNEIL,RYAN         STL  4
+------------------------------     ------------------------------
+          Starter Points =   6               Starter Points =  18
+        Offensive Points =  38             Offensive Points =  52
+        Defensive Points =  34             Defensive Points =  32
+
+Zen                                Crusaders
+==============================     ==============================
+HC: CAPERS,DOM          CAR  4     HC: HOLMGREN,MIKE       GB   4
+QB: CINCINNATI TEAM QB  CIN  8     QB: BALTIMORE TEAM QB   BAL 11
+RB: LEVENS,DORSEY       GB  15     RB: MEANS,NATRONE       JAC  0
+RB: MURRELL,ADRIAN      NYJ  0     RB: SMITH,ANTOWAIN      BUF  0
+WR: BROWN,TIM           OAK  0     WR: MORTON,JOHNNIE      DET 22
+WR: GALLOWAY,JOEY       SEA  0     WR: SMITH,ROD           DEN 16
+TE: COATES,BEN          NE   8     TE: DUDLEY,RICKEY       OAK  0
+K : DETROIT KICKER      DET  3     K : NEW ENGLAND KICKER  NE  16
+OL: DENVER OFFENSE      DEN  2     OL: PITTSBURGH OFFENSE  PIT 13
+DL: ARCHAMBEAU,LESTER   ATL  5     DL: MARTIN,WAYNE        NO   9
+DL: MAMULA,MIKE         PHI  1     DL: MCCRARY,MICHAEL     BAL  8
+LB: LEWIS,RAY           BAL  6     LB: JONES,MARVIN        NYJ  2
+LB: SEAU,JUNIOR         SD   5     LB: TUBBS,WINFRED       NO   8
+DB: GRIFFITH,ROBERT     MIN  3     DB: HARRISON,RODNEY     SD  10
+DB: SANDERS,DEION       DAL  0     DB: SEHORN,JASON        NYG  2
+------------------------------     ------------------------------
+          Starter Points =   1               Starter Points =  62
+        Offensive Points =  40             Offensive Points =  82
+        Defensive Points =  20             Defensive Points =  39
+</PRE>
+
+<?php include 'base/footer.php'; ?>

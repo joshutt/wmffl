@@ -10,49 +10,49 @@ require_once 'bootstrap.php';
 
 /**
  * Given an id return the Article associated with it.  If no id is provided return the most recent one
- * @param $uid
- * @return Article
+ * @param EntityManager $entityManager
+ * @param null $uid
+ * @return Article|null
  */
-function getArticle($uid = null): Article
+function getArticle(EntityManager $entityManager, $uid = null): ?Article
 {
-    global $entityManager;
-
-    $qb = $entityManager->createQueryBuilder();
-    $qb->select('a') -> from('WMFFL\orm\Article', 'a');
     if (!empty($uid)) {
-        $qb->where('a.id = :uid')
-            ->setParameter('uid', $uid);
+        return $entityManager->getRepository(Article::class)->find($uid);
     } else {
-        $qb->where('a.active = 1')
-            ->orderBy('a.displayDate desc')
-            ->orderBy('a.priority desc')
-            ->setMaxResults(1);
+        $dql = 'SELECT a FROM WMFFL\orm\Article a WHERE a.active = 1 ORDER BY a.displayDate DESC, a.priority DESC';
+        $query = $entityManager->createQuery($dql);
+        $query->setMaxResults(1);
+        return $query->getSingleResult();
     }
-
-    $query = $qb->getQuery();
-    return $query->getSingleResult();
 }
 
 
 /**
  * Return a Doctrine set of results of Articles.  The number returned is specified by $num.  Will return the most
  * recent items, unless the $start parameter is provided.  Then it will be the items starting at that point.
+ * @param EntityManager $entityManager
  * @param $num
- * @param $start
- * @return mixed
+ * @param int|null $start
+ * @return Article[]
  */
-function getArticles($num, $start=null ): mixed
+function getArticles(EntityManager $entityManager, $num, $start=null ): array
 {
-    global $entityManager;
-
-    $dql = 'SELECT a from WMFFL\orm\Article a where a.active=1 order by a.displayDate desc, a.priority desc';
+//    $dql = 'SELECT a from WMFFL\orm\Article a where a.active=1 order by a.displayDate desc, a.priority desc';
+//    $dql = 'SELECT a from WMFFL\orm\Article a where a.active=1 order by a.displayDate desc, a.priority desc';
+//    $dql = 'SELECT a FROM WMFFL\orm\Article a JOIN FETCH a.author u WHERE a.active = 1 ORDER BY a.displayDate DESC, a.priority DESC';
+    $dql = 'SELECT a, u from WMFFL\orm\Article a JOIN a.author u where a.active=1 order by a.displayDate desc, a.priority asc';
+//    $dql = 'SELECT a.author from WMFFL\orm\Article a where a.active=1 order by a.displayDate desc, a.priority desc';
     $query = $entityManager->createQuery($dql);
     $query->setMaxResults($num);
 
     if (!empty($start)) {
         $query->setFirstResult($start*$num);
     }
-
+////    dump($query->getSQL()); die();
+////    $results = $query->getArrayResult();
+////    dump($results); die();
+//    $result = $query->getScalarResult();
+//    dump($result); die();
     return $query->getResult();
 }
 
@@ -68,15 +68,18 @@ function printArticleCard(Article $article): string
     $link = $article->getLink();
     $title = $article->getTitle();
     $date = $article->getDisplayDate()->format('M d, Y');
-    $name = $article->getAuthor()->getName();
-
+    // Ensure author is not null before calling getName, if author can be optional
+    $authorName = '';
+    if ($article->getAuthor()) {
+        $authorName = $article->getAuthor()->getName();
+    }
     return <<< EOT
  <div class="card mb-4 article-card">
                     <a href="/article/view?uid=$articleId">
                     <img class="card-img-top article-img" src="/$link"/>
                     <div class="card-body">
                         <h4 class="card-title">$title</h4>
-                        <p class="card-text">$date<br/>$name</p>
+                        <p class="card-text">$date<br/>$authorName</p>
                     </div>
                     </a>
                 </div>

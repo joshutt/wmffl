@@ -1,4 +1,5 @@
 <?
+include 'check.inc.php';
 require_once "utils/start.php";
 
 function singleCompare($scoreA, $scoreB) {
@@ -143,4 +144,4 @@ print "</table>";
 ?>
 
 
-<p><a href="index.shtml">Return to Admin Page</a></p>
+<p><a href="index.php">Return to Admin Page</a></p>

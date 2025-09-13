@@ -1,26 +1,39 @@
 <?php
-function convertNiceNames(&$post, $dir)
+/**
+ * @var $isin boolean
+ * @var $conn mysqli
+ * @var $teamnum int
+ * @var $currentSeason int
+ * @var $currentWeek int
+ */
+
+/**
+ * @param $post
+ * @param $dir
+ * @return void
+ */
+function convertNiceNames(&$post, $dir): void
 {
     foreach ($post[$dir] as $key => $ch) {
-        if (substr($ch, 0, 5) == "draft") {
+        if (str_starts_with($ch, 'draft')) {
             $drID = substr($ch, 5, 1);
-            $trYear = $post[$dir . "draftyear" . $drID];
-            $trRnd = $post[$dir . "draftround" . $drID];
+            $trYear = $post[$dir . 'draftyear' . $drID];
+            $trRnd = $post[$dir . 'draftround' . $drID];
             $post[$dir][$key] = "pick$trYear$trRnd";
 //            array_push($returnList, "pick$trYear$trRnd");
-        } else if (substr($ch, 0, 7) == "newprot") {
+        } else if (str_starts_with($ch, 'newprot')) {
             $drID = substr($ch, 7, 1);
             $trPts = $post[$dir . $ch];
-            $trYear = $post[$dir . "protyear" . $drID];
+            $trYear = $post[$dir . 'protyear' . $drID];
             $post[$dir][$key] = "pts$trYear$trPts";
         }
     }
 }
 
-require_once "utils/start.php";
+require_once 'utils/start.php';
 
 if (!$isin) {
-    header("Location: tradescreen.php");
+    header('Location: tradescreen.php');
     exit;
 }
 
@@ -31,73 +44,66 @@ $NUM_PTS_DISPLAY=1;
 
 //$teamid = 2;
 $updateFlag = false;
-if (isset($_POST["cancel"])) {
-	header("Location: tradescreen.php");
+if (isset($_POST['cancel'])) {
+	header('Location: tradescreen.php');
 }
 
-require_once "checkambigous.inc.php";
+require_once 'checkambigous.inc.php';
 
 $badTransArray = array();
 $badDraftArray = array();
 $ambigous = false;
-if (isset($_POST["they"]) && isset($_POST["you"])) {
-    convertNiceNames($_POST, "they");
-    convertNiceNames($_POST, "you");
+if (isset($_POST['they']) && isset($_POST['you'])) {
+    convertNiceNames($_POST, 'they');
+    convertNiceNames($_POST, 'you');
 
     //print "ambigous $ambigous<br/>";
-    $ambigous = checkTransactions($teamnum, $badTransArray, $_POST);
+    $ambigous = checkTransactions($conn, $teamnum, $badTransArray, $_POST);
     //print "Check Draft, ambigous $ambigous<br/>";
-    $ambigous = checkDraft($teamnum, $badDraftArray, $_POST) || $ambigous;
+    $ambigous = checkDraft($conn, $teamnum, $badDraftArray, $_POST) || $ambigous;
     //print "Post Check Draft, ambigous $ambigous<br/>";
 }
 
-if (!$ambigous && isset($_POST["confirm"])) {
+if (!$ambigous && isset($_POST['confirm'])) {
     //session_start();
-    //$_SESSION["ab"] = "AlphaBeta";
-    $_SESSION["they"] = $_POST["they"];
-    //print_r($_SESSION["they"]);
-    $_SESSION["you"] = $_POST["you"];
-    $_SESSION["teamto"] = $_POST["teamto"];
-    $offerid = $_POST["offerid"];
+    $_SESSION['they'] = $_POST['they'] ?? [];
+    $_SESSION['you'] = $_POST['you'] ?? [];
+    $_SESSION['teamto'] = $_POST['teamto'] ?? null;
+    $offerid = $_POST['offerid'];
 	//header("Location: ambigouspick.php?offerid=$offerid");
 	header("Location: confirmoffer.php?offerid=$offerid");
-} elseif ($ambigous || isset($_POST["update"]) || isset($_POST["edit"])) {
+} elseif ($ambigous || isset($_POST['update']) || isset($_POST['edit'])) {
     $updateFlag = true;
 }
 
-include_once "trade.class.php";
-include_once "loadTrades.inc.php";
-include_once "base/useful.php";
+include_once 'trade.class.php';
+include_once 'loadTrades.inc.php';
+include_once 'base/useful.php';
 
-$thisTeam = loadTeam($teamnum);
-if (isset($_POST["offerid"])) {
-    $offerid = $_POST["offerid"];
+$thisTeam = loadTeam($conn, $teamnum);
+if (isset($_POST['offerid'])) {
+    $offerid = $_POST['offerid'];
 }
 if (isset($offerid) && $offerid != 0) {
-    $trade = loadTradeByID($offerid, $thisTeam);
+    $trade = loadTradeByID($conn, $offerid, $thisTeam);
 
     $otherTeam = $trade->getOtherTeam();
 } else {
     $offerid=0;
     $trade = new Trade($offerid);
-    if (isset($_POST["teamto"])) {
-        $otherTeamID = $_POST["teamto"];
-    } else {
-        $otherTeamID = $trade;
-    }
-    $otherTeam = loadTeam($otherTeamID);
+    $otherTeamID = $_POST['teamto'] ?? $trade;
+    $otherTeam = loadTeam($conn, $otherTeamID);
     $trade->setOtherTeam($otherTeam);
 }
 $mapping = array($teamnum=>$thisTeam->getName(), 
                 $otherTeam->getID()=>$otherTeam->getName());
 
 //print_r ($_POST);
-//print "<br/>";
 
 if ($updateFlag) {
-    $you = $_POST["you"];
-    $they = $_POST["they"];
-    include "updatetrade.inc.php";
+    $you = $_POST['you'] ?? [];
+    $they = $_POST['they'] ?? [];
+    include 'updatetrade.inc.php';
 //    print_r ($trade);
 }
 
@@ -114,7 +120,7 @@ if ($updateFlag) {
 
 <?php
 //$teamid = 0;
-include "base/menu.php"; 
+include 'base/menu.php';
 ?>
 
 <H1 ALIGN=Center>Edit Offer</H1>
@@ -137,7 +143,7 @@ not withdraw the trade, only cancel the changes you have made to it.</P>
 <FORM ACTION="edittrade.php" METHOD="POST">
 <INPUT TYPE="hidden" NAME="offerid" VALUE="<?php print $offerid; ?>"/>
 
-    <?php include "ambigouserrors.inc.php"; ?>
+    <?php include 'ambigouserrors.inc.php'; ?>
 
 <TABLE WIDTH=100%>
 <TR><TD COLSPAN=2><H3 ALIGN="Center">Trade So Far</H3></TD></TR>
@@ -148,15 +154,15 @@ not withdraw the trade, only cancel the changes you have made to it.</P>
 $playersFrom = $trade->getPlayersFrom();
 foreach ($playersFrom as $player) {
     print "<INPUT TYPE=\"checkbox\" NAME=\"you[]\" VALUE=\"play".$player->getID()."\" CHECKED>";
-    print $player->getName()." (".$player->getPos()."-".$player->getNFLTeam().")<BR>";
+    print $player->getName(). ' (' .$player->getPos(). '-' .$player->getNFLTeam(). ')<BR>';
 }
 foreach ($trade->getPicksFrom() as $pick) {
     print "<INPUT TYPE=\"checkbox\" NAME=\"you[]\" VALUE=\"pick".$pick->getSeason().$pick->getRound()."\" CHECKED>";
-    print $pick->getSeason()."-".$pick->getRound().OrdinalEnding($pick->getRound())." Round Pick<BR>";
+    print $pick->getSeason(). '-' .$pick->getRound().OrdinalEnding($pick->getRound()). ' Round Pick<BR>';
 }
 foreach ($trade->getPointsFrom() as $pts) {
     print "<INPUT TYPE=\"checkbox\" NAME=\"you[]\" VALUE=\"pts".$pts->getSeason().$pts->getPts()."\" CHECKED>";
-    print $pts->getPts()." transaction points in ".$pts->getSeason()."<BR>";
+    print $pts->getPts(). ' transaction points in ' .$pts->getSeason(). '<BR>';
 }
 ?>
 </TD>
@@ -166,15 +172,15 @@ foreach ($trade->getPointsFrom() as $pts) {
 $playersTo = $trade->getPlayersTo();
 foreach ($playersTo as $player) {
     print "<INPUT TYPE=\"checkbox\" NAME=\"they[]\" VALUE=\"play".$player->getID()."\" CHECKED>";
-    print $player->getName()." (".$player->getPos()."-".$player->getNFLTeam().")<BR>";
+    print $player->getName(). ' (' .$player->getPos(). '-' .$player->getNFLTeam(). ')<BR>';
 }
 foreach ($trade->getPicksTo() as $pick) {
     print "<INPUT TYPE=\"checkbox\" NAME=\"they[]\" VALUE=\"pick".$pick->getSeason().$pick->getRound()."\" CHECKED>";
-    print $pick->getSeason()."-".$pick->getRound().OrdinalEnding($pick->getRound())." Round Pick<BR>";
+    print $pick->getSeason(). '-' .$pick->getRound().OrdinalEnding($pick->getRound()). ' Round Pick<BR>';
 }
 foreach ($trade->getPointsTo() as $pts) {
     print "<INPUT TYPE=\"checkbox\" NAME=\"they[]\" VALUE=\"pts".$pts->getSeason().$pts->getPts()."\" CHECKED>";
-    print $pts->getPts()." transaction points in ".$pts->getSeason()."<BR>";
+    print $pts->getPts(). ' transaction points in ' .$pts->getSeason(). '<BR>';
 }
 ?>
 </TD></TR>
@@ -187,26 +193,26 @@ foreach ($trade->getPointsTo() as $pts) {
 
 <TR><TD VALIGN="top"><B>Your Roster:</B><BR>
         <?php
-$roster = loadRoster($thisTeam);
+$roster = loadRoster($conn, $thisTeam);
 foreach ($roster as $player) {
-    if ($player->getPos() == "HC") {
+    if ($player->getPos() == 'HC') {
         continue;
     }
     print "<INPUT TYPE=\"checkbox\" NAME=\"you[]\" VALUE=\"play".$player->getID()."\">";
-    print $player->getName()." (".$player->getPos()."-".$player->getNFLTeam().")<BR>";
+    print $player->getName(). ' (' .$player->getPos(). '-' .$player->getNFLTeam(). ')<BR>';
 }
 ?>
 </TD>
 
 <TD VALIGN="top"><B>Their Roster:</B><BR>
     <?php
-$roster = loadRoster($otherTeam);
+$roster = loadRoster($conn, $otherTeam);
 foreach ($roster as $player) {
-    if ($player->getPos() == "HC") {
+    if ($player->getPos() == 'HC') {
         continue;
     }
     print "<INPUT TYPE=\"checkbox\" NAME=\"they[]\" VALUE=\"play".$player->getID()."\">";
-    print $player->getName()." (".$player->getPos()."-".$player->getNFLTeam().")<BR>";
+    print $player->getName(). ' (' .$player->getPos(). '-' .$player->getNFLTeam(). ')<BR>';
 }
 ?>
 </TD></TR>
@@ -224,12 +230,12 @@ for ($i=1; $i<=$NUM_DRAFT_DISPLAY; $i++) {
         }
         print "<OPTION VALUE=\"$season\">$season</OPTION>";
     }
-    print "</SELECT>";
+    print '</SELECT>';
     print "<SELECT NAME=\"youdraftround$i\">";
     for ($j=1; $j<=$NUM_DRAFT_ROUNDS; $j++) {
         print "<OPTION VALUE=\"$j\">$j</OPTION>";
     }
-    print "</SELECT><BR>";
+    print '</SELECT><BR>';
 }
 
 for ($i=1; $i<=$NUM_PTS_DISPLAY; $i++) {
@@ -240,7 +246,7 @@ for ($i=1; $i<=$NUM_PTS_DISPLAY; $i++) {
         $season = $currentSeason+$j;
         print "<OPTION VALUE=\"$season\">$season</OPTION>";
     }
-    print "</SELECT><BR>";
+    print '</SELECT><BR>';
 }
 ?>
 </TD>
@@ -257,12 +263,12 @@ for ($i=1; $i<=$NUM_DRAFT_DISPLAY; $i++) {
         }
         print "<OPTION VALUE=\"$season\">$season</OPTION>";
     }
-    print "</SELECT>";
+    print '</SELECT>';
     print "<SELECT NAME=\"theydraftround$i\">";
     for ($j=1; $j<=$NUM_DRAFT_ROUNDS; $j++) {
         print "<OPTION VALUE=\"$j\">$j</OPTION>";
     }
-    print "</SELECT><BR>";
+    print '</SELECT><BR>';
 }
 
 for ($i=1; $i<=$NUM_PTS_DISPLAY; $i++) {
@@ -273,7 +279,7 @@ for ($i=1; $i<=$NUM_PTS_DISPLAY; $i++) {
         $season = $currentSeason+$j;
         print "<OPTION VALUE=\"$season\">$season</OPTION>";
     }
-    print "</SELECT><BR>";
+    print '</SELECT><BR>';
 }
 ?>
 
@@ -292,6 +298,6 @@ for ($i=1; $i<=$NUM_PTS_DISPLAY; $i++) {
 
 </FORM>
 
-<?php include "base/footer.php"; ?>
+<?php include 'base/footer.php'; ?>
 </BODY>
 </HTML>

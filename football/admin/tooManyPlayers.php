@@ -1,4 +1,10 @@
-<?
+<?php
+/**
+ * @var $conn mysqli
+ * @var $currentSeason int
+ */
+
+include 'check.inc.php';
 require_once "utils/start.php";
 #require_once "base/conn.php";
 #require_once "base/useful.php";
@@ -30,4 +36,4 @@ if ($empty) {
 ?>
 
 
-<p><a href="index.shtml">Return to Index</a></p>
+<p><a href="index.php">Return to Index</a></p>

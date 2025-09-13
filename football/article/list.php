@@ -1,7 +1,10 @@
 <?php
 /**
  * @var $isin boolean
+ * @var $entityManager EntityManager
  */
+
+use Doctrine\ORM\EntityManager;
 
 require_once 'utils/start.php';
 require 'articleUtils.php';
@@ -11,7 +14,7 @@ $start = null;
 if (array_key_exists('start', $_REQUEST) && !empty($_REQUEST['start'])) {
     $start = $_REQUEST['start'];
 }
-$articles = getArticles($artPerPage, $start);
+$articles = getArticles($entityManager, $artPerPage, $start);
 
 $title = 'Latest News';
 include 'base/menu.php';

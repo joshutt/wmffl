@@ -27,11 +27,25 @@ $connection = DriverManager::getConnection([
 //    'dbname' => 'wmffl'
 ], $config);
 
-Type::addType('ynenum', '\WMFFL\enum\YNEnumType');
+try {
+    Type::addType('ynenum', '\WMFFL\enum\YNEnumType');
+} catch (\Doctrine\DBAL\Exception $e) {
+    error_log("Error adding type: $e");
+}
 
 // obtain the EntityManager
 $entityManager = new EntityManager($connection, $config);
+error_log('In entity manager');
+if (is_null($entityManager)) {
+    error_log('EntityManager is null');
+} else {
+    error_log('EntityManager is not null');
+}
 
 $conn = $entityManager->getConnection();
-$conn->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'ynenum');
+try {
+    $conn->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'ynenum');
+} catch (\Doctrine\DBAL\Exception $e) {
+    error_log("Error getting connection: $e");
+}
 

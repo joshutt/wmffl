@@ -1,5 +1,6 @@
 <?
 // establish connection
+include 'check.inc.php';
 require "base/conn.php";
 
 $team = $_REQUEST['team'];
@@ -39,4 +40,4 @@ mysqli_query($conn, $updateQuery4) or die("Dead4: " . mysqli_error($conn));
 
 ?>
 <b>Head Coach Changed</b><br/>
-<a href="index.html">Return to Admin page</a>
+<a href="index">Return to Admin page</a>

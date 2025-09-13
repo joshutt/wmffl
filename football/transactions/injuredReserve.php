@@ -1,21 +1,28 @@
 <?php
-require_once "utils/start.php";
-require_once "IRResource.php";
+/**
+ * @var $teamnum int
+ * @var $conn mysqli
+ * @var $isin boolean
+ */
+require_once 'utils/start.php';
+require_once 'IRResource.php';
 
-$resource = new IRResource($conn, $teamnum);
-$resource->loadElgiblePlayers();
-$resource->loadCurrentIRPlayers();
+if ($isin) {
+    $resource = new IRResource($conn, $teamnum);
+    $resource->loadElgiblePlayers();
+    $resource->loadCurrentIRPlayers();
+}
 
-$title = "Injured Reserve";
-$javascriptList = array("//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js", "/base/js/injury.js");
-include "base/menu.php";
+$title = 'Injured Reserve';
+$javascriptList = array('//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js', '/base/js/injury.js');
+include 'base/menu.php';
 ?>
 
     <h1 align="center">Injured Reserve</h1>
     <hr/>
 
 <?php
-include "transmenu.php";
+include 'transmenu.php';
 
 if (!$isin) {
     ?>
@@ -81,9 +88,8 @@ if (!$isin) {
                     <div class="col-2"> <?= $player->status ?></div>
                     <div class="col-3"> <?= $player->expReturn ?></div>
                     <div class="col-2"><label class="switch">
-                            <input type="checkbox" name="irRemove" value="<?= $player->playerid ?>"
-                                   checked="true"/><span
-                                    class="slider round"></span>
+                            <input type="checkbox" name="irRemove" value="<?= $player->playerid ?>" checked="true"/>
+                            <span class="slider round"></span>
                         </label></div>
                 </div>
                 <?php
@@ -98,4 +104,4 @@ if (!$isin) {
 
     <?php
 }
-include "base/footer.php";
+include 'base/footer.php';

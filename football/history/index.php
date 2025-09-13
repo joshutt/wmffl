@@ -17,21 +17,21 @@ include 'base/menu.php';
         <li class="nav-item m-2"><a class="nav-link" href="alltimerecords.php">All-Time Records</a></li>
         <li class="nav-item m-2"><a class="nav-link" href="recordsweek">Player Single Week Records</a></li>
         <li class="nav-item m-2"><a class="nav-link" href="recordseason">Player Single Season Records</a></li>
-        <li class="nav-item m-2"><a class="nav-link" href="1992Season.shtml">1992 Season</a></li>
-        <li class="nav-item m-2"><a class="nav-link" href="1993Season.shtml">1993 Season</a></li>
-        <li class="nav-item m-2"><a class="nav-link" href="1994Season.shtml">1994 Season</a></li>
-        <li class="nav-item m-2"><a class="nav-link" href="1995Season.shtml">1995 Season</a></li>
-        <li class="nav-item m-2"><a class="nav-link" href="1996Season.shtml">1996 Season</a></li>
-        <li class="nav-item m-2"><a class="nav-link" href="1997Season.shtml">1997 Season</a></li>
-        <li class="nav-item m-2"><a class="nav-link" href="1998Season.shtml">1998 Season</a></li>
-        <li class="nav-item m-2"><a class="nav-link" href="1999Season.shtml">1999 Season</a></li>
-        <li class="nav-item m-2"><a class="nav-link" href="2000Season.shtml">2000 Season</a></li>
-        <li class="nav-item m-2"><a class="nav-link" href="2001Season.shtml">2001 Season</a></li>
-        <li class="nav-item m-2"><a class="nav-link" href="2002Season.shtml">2002 Season</a></li>
-        <li class="nav-item  m-2"><a class="nav-link" href="2003Season.shtml">2003 Season</a></li>
-        <li class="nav-item  m-2"><a class="nav-link" href="2004Season.shtml">2004 Season</a></li>
-        <li class="nav-item  m-2"><a class="nav-link" href="2005Season.shtml">2005 Season</a></li>
-        <li class="nav-item  m-2"><a class="nav-link" href="2006Season.shtml">2006 Season</a></li>
+        <li class="nav-item m-2"><a class="nav-link" href="1992Season.php">1992 Season</a></li>
+        <li class="nav-item m-2"><a class="nav-link" href="1993Season.php">1993 Season</a></li>
+        <li class="nav-item m-2"><a class="nav-link" href="1994Season.php">1994 Season</a></li>
+        <li class="nav-item m-2"><a class="nav-link" href="1995Season.php">1995 Season</a></li>
+        <li class="nav-item m-2"><a class="nav-link" href="1996Season.php">1996 Season</a></li>
+        <li class="nav-item m-2"><a class="nav-link" href="1997Season.php">1997 Season</a></li>
+        <li class="nav-item m-2"><a class="nav-link" href="1998Season.php">1998 Season</a></li>
+        <li class="nav-item m-2"><a class="nav-link" href="1999Season.php">1999 Season</a></li>
+        <li class="nav-item m-2"><a class="nav-link" href="2000Season.php">2000 Season</a></li>
+        <li class="nav-item m-2"><a class="nav-link" href="2001Season.php">2001 Season</a></li>
+        <li class="nav-item m-2"><a class="nav-link" href="2002Season.php">2002 Season</a></li>
+        <li class="nav-item  m-2"><a class="nav-link" href="2003Season.php">2003 Season</a></li>
+        <li class="nav-item  m-2"><a class="nav-link" href="2004Season.php">2004 Season</a></li>
+        <li class="nav-item  m-2"><a class="nav-link" href="2005Season.php">2005 Season</a></li>
+        <li class="nav-item  m-2"><a class="nav-link" href="2006Season.php">2006 Season</a></li>
         <li class="nav-item  m-2"><a class="nav-link" href="2007Season.php">2007 Season</a></li>
         <li class="nav-item  m-2"><a class="nav-link" href="2008Season.php">2008 Season</a></li>
         <li class="nav-item  m-2"><a class="nav-link" href="2009Season.php">2009 Season</a></li>
@@ -49,6 +49,8 @@ include 'base/menu.php';
         <li class="nav-item  m-2"><a class="nav-link" href="2021Season/">2021 Season</a></li>
         <li class="nav-item  m-2"><a class="nav-link" href="2022Season/">2022 Season</a></li>
         <li class="nav-item  m-2"><a class="nav-link" href="2023Season/">2023 Season</a></li>
+        <li class="nav-item  m-2"><a class="nav-link" href="2024Season/">2024 Season</a></li>
+        <li class="nav-item  m-2"><a class="nav-link" href="2025Season/">2025 Season</a></li>
     </ul>
 </div>
 
