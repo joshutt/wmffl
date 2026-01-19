@@ -3,8 +3,8 @@ $title = '2025 WMFFL Season';
 include 'base/menu.php';
 ?>
 
-<h1 align=center>The 2025 Season</H1>
-<HR size="1">
+<h1 class="text-center">The 2025 Season</h1>
+<hr class="my-2">
 <br/>
 
 <div class="container">
@@ -24,40 +24,45 @@ include 'base/menu.php';
     </ul>
 </div>
 
-<div class="container align-content-center d-none">
-    <hr size="1">
-    <a name="playoffs"/>
+<div class="container align-content-center">
+    <hr class="my-2">
+    <a id="playoffs"></a>
 
     <div class="row justify-content-around align-items-center mb-2">
 
         <div class="align-self-center">
             <h4>League Champions</h4><br/>
-            <b></b>
+            <b>Gallic Warriors</b>
         </div>
     </div>
 
     <div class="row justify-content-between">
-        <TABLE class="col">
-            <TH>Playoffs</TH>
+        <table class="col">
+            <thead>
             <tr>
-                <td><B>Game 1</B></td>
+                <th>Playoffs</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><b>Game 1</b></td>
                 <td></td>
                 <td></td>
-                <td><B>Championship</B></td>
+                <td><b>Championship</b></td>
             </tr>
             <tr>
-                <td></td>
-                <td></td>
-                <td width=30%></td>
-                <td></td>
-                <td></td>
+                <td>Gallic Warriors</td>
+                <td>76</td>
+                <td style="width: 30%"></td>
+                <td>Gallic Warriors</td>
+                <td>32</td>
             </tr>
             <tr>
-                <td></td>
-                <td></td>
-                <td width=30%></td>
-                <td></td>
-                <td></td>
+                <td>Norsemen</td>
+                <td>40</td>
+                <td style="width: 30%"></td>
+                <td>MeggaMen</td>
+                <td>16</td>
             </tr>
             <tr class="my-2 py-2">
                 <td>&nbsp;</td>
@@ -67,33 +72,34 @@ include 'base/menu.php';
                 <td></td>
             </tr>
             <tr>
-                <td><B>Game 2</B></td>
+                <td><b>Game 2</b></td>
                 <td></td>
                 <td></td>
-                <td><B>Toilet Bowl</B></td>
+                <td><b>Toilet Bowl</b></td>
             </tr>
             <tr>
-                <td></td>
-                <td></td>
-                <td width=30%></td>
-                <td></td>
-                <td></td>
+                <td>MeggaMen</td>
+                <td>75</td>
+                <td style="width: 30%"></td>
+                <td>Omar's Coming</td>
+                <td>73</td>
             </tr>
             <tr>
-                <td></td>
-                <td></td>
-                <td width=30%></td>
-                <td></td>
-                <td></td>
+                <td>Richard's Lionhearts</td>
+                <td>37</td>
+                <td style="width: 30%"></td>
+                <td>British Bulldogs</td>
+                <td>0</td>
             </tr>
-        </TABLE>
+            </tbody>
+        </table>
         <br/>
     </div>
 </div>
 <br/>
 
-<hr size="1">
-<a name="standings"/>
+<hr class="my-2">
+<a id="standings"></a>
 
 <div class="container align-content-center">
     <div class="row justify-content-around">

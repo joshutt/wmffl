@@ -60,9 +60,9 @@ $title = 'WMFFL Transactions';
 include 'base/menu.php';
 ?>
 
-    <H1 ALIGN=Center>Transactions</H1>
-    <H5 ALIGN=Center>Last Updated <?= $lastupdate; ?></H5>
-    <HR size="1">
+    <h1 class="text-center">Transactions</h1>
+    <h5 class="text-center">Last Updated <?= $lastupdate; ?></h5>
+    <hr/>
 
 <?php include 'transactions/transmenu.php'; ?>
 
@@ -175,8 +175,12 @@ WHERE m.season=$theyear
         </div>
 
         <div class="row">
-            <div class="col"><a class="btn btn-wmffl" href=""><< Previous Month</a></div>
-            <div class="col"><a class="btn btn-wmffl" href="">Next Month >></a></div>
+            <div class="col"><a class="btn btn-wmffl"
+                                href="transactions?year=<?= $themonth > 8 ? $theyear : $theyear - 1 ?>&month=<?= $themonth > 8 ? $themonth - 1 : 12 ?>"><<
+                    Previous Month</a></div>
+            <div class="col"><a class="btn btn-wmffl"
+                                href="transactions?year=<?= $themonth < 12 ? $theyear : $theyear + 1 ?>&month=<?= $themonth < 12 ? $themonth + 1 : 8 ?>">Next
+                    Month >></a></div>
         </div>
     </div>
 

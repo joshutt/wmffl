@@ -2,7 +2,7 @@
 /**
  * @var $thisSeason int
  * @var $thisWeek int
- * @var $conn myslqi
+ * @var $conn mysqli
  */
 
 //include 'lib/TEAMID.php';
