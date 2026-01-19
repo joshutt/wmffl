@@ -26,7 +26,7 @@ class DraftPick
     private ?int $pick = null;
 
     #[ORM\ManyToOne(targetEntity: Team::class)]
-    #[ORM\JoinColumn(name: 'teamid', referencedColumnName: 'teamid')]
+    #[ORM\JoinColumn(name: 'teamid', referencedColumnName: 'TeamID')]
     private ?Team $team = null;
 
     #[ORM\Column(name: 'orgTeam', nullable: true)]
