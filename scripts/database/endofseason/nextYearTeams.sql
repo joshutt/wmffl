@@ -1,4 +1,4 @@
-set @season := 2024; -- The season that just ended
+set @season := 2025; -- The season that just ended
 set @transpoints := 55; -- Number of transaction points a team gets each year
 
 insert into teamnames
@@ -42,3 +42,9 @@ insert into draftvote
 select userid, @season+1, null
 from user
 where active=1;
+
+insert into season_flags
+(season, teamid, flags, division_winner, playoff_team, finalist, champion)
+select season+1, teamid, null, 0, 0, 0, 0
+from season_flags
+where season=@season;
