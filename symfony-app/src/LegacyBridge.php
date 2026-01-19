@@ -135,6 +135,23 @@ class LegacyBridge
         // This variable will be accessible by the required file below.
         $symEntityManager = $container->get('doctrine')->getManager();
 
+        // Inject Symfony services as global variables for legacy code compatibility
+        $seasonWeekService = $container->get('App\Service\SeasonWeekService');
+        $authService = $container->get('App\Service\AuthenticationService');
+
+        // Make season/week data available as globals (replaces connect.php logic)
+        $GLOBALS['currentSeason'] = $seasonWeekService->getCurrentSeason();
+        $GLOBALS['currentWeek'] = $seasonWeekService->getCurrentWeek();
+        $GLOBALS['weekName'] = $seasonWeekService->getWeekName();
+        $GLOBALS['previousWeekName'] = $seasonWeekService->getPreviousWeekName();
+        $GLOBALS['previousWeek'] = $seasonWeekService->getPreviousWeek();
+        $GLOBALS['previousWeekSeason'] = $seasonWeekService->getPreviousWeekSeason();
+
+        // Make authentication data available as globals (replaces start.php logic)
+        $GLOBALS['isin'] = $authService->isLoggedIn();
+        $GLOBALS['fullname'] = $authService->getFullName();
+        $GLOBALS['teamnum'] = $authService->getTeamNumber();
+
         // Possibly (re-)set some env vars (e.g. to handle forms
         // posting to PHP_SELF):
         $p = $request->getPathInfo();

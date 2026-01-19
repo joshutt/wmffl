@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Team
 {
     #[ORM\Id]
-    #[ORM\Column(name: 'teamid', type: 'integer')]
+    #[ORM\Column(name: 'TeamID', type: 'integer')]
     #[ORM\GeneratedValue]
     private int $id;
 
