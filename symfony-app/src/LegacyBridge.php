@@ -55,8 +55,6 @@ class LegacyBridge
         // set the log files
         ini_set('error_log', "$projectRoot/logs/wmffl.log");
         ini_set('log_errors', 1);
-        error_log("PAGE Legacy: $requestPathInfo");
-
 
         // Keep the original path info if you need it before overwriting $requestPathInfo
         $originalRequestPathInfo = $request->getPathInfo();
@@ -92,14 +90,6 @@ class LegacyBridge
         }
 
         $path =  realpath("$legacyRoot/$requestPathInfo");
-
-        error_log("Path: $path");
-        error_log('Real path: '.realpath($path));
-
-        // Check if the path contains 'admin' and log it
-        if ($requestPathInfo && str_contains($requestPathInfo, 'admin')) {
-            error_log("Admin path accessed: $requestPathInfo");
-        }
 
         if (is_dir($path) || is_file($path)) {
             chdir(dirname($path));
