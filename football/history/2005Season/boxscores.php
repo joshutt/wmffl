@@ -1,5 +1,5 @@
 <table>
-<?
+<?php
 
 function printstats($player) {
     $returnString = "";

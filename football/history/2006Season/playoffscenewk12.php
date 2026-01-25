@@ -1,4 +1,4 @@
-<?
+<?php
 $title="Playoff Scenarios";
 include "base/menu.php";
 ?>
@@ -63,4 +63,4 @@ What?  Are you suicidal?  Isn't the above complicated enough for you?  Your head
 </ul>
 
 
-<? include "base/footer.php"; ?>
+<?php include "base/footer.php"; ?>

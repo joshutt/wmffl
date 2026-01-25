@@ -3,7 +3,7 @@
 <TITLE>Determine Draft Date</TITLE>
 </HEAD>
 
-<?
+<?php
 
 require_once "base/conn.php";
 require_once "login/loginglob.php";
@@ -13,7 +13,7 @@ include "base/menu.php";
 <H1 ALIGN=Center>Draft Date Open</H1>
 <HR size = "1"/>
 
-<?
+<?php
 if ($isin) {
 
     $thequery = "SELECT DATE_FORMAT(date, '%m%e'), DATE_FORMAT(date, '%W, %M %D'), attend ";
@@ -36,7 +36,7 @@ weekend days.
 <TABLE BORDER=1 WIDTH=50%>
 <TR><TH WIDTH=30%>Can Attend?</TH><TH WIDTH=70%>Date</TH></TR>
 
-<?
+<?php
 while (list($date, $fulldate, $attend) = mysqli_fetch_row($results)) {
         print "<TR><TD><INPUT TYPE=\"radio\" NAME=\"$date\" VALUE=\"Y\" ";
         if ($attend == 'Y') print "CHECKED ";
@@ -52,13 +52,13 @@ while (list($date, $fulldate, $attend) = mysqli_fetch_row($results)) {
 </FORM>
 </P>
 
-<?
+<?php
 } else {
 ?>
 
 <CENTER><B>You must be logged in to use this feature</B></CENTER>
 
-<? }
+<?php }
 include "base/footer.php";
 ?>
 

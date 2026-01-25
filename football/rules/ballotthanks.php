@@ -1,4 +1,4 @@
-<?
+<?php
 session_start();
 $title = "WMFFL Rule Proposals";
 
@@ -13,4 +13,4 @@ considered for addition to the ballot.
 If you would like to make additional proposals you may do so
 <A HREF="/rules/proposesubmit.php">here</A>.</P>
 
-<? include "base/footer.php"; ?>
+<?php include "base/footer.php"; ?>

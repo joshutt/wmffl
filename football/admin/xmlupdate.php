@@ -1,4 +1,4 @@
-<?
+<?php
 include 'check.inc.php';
 
 print "start<br/>";

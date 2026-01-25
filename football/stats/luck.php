@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "utils/start.php";
 if ($currentWeek < 1) {
     $thisSeason = $currentSeason - 1;
@@ -112,12 +112,12 @@ if ($week > 0) {
 $title = "Schedule Luck";
 ?>
 
-<? include "base/menu.php"; ?>
+<?php include "base/menu.php"; ?>
 
 <H1 ALIGN=Center>Schedule Luck</H1>
 <H5 ALIGN=Center><I>Through Week <?print $week;?></I></H5>
 <HR>
-<? include "base/statbar.html"; ?>
+<?php include "base/statbar.html"; ?>
 
 <P>Schedule Luck is an evaluation of how a team's record compares to what it
 "should be".  It is determined by calculating what a team's record would be
@@ -130,11 +130,11 @@ schedule has been.  Any team whose luck is within the statistical significance
 has a fairly accurate record.  These numbers are updated every Tuesday 
 afternoon.</P>
 
-<P>Current statistical significance: +/- <? printf("%5.1f",$statSig);?></P>
+<P>Current statistical significance: +/- <?php printf("%5.1f",$statSig);?></P>
 
 <TABLE ALIGN=Center>
 <TR><TH ALIGN=Left>Team</TH><TH ALIGN=Left>Luck Rating</TH></TR>
-<?
+<?php
 arsort($luckRe);
 foreach ($luckRe as $name=>$diff) {
 //    printf("%s = %5.1f<BR>", $name, ($diff["act"]-$diff["pot"])*100);
@@ -150,4 +150,4 @@ foreach ($luckRe as $name=>$diff) {
 ?>
 </TABLE>
 
-<? include "base/footer.php"; ?>
+<?php include "base/footer.php"; ?>

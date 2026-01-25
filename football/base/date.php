@@ -1,4 +1,4 @@
-<?
+<?php
 	require_once "conn.php";
 
 	$thequery = "SELECT UNIX_TIMESTAMP(ActivationDue-INTERVAL 30 MINUTE)-UNIX_TIMESTAMP(), weekname FROM weekmap WHERE now() BETWEEN StartDate AND EndDate";

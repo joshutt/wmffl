@@ -1,4 +1,4 @@
-<?
+<?php
   /* lib_DateTime.php
    *
    * A small library used to manipulate date and time structure, without

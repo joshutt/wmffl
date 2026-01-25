@@ -1,4 +1,4 @@
-<?
+<?php
 include_once "base/conn.php";
 
 include "base/menu.php";
@@ -25,7 +25,7 @@ th {background-color: #006699; text-align: center;
     color: #ffa34f; padding: 0px 8px 0px 8px}
 </style>
 
-<?
+<?php
 $results = mysqli_query($conn, $sql) or die("MySQL Error: " . mysqli_error($conn));
 print "<table>";
 print "<tr><th>Name</th><th>Team</th><th>NFL</th><th>Pts</th></tr>";

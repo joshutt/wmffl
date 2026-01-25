@@ -1,4 +1,4 @@
-<?
+<?php
 //require_once "base/conn.php";
 
 if (isset($conn)) {

@@ -1,4 +1,4 @@
-<?
+<?php
 #header("Content-type: text/txt");
 header("Content-type: text/csv");
 

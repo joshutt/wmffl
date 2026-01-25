@@ -1,4 +1,4 @@
-<?
+<?php
 $title="Playoff Scenarios";
 include "base/menu.php";
 ?>
@@ -56,4 +56,4 @@ Vick (QB-ATL), Alge Crumpler (TE-ATL) and Atlanta OL still to play.</p>
 </ul>
 
 
-<? include "base/footer.php"; ?>
+<?php include "base/footer.php"; ?>

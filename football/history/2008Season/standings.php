@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "utils/start.php";
 
 $thisWeek = $_REQUEST["week"];
@@ -14,7 +14,7 @@ $clinchedList = array("Sacks on the Beach" => "y-", "Lindbergh Baby Casserole" =
 
 ?>
 
-<? include "base/menu.php"; ?>
+<?php include "base/menu.php"; ?>
 
 <style>
 <!--
@@ -27,7 +27,7 @@ H4 {color:660000; text-decoration:None; font-size:14pt; font-weight:bold}
 <table width="100%">
 <tr><td class="othertitle" align="center">Current Standings</td></tr></table>
 <center>
-<? include "weekstandings.php"; ?>
+<?php include "weekstandings.php"; ?>
 
 <p>
 x - clinched playoff berth<br/>
@@ -37,4 +37,4 @@ z - clinched Toilet Bowl berth
 </center>
 
 
-<? include "base/footer.php"; ?>
+<?php include "base/footer.php"; ?>

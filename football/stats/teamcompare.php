@@ -1,4 +1,4 @@
-<?
+<?php
 function determineRecord(&$werRec, $werScore, $otherScore) {
     if ($werScore > $otherScore) {
         $werRec["win"]++;

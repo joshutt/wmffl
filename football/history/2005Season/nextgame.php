@@ -1,5 +1,5 @@
 <table>
-<?
+<?php
 $query = <<<EOD
 SELECT s.label, t1.name as 'teama', t2.name as 'teamb'
 FROM schedule s, teamnames t1, teamnames t2

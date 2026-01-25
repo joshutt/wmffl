@@ -1,4 +1,4 @@
-<?
+<?php
 $address = "josh.utterback@gmail.com, josh@joshutterback.com, jutterback@getwellnetwork.com, josh@wmffl.com";
 $address = "josh@wmffl.com";
 $subject =" A Test again";

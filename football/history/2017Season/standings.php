@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "utils/start.php";
 
 $thisWeek = $_REQUEST["week"];
@@ -15,7 +15,7 @@ $clinchedList = array("Sean Taylor's Ashes" => 'z-', "Richard's Lionhearts" => '
 
 ?>
 
-<? include "base/menu.php"; ?>
+<?php include "base/menu.php"; ?>
 
 <style>
 <!--
@@ -28,9 +28,9 @@ H4 {color:660000; text-decoration:None; font-size:14pt; font-weight:bold}
 <table width="100%">
 <tr><td class="othertitle" align="center">Current Standings</td></tr></table>
 <center>
-<? include "../common/weekstandings.php"; ?>
+<?php include "../common/weekstandings.php"; ?>
 
-<?
+<?php
 if (!empty($clinchedList)) {
 ?>
 
@@ -43,4 +43,4 @@ z - clinched Toilet Bowl berth
 </center>
 <?php } ?>
 
-<? include "base/footer.php"; ?>
+<?php include "base/footer.php"; ?>

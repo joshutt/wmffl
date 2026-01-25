@@ -1,4 +1,4 @@
-<?
+<?php
 session_start();
 $title = "WMFFL Rule Proposals";
 
@@ -121,4 +121,4 @@ Adjust auto draft to draft starters before backups and a single backup before mu
     </i></blockquote>
 </p>
 
-<? include "base/footer.php"; ?>
+<?php include "base/footer.php"; ?>

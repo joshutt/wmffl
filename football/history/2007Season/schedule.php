@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "utils/start.php";
 $thisSeason = 2007;
 $thisWeek = 17;
@@ -70,9 +70,9 @@ a.return {
 -->
 </style>
 
-<? include "base/menu.php"; ?>
+<?php include "base/menu.php"; ?>
 
-<H1 Align=Center><? print $thisSeason;?> Schedule</H1>
+<H1 Align=Center><?php print $thisSeason;?> Schedule</H1>
 <HR size = "1"><CENTER>
 
 <A HREF="#Week1">Week 1</A> | <A HREF="#Week2">Week 2</A> |
@@ -86,7 +86,7 @@ a.return {
 <A HREF="#Championship">WMFFL Championship XVI</A><HR size = "1"></CENTER>
 
 
-<?
+<?php
 $results = mysqli_query($conn, $sql) or die("Unable to get games: " . mysqli_error($conn));
 
 $listWeek = 0;
@@ -189,4 +189,4 @@ print "</div><br/>";
 
 <a name="Playoffs"/><a name="Championship"/>
 
-<? include "base/footer.php"; ?>
+<?php include "base/footer.php"; ?>

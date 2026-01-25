@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "utils/start.php";
 
 $title = "2010 WMFFL Financial Statements";
@@ -60,4 +60,4 @@ also a page detailing each team's balance.</P>
 <TR BGCOLOR="#CCCCCC"><TD>&nbsp;&nbsp;&nbsp;League Champion</TD><TD>&nbsp;</TD><TD>1 @ $174.61</TD></TR>
 </TABLE>
 
-<? include "base/footer.php"; ?>
+<?php include "base/footer.php"; ?>

@@ -28,7 +28,7 @@ while ($row = mysqli_fetch_array($results)) {
 <INPUT TYPE="Submit" VALUE="Compare">
 </FORM>
 
-<?
+<?php
 if (array_key_exists('teamone', $_REQUEST) && array_key_exists('teamtwo', $_REQUEST)) {
     $teamone = $_REQUEST['teamone'];
     $teamtwo = $_REQUEST['teamtwo'];
@@ -61,4 +61,4 @@ if (array_key_exists('teamone', $_REQUEST) && array_key_exists('teamtwo', $_REQU
 }
 ?>
 </CENTER>
-<? include "base/footer.php"; ?>
+<?php include "base/footer.php"; ?>

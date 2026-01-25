@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "base/conn.php";
 $query = "SELECT p.firstname, p.lastname, pc.years, MAX(pos.cost)-MIN(pos.cost) as 'Extra', t.name ";
 $query .= "FROM players p, protectioncost pc, positioncost pos ";
@@ -24,7 +24,7 @@ while ($aLine = mysqli_fetch_array($result)) {
 <TITLE>2005 WMFFL Protection Costs</TITLE>
 </HEAD>
 
-<? include "base/menu.php"; ?>
+<?php include "base/menu.php"; ?>
 
 <H1 Align=Center>Protection Costs</H1>
 <HR size = "1">
@@ -62,7 +62,7 @@ be able to find out how much each player will cost to protect.</P>
 
 <TABLE ALIGN="Center">
 
-<?
+<?php
 $sumup = 0;
 foreach ($page as $teamName=>$val) {
     if ($teamName == '') continue;
@@ -73,26 +73,26 @@ foreach ($page as $teamName=>$val) {
 </TD><TD WIDTH=*></TD><TD WIDTH=50% VALIGN=Top>
 
 <TABLE ALIGN=Right VALIGN=Top>
-<?
+<?php
         $sumup = 0;
     }
 ?>
 
-<TR><TH COLSPAN=3><? print $teamName; ?></TH></TR>
+<TR><TH COLSPAN=3><?php print $teamName; ?></TH></TR>
 <TR><TH>Player Name</TH><TH>Years Protected</TH><TH>Extra Cost</TH></TR>
-<? print $val; ?>
+<?php print $val; ?>
 <TR><TD>&nbsp;</TD></TR>
 
-<?
+<?php
 $sumup += $countall[$teamName] + 3;
 }
 $teamName = '';
 ?>
 <TR><TH COLSPAN=3>Not on a Roster</TH></TR>
 <TR><TH>Player Name</TH><TH>Years Protected</TH><TH>Extra Cost</TH></TR>
-<? print $page['']; ?>
+<?php print $page['']; ?>
 <TR><TD>&nbsp;</TD></TR>
 
 </TABLE>
 </TD></TR></TABLE>
-<? include "base/footer.php"; ?>
+<?php include "base/footer.php"; ?>

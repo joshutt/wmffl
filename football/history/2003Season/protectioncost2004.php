@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "base/conn.php";
 $query = "SELECT p.firstname, p.lastname, pc.years, MAX(pos.cost)-MIN(pos.cost) as 'Extra', t.name ";
 $query .= "FROM players p, protectioncost pc, positioncost pos ";
@@ -22,7 +22,7 @@ while ($aLine = mysqli_fetch_array($result)) {
 <TITLE>2004 WMFFL Protection Costs</TITLE>
 </HEAD>
 
-<? include "base/menu.php"; ?>
+<?php include "base/menu.php"; ?>
 
 <H1 Align=Center>Protection Costs</H1>
 <HR size = "1">
@@ -62,32 +62,32 @@ be able to find out how much each player will cost to protect.</P>
 
 <TR><TH COLSPAN=2>Bug Stompers</TH></TR>
 <TR><TH>Player Name</TH><TH>Years Protected</TH><TH>Extra Cost</TH></TR>
-<? print $page['Bug Stompers']; ?>
+<?php print $page['Bug Stompers']; ?>
 <TR><TD>&nbsp;</TD></TR>
 
 <TR><TH COLSPAN=2>Crusaders</TH></TR>
 <TR><TH>Player Name</TH><TH>Years Protected</TH><TH>Extra Cost</TH></TR>
-<? print $page['Crusaders']; ?>
+<?php print $page['Crusaders']; ?>
 <TR><TD>&nbsp;</TD></TR>
 
 <TR><TH COLSPAN=2>Freezer Burn</TH></TR>
 <TR><TH>Player Name</TH><TH>Years Protected</TH><TH>Extra Cost</TH></TR>
-<? print $page['Freezer Burn']; ?>
+<?php print $page['Freezer Burn']; ?>
 <TR><TD>&nbsp;</TD></TR>
 
 <TR><TH COLSPAN=2>Gallic Warriors</TH></TR>
 <TR><TH>Player Name</TH><TH>Years Protected</TH><TH>Extra Cost</TH></TR>
-<? print $page['Gallic Warriors']; ?>
+<?php print $page['Gallic Warriors']; ?>
 <TR><TD>&nbsp;</TD></TR>
 
 <TR><TH COLSPAN=2>Illuminati</TH></TR>
 <TR><TH>Player Name</TH><TH>Years Protected</TH><TH>Extra Cost</TH></TR>
-<? print $page['Illuminati']; ?>
+<?php print $page['Illuminati']; ?>
 <TR><TD>&nbsp;</TD></TR>
 
 <TR><TH COLSPAN=2>MeggaMen</TH></TR>
 <TR><TH>Player Name</TH><TH>Years Protected</TH><TH>Extra Cost</TH></TR>
-<? print $page['MeggaMen']; ?>
+<?php print $page['MeggaMen']; ?>
 <TR><TD>&nbsp;</TD></TR>
 
 </TABLE>
@@ -96,28 +96,28 @@ be able to find out how much each player will cost to protect.</P>
 <TABLE ALIGN=Right VALIGN=Top>
 <TR><TH COLSPAN=2>Norsemen</TH></TR>
 <TR><TH>Player Name</TH><TH>Years Protected</TH><TH>Extra Cost</TH></TR>
-<? print $page['Norsemen']; ?>
+<?php print $page['Norsemen']; ?>
 <TR><TD>&nbsp;</TD></TR>
 
 <TR><TH COLSPAN=2>Rednecks</TH></TR>
 <TR><TH>Player Name</TH><TH>Years Protected</TH><TH>Extra Cost</TH></TR>
-<? print $page['Rednecks']; ?>
+<?php print $page['Rednecks']; ?>
 <TR><TD>&nbsp;</TD></TR>
 
 <TR><TH COLSPAN=2>Werewolves</TH></TR>
 <TR><TH>Player Name</TH><TH>Years Protected</TH><TH>Extra Cost</TH></TR>
-<? print $page['Werewolves']; ?>
+<?php print $page['Werewolves']; ?>
 <TR><TD>&nbsp;</TD></TR>
 
 <TR><TH COLSPAN=2>Whiskey Tango</TH></TR>
 <TR><TH>Player Name</TH><TH>Years Protected</TH><TH>Extra Cost</TH></TR>
-<? print $page['Whiskey Tango']; ?>
+<?php print $page['Whiskey Tango']; ?>
 <TR><TD>&nbsp;</TD></TR>
 
 <TR><TH COLSPAN=2>Not on a Team</TH></TR>
 <TR><TH>Player Name</TH><TH>Years Protected</TH><TH>Extra Cost</TH></TR>
-<? print $page['']; ?>
+<?php print $page['']; ?>
 
 </TABLE>
 </TD></TR></TABLE>
-<? include "base/footer.php"; ?>
+<?php include "base/footer.php"; ?>

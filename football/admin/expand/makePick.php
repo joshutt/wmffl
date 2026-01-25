@@ -18,7 +18,7 @@ EOD;
 <select name="team"><option value="12">Matt</option><option value="13">Bill</option></select>
 
 <select name="player">
-<?
+<?php
 $results = mysqli_query($conn, $sql) or die("Unable to get available: " . mysqli_error($conn));
 
 while ($player = mysqli_fetch_array($results)) {

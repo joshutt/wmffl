@@ -1,4 +1,4 @@
-<?
+<?php
 include 'check.inc.php';
 //	require "../base/conn.php";
     require "/home/wmffl/public_html/base/conn.php";

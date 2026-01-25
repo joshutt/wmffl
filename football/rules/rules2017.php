@@ -1,4 +1,4 @@
-<?
+<?php
 $title = "WMFFL Rules";
 include "base/menu.php";
 ?>
@@ -614,4 +614,4 @@ Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules
 <LI>The rule is rejected by more than 50% of the vote.
 </OL></OL></OL>
 
-<? include "base/footer.php"; ?>
+<?php include "base/footer.php"; ?>

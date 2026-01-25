@@ -2,30 +2,30 @@
 <p><table width="145">
 <tr><td>
 
-<?
+<?php
 if (isset($message) && $message != "") {
 ?>
 <CENTER>
-<P><FONT Color="Red" SIZE="-1"><B><? print $message; ?> </B></FONT></P>
+<P><FONT Color="Red" SIZE="-1"><B><?php print $message; ?> </B></FONT></P>
 </CENTER>
 
 </TD></TR>
 <TR><TD>
 
-<?	
+<?php	
 $message = "";
 }
 if ($isin) {
 		
 ?>
 	<CENTER>
-	<P><div class="loginText">Welcome <? print $fullname; ?></div></P>
+	<P><div class="loginText">Welcome <?php print $fullname; ?></div></P>
 	
 	<P><A HREF="/login/logout.php">Log Out</A></P>
-<? if ($teamnum == 2) { print "<a href=\"/login/simulatelogin.php\">Commish</a>"; } ?>
+<?php if ($teamnum == 2) { print "<a href=\"/login/simulatelogin.php\">Commish</a>"; } ?>
 	<P><A HREF="/login/newpassword.php">Change Password</A></P>
 	</CENTER>
-<?
+<?php
 } else {
 
 ?>	
@@ -41,7 +41,7 @@ if ($isin) {
 	<P><A HREF="/login/forgotpassword.php">Forgot Password</A></P>
 
 	</CENTER>
-<?
+<?php
 	}
 ?>
 

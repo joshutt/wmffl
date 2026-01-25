@@ -1,4 +1,4 @@
-<?
+<?php
 
 class Transaction {
     var $date;

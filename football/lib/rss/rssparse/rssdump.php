@@ -21,19 +21,19 @@ $items = $rss->get_items_data();
 ?>
 <b>Channel data:</b><br/>
 <pre>
-<? print_r($ch) ?>
+<?php print_r($ch) ?>
 </pre><br/>
 <b>Channel image data:</b><br/>
 <pre>
-<? print_r($ch_im) ?>
+<?php print_r($ch_im) ?>
 </pre><br/>
 <b>Channel textinput data:</b><br/>
 <pre>
-<? print_r($ch_ti) ?>
+<?php print_r($ch_ti) ?>
 </pre><br/>
 <b>Items data:</b><br/>
 <pre>
-<?
+<?php
 foreach($items as $item) {
     echo "----<br/>\n";
     foreach($item as $key=>$val) {

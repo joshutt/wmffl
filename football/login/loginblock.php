@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "base/conn.php";
 
 if (isset($teamid)) {
@@ -18,15 +18,15 @@ if (isset($teamid)) {
 }
 ?>
 
-<P><FONT Color="Red"><B><? print $message; ?> </B></FONT></P>
+<P><FONT Color="Red"><B><?php print $message; ?> </B></FONT></P>
 
-<?
+<?php
 	if (isset($teamnum) && $teamnum != 0) {
 		
 ?>
 	<P>You are logged in<BR>
 	<A HREF="logout.php">Log Out</A></P>
-<?
+<?php
 	} else {
 ?>
 	<FORM ACTION="login.php" METHOD="POST">
@@ -34,6 +34,6 @@ if (isset($teamid)) {
 	Password: <INPUT TYPE="password" NAME="password" WIDTH=10><BR>
 	<INPUT TYPE="Submit" NAME="Log In">
 	</FORM>
-<?
+<?php
 	}
 ?>

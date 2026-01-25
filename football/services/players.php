@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "utils/start.php";
 
 // Get extra where

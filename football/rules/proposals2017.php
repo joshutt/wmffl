@@ -1,4 +1,4 @@
-<?
+<?php
 session_start();
 $title = "WMFFL Rule Proposals";
 
@@ -125,4 +125,4 @@ Eliminate halving of negative scores.
 </i></blockquote>
 </p>
 
-<? include "base/footer.php"; ?>
+<?php include "base/footer.php"; ?>

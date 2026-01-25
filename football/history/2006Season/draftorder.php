@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "utils/start.php";
 
 $sql = "SELECT d.round, d.pick, substring(t.name, 1, 20) as 'name', ";
@@ -9,7 +9,7 @@ $sql .= "ORDER BY Round, Pick";
 
 $title = "2006 WMFFL Draft Order";
 ?>
-<? include "base/menu.php"; ?>
+<?php include "base/menu.php"; ?>
 
 <H1 Align=Center>Draft Order</H1>
 <H5 ALIGN=Center><I>August 11, 2006</I></H5>
@@ -25,7 +25,7 @@ teams.  The weights were: Lindbergh Baby Casserole - 6; Rednecks - 5; Norsemen
 <P>
 <TABLE WIDTH=100%>
 
-<?
+<?php
 $results = mysqli_query($conn, $sql) or die("Database error: " . mysqli_error($conn));
 
 $round = 0;

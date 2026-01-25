@@ -139,14 +139,14 @@ include "base/menu.php";
                 ?>
 
                 <TR>
-                    <TH COLSPAN=3><? print $teamName; ?></TH>
+                    <TH COLSPAN=3><?php print $teamName; ?></TH>
                 </TR>
                 <TR>
                     <TH>Player Name</TH>
                     <TH>Years Protected</TH>
                     <TH>Extra Cost</TH>
                 </TR>
-                <? print $val; ?>
+                <?php print $val; ?>
                 <TR>
                     <TD>&nbsp;</TD>
                 </TR>
@@ -164,7 +164,7 @@ include "base/menu.php";
                     <TH>Years Protected</TH>
                     <TH>Extra Cost</TH>
                 </TR>
-                <? print $page['']; ?>
+                <?php print $page['']; ?>
                 <TR>
                     <TD>&nbsp;</TD>
                 </TR>

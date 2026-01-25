@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "utils/start.php";
 
 $sql = "SELECT d.round, d.pick, (t.name) as 'name', ";
@@ -9,7 +9,7 @@ $sql .= "ORDER BY Round, Pick";
 
 $title = "2015 WMFFL Draft Order";
 ?>
-<? include "base/menu.php"; ?>
+<?php include "base/menu.php"; ?>
 
 <H1 Align=Center>Draft Order</H1>
 <H5 ALIGN=Center><I>July 8, 2015</I></H5>
@@ -21,7 +21,7 @@ This is the official draft order for the 2015 Draft.  The order was determined b
 <P>
 <TABLE WIDTH=100%>
 
-<?
+<?php
 $results = mysqli_query($conn, $sql) or die("Database error: " . mysqli_error($conn));
 
 $round = 0;

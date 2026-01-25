@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "utils/start.php";
 
 $title = "2016 WMFFL Financial Statements";
@@ -74,19 +74,19 @@ include "base/menu.php";
 <HR size = "1">
 
 <p>
-<? include "base/statbar.html" ?>
+<?php include "base/statbar.html" ?>
 </p>
 
 
 <div class="center">
 
-<?  
+<?php  
 $amt_owed = array( 1 => "71.96", 3 => "202.37", 4 => "23.03", 6 => "58.21", 8 => "52.92", 12 => "62.44" );
 
 if ($isin && array_key_exists($teamnum, $amt_owed)) { ?>
 
 <h2 align="center"><a href="http://paypal.me/JoshUtterback/<?= $amt_owed[$teamnum] ?>">Pay Now</a></h2>
-<? } ?>
+<?php } ?>
 
 <table class="report">
 <tr class="titleRow"><th>Team</th><th>Previous</th><th>Paid</th><th>Late Fees</th><th>Illegal<br/>Lineup</th><th>Extra<br/>Transactions</th><th>Wins</th><th>Playoffs</th><th>Balance</th><th>2017 Fee</th><tr>
@@ -108,4 +108,4 @@ if ($isin && array_key_exists($teamnum, $amt_owed)) { ?>
 
 </div>
 
-<? include "base/footer.php"; ?>
+<?php include "base/footer.php"; ?>

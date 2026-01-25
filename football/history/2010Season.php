@@ -1,4 +1,4 @@
-<?
+<?php
 $title = "2010 WMFFL Season";
 include "base/menu.php"; 
 ?>
@@ -59,7 +59,7 @@ include "base/menu.php";
 
 <HR size = "1">
 
-<?
+<?php
 $thisSeason = 2010;
 $thisWeek = 17;
 include "common/weekstandings.php";

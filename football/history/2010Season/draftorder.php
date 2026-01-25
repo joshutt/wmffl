@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "utils/start.php";
 
 $sql = "SELECT d.round, d.pick, (t.name) as 'name', ";
@@ -9,7 +9,7 @@ $sql .= "ORDER BY Round, Pick";
 
 $title = "2010 WMFFL Draft Order";
 ?>
-<? include "base/menu.php"; ?>
+<?php include "base/menu.php"; ?>
 
 <H1 Align=Center>Draft Order</H1>
 <H5 ALIGN=Center><I>August 22, 2010</I></H5>
@@ -23,7 +23,7 @@ August 24.  The order was determined based on reverse order of finish last seaso
 <P>
 <TABLE WIDTH=100%>
 
-<?
+<?php
 $results = mysqli_query($conn, $sql) or die("Database error: " . mysqli_error($conn));
 
 $round = 0;

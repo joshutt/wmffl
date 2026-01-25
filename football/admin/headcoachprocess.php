@@ -1,4 +1,4 @@
-<?
+<?php
 // establish connection
 include 'check.inc.php';
 require "base/conn.php";

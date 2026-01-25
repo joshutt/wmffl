@@ -9,14 +9,14 @@
 
 <TABLE ALIGN=Center>
 <TR><TD>
-<?
+<?php
 for ($yearloop=0; $yearloop<count($champyear); $yearloop++) {
 	print "<IMG SRC=\"/images/greystone15-2a.jpg\" HEIGHT=100>";
 	print "</TD><TD>";
 }
 ?>
 </TR><TR><TD ALIGN=Center>
-<?
+<?php
 for ($yearloop=0; $yearloop<count($champyear); $yearloop++) {
 	print $champyear[$yearloop]."</TD><TD ALIGN=Center>";
 }

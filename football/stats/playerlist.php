@@ -1,4 +1,4 @@
-<?
+<?php
 include "base/conn.php";
 include "base/useful.php";
 
