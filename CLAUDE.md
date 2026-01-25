@@ -20,7 +20,7 @@ The project consists of two applications:
    - Bootstrap file: `football/bootstrap.php` (sets up Doctrine EntityManager)
 
 2. **Symfony Application** (`/symfony-app/`)
-   - Modern Symfony 7.2 application
+   - Modern Symfony 7.4 application
    - Entry point: `symfony-app/public/index.php`
    - Symfony handles requests first; if route not found (404), falls back to legacy via LegacyBridge
 
@@ -127,7 +127,7 @@ Both setups point to the same MySQL database but manage different entity mapping
   - `/football/history/` - Historical data
 - `/symfony-app/` - Modern Symfony application
   - `/symfony-app/src/Entity/` - Symfony-managed entities
-  - `/symfony-app/src/Controller/` - Symfony controllers (currently empty, all routed via legacy)
+  - `/symfony-app/src/Controller/` - Symfony controllers
   - `/symfony-app/public/` - Web root with index.php
 - `/src/` - Shared domain models (WMFFL namespace)
   - `/src/orm/` - Doctrine entities shared between both apps
