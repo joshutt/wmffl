@@ -1,5 +1,5 @@
 <?php
-use WMFFL\orm\Article;
+use App\Entity\Article;
 /**
  * @var $article Article
  */

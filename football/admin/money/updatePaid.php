@@ -5,7 +5,7 @@
  */
 
 use Doctrine\ORM\EntityManager;
-use WMFFL\orm\Paid as Paid;
+use App\Entity\Paid;
 
 include '../check.inc.php';
 require_once 'utils/start.php';
@@ -14,7 +14,7 @@ require_once 'bootstrap.php';
 //$paid = new Paid();
 //$entityManager->find('Paid', )
 $season = $_GET['season'] ?? $currentSeason;
-$paid = $entityManager->getRepository('WMFFL\orm\Paid')->findBy(array('season' => $season));
+$paid = $entityManager->getRepository(Paid::class)->findBy(array('season' => $season));
 ?>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -47,7 +47,7 @@ $paid = $entityManager->getRepository('WMFFL\orm\Paid')->findBy(array('season' =
                 <tr>
                     <td><?= $p->getTeam()->getName() ?></td>
                     <td><?= $fmt->formatCurrency($p->getPrevious(), 'USD') ?></td>
-                    <td><?= $fmt->formatCurrency($p->getEntry(), 'USD') ?></td>
+                    <td><?= $fmt->formatCurrency($p->getEntryFee(), 'USD') ?></td>
                     <td><span id="late-<?= $p->getId() ?>" class="editable-span"><?= $fmt->formatCurrency($p->getLateFee(), 'USD') ?></span></td>
                     <td><span id="amt-<?= $p->getId() ?>" class="editable-span"><?= $fmt->formatCurrency($p->getAmtPaid(), 'USD') ?></span></td>
                     <td>

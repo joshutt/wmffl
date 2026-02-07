@@ -4,7 +4,7 @@
  **/
 
 use Doctrine\ORM\EntityManager;
-use WMFFL\orm\Paid as Paid;
+use App\Entity\Paid;
 
 include '../check.inc.php';
 require_once 'utils/start.php';
@@ -19,7 +19,7 @@ $idx = $splitField[1];
 
 
 try {/** @var Paid $paid */
-    $paid = $entityManager->find('WMFFL\orm\Paid', $idx);
+    $paid = $entityManager->find(Paid::class, $idx);
 
     switch ($param) {
         case 'paid':

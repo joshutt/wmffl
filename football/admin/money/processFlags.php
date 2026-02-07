@@ -4,7 +4,7 @@
  **/
 
 use Doctrine\ORM\EntityManager;
-use WMFFL\orm\SeasonFlags as Flags;
+use App\Entity\SeasonFlag;
 
 include '../check.inc.php';
 require_once 'utils/start.php';
@@ -32,8 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 try {
     foreach ($flags as $id => $f) {
-        /* @var $currentFlags Flags */
-        $currentFlags = $entityManager->find('WMFFL\orm\SeasonFlags', $id);
+        /* @var $currentFlags SeasonFlag */
+        $currentFlags = $entityManager->find(SeasonFlag::class, $id);
         if ($currentFlags->getFlags() !== $f['flags']) {
             $currentFlags->setFlags($f['flags']);
             print "Update flags to [{$f['flags']}] for {$currentFlags->getTeam()->getName()} <br/>";

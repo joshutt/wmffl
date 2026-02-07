@@ -5,13 +5,14 @@
  */
 
 use Doctrine\ORM\EntityManager;
+use App\Entity\SeasonFlag;
 
 include '../check.inc.php';
 require_once 'utils/start.php';
 require_once 'bootstrap.php';
 
 $season = $_GET['season'] ?? $currentSeason;
-$flags = $entityManager->getRepository('WMFFL\orm\SeasonFlags')->findBy(array('season' => $season));
+$flags = $entityManager->getRepository(SeasonFlag::class)->findBy(array('season' => $season));
 ?>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
