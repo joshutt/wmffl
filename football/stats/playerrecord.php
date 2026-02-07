@@ -454,11 +454,10 @@ EOD;
 ?>
 </table>
 </center></p>
-<?php}?>
-
-
-
 <?php
+}
+
+
 if (sizeof($newRecs) > 0) {
 ?>
 <center>
@@ -478,8 +477,7 @@ EOD;
 ?>
 </table>
 </center>
-<?php}?>
-
 <?php
+}
+
 include "base/footer.php";
-?>
