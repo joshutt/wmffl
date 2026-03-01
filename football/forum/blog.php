@@ -5,7 +5,7 @@
  */
 
 use Doctrine\ORM\EntityManager;
-use WMFFL\orm\Forum;
+use App\Entity\Forum;
 
 require_once 'utils/setup.php';
 require_once 'bootstrap.php';
@@ -13,7 +13,7 @@ require_once 'bootstrap.php';
 // Get the 20 comments
 $qb = $entityManager->createQueryBuilder();
 $qb -> select('f')
-    -> from('\WMFFL\orm\Forum', 'f')
+    -> from(Forum::class, 'f')
     -> orderBy('f.createTime', 'DESC')
     -> setMaxResults(20);
 if (array_key_exists('start', $_REQUEST)) {

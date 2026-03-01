@@ -1,4 +1,4 @@
-<?
+<?php
 include 'check.inc.php';
 require_once "base/conn.php";
 session_start();

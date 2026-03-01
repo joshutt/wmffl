@@ -1,4 +1,4 @@
-<?
+<?php
 session_start();
 require_once "base/conn.php";
 require "login/loginglob.php";
@@ -17,7 +17,7 @@ rejectTrade($conn, $offerid);
 <title>Invalid Trade</title>
 </head>
 
-<? include "base/menu.php"; ?>
+<?php include "base/menu.php"; ?>
 
 <h1 align="center">Trade Screen</h1>
 <hr/>

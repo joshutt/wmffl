@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "utils/start.php";
 
 function numberName($num) {
@@ -60,7 +60,7 @@ In order to ensure that the draft order is fairly chosen randomly, we use a thir
 
 
 <p><b>Submit a word</b></p>
-<?
+<?php
 if ($isin) {
 
     $query = "SELECT `key`, value FROM config WHERE `key` like 'draft.order.%'";
@@ -110,10 +110,10 @@ if ($isin) {
   <form action="wordsubmit.php" method="post" onsubmit="return checkSize(this);">
   <input type="text" size="8" maxlength="8" name="word" onkeypress="return inputLimiter(event, 'word')"/>
   <input type="submit" name="submit" value="submit" />
-  <input type="hidden" name="teamid" value="<? print $teamnum; ?>"/>
+  <input type="hidden" name="teamid" value="<?php print $teamnum; ?>"/>
   </form>
   
-<?
+<?php
     }
     
 } else {
@@ -191,6 +191,6 @@ Gallic Warriors<br/>
 
 </tr>
 </table>
-<?
+<?php
 include "base/footer.php";
 ?>

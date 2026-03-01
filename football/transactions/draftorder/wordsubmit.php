@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "utils/start.php";
 
 $word = $_POST["word"];
@@ -51,8 +51,8 @@ include "base/menu.php";
 <h1 align="center">Draft Order Determination</h1>
 <hr size = "1" />
 
-<p><? print $message2; ?></p>
+<p><?php print $message2; ?></p>
 
 <p>Return to <a href="index.php">word submit</a> page</p>
 
-<? include "base/footer.php"; ?>
+<?php include "base/footer.php"; ?>

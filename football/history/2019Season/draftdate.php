@@ -71,12 +71,12 @@ while (list($date, $fulldate, $attend) = mysqli_fetch_row($results)) {
         </div>
 </FORM>
 </P>
-<?
+<?php
 } else {
 ?>
 
 <CENTER><B>You must be logged in to use this feature</B></CENTER>
 
-<? }
+<?php }
 include "base/footer.php";
 

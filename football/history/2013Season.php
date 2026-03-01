@@ -1,4 +1,4 @@
-<?
+<?php
 $title = "2013 WMFFL Season";
 include "base/menu.php"; 
 ?>
@@ -60,7 +60,7 @@ include "base/menu.php";
 <HR size = "1">
 
 <A NAME="standings">
-<?
+<?php
 $thisSeason = 2013;
 $thisWeek = 17;
 $clinchedList = array( 'Woodland Rangers' => 'z-', 'Norsemen' => 'y-', 'Werewolves' => 'z-', 'Crusaders' => 'y-', 'MeggaMen' => 'y-', 'Gallic Warriors' => 'x-');

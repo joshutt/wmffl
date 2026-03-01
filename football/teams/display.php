@@ -105,9 +105,9 @@ function displayPastTable(array $pastArray, string $display): void
         }
         $ownerName = $owners['name'];
         print '<tr>';
-        print "<td>$startDate";
-        print ($endDate != '' ? "-$endDate" : '');
-        print "</td><td>$ownerName</td></tr>";
+        print "<td class='p-1'>$startDate";
+        print ($endDate != '' ? "-$endDate" : '- current');
+        print "</td><td class='p-1'>$ownerName</td></tr>";
 
     }
     print '</table>'; // This was the missing closing tag

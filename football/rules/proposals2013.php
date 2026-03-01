@@ -1,4 +1,4 @@
-<?
+<?php
 session_start();
 $title = "WMFFL Rule Proposals";
 
@@ -10,7 +10,7 @@ $title = "WMFFL Rule Proposals";
 .ballot:hover {color: #e2a500; text-decoration: none;}
 </style>
 
-<? include "base/menu.php"; ?>
+<?php include "base/menu.php"; ?>
 
 <h1 align=center>Current Rule Proposals</h1>
 <hr SIZE = "1"/>
@@ -110,4 +110,4 @@ Season to taste, but just a general idea.
 </i></blockquote>
 </p>
 
-<? include "base/footer.php"; ?>
+<?php include "base/footer.php"; ?>

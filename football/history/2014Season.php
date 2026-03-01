@@ -60,7 +60,7 @@ include "base/menu.php";
 <HR size = "1">
     <A NAME="standings"/>
 
-<?
+<?php
 $thisSeason = 2014;
 $thisWeek = 17;
 $clinchedList = array( 'Joe Gibbs Good Head' => 'y-', 'Norsemen' => 'z-', 'Gallic Warriors' => 'y-', 'Sacks on the Beach' => 'y-', "Pretend I'm Not Here" => 'x-', 'Woodland Rangers' => 'z-');

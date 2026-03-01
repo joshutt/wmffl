@@ -1,4 +1,4 @@
-<?
+<?php
 //$currentSeason = 2004;
 $checkWeek = 17;
 if (array_key_exists('viewseasom', $_REQUEST)) {
@@ -32,11 +32,11 @@ $res1 = mysqli_query($conn, $otherSeason);
 ?>
 
 <div align="right"><form action="teamschedule.php">
-<input type="hidden" name="viewteam" value="<? print $viewteam; ?>"/>
+<input type="hidden" name="viewteam" value="<?php print $viewteam; ?>"/>
 View other teams: 
 <select name="vsTeam" onChange="submit();">
 <option value=""></option>
-<?
+<?php
 while (list($newName, $newTeamid) = mysqli_fetch_array($res1)) {
     if ($newTeamid == $vsTeam) {
         $displayName = $newName;
@@ -52,7 +52,7 @@ while (list($newName, $newTeamid) = mysqli_fetch_array($res1)) {
 
 <h3 align="center">Vs <?= $displayName ?></h3>
 
-<?
+<?php
 $SQL = <<<EOD
 SELECT wm.season, if(isnull(s.label), wm.weekname, s.label) as 'weekname',
 t.name, wm.week,

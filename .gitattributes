@@ -1,3 +1,19 @@
-* text=auto
-* text eol=lf
-*.png   binary
+# Text files - normalize to LF on commit, checkout as LF
+* text=auto eol=lf
+
+# Image files - treat as binary (no line ending conversion)
+*.png  binary
+*.gif  binary
+*.jpg  binary
+*.jpeg binary
+*.ico  binary
+*.bmp  binary
+*.webp binary
+*.tiff binary
+*.tif  binary
+
+# Other binary files
+*.pdf  binary
+*.zip  binary
+*.gz   binary
+*.tar  binary

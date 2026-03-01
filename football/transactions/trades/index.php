@@ -1,1 +1,1 @@
-<? include "tradescreen.php"; ?>
+<?php include "tradescreen.php"; ?>

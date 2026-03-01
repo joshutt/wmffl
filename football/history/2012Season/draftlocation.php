@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "utils/start.php";
 
 $title = "2012 WMFFL Draft Information";
@@ -13,13 +13,13 @@ $title = "2012 WMFFL Draft Information";
     </style>
 </head>
 
-<? include "base/menu.php"; ?>
+<?php include "base/menu.php"; ?>
 
 <H1 Align=Center>Draft Information</H1>
 <H5 ALIGN=Center><I>August 19, 2012</I></H5>
 <HR size = "1">
 
-<?
+<?php
 if ($isin) {
 ?>
 
@@ -41,11 +41,11 @@ if ($isin) {
 </table>
 </span>
 
-<?
+<?php
 } else {
 ?>
     Please log in to get get address information.
-<?
+<?php
 }
 
 include "base/footer.php";

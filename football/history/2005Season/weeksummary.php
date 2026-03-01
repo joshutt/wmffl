@@ -19,28 +19,28 @@ H4 {color:660000; text-decoration:None; font-size:14pt; font-weight:bold}
 <hr/>
 
 <p>
-<? include "summary$thisWeek.inc"; ?>
+<?php include "summary$thisWeek.inc"; ?>
 </p>
 
 <p>
 <h4 class="headline">Weekly Scores</h4>
-<? include "weeklyscores.php"; ?>
+<?php include "weeklyscores.php"; ?>
 </p>
 
 
 <p>
 <h4>Current Standings</h4>
-<? include "weekstandings.php"; ?>
+<?php include "weekstandings.php"; ?>
 </p>
 
 <p>
 <h4>Next Week's Games</h4>
-<? include "nextgame.php"; ?>
+<?php include "nextgame.php"; ?>
 </p>
 
 <p>
 <h4>Box Scores</h4>
-<? include "boxscores.php"; ?>
+<?php include "boxscores.php"; ?>
 </p>
 
-<? include "base/footer.php"; ?>
+<?php include "base/footer.php"; ?>

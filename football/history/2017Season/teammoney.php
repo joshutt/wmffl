@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "utils/start.php";
 
 $title = "2017 WMFFL Financial Statements";
@@ -13,7 +13,7 @@ include "base/menu.php";
 <HR size="1">
 
 <p>
-    <? include "base/statbar.html" ?>
+    <?php include "base/statbar.html" ?>
 </p>
 
 
@@ -25,7 +25,7 @@ include "base/menu.php";
     if ($isin && array_key_exists($teamnum, $amt_owed)) { ?>
 
         <h2 align="center"><a href="http://paypal.me/JoshUtterback/<?= $amt_owed[$teamnum] ?>">Pay Now</a></h2>
-    <? } ?>
+    <?php } ?>
 
     <table class="report">
         <tr class="titleRow">
@@ -193,4 +193,4 @@ include "base/menu.php";
 
 </div>
 
-<? include "base/footer.php"; ?>
+<?php include "base/footer.php"; ?>

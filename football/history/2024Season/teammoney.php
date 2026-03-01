@@ -9,8 +9,8 @@
  */
 
 use Doctrine\ORM\Query\Expr\Join;
-use WMFFL\orm\Paid;
-use WMFFL\orm\SeasonFlags;
+use App\Entity\Paid;
+use App\Entity\SeasonFlag;
 
 require_once 'utils/start.php';
 require_once 'bootstrap.php';
@@ -24,7 +24,7 @@ $showNextSeasonFee = $season != $currentSeason;
 // Get Paid Objects for this season, sorted by team name
 $qb = $entityManager->createQueryBuilder();
 $query = $qb->select('p')
-    ->from('WMFFL\orm\Paid', 'p')
+    ->from(Paid::class, 'p')
     ->join('p.team', 't')
     ->where('p.season = :season')
     ->orderBy('t.name', 'ASC')
@@ -71,7 +71,7 @@ foreach ($paidArr as $p) {
     $fullNeg += $neg;
     $teamRow[$id]['negative'] = $neg;
     $teamRow[$id]['previous'] = $p->getPrevious();
-    $teamRow[$id]['entry'] = $p->getEntry();
+    $teamRow[$id]['entry'] = $p->getEntryFee();
     $teamRow[$id]['paid'] = $p->getAmtPaid();
     $teamRow[$id]['lateFee'] = $p->getLateFee();
     $teamRow[$id]['illegal'] = $fines['illegal'];

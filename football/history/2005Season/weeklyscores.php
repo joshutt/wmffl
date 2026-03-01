@@ -1,5 +1,5 @@
 <table cellpadding="2">
-<?
+<?php
 $weekQuery = <<<EOD
 SELECT t1.name as 'namea', s.scorea, t2.name as 'nameb', s.scoreb, s.label
 FROM schedule s, teamnames t1, teamnames t2

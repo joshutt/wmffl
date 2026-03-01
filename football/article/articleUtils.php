@@ -4,7 +4,7 @@
  */
 
 use Doctrine\ORM\EntityManager;
-use WMFFL\orm\Article as Article;
+use App\Entity\Article;
 
 require_once 'bootstrap.php';
 
@@ -19,7 +19,7 @@ function getArticle(EntityManager $entityManager, $uid = null): ?Article
     if (!empty($uid)) {
         return $entityManager->getRepository(Article::class)->find($uid);
     } else {
-        $dql = 'SELECT a FROM WMFFL\orm\Article a WHERE a.active = 1 ORDER BY a.displayDate DESC, a.priority DESC';
+        $dql = 'SELECT a FROM App\Entity\Article a WHERE a.active = 1 ORDER BY a.displayDate DESC, a.priority DESC';
         $query = $entityManager->createQuery($dql);
         $query->setMaxResults(1);
         return $query->getSingleResult();
@@ -37,10 +37,7 @@ function getArticle(EntityManager $entityManager, $uid = null): ?Article
  */
 function getArticles(EntityManager $entityManager, $num, $start=null ): array
 {
-//    $dql = 'SELECT a from WMFFL\orm\Article a where a.active=1 order by a.displayDate desc, a.priority desc';
-//    $dql = 'SELECT a from WMFFL\orm\Article a where a.active=1 order by a.displayDate desc, a.priority desc';
-//    $dql = 'SELECT a FROM WMFFL\orm\Article a JOIN FETCH a.author u WHERE a.active = 1 ORDER BY a.displayDate DESC, a.priority DESC';
-    $dql = 'SELECT a, u from WMFFL\orm\Article a JOIN a.author u where a.active=1 order by a.displayDate desc, a.priority asc';
+    $dql = 'SELECT a, u from App\Entity\Article a JOIN a.author u where a.active=1 order by a.displayDate desc, a.priority asc';
 //    $dql = 'SELECT a.author from WMFFL\orm\Article a where a.active=1 order by a.displayDate desc, a.priority desc';
     $query = $entityManager->createQuery($dql);
     $query->setMaxResults($num);

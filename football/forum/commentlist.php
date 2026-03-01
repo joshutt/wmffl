@@ -4,12 +4,13 @@
  */
 
 use Doctrine\ORM\EntityManager;
+use App\Entity\Forum;
 
 require_once 'utils/start.php';
 
 $qb = $entityManager->createQueryBuilder();
 $qb->select('f')
-    ->from('WMFFL\orm\Forum', 'f')
+    ->from(Forum::class, 'f')
     ->orderBy('f.createTime', 'DESC')
     ->setMaxResults(6);
 $posts = $qb->getQuery()->getResult();

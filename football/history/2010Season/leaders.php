@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "utils/start.php";
 
 $thisSeason=2010;
@@ -25,14 +25,14 @@ $numCol = 3;
 $title = "League Leaders";
 ?>
 
-<? include "base/menu.php"; ?>
+<?php include "base/menu.php"; ?>
 
 <H1 ALIGN=Center><?= $thisSeason ?> League Leaders</H1>
 <HR>
 
 <TABLE WIDTH=100% ALIGN=Center> 
 <TR>
-<?
+<?php
 $off = array();
 $def = array();
 $count = 0;
@@ -93,6 +93,6 @@ print "</TABLE></TD>";
 </TR>
 </TABLE>
 
-<?
+<?php
 include "base/footer.php";
 ?>

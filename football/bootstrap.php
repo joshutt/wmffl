@@ -5,15 +5,15 @@
 
 // bootstrap.php
 use Doctrine\DBAL\DriverManager;
-use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
 
 require_once 'vendor/autoload.php';
 
 // Create a simple default Doctrine ORM configuration for Attributes
+// Use Symfony's Entity directory for all entities
 $config = ORMSetup::createAttributeMetadataConfiguration(
-    paths: array(__DIR__.'/../src/orm'),
+    paths: array(__DIR__.'/../symfony-app/src/Entity'),
     isDevMode: true,
 );
 
@@ -27,25 +27,14 @@ $connection = DriverManager::getConnection([
 //    'dbname' => 'wmffl'
 ], $config);
 
-try {
-    Type::addType('ynenum', '\WMFFL\enum\YNEnumType');
-} catch (\Doctrine\DBAL\Exception $e) {
-    error_log("Error adding type: $e");
-}
-
 // obtain the EntityManager
 $entityManager = new EntityManager($connection, $config);
-error_log('In entity manager');
-if (is_null($entityManager)) {
-    error_log('EntityManager is null');
-} else {
-    error_log('EntityManager is not null');
-}
 
+// Map MySQL ENUM columns to string type
 $conn = $entityManager->getConnection();
 try {
-    $conn->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'ynenum');
+    $conn->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
 } catch (\Doctrine\DBAL\Exception $e) {
-    error_log("Error getting connection: $e");
+    error_log("Error registering enum type mapping: $e");
 }
 

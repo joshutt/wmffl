@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "utils/start.php";
 $query = "SELECT p.firstname, p.lastname, pc.years, CEILING(if(p.pos in ('QB', 'RB', 'WR', 'TE'), pc.years, pc.years/2)) as 'Extra', t.name, p.pos ";
 $query .= "FROM newplayers p ";
@@ -27,7 +27,7 @@ while ($aLine = mysqli_fetch_array($result)) {
 $title = "2016 Protection Costs";
 ?>
 
-<? include "base/menu.php"; ?>
+<?php include "base/menu.php"; ?>
 
 <H1 Align=Center>Protection Costs</H1>
 <HR size = "1">
@@ -46,7 +46,7 @@ $title = "2016 Protection Costs";
 
 <TABLE ALIGN="Center">
 
-<?
+<?php
 $sumup = 0;
 foreach ($page as $teamName=>$val) {
     if ($teamName == '') continue;
@@ -57,26 +57,26 @@ foreach ($page as $teamName=>$val) {
 </TD><TD WIDTH=*></TD><TD WIDTH=50% VALIGN=Top>
 
 <TABLE ALIGN="Center" VALIGN=Top>
-<?
+<?php
         $sumup = 0;
     }
 ?>
 
-<TR><TH COLSPAN=4><? print $teamName; ?></TH></TR>
+<TR><TH COLSPAN=4><?php print $teamName; ?></TH></TR>
 <TR><TH>Player Name</TH><TH>Pos</TH><TH>Years</TH><TH>Extra</TH><th>Total Cost</th></TR>
-<? print $val; ?>
+<?php print $val; ?>
 <TR><TD>&nbsp;</TD></TR>
 
-<?
+<?php
 $sumup += $countall[$teamName] + 3;
 }
 $teamName = '';
 ?>
 <TR><TH COLSPAN=4>Not on a Roster</TH></TR>
 <TR><TH>Player Name</TH><TH>Pos</TH><TH>Years</TH><TH>Extra</TH><th>Total Cost</th></TR>
-<? print $page['']; ?>
+<?php print $page['']; ?>
 <TR><TD>&nbsp;</TD></TR>
 
 </TABLE>
 </TD></TR></TABLE>
-<? include "base/footer.php"; ?>
+<?php include "base/footer.php"; ?>

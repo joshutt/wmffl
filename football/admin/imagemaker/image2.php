@@ -40,4 +40,4 @@ $fullName = "$rootLoc/$newDir/$newName";
 imagejpeg($thumb, $fullName);
 ?>
 
-<img src="http://wmffl.com/<? print "$newDir/$newName"; ?>">
+<img src="http://wmffl.com/<?php print "$newDir/$newName"; ?>">

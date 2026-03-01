@@ -1,4 +1,4 @@
-<?
+<?php
 $title = "WMFFL Winning/Losing Streaks";
 include "base/menu.php";
 ?>
@@ -91,6 +91,6 @@ include "base/menu.php";
 <TR><TD>Norsemen</TD><TD>3 games</TD><TD>2006 Championship</TD><TD>2008 Playoffs</TD></TR>
 </TABLE></P>
 
-<?
+<?php
 include "base/footer.php";
 ?>

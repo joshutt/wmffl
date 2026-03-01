@@ -1,4 +1,4 @@
-<?
+<?php
 function checkDups(&$playArr, &$ptsArr, $pickArr) {
     $ptsAnArray = array();
     for ($i=0; $i<sizeof($ptsArr); $i++) {

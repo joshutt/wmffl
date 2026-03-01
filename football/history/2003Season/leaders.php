@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "base/conn.php";
 
 $sql = "SELECT  t.name, p.position, sum(ps.active) as 'totpts' ";
@@ -25,7 +25,7 @@ list($week) = mysqli_fetch_row($dateRes);
 <TITLE>League Leaders</TITLE>
 </HEAD>
 
-<? include "base/menu.php"; ?>
+<?php include "base/menu.php"; ?>
 
 <H1 ALIGN=Center>League Leaders</H1>
 <!-- <H5 ALIGN=Center><I>Through Week <?print $week;?></I></H5> -->
@@ -37,7 +37,7 @@ during the course of the season.</P>
 
 <TABLE WIDTH=100% ALIGN=Center>
 <TR>
-<?
+<?php
 $off = array();
 $def = array();
 $count = 0;
@@ -95,6 +95,6 @@ print "</TABLE></TD>";
 </TR>
 </TABLE>
 
-<?
+<?php
 include "base/footer.php";
 ?>

@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "utils/start.php";
 $thisSeason = $currentSeason;
 $thisWeek = $currentWeek;
@@ -23,9 +23,9 @@ $byeWeekQuery = "SELECT t.name FROM nflstatus s, nflteams t WHERE status='B' AND
 $title = "WMFFL Schedule";
 ?>
 
-<? include "base/menu.php"; ?>
+<?php include "base/menu.php"; ?>
 
-<H1 Align=Center><? print $thisSeason;?> Schedule</H1>
+<H1 Align=Center><?php print $thisSeason;?> Schedule</H1>
 <HR size = "1"><CENTER>
 
 <A HREF="#Week1">Week 1</A> | <A HREF="#Week2">Week 2</A> |
@@ -39,7 +39,7 @@ $title = "WMFFL Schedule";
 <A HREF="#Championship">WMFFL Championship XIV</A><HR size = "1"></CENTER>
 
 
-<?
+<?php
 $results = mysqli_query($conn, $sql);
 
 $listWeek = 0;
@@ -115,4 +115,4 @@ Playoff Winner #1 vs Playoff Winner #2
 <P>
 
 -->
-<? include "base/footer.php"; ?>
+<?php include "base/footer.php"; ?>

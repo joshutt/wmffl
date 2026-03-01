@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "utils/start.php";
 
 function getOrd($num) {
@@ -341,15 +341,15 @@ $title = "Player Records";
 include "base/menu.php";
 ?>
 
-<h1 align="center"><? print $title; ?></h1>
-<h5 align="center"><i>Through Week <? print $week; ?></i></h5>
+<h1 align="center"><?php print $title; ?></h1>
+<h5 align="center"><i>Through Week <?php print $week; ?></i></h5>
 <hr/>
 
-<? include "base/statbar.html"; ?>
+<?php include "base/statbar.html"; ?>
 
 <p>This is a list of individual player performances this season, that rank among the top 10 ever at a given position.</p>
 
-<?
+<?php
 $seasonFirst = true;
 foreach ($seaRecs as $record) {
     if ($record[3] > 1) {
@@ -378,7 +378,7 @@ if (!$seasonFirst) {
 </table>
 </center>
 </p>
-<?
+<?php
 }
 
 
@@ -410,18 +410,18 @@ if (!$first) {
 </table>
 </center>
 </p>
-<?
+<?php
 }
 ?>
 
-<?
+<?php
 if (sizeof($seaRecs) > 0) {
 ?>
 <p><center>
 <table border="1">
 <tr><th colspan="5">Single Season Top Ten</th></tr>
 <tr><th>Pos</th><th>Player</th><th>Pts</th><th>Rank</th></tr>
-<?
+<?php
 foreach ($seaRecs as $record) {
     if ($record[3] == 1) continue;
     $ordinal = getOrd($record[4]);
@@ -434,18 +434,18 @@ EOD;
 ?>
 </table>
 </center></p>
-<?}?>
+<?php}?>
 
 
 
-<?
+<?php
 if (sizeof($newRecs) > 0) {
 ?>
 <center>
 <table border="1">
 <tr><th colspan="5">Single Game Top Ten</th></tr>
 <tr><th>Pos</th><th>Player</th><th>Week</th><th>Pts</th><th>Rank</th></tr>
-<?
+<?php
 foreach ($newRecs as $record) {
     if ($record[4] == 1) continue;
     $ordinal = getOrd($record[4]);
@@ -458,8 +458,8 @@ EOD;
 ?>
 </table>
 </center>
-<?}?>
+<?php}?>
 
-<?
+<?php
 include "base/footer.php";
 ?>

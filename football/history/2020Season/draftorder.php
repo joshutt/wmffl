@@ -36,4 +36,4 @@ include "../common/draftorder.php";
 </TABLE>
 </P>
 
-<? include "base/footer.php"; ?>
+<?php include "base/footer.php"; ?>

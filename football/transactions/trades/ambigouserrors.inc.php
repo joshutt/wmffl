@@ -1,9 +1,9 @@
-<?
+<?php
 if (count($badTransArray) > 0) {
 ?>
 <font color="red"><b>Invalid Transaction Points</b></font><br/>
 
-<?
+<?php
 foreach ($badTransArray as $invalidTran) {
     $teamName = $mapping[$invalidTran->team];
     $ptsGiven = $invalidTran->pts;
@@ -14,12 +14,12 @@ foreach ($badTransArray as $invalidTran) {
 }
 ?>
 
-<?
+<?php
 if (count($badDraftArray) > 0) {
 ?>
 <font color="red"><b>Invalid Draft Picks</b></font><br/>
 
-<?
+<?php
 foreach ($badDraftArray as $invalidTran) {
     $teamName = $mapping[$invalidTran->team];
     $round = $invalidTran->round;

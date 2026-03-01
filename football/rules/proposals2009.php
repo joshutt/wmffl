@@ -79,4 +79,4 @@ From rule VI.D.3.c strike the words "not selected in the lottery"
 </i></blockquote>
 </p>
 
-<? include "base/footer.php"; ?>
+<?php include "base/footer.php"; ?>

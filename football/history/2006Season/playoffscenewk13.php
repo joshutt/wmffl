@@ -1,4 +1,4 @@
-<?
+<?php
 $title="Playoff Scenarios";
 include "base/menu.php";
 ?>
@@ -65,4 +65,4 @@ If no team wins both games, then any team that wins one fits under the following
 </ul>
 
 
-<? include "base/footer.php"; ?>
+<?php include "base/footer.php"; ?>

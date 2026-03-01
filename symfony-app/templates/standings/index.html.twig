@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Standings - WMFFL{% endblock %}
+
+{% block content %}
+<div class="cat text-center">STANDINGS</div>
+<div class="container gameBox pb-1">
+    {% set currentDiv = null %}
+    {% for team in teams %}
+        {% if team.division != currentDiv %}
+            {# Close previous division if exists #}
+            {% if currentDiv is not null %}
+</div>
+            {% endif %}
+
+            {# Start new division #}
+            {% set currentDiv = team.division %}
+            <div class="border-bottom border-top p-1">
+        {% endif %}
+
+        <div class="mt-0 justify-content-between">
+            <a class="row m-0" href="/teams/teamschedule?viewteam={{ team.teamid }}">
+                <div class="boxScore col-8 pl-1 pr-0 text-left text-truncate">{{ team.name }}</div>
+                <div class="boxScore col-4 px-0 d-block text-center">{{ team.printShortRecord() }}</div>
+            </a>
+        </div>
+    {% endfor %}
+
+    {# Close final division #}
+    {% if currentDiv is not null %}
+</div>
+    {% endif %}
+</div>
+{% endblock %}

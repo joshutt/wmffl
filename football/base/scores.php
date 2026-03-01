@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "base/conn.php";
 require_once "base/useful.php";
 

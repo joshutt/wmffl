@@ -62,7 +62,7 @@ include "base/menu.php";
 <HR size = "1">
     <A NAME="standings"/>
 
-<?
+<?php
 $thisSeason = 2018;
 $thisWeek = 17;
 $clinchedList = array('Trump Molests Collies' => 'y-', 'Amish Electricians' => 'z-', 'Fighting Squirrels' => 'z-', 'MeggaMen' => 'x-',  'Norsemen' => 'y-', 'Fightin\' Bitin\' Beavers' => 'y-');

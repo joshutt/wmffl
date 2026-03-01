@@ -1,12 +1,12 @@
-<?
+<?php
 require_once "utils/start.php";
 
 $title = "Championship Preview";
 ?>
 
-<? include "base/menu.php"; ?>
+<?php include "base/menu.php"; ?>
 
-<h1 align="center"><? print $title; ?></h1>
+<h1 align="center"><?php print $title; ?></h1>
 <hr/>
 
 <p><h4>#2 Whiskey Tango (10-5) vs #4 MeggaMen (10-5)</h4>
@@ -31,4 +31,4 @@ $title = "Championship Preview";
 <li> MeggaMen are favored by 7 points
 </ul></p>
 
-<? include "base/footer.php"; ?>
+<?php include "base/footer.php"; ?>

@@ -55,8 +55,6 @@ class LegacyBridge
         // set the log files
         ini_set('error_log', "$projectRoot/logs/wmffl.log");
         ini_set('log_errors', 1);
-        error_log("PAGE Legacy: $requestPathInfo");
-
 
         // Keep the original path info if you need it before overwriting $requestPathInfo
         $originalRequestPathInfo = $request->getPathInfo();
@@ -93,14 +91,6 @@ class LegacyBridge
 
         $path =  realpath("$legacyRoot/$requestPathInfo");
 
-        error_log("Path: $path");
-        error_log('Real path: '.realpath($path));
-
-        // Check if the path contains 'admin' and log it
-        if ($requestPathInfo && str_contains($requestPathInfo, 'admin')) {
-            error_log("Admin path accessed: $requestPathInfo");
-        }
-
         if (is_dir($path) || is_file($path)) {
             chdir(dirname($path));
             return $path;
@@ -134,6 +124,23 @@ class LegacyBridge
         // Make the Symfony entity manager available to the legacy script's scope.
         // This variable will be accessible by the required file below.
         $symEntityManager = $container->get('doctrine')->getManager();
+
+        // Inject Symfony services as global variables for legacy code compatibility
+        $seasonWeekService = $container->get('App\Service\SeasonWeekService');
+        $authService = $container->get('App\Service\AuthenticationService');
+
+        // Make season/week data available as globals (replaces connect.php logic)
+        $GLOBALS['currentSeason'] = $seasonWeekService->getCurrentSeason();
+        $GLOBALS['currentWeek'] = $seasonWeekService->getCurrentWeek();
+        $GLOBALS['weekName'] = $seasonWeekService->getWeekName();
+        $GLOBALS['previousWeekName'] = $seasonWeekService->getPreviousWeekName();
+        $GLOBALS['previousWeek'] = $seasonWeekService->getPreviousWeek();
+        $GLOBALS['previousWeekSeason'] = $seasonWeekService->getPreviousWeekSeason();
+
+        // Make authentication data available as globals (replaces start.php logic)
+        $GLOBALS['isin'] = $authService->isLoggedIn();
+        $GLOBALS['fullname'] = $authService->getFullName();
+        $GLOBALS['teamnum'] = $authService->getTeamNumber();
 
         // Possibly (re-)set some env vars (e.g. to handle forms
         // posting to PHP_SELF):

@@ -1,5 +1,5 @@
 <table cellpadding="5" cellspacing="1">
-<?
+<?php
 include "lib/Team.php";
 
 //$thisSeason = 2004;

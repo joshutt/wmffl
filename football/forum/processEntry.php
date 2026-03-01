@@ -9,7 +9,8 @@
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
-use WMFFL\orm\Forum;
+use App\Entity\Forum;
+use App\Entity\User;
 
 require_once 'utils/start.php';
 require_once 'bootstrap.php';
@@ -21,7 +22,7 @@ if (!$isin) {
 
 try {
     $post = new Forum();
-    $author = $entityManager->find('WMFFL\orm\User', $usernum);
+    $author = $entityManager->find(User::class, $usernum);
     $post->setTitle($_POST['subject']);
     $post->setBody(str_replace('\r\n', '', $_POST['body']));
     $post->setUser($author);
