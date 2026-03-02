@@ -7,7 +7,7 @@
 
 //include 'lib/TEAMID.php';
 //use lib\Team;
-use WMFFL\Team;
+use App\Model\Team;
 
 $query = <<<EOD
 SELECT tn.name as 'team', d.name as 'division', t.teamid as 'teamid',

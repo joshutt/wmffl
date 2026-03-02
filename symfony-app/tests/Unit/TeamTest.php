@@ -3,7 +3,7 @@
 namespace App\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use WMFFL\Team;
+use App\Model\Team;
 
 class TeamTest extends TestCase
 {

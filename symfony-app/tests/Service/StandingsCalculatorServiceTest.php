@@ -4,7 +4,7 @@ namespace App\Tests\Service;
 
 use App\Service\StandingsCalculatorService;
 use PHPUnit\Framework\TestCase;
-use WMFFL\Team;
+use App\Model\Team;
 
 class StandingsCalculatorServiceTest extends TestCase
 {

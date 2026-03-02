@@ -1,6 +1,6 @@
 <?php
 
-namespace WMFFL;
+namespace App\Model;
 
 class Team {
 

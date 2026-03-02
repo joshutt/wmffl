@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use WMFFL\Team;
+use App\Model\Team;
 
 class StandingsCalculatorService
 {
