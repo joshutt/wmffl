@@ -26,12 +26,22 @@ class StandingsCalculatorService
             $teamArray[$row['teamid']]->addGame($row['oppid'], $row['ptsfor'], $row['ptsagt'], $row['oppdiv']);
         }
 
-        // Pre-compute SOV for each team before sorting
-        foreach ($teamArray as $team) {
-            $team->sov = $this->calculateSov($team, $teamArray);
-        }
+        $this->precomputeSovs($teamArray);
 
         return array_values($teamArray);
+    }
+
+    /**
+     * Pre-compute SOV for each team in an already-built array.
+     * Allows legacy code to compute SOV without rebuilding via buildTeamArray().
+     *
+     * @param Team[] $teams Keyed by teamid or indexed
+     */
+    public function precomputeSovs(array $teams): void
+    {
+        foreach ($teams as $team) {
+            $team->sov = $this->calculateSov($team, $teams);
+        }
     }
 
     /**

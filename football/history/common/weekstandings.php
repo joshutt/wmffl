@@ -69,8 +69,6 @@ while ($row = mysqli_fetch_array($results)) {
 //    $t->ptsAgt = $row["ptsagt"];
     $t->divPtsFor = $row['divpf'] ?? 0;
     $t->divPtsAgt = $row['divpa'] ?? 0;
-    $t->allRef = &$teamArray;
-    $t->allRefKeys = array_keys($teamArray);
     $teamArray[$row['teamid']] = $t;
     //array_push($teamArray, $t);
 }
@@ -91,7 +89,9 @@ while ($row = mysqli_fetch_array($results)) {
     $teamArray[$teamid]->addGame($opp, $pts, $agst, 99);
 }
 
-usort($teamArray, 'WMFFL\Team::orderteam');
+$calculator = new \App\Service\StandingsCalculatorService();
+$calculator->precomputeSovs($teamArray);
+$calculator->sortTeams($teamArray);
 
 if (!isset($clinchedList)) {
     $clinchedList = array();
@@ -150,7 +150,7 @@ if (!isset($display) or $display == 1) {
             <td align="center"><?= $t->divRecord[1] ?></td>
             <td align="center"><?= $t->divRecord[2] ?></td>
             <td>&nbsp;</td>
-            <td align="center"><?= $t->getPrintSOV($teamArray) ?></td>
+            <td align="center"><?= sprintf('%5.3f', $t->sov) ?></td>
             <td>&nbsp;</td>
             <td align="center"><?= $t->ptsFor ?></td>
             <td align="center"><?= $t->ptsAgt ?></td>
