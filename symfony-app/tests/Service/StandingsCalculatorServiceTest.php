@@ -105,6 +105,60 @@ class StandingsCalculatorServiceTest extends TestCase
         $this->assertSame(0.0, $teamB->sov);
     }
 
+    // ---- precomputeSovs ----
+
+    public function testPrecomputeSovsSetsValueOnPrebuiltTeams(): void
+    {
+        // Build teams manually (as legacy weekstandings.php does) and call precomputeSovs directly
+        $teamA = new Team('Alpha', 'East', 1);
+        $teamB = new Team('Bravo', 'East', 2);
+
+        // A beat B
+        $teamA->addGame(2, 100, 80, 99);
+        $teamB->addGame(1, 80, 100, 99);
+
+        $teamArray = [1 => $teamA, 2 => $teamB];
+        $this->service->precomputeSovs($teamArray);
+
+        // A won so has SOV based on B's record (0-1) → 0.0
+        $this->assertSame(0.0, $teamA->sov, 'SOV when only win is against 0-1 opponent should be 0.0');
+        // B has no wins so SOV stays 0
+        $this->assertSame(0.0, $teamB->sov);
+    }
+
+    public function testPrecomputeSovsMatchesBuildTeamArraySovResults(): void
+    {
+        // precomputeSovs() on a manually built array should produce the same SOV
+        // as buildTeamArray() for the same data
+        [$teamData, $gameData] = $this->sovFixture();
+
+        // Path 1: via buildTeamArray
+        $builtTeams = $this->service->buildTeamArray($teamData, $gameData);
+        $builtSovs = array_combine(
+            array_column($builtTeams, 'teamid'),
+            array_column($builtTeams, 'sov')
+        );
+
+        // Path 2: manually build equivalent Team objects, then call precomputeSovs
+        $manualArray = [];
+        foreach ($teamData as $row) {
+            $manualArray[$row['teamid']] = new Team($row['team'], $row['division'], $row['teamid']);
+        }
+        foreach ($gameData as $row) {
+            $manualArray[$row['teamid']]->addGame($row['oppid'], $row['ptsfor'], $row['ptsagt'], $row['oppdiv']);
+        }
+        $this->service->precomputeSovs($manualArray);
+
+        foreach ($manualArray as $id => $team) {
+            $this->assertEqualsWithDelta(
+                $builtSovs[$id],
+                $team->sov,
+                0.0001,
+                "SOV for team $id should match between buildTeamArray and precomputeSovs paths"
+            );
+        }
+    }
+
     // ---- sortTeams: division ordering ----
 
     public function testSortTeamsByDivisionAlphabetically(): void
