@@ -8,8 +8,6 @@ use App\Entity\Article;
 
 require_once 'bootstrap.php';
 
-$t = new \WMFFL\Team('a', 'b',1);
-
 //print get_include_path();
 $a = new Article();
 $article = $entityManager->find(Article::class, 225);

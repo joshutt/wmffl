@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ season }} Standings - WMFFL{% endblock %}
+
+{% block content %}
+<div class="cat text-center">{{ season }} STANDINGS{% if week < 16 %} (Week {{ week }}){% endif %}</div>
+<div class="container-fluid">
+    <table cellpadding="5" cellspacing="1" class="mx-auto">
+        {% set currentDiv = null %}
+        {% for team in teams %}
+            {% if team.division != currentDiv %}
+                {% set currentDiv = team.division %}
+                <tr height="20"><th>&nbsp;</th></tr>
+                <tr><th colspan="14" class="text-center"><font size="+1">{{ currentDiv }}</font></th></tr>
+                <tr>
+                    <th></th>
+                    <th colspan="4">Overall</th>
+                    <th></th>
+                    <th colspan="3">In Division</th>
+                    <th></th>
+                    <th>SOV</th>
+                    <th></th>
+                    <th>PF</th>
+                    <th>PA</th>
+                </tr>
+                <tr>
+                    <th>Team</th>
+                    <th>W</th><th>L</th><th>T</th>
+                    <th>PCT</th>
+                    <th width="10"></th>
+                    <th>W</th><th>L</th><th>T</th>
+                    <th width="10"></th>
+                    <th>SOV</th>
+                    <th width="10"></th>
+                    <th>PF</th><th>PA</th>
+                </tr>
+            {% endif %}
+
+            <tr>
+                <td><a href="/teams/teamschedule?viewteam={{ team.teamid }}">{{ team.name }}</a></td>
+                <td align="center">{{ team.record[0] }}</td>
+                <td align="center">{{ team.record[1] }}</td>
+                <td align="center">{{ team.record[2] }}</td>
+                <td>{{ '%.3f'|format(team.getWinPCT()) }}</td>
+                <td>&nbsp;</td>
+                <td align="center">{{ team.divRecord[0] }}</td>
+                <td align="center">{{ team.divRecord[1] }}</td>
+                <td align="center">{{ team.divRecord[2] }}</td>
+                <td>&nbsp;</td>
+                <td align="center">{{ '%.3f'|format(team.sov) }}</td>
+                <td>&nbsp;</td>
+                <td align="center">{{ team.ptsFor }}</td>
+                <td align="center">{{ team.ptsAgt }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
