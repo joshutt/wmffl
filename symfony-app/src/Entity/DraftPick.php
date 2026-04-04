@@ -6,7 +6,7 @@ use App\Repository\DraftPickRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DraftPickRepository::class)]
-#[ORM\Table(name: 'draftPicks')]
+#[ORM\Table(name: 'draftpicks')]
 #[ORM\UniqueConstraint(name: 'Season_Round_Pick_uniq', columns: ['season', 'round', 'pick'])]
 #[ORM\UniqueConstraint(name: 'Season_playerid_uniq', columns: ['season', 'playerid'])]
 class DraftPick
