@@ -24,6 +24,6 @@
   "require-dev": {
     "symfony/maker-bundle": "^1.60",
     "symfony/console": "^7.1",
-    "phpunit/phpunit": "^11.3"
+    "phpunit/phpunit": "^12.5"
   }
 }
