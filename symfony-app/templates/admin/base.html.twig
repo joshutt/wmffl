@@ -10,7 +10,18 @@
                class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_dashboard' %} active{% endif %}">
                 Dashboard
             </a>
-            {# Future admin tools added here #}
+            <a href="{{ path('admin_money_paid') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_money_paid' %} active{% endif %}">
+                Paid Status
+            </a>
+            <a href="{{ path('admin_money_flags') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_money_flags' %} active{% endif %}">
+                Season Flags
+            </a>
+            <a href="/admin/index"
+               class="list-group-item list-group-item-action">
+                Legacy Admin
+            </a>
         </div>
     </div>
     <div class="col-md-10">
