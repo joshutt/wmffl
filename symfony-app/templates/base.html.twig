@@ -56,6 +56,7 @@
 </head>
 
 <body>
+{% block navbar %}
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-2">
     <a class="navbar-brand" href="/"><img src="/images/logo.png"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,7 +128,7 @@
             <div class="modal-body">
                 <a class="btn btn-lg btn-wmffl btn-block" href="/login/newpassword" role="button">Change Password</a>
             </div>
-            {% if app.request.session.get('isin') and app.request.session.get('teamnum') == 2 %}
+            {% if app.request.session.get('isin') and app.request.session.get('commish') %}
                 <div class="modal-body">
                     <a class="btn btn-lg btn-wmffl btn-block" href="/admin" role="button">Commish</a>
                 </div>
@@ -140,6 +141,7 @@
         </div>
     </div>
 </div>
+{% endblock %}
 
 <main role="main" class="fluid-container px-4 pb-1 mb-3">
     <div class="starter-template">

@@ -2,24 +2,25 @@
 
 namespace App\Service;
 
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-
 /**
  * Service to manage authentication state from legacy session.
  * Replaces legacy globals $isin, $fullname, $teamnum
+ *
+ * Reads directly from $_SESSION because the legacy login code sets variables
+ * at the root session level, while Symfony's Session component stores its
+ * own data under $_SESSION['_sf2_attributes']. Reading $_SESSION directly
+ * ensures both Symfony controllers and legacy code share the same auth state.
+ *
+ * session_start() is called lazily to ensure $_SESSION is populated on
+ * pure Symfony routes where legacy start.php has not run.
  */
 class AuthenticationService
 {
-    public function __construct(
-        private RequestStack $requestStack
-    ) {
-    }
-
-    private function getSession(): ?SessionInterface
+    private function ensureSessionStarted(): void
     {
-        $request = $this->requestStack->getCurrentRequest();
-        return $request?->getSession();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
     }
 
     /**
@@ -28,13 +29,8 @@ class AuthenticationService
      */
     public function isLoggedIn(): bool
     {
-        $session = $this->getSession();
-        if (!$session) {
-            return false;
-        }
-
-        $isin = $session->get('isin');
-        return !empty($isin);
+        $this->ensureSessionStarted();
+        return !empty($_SESSION['isin'] ?? null);
     }
 
     /**
@@ -43,12 +39,8 @@ class AuthenticationService
      */
     public function getFullName(): ?string
     {
-        $session = $this->getSession();
-        if (!$session) {
-            return null;
-        }
-
-        return $session->get('fullname');
+        $this->ensureSessionStarted();
+        return $_SESSION['fullname'] ?? null;
     }
 
     /**
@@ -57,35 +49,27 @@ class AuthenticationService
      */
     public function getTeamNumber(): ?int
     {
-        $session = $this->getSession();
-        if (!$session) {
-            return null;
-        }
-
-        $teamnum = $session->get('teamnum');
+        $this->ensureSessionStarted();
+        $teamnum = $_SESSION['teamnum'] ?? null;
         return $teamnum !== null ? (int) $teamnum : null;
     }
 
     /**
      * Get logged-in user's ID
-     * Replaces legacy $userid global
+     * Replaces legacy $usernum global
      */
     public function getUserId(): ?int
     {
-        $session = $this->getSession();
-        if (!$session) {
-            return null;
-        }
-
-        $userid = $session->get('userid');
-        return $userid !== null ? (int) $userid : null;
+        $this->ensureSessionStarted();
+        $usernum = $_SESSION['usernum'] ?? null;
+        return $usernum !== null ? (int) $usernum : null;
     }
 
     /**
-     * Check if the logged-in user is a commissioner (team 2)
+     * Check if the logged-in user is a commissioner
      */
     public function isCommissioner(): bool
     {
-        return $this->isLoggedIn() && $this->getTeamNumber() === 2;
+        return $this->isLoggedIn() && !empty($_SESSION['commish'] ?? null);
     }
 }

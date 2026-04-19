@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block navbar %}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-2">
+        <div class="list-group mt-2">
+            <a href="{{ path('admin_dashboard') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_dashboard' %} active{% endif %}">
+                Dashboard
+            </a>
+            {# Future admin tools added here #}
+        </div>
+    </div>
+    <div class="col-md-10">
+        {% block admin_content %}{% endblock %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Admin - Dashboard{% endblock %}
+
+{% block admin_content %}
+<h2 class="mt-2">Commissioner Dashboard</h2>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Season</h5>
+                <p class="card-text display-4">{{ season }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Current Week</h5>
+                <p class="card-text display-4">{{ weekName }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Active Teams</h5>
+                <p class="card-text display-4">{{ teamCount }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h4>Active Users ({{ users|length }})</h4>
+<table class="table table-sm table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Team</th>
+            <th>Last Login</th>
+            <th>Commish</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.name }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.team ? user.team.name : '—' }}</td>
+            <td>{{ user.lastLog ? user.lastLog|date('Y-m-d g:i a') : 'Never' }}</td>
+            <td>{{ user.commish ? 'Yes' : '' }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
