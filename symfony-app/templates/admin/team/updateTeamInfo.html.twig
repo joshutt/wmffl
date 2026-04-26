@@ -1,0 +1,55 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Admin - Update Team Info{% endblock %}
+
+{% block admin_content %}
+<h2 class="mt-2">Teams {{ season }}</h2>
+
+<form action="{{ path('admin_team_process') }}" method="POST">
+    <table class="table table-sm table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Name</th>
+                <th>Abbreviation</th>
+                <th>Logo</th>
+                <th>Full Logo</th>
+                <th>Division</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+            {% set tn = row.teamName %}
+            {% set team = row.team %}
+            {% set id = tn.teamId %}
+            <tr>
+                <td>
+                    <input type="text" class="form-control" name="name-{{ id }}" value="{{ tn.name }}"/>
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="abbv-{{ id }}" size="4" maxlength="10" value="{{ tn.abbrev }}"/>
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="logo-{{ id }}" value="{{ team.logo }}"/>
+                </td>
+                <td class="text-center">
+                    <input type="checkbox" name="full-{{ id }}" {{ team.fullLogo ? 'checked' : '' }}/>
+                </td>
+                <td>
+                    <select class="form-control" name="division-{{ id }}">
+                        {% for division in divisions %}
+                        <option value="{{ division.id }}" {{ tn.divisionId == division.id ? 'selected' : '' }}>
+                            {{ division.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="text-center mt-2">
+        <button type="submit" class="btn btn-wmffl">Save Changes</button>
+    </div>
+</form>
+{% endblock %}

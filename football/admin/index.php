@@ -19,7 +19,6 @@
 <UL>
 <LI><A HREF="http://wmffl.com/mailman/admin/newsletter_wmffl.com">Newsletter</A></LI>
 <LI><A HREF="http://admin.wmffl.com/phproject">Project Management</A></LI>
-<LI><A HREF="http://admin.wmffl.com/imagemaker">Image Maker</A></LI>
 </UL>
 
 <B>To Do Items</B>
@@ -31,9 +30,7 @@
 <UL>
 <LI><A HREF="presendtransactions.php">Send Transactions</A>
 <LI><A HREF="updatescores.php">Recalculate Scores</A>
-<li><a href="headcoach.php">Head Coach Change</a>
 <li><a href="/login/simulatelogin">Become a team</a></li>
-<li><a href="team/updateTeamInfo.php">Update Team Info</a>
 </UL>
 
 <b>Reports</b>
@@ -42,7 +39,7 @@
 <li><a href="draftdates.php">View Draft Date Results</a></li>
 <li><a href="tooManyPlayers.php">Too Many Players  Report</a></li>
 <li><a href="weekly.php">Player of the Week</a></li>
-<li><a href="mvp.php">MVP List</a></li>
+<li><a href="/admin/mvp">MVP List</a></li>
 <li><a href="money/updatePaid">Update Payments</a></li>
 <li><a href="money/updateFlags">Update Flags</a></li>
 </ul>

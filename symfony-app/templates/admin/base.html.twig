@@ -18,6 +18,18 @@
                class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_money_flags' %} active{% endif %}">
                 Season Flags
             </a>
+            <a href="{{ path('admin_headcoach') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_headcoach' %} active{% endif %}">
+                Head Coach
+            </a>
+            <a href="{{ path('admin_team_update') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_team_update' %} active{% endif %}">
+                Team Info
+            </a>
+            <a href="{{ path('admin_mvp') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_mvp' %} active{% endif %}">
+                MVP List
+            </a>
             <a href="/admin/index"
                class="list-group-item list-group-item-action">
                 Legacy Admin

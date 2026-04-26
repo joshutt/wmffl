@@ -1,0 +1,43 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Admin - Head Coach Change{% endblock %}
+
+{% block admin_content %}
+<h2 class="mt-2">Head Coach Change</h2>
+
+<form action="{{ path('admin_headcoach_process') }}" method="POST">
+    <div class="form-group mb-3">
+        <label for="team"><strong>Team</strong></label>
+        <select name="team" id="team" class="form-control">
+            {% for team in teams %}
+            <option value="{{ team.id }}">{{ team.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <table class="table table-sm table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th></th>
+                <th>Coach</th>
+                <th>NFL Team</th>
+                <th>WMFFL Team</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for coach in coaches %}
+            <tr>
+                <td><input type="radio" name="player" value="{{ coach.playerid }}" required/></td>
+                <td>{{ coach.name }}</td>
+                <td>{{ coach.nflTeam }}</td>
+                <td>{{ coach.wmfflTeam }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="text-center mt-2">
+        <button type="submit" class="btn btn-wmffl">Submit</button>
+    </div>
+</form>
+{% endblock %}
