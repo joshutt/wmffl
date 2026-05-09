@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Service\AuthenticationService;
+use App\Service\MvpScoringService;
 use App\Service\SeasonWeekService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +17,7 @@ class AdminMvpController extends AbstractAdminController
         AuthenticationService $auth,
         SeasonWeekService $seasonWeek,
         EntityManagerInterface $em,
+        MvpScoringService $scoring,
         ?int $season = null,
         ?int $week = null
     ): Response {
@@ -52,7 +54,7 @@ class AdminMvpController extends AbstractAdminController
             ['season' => $season, 'week' => $week]
         );
 
-        $allPlayers  = $this->rankPlayers($rows);
+        $allPlayers = $scoring->rankPlayers($rows);
         $defensivePositions = ['DL', 'LB', 'DB'];
 
         return $this->render('admin/mvp/index.html.twig', [
@@ -66,116 +68,4 @@ class AdminMvpController extends AbstractAdminController
         ]);
     }
 
-    private function rankPlayers(array $rows): array
-    {
-        $posVal    = [];
-        $posCount  = [];
-        $allPlayers = [];
-        $fullPlayers = [];
-
-        foreach ($rows as $row) {
-            $pos    = $row['pos'];
-            $teamid = (int) $row['teamid'];
-            $week   = (int) $row['week'];
-            $active = (float) $row['active'];
-
-            if ($active >= 0) {
-                $posVal[$pos][$teamid][$week] = ($posVal[$pos][$teamid][$week] ?? 0.0) + $active;
-            }
-            $posCount[$pos][$teamid][$week] = ($posCount[$pos][$teamid][$week] ?? 0) + 1;
-
-            $pid = (int) $row['playerid'];
-            $allPlayers[$pid][$week] = $row;
-            if (!isset($fullPlayers[$pid]) || $week > (int) $fullPlayers[$pid]['week']) {
-                $fullPlayers[$pid] = $row;
-            }
-        }
-
-        $finals = [];
-
-        foreach ($allPlayers as $playerId => $weeklyData) {
-            foreach ($weeklyData as $week => $player) {
-                $pos   = $player['pos'];
-                $team  = (int) $player['teamid'];
-                $opp   = (int) $player['opp'];
-                $score = (float) $player['active'];
-                $week  = (int) $week;
-
-                $oppVal   = fn(string $p) => $posVal[$p][$opp][$week] ?? 0.0;
-                $oppCount = fn(string $p) => $posCount[$p][$opp][$week] ?? 0;
-                $myCount  = fn(string $p) => $posCount[$p][$team][$week] ?? 0;
-
-                $val = match(true) {
-                    in_array($pos, ['HC', 'QB', 'K', 'OL']) =>
-                        $this->compare($score, $oppVal($pos)),
-
-                    in_array($pos, ['DL', 'LB', 'DB']) =>
-                        $this->compare($score, $oppVal($pos) / 2.0),
-
-                    $myCount($pos) === $oppCount($pos) =>
-                        $this->compare($score, $oppCount($pos) > 0 ? $oppVal($pos) / $oppCount($pos) : 0.0),
-
-                    $pos === 'RB' => $this->flexCompare($score, $opp, $week, ['RB', 'TE'], ['RB', 'WR'], $team, $posVal, $posCount),
-                    $pos === 'WR' => $this->flexCompare($score, $opp, $week, ['WR', 'TE'], ['WR'],       $team, $posVal, $posCount),
-                    default       => $this->flexCompare($score, $opp, $week, ['RB', 'TE'], ['WR', 'TE'], $team, $posVal, $posCount, $oppVal('TE')),
-                };
-
-                $finals[$playerId] = ($finals[$playerId] ?? 0.0) + $val;
-            }
-        }
-
-        arsort($finals);
-
-        $result = [];
-        foreach ($finals as $playerId => $score) {
-            $result[] = [
-                'name'   => $fullPlayers[$playerId]['name'],
-                'pos'    => $fullPlayers[$playerId]['pos'],
-                'abbrev' => $fullPlayers[$playerId]['abbrev'],
-                'score'  => round($score, 2),
-            ];
-        }
-
-        return $result;
-    }
-
-    private function compare(float $scoreA, float $scoreB): float
-    {
-        if ($scoreA < 0)          return $scoreA;
-        if ($scoreA <= $scoreB)   return 0.0;
-        if ($scoreB < 0)          return $scoreA;
-        return $scoreA - $scoreB;
-    }
-
-    /**
-     * Compare a flex-position player against the opponent, trying two groupings in order.
-     * Falls back to $fallback if neither grouping matches.
-     */
-    private function flexCompare(
-        float $score,
-        int $opp,
-        int $week,
-        array $primaryGroup,
-        array $secondaryGroup,
-        int $team,
-        array $posVal,
-        array $posCount,
-        float $fallback = 0.0
-    ): float {
-        $oppGroupVal   = fn(array $pos) => array_sum(array_map(fn($p) => $posVal[$p][$opp][$week] ?? 0.0, $pos));
-        $oppGroupCount = fn(array $pos) => array_sum(array_map(fn($p) => $posCount[$p][$opp][$week] ?? 0, $pos));
-        $myGroupCount  = fn(array $pos) => array_sum(array_map(fn($p) => $posCount[$p][$team][$week] ?? 0, $pos));
-
-        if ($myGroupCount($primaryGroup) === $oppGroupCount($primaryGroup)) {
-            $cnt = $oppGroupCount($primaryGroup);
-            return $this->compare($score, $cnt > 0 ? $oppGroupVal($primaryGroup) / $cnt : 0.0);
-        }
-
-        if ($myGroupCount($secondaryGroup) === $oppGroupCount($secondaryGroup)) {
-            $cnt = $oppGroupCount($secondaryGroup);
-            return $this->compare($score, $cnt > 0 ? $oppGroupVal($secondaryGroup) / $cnt : 0.0);
-        }
-
-        return $this->compare($score, $fallback);
-    }
 }

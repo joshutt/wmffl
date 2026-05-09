@@ -135,3 +135,5 @@ football/transactions/livedraft/check.log
 
 /football/activate/update.inc
 **/.phpunit.result.cache
+
+/plans/
