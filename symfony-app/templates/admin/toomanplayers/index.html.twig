@@ -1,0 +1,30 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Admin - Too Many Players{% endblock %}
+
+{% block admin_content %}
+<h2 class="mt-2">Too Many Players — {{ season }}</h2>
+
+{% if rows is empty %}
+<p class="text-success">No teams have more than {{ limit }} players.</p>
+{% else %}
+<table class="table table-sm table-striped table-bordered w-auto">
+    <thead class="thead-dark">
+        <tr>
+            <th>Week</th>
+            <th>Team</th>
+            <th>Players</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in rows %}
+        <tr>
+            <td>{{ row.weekname }}</td>
+            <td>{{ row.name }}</td>
+            <td>{{ row.playerCount }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}

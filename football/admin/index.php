@@ -33,9 +33,7 @@
 
 <b>Reports</b>
 <ul>
-<li><a href="draftdates.php">View Draft Date Results</a></li>
-<li><a href="tooManyPlayers.php">Too Many Players  Report</a></li>
-<li><a href="/admin/weekly">Player of the Week</a></li>
+<li><a href="/admin/toomanplayers">Too Many Players Report</a></li>
 </ul>
 
 </BODY>

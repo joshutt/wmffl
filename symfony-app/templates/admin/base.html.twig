@@ -39,8 +39,16 @@
                 Reprocess Scores
             </a>
             <a href="{{ path('admin_ballot') }}"
-               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_ballot' %} active{% endif %}">
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') starts with 'admin_ballot' %} active{% endif %}">
                 Vote Results
+            </a>
+            <a href="{{ path('admin_draftdates') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_draftdates' %} active{% endif %}">
+                Draft Dates
+            </a>
+            <a href="{{ path('admin_toomanplayers') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_toomanplayers' %} active{% endif %}">
+                Too Many Players
             </a>
             <a href="/admin/index"
                class="list-group-item list-group-item-action">
