@@ -10,11 +10,13 @@ use App\Service\SeasonWeekService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\EntityRepository;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+#[AllowMockObjectsWithoutExpectations]
 class AdminTeamControllerTest extends TestCase
 {
     // ---- GET /admin/team/updateTeamInfo ----
@@ -108,26 +110,26 @@ class AdminTeamControllerTest extends TestCase
             }
         };
 
-        $auth = $this->createMock(AuthenticationService::class);
+        $auth = $this->createStub(AuthenticationService::class);
         $auth->method('isCommissioner')->willReturn($commissioner);
 
-        $seasonWeek = $this->createMock(SeasonWeekService::class);
+        $seasonWeek = $this->createStub(SeasonWeekService::class);
         $seasonWeek->method('getCurrentSeason')->willReturn(2025);
 
-        $teamName = $this->createMock(TeamNames::class);
+        $teamName = $this->createStub(TeamNames::class);
         $teamName->method('getTeamId')->willReturn(1);
         $teamName->method('getName')->willReturn('Test Team');
         $teamName->method('getAbbrev')->willReturn('TT');
         $teamName->method('getDivisionId')->willReturn(1);
 
-        $team = $this->createMock(Team::class);
+        $team = $this->createStub(Team::class);
         $team->method('getLogo')->willReturn('');
         $team->method('isFullLogo')->willReturn(false);
 
-        $repo = $this->createMock(EntityRepository::class);
+        $repo = $this->createStub(EntityRepository::class);
         $repo->method('findBy')->willReturn([$teamName]);
 
-        $query = $this->createMock(Query::class);
+        $query = $this->createStub(Query::class);
         $query->method('setParameter')->willReturnSelf();
         $query->method('getResult')->willReturn([]);
 

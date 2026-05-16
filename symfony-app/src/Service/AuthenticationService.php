@@ -72,4 +72,20 @@ class AuthenticationService
     {
         return $this->isLoggedIn() && !empty($_SESSION['commish'] ?? null);
     }
+
+    /**
+     * Overwrite the session to impersonate a team (commissioner-only tool).
+     * Clears the commish flag so the impersonated session has no elevated rights.
+     */
+    public function becomeTeam(int $teamId, string $name, string $username, int $userId): void
+    {
+        $this->ensureSessionStarted();
+        $_SESSION['isin']     = true;
+        $_SESSION['teamnum']  = $teamId;
+        $_SESSION['usernum']  = $userId;
+        $_SESSION['fullname'] = $name;
+        $_SESSION['user']     = $username;
+        $_SESSION['message']  = '';
+        unset($_SESSION['commish']);
+    }
 }

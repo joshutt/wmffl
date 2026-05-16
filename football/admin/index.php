@@ -28,12 +28,11 @@
 
 <B>League Management</B>
 <UL>
-<li><a href="/login/simulatelogin">Become a team</a></li>
+<li><a href="/admin/become">Become a team</a></li>
 </UL>
 
 <b>Reports</b>
 <ul>
-<li><a href="/admin/toomanplayers">Too Many Players Report</a></li>
 </ul>
 
 </BODY>

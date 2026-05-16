@@ -8,10 +8,12 @@ use App\Service\MvpScoringService;
 use App\Service\SeasonWeekService;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
+#[AllowMockObjectsWithoutExpectations]
 class AdminMvpControllerTest extends TestCase
 {
     // ---- GET /admin/mvp (default season/week) ----
@@ -172,18 +174,18 @@ class AdminMvpControllerTest extends TestCase
             }
         };
 
-        $auth = $this->createMock(AuthenticationService::class);
+        $auth = $this->createStub(AuthenticationService::class);
         $auth->method('isCommissioner')->willReturn($commissioner);
 
-        $seasonWeek = $this->createMock(SeasonWeekService::class);
+        $seasonWeek = $this->createStub(SeasonWeekService::class);
 
         $conn = $this->createMock(Connection::class);
         $conn->method('fetchAllAssociative')->willReturn([]);
 
-        $em = $this->createMock(EntityManagerInterface::class);
+        $em = $this->createStub(EntityManagerInterface::class);
         $em->method('getConnection')->willReturn($conn);
 
-        $scoring = $this->createMock(MvpScoringService::class);
+        $scoring = $this->createStub(MvpScoringService::class);
         $scoring->method('rankPlayers')->willReturn($scoringResult);
 
         return [$controller, $auth, $seasonWeek, $em, $scoring, $conn];

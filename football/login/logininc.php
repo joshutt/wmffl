@@ -22,7 +22,7 @@ if ($isin) {
 	<P><div class="loginText">Welcome <?php print $fullname; ?></div></P>
 	
 	<P><A HREF="/login/logout.php">Log Out</A></P>
-<?php if ($teamnum == 2) { print "<a href=\"/login/simulatelogin.php\">Commish</a>"; } ?>
+<?php if ($teamnum == 2) { print "<a href=\"/admin/become\">Commish</a>"; } ?>
 	<P><A HREF="/login/newpassword.php">Change Password</A></P>
 	</CENTER>
 <?php

@@ -7,10 +7,12 @@ use App\Service\AuthenticationService;
 use App\Service\SeasonWeekService;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
+#[AllowMockObjectsWithoutExpectations]
 class AdminDraftDatesControllerTest extends TestCase
 {
     public function testIndexRedirectsWhenNotCommissioner(): void
@@ -161,17 +163,17 @@ class AdminDraftDatesControllerTest extends TestCase
             }
         };
 
-        $auth = $this->createMock(AuthenticationService::class);
+        $auth = $this->createStub(AuthenticationService::class);
         $auth->method('isCommissioner')->willReturn($commissioner);
 
-        $seasonWeek = $this->createMock(SeasonWeekService::class);
+        $seasonWeek = $this->createStub(SeasonWeekService::class);
         $seasonWeek->method('getCurrentSeason')->willReturn(2025);
 
         $this->conn = $this->createMock(Connection::class);
         $this->conn->method('fetchAllAssociative')->willReturn($dateRows);
         $this->conn->method('fetchFirstColumn')->willReturn($noVoteTeams);
 
-        $em = $this->createMock(EntityManagerInterface::class);
+        $em = $this->createStub(EntityManagerInterface::class);
         $em->method('getConnection')->willReturn($this->conn);
 
         return [$controller, $auth, $seasonWeek, $em, $this->conn];

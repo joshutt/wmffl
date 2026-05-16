@@ -8,11 +8,13 @@ use App\Service\AuthenticationService;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+#[AllowMockObjectsWithoutExpectations]
 class AdminHeadCoachControllerTest extends TestCase
 {
     // ---- GET /admin/headcoach ----
@@ -179,7 +181,7 @@ class AdminHeadCoachControllerTest extends TestCase
             }
         };
 
-        $auth = $this->createMock(AuthenticationService::class);
+        $auth = $this->createStub(AuthenticationService::class);
         $auth->method('isCommissioner')->willReturn($commissioner);
 
         $this->conn = $this->createMock(Connection::class);
@@ -187,13 +189,13 @@ class AdminHeadCoachControllerTest extends TestCase
         $this->conn->method('fetchOne')->willReturn($coachAlreadyOnTeam ? 99 : false);
         $this->conn->method('executeStatement')->willReturn(0);
 
-        $repo = $this->createMock(EntityRepository::class);
+        $repo = $this->createStub(EntityRepository::class);
         $repo->method('findBy')->willReturn([]);
 
-        $em = $this->createMock(EntityManagerInterface::class);
+        $em = $this->createStub(EntityManagerInterface::class);
         $em->method('getConnection')->willReturn($this->conn);
         $em->method('getRepository')->willReturn($repo);
-        $em->method('find')->willReturn($this->createMock(Team::class));
+        $em->method('find')->willReturn($this->createStub(Team::class));
 
         return [$controller, $auth, $em];
     }

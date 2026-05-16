@@ -10,12 +10,14 @@ use App\Service\SeasonWeekService;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+#[AllowMockObjectsWithoutExpectations]
 class AdminMoneyControllerTest extends TestCase
 {
     // ---- GET /admin/money/updatePaid ----
@@ -90,7 +92,7 @@ class AdminMoneyControllerTest extends TestCase
     public function testRecordChangeReturnsOkOnSuccess(): void
     {
         [$controller, $auth, $seasonWeek, $em] = $this->makeController(commissioner: true);
-        $em->method('find')->willReturn($this->createMock(Paid::class));
+        $em->method('find')->willReturn($this->createStub(Paid::class));
 
         $request = new Request(request: ['field' => 'paid-1', 'val' => 'true']);
         $response = $controller->recordChange($request, $auth, $em);
@@ -135,7 +137,7 @@ class AdminMoneyControllerTest extends TestCase
     public function testRecordChangeFlushesOnSuccess(): void
     {
         [$controller, $auth, $seasonWeek, $em] = $this->makeController(commissioner: true);
-        $em->method('find')->willReturn($this->createMock(Paid::class));
+        $em->method('find')->willReturn($this->createStub(Paid::class));
         $em->expects($this->once())->method('flush');
 
         $request = new Request(request: ['field' => 'paid-1', 'val' => 'true']);
@@ -296,16 +298,16 @@ class AdminMoneyControllerTest extends TestCase
             }
         };
 
-        $auth = $this->createMock(AuthenticationService::class);
+        $auth = $this->createStub(AuthenticationService::class);
         $auth->method('isCommissioner')->willReturn($commissioner);
 
-        $seasonWeek = $this->createMock(SeasonWeekService::class);
+        $seasonWeek = $this->createStub(SeasonWeekService::class);
         $seasonWeek->method('getCurrentSeason')->willReturn(2025);
 
-        $repo = $this->createMock(EntityRepository::class);
+        $repo = $this->createStub(EntityRepository::class);
         $repo->method('findBy')->willReturn([]);
 
-        $conn = $this->createMock(Connection::class);
+        $conn = $this->createStub(Connection::class);
         $conn->method('executeStatement')->willReturn(0);
 
         $em = $this->createMock(EntityManagerInterface::class);
