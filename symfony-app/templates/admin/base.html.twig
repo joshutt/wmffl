@@ -10,10 +10,6 @@
                class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_dashboard' %} active{% endif %}">
                 Dashboard
             </a>
-            <a href="{{ path('admin_become') }}"
-               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') starts with 'admin_become' %} active{% endif %}">
-                Become a Team
-            </a>
             <a href="{{ path('admin_money_paid') }}"
                class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_money_paid' %} active{% endif %}">
                 Paid Status

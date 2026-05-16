@@ -2,7 +2,6 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Team;
 use App\Service\AuthenticationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,22 +11,6 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/admin/become')]
 class AdminBecomeController extends AbstractAdminController
 {
-    #[Route('', name: 'admin_become', methods: ['GET'])]
-    public function index(
-        AuthenticationService $auth,
-        EntityManagerInterface $em
-    ): Response {
-        if ($redirect = $this->requireCommissioner($auth)) {
-            return $redirect;
-        }
-
-        $teams = $em->getRepository(Team::class)->findBy([], ['name' => 'ASC']);
-
-        return $this->render('admin/become/index.html.twig', [
-            'teams' => $teams,
-        ]);
-    }
-
     #[Route('', name: 'admin_become_as', methods: ['POST'])]
     public function becomeAs(
         Request $request,
@@ -47,7 +30,7 @@ class AdminBecomeController extends AbstractAdminController
 
         if (!$user) {
             $this->addFlash('error', 'Team not found.');
-            return $this->redirectToRoute('admin_become');
+            return $this->redirectToRoute('admin_dashboard');
         }
 
         $auth->becomeTeam(

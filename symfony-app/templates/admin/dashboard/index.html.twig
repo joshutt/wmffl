@@ -41,6 +41,7 @@
             <th>Team</th>
             <th>Last Login</th>
             <th>Commish</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -51,6 +52,14 @@
             <td>{{ user.team ? user.team.name : '—' }}</td>
             <td>{{ user.lastLog ? user.lastLog|date('Y-m-d g:i a') : 'Never' }}</td>
             <td>{{ user.commish ? 'Yes' : '' }}</td>
+            <td>
+                {% if user.team %}
+                <form action="{{ path('admin_become_as') }}" method="POST">
+                    <input type="hidden" name="teamId" value="{{ user.team.id }}">
+                    <button type="submit" class="btn btn-sm btn-wmffl">Become</button>
+                </form>
+                {% endif %}
+            </td>
         </tr>
         {% endfor %}
     </tbody>

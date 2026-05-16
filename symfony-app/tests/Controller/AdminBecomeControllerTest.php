@@ -3,11 +3,9 @@
 namespace App\Tests\Controller;
 
 use App\Controller\Admin\AdminBecomeController;
-use App\Entity\Team;
 use App\Service\AuthenticationService;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
 use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -17,36 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 #[AllowMockObjectsWithoutExpectations]
 class AdminBecomeControllerTest extends TestCase
 {
-    // ---- GET /admin/become ----
-
-    public function testIndexRedirectsWhenNotCommissioner(): void
-    {
-        [$controller, $auth, $em] = $this->makeController(commissioner: false);
-
-        $response = $controller->index($auth, $em);
-
-        $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertSame('/', $response->getTargetUrl());
-    }
-
-    public function testIndexRendersCorrectTemplate(): void
-    {
-        [$controller, $auth, $em] = $this->makeController(commissioner: true);
-
-        $controller->index($auth, $em);
-
-        $this->assertSame('admin/become/index.html.twig', $controller->renderedView);
-    }
-
-    public function testIndexPassesTeamsToTemplate(): void
-    {
-        [$controller, $auth, $em] = $this->makeController(commissioner: true);
-
-        $controller->index($auth, $em);
-
-        $this->assertArrayHasKey('teams', $controller->renderedParams);
-    }
-
     // ---- POST /admin/become ----
 
     public function testBecomeAsRedirectsWhenNotCommissioner(): void
@@ -84,7 +52,7 @@ class AdminBecomeControllerTest extends TestCase
         $controller->becomeAs($request, $auth, $em);
     }
 
-    public function testBecomeAsRedirectsToIndexWhenTeamNotFound(): void
+    public function testBecomeAsRedirectsToDashboardWhenTeamNotFound(): void
     {
         [$controller, $auth, $em] = $this->makeController(commissioner: true, user: false);
 
@@ -92,7 +60,7 @@ class AdminBecomeControllerTest extends TestCase
         $response = $controller->becomeAs($request, $auth, $em);
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertSame('/admin_become', $response->getTargetUrl());
+        $this->assertSame('/admin_dashboard', $response->getTargetUrl());
     }
 
     public function testBecomeAsAddsErrorFlashWhenTeamNotFound(): void
@@ -113,16 +81,7 @@ class AdminBecomeControllerTest extends TestCase
     private function makeController(bool $commissioner, array|false $user = false): array
     {
         $controller = new class extends AdminBecomeController {
-            public ?string $renderedView = null;
-            public ?array $renderedParams = null;
             public array $flashes = [];
-
-            protected function render(string $view, array $parameters = [], ?Response $response = null): Response
-            {
-                $this->renderedView   = $view;
-                $this->renderedParams = $parameters;
-                return new Response();
-            }
 
             protected function redirectToRoute(string $route, array $parameters = [], int $status = 302): RedirectResponse
             {
@@ -146,12 +105,8 @@ class AdminBecomeControllerTest extends TestCase
         $this->conn = $this->createStub(Connection::class);
         $this->conn->method('fetchAssociative')->willReturn($user);
 
-        $repo = $this->createStub(EntityRepository::class);
-        $repo->method('findBy')->willReturn([]);
-
         $em = $this->createStub(EntityManagerInterface::class);
         $em->method('getConnection')->willReturn($this->conn);
-        $em->method('getRepository')->willReturn($repo);
 
         return [$controller, $auth, $em];
     }
