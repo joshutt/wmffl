@@ -1,17 +1,14 @@
 {
   "name": "wmffl/wmffl",
   "require": {
-    "monolog/monolog": "^3.7",
     "doctrine/orm": "^3.2",
     "doctrine/dbal": "^3.0",
-    "symfony/cache": "^7.1",
     "ext-mysqli": "*"
   },
   "autoload": {
     "psr-4": {
       "": [
-        "football/",
-        "lib/"
+        "football/"
       ]
     }
   },
@@ -22,8 +19,6 @@
     }
   ],
   "require-dev": {
-    "symfony/maker-bundle": "^1.60",
-    "symfony/console": "^7.1",
     "phpunit/phpunit": "^11.3"
   }
 }
