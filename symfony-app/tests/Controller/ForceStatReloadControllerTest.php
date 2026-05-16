@@ -3,49 +3,30 @@
 namespace App\Tests\Controller;
 
 use App\Controller\ForceStatReloadController;
-use App\Service\AuthenticationService;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-#[AllowMockObjectsWithoutExpectations]
 class ForceStatReloadControllerTest extends TestCase
 {
-    public function testReturnsForbiddenWhenNotCommissioner(): void
-    {
-        [$controller, $auth] = $this->makeController(commissioner: false);
-
-        $response = $controller($auth, '/fake/project');
-
-        $this->assertSame(Response::HTTP_FORBIDDEN, $response->getStatusCode());
-    }
-
     public function testReturnsPlainTextResponse(): void
     {
-        [$controller, $auth] = $this->makeController(commissioner: true, output: []);
-
-        $response = $controller($auth, '/fake/project');
+        $response = $this->makeController([])(projectDir: '/fake/project');
 
         $this->assertSame('text/plain', $response->headers->get('Content-Type'));
     }
 
-    public function testReturnsOkWhenCommissioner(): void
+    public function testReturnsOk(): void
     {
-        [$controller, $auth] = $this->makeController(commissioner: true, output: []);
-
-        $response = $controller($auth, '/fake/project');
+        $response = $this->makeController([])(projectDir: '/fake/project');
 
         $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
     }
 
     public function testResponseBodyContainsScriptOutput(): void
     {
-        [$controller, $auth] = $this->makeController(
-            commissioner: true,
-            output: ['Live Scores', 'Week: 5', 'Updated Scores']
-        );
-
-        $response = $controller($auth, '/fake/project');
+        $response = $this->makeController(
+            ['Live Scores', 'Week: 5', 'Updated Scores']
+        )(projectDir: '/fake/project');
 
         $this->assertStringContainsString('Live Scores', $response->getContent());
         $this->assertStringContainsString('Week: 5', $response->getContent());
@@ -54,9 +35,9 @@ class ForceStatReloadControllerTest extends TestCase
 
     // ---- Helpers ----
 
-    private function makeController(bool $commissioner, array $output = []): array
+    private function makeController(array $output): ForceStatReloadController
     {
-        $controller = new class($output) extends ForceStatReloadController {
+        return new class($output) extends ForceStatReloadController {
             public function __construct(private readonly array $fakeOutput) {}
 
             protected function execScript(string $script, array &$outArr): void
@@ -66,10 +47,5 @@ class ForceStatReloadControllerTest extends TestCase
 
             protected function appendLog(string $path, string $output): void {}
         };
-
-        $auth = $this->createStub(AuthenticationService::class);
-        $auth->method('isCommissioner')->willReturn($commissioner);
-
-        return [$controller, $auth];
     }
 }

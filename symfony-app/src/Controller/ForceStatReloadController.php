@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Service\AuthenticationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,13 +11,8 @@ class ForceStatReloadController extends AbstractController
 {
     #[Route('/service/force-stat-reload', name: 'service_force_stat_reload', methods: ['GET'])]
     public function __invoke(
-        AuthenticationService $auth,
         #[Autowire('%kernel.project_dir%')] string $projectDir
     ): Response {
-        if (!$auth->isCommissioner()) {
-            return new Response('Not authorized.', Response::HTTP_FORBIDDEN);
-        }
-
         $scriptsPath = dirname($projectDir) . '/scripts';
 
         $outArr = [];
