@@ -56,6 +56,16 @@ class AdminHeadCoachController extends AbstractAdminController
         $now      = (new \DateTime())->format('Y-m-d H:i:s');
         $conn     = $em->getConnection();
 
+        // Reject if this coach is already active on a different team
+        $alreadyOnTeam = $conn->fetchOne(
+            "SELECT teamid FROM roster WHERE playerid = :playerId AND dateoff IS NULL AND teamid <> :teamId",
+            ['playerId' => $playerId, 'teamId' => $teamId]
+        );
+        if ($alreadyOnTeam !== false) {
+            $this->addFlash('error', 'That coach is already assigned to another team.');
+            return $this->redirectToRoute('admin_headcoach');
+        }
+
         // Log Fire transaction for existing HC on this team
         $conn->executeStatement(
             "INSERT INTO transactions (teamid, playerid, method, Date)
@@ -86,6 +96,37 @@ class AdminHeadCoachController extends AbstractAdminController
         $conn->executeStatement(
             "INSERT INTO roster (teamid, playerid, dateon) VALUES (:teamId, :playerId, :now)",
             ['teamId' => $teamId, 'playerId' => $playerId, 'now' => $now]
+        );
+
+        return $this->redirectToRoute('admin_headcoach');
+    }
+
+    #[Route('/drop', name: 'admin_headcoach_drop', methods: ['POST'])]
+    public function drop(
+        Request $request,
+        AuthenticationService $auth,
+        EntityManagerInterface $em
+    ): Response {
+        if ($redirect = $this->requireCommissioner($auth)) {
+            return $redirect;
+        }
+
+        $playerId = (int) $request->request->get('player');
+        $now      = (new \DateTime())->format('Y-m-d H:i:s');
+        $conn     = $em->getConnection();
+
+        $conn->executeStatement(
+            "INSERT INTO transactions (teamid, playerid, method, Date)
+             SELECT r.teamid, r.playerid, 'Fire', :now
+             FROM roster r
+             WHERE r.playerid = :playerId AND r.dateoff IS NULL",
+            ['now' => $now, 'playerId' => $playerId]
+        );
+
+        $conn->executeStatement(
+            "UPDATE roster SET dateoff = :now
+             WHERE playerid = :playerId AND dateoff IS NULL",
+            ['now' => $now, 'playerId' => $playerId]
         );
 
         return $this->redirectToRoute('admin_headcoach');

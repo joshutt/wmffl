@@ -80,7 +80,7 @@ class AdminHeadCoachControllerTest extends TestCase
 
     public function testProcessRedirectsToIndexAfterHire(): void
     {
-        [$controller, $auth, $em] = $this->makeController(commissioner: true);
+        [$controller, $auth, $em] = $this->makeController(commissioner: true, coachAlreadyOnTeam: false);
 
         $request = new Request(request: ['team' => '1', 'player' => '42']);
         $response = $controller->process($request, $auth, $em);
@@ -91,7 +91,7 @@ class AdminHeadCoachControllerTest extends TestCase
 
     public function testProcessExecutesFourSqlStatements(): void
     {
-        [$controller, $auth, $em] = $this->makeController(commissioner: true);
+        [$controller, $auth, $em] = $this->makeController(commissioner: true, coachAlreadyOnTeam: false);
 
         $conn = $this->getConn($em);
         $conn->expects($this->exactly(4))->method('executeStatement');
@@ -100,15 +100,66 @@ class AdminHeadCoachControllerTest extends TestCase
         $controller->process($request, $auth, $em);
     }
 
+    public function testProcessRejectsHireIfCoachAlreadyOnAnotherTeam(): void
+    {
+        [$controller, $auth, $em] = $this->makeController(commissioner: true, coachAlreadyOnTeam: true);
+
+        $conn = $this->getConn($em);
+        $conn->expects($this->never())->method('executeStatement');
+
+        $request = new Request(request: ['team' => '1', 'player' => '42']);
+        $response = $controller->process($request, $auth, $em);
+
+        $this->assertInstanceOf(RedirectResponse::class, $response);
+        $this->assertSame('/admin_headcoach', $response->getTargetUrl());
+        $this->assertCount(1, $controller->flashes);
+        $this->assertSame('error', $controller->flashes[0]['type']);
+    }
+
+    // ---- POST /admin/headcoach/drop ----
+
+    public function testDropRedirectsWhenNotCommissioner(): void
+    {
+        [$controller, $auth, $em] = $this->makeController(commissioner: false);
+
+        $response = $controller->drop(new Request(), $auth, $em);
+
+        $this->assertInstanceOf(RedirectResponse::class, $response);
+        $this->assertSame('/', $response->getTargetUrl());
+    }
+
+    public function testDropExecutesTwoSqlStatements(): void
+    {
+        [$controller, $auth, $em] = $this->makeController(commissioner: true);
+
+        $conn = $this->getConn($em);
+        $conn->expects($this->exactly(2))->method('executeStatement');
+
+        $request = new Request(request: ['player' => '42']);
+        $controller->drop($request, $auth, $em);
+    }
+
+    public function testDropRedirectsToIndexAfterDrop(): void
+    {
+        [$controller, $auth, $em] = $this->makeController(commissioner: true);
+
+        $request = new Request(request: ['player' => '42']);
+        $response = $controller->drop($request, $auth, $em);
+
+        $this->assertInstanceOf(RedirectResponse::class, $response);
+        $this->assertSame('/admin_headcoach', $response->getTargetUrl());
+    }
+
     // ---- Helpers ----
 
     private Connection $conn;
 
-    private function makeController(bool $commissioner): array
+    private function makeController(bool $commissioner, bool $coachAlreadyOnTeam = false): array
     {
         $controller = new class extends AdminHeadCoachController {
             public ?string $renderedView = null;
             public ?array $renderedParams = null;
+            public array $flashes = [];
 
             protected function render(string $view, array $parameters = [], ?Response $response = null): Response
             {
@@ -121,6 +172,11 @@ class AdminHeadCoachControllerTest extends TestCase
             {
                 return new RedirectResponse("/$route", $status);
             }
+
+            public function addFlash(string $type, mixed $message): void
+            {
+                $this->flashes[] = ['type' => $type, 'message' => $message];
+            }
         };
 
         $auth = $this->createMock(AuthenticationService::class);
@@ -128,6 +184,7 @@ class AdminHeadCoachControllerTest extends TestCase
 
         $this->conn = $this->createMock(Connection::class);
         $this->conn->method('fetchAllAssociative')->willReturn([]);
+        $this->conn->method('fetchOne')->willReturn($coachAlreadyOnTeam ? 99 : false);
         $this->conn->method('executeStatement')->willReturn(0);
 
         $repo = $this->createMock(EntityRepository::class);

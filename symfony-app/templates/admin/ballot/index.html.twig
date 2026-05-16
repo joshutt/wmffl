@@ -1,0 +1,180 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Admin - Vote Results{% endblock %}
+
+{% block admin_content %}
+<div class="d-flex justify-content-between align-items-center mt-2">
+    <h2>Vote Results</h2>
+    <div class="text-center">
+        <a href="{{ path('admin_ballot_new') }}" class="btn btn-wmffl">New Issue</a>
+    </div>
+</div>
+
+{% if summary is not empty %}
+<h5 class="mt-4">Active Issues — Summary</h5>
+<table class="table table-bordered table-sm" style="max-width: 700px;">
+    <thead class="table-dark">
+        <tr>
+            <th>Issue</th>
+            <th class="text-center">For</th>
+            <th class="text-center">For %</th>
+            <th class="text-center">Against</th>
+            <th class="text-center">Against %</th>
+            <th class="text-center">Abstain</th>
+            <th class="text-center">No Vote</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in summary %}
+        <tr>
+            <td>{{ row.issuenum }}</td>
+            <td class="text-center">{{ row.yes }}</td>
+            <td class="text-center">{{ (row.passRate * 100)|number_format(1) }}%</td>
+            <td class="text-center">{{ row.no }}</td>
+            <td class="text-center">{{ (row.rejectRate * 100)|number_format(1) }}%</td>
+            <td class="text-center">{{ row.abstain }}</td>
+            <td class="text-center">{{ row.novote }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h5 class="mt-4">Active Issues — Votes by Team</h5>
+{% for issuenum, votes in byIssue %}
+<h6 class="mt-3">Issue {{ issuenum }}</h6>
+<table class="table table-bordered table-sm" style="max-width: 400px;">
+    <thead class="table-dark">
+        <tr><th>Team</th><th>Vote</th></tr>
+    </thead>
+    <tbody>
+        {% for row in votes %}
+        <tr>
+            <td>{{ row.team }}</td>
+            <td>{{ row.vote }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endfor %}
+{% endif %}
+
+<div class="d-flex justify-content-between align-items-baseline mt-5">
+    <h5>All Issues</h5>
+    <small class="text-muted">{{ total }} total</small>
+</div>
+
+{% if allIssues is empty %}
+    <p class="text-muted">No issues found.</p>
+{% else %}
+<table class="table table-bordered table-sm table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Issue #</th>
+            <th>Name</th>
+            <th>Season</th>
+            <th>Start Date</th>
+            <th>Deadline</th>
+            <th>Result</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for issue in allIssues %}
+        <tr>
+            <td>{{ issue.issueNum }}</td>
+            <td>{{ issue.issueName }}</td>
+            <td>{{ issue.season }}</td>
+            <td>{{ issue.startDate ? issue.startDate|date('m/d/Y') : '—' }}</td>
+            <td>{{ issue.deadline ? issue.deadline|date('m/d/Y') : '—' }}</td>
+            <td>{{ issue.result ?? '—' }}</td>
+            <td class="text-nowrap">
+                <a href="{{ path('admin_ballot_edit', {id: issue.id}) }}" class="btn btn-sm btn-wmffl">Edit</a>
+                {% if not issue.startDate %}
+                <button type="button" class="btn btn-sm btn-outline-secondary"
+                        data-publish-url="{{ path('admin_ballot_publish', {id: issue.id}) }}"
+                        data-issue-name="{{ issue.issueName }}"
+                        onclick="openPublishModal(this)">
+                    Put on Ballot
+                </button>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{# ---- Publish Modal ---- #}
+<div class="modal fade" id="publishModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" id="publishForm">
+                <div class="modal-header">
+                    <h5 class="modal-title">Put on Ballot — <span id="publishIssueName"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Start Date</label>
+                        <input type="date" name="startDate" id="publishStartDate" class="form-control" required>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Teams</label>
+                        <div class="d-flex gap-2 mb-1">
+                            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="setAllTeams(true)">Select All</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="setAllTeams(false)">Deselect All</button>
+                        </div>
+                        <div style="max-height: 260px; overflow-y: auto; border: 1px solid #dee2e6; border-radius: 4px; padding: 8px;">
+                            {% for team in teams %}
+                            <div class="form-check">
+                                <input class="form-check-input team-check" type="checkbox"
+                                       name="teams[]" value="{{ team.id }}"
+                                       id="team_{{ team.id }}" checked>
+                                <label class="form-check-label" for="team_{{ team.id }}">{{ team.name }}</label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-wmffl">Put on Ballot</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function openPublishModal(btn) {
+    document.getElementById('publishForm').action = btn.dataset.publishUrl;
+    document.getElementById('publishIssueName').textContent = btn.dataset.issueName;
+    document.getElementById('publishStartDate').value = new Date().toISOString().slice(0, 10);
+    document.querySelectorAll('.team-check').forEach(cb => cb.checked = true);
+    new bootstrap.Modal(document.getElementById('publishModal')).show();
+}
+function setAllTeams(checked) {
+    document.querySelectorAll('.team-check').forEach(cb => cb.checked = checked);
+}
+</script>
+
+{% if totalPages > 1 %}
+<nav>
+    <ul class="pagination pagination-sm">
+        <li class="page-item {% if page == 1 %}disabled{% endif %}">
+            <a class="page-link" href="{{ path('admin_ballot', {page: page - 1}) }}">&laquo;</a>
+        </li>
+        {% for p in 1..totalPages %}
+        <li class="page-item {% if p == page %}active{% endif %}">
+            <a class="page-link" href="{{ path('admin_ballot', {page: p}) }}">{{ p }}</a>
+        </li>
+        {% endfor %}
+        <li class="page-item {% if page == totalPages %}disabled{% endif %}">
+            <a class="page-link" href="{{ path('admin_ballot', {page: page + 1}) }}">&raquo;</a>
+        </li>
+    </ul>
+</nav>
+{% endif %}
+{% endif %}
+{% endblock %}

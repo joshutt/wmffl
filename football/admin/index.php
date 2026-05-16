@@ -28,20 +28,14 @@
 
 <B>League Management</B>
 <UL>
-<LI><A HREF="presendtransactions.php">Send Transactions</A>
-<LI><A HREF="updatescores.php">Recalculate Scores</A>
 <li><a href="/login/simulatelogin">Become a team</a></li>
 </UL>
 
 <b>Reports</b>
 <ul>
-<li><a href="ballotview.php">View Votes Results</a></li>
 <li><a href="draftdates.php">View Draft Date Results</a></li>
 <li><a href="tooManyPlayers.php">Too Many Players  Report</a></li>
-<li><a href="weekly.php">Player of the Week</a></li>
-<li><a href="/admin/mvp">MVP List</a></li>
-<li><a href="money/updatePaid">Update Payments</a></li>
-<li><a href="money/updateFlags">Update Flags</a></li>
+<li><a href="/admin/weekly">Player of the Week</a></li>
 </ul>
 
 </BODY>

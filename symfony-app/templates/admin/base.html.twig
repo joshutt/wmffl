@@ -30,6 +30,18 @@
                class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_mvp' %} active{% endif %}">
                 MVP List
             </a>
+            <a href="{{ path('admin_weekly') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_weekly' %} active{% endif %}">
+                Player of the Week
+            </a>
+            <a href="{{ path('admin_scores') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') starts with 'admin_scores' %} active{% endif %}">
+                Reprocess Scores
+            </a>
+            <a href="{{ path('admin_ballot') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_ballot' %} active{% endif %}">
+                Vote Results
+            </a>
             <a href="/admin/index"
                class="list-group-item list-group-item-action">
                 Legacy Admin
@@ -37,6 +49,12 @@
         </div>
     </div>
     <div class="col-md-10">
+        {% for message in app.flashes('error') %}
+        <div class="alert alert-danger mt-2" role="alert">{{ message }}</div>
+        {% endfor %}
+        {% for message in app.flashes('success') %}
+        <div class="alert alert-success mt-2" role="alert">{{ message }}</div>
+        {% endfor %}
         {% block admin_content %}{% endblock %}
     </div>
 </div>

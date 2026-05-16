@@ -22,6 +22,7 @@
                 <th>Coach</th>
                 <th>NFL Team</th>
                 <th>WMFFL Team</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -31,6 +32,14 @@
                 <td>{{ coach.name }}</td>
                 <td>{{ coach.nflTeam }}</td>
                 <td>{{ coach.wmfflTeam }}</td>
+                <td>
+                    {% if coach.wmfflTeam %}
+                    <form action="{{ path('admin_headcoach_drop') }}" method="POST">
+                        <input type="hidden" name="player" value="{{ coach.playerid }}">
+                        <button type="submit" class="btn btn-sm btn-danger">Drop</button>
+                    </form>
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </tbody>
