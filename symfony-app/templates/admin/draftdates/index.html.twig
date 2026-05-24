@@ -1,0 +1,41 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Admin - Draft Date Results{% endblock %}
+
+{% block admin_content %}
+<h2 class="mt-2">Draft Date Results — {{ season }}</h2>
+
+<table class="table table-sm table-striped table-bordered w-auto">
+    <thead class="thead-dark">
+        <tr>
+            <th>Date</th>
+            <th>Yes</th>
+            <th>No</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for date, counts in dates %}
+        <tr{% if counts.yes == maxYes %} class="font-weight-bold"{% endif %}>
+            <td>{{ date }}</td>
+            <td>{{ counts.yes }}</td>
+            <td>{{ counts.no }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="3">No votes recorded for {{ season }}.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<p>Best date has <strong>{{ maxYes }}</strong> yes vote{{ maxYes != 1 ? 's' : '' }}.</p>
+
+{% if noVote is empty %}
+<p class="text-success">All teams have voted.</p>
+{% else %}
+<p><strong>Teams not yet voted:</strong></p>
+<ul>
+    {% for name in noVote %}
+    <li>{{ name }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

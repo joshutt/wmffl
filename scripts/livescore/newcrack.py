@@ -1,4 +1,4 @@
-import StringIO
+import io
 import sys
 
 from players import Player
@@ -29,7 +29,7 @@ def valuate(b_arr):
         return 0
     while len(c_arr) > 0:
         val = val << 8
-        add_val = ord(c_arr[-1])
+        add_val = c_arr[-1]
         val = val + add_val
         c_arr = c_arr[0:-1]
     neg_max = 1 << (len(b_arr) * 8 - 1)
@@ -51,14 +51,14 @@ if len(sys.argv) >= 2:
         expWeek = int(sys.argv[2])
 
 # Open file and read data
-indFile = open(inputFile, "r")
+indFile = open(inputFile, "rb")
 indyStats = indFile.read()
 indFile.close()
 
 # if file isn't longer than the header, no point
 if len(indyStats) <= 40:
     sys.exit(1)
-theFile = StringIO.StringIO(indyStats)
+theFile = io.BytesIO(indyStats)
 
 # Read Header information
 year = valuate(theFile.read(4))

@@ -1,0 +1,97 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Admin - Reprocess Scores{% endblock %}
+
+{% block admin_content %}
+<h2 class="mt-2">Reprocess Scores</h2>
+
+{% if results is not null %}
+    <div class="alert {% if results|length > 0 %}alert-success{% else %}alert-warning{% endif %} mt-3">
+        {% if results|length > 0 %}
+            Reprocessed {{ results|length }} game(s) for {{ processedSeason }} Week {{ processedWeek }}.
+        {% else %}
+            No games found for {{ processedSeason }} Week {{ processedWeek }}.
+        {% endif %}
+    </div>
+
+    {% if results|length > 0 %}
+    <table class="table table-sm table-bordered mt-2" style="max-width: 500px;">
+        <thead class="table-dark">
+            <tr>
+                <th>Home</th>
+                <th class="text-center">Score</th>
+                <th>Away</th>
+                <th class="text-center">Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for game in results %}
+            <tr>
+                <td>{{ game.teamaName }}</td>
+                <td class="text-center fw-bold">{{ game.scorea }}</td>
+                <td>{{ game.teambName }}</td>
+                <td class="text-center fw-bold">{{ game.scoreb }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+{% endif %}
+
+<div class="row mt-4 g-3">
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">Current Week</div>
+            <div class="card-body text-center">
+                <p class="card-text">{{ currentSeason }} &mdash; Week {{ currentWeek }}</p>
+                <form method="post" action="{{ path('admin_scores_reprocess') }}">
+                    <input type="hidden" name="season" value="{{ currentSeason }}">
+                    <input type="hidden" name="week" value="{{ currentWeek }}">
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-wmffl">Reprocess</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">Previous Week</div>
+            <div class="card-body text-center">
+                <p class="card-text">{{ previousSeason }} &mdash; Week {{ previousWeek }}</p>
+                <form method="post" action="{{ path('admin_scores_reprocess') }}">
+                    <input type="hidden" name="season" value="{{ previousSeason }}">
+                    <input type="hidden" name="week" value="{{ previousWeek }}">
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-wmffl">Reprocess</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">Specific Week</div>
+            <div class="card-body">
+                <form method="post" action="{{ path('admin_scores_reprocess') }}">
+                    <div class="mb-2">
+                        <label class="form-label">Season</label>
+                        <input type="number" name="season" class="form-control" value="{{ currentSeason }}" min="2000" max="2099" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Week</label>
+                        <input type="number" name="week" class="form-control" value="{{ currentWeek }}" min="1" max="16" required>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-wmffl">Reprocess</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block navbar %}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-2">
+        <div class="list-group mt-2">
+            <a href="{{ path('admin_dashboard') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_dashboard' %} active{% endif %}">
+                Dashboard
+            </a>
+            <a href="{{ path('admin_money_paid') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_money_paid' %} active{% endif %}">
+                Paid Status
+            </a>
+            <a href="{{ path('admin_money_flags') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_money_flags' %} active{% endif %}">
+                Season Flags
+            </a>
+            <a href="{{ path('admin_headcoach') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_headcoach' %} active{% endif %}">
+                Head Coach
+            </a>
+            <a href="{{ path('admin_team_update') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_team_update' %} active{% endif %}">
+                Team Info
+            </a>
+            <a href="{{ path('admin_mvp') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_mvp' %} active{% endif %}">
+                MVP List
+            </a>
+            <a href="{{ path('admin_weekly') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_weekly' %} active{% endif %}">
+                Player of the Week
+            </a>
+            <a href="{{ path('admin_scores') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') starts with 'admin_scores' %} active{% endif %}">
+                Reprocess Scores
+            </a>
+            <a href="{{ path('admin_ballot') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') starts with 'admin_ballot' %} active{% endif %}">
+                Vote Results
+            </a>
+            <a href="{{ path('admin_draftdates') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_draftdates' %} active{% endif %}">
+                Draft Dates
+            </a>
+            <a href="{{ path('admin_toomanplayers') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_toomanplayers' %} active{% endif %}">
+                Too Many Players
+            </a>
+        </div>
+    </div>
+    <div class="col-md-10">
+        {% for message in app.flashes('error') %}
+        <div class="alert alert-danger mt-2" role="alert">{{ message }}</div>
+        {% endfor %}
+        {% for message in app.flashes('success') %}
+        <div class="alert alert-success mt-2" role="alert">{{ message }}</div>
+        {% endfor %}
+        {% block admin_content %}{% endblock %}
+    </div>
+</div>
+{% endblock %}

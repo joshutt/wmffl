@@ -1,4 +1,4 @@
-#!/usr/local/devel/python
+#!/usr/bin/env python3
 
 matchDict = {1: 'BUF', 2: 'IND', 3: 'MIA', 4: 'NE', 5: 'NYJ', 6: 'CIN', 7: 'CLE',
              8: 'TEN', 9: 'JAC', 10: 'PIT', 11: 'DEN', 12: 'KC', 13: 'LV', 14: 'LAC',
@@ -8,9 +8,9 @@ matchDict = {1: 'BUF', 2: 'IND', 3: 'MIA', 4: 'NE', 5: 'NYJ', 6: 'CIN', 7: 'CLE'
 
 
 def double_byte(byte_as_string):
-    return_value = ord(byte_as_string[1]) << 8
-    return_value = return_value + ord(byte_as_string[0])
-    if ord(byte_as_string[1]) & 128:
+    return_value = byte_as_string[1] << 8
+    return_value = return_value + byte_as_string[0]
+    if byte_as_string[1] & 128:
         return_value = (return_value ^ 65535) + 1
         return_value = return_value * -1
     return return_value
@@ -119,26 +119,26 @@ class Player:
         self.penalties = 0
 
     def process_record(self, the_record):
-        if ord(the_record[7]) == 1:
-            num_scored = ord(the_record[8])
+        if the_record[7] == 1:
+            num_scored = the_record[8]
             for i in range(0, num_scored):
-                type_score = ord(the_record[9 + i * 5])
+                type_score = the_record[9 + i * 5]
                 yards = double_byte(the_record[10 + i * 5:12 + i * 5])
                 self.scores.append(Score(type_score, yards))
         else:
-            self.intThrow = ord(the_record[10])
+            self.intThrow = the_record[10]
             self.passYards = double_byte(the_record[12:14])
             self.rushYards = double_byte(the_record[16:18])
             self.receptions = double_byte(the_record[18:20])
             self.recYards = double_byte(the_record[20:22])
-            self.tackles = ord(the_record[22])
-            self.sacks = ord(the_record[24]) / 2.0
-            self.intCatch = ord(the_record[27])
-            self.passDefend = ord(the_record[28])
-            self.intReturn = ord(the_record[29])
-            self.fumbles = ord(the_record[32])
-            self.fumbRec = ord(the_record[34])
-            self.forceFumb = ord(the_record[35])
+            self.tackles = the_record[22]
+            self.sacks = the_record[24] / 2.0
+            self.intCatch = the_record[27]
+            self.passDefend = the_record[28]
+            self.intReturn = the_record[29]
+            self.fumbles = the_record[32]
+            self.fumbRec = the_record[34]
+            self.forceFumb = the_record[35]
             self.fumbleReturn = double_byte(the_record[36:38])
 
     def num_td(self):

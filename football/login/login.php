@@ -3,7 +3,7 @@ require_once 'utils/start.php';
 
 $username = mysqli_real_escape_string($conn, $_POST['username']);
 $password = mysqli_real_escape_string($conn, $_POST['password']);
-$thequery = "select teamid, password, name, userid from user where username=? and password=md5(?) and Active='Y'";
+$thequery = "select teamid, password, name, userid, commish from user where username=? and password=md5(?) and Active='Y'";
 $stmt = mysqli_prepare($conn, $thequery);
 
 // Bind the parameters
@@ -30,6 +30,7 @@ if ($numrow == 0) {
     $_SESSION['teamnum'] = $team[0];
     $_SESSION['user'] = $username;
     $_SESSION['usernum'] = $team[3];
+    $_SESSION['commish'] = (bool) $team[4];
     $_SESSION['message'] = '';
     $_SESSION['fullname'] = $team[2];
 

@@ -1,0 +1,76 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Admin - MVP List{% endblock %}
+
+{% block admin_content %}
+<h2 class="mt-2">MVP List — {{ season }} through Week {{ week }}</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <h4>Player of the Week</h4>
+        <table class="table table-sm table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Player</th>
+                    <th>Pos</th>
+                    <th>Team</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for player in overall %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ player.name }}</td>
+                    <td>{{ player.pos }}</td>
+                    <td>{{ player.abbrev }}</td>
+                    <td>{{ player.score }}</td>
+                </tr>
+                {% else %}
+                <tr><td colspan="4">No data available.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <h4>Defensive POW</h4>
+        <table class="table table-sm table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Player</th>
+                    <th>Pos</th>
+                    <th>Team</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for player in defense %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ player.name }}</td>
+                    <td>{{ player.pos }}</td>
+                    <td>{{ player.abbrev }}</td>
+                    <td>{{ player.score }}</td>
+                </tr>
+                {% else %}
+                <tr><td colspan="4">No data available.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="mt-3">
+    <strong>Jump to week:</strong>
+    {% for w in 1..14 %}
+        {% if w == week %}
+            <strong>{{ w }}</strong>
+        {% else %}
+            <a href="{{ path('admin_mvp', {'season': season, 'week': w}) }}">{{ w }}</a>
+        {% endif %}
+        {% if not loop.last %} | {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

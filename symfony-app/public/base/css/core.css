@@ -348,6 +348,12 @@ a.btn.disabled, fieldset:disabled a.btn {
     display: inline-block;
 }
 
+.list-group-item.active {
+    background-color: #660000;
+    border-color: #e2a500;
+    color: #e2a500;
+}
+
 .mainStory > div > table {
     font-size: 11px;
 }

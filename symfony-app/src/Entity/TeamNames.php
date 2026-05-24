@@ -24,6 +24,9 @@ class TeamNames
     #[ORM\Column(name: 'name', type: Types::STRING, length: 100)]
     private string $name;
 
+    #[ORM\Column(name: 'abbrev', type: Types::STRING, length: 10)]
+    private string $abbrev;
+
     #[ORM\Column(name: 'divisionid', type: Types::INTEGER)]
     private int $divisionId;
 
@@ -57,6 +60,17 @@ class TeamNames
     public function setName(string $name): static
     {
         $this->name = $name;
+        return $this;
+    }
+
+    public function getAbbrev(): string
+    {
+        return $this->abbrev;
+    }
+
+    public function setAbbrev(string $abbrev): static
+    {
+        $this->abbrev = $abbrev;
         return $this;
     }
 

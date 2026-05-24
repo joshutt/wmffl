@@ -16,8 +16,10 @@ if (isset($conn) && get_class($conn) == 'mysqli') {
     return;
 }
 
-// Start the session, so that every page is in sess29Gion
-session_start();
+// Start the session, so that every page is in session
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // establish Database connection information
 $conn = mysqli_connect('localhost', $ini['userName'], $ini['password'], $ini['dbName']);

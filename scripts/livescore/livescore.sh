@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/bin/bash
+
+#set -x
 
 SCRIPT=$( dirname $0)
 source $SCRIPT/../../conf/livescore.conf
@@ -10,7 +12,7 @@ then
 fi
 touch $SCRIPT_DIR/tmpFile
 
-WEEK=`/usr/local/bin/php $SCRIPT_DIR/getweek.php`
+WEEK=`php $SCRIPT_DIR/getweek.php`
 ZIPFILE="${DATA_DIR}/zip${WEEK}.zip"
 
 echo 
@@ -20,7 +22,7 @@ echo `date`
 echo "Week: $WEEK"
 echo "---------------------------------"
 
-python $SCRIPT_DIR/getzipfile.py $ZIPFILE > $SCRIPT_DIR/tmpupdate
+python3 $SCRIPT_DIR/getzipfile.py $ZIPFILE > $SCRIPT_DIR/tmpupdate
 if [ `diff $SCRIPT_DIR/tmpupdate $FILE_DIR/update.inc | wc -l` -eq '0' ]
 then
   echo "No Changes"
