@@ -1,0 +1,23 @@
+{# Standings widget, ported from football/standings.php #}
+<div class="cat text-center">STANDINGS</div>
+<div class="container gameBox pb-1">
+    {% set currentDiv = '' %}
+    {% for team in teams %}
+        {% if team.division != currentDiv %}
+            {% if currentDiv != '' %}
+                </div>
+            {% endif %}
+            {% set currentDiv = team.division %}
+            <div class="border-bottom border-top p-1">
+        {% endif %}
+        <div class="mt-0 justify-content-between">
+            <a class="row m-0" href="/teams/teamschedule?viewteam={{ team.teamid }}">
+                <div class="boxScore col-8 pl-1 pr-0 text-left text-truncate">{{ team.name }}</div>
+                <div class="boxScore col-4 px-0 d-block text-center">{{ team.printShortRecord() }}</div>
+            </a>
+        </div>
+        {% if loop.last %}
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>

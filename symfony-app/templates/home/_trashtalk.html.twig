@@ -1,0 +1,9 @@
+{# Latest forum posts, ported from football/forum/commentlist.php #}
+<div class="card-header cat text-center">LATEST TRASH TALK</div>
+<div class="card-body py-0 my-1 text-left gameBox">
+    {% for post in posts %}
+        <div class="headline p-1"><a class="NFLHeadline"
+                                     href="/forum/comments#{{ post.id }}">{{ post.title }}</a></div>
+    {% endfor %}
+    <div class="headline p-1"><a href="/forum/blogentry" class="comment">Leave Commentary</a></div>
+</div>

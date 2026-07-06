@@ -76,10 +76,13 @@ green, legacy publish flow still reachable).
     date, priority, active), newest first, with edit links and
     activate/deactivate toggles.
   - `GET/POST /admin/articles/new` and `GET/POST /admin/articles/{id}/edit`
-    — form for title, caption, image link (path string — no upload in this
-    phase), text (textarea), display date, priority, active, and author
-    (select of users). Edit works on **any** article — commissioner access
-    is not limited by authorship or active state.
+    — form for title, caption, image (remote URL or file upload, resized
+    and stored in the `images` table via `ArticleImageService` exactly like
+    the member publish flow; a stored path passes through as-is), text
+    (TinyMCE 5 WYSIWYG, same editor as the member flow), display date,
+    priority, active, and author (select of users). Edit works on **any**
+    article — commissioner access is not limited by authorship or active
+    state.
   - `POST /admin/articles/{id}/toggle` — flip `active`, redirect back to
     the list.
 - Templates under `templates/admin/article/`; buttons `btn-wmffl` in
