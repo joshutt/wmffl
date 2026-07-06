@@ -20,6 +20,9 @@ Legacy: `football/article.php`, `football/article/` (`articleDisplay.php`,
    the homepage article-card block in `article.php`) and list page
 2. Article authoring/publishing flow (`process.php`, `publish.php`,
    `preview.php`, `confirm.php`) — involves writes, migrate carefully
+3. Article comments — let users add comments to an article (new
+   functionality; the half-built `printComment()` code in legacy
+   `article/article.php` was never wired up and should not be ported)
 
 ## Phase 2 — Player Profiles (in progress)
 
