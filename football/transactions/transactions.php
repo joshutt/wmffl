@@ -7,7 +7,7 @@ require_once 'utils/start.php';
 function trade($conn, $teamid, $date): void
 {
     $tradequery = 'select t1.tradegroup, t1.date, tm1.name as TeamFrom, ';
-    $tradequery .= 'p.lastname, p.firstname, p.pos, p.team, t1.other ';
+    $tradequery .= 'p.lastname, p.firstname, p.pos, p.team, t1.other, p.playerid ';
     $tradequery .= 'from trade t1 ';
     $tradequery .= 'left join trade t2 on t1.tradegroup=t2.tradegroup and t1.teamfromid<>t2.teamfromid ';
     $tradequery .= 'join teamnames tm1 on t1.teamfromid=tm1.teamid ';
@@ -25,7 +25,7 @@ function trade($conn, $teamid, $date): void
     //print $tradequery;
     $firstteam = null;
     $firstplayer = null;
-    while (list($group, $tdate, $TeamFrom, $lastname, $firstname, $position, $nflteam, $other) = mysqli_fetch_row($results)) {
+    while (list($group, $tdate, $TeamFrom, $lastname, $firstname, $position, $nflteam, $other, $playerid) = mysqli_fetch_row($results)) {
         if ($oldgroup != $group) {
             print "<li style='white-space: normal;'>Traded ";
             $oldgroup = $group;
@@ -42,7 +42,7 @@ function trade($conn, $teamid, $date): void
         }
         if ($other) {
             print $other;
-        } else print "$firstname $lastname ($position-$nflteam)";
+        } else print "<a href='/player/$playerid'>$firstname $lastname</a> ($position-$nflteam)";
         $firstplayer = FALSE;
     }
 }
@@ -80,8 +80,8 @@ include 'base/menu.php';
 
                 <?php
                 // Create the query
-                $thequery = "SELECT DATE_FORMAT(t.date, '%M %e, %Y'), m.name, t.method, concat(p.firstname, ' ', p.lastname), p.pos, 
-COALESCE(r.nflteamid, ''), m.teamid, DATE_FORMAT(t.date, '%Y-%m-%d') 
+                $thequery = "SELECT DATE_FORMAT(t.date, '%M %e, %Y'), m.name, t.method, concat(p.firstname, ' ', p.lastname), p.pos,
+COALESCE(r.nflteamid, ''), m.teamid, DATE_FORMAT(t.date, '%Y-%m-%d'), p.playerid
 FROM transactions t
 JOIN teamnames m on t.teamid=m.teamid
 JOIN newplayers p on p.playerid=t.playerid
@@ -105,7 +105,7 @@ WHERE m.season=$theyear
                 $oldmethod = '';
                 $tradeonce = null;
                 $firstplayer = null;
-                while (list($date, $teamname, $method, $player, $position, $nflteam, $teamid, $rawdate) = mysqli_fetch_row($results)) {
+                while (list($date, $teamname, $method, $player, $position, $nflteam, $teamid, $rawdate, $playerid) = mysqli_fetch_row($results)) {
                     $change = FALSE;
                     if ($olddate != $date) {
                         if (!$first) {
@@ -166,7 +166,7 @@ WHERE m.season=$theyear
                         $firstplayer = TRUE;
                     }
                     if (!$firstplayer) print ', ';
-                    print "$player ($position-$nflteam)";
+                    print "<a href='/player/$playerid'>$player</a> ($position-$nflteam)";
                     $firstplayer = FALSE;
                 }
                 ?>

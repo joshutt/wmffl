@@ -25,8 +25,8 @@ class Player
     #[ORM\Column(length: 25, nullable: true)]
     private ?string $firstname = null;
 
-    #[ORM\Column(nullable: true, enumType: PosEnum::class)]
-    private ?PosEnum $pos = null;
+    #[ORM\Column(nullable: true)]
+    private ?string $pos = null;
 
     #[ORM\Column(length: 3, nullable: true)]
     private ?string $team = null;
@@ -113,12 +113,12 @@ class Player
 
     public function getPos(): ?PosEnum
     {
-        return $this->pos;
+        return $this->pos !== null && $this->pos !== '' ? PosEnum::tryFrom($this->pos) : null;
     }
 
     public function setPos(?PosEnum $pos): static
     {
-        $this->pos = $pos;
+        $this->pos = $pos?->value;
 
         return $this;
     }

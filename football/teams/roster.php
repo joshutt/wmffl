@@ -29,7 +29,7 @@ $theDate = mysqli_fetch_row($result);
         //	print "Team name: ".$teamname;
         //$thequery = "select p.lastname, p.pos, p.team, IF(p.firstname <> '', concat(', ',p.firstname), '') from newplayers p, roster r, team t where p.playerid=r.playerid and r.teamid=t.teamid and r.dateoff is null and t.teamid=$viewteam order by p.pos, p.lastname";
         $thequery = "select p.lastname, p.pos, p.team, b.week,
-       IF(p.firstname <> '', concat(', ',p.firstname), '') as 'firstname',
+       IF(p.firstname <> '', concat(', ',p.firstname), '') as 'firstname', p.playerid,
        r.DateOn, i.status as 'injury', max(pocos.cost) as 'cost', p.dob, TIMESTAMPDIFF(YEAR, p.dob, now()) as 'age',
        ifnull(ps.pts,0) as 'pts', ir.current as 'ir'
 from newplayers p
@@ -58,7 +58,7 @@ order by p.pos, p.lastname";
             if ($player['ir'] == 1) {
                 $inj = 'IR';
             }
-            $newItem = array('pos' => $player['pos'], 'name' => $player['lastname'] . $player['firstname'],
+            $newItem = array('pos' => $player['pos'], 'name' => "<a href='/player/{$player['playerid']}'>{$player['lastname']}{$player['firstname']}</a>",
                 'team' => $player['team'], 'bye' => $player['week'], 'age' => $player['age'], 'injury' => $inj,
                 'date' => date_format($date, 'M j, Y'), 'cost' => $player['cost'],
                 'pts' => $player['pts']);

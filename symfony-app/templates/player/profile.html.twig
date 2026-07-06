@@ -1,0 +1,204 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ player.firstname }} {{ player.lastname }} - Player Profile - WMFFL{% endblock %}
+
+{% block stylesheets %}
+<style>
+#stats-season-table thead th,
+#roster-history-table thead th {
+    cursor: pointer;
+    white-space: nowrap;
+    user-select: none;
+}
+#stats-season-table thead th::after,
+#roster-history-table thead th::after {
+    content: ' \2195';
+    opacity: 0.3;
+    font-size: 0.75em;
+}
+#stats-season-table thead th[data-sort="asc"]::after,
+#roster-history-table thead th[data-sort="asc"]::after  { content: ' \2191'; opacity: 1; }
+#stats-season-table thead th[data-sort="desc"]::after,
+#roster-history-table thead th[data-sort="desc"]::after { content: ' \2193'; opacity: 1; }
+</style>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    function makeSortable(table) {
+        if (!table) return;
+        var headers = table.querySelectorAll('thead th');
+        var sortCol = -1, sortAsc = true;
+        headers.forEach(function (th, col) {
+            th.addEventListener('click', function () {
+                sortAsc = (sortCol === col) ? !sortAsc : false;
+                sortCol = col;
+                headers.forEach(function (h) { delete h.dataset.sort; });
+                th.dataset.sort = sortAsc ? 'asc' : 'desc';
+                var tbody = table.querySelector('tbody');
+                var rows = Array.from(tbody.querySelectorAll('tr'));
+                rows.sort(function (a, b) {
+                    var av = a.cells[col].dataset.sortValue ?? a.cells[col].textContent.trim();
+                    var bv = b.cells[col].dataset.sortValue ?? b.cells[col].textContent.trim();
+                    var an = parseFloat(av), bn = parseFloat(bv);
+                    if (!isNaN(an) && !isNaN(bn)) return sortAsc ? an - bn : bn - an;
+                    return sortAsc ? av.localeCompare(bv) : bv.localeCompare(av);
+                });
+                rows.forEach(function (r) { tbody.appendChild(r); });
+            });
+        });
+    }
+    makeSortable(document.getElementById('stats-season-table'));
+    makeSortable(document.getElementById('roster-history-table'));
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="cat text-center">{{ player.firstname }} {{ player.lastname }}</div>
+<div class="container mt-3">
+
+    <div class="row">
+        <div class="col-md-6">
+            <h5 class="text-center mb-2">Player Info</h5>
+            <table class="table table-sm table-bordered mx-auto" style="max-width: 400px;">
+                {% if player.pos %}
+                <tr>
+                    <th>Position</th>
+                    <td>{{ player.pos.value }}</td>
+                </tr>
+                {% endif %}
+                {% if player.team %}
+                <tr>
+                    <th>NFL Team</th>
+                    <td>{{ player.team }}</td>
+                </tr>
+                {% endif %}
+                {% if player.number %}
+                <tr>
+                    <th>Number</th>
+                    <td>#{{ player.number }}</td>
+                </tr>
+                {% endif %}
+                {% if player.height %}
+                {% set feet = (player.height / 12)|round(0, 'floor') %}
+                {% set inches = player.height % 12 %}
+                <tr>
+                    <th>Height</th>
+                    <td>{{ feet }}'{{ inches }}"</td>
+                </tr>
+                {% endif %}
+                {% if player.weight %}
+                <tr>
+                    <th>Weight</th>
+                    <td>{{ player.weight }} lbs</td>
+                </tr>
+                {% endif %}
+                {% if player.dob %}
+                <tr>
+                    <th>Date of Birth</th>
+                    <td>{{ player.dob|date('M j, Y') }}</td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <th>WMFFL Team</th>
+                    <td>
+                        {% if currentRoster %}
+                            {{ currentRoster.team_name }}
+                        {% else %}
+                            <em>Free Agent</em>
+                        {% endif %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-md-6">
+            {% if rosterHistory %}
+            <h5 class="text-center mb-2">WMFFL Roster History</h5>
+            <table id="roster-history-table" class="table table-sm table-bordered">
+                <thead>
+                    <tr>
+                        <th>Team</th>
+                        <th>Joined</th>
+                        <th>Released</th>
+                        <th>Games</th>
+                        <th>Active Pts</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in rosterHistory %}
+                    <tr>
+                        <td>{{ entry.team_name }}</td>
+                        <td data-sort-value="{{ entry.date_on|date('Y-m-d') }}">{{ entry.date_on|date('M j, Y') }}</td>
+                        <td data-sort-value="{{ entry.date_off ? entry.date_off|date('Y-m-d') : '9999-12-31' }}">{{ entry.date_off ? entry.date_off|date('M j, Y') : 'Active' }}</td>
+                        <td class="text-center">{{ entry.games_activated }}</td>
+                        <td class="text-center">{{ entry.active_pts }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if statsBySeason %}
+    {% set totals = {weeks_played: 0, total_pts: 0, active_pts: 0} %}
+    {% for key in activeStatColumns|keys %}
+        {% set totals = totals|merge({(key): 0}) %}
+    {% endfor %}
+    {% for row in statsBySeason %}
+        {% set totals = totals|merge({weeks_played: totals.weeks_played + row.weeks_played, total_pts: totals.total_pts + row.total_pts, active_pts: totals.active_pts + row.active_pts}) %}
+        {% for key in activeStatColumns|keys %}
+            {% set totals = totals|merge({(key): totals[key] + (row[key] ?? 0)}) %}
+        {% endfor %}
+    {% endfor %}
+    <div class="row mt-4">
+        <div class="col">
+            <h5 class="text-center mb-2">Stats by Season</h5>
+            <div class="table-responsive">
+            <table id="stats-season-table" class="table table-sm table-bordered mx-auto">
+                <thead>
+                    <tr>
+                        <th>Season</th>
+                        <th>Wks</th>
+                        {% for key, label in activeStatColumns %}
+                        <th>{{ label }}</th>
+                        {% endfor %}
+                        <th>Pts</th>
+                        <th>Active Pts</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in statsBySeason %}
+                    <tr>
+                        <td>{{ row.season }}</td>
+                        <td class="text-center">{{ row.weeks_played }}</td>
+                        {% for key, label in activeStatColumns %}
+                        <td class="text-center">{{ row[key] ?? 0 }}</td>
+                        {% endfor %}
+                        <td class="text-center">{{ row.total_pts }}</td>
+                        <td class="text-center">{{ row.active_pts }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr class="font-weight-bold table-secondary">
+                        <td>Career</td>
+                        <td class="text-center">{{ totals.weeks_played }}</td>
+                        {% for key in activeStatColumns|keys %}
+                        <td class="text-center">{{ totals[key] }}</td>
+                        {% endfor %}
+                        <td class="text-center">{{ totals.total_pts }}</td>
+                        <td class="text-center">{{ totals.active_pts }}</td>
+                    </tr>
+                </tfoot>
+            </table>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}
