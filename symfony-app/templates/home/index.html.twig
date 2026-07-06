@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}The WMFFL Fantasy Football League{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="/base/css/index.css">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/base/js/front.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 col">
+
+        <div class="m-2">
+            <div class="container">
+                <div class="row">
+                    <div class="col main-art">
+                        {% if articles|length > 0 %}
+                            {{ include('article/_card.html.twig', {article: articles[0]}) }}
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row mx-0">
+                    <div class="card-deck">
+                        {% for article in articles[1:] %}
+                            {{ include('article/_card.html.twig') }}
+                            <div class="w-100 d-none d-block d-md-none"><!-- wrap on small --></div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="w-100 d-none d-block d-md-none"><!-- wrap every 2 on sm--></div>
+
+    <div class="col-md-4 col">
+
+        <div class="card text-center m-1 mb-2">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs justify-content-center" role="tablist">
+                    <li role="presentation" class="btn btn-wmffl mr-1">
+                        <a href="#scores" aria-controls="tab-01" role="tab" data-toggle="tab">Scores</a>
+                    </li>
+                    <li role="presentation" class="btn btn-wmffl ml-1">
+                        <a href="#standings" aria-controls="tab-02" role="tab" data-toggle="tab">Standings</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body py-1 px-0">
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="scores">
+                        {{ include('home/_scores.html.twig') }}
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="standings">
+                        {{ include('home/_standings.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card m-1 mb-2">
+            {{ include('home/_trashtalk.html.twig') }}
+        </div>
+        <div class="card m-1">
+            {{ include('home/_quicklinks.html.twig') }}
+        </div>
+    </div>
+</div>
+{% endblock %}

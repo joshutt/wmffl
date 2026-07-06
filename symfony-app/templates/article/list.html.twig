@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Latest News{% endblock %}
+
+{% block content %}
+    <h1 class="full">Latest News</h1>
+
+    <div class="py-2 row justify-content-between">
+        <div class="float-left"><a class="btn btn-wmffl" href="{{ path('article_list', {page: page + 1}) }}">&lt;&lt;&lt;
+                Older</a></div>
+        {% if isLoggedIn %}
+            <div class="float-right"><a class="btn btn-wmffl" href="/article/publish">Write Article</a></div>
+        {% endif %}
+        {% if page > 0 %}
+            <div class="float-right"><a class="btn btn-wmffl" href="{{ path('article_list', {page: page - 1}) }}">Newer &gt;&gt;&gt;</a></div>
+        {% endif %}
+    </div>
+
+    <div class="container-fluid">
+        <div class="card-deck">
+            {% for article in articles %}
+                {{ include('article/_card.html.twig') }}
+                {% if loop.index % 2 == 0 %}
+                    <div class="w-100 d-none d-sm-block d-md-none"><!-- wrap every 2 on sm--></div>
+                {% endif %}
+                {% if loop.index % 3 == 0 %}
+                    <div class="w-100 d-none d-md-block d-lg-none"><!-- wrap every 3 on md--></div>
+                {% endif %}
+                {% if loop.index % 4 == 0 %}
+                    <div class="w-100 d-none d-lg-block"><!-- wrap every 4 on lg--></div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="py-2 row justify-content-between">
+            <div class="float-left"><a class="btn btn-wmffl" href="{{ path('article_list', {page: page + 1}) }}">&lt;&lt;&lt;
+                    Older</a></div>
+            {% if page > 0 %}
+                <div class="float-right"><a class="btn btn-wmffl" href="{{ path('article_list', {page: page - 1}) }}">Newer &gt;&gt;&gt;</a></div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

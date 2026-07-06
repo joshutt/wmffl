@@ -1,0 +1,93 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Admin - {{ isNew ? 'New Article' : 'Edit Article' }}{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="/base/vendor/js/tiny_mce_5_0/tinymce.min.js"></script>
+    <script>
+        {# Same editor the member publish flow uses (base/js/article.js), but in
+           classic mode on the textarea so the HTML submits as the text field #}
+        tinyMCE.init({
+            selector: 'textarea#text',
+            plugins: "autolink,lists,spellchecker,pagebreak,table,save,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,template,lists,charmap,emoticons,hr,image,link,wordcount",
+            toolbar: [
+                'newdocument | formatselect fontsizeselect | forecolor backcolor | undo redo',
+                'bold italic underline strikethrough blockquote removeformat | alignleft aligncenter alignright alignjustify | outdent indent |numlist bullist checklist |',
+                'fullscreen preview wordcount | charmap emoticons hr image link media',
+                'table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol',
+            ],
+            theme_advanced_resizing: true,
+            remove_linebreaks: true,
+            link_title: false,
+            link_quicklink: true,
+            target_list: false,
+            menubar: false,
+            statusbar: false,
+            height: 400,
+        });
+    </script>
+{% endblock %}
+
+{% block admin_content %}
+<h2 class="mt-2">{{ isNew ? 'New Article' : 'Edit Article' }}</h2>
+
+<form method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="title" name="title" maxlength="75"
+               value="{{ article.title }}" required>
+    </div>
+    <div class="form-group border pb-2">
+        <label for="link">Image URL</label>
+        <input type="text" class="form-control" id="link" name="link" maxlength="255"
+               value="{{ article.link }}" placeholder="https://example.com/photo.jpg">
+        <label class="mt-2" for="imageUpload">Image Upload</label>
+        <input type="file" class="form-control pt-1 pl-1" id="imageUpload" name="imageUpload">
+        <small class="form-text text-muted">A full http(s) URL or an uploaded file is resized and stored
+            like member-published article images; a stored path (e.g. img/l/&hellip;) is kept as-is.
+            Provide only one of URL and upload.</small>
+    </div>
+    <div class="form-group">
+        <label for="caption">Image Caption</label>
+        <input type="text" class="form-control" id="caption" name="caption" maxlength="255"
+               value="{{ article.caption }}">
+    </div>
+    <div class="form-group">
+        <label for="text">Article Text</label>
+        <textarea class="form-control" id="text" name="text" rows="12">{{ article.text }}</textarea>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="displayDate">Display Date</label>
+            <input type="datetime-local" class="form-control" id="displayDate" name="displayDate"
+                   value="{{ article.displayDate ? article.displayDate|date('Y-m-d\\TH:i') : '' }}" required>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="priority">Priority</label>
+            <input type="number" class="form-control" id="priority" name="priority"
+                   value="{{ article.priority }}">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="author">Author</label>
+            <select class="form-control" id="author" name="author">
+                <option value="0">— none —</option>
+                {% for user in users %}
+                    <option value="{{ user.id }}"{% if article.author and article.author.id == user.id %} selected{% endif %}>{{ user.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group col-md-2">
+            <div class="form-check mt-4 pt-2">
+                <input type="checkbox" class="form-check-input" id="active" name="active" value="1"
+                       {%- if article.active %} checked{% endif %}>
+                <label class="form-check-label" for="active">Active</label>
+            </div>
+        </div>
+    </div>
+    <div class="text-center my-2">
+        <button type="submit" class="btn btn-wmffl">Save</button>
+        <a class="btn btn-wmffl" href="{{ path('admin_articles') }}">Cancel</a>
+    </div>
+</form>
+{% endblock %}

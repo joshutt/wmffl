@@ -1,0 +1,18 @@
+{# Scores widget, ported from football/scores.php #}
+{% if scores %}
+    <div class="cat text-center">{{ scores.weekName|upper }} SCORES</div>
+    <div class="container gameBox">
+        {% for game in scores.games %}
+            <div class="border-top border-bottom p-1">
+                <a class="row m-0" href="/activate/currentscore?teamid={{ game.teama }}&week={{ scores.week }}">
+                    {% if game.label %}
+                        <div class="boxScore text-center col-12">{{ game.label }}</div>
+                    {% endif %}
+                    <div class="boxScore col-10 px-0 text-left text-truncate">{{ game.leadname }}<br/> {{ game.trailname }}</div>
+                    <div class="boxScore col-2 px-0 text-center">{{ game.leadscore }}<br/>{{ game.trailscore }}
+                        <span class="align-top">{{ game.overtime ? 'OT' : '' }}</span></div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}

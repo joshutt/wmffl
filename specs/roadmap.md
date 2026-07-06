@@ -9,17 +9,25 @@ should be small enough to land as its own PR.
 - Standings: `StandingsController`, `StandingsCalculatorService`
 - History standings: `HistoryStandingsController` (`/history/standings/{season}/{week}`)
 - Team model migrated to `App\Model\Team`
+- Articles read-only display: `ArticleController` (`/article/{id}`, `/articles`,
+  301s from legacy URLs), `ArticleRepository`, homepage migrated to
+  `HomeController` (`/`, incl. scores/standings/trash-talk/quicklinks widgets,
+  `ScoresRepository`), admin article management (`AdminArticleController`)
 
 ## Phase 1 — Articles
 
-Legacy: `football/article.php`, `football/article/` (`articleDisplay.php`,
-`articleUtils.php`, `list.php`, `view.php`, `view-snip.php`, `preview.php`,
-`process.php`, `publish.php`, `confirm.php`)
+Legacy: `football/article/` (`article.php`, `articleUtils.php`,
+`view-snip.php`, `preview.php`, `process.php`, `publish.php`, `confirm.php` —
+retained for the publish flow only)
 
-1. Article entity/repository + read-only display (`view.php`, `view-snip.php`,
-   the homepage article-card block in `article.php`) and list page
+1. ~~Article entity/repository + read-only display and list page~~ Done
+   (2026-07, `specs/2026-07-06-articles-read-only/`), including homepage
+   migration and admin tooling
 2. Article authoring/publishing flow (`process.php`, `publish.php`,
    `preview.php`, `confirm.php`) — involves writes, migrate carefully
+3. Article comments — let users add comments to an article (new
+   functionality; the half-built `printComment()` code in legacy
+   `article/article.php` was never wired up and should not be ported)
 
 ## Phase 2 — Player Profiles (in progress)
 
