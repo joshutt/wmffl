@@ -12,6 +12,7 @@
 
     {% if isLoggedIn %}
         <form class="mt-3" method="post" action="{{ path('article_comment', {id: article.id}) }}">
+            <input type="hidden" name="_token" value="{{ csrf_token('comment') }}"/>
             <div class="form-group">
                 <label class="font-weight-bold" for="comment-text">Add a comment:</label>
                 <textarea class="form-control" id="comment-text" name="text" rows="3"></textarea>

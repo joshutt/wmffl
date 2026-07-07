@@ -85,6 +85,12 @@ class ArticleController extends AbstractController
             return $this->redirectToRoute('article_view', ['id' => $id]);
         }
 
+        if (!$this->isCsrfTokenValid('comment', (string) $request->getPayload()->get('_token'))) {
+            $this->addFlash('error', 'Your session expired; please try again');
+
+            return $this->redirectToRoute('article_view', ['id' => $id]);
+        }
+
         $text = trim($request->request->get('text', ''));
         if ($text === '') {
             $this->addFlash('error', 'A comment cannot be empty');

@@ -20,6 +20,7 @@
         {% endfor %}
 
         <form method="POST" action="{{ path('article_publish') }}" enctype="multipart/form-data">
+            <input type="hidden" name="_token" value="{{ csrf_token('article_publish') }}"/>
             {% if draft %}
                 <input type="hidden" name="draft" value="{{ draft.id }}"/>
             {% endif %}

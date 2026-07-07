@@ -113,6 +113,7 @@ class AdminBallotController extends AbstractAdminController
         if ($redirect = $this->requireCommissioner($auth)) {
             return $redirect;
         }
+        $this->assertCsrfToken($request, 'admin_ballot');
 
         $issue = new Issue();
         $this->hydrateIssue($issue, $request, $em);
@@ -157,6 +158,8 @@ class AdminBallotController extends AbstractAdminController
             return $redirect;
         }
 
+        $this->assertCsrfToken($request, 'admin_ballot');
+
         $issue = $em->getRepository(Issue::class)->find($id);
         if (!$issue) {
             throw $this->createNotFoundException();
@@ -178,6 +181,7 @@ class AdminBallotController extends AbstractAdminController
         if ($redirect = $this->requireCommissioner($auth)) {
             return $redirect;
         }
+        $this->assertCsrfToken($request, 'admin_ballot_publish');
 
         $issue = $em->getRepository(Issue::class)->find($id);
         if (!$issue) {

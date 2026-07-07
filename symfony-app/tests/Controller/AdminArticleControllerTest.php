@@ -12,6 +12,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HtmlSanitizer\HtmlSanitizer;
+use Symfony\Component\HtmlSanitizer\HtmlSanitizerConfig;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -72,7 +74,7 @@ class AdminArticleControllerTest extends TestCase
     {
         [$controller, $auth, $em, $images] = $this->makeController(commissioner: false);
 
-        $response = $controller->new(new Request(), $auth, $em, $images);
+        $response = $controller->new(new Request(), $auth, $em, $images, $this->makeSanitizer());
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertSame('/', $response->getTargetUrl());
@@ -82,7 +84,7 @@ class AdminArticleControllerTest extends TestCase
     {
         [$controller, $auth, $em, $images] = $this->makeController(commissioner: true);
 
-        $controller->new(new Request(), $auth, $em, $images);
+        $controller->new(new Request(), $auth, $em, $images, $this->makeSanitizer());
 
         $this->assertSame('admin/article/form.html.twig', $controller->renderedView);
         $this->assertTrue($controller->renderedParams['isNew']);
@@ -95,7 +97,7 @@ class AdminArticleControllerTest extends TestCase
         $em->expects($this->once())->method('persist')->with($this->isInstanceOf(Article::class));
         $em->expects($this->once())->method('flush');
 
-        $response = $controller->new($this->post(self::VALID_FORM), $auth, $em, $images);
+        $response = $controller->new($this->post(self::VALID_FORM), $auth, $em, $images, $this->makeSanitizer());
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertSame('/admin_articles', $response->getTargetUrl());
@@ -106,7 +108,7 @@ class AdminArticleControllerTest extends TestCase
         [$controller, $auth, $em, $images] = $this->makeController(commissioner: true);
         $em->expects($this->never())->method('persist');
 
-        $controller->new($this->post(['title' => '  '] + self::VALID_FORM), $auth, $em, $images);
+        $controller->new($this->post(['title' => '  '] + self::VALID_FORM), $auth, $em, $images, $this->makeSanitizer());
 
         $this->assertSame('admin/article/form.html.twig', $controller->renderedView);
         $this->assertContains(['error', 'A title is required'], $controller->flashes);
@@ -117,7 +119,7 @@ class AdminArticleControllerTest extends TestCase
         [$controller, $auth, $em, $images] = $this->makeController(commissioner: true);
         $em->expects($this->never())->method('persist');
 
-        $controller->new($this->post(['displayDate' => 'garbage'] + self::VALID_FORM), $auth, $em, $images);
+        $controller->new($this->post(['displayDate' => 'garbage'] + self::VALID_FORM), $auth, $em, $images, $this->makeSanitizer());
 
         $this->assertSame('admin/article/form.html.twig', $controller->renderedView);
         $this->assertContains(['error', 'A valid display date is required'], $controller->flashes);
@@ -136,7 +138,7 @@ class AdminArticleControllerTest extends TestCase
             $persisted = $a;
         });
 
-        $controller->new($this->post(['link' => ''] + self::VALID_FORM, $upload), $auth, $em, $images);
+        $controller->new($this->post(['link' => ''] + self::VALID_FORM, $upload), $auth, $em, $images, $this->makeSanitizer());
 
         $this->assertSame('img/l/abc123', $persisted->getLink());
     }
@@ -147,7 +149,7 @@ class AdminArticleControllerTest extends TestCase
     {
         [$controller, $auth, $em, $images] = $this->makeController(commissioner: false);
 
-        $response = $controller->edit(5, new Request(), $auth, $this->makeRepository(), $em, $images);
+        $response = $controller->edit(5, new Request(), $auth, $this->makeRepository(), $em, $images, $this->makeSanitizer());
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertSame('/', $response->getTargetUrl());
@@ -160,7 +162,7 @@ class AdminArticleControllerTest extends TestCase
         $repo->method('find')->willReturn(null);
 
         $this->expectException(NotFoundHttpException::class);
-        $controller->edit(999, new Request(), $auth, $repo, $em, $images);
+        $controller->edit(999, new Request(), $auth, $repo, $em, $images, $this->makeSanitizer());
     }
 
     public function testEditGetRendersFormWithArticle(): void
@@ -170,7 +172,7 @@ class AdminArticleControllerTest extends TestCase
         $repo = $this->makeRepository();
         $repo->method('find')->willReturn($article);
 
-        $controller->edit(5, new Request(), $auth, $repo, $em, $images);
+        $controller->edit(5, new Request(), $auth, $repo, $em, $images, $this->makeSanitizer());
 
         $this->assertSame('admin/article/form.html.twig', $controller->renderedView);
         $this->assertFalse($controller->renderedParams['isNew']);
@@ -186,7 +188,7 @@ class AdminArticleControllerTest extends TestCase
         $repo = $this->makeRepository();
         $repo->method('find')->willReturn($article);
 
-        $response = $controller->edit(5, $this->post(self::VALID_FORM), $auth, $repo, $em, $images);
+        $response = $controller->edit(5, $this->post(self::VALID_FORM), $auth, $repo, $em, $images, $this->makeSanitizer());
 
         $this->assertSame('/admin_articles', $response->getTargetUrl());
         $this->assertSame('Week 5 Recap', $article->getTitle());
@@ -209,7 +211,7 @@ class AdminArticleControllerTest extends TestCase
         $repo = $this->makeRepository();
         $repo->method('find')->willReturn($article);
 
-        $controller->edit(5, $this->post(['author' => '7'] + self::VALID_FORM), $auth, $repo, $em, $images);
+        $controller->edit(5, $this->post(['author' => '7'] + self::VALID_FORM), $auth, $repo, $em, $images, $this->makeSanitizer());
 
         $this->assertSame($user, $article->getAuthor());
     }
@@ -225,7 +227,7 @@ class AdminArticleControllerTest extends TestCase
 
         $form = self::VALID_FORM;
         unset($form['active']);
-        $controller->edit(5, $this->post($form), $auth, $repo, $em, $images);
+        $controller->edit(5, $this->post($form), $auth, $repo, $em, $images, $this->makeSanitizer());
 
         $this->assertFalse($article->isActive());
     }
@@ -241,7 +243,7 @@ class AdminArticleControllerTest extends TestCase
         $repo = $this->makeRepository();
         $repo->method('find')->willReturn($article);
 
-        $controller->edit(5, $this->post(self::VALID_FORM), $auth, $repo, $em, $images);
+        $controller->edit(5, $this->post(self::VALID_FORM), $auth, $repo, $em, $images, $this->makeSanitizer());
 
         $this->assertNotNull($article->getLastEdited());
         $this->assertEqualsWithDelta(time(), $article->getLastEdited()->getTimestamp(), 5);
@@ -256,7 +258,7 @@ class AdminArticleControllerTest extends TestCase
         $repo = $this->makeRepository();
         $repo->method('find')->willReturn($article);
 
-        $controller->edit(5, $this->post(self::VALID_FORM), $auth, $repo, $em, $images);
+        $controller->edit(5, $this->post(self::VALID_FORM), $auth, $repo, $em, $images, $this->makeSanitizer());
 
         $this->assertNull($article->getLastEdited());
     }
@@ -270,7 +272,7 @@ class AdminArticleControllerTest extends TestCase
         $repo = $this->makeRepository();
         $repo->method('find')->willReturn($article);
 
-        $controller->edit(5, $this->post(['title' => ' '] + self::VALID_FORM), $auth, $repo, $em, $images);
+        $controller->edit(5, $this->post(['title' => ' '] + self::VALID_FORM), $auth, $repo, $em, $images, $this->makeSanitizer());
 
         $this->assertNull($article->getLastEdited());
     }
@@ -284,7 +286,7 @@ class AdminArticleControllerTest extends TestCase
             $persisted = $a;
         });
 
-        $controller->new($this->post(self::VALID_FORM), $auth, $em, $images);
+        $controller->new($this->post(self::VALID_FORM), $auth, $em, $images, $this->makeSanitizer());
 
         $this->assertNull($persisted->getLastEdited());
     }
@@ -300,7 +302,7 @@ class AdminArticleControllerTest extends TestCase
         $repo = $this->makeRepository();
         $repo->method('find')->willReturn($article);
 
-        $controller->edit(5, $this->post(['link' => 'img/l/existinghash'] + self::VALID_FORM), $auth, $repo, $em, $images);
+        $controller->edit(5, $this->post(['link' => 'img/l/existinghash'] + self::VALID_FORM), $auth, $repo, $em, $images, $this->makeSanitizer());
 
         $this->assertSame('img/l/existinghash', $article->getLink());
     }
@@ -316,7 +318,7 @@ class AdminArticleControllerTest extends TestCase
         $repo = $this->makeRepository();
         $repo->method('find')->willReturn($article);
 
-        $controller->edit(5, $this->post(['link' => 'https://example.com/photo.jpg'] + self::VALID_FORM), $auth, $repo, $em, $images);
+        $controller->edit(5, $this->post(['link' => 'https://example.com/photo.jpg'] + self::VALID_FORM), $auth, $repo, $em, $images, $this->makeSanitizer());
 
         $this->assertSame('img/l/rehosted', $article->getLink());
     }
@@ -334,7 +336,7 @@ class AdminArticleControllerTest extends TestCase
         $repo = $this->makeRepository();
         $repo->method('find')->willReturn($article);
 
-        $controller->edit(5, $this->post(['link' => 'img/l/oldhash'] + self::VALID_FORM, $upload), $auth, $repo, $em, $images);
+        $controller->edit(5, $this->post(['link' => 'img/l/oldhash'] + self::VALID_FORM, $upload), $auth, $repo, $em, $images, $this->makeSanitizer());
 
         $this->assertSame('img/l/uploaded', $article->getLink());
     }
@@ -355,7 +357,8 @@ class AdminArticleControllerTest extends TestCase
             $auth,
             $repo,
             $em,
-            $images
+            $images,
+            $this->makeSanitizer()
         );
 
         $this->assertSame('admin/article/form.html.twig', $controller->renderedView);
@@ -374,7 +377,7 @@ class AdminArticleControllerTest extends TestCase
         $repo = $this->makeRepository();
         $repo->method('find')->willReturn($article);
 
-        $controller->edit(5, $this->post(['link' => 'https://example.com/not-an-image'] + self::VALID_FORM), $auth, $repo, $em, $images);
+        $controller->edit(5, $this->post(['link' => 'https://example.com/not-an-image'] + self::VALID_FORM), $auth, $repo, $em, $images, $this->makeSanitizer());
 
         $this->assertSame('admin/article/form.html.twig', $controller->renderedView);
         $this->assertContains(['error', 'Provide a full URL to a JPEG, GIF or PNG image'], $controller->flashes);
@@ -386,7 +389,7 @@ class AdminArticleControllerTest extends TestCase
     {
         [$controller, $auth, $em] = $this->makeController(commissioner: false);
 
-        $response = $controller->toggle(5, $auth, $this->makeRepository(), $em);
+        $response = $controller->toggle(5, new Request(), $auth, $this->makeRepository(), $em);
 
         $this->assertSame('/', $response->getTargetUrl());
     }
@@ -398,7 +401,7 @@ class AdminArticleControllerTest extends TestCase
         $repo->method('find')->willReturn(null);
 
         $this->expectException(NotFoundHttpException::class);
-        $controller->toggle(999, $auth, $repo, $em);
+        $controller->toggle(999, new Request(), $auth, $repo, $em);
     }
 
     public function testToggleDeactivatesActiveArticle(): void
@@ -411,7 +414,7 @@ class AdminArticleControllerTest extends TestCase
         $repo = $this->makeRepository();
         $repo->method('find')->willReturn($article);
 
-        $response = $controller->toggle(5, $auth, $repo, $em);
+        $response = $controller->toggle(5, new Request(), $auth, $repo, $em);
 
         $this->assertFalse($article->isActive());
         $this->assertSame('/admin_articles', $response->getTargetUrl());
@@ -426,7 +429,7 @@ class AdminArticleControllerTest extends TestCase
         $repo = $this->makeRepository();
         $repo->method('find')->willReturn($article);
 
-        $controller->toggle(5, $auth, $repo, $em);
+        $controller->toggle(5, new Request(), $auth, $repo, $em);
 
         $this->assertTrue($article->isActive());
     }
@@ -436,6 +439,13 @@ class AdminArticleControllerTest extends TestCase
     private function makeController(bool $commissioner): array
     {
         $controller = new class extends AdminArticleController {
+            public bool $csrfValid = true;
+
+            protected function isCsrfTokenValid(string $id, #[\SensitiveParameter] ?string $token): bool
+            {
+                return $this->csrfValid;
+            }
+
             public ?string $renderedView = null;
             public ?array $renderedParams = null;
             public array $flashes = [];
@@ -475,6 +485,21 @@ class AdminArticleControllerTest extends TestCase
     private function makeRepository(): ArticleRepository
     {
         return $this->createMock(ArticleRepository::class);
+    }
+
+    /**
+     * A real sanitizer configured like config/packages/html_sanitizer.yaml
+     * (app.article), so save-time sanitizing is exercised for real in tests.
+     */
+    private function makeSanitizer(): HtmlSanitizer
+    {
+        return new HtmlSanitizer(
+            (new HtmlSanitizerConfig())
+                ->allowSafeElements()
+                ->allowStaticElements()
+                ->allowRelativeLinks()
+                ->allowRelativeMedias()
+        );
     }
 
     private function post(array $params, ?UploadedFile $upload = null): Request

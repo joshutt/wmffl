@@ -6,6 +6,7 @@
 <h2 class="mt-2">Head Coach Change</h2>
 
 <form action="{{ path('admin_headcoach_process') }}" method="POST">
+    <input type="hidden" name="_token" value="{{ csrf_token('admin_headcoach') }}"/>
     <div class="form-group mb-3">
         <label for="team"><strong>Team</strong></label>
         <select name="team" id="team" class="form-control">
@@ -35,6 +36,7 @@
                 <td>
                     {% if coach.wmfflTeam %}
                     <form action="{{ path('admin_headcoach_drop') }}" method="POST">
+                        <input type="hidden" name="_token" value="{{ csrf_token('admin_headcoach') }}">
                         <input type="hidden" name="player" value="{{ coach.playerid }}">
                         <button type="submit" class="btn btn-sm btn-danger">Drop</button>
                     </form>

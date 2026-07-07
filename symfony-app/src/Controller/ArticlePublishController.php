@@ -9,6 +9,7 @@ use App\Service\ArticleImageService;
 use App\Service\AuthenticationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HtmlSanitizer\HtmlSanitizerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -60,10 +61,15 @@ class ArticlePublishController extends AbstractController
         AuthenticationService $auth,
         ArticleRepository $articles,
         EntityManagerInterface $em,
-        ArticleImageService $images
+        ArticleImageService $images,
+        HtmlSanitizerInterface $appArticle
     ): Response {
         if (!$auth->isLoggedIn()) {
             return $this->render('article/publish.html.twig', ['isLoggedIn' => false]);
+        }
+
+        if (!$this->isCsrfTokenValid('article_publish', (string) $request->getPayload()->get('_token'))) {
+            throw new AccessDeniedHttpException('Invalid CSRF token');
         }
 
         $draft = null;
@@ -135,7 +141,10 @@ class ArticlePublishController extends AbstractController
 
         $draft->setTitle($title);
         $draft->setCaption($caption ?: null);
-        $draft->setText($text);
+        // Strip everything the article sanitizer disallows at save time, so the
+        // stored HTML is already safe rather than relying only on render-time
+        // sanitizing. Keeps the full TinyMCE formatting set (see app.article).
+        $draft->setText($appArticle->sanitize($text));
         if ($link !== null) {
             $draft->setLink($link);
         }
@@ -166,6 +175,10 @@ class ArticlePublishController extends AbstractController
         ArticleRepository $articles,
         EntityManagerInterface $em
     ): Response {
+        if (!$this->isCsrfTokenValid('article_confirm', (string) $request->getPayload()->get('_token'))) {
+            throw new AccessDeniedHttpException('Invalid CSRF token');
+        }
+
         $article = $this->findOwnedArticle($id, $auth, $articles);
 
         if ($request->request->has('Edit')) {

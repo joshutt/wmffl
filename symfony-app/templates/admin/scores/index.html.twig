@@ -46,6 +46,7 @@
             <div class="card-body text-center">
                 <p class="card-text">{{ currentSeason }} &mdash; Week {{ currentWeek }}</p>
                 <form method="post" action="{{ path('admin_scores_reprocess') }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('admin_scores') }}">
                     <input type="hidden" name="season" value="{{ currentSeason }}">
                     <input type="hidden" name="week" value="{{ currentWeek }}">
                     <div class="text-center">
@@ -62,6 +63,7 @@
             <div class="card-body text-center">
                 <p class="card-text">{{ previousSeason }} &mdash; Week {{ previousWeek }}</p>
                 <form method="post" action="{{ path('admin_scores_reprocess') }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('admin_scores') }}">
                     <input type="hidden" name="season" value="{{ previousSeason }}">
                     <input type="hidden" name="week" value="{{ previousWeek }}">
                     <div class="text-center">
@@ -77,6 +79,7 @@
             <div class="card-header">Specific Week</div>
             <div class="card-body">
                 <form method="post" action="{{ path('admin_scores_reprocess') }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('admin_scores') }}">
                     <div class="mb-2">
                         <label class="form-label">Season</label>
                         <input type="number" name="season" class="form-control" value="{{ currentSeason }}" min="2000" max="2099" required>

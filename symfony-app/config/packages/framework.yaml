@@ -5,6 +5,9 @@ framework:
     # Note that the session will be started ONLY if you read or write from it.
     session: true
 
+    # CSRF tokens for hand-built HTML forms (validated via isCsrfTokenValid()).
+    csrf_protection: true
+
     #esi: true
     #fragments: true
 

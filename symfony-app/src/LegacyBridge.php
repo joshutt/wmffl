@@ -30,10 +30,16 @@ class LegacyBridge
         $projectRoot = dirname(__DIR__, 2);
         $legacyRoot = $projectRoot . '/football';
 
-        // Set up the include path
-        $includePath = '/home/joshutt/php';
-        $includePath .= PATH_SEPARATOR.$legacyRoot;
+        // Set up the include path. An optional extra directory (e.g. a shared
+        // PHP library dir outside the project) can be supplied per-environment
+        // via the LEGACY_INCLUDE_PATH env var instead of being hard-coded.
+        $includePath = $legacyRoot;
         $includePath .= PATH_SEPARATOR.$projectRoot;
+
+        $extraIncludePath = $_SERVER['LEGACY_INCLUDE_PATH'] ?? $_ENV['LEGACY_INCLUDE_PATH'] ?? '';
+        if ($extraIncludePath !== '' && is_dir($extraIncludePath)) {
+            $includePath = $extraIncludePath.PATH_SEPARATOR.$includePath;
+        }
 
         // Add src, lib and conf if the directories exist
         if (is_dir($projectRoot.'/src')) {

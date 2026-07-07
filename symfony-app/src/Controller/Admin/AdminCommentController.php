@@ -52,6 +52,7 @@ class AdminCommentController extends AbstractAdminController
         if ($redirect = $this->requireCommissioner($auth)) {
             return $redirect;
         }
+        $this->assertCsrfToken($request, 'admin_comment_toggle');
 
         $comment = $comments->find($id);
         if (!$comment) {

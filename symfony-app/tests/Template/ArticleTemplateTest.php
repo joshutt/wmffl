@@ -4,6 +4,10 @@ namespace App\Tests\Template;
 
 use App\Entity\Article;
 use PHPUnit\Framework\TestCase;
+use Psr\Container\ContainerInterface;
+use Symfony\Bridge\Twig\Extension\HtmlSanitizerExtension;
+use Symfony\Component\HtmlSanitizer\HtmlSanitizer;
+use Symfony\Component\HtmlSanitizer\HtmlSanitizerConfig;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -19,6 +23,32 @@ class ArticleTemplateTest extends TestCase
     protected function setUp(): void
     {
         $this->twig = new Environment(new FilesystemLoader(__DIR__ . '/../../templates'));
+
+        // Mirror config/packages/html_sanitizer.yaml so the sanitize_html
+        // filter used by _article.html.twig resolves in the bare test env.
+        $sanitizer = new HtmlSanitizer(
+            (new HtmlSanitizerConfig())
+                ->allowSafeElements()
+                ->allowStaticElements()
+                ->allowRelativeLinks()
+                ->allowRelativeMedias()
+        );
+        $sanitizers = new class($sanitizer) implements ContainerInterface {
+            public function __construct(private HtmlSanitizer $sanitizer)
+            {
+            }
+
+            public function get(string $id): HtmlSanitizer
+            {
+                return $this->sanitizer;
+            }
+
+            public function has(string $id): bool
+            {
+                return true;
+            }
+        };
+        $this->twig->addExtension(new HtmlSanitizerExtension($sanitizers));
     }
 
     public function testNeverEditedArticleShowsNoEditedLine(): void

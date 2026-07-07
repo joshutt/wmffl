@@ -404,6 +404,13 @@ class ArticleControllerTest extends TestCase
     private function makeController(): ArticleController
     {
         return new class extends ArticleController {
+            public bool $csrfValid = true;
+
+            protected function isCsrfTokenValid(string $id, #[\SensitiveParameter] ?string $token): bool
+            {
+                return $this->csrfValid;
+            }
+
             public ?string $renderedView = null;
             public ?array $renderedParams = null;
             public array $flashes = [];
