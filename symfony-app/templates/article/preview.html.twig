@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Preview - {{ article.title }}{% endblock %}
+
+{% block content %}
+<div id="articleBlock" class="container">
+    {{ include('article/_article.html.twig') }}
+
+    <form action="{{ path('article_confirm', {id: article.id}) }}" method="post">
+        <div class="text-center my-3">
+            <input type="submit" class="btn btn-wmffl" name="Edit" value="Edit"/>
+            <input type="submit" class="btn btn-wmffl" name="Publish" value="Publish"/>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{# Shared TinyMCE init for article editing (admin form + member publish form).
+   Classic mode on a textarea so the HTML submits as a normal form field.
+   Include with: {{ include('article/_editor.html.twig', {selector: 'textarea#text'}) }} #}
+<script src="/base/vendor/js/tiny_mce_5_0/tinymce.min.js"></script>
+<script>
+    tinyMCE.init({
+        selector: '{{ selector }}',
+        plugins: "autolink,lists,spellchecker,pagebreak,table,save,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,template,lists,charmap,emoticons,hr,image,link,wordcount",
+        toolbar: [
+            'newdocument | formatselect fontsizeselect | forecolor backcolor | undo redo',
+            'bold italic underline strikethrough blockquote removeformat | alignleft aligncenter alignright alignjustify | outdent indent |numlist bullist checklist |',
+            'fullscreen preview wordcount | charmap emoticons hr image link media',
+            'table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol',
+        ],
+        theme_advanced_resizing: true,
+        remove_linebreaks: true,
+        link_title: false,
+        link_quicklink: true,
+        target_list: false,
+        menubar: false,
+        statusbar: false,
+        height: 400,
+    });
+</script>

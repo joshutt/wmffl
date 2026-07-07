@@ -1,0 +1,10 @@
+{# Article card, ported from printArticleCard() in football/article/articleUtils.php #}
+<div class="card mb-4 article-card">
+    <a href="{{ path('article_view', {id: article.id}) }}">
+        <img class="card-img-top article-img" src="/{{ article.link }}"/>
+        <div class="card-body">
+            <h4 class="card-title">{{ article.title }}</h4>
+            <p class="card-text">{{ article.displayDate|date('M d, Y') }}<br/>{{ article.author ? article.author.name : '' }}</p>
+        </div>
+    </a>
+</div>

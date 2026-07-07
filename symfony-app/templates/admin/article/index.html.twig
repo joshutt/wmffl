@@ -1,0 +1,41 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Admin - Articles{% endblock %}
+
+{% block admin_content %}
+<h2 class="mt-2">Articles</h2>
+
+<div class="text-center my-2">
+    <a class="btn btn-wmffl" href="{{ path('admin_articles_new') }}">New Article</a>
+</div>
+
+<table class="table table-sm table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Display Date</th>
+            <th>Priority</th>
+            <th>Active</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for article in articles %}
+        <tr{% if not article.active %} class="text-muted"{% endif %}>
+            <td><a href="{{ path('article_view', {id: article.id}) }}">{{ article.title }}</a></td>
+            <td>{{ article.author ? article.author.name : '—' }}</td>
+            <td>{{ article.displayDate|date('Y-m-d g:i a') }}</td>
+            <td>{{ article.priority }}</td>
+            <td>{{ article.active ? 'Yes' : 'No' }}</td>
+            <td class="text-center">
+                <a class="btn btn-sm btn-wmffl" href="{{ path('admin_articles_edit', {id: article.id}) }}">Edit</a>
+                <form class="d-inline" method="post" action="{{ path('admin_articles_toggle', {id: article.id}) }}">
+                    <button type="submit" class="btn btn-sm btn-wmffl">{{ article.active ? 'Deactivate' : 'Activate' }}</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

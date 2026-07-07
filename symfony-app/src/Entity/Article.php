@@ -38,6 +38,9 @@ class Article
     #[ORM\Column(name: 'priority', type: 'integer')]
     private ?int $priority = 0;
 
+    #[ORM\Column(name: 'lastEdited', type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTime $lastEdited = null;
+
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: 'author', referencedColumnName: 'UserID', nullable: true)]
     private ?User $author = null;
@@ -132,6 +135,17 @@ class Article
     public function setPriority(int $priority): static
     {
         $this->priority = $priority;
+        return $this;
+    }
+
+    public function getLastEdited(): ?\DateTime
+    {
+        return $this->lastEdited;
+    }
+
+    public function setLastEdited(?\DateTime $lastEdited): static
+    {
+        $this->lastEdited = $lastEdited;
         return $this;
     }
 

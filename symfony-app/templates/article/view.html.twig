@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block content %}
+<div id="articleBlock" class="container">
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger" role="alert">{{ message }}</div>
+    {% endfor %}
+
+    {{ include('article/_article.html.twig') }}
+
+    {% if canEdit %}
+        <div class="text-center my-3">
+            <a class="btn btn-wmffl" href="{{ path('article_publish', {draft: article.id}) }}">Edit</a>
+        </div>
+    {% endif %}
+
+    {{ include('article/_comments.html.twig') }}
+</div>
+{% endblock %}
