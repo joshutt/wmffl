@@ -96,3 +96,80 @@ No changes planned to this code; task 1 backfills its tests.
   branch's new+existing-Phase-2 PHP files via `--coverage-clover`, manual
   E2E checklist against real league data, regression checks. Fix anything
   it surfaces before opening the PR.
+
+## 7. Loose Ends
+
+Switch the `/players` search to filter on the `active` flag rather than
+the `retired` column, disambiguate the two concepts, and do a final
+quality pass:
+
+- **Search filters on `active`, not `retired`.** In
+  `PlayerRepository::buildSearchWhere()`, replace the default
+  `np.retired IS NULL` restriction with `np.active = 1`; the `inactive`
+  filter (checkbox) includes `active = 0` players instead of retired
+  ones. This makes the existing "Include non-active" label
+  (`templates/player/index.html.twig:48`) accurate as-is. Update the
+  search tests (default excludes `active = 0`, checkbox includes them)
+  and keep showing `retired` in the result rows where it already
+  renders.
+- **`active` vs `retired` semantics.** After the switch: `active`
+  (boolean) drives both search visibility and — with `usePos` — the
+  legacy transaction player pool (`football/transactions/list.php:17`,
+  `p.active=1 AND p.usePos=1`); `retired` (year(4), NULL = still
+  playing) is informational only. Document this with brief comments on
+  the three `App\Entity\Player` fields.
+- **Expose `active`/`usePos` in admin player editing.** With `active`
+  now controlling search visibility, admins must be able to set it; the
+  edit form covers bio/draft fields and `retired` but not these two
+  flags, so managing them still requires direct SQL. Add both as
+  checkboxes to `AdminPlayerController::edit()` + template, persist on
+  POST, cover in the controller tests.
+- **Hide position-less players.** Exclude players with no position from
+  the `/players` search results: add a
+  `np.pos IS NOT NULL AND np.pos <> ''` clause in
+  `PlayerRepository::buildSearchWhere()`, applied regardless of the
+  include-non-active checkbox. Since `AdminPlayerController` reuses
+  `searchPlayers()`, gate the clause on a filter key (e.g.
+  `requirePos`) that `PlayerProfileController::index()` always sets and
+  the admin search omits, so position-less records stay reachable for
+  fixing in admin. Test: a player with NULL/empty `pos` never appears
+  in `/players` results but is still found by the admin search.
+- **"Players" link in the legacy nav.** Task 2 added "Players" only to
+  the Symfony nav (`templates/base.html.twig:72`); legacy pages render
+  their own nav from `football/base/menu.php` (~line 104). Add the same
+  `<li class="nav-item"><a class="nav-link pl-2" href="/players">`
+  entry there, in the matching slot (between Teams and Stats), so the
+  link is present regardless of which app served the page.
+- **Prominent player name on the profile page.** The name currently
+  renders in a `div.cat` (`templates/player/profile.html.twig:59`) — the
+  same 25px maroon/gold section-header bar (`core.css:144`) used for
+  every other section on the page, so it doesn't read as the page
+  title. Replace it with a real page heading: an `<h1>` with the full
+  name, sized clearly above the section bars (keep the site's
+  maroon/gold palette), with a small subtitle line (position · #number
+  · NFL team, omitting empty fields) so it's unmistakable whose profile
+  is shown. Update the profile-page test's heading assertion.
+- **Clear-search button.** Add a "Clear" button next to the Search
+  button on the `/players` filter form
+  (`templates/player/index.html.twig`) that resets all criteria — name,
+  WMFFL team, NFL team, position, include-non-active — by linking back
+  to the bare `player_index` route (no query params, no JS needed);
+  style per the `btn-wmffl` + `text-center` convention. Test: with
+  filters applied, the clear control returns the default listing.
+- **Logged-in name on Symfony pages.** Legacy pages show the user's
+  name on the navbar button when logged in
+  (`football/base/menu.php:113`, via the `$isin`/`$fullname` globals
+  `LegacyBridge` fills from `AuthenticationService`); Symfony pages
+  always show "Log In" even when logged in. The conditional already
+  exists (`templates/base.html.twig:80`) but reads
+  `app.request.session.get('isin')` — Symfony's attribute bag — while
+  the login flow writes raw `$_SESSION['isin']`/`$_SESSION['fullname']`
+  (`AuthenticationService::login()`), which `session.get()` never sees.
+  Fix by exposing `AuthenticationService` to Twig (global via
+  `twig.yaml` or a lightweight extension) and switching the template to
+  `auth.isLoggedIn()` / `auth.fullName()`, matching the legacy button
+  markup (name opens `#profileModal`). Test with the fake-session E2E
+  recipe: logged-in request renders the fullname button, anonymous
+  renders "Log In".
+- **Quality pass.** Run a code review + simplification pass over the
+  full branch diff; apply findings; suites stay green.
