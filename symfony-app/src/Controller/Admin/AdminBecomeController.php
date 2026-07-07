@@ -20,6 +20,7 @@ class AdminBecomeController extends AbstractAdminController
         if ($redirect = $this->requireCommissioner($auth)) {
             return $redirect;
         }
+        $this->assertCsrfToken($request, 'admin_become');
 
         $teamId = (int) $request->request->get('teamId');
 

@@ -137,3 +137,6 @@ football/transactions/livedraft/check.log
 **/.phpunit.result.cache
 
 /plans/
+
+# Security review notes — kept out of the repo; stored separately
+/specs/backlog/securityreview.md

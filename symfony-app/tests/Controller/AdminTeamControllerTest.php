@@ -94,6 +94,13 @@ class AdminTeamControllerTest extends TestCase
     private function makeController(bool $commissioner): array
     {
         $controller = new class extends AdminTeamController {
+            public bool $csrfValid = true;
+
+            protected function isCsrfTokenValid(string $id, #[\SensitiveParameter] ?string $token): bool
+            {
+                return $this->csrfValid;
+            }
+
             public ?string $renderedView = null;
             public ?array $renderedParams = null;
 

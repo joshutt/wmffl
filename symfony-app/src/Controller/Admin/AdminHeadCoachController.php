@@ -50,6 +50,7 @@ class AdminHeadCoachController extends AbstractAdminController
         if ($redirect = $this->requireCommissioner($auth)) {
             return $redirect;
         }
+        $this->assertCsrfToken($request, 'admin_headcoach');
 
         $teamId   = (int) $request->request->get('team');
         $playerId = (int) $request->request->get('player');
@@ -110,6 +111,7 @@ class AdminHeadCoachController extends AbstractAdminController
         if ($redirect = $this->requireCommissioner($auth)) {
             return $redirect;
         }
+        $this->assertCsrfToken($request, 'admin_headcoach');
 
         $playerId = (int) $request->request->get('player');
         $now      = (new \DateTime())->format('Y-m-d H:i:s');

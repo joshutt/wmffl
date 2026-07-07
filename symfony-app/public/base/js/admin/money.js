@@ -33,7 +33,8 @@ function toggleChange(event) {
     console.log("Send "+inputElement.id+ " a new value of "+newValue);
     $.post("recordChange", {
         field: inputElement.id,
-        val: newValue
+        val: newValue,
+        _token: window.moneyCsrfToken
     }, function(response) {
         console.log(response);
     }, "json");
@@ -46,7 +47,8 @@ function sendChange(event) {
     console.log("Send "+inputElement.id+ " a new value of "+newValue);
     $.post("recordChange", {
         field: inputElement.id,
-        val: newValue
+        val: newValue,
+        _token: window.moneyCsrfToken
     }, function(response) {
         console.log(response);
     }, "json");

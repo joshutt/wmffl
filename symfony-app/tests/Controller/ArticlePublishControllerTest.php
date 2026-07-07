@@ -11,6 +11,8 @@ use App\Service\AuthenticationService;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HtmlSanitizer\HtmlSanitizer;
+use Symfony\Component\HtmlSanitizer\HtmlSanitizerConfig;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -153,7 +155,8 @@ class ArticlePublishControllerTest extends TestCase
             $this->makeAuth(false),
             $this->makeRepository(),
             $em,
-            $images
+            $images,
+            $this->makeSanitizer()
         );
 
         $this->assertSame('article/publish.html.twig', $controller->renderedView);
@@ -204,7 +207,8 @@ class ArticlePublishControllerTest extends TestCase
             $this->makeAuth(true, userId: 7),
             $this->makeRepository(),
             $em,
-            $images
+            $images,
+            $this->makeSanitizer()
         );
 
         $this->assertContains(
@@ -230,7 +234,8 @@ class ArticlePublishControllerTest extends TestCase
             $this->makeAuth(true, userId: 7),
             $this->makeRepository(),
             $em,
-            $images
+            $images,
+            $this->makeSanitizer()
         );
 
         $this->assertSame('article/publish.html.twig', $controller->renderedView);
@@ -249,7 +254,8 @@ class ArticlePublishControllerTest extends TestCase
             $this->makeAuth(true, userId: 7),
             $this->makeRepository(),
             $em,
-            $images
+            $images,
+            $this->makeSanitizer()
         );
 
         $this->assertCount(3, $controller->flashes);
@@ -269,7 +275,8 @@ class ArticlePublishControllerTest extends TestCase
             $this->makeAuth(true, userId: 7),
             $this->makeRepository(),
             $em,
-            $images
+            $images,
+            $this->makeSanitizer()
         );
 
         $this->assertContains(
@@ -299,7 +306,8 @@ class ArticlePublishControllerTest extends TestCase
             $this->makeAuth(true, userId: 7),
             $this->makeRepository(),
             $em,
-            $images
+            $images,
+            $this->makeSanitizer()
         );
 
         $this->assertFalse($persisted->isActive());
@@ -316,6 +324,63 @@ class ArticlePublishControllerTest extends TestCase
         $this->assertStringStartsWith('/article_preview', $response->getTargetUrl());
     }
 
+    public function testSubmitSanitizesBodyAtSaveTime(): void
+    {
+        [$controller, $em, $images] = $this->makeSubmitDeps();
+        $em->method('find')->with(User::class, 7)->willReturn($this->makeUser(7));
+        $images->method('store')->willReturn('img/l/abc123');
+
+        $persisted = null;
+        $em->method('persist')->willReturnCallback(function (Article $a) use (&$persisted) {
+            $persisted = $a;
+        });
+
+        // TinyMCE-style formatting plus an injected script and event handler.
+        $body = '<p style="text-align: center;"><strong>Bold</strong> '
+            . '<span style="color: #ff0000;">red</span></p>'
+            . '<script>alert(1)</script><img src=x onerror="alert(1)">'
+            . '<a href="javascript:alert(1)">x</a>'
+            . str_repeat('More body text to clear the length minimum. ', 6);
+
+        $controller->submit(
+            $this->post(['text' => $body] + self::VALID_FORM),
+            $this->makeAuth(true, userId: 7),
+            $this->makeRepository(),
+            $em,
+            $images,
+            $this->makeSanitizer()
+        );
+
+        $stored = $persisted->getText();
+        // Dangerous markup is gone from what actually gets stored...
+        $this->assertStringNotContainsString('<script', $stored);
+        $this->assertStringNotContainsString('onerror', $stored);
+        $this->assertStringNotContainsString('javascript:', $stored);
+        // ...while the editor's formatting survives.
+        $this->assertStringContainsString('text-align: center', $stored);
+        $this->assertStringContainsString('<strong>Bold</strong>', $stored);
+        $this->assertStringContainsString('color: #ff0000', $stored);
+    }
+
+    public function testSubmitRejectsInvalidCsrfToken(): void
+    {
+        [$controller, $em, $images] = $this->makeSubmitDeps();
+        $controller->csrfValid = false;
+        $em->expects($this->never())->method('persist');
+        $em->expects($this->never())->method('flush');
+
+        $this->expectException(AccessDeniedHttpException::class);
+
+        $controller->submit(
+            $this->post(self::VALID_FORM),
+            $this->makeAuth(true, userId: 7),
+            $this->makeRepository(),
+            $em,
+            $images,
+            $this->makeSanitizer()
+        );
+    }
+
     public function testSubmitStoresImageFromUrl(): void
     {
         [$controller, $em, $images] = $this->makeSubmitDeps();
@@ -328,7 +393,8 @@ class ArticlePublishControllerTest extends TestCase
             $this->makeAuth(true, userId: 7),
             $this->makeRepository(),
             $em,
-            $images
+            $images,
+            $this->makeSanitizer()
         );
     }
 
@@ -345,7 +411,8 @@ class ArticlePublishControllerTest extends TestCase
             $this->makeAuth(true, userId: 7),
             $this->makeRepository(),
             $em,
-            $images
+            $images,
+            $this->makeSanitizer()
         );
     }
 
@@ -366,7 +433,8 @@ class ArticlePublishControllerTest extends TestCase
             $this->makeAuth(true, userId: 7),
             $this->makeRepository($draft),
             $em,
-            $images
+            $images,
+            $this->makeSanitizer()
         );
 
         $this->assertSame('Week 5 Recap', $draft->getTitle());
@@ -389,7 +457,8 @@ class ArticlePublishControllerTest extends TestCase
             $this->makeAuth(true, userId: 7),
             $this->makeRepository($draft),
             $em,
-            $images
+            $images,
+            $this->makeSanitizer()
         );
 
         $this->assertSame('img/l/existing', $draft->getLink());
@@ -410,7 +479,8 @@ class ArticlePublishControllerTest extends TestCase
             $this->makeAuth(true, userId: 7),
             $this->makeRepository($article),
             $em,
-            $images
+            $images,
+            $this->makeSanitizer()
         );
 
         $this->assertTrue($article->isActive());
@@ -429,7 +499,8 @@ class ArticlePublishControllerTest extends TestCase
             $this->makeAuth(true, userId: 8),
             $this->makeRepository($draft),
             $em,
-            $images
+            $images,
+            $this->makeSanitizer()
         );
     }
 
@@ -446,7 +517,8 @@ class ArticlePublishControllerTest extends TestCase
             $this->makeAuth(true, userId: 7),
             $this->makeRepository($draft),
             $em,
-            $images
+            $images,
+            $this->makeSanitizer()
         );
 
         $this->assertSame('Old Title', $draft->getTitle());
@@ -628,7 +700,8 @@ class ArticlePublishControllerTest extends TestCase
             $this->makeAuth(true, userId: 7),
             $this->makeRepository(),
             $em,
-            $images
+            $images,
+            $this->makeSanitizer()
         );
 
         $this->assertSame('article/publish.html.twig', $controller->renderedView);
@@ -638,6 +711,13 @@ class ArticlePublishControllerTest extends TestCase
     private function makeController(): ArticlePublishController
     {
         return new class extends ArticlePublishController {
+            public bool $csrfValid = true;
+
+            protected function isCsrfTokenValid(string $id, #[\SensitiveParameter] ?string $token): bool
+            {
+                return $this->csrfValid;
+            }
+
             public ?string $renderedView = null;
             public ?array $renderedParams = null;
             public array $flashes = [];
@@ -669,6 +749,21 @@ class ArticlePublishControllerTest extends TestCase
         $images = $this->createMock(ArticleImageService::class);
 
         return [$controller, $em, $images];
+    }
+
+    /**
+     * A real sanitizer configured like config/packages/html_sanitizer.yaml
+     * (app.article), so save-time sanitizing is exercised for real in tests.
+     */
+    private function makeSanitizer(): HtmlSanitizer
+    {
+        return new HtmlSanitizer(
+            (new HtmlSanitizerConfig())
+                ->allowSafeElements()
+                ->allowStaticElements()
+                ->allowRelativeLinks()
+                ->allowRelativeMedias()
+        );
     }
 
     private function makeAuth(bool $loggedIn, ?int $userId = null, bool $commissioner = false): AuthenticationService

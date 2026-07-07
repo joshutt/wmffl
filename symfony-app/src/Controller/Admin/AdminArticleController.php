@@ -8,6 +8,7 @@ use App\Repository\ArticleRepository;
 use App\Service\ArticleImageService;
 use App\Service\AuthenticationService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HtmlSanitizer\HtmlSanitizerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -32,7 +33,8 @@ class AdminArticleController extends AbstractAdminController
         Request $request,
         AuthenticationService $auth,
         EntityManagerInterface $em,
-        ArticleImageService $images
+        ArticleImageService $images,
+        HtmlSanitizerInterface $appArticle
     ): Response {
         if ($redirect = $this->requireCommissioner($auth)) {
             return $redirect;
@@ -42,7 +44,10 @@ class AdminArticleController extends AbstractAdminController
         $article->setDisplayDate(new \DateTime());
         $article->setActive(true);
 
-        if ($request->isMethod('POST') && $this->applyForm($request, $article, $em, $images)) {
+        if ($request->isMethod('POST')) {
+            $this->assertCsrfToken($request, 'admin_article');
+        }
+        if ($request->isMethod('POST') && $this->applyForm($request, $article, $em, $images, $appArticle)) {
             $em->persist($article);
             $em->flush();
             $this->addFlash('success', 'Article created');
@@ -60,7 +65,8 @@ class AdminArticleController extends AbstractAdminController
         AuthenticationService $auth,
         ArticleRepository $articles,
         EntityManagerInterface $em,
-        ArticleImageService $images
+        ArticleImageService $images,
+        HtmlSanitizerInterface $appArticle
     ): Response {
         if ($redirect = $this->requireCommissioner($auth)) {
             return $redirect;
@@ -71,8 +77,11 @@ class AdminArticleController extends AbstractAdminController
             throw $this->createNotFoundException("No article with id $id");
         }
 
+        if ($request->isMethod('POST')) {
+            $this->assertCsrfToken($request, 'admin_article');
+        }
         $wasActive = (bool) $article->isActive();
-        if ($request->isMethod('POST') && $this->applyForm($request, $article, $em, $images)) {
+        if ($request->isMethod('POST') && $this->applyForm($request, $article, $em, $images, $appArticle)) {
             if ($wasActive) {
                 // Editing live content; drafts never get a lastEdited date
                 $article->setLastEdited(new \DateTime());
@@ -89,6 +98,7 @@ class AdminArticleController extends AbstractAdminController
     #[Route('/{id}/toggle', name: 'admin_articles_toggle', requirements: ['id' => '\d+'], methods: ['POST'])]
     public function toggle(
         int $id,
+        Request $request,
         AuthenticationService $auth,
         ArticleRepository $articles,
         EntityManagerInterface $em
@@ -96,6 +106,7 @@ class AdminArticleController extends AbstractAdminController
         if ($redirect = $this->requireCommissioner($auth)) {
             return $redirect;
         }
+        $this->assertCsrfToken($request, 'admin_article_toggle');
 
         $article = $articles->find($id);
         if (!$article) {
@@ -116,7 +127,8 @@ class AdminArticleController extends AbstractAdminController
         Request $request,
         Article $article,
         EntityManagerInterface $em,
-        ArticleImageService $images
+        ArticleImageService $images,
+        HtmlSanitizerInterface $appArticle
     ): bool {
         $title = trim($request->request->get('title', ''));
         if ($title === '') {
@@ -161,7 +173,10 @@ class AdminArticleController extends AbstractAdminController
         $article->setTitle($title);
         $article->setCaption(trim($request->request->get('caption', '')) ?: null);
         $article->setLink($link ?: null);
-        $article->setText($request->request->get('text', '') ?: null);
+        // Sanitize at save time so stored HTML is already safe (keeps the full
+        // TinyMCE formatting set; see the app.article sanitizer config).
+        $text = $appArticle->sanitize($request->request->get('text', ''));
+        $article->setText($text ?: null);
         $article->setDisplayDate($displayDate);
         $article->setPriority($request->request->getInt('priority'));
         $article->setActive($request->request->has('active'));

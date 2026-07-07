@@ -55,6 +55,7 @@
             <td>
                 {% if user.team %}
                 <form action="{{ path('admin_become_as') }}" method="POST">
+                    <input type="hidden" name="_token" value="{{ csrf_token('admin_become') }}">
                     <input type="hidden" name="teamId" value="{{ user.team.id }}">
                     <button type="submit" class="btn btn-sm btn-wmffl">Become</button>
                 </form>

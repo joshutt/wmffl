@@ -11,6 +11,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 #[AllowMockObjectsWithoutExpectations]
 class AdminBecomeControllerTest extends TestCase
@@ -74,6 +75,18 @@ class AdminBecomeControllerTest extends TestCase
         $this->assertSame('error', $controller->flashes[0]['type']);
     }
 
+    public function testBecomeAsRejectsInvalidCsrfToken(): void
+    {
+        $user = ['teamid' => 5, 'name' => 'Team X', 'username' => 'teamx', 'userid' => 10];
+        [$controller, $auth, $em] = $this->makeController(commissioner: true, user: $user);
+        $controller->csrfValid = false;
+
+        $auth->expects($this->never())->method('becomeTeam');
+
+        $this->expectException(AccessDeniedHttpException::class);
+        $controller->becomeAs(new Request(request: ['teamId' => '5']), $auth, $em);
+    }
+
     // ---- Helpers ----
 
     private Connection $conn;
@@ -81,6 +94,13 @@ class AdminBecomeControllerTest extends TestCase
     private function makeController(bool $commissioner, array|false $user = false): array
     {
         $controller = new class extends AdminBecomeController {
+            public bool $csrfValid = true;
+
+            protected function isCsrfTokenValid(string $id, #[\SensitiveParameter] ?string $token): bool
+            {
+                return $this->csrfValid;
+            }
+
             public array $flashes = [];
 
             protected function redirectToRoute(string $route, array $parameters = [], int $status = 302): RedirectResponse
