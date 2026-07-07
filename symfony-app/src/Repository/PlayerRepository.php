@@ -11,9 +11,95 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class PlayerRepository extends ServiceEntityRepository
 {
+    /** Sentinel `team` filter value for players with no current roster row */
+    public const FREE_AGENTS = 'fa';
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Player::class);
+    }
+
+    /**
+     * A page of the player index joined with the current WMFFL roster spot
+     * (if any). Filters: q (name substring), team (WMFFL team id or
+     * FREE_AGENTS), nfl (NFL abbreviation), pos, inactive (include retired).
+     */
+    public function searchPlayers(array $filters, int $page, int $perPage = 50): array
+    {
+        $params = [];
+        $where = $this->buildSearchWhere($filters, $params);
+
+        return $this->getEntityManager()->getConnection()->fetchAllAssociative(
+            'SELECT np.playerid AS id, np.lastname, np.firstname, np.pos,
+                    np.team AS nfl_team, np.retired, t.Name AS wmffl_team'
+            . self::SEARCH_FROM . $where .
+            ' ORDER BY np.lastname, np.firstname
+             LIMIT ' . max(1, $perPage) . ' OFFSET ' . (max(0, $page) * max(1, $perPage)),
+            $params
+        );
+    }
+
+    public function countPlayers(array $filters): int
+    {
+        $params = [];
+        $where = $this->buildSearchWhere($filters, $params);
+
+        return (int) $this->getEntityManager()->getConnection()->fetchOne(
+            'SELECT COUNT(*)' . self::SEARCH_FROM . $where,
+            $params
+        );
+    }
+
+    /** @return string[] distinct NFL abbreviations present in newplayers */
+    public function getDistinctNflTeams(): array
+    {
+        return $this->getEntityManager()->getConnection()->fetchFirstColumn(
+            "SELECT DISTINCT team FROM newplayers WHERE team IS NOT NULL AND team <> '' ORDER BY team"
+        );
+    }
+
+    /** @return string[] distinct positions present in newplayers */
+    public function getDistinctPositions(): array
+    {
+        return $this->getEntityManager()->getConnection()->fetchFirstColumn(
+            "SELECT DISTINCT pos FROM newplayers WHERE pos IS NOT NULL AND pos <> '' ORDER BY pos"
+        );
+    }
+
+    private const SEARCH_FROM =
+        ' FROM newplayers np
+         LEFT JOIN roster r ON r.PlayerID = np.playerid AND r.DateOff IS NULL
+         LEFT JOIN team t ON t.TeamID = r.TeamID';
+
+    private function buildSearchWhere(array $filters, array &$params): string
+    {
+        $where = [];
+
+        if (empty($filters['inactive'])) {
+            $where[] = 'np.retired IS NULL';
+        }
+        if (($filters['q'] ?? '') !== '') {
+            $where[] = '(np.lastname LIKE :q OR np.firstname LIKE :q)';
+            $params['q'] = '%' . addcslashes($filters['q'], '%_\\') . '%';
+        }
+        if (($filters['pos'] ?? '') !== '') {
+            $where[] = 'np.pos = :pos';
+            $params['pos'] = $filters['pos'];
+        }
+        if (($filters['nfl'] ?? '') !== '') {
+            $where[] = 'np.team = :nfl';
+            $params['nfl'] = $filters['nfl'];
+        }
+        if (($filters['team'] ?? '') !== '') {
+            if ($filters['team'] === self::FREE_AGENTS) {
+                $where[] = 'r.PlayerID IS NULL';
+            } else {
+                $where[] = 'r.TeamID = :team';
+                $params['team'] = (int) $filters['team'];
+            }
+        }
+
+        return $where ? ' WHERE ' . implode(' AND ', $where) : '';
     }
 
     public function getCurrentRoster(int $playerId): ?array

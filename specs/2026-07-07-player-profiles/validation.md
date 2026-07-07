@@ -39,15 +39,15 @@ Use the fake-session recipe from the articles phase: run
 `sess_<id>` file (`isin|b:1;usernum|i:N;...`) and set the matching
 `PHPSESSID` cookie — one member session, one commissioner session.
 
-- [ ] `/player/{id}` for a long-tenured player with multiple team stints:
+- [x] `/player/{id}` for a long-tenured player with multiple team stints:
       bio, current team, every stint with correct season-spanning team
       names, games activated and active points per stint, per-season stat
       rows with sensible totals (spot-check one season against the legacy
       stats pages).
-- [ ] Edge cases: a player never rostered by any WMFFL team; a rostered
+- [x] Edge cases: a player never rostered by any WMFFL team; a rostered
       player with no stats yet; a retired player; a kicker (FG columns
       appear) vs a QB (they don't).
-- [ ] `/players`: loads unfiltered and paginates showing active players
+- [x] `/players`: loads unfiltered and paginates showing active players
       only; search a partial last name, then a partial first name; filter
       by a WMFFL team, then by Free Agents; filter by an NFL team; filter
       by position; combine filters; tick "include non-active" and confirm
@@ -55,24 +55,24 @@ Use the fake-session recipe from the articles phase: run
       survive clicking to page 2; a rostered player's WMFFL team shows
       and a free agent's is blank; clicking a row lands on the right
       profile.
-- [ ] "Players" nav link present and working, logged in and out.
-- [ ] Legacy links: on `/teams/roster` and each page wired in task 3,
+- [x] "Players" nav link present and working, logged in and out.
+- [x] Legacy links: on `/teams/roster` and each page wired in task 3,
       player names are links and land on the correct profile; the pages
       otherwise render exactly as before (via LegacyBridge).
-- [ ] Admin (commissioner session): search a player at `/admin/players`,
+- [x] Admin (commissioner session): search a player at `/admin/players`,
       edit their position/NFL team, save — flash shows, change appears on
       the public profile and index immediately. Non-commissioner member
       session is blocked from both admin routes.
 
 ## Regression
 
-- [ ] Untouched legacy routes still load (`/teams/roster`,
+- [x] Untouched legacy routes still load (`/teams/roster`,
       `/transactions/transactions`, `/history/`, `/stats/playerstats`).
-- [ ] Homepage, `/articles`, `/article/{id}`, standings, and admin
+- [x] Homepage, `/articles`, `/article/{id}`, standings, and admin
       dashboard unaffected.
-- [ ] `public/players.html` still serves at `/players.html` (deliberately
+- [x] `public/players.html` still serves at `/players.html` (deliberately
       untouched) and does not shadow the `/players` route.
-- [ ] Root legacy suite (`vendor/bin/phpunit test/`) shows only the
+- [x] Root legacy suite (`vendor/bin/phpunit test/`) shows only the
       pre-existing failures.
 
 ## Merge gate

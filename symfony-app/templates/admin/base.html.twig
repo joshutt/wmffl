@@ -38,6 +38,10 @@
                class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_mvp' %} active{% endif %}">
                 MVP List
             </a>
+            <a href="{{ path('admin_players') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') starts with 'admin_players' %} active{% endif %}">
+                Players
+            </a>
             <a href="{{ path('admin_weekly') }}"
                class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_weekly' %} active{% endif %}">
                 Player of the Week

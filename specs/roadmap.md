@@ -19,16 +19,15 @@ should be small enough to land as its own PR.
   last-edited tracking, threaded article comments (`CommentRepository`,
   `article_comment` route), admin moderation (`AdminCommentController`);
   `football/article/` deleted — every article route is Symfony-served
-
-## Phase 2 — Player Profiles (in progress)
-
-Legacy: none (new functionality) — currently being built directly in Symfony.
-
-1. `Player` entity + `PlayerRepository` (roster/history/season-stat queries)
-2. `PlayerProfileController` (`/player/{id}`) + `player/profile.html.twig`
-3. Wire up navigation/links from roster and team pages to player profiles
-4. Retire `symfony-app/public/players.html` static prototype once the real
-   page covers its use case
+- Player profiles (Phase 2 complete, 2026-07,
+  `specs/2026-07-07-player-profiles/`): `Player` entity + `PlayerRepository`
+  (roster/history/season-stat/search queries), `PlayerProfileController`
+  (`/player/{id}` profile, `/players` searchable index, "Players" main-nav
+  link), legacy team pages (`roster.php`, `compareteams.php`) link player
+  names to profiles, admin player editing (`AdminPlayerController`,
+  `/admin/players`). Note: `symfony-app/public/players.html` was NOT retired —
+  it's a Live Draft Board prototype, not a player list; see the
+  draft-tooling note below.
 
 ## Phase 3 — Teams
 
@@ -39,6 +38,11 @@ Legacy: `football/teams/` (`roster.php`, `display.php`, `teamroster.php`,
 1. Team roster page (builds on Phase 2's `Player` entity)
 2. Team schedule page
 3. Team history / head-to-head / compare-teams pages
+
+Phase 2 audit note: of the legacy team pages, only `roster.php` and
+`compareteams.php` render player names; both already link to
+`/player/{id}`. No unlinkable player-name renderings remain in
+`football/teams/`.
 
 ## Phase 4 — Transactions
 
@@ -77,6 +81,13 @@ Legacy: `login/`, `activate/`, `forum/`, `rules/`, `quicklinks.php`,
 1. Auth (login/activate) — highest risk, do last and carefully
 2. Static/low-traffic pages (rules, info, quicklinks, forum)
 3. Scores
+
+## Unscheduled — Draft tooling
+
+`symfony-app/public/players.html` is a "Live Draft Board with Announcer"
+prototype (Tailwind CDN + AWS Polly), not a player list. When draft tooling
+gets built, port or retire it then; it serves at `/players.html` and does
+not conflict with the `/players` index.
 
 ## Final phase — Decommission legacy
 

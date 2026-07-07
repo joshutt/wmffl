@@ -2,13 +2,48 @@
 
 namespace App\Controller;
 
+use App\Entity\Team;
 use App\Repository\PlayerRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PlayerProfileController extends AbstractController
 {
+    public const PER_PAGE = 50;
+
+    #[Route('/players', name: 'player_index')]
+    public function index(
+        Request $request,
+        PlayerRepository $players,
+        EntityManagerInterface $em
+    ): Response {
+        $filters = [
+            'q' => trim($request->query->get('q', '')),
+            'team' => $request->query->get('team', ''),
+            'nfl' => $request->query->get('nfl', ''),
+            'pos' => $request->query->get('pos', ''),
+            'inactive' => $request->query->getBoolean('inactive'),
+        ];
+        $page = max(0, $request->query->getInt('page'));
+
+        $total = $players->countPlayers($filters);
+
+        return $this->render('player/index.html.twig', [
+            'players' => $players->searchPlayers($filters, $page, self::PER_PAGE),
+            'filters' => $filters,
+            'page' => $page,
+            'totalPages' => (int) ceil($total / self::PER_PAGE),
+            'total' => $total,
+            'freeAgentValue' => PlayerRepository::FREE_AGENTS,
+            'teams' => $em->getRepository(Team::class)->findBy(['active' => true], ['name' => 'ASC']),
+            'nflTeams' => $players->getDistinctNflTeams(),
+            'positions' => $players->getDistinctPositions(),
+        ]);
+    }
+
     #[Route('/player/{id}', name: 'player_profile')]
     public function profile(int $id, PlayerRepository $playerRepository): Response
     {

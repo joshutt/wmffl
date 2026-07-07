@@ -1,0 +1,80 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Admin - Edit Player{% endblock %}
+
+{% block admin_content %}
+<h2 class="mt-2">Edit Player: {{ player.firstname }} {{ player.lastname }}</h2>
+
+<form method="post">
+    <input type="hidden" name="_token" value="{{ csrf_token('admin_player') }}"/>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="firstname">First Name</label>
+            <input type="text" class="form-control" id="firstname" name="firstname" maxlength="25"
+                   value="{{ player.firstname }}">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="lastname">Last Name</label>
+            <input type="text" class="form-control" id="lastname" name="lastname" maxlength="25"
+                   value="{{ player.lastname }}" required>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="pos">Position</label>
+            <select class="form-control" id="pos" name="pos">
+                <option value="">—</option>
+                {% for position in positions %}
+                <option value="{{ position.value }}"{% if player.pos == position %} selected{% endif %}>{{ position.value }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="number">Number</label>
+            <input type="number" class="form-control" id="number" name="number" min="0" max="99"
+                   value="{{ player.number }}">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="team">NFL Team</label>
+            <input type="text" class="form-control" id="team" name="team" maxlength="3"
+                   value="{{ player.team }}" placeholder="e.g. SEA">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="retired">Retired (year)</label>
+            <input type="number" class="form-control" id="retired" name="retired" min="1901" max="2155"
+                   value="{{ player.retired }}" placeholder="blank = active">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="height">Height (inches)</label>
+            <input type="number" class="form-control" id="height" name="height" min="0"
+                   value="{{ player.height }}">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="weight">Weight (lbs)</label>
+            <input type="number" class="form-control" id="weight" name="weight" min="0"
+                   value="{{ player.weight }}">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="dob">Date of Birth</label>
+            <input type="date" class="form-control" id="dob" name="dob"
+                   value="{{ player.dob ? player.dob|date('Y-m-d') : '' }}">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="draftTeam">Draft Team</label>
+            <input type="text" class="form-control" id="draftTeam" name="draftTeam" maxlength="3"
+                   value="{{ player.draftTeam }}" placeholder="e.g. GB">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="draftYear">Draft Year</label>
+            <input type="number" class="form-control" id="draftYear" name="draftYear" min="1920"
+                   value="{{ player.draftYear }}">
+        </div>
+    </div>
+    <div class="text-center my-2">
+        <button type="submit" class="btn btn-wmffl">Save</button>
+        <a class="btn btn-wmffl" href="{{ path('admin_players', player.lastname ? {q: player.lastname} : {}) }}">Cancel</a>
+    </div>
+</form>
+{% endblock %}
