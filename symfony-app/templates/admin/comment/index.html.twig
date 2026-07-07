@@ -27,6 +27,7 @@
             <td class="text-center">
                 <form class="d-inline" method="post" action="{{ path('admin_comments_toggle', {id: comment.id}) }}">
                     <input type="hidden" name="page" value="{{ page }}"/>
+                    <input type="hidden" name="_token" value="{{ csrf_token('admin_comment_toggle') }}"/>
                     <button type="submit" class="btn btn-sm btn-wmffl">{{ comment.active == true ? 'Deactivate' : 'Activate' }}</button>
                 </form>
             </td>

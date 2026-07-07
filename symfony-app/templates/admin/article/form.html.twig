@@ -11,6 +11,7 @@
 <h2 class="mt-2">{{ isNew ? 'New Article' : 'Edit Article' }}</h2>
 
 <form method="post" enctype="multipart/form-data">
+    <input type="hidden" name="_token" value="{{ csrf_token('admin_article') }}"/>
     <div class="form-group">
         <label for="title">Title</label>
         <input type="text" class="form-control" id="title" name="title" maxlength="75"

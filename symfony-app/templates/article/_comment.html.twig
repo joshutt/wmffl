@@ -9,6 +9,7 @@
         <form class="d-none mt-2" id="reply-form-{{ node.comment.id }}" method="post"
               action="{{ path('article_comment', {id: article.id}) }}">
             <input type="hidden" name="parent" value="{{ node.comment.id }}"/>
+            <input type="hidden" name="_token" value="{{ csrf_token('comment') }}"/>
             <div class="form-group">
                 <textarea class="form-control" name="text" rows="2"></textarea>
             </div>

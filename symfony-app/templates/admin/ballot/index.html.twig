@@ -108,6 +108,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" id="publishForm">
+                <input type="hidden" name="_token" value="{{ csrf_token('admin_ballot_publish') }}"/>
                 <div class="modal-header">
                     <h5 class="modal-title">Put on Ballot — <span id="publishIssueName"></span></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>

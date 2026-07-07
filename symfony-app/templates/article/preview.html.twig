@@ -7,6 +7,7 @@
     {{ include('article/_article.html.twig') }}
 
     <form action="{{ path('article_confirm', {id: article.id}) }}" method="post">
+        <input type="hidden" name="_token" value="{{ csrf_token('article_confirm') }}"/>
         <div class="text-center my-3">
             <input type="submit" class="btn btn-wmffl" name="Edit" value="Edit"/>
             <input type="submit" class="btn btn-wmffl" name="Publish" value="Publish"/>

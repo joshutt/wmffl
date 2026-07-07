@@ -57,6 +57,7 @@ class AdminTeamController extends AbstractAdminController
         if ($redirect = $this->requireCommissioner($auth)) {
             return $redirect;
         }
+        $this->assertCsrfToken($request, 'admin_team');
 
         $season = $seasonWeek->getCurrentSeason();
         $teamNames = $em->getRepository(TeamNames::class)->findBy(['season' => $season]);

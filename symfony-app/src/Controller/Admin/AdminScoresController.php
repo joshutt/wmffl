@@ -40,6 +40,7 @@ class AdminScoresController extends AbstractAdminController
         if ($redirect = $this->requireCommissioner($auth)) {
             return $redirect;
         }
+        $this->assertCsrfToken($request, 'admin_scores');
 
         $season = (int) $request->request->get('season');
         $week   = (int) $request->request->get('week');

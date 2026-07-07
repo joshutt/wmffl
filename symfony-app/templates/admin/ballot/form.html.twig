@@ -6,6 +6,7 @@
 <h2 class="mt-2">{{ issue ? 'Edit Issue' : 'New Issue' }}</h2>
 
 <form method="post" action="{{ issue ? path('admin_ballot_update', {id: issue.id}) : path('admin_ballot_create') }}" style="max-width: 600px;">
+    <input type="hidden" name="_token" value="{{ csrf_token('admin_ballot') }}"/>
 
     <div class="mb-3">
         <label class="form-label">Issue Number <span class="text-danger">*</span></label>

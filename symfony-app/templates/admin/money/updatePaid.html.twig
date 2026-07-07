@@ -3,6 +3,7 @@
 {% block title %}{{ season }} Paid Status - Admin{% endblock %}
 
 {% block javascripts %}
+<script>window.moneyCsrfToken = "{{ csrf_token('admin_money_record') }}";</script>
 <script src="/base/js/admin/money.js"></script>
 {% endblock %}
 

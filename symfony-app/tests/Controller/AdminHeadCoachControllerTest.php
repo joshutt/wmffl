@@ -159,6 +159,13 @@ class AdminHeadCoachControllerTest extends TestCase
     private function makeController(bool $commissioner, bool $coachAlreadyOnTeam = false): array
     {
         $controller = new class extends AdminHeadCoachController {
+            public bool $csrfValid = true;
+
+            protected function isCsrfTokenValid(string $id, #[\SensitiveParameter] ?string $token): bool
+            {
+                return $this->csrfValid;
+            }
+
             public ?string $renderedView = null;
             public ?array $renderedParams = null;
             public array $flashes = [];

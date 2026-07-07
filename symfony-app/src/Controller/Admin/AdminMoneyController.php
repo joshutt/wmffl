@@ -46,17 +46,25 @@ class AdminMoneyController extends AbstractAdminController
         if (!$auth->isCommissioner()) {
             return new JsonResponse(['error' => 'Unauthorized'], Response::HTTP_FORBIDDEN);
         }
+        if (!$this->isCsrfTokenValid('admin_money_record', (string) $request->getPayload()->get('_token'))) {
+            return new JsonResponse(['error' => 'Invalid CSRF token'], Response::HTTP_FORBIDDEN);
+        }
 
-        $field = $request->request->get('field');
+        $field = (string) $request->request->get('field');
         $val   = $request->request->get('val');
 
         $parts = explode('-', $field, 2);
+        if (count($parts) !== 2 || !in_array($parts[0], ['paid', 'late', 'amt'], true) || !ctype_digit($parts[1])) {
+            return new JsonResponse(['error' => 'Invalid field'], Response::HTTP_BAD_REQUEST);
+        }
         $param = $parts[0];
         $idx   = (int) $parts[1];
 
         try {
-            /** @var Paid $paid */
             $paid = $em->find(Paid::class, $idx);
+            if (!$paid instanceof Paid) {
+                return new JsonResponse(['error' => 'Record not found'], Response::HTTP_NOT_FOUND);
+            }
 
             switch ($param) {
                 case 'paid':
@@ -109,6 +117,7 @@ class AdminMoneyController extends AbstractAdminController
         if (!$auth->isCommissioner()) {
             return new RedirectResponse('/');
         }
+        $this->assertCsrfToken($request, 'admin_money_flags');
 
         $season = (int) $request->request->get('season');
         $flags = [];

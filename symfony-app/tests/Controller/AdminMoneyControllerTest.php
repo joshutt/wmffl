@@ -157,6 +157,29 @@ class AdminMoneyControllerTest extends TestCase
         $this->assertArrayHasKey('error', $data);
     }
 
+    public function testRecordChangeRejectsMalformedField(): void
+    {
+        [$controller, $auth, $seasonWeek, $em] = $this->makeController(commissioner: true);
+        $em->expects($this->never())->method('find');
+
+        $request = new Request(request: ['field' => 'bogus', 'val' => 'true']);
+        $response = $controller->recordChange($request, $auth, $em);
+
+        $this->assertSame(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
+    }
+
+    public function testRecordChangeReturnsNotFoundForUnknownRecord(): void
+    {
+        [$controller, $auth, $seasonWeek, $em] = $this->makeController(commissioner: true);
+        $em->method('find')->willReturn(null);
+        $em->expects($this->never())->method('flush');
+
+        $request = new Request(request: ['field' => 'paid-999', 'val' => 'true']);
+        $response = $controller->recordChange($request, $auth, $em);
+
+        $this->assertSame(Response::HTTP_NOT_FOUND, $response->getStatusCode());
+    }
+
     // ---- GET /admin/money/updateFlags ----
 
     public function testUpdateFlagsRedirectsWhenNotCommissioner(): void
@@ -282,6 +305,13 @@ class AdminMoneyControllerTest extends TestCase
     private function makeController(bool $commissioner): array
     {
         $controller = new class extends AdminMoneyController {
+            public bool $csrfValid = true;
+
+            protected function isCsrfTokenValid(string $id, #[\SensitiveParameter] ?string $token): bool
+            {
+                return $this->csrfValid;
+            }
+
             public ?string $renderedView = null;
             public ?array $renderedParams = null;
 
