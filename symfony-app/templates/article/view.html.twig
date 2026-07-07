@@ -4,21 +4,18 @@
 
 {% block content %}
 <div id="articleBlock" class="container">
-    <h1 class="text-center titleLine1 p-1">{{ article.title }}</h1>
-    <figure class="figure col text-center p-1">
-        <img class="figure-img img-responsive" src="/{{ article.link }}"/>
-        <div class="figure-caption caption ">{{ article.caption }}</div>
-    </figure>
-    <div>
-        <span class="newsdate">Published: {{ article.displayDate|date('M d, Y') }}</span>
-    </div>
-    <div>
-        {% if article.author %}
-            <span class="byLine">By {{ article.author.name }}</span>
-        {% endif %}
-    </div>
-    <div class="mainStory">
-        <div class="mt-2">{{ article.text|raw }}</div>
-    </div>
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger" role="alert">{{ message }}</div>
+    {% endfor %}
+
+    {{ include('article/_article.html.twig') }}
+
+    {% if canEdit %}
+        <div class="text-center my-3">
+            <a class="btn btn-wmffl" href="{{ path('article_publish', {draft: article.id}) }}">Edit</a>
+        </div>
+    {% endif %}
+
+    {{ include('article/_comments.html.twig') }}
 </div>
 {% endblock %}

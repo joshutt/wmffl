@@ -1,0 +1,48 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Admin - Comments{% endblock %}
+
+{% block admin_content %}
+<h2 class="mt-2">Comments</h2>
+
+<table class="table table-sm table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>Comment</th>
+            <th>Author</th>
+            <th>Article</th>
+            <th>Date</th>
+            <th>Active</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for comment in comments %}
+        <tr{% if comment.active != true %} class="text-muted"{% endif %}>
+            <td>{{ comment.commentText|length > 80 ? comment.commentText|slice(0, 80) ~ '…' : comment.commentText }}</td>
+            <td>{{ comment.author ? comment.author.name : '—' }}</td>
+            <td><a href="{{ path('article_view', {id: comment.articleId}) }}">Article {{ comment.articleId }}</a></td>
+            <td>{{ comment.dateCreated|date('Y-m-d g:i a') }}</td>
+            <td>{{ comment.active == true ? 'Yes' : 'No' }}</td>
+            <td class="text-center">
+                <form class="d-inline" method="post" action="{{ path('admin_comments_toggle', {id: comment.id}) }}">
+                    <input type="hidden" name="page" value="{{ page }}"/>
+                    <button type="submit" class="btn btn-sm btn-wmffl">{{ comment.active == true ? 'Deactivate' : 'Activate' }}</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6" class="text-center text-muted">No comments</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="text-center my-2">
+    {% if page > 0 %}
+        <a class="btn btn-wmffl" href="{{ path('admin_comments', {page: page - 1}) }}">Newer &gt;&gt;&gt;</a>
+    {% endif %}
+    {% if hasMore %}
+        <a class="btn btn-wmffl" href="{{ path('admin_comments', {page: page + 1}) }}">&lt;&lt;&lt; Older</a>
+    {% endif %}
+</div>
+{% endblock %}

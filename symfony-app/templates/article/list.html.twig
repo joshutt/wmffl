@@ -9,7 +9,7 @@
         <div class="float-left"><a class="btn btn-wmffl" href="{{ path('article_list', {page: page + 1}) }}">&lt;&lt;&lt;
                 Older</a></div>
         {% if isLoggedIn %}
-            <div class="float-right"><a class="btn btn-wmffl" href="/article/publish">Write Article</a></div>
+            <div class="float-right"><a class="btn btn-wmffl" href="{{ path('article_publish') }}">Write Article</a></div>
         {% endif %}
         {% if page > 0 %}
             <div class="float-right"><a class="btn btn-wmffl" href="{{ path('article_list', {page: page - 1}) }}">Newer &gt;&gt;&gt;</a></div>

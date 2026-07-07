@@ -71,7 +71,12 @@ class AdminArticleController extends AbstractAdminController
             throw $this->createNotFoundException("No article with id $id");
         }
 
+        $wasActive = (bool) $article->isActive();
         if ($request->isMethod('POST') && $this->applyForm($request, $article, $em, $images)) {
+            if ($wasActive) {
+                // Editing live content; drafts never get a lastEdited date
+                $article->setLastEdited(new \DateTime());
+            }
             $em->flush();
             $this->addFlash('success', 'Article updated');
 

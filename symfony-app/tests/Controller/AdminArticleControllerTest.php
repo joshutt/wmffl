@@ -230,6 +230,65 @@ class AdminArticleControllerTest extends TestCase
         $this->assertFalse($article->isActive());
     }
 
+    // ---- lastEdited tracking ----
+
+    public function testEditPostOnActiveArticleSetsLastEdited(): void
+    {
+        [$controller, $auth, $em, $images] = $this->makeController(commissioner: true);
+
+        $article = new Article();
+        $article->setActive(true);
+        $repo = $this->makeRepository();
+        $repo->method('find')->willReturn($article);
+
+        $controller->edit(5, $this->post(self::VALID_FORM), $auth, $repo, $em, $images);
+
+        $this->assertNotNull($article->getLastEdited());
+        $this->assertEqualsWithDelta(time(), $article->getLastEdited()->getTimestamp(), 5);
+    }
+
+    public function testEditPostOnInactiveDraftLeavesLastEditedNull(): void
+    {
+        [$controller, $auth, $em, $images] = $this->makeController(commissioner: true);
+
+        $article = new Article();
+        $article->setActive(false);
+        $repo = $this->makeRepository();
+        $repo->method('find')->willReturn($article);
+
+        $controller->edit(5, $this->post(self::VALID_FORM), $auth, $repo, $em, $images);
+
+        $this->assertNull($article->getLastEdited());
+    }
+
+    public function testEditPostValidationFailureDoesNotSetLastEdited(): void
+    {
+        [$controller, $auth, $em, $images] = $this->makeController(commissioner: true);
+
+        $article = new Article();
+        $article->setActive(true);
+        $repo = $this->makeRepository();
+        $repo->method('find')->willReturn($article);
+
+        $controller->edit(5, $this->post(['title' => ' '] + self::VALID_FORM), $auth, $repo, $em, $images);
+
+        $this->assertNull($article->getLastEdited());
+    }
+
+    public function testNewPostDoesNotSetLastEdited(): void
+    {
+        [$controller, $auth, $em, $images] = $this->makeController(commissioner: true);
+
+        $persisted = null;
+        $em->method('persist')->willReturnCallback(function (Article $a) use (&$persisted) {
+            $persisted = $a;
+        });
+
+        $controller->new($this->post(self::VALID_FORM), $auth, $em, $images);
+
+        $this->assertNull($persisted->getLastEdited());
+    }
+
     // ---- image handling ----
 
     public function testEditPostPlainPathBypassesImageService(): void

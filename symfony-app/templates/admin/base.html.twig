@@ -22,6 +22,10 @@
                class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') starts with 'admin_articles' %} active{% endif %}">
                 Articles
             </a>
+            <a href="{{ path('admin_comments') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') starts with 'admin_comments' %} active{% endif %}">
+                Comments
+            </a>
             <a href="{{ path('admin_headcoach') }}"
                class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_headcoach' %} active{% endif %}">
                 Head Coach
