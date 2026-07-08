@@ -31,8 +31,8 @@ class Team
     #[ORM\Column(name: 'motto', type: 'string', nullable: true)]
     private string|null $motto = null;
 
-    #[ORM\Column(name: 'abbrev', type: 'string')]
-    private string $abbreviation;
+    #[ORM\Column(name: 'abbrev', type: 'string', nullable: true)]
+    private string|null $abbreviation = null;
 
     #[ORM\Column(name: 'active', type: 'boolean')]
     private bool $active;

@@ -12,10 +12,80 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/admin/team')]
 class AdminTeamController extends AbstractAdminController
 {
-    #[Route('/updateTeamInfo', name: 'admin_team_update')]
+    #[Route('/admin/teams', name: 'admin_teams')]
+    public function index(
+        AuthenticationService $auth,
+        SeasonWeekService $seasonWeek,
+        EntityManagerInterface $em
+    ): Response {
+        if ($redirect = $this->requireCommissioner($auth)) {
+            return $redirect;
+        }
+
+        return $this->render('admin/team/index.html.twig', [
+            'teams' => $em->getRepository(Team::class)->findBy([], ['name' => 'ASC']),
+            'divisionNames' => $this->divisionNames($em, $seasonWeek->getCurrentSeason()),
+        ]);
+    }
+
+    #[Route('/admin/teams/{id}/edit', name: 'admin_teams_edit', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
+    public function edit(
+        int $id,
+        Request $request,
+        AuthenticationService $auth,
+        SeasonWeekService $seasonWeek,
+        EntityManagerInterface $em
+    ): Response {
+        if ($redirect = $this->requireCommissioner($auth)) {
+            return $redirect;
+        }
+
+        $team = $em->find(Team::class, $id);
+        if (!$team) {
+            throw $this->createNotFoundException("No team with id $id");
+        }
+
+        $season = $seasonWeek->getCurrentSeason();
+
+        if ($request->isMethod('POST')) {
+            $this->assertCsrfToken($request, 'admin_team');
+
+            $team->setAbbreviation(trim($request->request->get('abbrev', '')));
+            $team->setMotto(trim($request->request->get('motto', '')) ?: null);
+            $team->setLogo(trim($request->request->get('logo', '')) ?: null);
+            $team->setFullLogo($request->request->getBoolean('fulllogo'));
+            $team->setActive($request->request->getBoolean('active'));
+            $team->setDivision($request->request->getInt('division'));
+            $em->flush();
+            $this->addFlash('success', 'Team updated');
+
+            return $this->redirectToRoute('admin_teams');
+        }
+
+        return $this->render('admin/team/edit.html.twig', [
+            'team' => $team,
+            'divisionNames' => $this->divisionNames($em, $season),
+        ]);
+    }
+
+    /** @return array<int, string> current-season division names keyed by id */
+    private function divisionNames(EntityManagerInterface $em, int $season): array
+    {
+        $divisions = $em->createQuery(
+            'SELECT d FROM App\Entity\Division d WHERE d.endYear >= :season ORDER BY d.name ASC'
+        )->setParameter('season', $season)->getResult();
+
+        $names = [];
+        foreach ($divisions as $division) {
+            $names[$division->getId()] = $division->getName();
+        }
+
+        return $names;
+    }
+
+    #[Route('/admin/team/updateTeamInfo', name: 'admin_team_update')]
     public function updateTeamInfo(
         AuthenticationService $auth,
         SeasonWeekService $seasonWeek,

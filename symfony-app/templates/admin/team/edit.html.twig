@@ -1,0 +1,56 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Admin - Edit Team{% endblock %}
+
+{% block admin_content %}
+<h2 class="mt-2">Edit Team: {{ team.name }}</h2>
+
+<form method="post">
+    <input type="hidden" name="_token" value="{{ csrf_token('admin_team') }}"/>
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <label for="abbrev">Abbreviation</label>
+            <input type="text" class="form-control" id="abbrev" name="abbrev" maxlength="3"
+                   value="{{ team.abbreviation }}" required>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="motto">Motto</label>
+            <input type="text" class="form-control" id="motto" name="motto" maxlength="255"
+                   value="{{ team.motto }}">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="division">Division</label>
+            <select class="form-control" id="division" name="division">
+                {% for id, name in divisionNames %}
+                    <option value="{{ id }}"{% if team.division == id %} selected{% endif %}>{{ name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="logo">Logo filename</label>
+            <input type="text" class="form-control" id="logo" name="logo" maxlength="50"
+                   value="{{ team.logo }}" placeholder="e.g. AmishElectricians.jpg">
+        </div>
+        <div class="form-group col-md-4">
+            <div class="form-check mt-md-4 pt-md-2">
+                <input type="checkbox" class="form-check-input" id="fulllogo" name="fulllogo" value="1"
+                       {% if team.fullLogo %}checked{% endif %}>
+                <label class="form-check-label" for="fulllogo">Full logo (banner-style team header)</label>
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+            <div class="form-check mt-md-4 pt-md-2">
+                <input type="checkbox" class="form-check-input" id="active" name="active" value="1"
+                       {% if team.active %}checked{% endif %}>
+                <label class="form-check-label" for="active">Active (current league member)</label>
+            </div>
+        </div>
+    </div>
+    <div class="text-center my-2">
+        <button type="submit" class="btn btn-wmffl">Save</button>
+        <a class="btn btn-wmffl" href="{{ path('admin_teams') }}">Cancel</a>
+    </div>
+</form>
+{% endblock %}
