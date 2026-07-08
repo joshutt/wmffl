@@ -1,0 +1,36 @@
+{% extends 'team/base.html.twig' %}
+
+{% block team_content %}
+<div class="text-right">
+    <form action="{{ path('team_schedule', {id: header.teamid}) }}" method="get" class="d-inline-block">
+        View other teams:
+        <select name="vs" onchange="this.form.submit();">
+            <option value=""></option>
+            {% for opponent in opponents %}
+                <option value="{{ opponent.teamid }}"{% if opponent.teamid == vs %} selected{% endif %}>{{ opponent.name }}</option>
+            {% endfor %}
+        </select>
+        <noscript><button type="submit" class="btn btn-wmffl">Go</button></noscript>
+    </form>
+</div>
+
+<h3 class="text-center">Vs {{ opponentName }}</h3>
+<h3 class="text-center">({{ record.win }} - {{ record.loss }} - {{ record.tie }} - {{ record.pct }})</h3>
+
+<table class="table table-striped table-sm">
+    {% for game in games %}
+        <tr>
+            <td>{{ game.season }}</td>
+            <td>{{ game.weekname }}</td>
+            <td>{{ game.opponent }}</td>
+            {% if game.score is not null and (game.season < currentSeason or game.week < checkWeek) %}
+                <td>{% if game.score > game.oppscore %}WIN{% elseif game.score == game.oppscore %}TIE{% else %}LOSS{% endif %}</td>
+                <td>{{ game.score }} - {{ game.oppscore }}</td>
+            {% else %}
+                <td></td>
+                <td></td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

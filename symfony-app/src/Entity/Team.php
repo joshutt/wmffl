@@ -28,6 +28,9 @@ class Team
     #[ORM\Column(name: 'fulllogo', type: 'boolean')]
     private bool $fullLogo;
 
+    #[ORM\Column(name: 'motto', type: 'string', nullable: true)]
+    private string|null $motto = null;
+
     #[ORM\Column(name: 'abbrev', type: 'string')]
     private string $abbreviation;
 
@@ -85,9 +88,21 @@ class Team
         return $this->logo;
     }
 
-    public function setLogo(string $logo): static
+    public function setLogo(?string $logo): static
     {
         $this->logo = $logo;
+
+        return $this;
+    }
+
+    public function getMotto(): ?string
+    {
+        return $this->motto;
+    }
+
+    public function setMotto(?string $motto): static
+    {
+        $this->motto = $motto;
 
         return $this;
     }

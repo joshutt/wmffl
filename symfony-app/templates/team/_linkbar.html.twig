@@ -1,0 +1,19 @@
+{# Championship trophies + page pills (port of football/teams/newlinkbar.php) #}
+<div class="row justify-content-center col">
+    {% for season in championships %}
+        <div class="card">
+            <img src="/images/greystone15-2a.jpg" height="100" alt="{{ season }} WMFFL Champions">
+            <span class="text-center">{{ season }}</span>
+        </div>
+    {% endfor %}
+</div>
+<hr/>
+
+<ul class="nav nav-pills nav-fill col my-2 py-1">
+    <li class="nav-item col-4"><a class="nav-link{% if page == 'History' %} active{% endif %}"
+                                  href="{{ path('team_history', {id: header.teamid}) }}">History</a></li>
+    <li class="nav-item col-4"><a class="nav-link{% if page == 'Roster' %} active{% endif %}"
+                                  href="{{ path('team_roster', {id: header.teamid}) }}">Roster</a></li>
+    <li class="nav-item col-4"><a class="nav-link{% if page == 'Schedule' %} active{% endif %}"
+                                  href="{{ path('team_schedule', {id: header.teamid}) }}">Schedule</a></li>
+</ul>

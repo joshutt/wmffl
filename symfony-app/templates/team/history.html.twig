@@ -1,0 +1,94 @@
+{% extends 'team/base.html.twig' %}
+
+{% block team_content %}
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8">
+        <h4 class="font-weight-bold text-center">History</h4>
+        <table class="table table-sm table-striped">
+            <thead>
+            <tr><th>Year</th><th>W</th><th>L</th><th>T</th><th>Pct</th></tr>
+            </thead>
+            <tbody>
+            {% for record in records %}
+                <tr{% if loop.first %} class="font-weight-bold"{% endif %}>
+                    <td>{{ record.label }}</td>
+                    <td>{{ record.win }}</td>
+                    <td>{{ record.lose }}</td>
+                    <td>{{ record.tie }}</td>
+                    <td>{{ record.pct }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% if playoffResults %}
+        <div class="col-12 col-md-8">
+            <h4 class="font-weight-bold text-center">Postseason Results</h4>
+            <table class="table table-sm table-striped">
+                <tbody>
+                {% for game in playoffResults %}
+                    <tr>
+                        <td>{{ game.event }} {{ game.season }}</td>
+                        <td>{{ game.won ? 'Beat' : 'Lost to' }} {{ game.opponent }}</td>
+                        <td>{{ game.myscore }}-{{ game.otherscore }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-6 col-md-4">
+        <table class="table table-sm">
+            <thead><tr><th colspan="2">Division Titles</th></tr></thead>
+            <tbody>
+            {% for title in titles.division %}
+                <tr><td>{{ title.season }}</td><td>{{ title.division }} Title</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-6 col-md-4">
+        <table class="table table-sm">
+            <thead><tr><th colspan="2">League Titles</th></tr></thead>
+            <tbody>
+            {% for season in titles.league %}
+                <tr><td>{{ season }}</td><td>WMFFL Champions</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-6 col-md-4">
+        <table class="table table-sm">
+            <thead><tr><th colspan="2">Past Owners</th></tr></thead>
+            <tbody>
+            {% for range in pastOwners %}
+                <tr>
+                    <td class="p-1">{{ range.start }}{{ range.end ? '-' ~ range.end : '- current' }}</td>
+                    <td class="p-1">{{ range.name }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-6 col-md-4">
+        <table class="table table-sm">
+            <thead><tr><th colspan="2">Past Names</th></tr></thead>
+            <tbody>
+            {% for range in pastNames %}
+                <tr>
+                    <td class="p-1">{{ range.start }}{{ range.end ? '-' ~ range.end : '- current' }}</td>
+                    <td class="p-1">{{ range.name }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

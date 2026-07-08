@@ -1,0 +1,51 @@
+{% extends 'team/base.html.twig' %}
+
+{% block team_content %}
+<div class="roster d-flex justify-content-center row">
+    <div class="row text-center">
+        <div class="col-12 font-weight-bold h4">Current Roster</div>
+        {% if summary %}
+            <div class="col-6">
+                {% if summary.remaining > 0 %}
+                    {{ summary.remaining }} Remaining Free Transactions
+                {% else %}
+                    {{ summary.remaining|abs }} extra transactions used
+                {% endif %}
+            </div>
+            <div class="col-6">{{ summary.roster_count }} players on roster</div>
+        {% endif %}
+    </div>
+    <div class="col-12 d-flex justify-content-center">
+        <table id="statTable">
+            <thead>
+            <tr>
+                <th>Pos</th>
+                <th>Name</th>
+                <th>Team</th>
+                <th>Bye<br/>Week</th>
+                <th>Age</th>
+                <th>Injury</th>
+                <th>Acquired</th>
+                <th>{{ costSeason }}<br/>Cost</th>
+                <th>{{ ptsSeason }}<br/>Pts</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for player in roster %}
+                <tr>
+                    <td>{{ player.pos }}</td>
+                    <td><a href="{{ path('player_profile', {id: player.playerid}) }}">{{ player.lastname }}{% if player.firstname %}, {{ player.firstname }}{% endif %}</a></td>
+                    <td>{{ player.team }}</td>
+                    <td>{{ player.bye }}</td>
+                    <td>{{ player.age }}</td>
+                    <td>{{ player.injury }}</td>
+                    <td>{{ player.date_on|date('M j, Y') }}</td>
+                    <td>{{ player.cost }}</td>
+                    <td>{{ player.pts }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

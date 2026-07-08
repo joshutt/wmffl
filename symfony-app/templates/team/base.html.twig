@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ header.name }} {{ page }} - WMFFL{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="/base/css/stats.css">
+    <link rel="stylesheet" type="text/css" href="/base/css/team.css">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/base/vendor/js/jquery.tablesorter.min.js"></script>
+    <script src="/base/js/team.js"></script>
+{% endblock %}
+
+{% block content %}
+    {% include 'team/_header.html.twig' %}
+    {% include 'team/_linkbar.html.twig' %}
+    {% block team_content %}{% endblock %}
+{% endblock %}

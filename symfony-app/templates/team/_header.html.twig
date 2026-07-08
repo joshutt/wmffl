@@ -1,0 +1,27 @@
+{# Shared team-page header (port of football/teams/teamheader.php) #}
+{% set ownerLabel = (header.owner_count > 1 ? 'Owners: ' : 'Owner: ') ~ header.owners %}
+
+{% if header.fulllogo %}
+    <div class="text-center">
+        <img src="/images/teams/{{ header.logo }}" alt="{{ header.name }}"/>
+        <div class="h5 justify-content-center">{{ ownerLabel }}<br>
+            Member Since {{ header.member }}<br>
+            <i>{{ header.motto }}</i></div>
+    </div>
+{% else %}
+    <div id="wrapper">
+        <div id="teamLogoBlock">
+            {% if header.logo %}
+                <div id="logo-left"><img src="/images/teams/{{ header.logo }}" alt="{{ header.name }}"/></div>
+            {% endif %}
+            <div id="team-name">
+                <span id="big-name">{{ header.name }}</span>
+                <span id="est">Established {{ header.member }}</span>
+                <span id="ownName">{{ ownerLabel }}<br>Since {{ header.owner_since }}</span>
+            </div>
+            {% if header.logo %}
+                <div id="logo-right"><img src="/images/teams/{{ header.logo }}" alt="{{ header.name }}"/></div>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}

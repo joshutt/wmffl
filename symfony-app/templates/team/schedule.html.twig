@@ -1,0 +1,47 @@
+{% extends 'team/base.html.twig' %}
+
+{% block team_content %}
+<h3 class="font-weight-bold text-center">{{ season }} Schedule</h3>
+
+<div class="col">
+    <table class="table table-striped table-sm w-auto mx-auto">
+        {% for game in games %}
+            <tr>
+                <td>{{ game.weekname }}</td>
+                {% if game.score is not null and game.week < checkWeek %}
+                    <td>{% if game.score > game.oppscore %}WIN{% elseif game.score == game.oppscore %}TIE{% else %}LOSS{% endif %}</td>
+                    <td>vs {{ game.opponent }}</td>
+                    <td>{{ game.score }} - {{ game.oppscore }}</td>
+                {% else %}
+                    <td></td>
+                    <td>vs {{ game.opponent }}</td>
+                    <td></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div class="pt-4 justify-content-center col text-center">
+    <form action="{{ path('team_schedule', {id: header.teamid}) }}" method="get" class="d-inline-block mx-3">
+        View previous seasons:
+        <select name="season" onchange="this.form.submit();">
+            <option value=""></option>
+            {% for pastSeason in seasons %}
+                <option value="{{ pastSeason }}">{{ pastSeason }}</option>
+            {% endfor %}
+        </select>
+        <noscript><button type="submit" class="btn btn-wmffl">Go</button></noscript>
+    </form>
+    <form action="{{ path('team_schedule', {id: header.teamid}) }}" method="get" class="d-inline-block mx-3">
+        Head-to-head vs:
+        <select name="vs" onchange="this.form.submit();">
+            <option value=""></option>
+            {% for opponent in opponents %}
+                <option value="{{ opponent.teamid }}">{{ opponent.name }}</option>
+            {% endfor %}
+        </select>
+        <noscript><button type="submit" class="btn btn-wmffl">Go</button></noscript>
+    </form>
+</div>
+{% endblock %}
