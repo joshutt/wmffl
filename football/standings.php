@@ -36,7 +36,7 @@ foreach ($teamArray as $t) {
         ?>
     <?php } ?>
     <div class="mt-0 justify-content-between">
-        <a class="row m-0" href="/teams/teamschedule?viewteam=<?= $t->teamid ?>">
+        <a class="row m-0" href="/team/<?= $t->teamid ?>/schedule">
         <div class="boxScore col-8 pl-1 pr-0 text-left text-truncate"><?= $t->name ?></div>
         <div class="boxScore col-4 px-0 d-block text-center"><?= $t->printShortRecord() ?></div>
         </a>

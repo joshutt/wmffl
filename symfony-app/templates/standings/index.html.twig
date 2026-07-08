@@ -19,7 +19,7 @@
         {% endif %}
 
         <div class="mt-0 justify-content-between">
-            <a class="row m-0" href="/teams/teamschedule?viewteam={{ team.teamid }}">
+            <a class="row m-0" href="{{ path('team_schedule', {id: team.teamid}) }}">
                 <div class="boxScore col-8 pl-1 pr-0 text-left text-truncate">{{ team.name }}</div>
                 <div class="boxScore col-4 px-0 d-block text-center">{{ team.printShortRecord() }}</div>
             </a>
