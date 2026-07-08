@@ -86,7 +86,7 @@ class AdminTeamControllerTest extends TestCase
 
         $request = new Request(request: [
             'abbrev' => 'ZZ', 'motto' => ' We win ', 'logo' => 'zz.jpg',
-            'fulllogo' => '1', 'active' => '1', 'division' => '3',
+            'fulllogo' => '1', 'active' => '1', 'division' => '2',
         ]);
         $request->setMethod('POST');
 
@@ -97,7 +97,7 @@ class AdminTeamControllerTest extends TestCase
         $this->assertSame('zz.jpg', $team->getLogo());
         $this->assertTrue($team->isFullLogo());
         $this->assertTrue($team->isActive());
-        $this->assertSame(3, $team->getDivision());
+        $this->assertSame(2, $team->getDivision());
         $this->assertSame(['success', 'Team updated'], $controller->flashed);
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertSame('/admin_teams', $response->getTargetUrl());
@@ -117,6 +117,22 @@ class AdminTeamControllerTest extends TestCase
         $this->assertNull($team->getLogo());
         $this->assertFalse($team->isFullLogo());
         $this->assertFalse($team->isActive());
+    }
+
+    public function testEditPostRejectsUnknownDivisionWithoutSaving(): void
+    {
+        $team = $this->makeTeam();
+        [$controller, $auth, $seasonWeek, $em] = $this->makeController(commissioner: true, findTeam: $team);
+        $em->expects($this->never())->method('flush');
+
+        $request = new Request(request: ['abbrev' => 'ZZ', 'division' => '999']);
+        $request->setMethod('POST');
+
+        $controller->edit(2, $request, $auth, $seasonWeek, $em);
+
+        $this->assertSame('AE', $team->getAbbreviation());
+        $this->assertSame(['error', 'Pick a current division'], $controller->flashed);
+        $this->assertSame('admin/team/edit.html.twig', $controller->renderedView);
     }
 
     public function testEditPostRejectsInvalidCsrfToken(): void

@@ -65,6 +65,19 @@ class TeamTemplateTest extends TestCase
         $this->assertStringNotContainsString('teamLogoBlock', $html);
     }
 
+    public function testFullLogoFlagWithoutALogoFallsBackToTheStandardHeader(): void
+    {
+        $html = $this->render('team/roster.html.twig', $this->rosterParams(header: [
+            'fulllogo' => true, 'logo' => null,
+        ]));
+
+        // no broken <img src="/images/teams/"> — the standard layout still
+        // shows the team name as text
+        $this->assertStringNotContainsString('src="/images/teams/"', $html);
+        $this->assertStringContainsString('teamLogoBlock', $html);
+        $this->assertStringContainsString('Amish Electricians', $html);
+    }
+
     public function testCoOwnersGetThePluralLabel(): void
     {
         $html = $this->render('team/roster.html.twig', $this->rosterParams(header: [

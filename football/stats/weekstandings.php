@@ -129,7 +129,7 @@ EOD;
     }
 
     print <<< EOD
-<tr bgcolor="$bgcolor"><td>{$clinchedList[$t->name]}<a href="/teams/teamschedule.php?viewteam={$t->teamid}">{$t->name}</a></td>
+<tr bgcolor="$bgcolor"><td>{$clinchedList[$t->name]}<a href="/team/{$t->teamid}/schedule">{$t->name}</a></td>
 <td align="center">{$t->record[0]}</td>
 <td align="center">{$t->record[1]}</td>
 <td align="center">{$t->record[2]}</td>

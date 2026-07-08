@@ -87,6 +87,7 @@ final class Version20260118000000 extends AbstractMigration
         // This migration is intentionally empty.
         // The database schema already exists and this migration serves
         // as a baseline for tracking future schema changes.
+        $this->addSql('-- Baseline migration: all tables already exist');
     }
 
     public function down(Schema $schema): void

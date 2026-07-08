@@ -1,7 +1,7 @@
 {# Shared team-page header (port of football/teams/teamheader.php) #}
 {% set ownerLabel = (header.owner_count > 1 ? 'Owners: ' : 'Owner: ') ~ header.owners %}
 
-{% if header.fulllogo %}
+{% if header.fulllogo and header.logo %}
     <div class="text-center">
         <img src="/images/teams/{{ header.logo }}" alt="{{ header.name }}"/>
         <div class="h5 justify-content-center">{{ ownerLabel }}<br>

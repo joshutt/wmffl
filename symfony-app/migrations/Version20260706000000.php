@@ -27,5 +27,6 @@ final class Version20260706000000 extends AbstractMigration
     public function down(Schema $schema): void
     {
         // The original '' value carried no information worth restoring
+        $this->addSql('-- No-op: empty-string active values are not restored');
     }
 }

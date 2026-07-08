@@ -47,38 +47,47 @@ class AdminTeamController extends AbstractAdminController
             throw $this->createNotFoundException("No team with id $id");
         }
 
-        $season = $seasonWeek->getCurrentSeason();
+        $divisionNames = $this->divisionNames($em, $seasonWeek->getCurrentSeason());
 
         if ($request->isMethod('POST')) {
             $this->assertCsrfToken($request, 'admin_team');
 
-            $team->setAbbreviation(trim($request->request->get('abbrev', '')));
-            $team->setMotto(trim($request->request->get('motto', '')) ?: null);
-            $team->setLogo(trim($request->request->get('logo', '')) ?: null);
-            $team->setFullLogo($request->request->getBoolean('fulllogo'));
-            $team->setActive($request->request->getBoolean('active'));
-            $team->setDivision($request->request->getInt('division'));
-            $em->flush();
-            $this->addFlash('success', 'Team updated');
+            $division = $request->request->getInt('division');
+            if (!isset($divisionNames[$division])) {
+                $this->addFlash('error', 'Pick a current division');
+            } else {
+                $team->setAbbreviation(trim($request->request->get('abbrev', '')));
+                $team->setMotto(trim($request->request->get('motto', '')) ?: null);
+                $team->setLogo(trim($request->request->get('logo', '')) ?: null);
+                $team->setFullLogo($request->request->getBoolean('fulllogo'));
+                $team->setActive($request->request->getBoolean('active'));
+                $team->setDivision($division);
+                $em->flush();
+                $this->addFlash('success', 'Team updated');
 
-            return $this->redirectToRoute('admin_teams');
+                return $this->redirectToRoute('admin_teams');
+            }
         }
 
         return $this->render('admin/team/edit.html.twig', [
             'team' => $team,
-            'divisionNames' => $this->divisionNames($em, $season),
+            'divisionNames' => $divisionNames,
         ]);
+    }
+
+    /** @return Division[] divisions spanning the given season */
+    private function currentDivisions(EntityManagerInterface $em, int $season): array
+    {
+        return $em->createQuery(
+            'SELECT d FROM App\Entity\Division d WHERE d.endYear >= :season ORDER BY d.name ASC'
+        )->setParameter('season', $season)->getResult();
     }
 
     /** @return array<int, string> current-season division names keyed by id */
     private function divisionNames(EntityManagerInterface $em, int $season): array
     {
-        $divisions = $em->createQuery(
-            'SELECT d FROM App\Entity\Division d WHERE d.endYear >= :season ORDER BY d.name ASC'
-        )->setParameter('season', $season)->getResult();
-
         $names = [];
-        foreach ($divisions as $division) {
+        foreach ($this->currentDivisions($em, $season) as $division) {
             $names[$division->getId()] = $division->getName();
         }
 
@@ -98,9 +107,7 @@ class AdminTeamController extends AbstractAdminController
         $season = $seasonWeek->getCurrentSeason();
 
         $teamNames = $em->getRepository(TeamNames::class)->findBy(['season' => $season]);
-        $divisions = $em->createQuery(
-            'SELECT d FROM App\Entity\Division d WHERE d.endYear >= :season ORDER BY d.name ASC'
-        )->setParameter('season', $season)->getResult();
+        $divisions = $this->currentDivisions($em, $season);
 
         $rows = [];
         foreach ($teamNames as $tn) {
