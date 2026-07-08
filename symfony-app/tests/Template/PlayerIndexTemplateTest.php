@@ -132,6 +132,19 @@ class PlayerIndexTemplateTest extends TestCase
         $this->assertMatchesRegularExpression('/name="inactive"[^>]*checked/', $html);
     }
 
+    public function testClearButtonLinksBackToTheUnfilteredListing(): void
+    {
+        $html = $this->render([
+            'players' => [$this->row(7, 'Largent', 'Steve')],
+            'filters' => ['q' => 'larg', 'team' => '3', 'nfl' => 'SEA', 'pos' => 'WR', 'inactive' => true],
+            'total' => 1,
+            'totalPages' => 1,
+        ]);
+
+        // Bare route, no query params: resets every filter
+        $this->assertStringContainsString('<a class="btn btn-wmffl" href="/player_index">Clear</a>', $html);
+    }
+
     private function render(array $overrides): string
     {
         return $this->twig->render('player/index.html.twig', $overrides + [

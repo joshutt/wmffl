@@ -118,7 +118,7 @@ class PlayerRepositoryTest extends TestCase
         $conn->expects($this->once())->method('fetchAllAssociative')
             ->with(
                 $this->logicalAnd(
-                    $this->stringContains('np.retired IS NULL'),
+                    $this->stringContains('np.active = 1'),
                     $this->stringContains("LEFT JOIN roster r ON r.PlayerID = np.playerid AND r.DateOff IS NULL"),
                     $this->stringContains('ORDER BY np.lastname, np.firstname'),
                     $this->stringContains('LIMIT 50 OFFSET 0')
@@ -132,11 +132,33 @@ class PlayerRepositoryTest extends TestCase
         $this->assertSame($rows, $repo->searchPlayers([], 0));
     }
 
-    public function testSearchPlayersIncludesRetiredWhenInactiveFilterSet(): void
+    public function testSearchPlayersIncludesNonActiveWhenInactiveFilterSet(): void
     {
         $conn = $this->createMock(Connection::class);
         $conn->expects($this->once())->method('fetchAllAssociative')
-            ->with($this->logicalNot($this->stringContains('retired IS NULL')), [])
+            ->with($this->logicalNot($this->stringContains('np.active = 1')), [])
+            ->willReturn([]);
+
+        $repo = $this->makeRepo($conn);
+        $repo->searchPlayers(['inactive' => true], 0);
+    }
+
+    public function testSearchPlayersRequirePosExcludesPositionlessPlayers(): void
+    {
+        $conn = $this->createMock(Connection::class);
+        $conn->expects($this->once())->method('fetchAllAssociative')
+            ->with($this->stringContains("np.pos IS NOT NULL AND np.pos <> ''"), [])
+            ->willReturn([]);
+
+        $repo = $this->makeRepo($conn);
+        $repo->searchPlayers(['requirePos' => true], 0);
+    }
+
+    public function testSearchPlayersWithoutRequirePosKeepsPositionlessPlayersReachable(): void
+    {
+        $conn = $this->createMock(Connection::class);
+        $conn->expects($this->once())->method('fetchAllAssociative')
+            ->with($this->logicalNot($this->stringContains('np.pos IS NOT NULL')), [])
             ->willReturn([]);
 
         $repo = $this->makeRepo($conn);
@@ -213,7 +235,7 @@ class PlayerRepositoryTest extends TestCase
         $conn->expects($this->once())->method('fetchAllAssociative')
             ->with(
                 $this->logicalAnd(
-                    $this->stringContains('np.retired IS NULL'),
+                    $this->stringContains('np.active = 1'),
                     $this->stringContains('np.lastname LIKE :q'),
                     $this->stringContains('np.pos = :pos'),
                     $this->stringContains('np.team = :nfl'),
@@ -247,7 +269,7 @@ class PlayerRepositoryTest extends TestCase
             ->with(
                 $this->logicalAnd(
                     $this->stringContains('SELECT COUNT(*)'),
-                    $this->stringContains('np.retired IS NULL'),
+                    $this->stringContains('np.active = 1'),
                     $this->stringContains('np.lastname LIKE :q')
                 ),
                 ['q' => '%larg%']

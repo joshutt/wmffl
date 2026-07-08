@@ -122,6 +122,8 @@ class AdminPlayerControllerTest extends TestCase
             'dob' => '1954-09-28',
             'draftTeam' => 'HOU',
             'draftYear' => '1976',
+            'active' => '1',
+            'usePos' => '1',
         ]);
         $response = $controller->edit(7, $request, $this->makeAuth(true), $this->makeRepo($player), $em);
 
@@ -141,6 +143,8 @@ class AdminPlayerControllerTest extends TestCase
         $this->assertSame('1954-09-28', $player->getDob()->format('Y-m-d'));
         $this->assertSame('HOU', $player->getDraftTeam());
         $this->assertSame(1976, $player->getDraftYear());
+        $this->assertTrue($player->isActive());
+        $this->assertTrue($player->isUsePos());
     }
 
     public function testEditPostBlankOptionalFieldsPersistAsNull(): void
@@ -149,7 +153,8 @@ class AdminPlayerControllerTest extends TestCase
         $player = $this->makePlayer();
         $player->setFirstname('Steve')->setTeam('SEA')->setNumber(80)->setRetired(1989)
             ->setHeight(71)->setWeight(191)->setDob(new \DateTime('1954-09-28'))
-            ->setDraftTeam('HOU')->setDraftYear(1976)->setPos(PosEnum::WR);
+            ->setDraftTeam('HOU')->setDraftYear(1976)->setPos(PosEnum::WR)
+            ->setActive(true)->setUsePos(true);
 
         $em = $this->createMock(EntityManagerInterface::class);
         $em->expects($this->once())->method('flush');
@@ -179,6 +184,9 @@ class AdminPlayerControllerTest extends TestCase
         $this->assertNull($player->getDob());
         $this->assertNull($player->getDraftTeam());
         $this->assertNull($player->getDraftYear());
+        // checkboxes absent from the POST mean unchecked
+        $this->assertFalse($player->isActive());
+        $this->assertFalse($player->isUsePos());
     }
 
     public function testEditPostEmptyLastnameRerendersWithErrorAndPersistsNothing(): void

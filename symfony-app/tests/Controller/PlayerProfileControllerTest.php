@@ -27,7 +27,7 @@ class PlayerProfileControllerTest extends TestCase
         $repo = $this->createMock(PlayerRepository::class);
         $repo->expects($this->once())->method('searchPlayers')
             ->with(
-                ['q' => 'larg', 'team' => '3', 'nfl' => 'SEA', 'pos' => 'WR', 'inactive' => true],
+                ['q' => 'larg', 'team' => '3', 'nfl' => 'SEA', 'pos' => 'WR', 'inactive' => true, 'requirePos' => true],
                 1,
                 PlayerProfileController::PER_PAGE
             )
@@ -47,6 +47,9 @@ class PlayerProfileControllerTest extends TestCase
         $this->assertSame(3, $params['totalPages']);
         $this->assertSame('larg', $params['filters']['q']);
         $this->assertTrue($params['filters']['inactive']);
+        // requirePos is a query concern; it must stay out of the template
+        // filters so pagination links don't carry it
+        $this->assertArrayNotHasKey('requirePos', $params['filters']);
         $this->assertSame(PlayerRepository::FREE_AGENTS, $params['freeAgentValue']);
         $this->assertCount(1, $params['teams']);
         $this->assertSame(['GB', 'SEA'], $params['nflTeams']);
@@ -60,7 +63,7 @@ class PlayerProfileControllerTest extends TestCase
         $repo = $this->createMock(PlayerRepository::class);
         $repo->expects($this->once())->method('searchPlayers')
             ->with(
-                ['q' => '', 'team' => '', 'nfl' => '', 'pos' => '', 'inactive' => false],
+                ['q' => '', 'team' => '', 'nfl' => '', 'pos' => '', 'inactive' => false, 'requirePos' => true],
                 0,
                 PlayerProfileController::PER_PAGE
             )

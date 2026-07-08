@@ -42,7 +42,7 @@
         <div class="form-group col-md-3">
             <label for="retired">Retired (year)</label>
             <input type="number" class="form-control" id="retired" name="retired" min="1901" max="2155"
-                   value="{{ player.retired }}" placeholder="blank = active">
+                   value="{{ player.retired }}" placeholder="blank = still playing">
         </div>
         <div class="form-group col-md-3">
             <label for="height">Height (inches)</label>
@@ -53,6 +53,22 @@
             <label for="weight">Weight (lbs)</label>
             <input type="number" class="form-control" id="weight" name="weight" min="0"
                    value="{{ player.weight }}">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="active" name="active" value="1"
+                       {% if player.active %}checked{% endif %}>
+                <label class="form-check-label" for="active">Active (shown in the player search; with "In transaction pool", available for transactions)</label>
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="usePos" name="usePos" value="1"
+                       {% if player.usePos %}checked{% endif %}>
+                <label class="form-check-label" for="usePos">In transaction pool (legacy transaction pages)</label>
+            </div>
         </div>
     </div>
     <div class="form-row">

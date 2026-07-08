@@ -4,6 +4,19 @@
 
 {% block stylesheets %}
 <style>
+.player-name {
+    color: #660000;
+    font-weight: 700;
+    margin-bottom: 0;
+    padding-bottom: 4px;
+    border-bottom: 3px solid #e2a500;
+    display: inline-block;
+}
+.player-subtitle {
+    color: #660000;
+    font-size: 1.1rem;
+    margin: 4px 0 0;
+}
 #stats-season-table thead th,
 #roster-history-table thead th {
     cursor: pointer;
@@ -56,7 +69,17 @@ document.addEventListener('DOMContentLoaded', function () {
 {% endblock %}
 
 {% block content %}
-<div class="cat text-center">{{ player.firstname }} {{ player.lastname }}</div>
+<header class="text-center">
+    <h1 class="player-name">{{ player.firstname }} {{ player.lastname }}</h1>
+    {% set subtitleParts = [
+        player.pos ? player.pos.value,
+        player.number ? '#' ~ player.number,
+        player.team
+    ]|filter(v => v) %}
+    {% if subtitleParts %}
+    <p class="player-subtitle">{{ subtitleParts|join(' · ') }}</p>
+    {% endif %}
+</header>
 <div class="container mt-3">
 
     <div class="row">

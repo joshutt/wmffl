@@ -1,0 +1,5 @@
+twig:
+    # Legacy login writes raw $_SESSION keys that Symfony's session bag never
+    # sees; templates read auth state through AuthenticationService instead.
+    globals:
+        auth: '@App\Service\AuthenticationService'

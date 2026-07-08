@@ -34,6 +34,7 @@ class Player
     #[ORM\Column(nullable: true)]
     private ?int $number = null;
 
+    /** Year the player retired, NULL while playing. Informational only. */
     #[ORM\Column(nullable: true)]
     private ?int $retired = null;
 
@@ -58,9 +59,14 @@ class Player
     #[ORM\Column(name: 'draftPick', nullable: true)]
     private ?int $draftPick = null;
 
+    /**
+     * Drives /players search visibility, and — together with usePos — the
+     * legacy transaction player pool (football/transactions/list.php).
+     */
     #[ORM\Column]
     private ?bool $active = null;
 
+    /** With active, gates the legacy transaction player pool only. */
     #[ORM\Column(name: 'usePos')]
     private ?bool $usePos = null;
 

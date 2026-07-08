@@ -77,8 +77,8 @@
             <li class="nav-item"> <a class="nav-link pl-2" href="/rules/">Rules</a> </li>
             <li class="nav-item"> <a class="nav-link pl-2" href="/history/">History</a> </li>
         </ul>
-        {% if app.request.session.get('isin') %}
-            <button class="btn btn-wmffl my-2 my-sm-0" data-toggle="modal" data-target="#profileModal">{{ app.request.session.get('fullname') }}</button>
+        {% if auth.isLoggedIn %}
+            <button class="btn btn-wmffl my-2 my-sm-0" data-toggle="modal" data-target="#profileModal">{{ auth.fullName }}</button>
         {% else %}
             <button class="btn btn-wmffl my-2 my-sm-0" data-toggle="modal" data-target="#loginModal">Log In</button>
         {% endif %}
@@ -121,7 +121,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title mt-0" id="loginModalLabel">Profile {{ app.request.session.get('fullname') }}</h1>
+                <h1 class="modal-title mt-0" id="loginModalLabel">Profile {{ auth.fullName }}</h1>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -129,7 +129,7 @@
             <div class="modal-body">
                 <a class="btn btn-lg btn-wmffl btn-block" href="/login/newpassword" role="button">Change Password</a>
             </div>
-            {% if app.request.session.get('isin') and app.request.session.get('commish') %}
+            {% if auth.isCommissioner %}
                 <div class="modal-body">
                     <a class="btn btn-lg btn-wmffl btn-block" href="/admin" role="button">Commish</a>
                 </div>

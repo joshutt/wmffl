@@ -31,7 +31,7 @@ class AdminPlayerController extends AbstractAdminController
 
         return $this->render('admin/player/index.html.twig', [
             'q' => $q,
-            // null = no search yet (prompt to search); retired players are
+            // null = no search yet (prompt to search); non-active players are
             // included since fixing their records is the point of this page
             'players' => $q === ''
                 ? null
@@ -102,13 +102,17 @@ class AdminPlayerController extends AbstractAdminController
         $player->setTeam(trim($request->request->get('team', '')) ?: null);
         $player->setNumber($this->nullableInt($request, 'number'));
         // retired is a year(4) column: the season the player retired, or NULL
-        // while active
+        // while still playing (informational; the active flag drives search)
         $player->setRetired($this->nullableInt($request, 'retired'));
         $player->setHeight($this->nullableInt($request, 'height'));
         $player->setWeight($this->nullableInt($request, 'weight'));
         $player->setDob($dob);
         $player->setDraftTeam(trim($request->request->get('draftTeam', '')) ?: null);
         $player->setDraftYear($this->nullableInt($request, 'draftYear'));
+        // active drives /players search visibility and (with usePos) the
+        // legacy transaction player pool; unchecked boxes arrive absent
+        $player->setActive($request->request->getBoolean('active'));
+        $player->setUsePos($request->request->getBoolean('usePos'));
 
         return true;
     }

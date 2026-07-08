@@ -22,7 +22,8 @@ class PlayerRepository extends ServiceEntityRepository
     /**
      * A page of the player index joined with the current WMFFL roster spot
      * (if any). Filters: q (name substring), team (WMFFL team id or
-     * FREE_AGENTS), nfl (NFL abbreviation), pos, inactive (include retired).
+     * FREE_AGENTS), nfl (NFL abbreviation), pos, inactive (include
+     * active = 0 players), requirePos (exclude players with no position).
      */
     public function searchPlayers(array $filters, int $page, int $perPage = 50): array
     {
@@ -76,7 +77,10 @@ class PlayerRepository extends ServiceEntityRepository
         $where = [];
 
         if (empty($filters['inactive'])) {
-            $where[] = 'np.retired IS NULL';
+            $where[] = 'np.active = 1';
+        }
+        if (!empty($filters['requirePos'])) {
+            $where[] = "np.pos IS NOT NULL AND np.pos <> ''";
         }
         if (($filters['q'] ?? '') !== '') {
             $where[] = '(np.lastname LIKE :q OR np.firstname LIKE :q)';

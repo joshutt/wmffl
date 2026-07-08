@@ -40,6 +40,10 @@ class PlayerProfileTemplateTest extends TestCase
             'activeStatColumns' => ['yards' => 'Yards', 'tds' => 'TDs'],
         ]);
 
+        // Page heading: h1 name with a pos · number · NFL-team subtitle
+        $this->assertMatchesRegularExpression('#<h1[^>]*>Steve Largent</h1>#', $html);
+        $this->assertStringContainsString('WR · #80 · SEA', $html);
+
         // Bio
         $this->assertStringContainsString('Steve Largent', $html);
         $this->assertStringContainsString('WR', $html);
@@ -83,7 +87,9 @@ class PlayerProfileTemplateTest extends TestCase
             'activeStatColumns' => [],
         ]);
 
-        $this->assertStringContainsString('Rookie Newcomer', $html);
+        $this->assertMatchesRegularExpression('#<h1[^>]*>Rookie Newcomer</h1>#', $html);
+        // No pos/number/NFL team means no subtitle line at all
+        $this->assertStringNotContainsString('<p class="player-subtitle">', $html);
         $this->assertStringContainsString('Free Agent', $html);
         $this->assertStringNotContainsString('WMFFL Roster History', $html);
         $this->assertStringNotContainsString('Stats by Season', $html);

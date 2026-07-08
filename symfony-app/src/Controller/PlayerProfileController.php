@@ -29,10 +29,13 @@ class PlayerProfileController extends AbstractController
         ];
         $page = max(0, $request->query->getInt('page'));
 
-        $total = $players->countPlayers($filters);
+        // Position-less records are data glitches; hide them here but keep
+        // them reachable through the admin search (which omits requirePos).
+        $criteria = $filters + ['requirePos' => true];
+        $total = $players->countPlayers($criteria);
 
         return $this->render('player/index.html.twig', [
-            'players' => $players->searchPlayers($filters, $page, self::PER_PAGE),
+            'players' => $players->searchPlayers($criteria, $page, self::PER_PAGE),
             'filters' => $filters,
             'page' => $page,
             'totalPages' => (int) ceil($total / self::PER_PAGE),
