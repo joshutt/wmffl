@@ -210,7 +210,7 @@ if ($isin) {
                         } else {
                             print "<TR><TD>$avail</TD>";
                         }
-                        print "<TD>&nbsp;&nbsp;&nbsp;</TD><TD>$last</TD><TD>&nbsp;&nbsp;&nbsp;</TD><TD>$first</TD><TD>&nbsp;&nbsp;&nbsp;</TD><TD>$pos</TD><TD>&nbsp;&nbsp;&nbsp;</TD><TD>$team</TD></TR>";
+                        print "<TD>&nbsp;&nbsp;&nbsp;</TD><TD><a href='/player/$id'>$last</a></TD><TD>&nbsp;&nbsp;&nbsp;</TD><TD><a href='/player/$id'>$first</a></TD><TD>&nbsp;&nbsp;&nbsp;</TD><TD>$pos</TD><TD>&nbsp;&nbsp;&nbsp;</TD><TD>$team</TD></TR>";
                     }
                 }
 

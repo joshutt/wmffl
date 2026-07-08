@@ -32,7 +32,7 @@ while ($row = mysqli_fetch_array($results)) {
 if (array_key_exists('teamone', $_REQUEST) && array_key_exists('teamtwo', $_REQUEST)) {
     $teamone = $_REQUEST['teamone'];
     $teamtwo = $_REQUEST['teamtwo'];
-	$thequery = "select concat(p.firstname, ' ', p.lastname) as 'name', p.pos, p.team, ";
+	$thequery = "select concat(p.firstname, ' ', p.lastname) as 'name', p.playerid, p.pos, p.team, ";
 	$thequery .= "t.name as 'teamname'";
 	$thequery .= "from newplayers p, roster r, team t ";
 	$thequery .= "where p.playerid=r.playerid and r.teamid=t.teamid and r.dateoff is null ";
@@ -55,7 +55,7 @@ if (array_key_exists('teamone', $_REQUEST) && array_key_exists('teamtwo', $_REQU
 			print "<TR><TH COLSPAN=3>".$row["teamname"]."</TH></TR>";
 			$teamname = $row["teamname"];
 		}
-		print "<TR><TD>".$row['name']."</TD><TD>".$row['pos']."</TD><TD>".$row['team']."</TD></TR>";
+		print "<TR><TD><a href='/player/{$row['playerid']}'>".$row['name']."</a></TD><TD>".$row['pos']."</TD><TD>".$row['team']."</TD></TR>";
 	}
 	print "</TABLE></TD></TR></TABLE>";
 }

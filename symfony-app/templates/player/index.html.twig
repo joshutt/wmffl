@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Players - WMFFL{% endblock %}
+
+{# non-empty filters only, so pagination links stay clean #}
+{% set linkFilters = filters|filter(v => v) %}
+
+{% block content %}
+<div class="cat text-center">Players</div>
+<div class="container mt-3">
+
+    <form method="get" action="{{ path('player_index') }}" class="form-row align-items-end mb-3">
+        <div class="col-md-3 mb-2">
+            <label for="filter-q">Name</label>
+            <input type="text" id="filter-q" name="q" value="{{ filters.q }}" class="form-control" placeholder="First or last name">
+        </div>
+        <div class="col-md-3 mb-2">
+            <label for="filter-team">WMFFL Team</label>
+            <select id="filter-team" name="team" class="form-control">
+                <option value="">All Teams</option>
+                <option value="{{ freeAgentValue }}" {% if filters.team == freeAgentValue %}selected{% endif %}>Free Agents</option>
+                {% for team in teams %}
+                <option value="{{ team.id }}" {% if filters.team == team.id %}selected{% endif %}>{{ team.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2 mb-2">
+            <label for="filter-nfl">NFL Team</label>
+            <select id="filter-nfl" name="nfl" class="form-control">
+                <option value="">All</option>
+                {% for nfl in nflTeams %}
+                <option value="{{ nfl }}" {% if filters.nfl == nfl %}selected{% endif %}>{{ nfl }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2 mb-2">
+            <label for="filter-pos">Position</label>
+            <select id="filter-pos" name="pos" class="form-control">
+                <option value="">All</option>
+                {% for pos in positions %}
+                <option value="{{ pos }}" {% if filters.pos == pos %}selected{% endif %}>{{ pos }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2 mb-2">
+            <div class="form-check">
+                <input type="checkbox" id="filter-inactive" name="inactive" value="1" class="form-check-input" {% if filters.inactive %}checked{% endif %}>
+                <label for="filter-inactive" class="form-check-label">Include non-active</label>
+            </div>
+            <div class="text-center mt-1">
+                <button type="submit" class="btn btn-wmffl">Search</button>
+                <a class="btn btn-wmffl" href="{{ path('player_index') }}">Clear</a>
+            </div>
+        </div>
+    </form>
+
+    {% if players %}
+    <p class="text-muted">{{ total }} player{{ total == 1 ? '' : 's' }} found</p>
+    <table class="table table-sm table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Pos</th>
+                <th>NFL Team</th>
+                <th>WMFFL Team</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in players %}
+            <tr>
+                <td><a href="{{ path('player_profile', {id: player.id}) }}">{{ player.firstname }} {{ player.lastname }}</a></td>
+                <td>{{ player.pos }}</td>
+                <td>{{ player.nfl_team }}</td>
+                <td>{{ player.wmffl_team }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="py-2 row justify-content-between">
+        {% if page > 0 %}
+        <div class="float-left"><a class="btn btn-wmffl" href="{{ path('player_index', linkFilters|merge({page: page - 1})) }}">&lt;&lt;&lt; Previous</a></div>
+        {% endif %}
+        {% if page + 1 < totalPages %}
+        <div class="float-right ml-auto"><a class="btn btn-wmffl" href="{{ path('player_index', linkFilters|merge({page: page + 1})) }}">Next &gt;&gt;&gt;</a></div>
+        {% endif %}
+    </div>
+    {% else %}
+    <p class="text-center">No players match your search.</p>
+    {% endif %}
+
+</div>
+{% endblock %}

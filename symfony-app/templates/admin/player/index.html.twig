@@ -1,0 +1,47 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Admin - Players{% endblock %}
+
+{% block admin_content %}
+<h2 class="mt-2">Players</h2>
+
+<form method="get" action="{{ path('admin_players') }}" class="form-inline mb-3">
+    <label class="sr-only" for="q">Name</label>
+    <input type="text" class="form-control mr-2" id="q" name="q" value="{{ q }}"
+           placeholder="First or last name">
+    <div class="text-center">
+        <button type="submit" class="btn btn-wmffl">Search</button>
+    </div>
+</form>
+
+{% if players is null %}
+<p class="text-muted">Search for a player by name to edit their record.</p>
+{% elseif players is empty %}
+<p class="text-muted">No players match "{{ q }}".</p>
+{% else %}
+<table class="table table-sm table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Pos</th>
+            <th>NFL Team</th>
+            <th>Retired</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for player in players %}
+        <tr>
+            <td>{{ player.firstname }} {{ player.lastname }}</td>
+            <td>{{ player.pos }}</td>
+            <td>{{ player.nfl_team }}</td>
+            <td>{{ player.retired }}</td>
+            <td class="text-center">
+                <a class="btn btn-sm btn-wmffl" href="{{ path('admin_players_edit', {id: player.id}) }}">Edit</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}

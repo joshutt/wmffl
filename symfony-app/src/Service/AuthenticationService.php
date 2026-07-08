@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use Symfony\Component\HttpFoundation\RequestStack;
+
 /**
  * Service to manage authentication state from legacy session.
  * Replaces legacy globals $isin, $fullname, $teamnum
@@ -11,14 +13,30 @@ namespace App\Service;
  * own data under $_SESSION['_sf2_attributes']. Reading $_SESSION directly
  * ensures both Symfony controllers and legacy code share the same auth state.
  *
- * session_start() is called lazily to ensure $_SESSION is populated on
+ * The session is started lazily to ensure $_SESSION is populated on
  * pure Symfony routes where legacy start.php has not run.
  */
 class AuthenticationService
 {
+    public function __construct(private ?RequestStack $requestStack = null)
+    {
+    }
+
     private function ensureSessionStarted(): void
     {
-        if (session_status() === PHP_SESSION_NONE) {
+        if (session_status() !== PHP_SESSION_NONE) {
+            return;
+        }
+
+        // Start through Symfony's session layer when a request is in scope: a
+        // raw session_start() here would leave Symfony's storage unaware the
+        // session is open, and any later Session::start() — notably CSRF
+        // validation in isCsrfTokenValid() — throws "Failed to start the
+        // session: already started by PHP."
+        $request = $this->requestStack?->getMainRequest();
+        if ($request?->hasSession()) {
+            $request->getSession()->start();
+        } else {
             session_start();
         }
     }

@@ -102,6 +102,7 @@ if (!isset($title)) {
             <li class="nav-item"> <a class="nav-link pl-2" href="/articles">News</a> </li>
             <li class="nav-item"> <a class="nav-link pl-2" href="/activate/activations">Activations</a> </li>
             <li class="nav-item"> <a class="nav-link pl-2" href="/teams/">Teams</a> </li>
+            <li class="nav-item"> <a class="nav-link pl-2" href="/players">Players</a> </li>
             <li class="nav-item"> <a class="nav-link pl-2" href="/stats/leaders">Stats</a> </li>
             <li class="nav-item"> <a class="nav-link pl-2" href="/history/2025Season/schedule">Schedule</a> </li>
             <li class="nav-item"> <a class="nav-link pl-2" href="/history/2025Season/standings#">Standings</a> </li>

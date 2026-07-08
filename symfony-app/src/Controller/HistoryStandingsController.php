@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\StandingsRepository;
+use App\Service\SeasonWeekService;
 use App\Service\StandingsCalculatorService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,6 +12,23 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HistoryStandingsController extends AbstractController
 {
+    #[Route('/history/standings', name: 'history_standings_current')]
+    public function current(
+        SeasonWeekService $seasonWeekService,
+        StandingsCalculatorService $calculatorService,
+        StandingsRepository $standingsRepository,
+    ): Response {
+        $season = $seasonWeekService->getCurrentSeason();
+        $week = $seasonWeekService->getCurrentWeek();
+
+        if ($week == 0) {
+            $week = 16;
+            $season = $season - 1;
+        }
+
+        return $this->renderStandings($calculatorService, $standingsRepository, $season, $week);
+    }
+
     #[Route('/history/standings/{season}/{week}', name: 'history_standings')]
     public function index(
         StandingsCalculatorService $calculatorService,
