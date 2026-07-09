@@ -35,9 +35,10 @@ should be small enough to land as its own PR.
   `/team/{id}/schedule` with past-season selector and a new head-to-head
   entry point (`?vs=`, all-time; the legacy `viewseasom` typo filter was
   dead and is gone), `/team/{id}/history`, `/teams/compare` (bound params —
-  closes the legacy SQL injection); admin team editing added
-  (`/admin/teams` list + edit of abbrev/motto/logo/fulllogo/active/
-  division). `football/teams/` deleted with 301 redirects
+  closes the legacy SQL injection); admin editing stays on the existing
+  Team Info page (`/admin/team/updateTeamInfo` — a separate `/admin/teams`
+  list+edit was built then dropped as duplicate functionality).
+  `football/teams/` deleted with 301 redirects
   (`LegacyTeamRedirectController`) resolving `viewteam` as id, abbrev, or
   space-stripped name, incl. `.php` aliases for archival links.
 
