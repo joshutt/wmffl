@@ -42,26 +42,44 @@ should be small enough to land as its own PR.
   (`LegacyTeamRedirectController`) resolving `viewteam` as id, abbrev, or
   space-stripped name, incl. `.php` aliases for archival links.
 
-## Phase 4 — Transactions
+## Phase 4 — Transactions (spec: `specs/2026-07-10-transactions-stats/`)
 
 Legacy: `football/transactions/` (`list.php`, `transactions.php`,
-`injuredReserve.php`, `protections.php`, `trades/`, `draftorder/`)
+`injuredReserve.php`, `protections.php`, `confirm.php`, waiver pages)
 
 1. Transaction list (read-only view)
 2. Waiver order / waiver picks
-3. IR moves, protections, trades (these involve writes — migrate carefully,
-   one action at a time)
+3. IR moves, protections, roster add/drop (`list.php` → `confirm.php`) —
+   these involve writes; migrate carefully, one action at a time
+4. Delete `football/transactions/draftorder/` (draft-order word game) —
+   obsolete, remove rather than migrate
 
-## Phase 5 — Stats
+Trades (`football/transactions/trades/`) are excluded — they get their own
+phase (Phase 6) and stay on the LegacyBridge until then.
+
+## Phase 5 — Stats (spec: `specs/2026-07-10-transactions-stats/`)
 
 Legacy: `football/stats/` (`playerstats.php`, `leaders.php`, `powerlist.php`,
-`powerrate.php`, `weekbyweek.php`, `injuryReport.php`)
+`powerrate.php`, `weekbyweek.php`, `injuryReport.php`, plus extras)
 
 1. Player stats / leaders pages
 2. Power rankings
 3. Week-by-week and injury report pages
+4. Index-linked extras: `luck.php`, `playerrecord.php`, `lastplayer.php`
+5. CSV exports: `statcsv.php`, `playerlist.php` (port as CSV-returning routes)
+6. Delete dead pages instead of migrating: `info.php` (phpinfo dump),
+   `standings.php` (hardcoded 2009), `teamcompare.php` (unlinked)
 
-## Phase 6 — History (remaining)
+## Phase 6 — Trades
+
+Legacy: `football/transactions/trades/` (~1,800 lines: `tradescreen.php`,
+`edittrade.php`, offer/confirm/process flow, email notifications)
+
+1. Trade list / trade screen (read-only views)
+2. Offer → confirm → process workflow (writes + email) — the riskiest
+   write path in the app; migrate one step at a time
+
+## Phase 7 — History (remaining)
 
 Legacy: `football/history/` (`pastchamps.php`, `pastdrafts.php`,
 `alltimerecords.php`, `recordseason.php`, `recordsweek.php`,
@@ -71,7 +89,7 @@ per-season pages)
 2. Per-season pages — likely a single generic Symfony route/template driven
    by data, replacing the 30+ individual `{year}Season.php` files
 
-## Phase 7 — Remaining odds and ends
+## Phase 8 — Remaining odds and ends
 
 Legacy: `login/`, `activate/`, `forum/`, `rules/`, `quicklinks.php`,
 `info.php`, `scores.php`
