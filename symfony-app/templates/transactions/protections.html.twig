@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}WMFFL Protections{% endblock %}
+
+{% block content %}
+<h1>Protections</h1>
+<hr size="1"/>
+
+{% if not loggedIn %}
+    <div class="text-center font-weight-bold">You must be logged in to submit protections</div>
+{% else %}
+    <div class="container">
+        <p>
+            Select the players that you wish to protect, by checking the box next to
+            them and then submitting the form. You may change protections at any time
+            up until the deadline{% if deadline %}: {{ deadline|date('h:i a T') }} on {{ deadline|date('l, F d') }}{% endif %}.
+        </p>
+
+        {% if deadlinePassed %}
+            <p><b><span style="color: red;">Sorry, The Deadline For Changing Protections has Passed</span></b></p>
+        {% elseif points is null or not points.paid %}
+            <div class="alert alert-secondary" role="alert">
+                <p>Your account is in arrears.  You must be in good standing to submit Protections</p>
+                <p><a class="btn btn-wmffl" href="/history/teammoney">View Account Balance</a></p>
+            </div>
+        {% else %}
+            <form name="protform" action="{{ path('transactions_protections_save') }}" method="POST">
+                <input type="hidden" name="_token" value="{{ csrf_token(constant('App\\Controller\\ProtectionsController::CSRF_TOKEN_ID')) }}"/>
+
+                <div class="row justify-content-around">
+                    <div class="col-4 my-2 py-1 align-content-center">
+                        Points Allowed: <b id="ptsAllowed">{{ points.totalPts }}</b><br/>
+                        Points Used: <input type="text" name="PtsUse" id="PtsUse" size="3" maxlength="3" onfocus="this.blur();" value="{{ points.protectionPts }}"/>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-1"></div>
+                    <div class="col-3"><b>Name</b></div>
+                    <div class="col-1"><b>Pos</b></div>
+                    <div class="col-1"><b>Cost</b></div>
+                </div>
+
+                {% for player in roster %}
+                    <div class="row justify-content-center">
+                        <div class="col-1">
+                            <label class="switch">
+                                <input type="checkbox" name="protect[]" value="{{ player.playerid }}"
+                                       data-cost="{{ player.cost }}"
+                                       {{ (player.protected == 1 or player.pos == 'HC') ? 'checked' : '' }}/>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div class="col-3">{{ player.firstname }} {{ player.lastname }} ({{ player.pos }}-{{ player.team }})</div>
+                        <div class="col-1">{{ player.pos }}</div>
+                        <div class="col-1">{{ player.cost }}</div>
+                    </div>
+                {% endfor %}
+
+                <div class="row justify-content-around m-2">
+                    <input type="submit" name="submit" class="btn btn-wmffl" value="Submit Protections"/>
+                </div>
+            </form>
+
+            <script>
+                // Track points as boxes are toggled; block over-budget submits
+                (function () {
+                    const form = document.forms['protform'];
+                    const ptsUse = document.getElementById('PtsUse');
+                    const allowed = parseInt(document.getElementById('ptsAllowed').textContent, 10);
+
+                    form.querySelectorAll('input[name="protect[]"]').forEach(function (box) {
+                        box.addEventListener('change', function () {
+                            const cost = parseInt(box.dataset.cost, 10);
+                            ptsUse.value = parseInt(ptsUse.value, 10) + (box.checked ? cost : -cost);
+                        });
+                    });
+
+                    form.addEventListener('submit', function (event) {
+                        if (parseInt(ptsUse.value, 10) > allowed) {
+                            alert('Your protections exceed ' + allowed + ' points');
+                            event.preventDefault();
+                        }
+                    });
+                })();
+            </script>
+        {% endif %}
+    </div>
+{% endif %}
+{% endblock %}
