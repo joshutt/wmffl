@@ -1,0 +1,15 @@
+{# Generic sortable stat table (legacy reportUtils.php outputHtml) #}
+<table id="statTable">
+    <thead>
+    <tr>
+        {% for title in titles %}<th>{{ title }}</th>{% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for row in rows %}
+        <tr>
+            {% for item in row %}<td>{{ item }}</td>{% endfor %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
