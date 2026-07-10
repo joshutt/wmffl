@@ -15,12 +15,9 @@ use Symfony\Component\Routing\Attribute\Route;
  */
 class LegacyStatsRedirectController extends AbstractController
 {
-    #[Route('/stats/index.php', name: 'legacy_stats_index_php')]
-    public function index(): Response
-    {
-        return $this->redirectToRoute('stats_index', [], Response::HTTP_MOVED_PERMANENTLY);
-    }
-
+    // No /stats/index.php alias: Symfony strips a trailing index.php as
+    // the front controller, so such a route never matches (Phase 3
+    // gotcha); the bare directory URL redirects natively.
     #[Route('/stats/leaders.php', name: 'legacy_stats_leaders_php', methods: ['GET', 'POST'])]
     public function leaders(Request $request): Response
     {

@@ -16,9 +16,11 @@ use Symfony\Component\Routing\Attribute\Route;
  */
 class LegacyTransactionRedirectController extends AbstractController
 {
+    // No /transactions/index.php alias: Symfony strips a trailing
+    // index.php as the front controller, so such a route never matches
+    // (Phase 3 gotcha); the bare directory URL redirects natively.
     #[Route('/transactions/transactions', name: 'legacy_transactions')]
     #[Route('/transactions/transactions.php', name: 'legacy_transactions_php')]
-    #[Route('/transactions/index.php', name: 'legacy_transactions_index_php')]
     public function transactions(Request $request): Response
     {
         $params = [];

@@ -98,6 +98,53 @@ directories with 301 redirects, per the mission in `specs/mission.md`.
 - All new SQL goes through repositories (`App\Repository`), business
   logic in services (pattern: `StandingsCalculatorService`).
 
+## Deliberate behavior changes (found during implementation)
+
+Behavior was ported as-is except for outright bugs and security holes,
+per the scope decisions. Documented here per `validation.md` §4:
+
+1. **IR moves no longer log phantom transactions.** Legacy `IRResource`
+   inserted a `To IR`/`From IR` transactions row even when the IR write
+   matched no rows (ineligible player, forged id).
+2. **Roster-move hardening (`confirm.php`).** Legacy counted roster
+   limits from the posted `keep*` form fields and its drop `UPDATE` had
+   no `teamid` scope, so a forged POST could exceed the limits or close
+   another team's roster rows. The port counts from the database and
+   scopes drops to the member's own roster; legitimate submissions
+   behave identically.
+3. **Protections save re-checks everything server-side.** Legacy
+   `saveprotections.php` enforced no deadline, login-gating only by
+   accident, and displayed the stale `protectionpts` value as the
+   "Allowed" number in the over-budget message. The save endpoint now
+   re-checks login, CSRF, deadline, and paid standing, and shows the
+   real `totalpts` allowance.
+4. **Protections deadline is config-driven** (`config` table key
+   `protections.deadline`, seeded by migration to `2026-08-16 23:59`,
+   the 2026 analog of the hardcoded 2025 date). No configured value
+   means protections are closed.
+5. **Player-list sort links work.** Legacy `list.php`'s Pos / NFL Team
+   sort links ordered by source column names that don't exist in the
+   UNION output and crashed the page; the port whitelists and maps them.
+6. **`statcsv` output is aligned.** Legacy emitted a position label in
+   the header the rows didn't have and an always-empty NFL Team column
+   (undefined `nflteam` alias). The CSV (now `/stats/players?format=csv`)
+   emits matching header/row columns with the real NFL team.
+7. **`playerlist.php` query modernized.** It referenced `p.status` and
+   `p.position`, columns dropped from `newplayers` — the legacy feed was
+   a SQL error. The port keys off `active`/`pos`.
+8. **`lastplayer.php` never rendered** (parse error, `<?php}?>`);
+   `/stats/lastplayer` serves its intended 2005-frozen snapshot against
+   the retired `players` table.
+9. **Season top-ten ordinals** on the records page read 2nd/3rd instead
+   of legacy's "2th"/"3th" (it passed the tie string to its ordinal
+   helper).
+10. **Injury-report null dates show blank** instead of legacy's
+    `new DateTime(null)` rendering today's date.
+11. **No `/transactions/index.php` or `/stats/index.php` redirect
+    routes**: Symfony strips a trailing `index.php` as the front
+    controller so such routes can never match (Phase 3 gotcha); the
+    bare directory URLs redirect natively.
+
 ## Non-goals
 
 - Trades workflow (Phase 6).

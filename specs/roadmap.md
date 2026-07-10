@@ -41,34 +41,35 @@ should be small enough to land as its own PR.
   `football/teams/` deleted with 301 redirects
   (`LegacyTeamRedirectController`) resolving `viewteam` as id, abbrev, or
   space-stripped name, incl. `.php` aliases for archival links.
-
-## Phase 4 — Transactions (spec: `specs/2026-07-10-transactions-stats/`)
-
-Legacy: `football/transactions/` (`list.php`, `transactions.php`,
-`injuredReserve.php`, `protections.php`, `confirm.php`, waiver pages)
-
-1. Transaction list (read-only view)
-2. Waiver order / waiver picks
-3. IR moves, protections, roster add/drop (`list.php` → `confirm.php`) —
-   these involve writes; migrate carefully, one action at a time
-4. Delete `football/transactions/draftorder/` (draft-order word game) —
-   obsolete, remove rather than migrate
-
-Trades (`football/transactions/trades/`) are excluded — they get their own
-phase (Phase 6) and stay on the LegacyBridge until then.
-
-## Phase 5 — Stats (spec: `specs/2026-07-10-transactions-stats/`)
-
-Legacy: `football/stats/` (`playerstats.php`, `leaders.php`, `powerlist.php`,
-`powerrate.php`, `weekbyweek.php`, `injuryReport.php`, plus extras)
-
-1. Player stats / leaders pages
-2. Power rankings
-3. Week-by-week and injury report pages
-4. Index-linked extras: `luck.php`, `playerrecord.php`, `lastplayer.php`
-5. CSV exports: `statcsv.php`, `playerlist.php` (port as CSV-returning routes)
-6. Delete dead pages instead of migrating: `info.php` (phpinfo dump),
-   `standings.php` (hardcoded 2009), `teamcompare.php` (unlinked)
+- Transactions (Phase 4 complete, 2026-07-10,
+  `specs/2026-07-10-transactions-stats/`): `TransactionController`
+  (`/transactions` history with trade sentences, `/transactions/waivers`,
+  `/transactions/protections/show`), `InjuredReserveController`
+  (`/transactions/ir` + CSRF-protected JSON add/remove),
+  `ProtectionsController` (form + save; deadline moved from a hardcoded
+  date to the config key `protections.deadline`), `RosterMoveController` +
+  `RosterMoveService` (`/transactions/list` search →
+  `/transactions/confirm` preview/execute with the 25-active/26-total
+  limits, waiver-priority handling, entry-fee gate).
+  `football/transactions/` deleted with 301s
+  (`LegacyTransactionRedirectController`) except `transmenu.php` (still
+  included by trades) and `trades/` (Phase 6, still on the LegacyBridge);
+  `draftorder/` (word game) and `injury/` (unlinked report) deleted
+  without replacement.
+- Stats (Phase 5 complete, 2026-07-10,
+  `specs/2026-07-10-transactions-stats/`): `StatsController` +
+  `StatsRepository` (`/stats` index, `/stats/leaders`, `/stats/players`
+  with html/ajax/csv/json formats replacing `statcsv.php`,
+  `/stats/playerlist` text feed), `WeekByWeekService`,
+  `PowerRatingService` (one potential-vs-actual core for
+  `powerrate`/`powerlist`), `LuckService`, `PlayerRecordsService`
+  (`/stats/records`, `/stats/lastplayer` — the legacy file had a parse
+  error and never rendered), `InjuryReportService` (`/stats/injuries`).
+  `football/stats/` deleted with 301s (`LegacyStatsRedirectController`,
+  query-param carry for history `?season=` deep links); dead pages
+  (`info.php` phpinfo dump, 2009-hardcoded `standings.php` +
+  `weekstandings.php`, `teamcompare.php`) deleted, their URLs land on
+  `/stats`.
 
 ## Phase 6 — Trades
 

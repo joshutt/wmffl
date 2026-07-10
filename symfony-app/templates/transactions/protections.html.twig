@@ -13,7 +13,7 @@
         <p>
             Select the players that you wish to protect, by checking the box next to
             them and then submitting the form. You may change protections at any time
-            up until the deadline{% if deadline %}: {{ deadline|date('h:i a T') }} on {{ deadline|date('l, F d') }}{% endif %}.
+            up until the deadline{% if deadline %}: {{ deadline|date('h:i a T', false) }} on {{ deadline|date('l, F d', false) }}{% endif %}.
         </p>
 
         {% if deadlinePassed %}
