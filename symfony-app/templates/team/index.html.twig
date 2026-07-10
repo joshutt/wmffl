@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}WMFFL Teams{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="/base/css/team.css">
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center">The Teams</h1>
+<hr size="1">
+
+<div class="row">
+    {% for divisionName, division in divisions %}
+        <div class="col-12 col-md-4">
+            <div class="my-2 shadow card bg-div-{{ division[0].divisionid }}">
+                <div class="font-weight-bold text-center h3 card-title m-2">{{ divisionName }}</div>
+                <div class="card-body">
+                    <ul class="list-group w-100">
+                        {% for team in division %}
+                            <a href="{{ path('team_roster', {id: team.teamid}) }}"
+                               class="my-2 shadow list-group-item-action list-group-item">
+                                <div class="font-weight-bold">{{ team.team }}</div>
+                                <div class="small">{{ team.owner }}</div>
+                            </a>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="row justify-content-around">
+    <div class="col-12 col-md-4">
+        <div class="my-2 shadow card">
+            <div class="font-weight-bold text-center h3 card-title m-2">Defunct Teams</div>
+            <div class="card-body">
+                <ul class="list-group w-100">
+                    <a href="{{ path('team_squirrels') }}"
+                       class="my-2 shadow list-group-item-action list-group-item">
+                        <div class="font-weight-bold">Fighting Squirrels</div>
+                    </a>
+                    <div class="my-2 shadow list-group-item-action list-group-item">
+                        <div class="font-weight-bold">Kingsmen</div>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-4">
+        <div class="my-2 shadow card">
+            <div class="font-weight-bold text-center h3 card-title m-2">Other Features</div>
+            <div class="card-body">
+                <ul class="list-group w-100">
+                    <a href="{{ path('team_compare') }}"
+                       class="my-2 shadow list-group-item-action list-group-item">
+                        <div class="font-weight-bold">Compare Rosters</div>
+                    </a>
+                    {# Waiver order is still legacy-served; Phase 4 territory #}
+                    <a href="/transactions/displayWaiverOrder"
+                       class="my-2 shadow list-group-item-action list-group-item">
+                        <div class="font-weight-bold">Waiver Wire Order</div>
+                    </a>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Compare Rosters - WMFFL{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Compare Rosters</h1>
+<hr size="1">
+
+<div class="text-center my-3">
+    <form action="{{ path('team_compare') }}" method="get">
+        <select name="teamone">
+            {% for team in teams %}
+                <option value="{{ team.teamid }}"{% if team.teamid == teamOne %} selected{% endif %}>{{ team.name }}</option>
+            {% endfor %}
+        </select>
+        <select name="teamtwo">
+            {% for team in teams %}
+                <option value="{{ team.teamid }}"{% if team.teamid == teamTwo %} selected{% endif %}>{{ team.name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-wmffl">Compare</button>
+    </form>
+</div>
+
+{% if rosters is not null %}
+    <div class="row justify-content-center">
+        {% for teamname, players in rosters %}
+            <div class="col-12 col-md-5">
+                <h4 class="text-center">{{ teamname }}</h4>
+                <table class="table table-sm mx-auto w-auto">
+                    <tbody>
+                    {% for player in players %}
+                        <tr>
+                            <td><a href="{{ path('player_profile', {id: player.playerid}) }}">{{ player.name }}</a></td>
+                            <td>{{ player.pos }}</td>
+                            <td>{{ player.team }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}

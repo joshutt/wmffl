@@ -37,7 +37,7 @@
             {% endif %}
 
             <tr>
-                <td><a href="/teams/teamschedule?viewteam={{ team.teamid }}">{{ team.name }}</a></td>
+                <td><a href="{{ path('team_schedule', {id: team.teamid}) }}">{{ team.name }}</a></td>
                 <td align="center">{{ team.record[0] }}</td>
                 <td align="center">{{ team.record[1] }}</td>
                 <td align="center">{{ team.record[2] }}</td>

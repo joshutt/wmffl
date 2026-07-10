@@ -28,21 +28,19 @@ should be small enough to land as its own PR.
   `/admin/players`). Note: `symfony-app/public/players.html` was NOT retired —
   it's a Live Draft Board prototype, not a player list; see the
   draft-tooling note below.
-
-## Phase 3 — Teams
-
-Legacy: `football/teams/` (`roster.php`, `display.php`, `teamroster.php`,
-`teamschedule.php`, `teamhistory.php`, `h2h.php`, `compareteams.php`,
-`indschedule.php`)
-
-1. Team roster page (builds on Phase 2's `Player` entity)
-2. Team schedule page
-3. Team history / head-to-head / compare-teams pages
-
-Phase 2 audit note: of the legacy team pages, only `roster.php` and
-`compareteams.php` render player names; both already link to
-`/player/{id}`. No unlinkable player-name renderings remain in
-`football/teams/`.
+- Team pages (Phase 3 complete, 2026-07,
+  `specs/2026-07-08-team-pages/`): `TeamRepository` + `TeamController` —
+  `/teams` division-card index (added beyond the original phase scope) with
+  the static Squirrels page, `/team/{id}/roster` (tablesorter kept),
+  `/team/{id}/schedule` with past-season selector and a new head-to-head
+  entry point (`?vs=`, all-time; the legacy `viewseasom` typo filter was
+  dead and is gone), `/team/{id}/history`, `/teams/compare` (bound params —
+  closes the legacy SQL injection); admin editing stays on the existing
+  Team Info page (`/admin/team/updateTeamInfo` — a separate `/admin/teams`
+  list+edit was built then dropped as duplicate functionality).
+  `football/teams/` deleted with 301 redirects
+  (`LegacyTeamRedirectController`) resolving `viewteam` as id, abbrev, or
+  space-stripped name, incl. `.php` aliases for archival links.
 
 ## Phase 4 — Transactions
 

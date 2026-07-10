@@ -139,7 +139,7 @@ if (!isset($display) or $display == 1) {
 
         <tr bgcolor="<?= $bgcolor ?>">
             <td><?= array_key_exists($t->name, $clinchedList) ? $clinchedList[$t->name] : '' ?><a
-                        href="/teams/teamschedule.php?viewteam=<?= $t->teamid ?>"><?= $t->name ?></a></td>
+                        href="/team/<?= $t->teamid ?>/schedule"><?= $t->name ?></a></td>
             <td align="center"><?= $t->record[0] ?></td>
             <td align="center"><?= $t->record[1] ?></td>
             <td align="center"><?= $t->record[2] ?></td>
