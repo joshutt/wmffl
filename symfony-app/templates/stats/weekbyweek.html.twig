@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Week By Week{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="/base/css/week.css">
+    <link rel="stylesheet" type="text/css" href="/base/css/stats.css">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/base/vendor/js/jquery.tablesorter.min.js"></script>
+    <script src="/base/js/week.js"></script>
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Week By Week</h1>
+<hr size="1"/>
+
+{% include 'stats/_statbar.html.twig' %}
+
+<div id="tblblock" class="container justify-content-center">
+    <div class="row col justify-content-center">
+        <div>
+            <select id="display" class="mx-1">
+                <option value="team">By Team</option>
+                <option value="pos" {{ selectedPos ? 'selected' }}>By Pos</option>
+            </select>
+
+            <select id="team" class="mx-1">
+                {% for team in teams %}
+                    <option value="{{ team.teamid }}" {{ selectedTeam == team.teamid ? 'selected' }}>{{ team.name }}</option>
+                {% endfor %}
+            </select>
+
+            <select id="pos" class="mx-1">
+                {% for pos in positions %}
+                    <option value="{{ pos }}" {{ selectedPos == pos ? 'selected' }}>{{ pos }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <button class="button mx-1" id="refresh" onclick="refresh(); return false;">Refresh</button>
+            <button class="button mx-2" id="csv" onclick="csv()">CSV</button>
+            <button class="button mx-2" id="json" onclick="csv('json')">JSON</button>
+        </div>
+    </div>
+    <div id="mainTable" class="row col-12 justify-content-center">
+        {% include 'stats/_table.html.twig' %}
+    </div>
+</div>
+{% endblock %}

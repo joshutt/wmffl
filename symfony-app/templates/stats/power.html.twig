@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Power Rankings{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Power Rankings</h1>
+<h5 class="text-center"><i>Through Week {{ week }}</i></h5>
+<hr/>
+
+{% include 'stats/_statbar.html.twig' %}
+
+<p>The current power rankings as well as the rankings for the previous two
+weeks are listed below.  Power rankings are intended to be an indication of
+how good teams are.  They are based on points scored and potential points, with
+a weighing factor for more recent games.  Record plays no role in the actual
+ranking.  Therefore, it is possible for a team with a poorer record to appear
+high in the rankings an vice versa.  Rankings are to be used for entertainment
+purposes only.</p>
+
+<div class="text-center">
+    <table class="mx-auto">
+        <tr>
+            <th align="left">Team</th><th></th><th>Current Rating</th>
+            {% if week >= 2 %}<th></th><th>Last Week</th>{% endif %}
+            {% if week >= 3 %}<th></th><th>Week {{ week - 2 }}</th>{% endif %}
+        </tr>
+        {% for team, ratings in ratings %}
+            <tr>
+                <td>{{ team }}</td><td>&nbsp;</td>
+                <td align="center">{{ '%6.2f'|format(ratings[week] ?? 0) }}</td><td>&nbsp;</td>
+                {% if week >= 2 %}<td align="center">{{ '%6.2f'|format(ratings[week - 1] ?? 0) }}</td><td>&nbsp;</td>{% endif %}
+                {% if week >= 3 %}<td align="center">{{ '%6.2f'|format(ratings[week - 2] ?? 0) }}</td>{% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+    <br/>
+
+    {% if lines is not empty %}
+        <table class="mx-auto">
+            <tr><th colspan="5">Week {{ week + 1 }} Lines</th></tr>
+            <tr><th>Favorite</th><th></th><th>Line</th><th></th><th>Underdog</th></tr>
+            {% for line in lines %}
+                <tr>
+                    <td>{{ line.favorite }}</td><td>&nbsp;</td>
+                    <td>{{ line.line }}</td><td>&nbsp;</td>
+                    <td>{{ line.underdog }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</div>
+{% endblock %}
