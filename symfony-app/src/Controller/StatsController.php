@@ -3,7 +3,13 @@
 namespace App\Controller;
 
 use App\Repository\StatsRepository;
+use App\Service\AuthenticationService;
+use App\Service\InjuryReportService;
+use App\Service\LuckService;
+use App\Service\PlayerRecordsService;
+use App\Service\PowerRatingService;
 use App\Service\SeasonWeekService;
+use App\Service\WeekByWeekService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -102,6 +108,89 @@ class StatsController extends AbstractController
         };
     }
 
+    #[Route('/stats/weekbyweek', name: 'stats_weekbyweek', methods: ['GET', 'POST'])]
+    public function weekByWeek(Request $request, WeekByWeekService $weekByWeek, AuthenticationService $auth): Response
+    {
+        $season = $this->requestedSeason($request);
+
+        // Scope resolution mirrors legacy: explicit team, else explicit
+        // position, else the member's own team, else team 1
+        $team = $this->param($request, 'team');
+        $pos = $this->param($request, 'pos');
+        if ($team) {
+            $grid = $weekByWeek->getTeamGrid($season, (int) $team);
+        } elseif ($pos) {
+            $grid = $weekByWeek->getPositionGrid($season, $pos);
+        } else {
+            $team = $auth->getTeamNumber() ?: 1;
+            $grid = $weekByWeek->getTeamGrid($season, (int) $team);
+        }
+
+        return match ($this->requestedFormat($request)) {
+            'csv' => $this->csvResponse($grid['titles'], $grid['rows'], 'weekbyweek.csv'),
+            'json' => $this->jsonRows($grid['titles'], $grid['rows']),
+            'ajax' => $this->render('stats/_table.html.twig', ['titles' => $grid['titles'], 'rows' => $grid['rows']]),
+            default => $this->render('stats/weekbyweek.html.twig', [
+                'titles' => $grid['titles'],
+                'rows' => $grid['rows'],
+                'teams' => $weekByWeek->getTeamList($season),
+                'positions' => StatsRepository::POSITIONS,
+                'selectedTeam' => (int) $team,
+                'selectedPos' => $pos,
+            ]),
+        };
+    }
+
+    #[Route('/stats/power', name: 'stats_power')]
+    public function power(PowerRatingService $powerRatings): Response
+    {
+        $season = $this->defaultSeason();
+        $result = $powerRatings->getPowerRatings($season);
+
+        return $this->render('stats/power.html.twig', [
+            'ratings' => $result['ratings'],
+            'week' => $result['week'],
+            'lines' => $powerRatings->getLines($season, $result['week'], $result['ratings']),
+        ]);
+    }
+
+    #[Route('/stats/luck', name: 'stats_luck')]
+    public function luck(LuckService $luckService): Response
+    {
+        return $this->render('stats/luck.html.twig', $luckService->getLuckRatings($this->defaultSeason()));
+    }
+
+    #[Route('/stats/records', name: 'stats_records')]
+    public function records(PlayerRecordsService $recordsService): Response
+    {
+        $season = $this->defaultSeason();
+
+        return $this->render('stats/records.html.twig', [
+            'records' => $recordsService->getRecords($season),
+            'week' => $this->stats->getMaxScoredWeek($season, 16),
+        ]);
+    }
+
+    /** The 2005 snapshot variant of the records page (lastplayer.php) */
+    #[Route('/stats/lastplayer', name: 'stats_lastplayer')]
+    public function lastPlayer(PlayerRecordsService $recordsService): Response
+    {
+        return $this->render('stats/records.html.twig', [
+            'records' => $recordsService->getLastPlayerRecords(),
+            'week' => $this->stats->getMaxScoredWeek(PlayerRecordsService::LASTPLAYER_SEASON, 16),
+        ]);
+    }
+
+    #[Route('/stats/injuries', name: 'stats_injuries')]
+    public function injuries(InjuryReportService $injuryReport): Response
+    {
+        return $this->render('stats/injuries.html.twig', [
+            'lists' => $injuryReport->getCurrentIrLists(),
+            'eligible' => $injuryReport->getEligible(),
+            'fullReport' => $injuryReport->getFullReport(),
+        ]);
+    }
+
     /** Plain-text weekly score feed (playerlist.php) */
     #[Route('/stats/playerlist', name: 'stats_playerlist')]
     public function playerlist(): Response
@@ -131,6 +220,11 @@ class StatsController extends AbstractController
             return $season;
         }
 
+        return $this->defaultSeason();
+    }
+
+    private function defaultSeason(): int
+    {
         $season = $this->seasonWeek->getCurrentSeason();
 
         return $this->seasonWeek->getCurrentWeek() < 1 ? $season - 1 : $season;

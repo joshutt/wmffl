@@ -1,0 +1,139 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Injury Report{% endblock %}
+
+{% block javascripts %}
+    <script src="/base/vendor/js/jquery.tablesorter.min.js"></script>
+    <script src="/base/js/injury.js"></script>
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Injury Report</h1>
+<hr/>
+
+{% include 'stats/_statbar.html.twig' %}
+
+<div class="mx-auto text-center">
+    <button type="button" class="btn btn-wmffl mx-4" id="currentLists-tab" data-toggle="tab"
+            onclick="toggleIRCurrent()">Current Lists
+    </button>
+    <button type="button" class="btn btn-wmffl mx-4" id="fillList-tab" data-toggle="tab" onclick="toggleIRFull()">
+        Full Report
+    </button>
+</div>
+
+<div class="tab-content">
+    <div id="currentLists" class="tab-pane show active">
+        <div class="row justify-content-around">
+            <div class="card px-0 m-2">
+                <div class="card-header text-center font-weight-bold">Current IR List</div>
+                <div class="card-body">
+                    <table class="table table-hover mb-0 tablesorter" id="irListTable">
+                        <thead>
+                        <tr>
+                            <th>Player</th>
+                            <th>Pos</th>
+                            <th>NFL</th>
+                            <th>Team</th>
+                            <th>Reason</th>
+                            <th>On IR Since</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if lists.ir is empty %}
+                            <tr>
+                                <td colspan="6" class="font-weight-bold">No Players Current on IR</td>
+                            </tr>
+                        {% endif %}
+                        {% for player in lists.ir %}
+                            <tr>
+                                <td>{{ player.firstname }} {{ player.lastname }}</td>
+                                <td>{{ player.pos }}</td>
+                                <td>{{ player.nflteamid }}</td>
+                                <td>{{ player.abbrev }}</td>
+                                <td>{{ player.details }}</td>
+                                <td>{{ player.dateon ? player.dateon|date('n-d-Y') }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-around">
+            <div class="card px-0 m-2">
+                <div class="card-header text-center font-weight-bold">IR Eligible</div>
+                <div class="card-body">
+                    <table class="table table-hover mb-0 tablesorter">
+                        <thead>
+                        <tr>
+                            <th>Player</th>
+                            <th>Pos</th>
+                            <th>NFL</th>
+                            <th>Team</th>
+                            <th>Reason</th>
+                            <th>Exp Return</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if eligible is empty %}
+                            <tr>
+                                <td colspan="6" class="font-weight-bold">No Players Current Eligible for IR</td>
+                            </tr>
+                        {% endif %}
+                        {% for player in eligible %}
+                            <tr>
+                                <td>{{ player.firstname }} {{ player.lastname }}</td>
+                                <td>{{ player.pos }}</td>
+                                <td>{{ player.nflteamid }}</td>
+                                <td>{{ player.abbrev }}</td>
+                                <td>{{ player.details }}</td>
+                                <td>{{ player.expectedReturn ? player.expectedReturn|date('n-d-Y') }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="fullList" class="tab-pane container">
+        <div class="row justify-content-between">
+            {% for teamName, injuries in fullReport %}
+                {% if loop.first %}
+                    <h3 class="col-12 text-center mt-2">League Wide Injury Report for Week {{ injuries[0].week }}</h3>
+                {% endif %}
+                <div class="card px-0 m-2">
+                    <div class="card-header text-center font-weight-bold">{{ teamName }}</div>
+                    <div class="card-body">
+                        <table class="table table-hover tablesorter">
+                            <thead>
+                            <tr>
+                                <th>Player</th>
+                                <th>Pos</th>
+                                <th>NFL</th>
+                                <th>Status</th>
+                                <th>Reason</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for player in injuries %}
+                                <tr>
+                                    <td>{{ player.firstname }} {{ player.lastname }}</td>
+                                    <td>{{ player.pos }}</td>
+                                    <td>{{ player.nflteamid }}</td>
+                                    <td>{{ player.status }}</td>
+                                    <td>{{ player.details }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
