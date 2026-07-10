@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}WMFFL Transactions{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Transactions</h1>
+<h5 class="text-center">Last Updated {{ lastUpdate }}</h5>
+<hr/>
+
+{% include 'transactions/_transmenu.html.twig' %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <a class="btn btn-wmffl" href="{{ path('transactions_history', {year: previous.year, month: previous.month}) }}">&lt;&lt; Previous Month</a>
+        </div>
+        <div class="col">
+            <a class="btn btn-wmffl" href="{{ path('transactions_history', {year: next.year, month: next.month}) }}">Next Month &gt;&gt;</a>
+        </div>
+    </div>
+
+    <div class="row py-4">
+        <div class="col-12">
+            {% for day in history %}
+                <b><i>{{ day.date }}</i></b>
+                <ul>
+                    {% for team in day.teams %}
+                        <li><b>{{ team.name }}</b>
+                            <ul>
+                                {% for move in team.moves %}
+                                    <li style="white-space: normal;">{{ move.label }}
+                                        {%- for player in move.players %}
+                                            {{ loop.first ? ' ' : ', ' }}<a href="{{ path('player_profile', {id: player.playerid}) }}">{{ player.name }}</a> ({{ player.pos }}-{{ player.nflteam }})
+                                        {%- endfor %}
+                                    </li>
+                                {% endfor %}
+                                {% for sentence in team.trades %}
+                                    <li style="white-space: normal;">
+                                        {%- for token in sentence -%}
+                                            {%- if token.text is defined -%}
+                                                {{- token.text -}}
+                                            {%- else -%}
+                                                <a href="{{ path('player_profile', {id: token.player.playerid}) }}">{{ token.player.name }}</a> ({{ token.player.pos }}-{{ token.player.nflteam }})
+                                            {%- endif -%}
+                                        {%- endfor -%}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <a class="btn btn-wmffl" href="{{ path('transactions_history', {year: previous.year, month: previous.month}) }}">&lt;&lt; Previous Month</a>
+        </div>
+        <div class="col">
+            <a class="btn btn-wmffl" href="{{ path('transactions_history', {year: next.year, month: next.month}) }}">Next Month &gt;&gt;</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

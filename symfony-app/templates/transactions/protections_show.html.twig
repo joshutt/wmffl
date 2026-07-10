@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ season }} Protections{% endblock %}
+
+{% block content %}
+<h1 class="text-center">{{ season }} Protections</h1>
+<hr size="1"/>
+
+<ul class="nav nav-pills nav-fill col m-2 p-1 justify-content-center">
+    <li class="nav-item m-2 col-2">
+        <a class="nav-link" href="{{ path('transactions_protections_show', {order: 'team', season: season}) }}">By Team</a>
+    </li>
+    <li class="nav-item m-2 col-2">
+        <a class="nav-link" href="{{ path('transactions_protections_show', {order: 'pos', season: season}) }}">By Position</a>
+    </li>
+</ul>
+
+<div class="container-fluid">
+    <div class="row">
+        {% for groupName, players in groups %}
+            <div class="col-12 col-lg-6 col-xl-4">
+                <div class="card px-0 mx-0 my-2">
+                    <div class="card-header text-center font-weight-bold">{{ groupName }} ({{ players|length }})</div>
+                    <div class="card-body">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-6 px-lg-1"><strong>Name</strong></div>
+                                <div class="col-2 px-lg-1"><strong>{{ detailLabel }}</strong></div>
+                                <div class="col-2 px-lg-1"><strong>NFL</strong></div>
+                                <div class="col-2 px-lg-1"><strong>Cost</strong></div>
+                            </div>
+                            {% for row in players %}
+                                <div class="row justify-content-center">
+                                    <div class="col-6 px-lg-0">{{ row.player }}</div>
+                                    <div class="col-2 px-lg-0">{{ row.detail }}</div>
+                                    <div class="col-2 px-lg-0">{{ row.nfl }}</div>
+                                    <div class="col-2 px-lg-0">{{ row.cost }}</div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
