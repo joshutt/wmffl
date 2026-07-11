@@ -81,72 +81,59 @@ class PlayerRecordsService
      */
     public function getRecords(int $season): array
     {
-        $game = [];
-        foreach (self::GAME_THRESHOLDS as $pos => $thresholds) {
-            $rows = $this->connection->fetchAllAssociative(
-                "SELECT CONCAT(p.firstname, ' ', p.lastname) as name, wm.weekname as week, ps.active as pts
-                 FROM newplayers p, playerscores ps, weekmap wm
-                 WHERE p.playerid=ps.playerid
-                 AND wm.season=ps.season AND wm.week=ps.week
-                 AND wm.season = :season
-                 AND p.pos = :pos
-                 AND ps.active >= :min
-                 ORDER BY ps.active DESC, ps.week",
-                ['season' => $season, 'pos' => $pos, 'min' => min($thresholds)]
-            );
-            $game = array_merge($game, $this->rankAgainstThresholds($pos, $thresholds, $rows));
-        }
-
-        $seasonRecords = [];
-        foreach (self::SEASON_THRESHOLDS as $pos => $thresholds) {
-            $rows = $this->connection->fetchAllAssociative(
-                "SELECT CONCAT(p.firstname, ' ', p.lastname) as name, sum(ps.active) as pts
-                 FROM newplayers p, playerscores ps
-                 WHERE p.playerid=ps.playerid
-                 AND ps.season = :season
-                 AND p.pos = :pos
-                 GROUP BY p.playerid
-                 HAVING `pts` >= :min
-                 ORDER BY `pts` DESC",
-                ['season' => $season, 'pos' => $pos, 'min' => min($thresholds)]
-            );
-            $seasonRecords = array_merge($seasonRecords, $this->rankAgainstThresholds($pos, $thresholds, $rows));
-        }
-
-        return ['game' => $game, 'season' => $seasonRecords];
+        return $this->buildRecords($season, self::GAME_THRESHOLDS, self::SEASON_THRESHOLDS, 'newplayers', 'pos');
     }
 
     /** The 2005 snapshot page, against the retired `players` table */
     public function getLastPlayerRecords(): array
     {
+        return $this->buildRecords(
+            self::LASTPLAYER_SEASON,
+            self::LASTPLAYER_GAME_THRESHOLDS,
+            self::LASTPLAYER_SEASON_THRESHOLDS,
+            'players',
+            'position'
+        );
+    }
+
+    /**
+     * @return array{game: array, season: array} record entries per kind
+     */
+    private function buildRecords(
+        int $season,
+        array $gameThresholds,
+        array $seasonThresholds,
+        string $playerTable,
+        string $posColumn
+    ): array {
         $game = [];
-        foreach (self::LASTPLAYER_GAME_THRESHOLDS as $pos => $thresholds) {
+        foreach ($gameThresholds as $pos => $thresholds) {
             $rows = $this->connection->fetchAllAssociative(
                 "SELECT CONCAT(p.firstname, ' ', p.lastname) as name, wm.weekname as week, ps.active as pts
-                 FROM players p, playerscores ps, weekmap wm
+                 FROM $playerTable p, playerscores ps, weekmap wm
                  WHERE p.playerid=ps.playerid
                  AND wm.season=ps.season AND wm.week=ps.week
                  AND wm.season = :season
-                 AND p.position = :pos
+                 AND p.$posColumn = :pos
                  AND ps.active >= :min
                  ORDER BY ps.active DESC, ps.week",
-                ['season' => self::LASTPLAYER_SEASON, 'pos' => $pos, 'min' => min($thresholds)]
+                ['season' => $season, 'pos' => $pos, 'min' => min($thresholds)]
             );
             $game = array_merge($game, $this->rankAgainstThresholds($pos, $thresholds, $rows));
         }
 
         $seasonRecords = [];
-        foreach (self::LASTPLAYER_SEASON_THRESHOLDS as $pos => $thresholds) {
+        foreach ($seasonThresholds as $pos => $thresholds) {
             $rows = $this->connection->fetchAllAssociative(
                 "SELECT CONCAT(p.firstname, ' ', p.lastname) as name, sum(ps.active) as pts
-                 FROM players p, playerscores ps
+                 FROM $playerTable p, playerscores ps
                  WHERE p.playerid=ps.playerid
                  AND ps.season = :season
-                 AND p.position = :pos
+                 AND p.$posColumn = :pos
                  GROUP BY p.playerid
                  HAVING `pts` >= :min
                  ORDER BY `pts` DESC",
-                ['season' => self::LASTPLAYER_SEASON, 'pos' => $pos, 'min' => min($thresholds)]
+                ['season' => $season, 'pos' => $pos, 'min' => min($thresholds)]
             );
             $seasonRecords = array_merge($seasonRecords, $this->rankAgainstThresholds($pos, $thresholds, $rows));
         }
