@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}WMFFL Protections{% endblock %}
+
+{% block content %}
+<h1>Protections</h1>
+<hr size="1"/>
+
+<div class="container">
+    {% if error == 'not_logged_in' %}
+        <div class="alert alert-secondary" role="alert">
+            You must be logged in to save protections.
+        </div>
+    {% elseif error == 'deadline' %}
+        <div class="alert alert-secondary" role="alert">
+            The deadline for changing protections has passed. Nothing was saved.
+        </div>
+    {% elseif error == 'unpaid' %}
+        <div class="alert alert-secondary" role="alert">
+            Your account is in arrears. You must be in good standing to submit protections.
+        </div>
+    {% elseif error == 'over_budget' %}
+        <div class="alert alert-secondary" role="alert">
+            You spent too many protection points<br/>
+            Spent: {{ spent }}<br/>
+            Allowed: {{ allowed }}
+        </div>
+    {% else %}
+        <div class="alert alert-secondary alert-dismissible" role="alert">
+            Your protections have been saved.
+            You may revise them anytime until the deadline.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-3"><strong>Player</strong></div>
+            <div class="col-1"><strong>Cost</strong></div>
+        </div>
+        {% for row in saved %}
+            <div class="row justify-content-center">
+                <div class="col-3">{{ row.player }} ({{ row.pos }}-{{ row.team }})</div>
+                <div class="col-1">{{ row.cost }}</div>
+            </div>
+        {% endfor %}
+        <div class="row justify-content-center">
+            <div class="col-3"><strong>TOTAL</strong></div>
+            <div class="col-1"><strong>{{ totalCost }}</strong></div>
+        </div>
+    {% endif %}
+
+    {% if error != 'not_logged_in' %}
+        <div class="text-center">
+            <a class="btn btn-wmffl" href="{{ path('transactions_protections') }}">Change Protections</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

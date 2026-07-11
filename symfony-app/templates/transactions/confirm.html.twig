@@ -1,0 +1,165 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirm Transaction{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center">Confirm Transaction</h1>
+    <hr size="1"/>
+
+    {% if not loggedIn %}
+        <div class="text-center font-weight-bold">You must be logged in to perform transactions</div>
+    {% else %}
+        <div class="hidden">
+            <p>Step 4: Check your available roster room and transaction points. You will not
+                be allowed to exceed the roster limit of {{ maxPlayers }}. If you use
+                more transaction points then you have the $1 fee will automaticlly be debited
+                from your account.</p>
+
+            <p>Step 5: Remove any players that you do not want to pick up, by changing the "Add"
+                label to "Leave".</p>
+
+            <p>Step 6: Drop any players from your current roster that you want by changing the
+                "Keep" status to "Drop".</p>
+
+            <p>Step 7: Click the "Confirm" button at the bottom of the page to execute these
+                transactions. If there are any errors or problems you will be notified and none
+                of the transactions requested will take place.</p>
+        </div>
+
+        <hr/>
+
+        <div class="container-fluid">
+            {% if errors is not empty %}
+                <p><span style="color: red;"><b>
+                    {% for error in errors %}{{ error }}<br/>{% endfor %}
+                </b></span></p>
+            {% endif %}
+
+            <p>You currently have {{ counts.active }} players on your roster, {{ counts.ir }} are on the IR.
+                That leaves you with {{ availableSlots }} available slots.<br/>
+                You have {{ counts.ptsLeft }} points left.</p>
+
+            <p>Confirm that these are the players you would like to pick up</p>
+
+            <form method="POST" action="{{ path('transactions_confirm') }}">
+                <input type="hidden" name="_token" value="{{ csrf_token(constant('App\\Controller\\RosterMoveController::CSRF_TOKEN_ID')) }}"/>
+                <table class="mx-4">
+                    <thead>
+                    <tr class="p-1 px-2">
+                        <td class="p-1 px-2"><b>Add</b></td>
+                        <td class="p-1 px-2"><b>Last Name</b></td>
+                        <td class="p-1 px-2"><b>First Name</b></td>
+                        <td class="p-1 px-2"><b>NFL Team</b></td>
+                        <td class="p-1 px-2"><b>Pos</b></td>
+                    </tr>
+                    </thead>
+                    {% for player in pickups %}
+                        <tr>
+                            <td class="p-1 px-2">
+                                {% if player.pos == 'HC' %}
+                                    HC
+                                {% elseif player.isWaive %}
+                                    <select name="prio{{ player.playerid }}">
+                                        {% for i in 1..waiverCount %}
+                                            <option value="{{ i }}" {{ i == player.defaultPriority ? 'selected' }}>Priority #{{ i }}</option>
+                                        {% endfor %}
+                                        <option value="n">Leave</option>
+                                    </select>
+                                {% else %}
+                                    <select name="pick{{ player.playerid }}">
+                                        <option value="y">Add</option>
+                                        <option value="n">Leave</option>
+                                    </select>
+                                {% endif %}
+                            </td>
+                            <td class="p-1 px-2">{{ player.lastname }}</td>
+                            <td class="p-1 px-2">{{ player.firstname }}</td>
+                            <td class="p-1 px-2">{{ player.team }}</td>
+                            <td class="p-1 px-2">{{ player.pos }}</td>
+                        </tr>
+                    {% endfor %}
+
+                    <tr><td>&nbsp;</td></tr>
+                    <tr>
+                        <td colspan="5"><a href="{{ path('transactions_list') }}">Return to Player List</a></td>
+                    </tr>
+                    <tr><td>&nbsp;</td></tr>
+
+                    {% if displayWaiver %}
+                        <thead>
+                        <tr>
+                            <th class="text-center" colspan="5">WAVIER LIST</th>
+                        </tr>
+                        <tr>
+                            <td class="p-1 px-2"><b>Status</b></td>
+                            <td class="p-1 px-2"><b>Last Name</b></td>
+                            <td class="p-1 px-2"><b>First Name</b></td>
+                            <td class="p-1 px-2"><b>NFL Team</b></td>
+                            <td class="p-1 px-2"><b>Pos</b></td>
+                        </tr>
+                        </thead>
+                        {% for player in existingPicks %}
+                            <tr>
+                                <td class="p-1 px-2">
+                                    <select name="prio{{ player.playerid }}">
+                                        {% for i in 1..waiverCount %}
+                                            <option value="{{ i }}" {{ i == player.priority ? 'selected' }}>Priority #{{ i }}</option>
+                                        {% endfor %}
+                                        <option value="n">Leave</option>
+                                    </select>
+                                </td>
+                                {% if player.pos == 'OL' %}
+                                    <td colspan="2" class="p-1 px-2">{{ player.lastname }}</td>
+                                {% else %}
+                                    <td class="p-1 px-2">{{ player.lastname }}</td>
+                                    <td class="p-1 px-2">{{ player.firstname }}</td>
+                                {% endif %}
+                                <td class="p-1 px-2">{{ player.team }}</td>
+                                <td class="p-1 px-2">{{ player.pos }}</td>
+                            </tr>
+                        {% endfor %}
+                        <tr><td>&nbsp;</td></tr>
+                    {% endif %}
+
+                    <thead>
+                    <tr>
+                        <th colspan="5" class="text-center">CURRENT ROSTER</th>
+                    </tr>
+                    <tr>
+                        <td class="p-1 px-2"><b>Status</b></td>
+                        <td class="p-1 px-2"><b>Last Name</b></td>
+                        <td class="p-1 px-2"><b>First Name</b></td>
+                        <td class="p-1 px-2"><b>NFL Team</b></td>
+                        <td class="p-1 px-2"><b>Pos</b></td>
+                    </tr>
+                    </thead>
+                    {% for player in roster %}
+                        <tr>
+                            <td class="p-1 px-2">
+                                {% if player.pos == 'HC' %}
+                                    HC
+                                {% else %}
+                                    <select name="{{ player.ir == 'IR' ? 'injr' : 'keep' }}{{ player.playerid }}">
+                                        <option value="y">Keep</option>
+                                        <option value="n">Drop</option>
+                                    </select>
+                                {% endif %}
+                            </td>
+                            <td class="p-1 px-2">{{ player.lastname }}</td>
+                            <td class="p-1 px-2">{{ player.firstname }}</td>
+                            <td class="p-1 px-2">{{ player.team }}</td>
+                            <td class="p-1 px-2">{{ player.pos }}</td>
+                            <td class="p-1 px-2">{{ player.ir }}</td>
+                        </tr>
+                    {% endfor %}
+
+                    <tr>
+                        <td colspan="5" align="center"><input type="submit" value="Confirm" name="submit"/></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

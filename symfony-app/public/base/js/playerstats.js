@@ -13,7 +13,7 @@ $(document).ready(function () {
 
     $('#pos').change(function () {
         var newPos = $('#pos option:selected').val();
-        $.get("playerstats", {pos: newPos, format: "ajax"}).done(function (data) {
+        $.get("players", {pos: newPos, format: "ajax"}).done(function (data) {
             $('#mainTable').html(data);
             setSorter();
         })
@@ -66,7 +66,7 @@ function setSorter() {
 }
 
 function csv(frmt="csv") {
-    var form = $("<form/>", {action: "playerstats", method: "POST"});
+    var form = $("<form/>", {action: "players", method: "POST"});
     form.append($("<input/>", {name: "format", value: frmt}));
     form.append($("<input/>", {name: "pos", value: $("#pos").val()}));
     $(document.body).append(form);

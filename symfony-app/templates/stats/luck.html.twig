@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Schedule Luck{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Schedule Luck</h1>
+<h5 class="text-center"><i>Through Week {{ week }}</i></h5>
+<hr/>
+
+{% include 'stats/_statbar.html.twig' %}
+
+<p>Schedule Luck is an evaluation of how a team's record compares to what it
+"should be".  It is determined by calculating what a team's record would be
+if they played every other team, every week and comparing that to what their
+record actually is.  A positive number indicates that the team's schedule
+has been favorable to them and that their record is better than it "should"
+be.  A negative number indicates that the schedule has been unfavorable.
+The higher the number (positive or negative) the more lucky (or unlucky) the
+schedule has been.  Any team whose luck is within the statistical significance
+has a fairly accurate record.  These numbers are updated every Tuesday
+afternoon.</p>
+
+<p>Current statistical significance: +/- {{ '%5.1f'|format(statSig) }}</p>
+
+<table class="mx-auto">
+    <tr><th align="left">Team</th><th align="left">Luck Rating</th></tr>
+    {% for team, rating in luck %}
+        {% set color = rating >= statSig ? 'green' : (rating <= -statSig ? 'red' : 'inherit') %}
+        <tr>
+            <td><span style="color: {{ color }};">{{ team }}</span></td>
+            <td><span style="color: {{ color }};">{{ '%5.1f'|format(rating) }}</span></td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

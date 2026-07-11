@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Player Records{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Player Records</h1>
+<h5 class="text-center"><i>Through Week {{ week }}</i></h5>
+<hr/>
+
+{% include 'stats/_statbar.html.twig' %}
+
+<p>This is a list of individual player performances this season, that rank among the top 10 ever at a given position.</p>
+
+{% set ordinals = {1: 'st', 2: 'nd', 3: 'rd'} %}
+{% set seasonFirsts = records.season|filter(r => r.rank == 1) %}
+{% set gameFirsts = records.game|filter(r => r.rank == 1) %}
+{% set seasonTopTen = records.season|filter(r => r.rank > 1) %}
+{% set gameTopTen = records.game|filter(r => r.rank > 1) %}
+
+{% if seasonFirsts is not empty %}
+    <div class="text-center my-3">
+        <table border="1" class="mx-auto">
+            <tr><th colspan="3">Single Season Records</th></tr>
+            <tr><th>Pos</th><th>Player</th><th>Pts</th></tr>
+            {% for record in seasonFirsts %}
+                <tr>
+                    <td>{{ record.pos }}</td>
+                    <td>{{ record.name }}</td>
+                    <td>{{ record.pts }}{{ record.tie ? ' (tie)' }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endif %}
+
+{% if gameFirsts is not empty %}
+    <div class="text-center my-3">
+        <table border="1" class="mx-auto">
+            <tr><th colspan="4">Single Game Records</th></tr>
+            <tr><th>Pos</th><th>Player</th><th>Week</th><th>Pts</th></tr>
+            {% for record in gameFirsts %}
+                <tr>
+                    <td>{{ record.pos }}</td>
+                    <td>{{ record.name }}</td>
+                    <td>{{ record.week }}</td>
+                    <td>{{ record.pts }}{{ record.tie ? ' (tie)' }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endif %}
+
+{% if seasonTopTen is not empty %}
+    <div class="text-center my-3">
+        <table border="1" class="mx-auto">
+            <tr><th colspan="4">Single Season Top Ten</th></tr>
+            <tr><th>Pos</th><th>Player</th><th>Pts</th><th>Rank</th></tr>
+            {% for record in seasonTopTen %}
+                <tr>
+                    <td>{{ record.pos }}</td>
+                    <td>{{ record.name }}</td>
+                    <td>{{ record.pts }}</td>
+                    <td>{{ record.rank }}{{ ordinals[record.rank]|default('th') }}{{ record.tie ? ' (tie)' }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endif %}
+
+{% if gameTopTen is not empty %}
+    <div class="text-center my-3">
+        <table border="1" class="mx-auto">
+            <tr><th colspan="5">Single Game Top Ten</th></tr>
+            <tr><th>Pos</th><th>Player</th><th>Week</th><th>Pts</th><th>Rank</th></tr>
+            {% for record in gameTopTen %}
+                <tr>
+                    <td>{{ record.pos }}</td>
+                    <td>{{ record.name }}</td>
+                    <td>{{ record.week }}</td>
+                    <td>{{ record.pts }}</td>
+                    <td>{{ record.rank }}{{ ordinals[record.rank]|default('th') }}{{ record.tie ? ' (tie)' }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endif %}
+{% endblock %}

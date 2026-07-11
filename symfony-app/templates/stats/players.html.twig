@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Player Stats{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="/base/css/stats.css">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/base/vendor/js/jquery.tablesorter.min.js"></script>
+    <script src="/base/js/playerstats.js"></script>
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Player Stats</h1>
+<hr/>
+
+{% include 'stats/_statbar.html.twig' %}
+
+<div id="tblblock" class="container">
+    <div class="formatOptions row col justify-content-center">
+        <select id="pos" class="mr-2">
+            {% for setPos in positions %}
+                <option value="{{ setPos }}" {{ setPos == pos ? 'selected' }}>{{ setPos }}</option>
+            {% endfor %}
+        </select>
+        <button class="button mx-1" id="csv" onclick="csv()">CSV</button>
+        <button class="button mx-1" id="json" onclick="csv('json')">JSON</button>
+    </div>
+    <div id="mainTable" class="row col-12 justify-content-center">
+        {% include 'stats/_table.html.twig' %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Stats Index{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Stats Index</h1>
+<hr/>
+
+<div class="btn-group" role="group">
+    <a class="btn btn-wmffl" href="{{ path('stats_leaders') }}">League Leaders</a>
+    <a class="btn btn-wmffl" href="{{ path('stats_weekbyweek') }}">Week By Week</a>
+    <a class="btn btn-wmffl" href="{{ path('stats_power') }}">Power Rank</a>
+    <a class="btn btn-wmffl" href="{{ path('stats_players') }}">Player Stats</a>
+    <a class="btn btn-wmffl" href="{{ path('stats_luck') }}">Luck Ratings</a>
+    <a class="btn btn-wmffl" href="{{ path('stats_records') }}">Player Records</a>
+    <a class="btn btn-wmffl" href="/history/2024Season/teammoney">Accounting</a>
+</div>
+{% endblock %}

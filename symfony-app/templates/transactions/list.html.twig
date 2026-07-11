@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}WMFFL Players List{% endblock %}
+
+{% block content %}
+<h1 class="text-center">List Players</h1>
+<hr size="1"/>
+
+{% include 'transactions/_transmenu.html.twig' %}
+
+{% if not loggedIn %}
+    <div class="text-center font-weight-bold h4">You must be logged in to use this feature</div>
+{% else %}
+    <div class="container">
+        <p>Step 1: Search for players by any of the below criteria and selecting "List Players".
+            First and Last Name have assumed wildcards (ie, 'Sm' will give you Smith and Small
+            as well as Ismail and Riemersma).</p>
+
+        <p>Step 2: Change the 'Available' tag to 'Pick Up' for any players you are interested in. If you only want to
+            drop players or change your waiver priorities skip this step.</p>
+
+        <p>Step 3: Click the "Perform Transactions" button to go to the next page.</p>
+        <hr/>
+
+        <form action="{{ path('transactions_list') }}" method="GET">
+            Last Name:<input type="text" name="Last" value="{{ criteria.last }}"/>
+            First Name:<input type="text" name="First" value="{{ criteria.first }}"/><br/>
+
+            <select name="Position">
+                <option value="" {{ criteria.position == '' ? 'selected' }}>ALL Positions</option>
+                {% for value, label in positions %}
+                    <option value="{{ value }}" {{ criteria.position == value ? 'selected' }}>{{ label }}</option>
+                {% endfor %}
+            </select>
+
+            <select name="Team">
+                <option value="" {{ criteria.team == '' ? 'selected' }}>ALL NFL Teams</option>
+                {% for value, label in nflTeams %}
+                    <option value="{{ value }}" {{ criteria.team == value ? 'selected' }}>{{ label }}</option>
+                {% endfor %}
+            </select>
+
+            <select name="Available">
+                <option value="" {{ criteria.available == '' ? 'selected' }}>ALL Players</option>
+                <option value="available" {{ criteria.available == 'available' ? 'selected' }}>Available Players</option>
+                <option value="taken" {{ criteria.available == 'taken' ? 'selected' }}>Taken Players</option>
+            </select>
+
+            <input type="hidden" name="Order" value="{{ criteria.order }}"/>
+            <input type="submit" name="submit" value="List Players"/>
+        </form>
+
+        {% set sortParams = {Position: criteria.position, Team: criteria.team, Available: criteria.available, Last: criteria.last, First: criteria.first, submit: 'y'} %}
+        <form action="{{ path('transactions_confirm') }}" method="POST">
+            <input type="hidden" name="_token" value="{{ csrf_token(constant('App\\Controller\\RosterMoveController::CSRF_TOKEN_ID')) }}"/>
+            <table>
+                <tr>
+                    <td><b><a href="{{ path('transactions_list', sortParams|merge({Order: 'teamname'})) }}">Current Team</a></b></td>
+                    <td>&nbsp;&nbsp;&nbsp;</td>
+                    <td><b><a href="{{ path('transactions_list', sortParams|merge({Order: 'lastname'})) }}">Last Name</a></b></td>
+                    <td>&nbsp;&nbsp;&nbsp;</td>
+                    <td><b><a href="{{ path('transactions_list', sortParams|merge({Order: 'firstname'})) }}">First Name</a></b></td>
+                    <td>&nbsp;&nbsp;&nbsp;</td>
+                    <td><b><a href="{{ path('transactions_list', sortParams|merge({Order: 'position'})) }}">Pos</a></b></td>
+                    <td>&nbsp;&nbsp;&nbsp;</td>
+                    <td><b><a href="{{ path('transactions_list', sortParams|merge({Order: 'nflteam'})) }}">NFL Team</a></b></td>
+                </tr>
+                {% for player in results ?? [] %}
+                    <tr>
+                        <td>
+                            {% if player.teamname == 'Available' %}
+                                <select name="pick{{ player.playerid }}">
+                                    <option value="" selected>Available</option>
+                                    <option value="{{ player.playerid }}">Pick Up</option>
+                                </select>
+                            {% else %}
+                                {{ player.teamname }}
+                            {% endif %}
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;</td>
+                        <td><a href="{{ path('player_profile', {id: player.playerid}) }}">{{ player.lastname }}</a></td>
+                        <td>&nbsp;&nbsp;&nbsp;</td>
+                        <td><a href="{{ path('player_profile', {id: player.playerid}) }}">{{ player.firstname }}</a></td>
+                        <td>&nbsp;&nbsp;&nbsp;</td>
+                        <td>{{ player.pos }}</td>
+                        <td>&nbsp;&nbsp;&nbsp;</td>
+                        <td>{{ player.team }}</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="9" align="center"><input type="submit" name="submit" value="Perform Transactions"/></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+{% endif %}
+{% endblock %}

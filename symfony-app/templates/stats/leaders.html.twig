@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}League Leaders{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="/base/css/stats.css">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/base/vendor/js/jquery.tablesorter.min.js"></script>
+    <script src="/base/js/leaders.js"></script>
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center">League Leaders</h1>
+<hr/>
+
+{% include 'stats/_statbar.html.twig' %}
+
+<div class="container mt-2">
+    <span class="row justify-content-center my-2">Through Week {{ week }}</span>
+    <div class="formatOptions row col justify-content-center">
+        <button class="button mx-1" id="csv" onclick="csv()">CSV</button>
+        <button class="button mx-1" id="json" onclick="csv('json')">JSON</button>
+    </div>
+    <div id="mainTable" class="row col-12 justify-content-center">
+        {% include 'stats/_table.html.twig' %}
+    </div>
+</div>
+{% endblock %}

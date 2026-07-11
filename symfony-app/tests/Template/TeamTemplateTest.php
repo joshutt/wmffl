@@ -302,7 +302,7 @@ class TeamTemplateTest extends TestCase
         $this->assertStringNotContainsString('href="/kingsmen', $html);
         $this->assertStringContainsString('Kingsmen', $html);
         $this->assertStringContainsString('/team_compare', $html);
-        $this->assertStringContainsString('/transactions/displayWaiverOrder', $html);
+        $this->assertStringContainsString('/transactions_waivers', $html);
     }
 
     // ---- squirrels + compare ----
