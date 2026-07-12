@@ -70,25 +70,20 @@ should be small enough to land as its own PR.
   (`info.php` phpinfo dump, 2009-hardcoded `standings.php` +
   `weekstandings.php`, `teamcompare.php`) deleted, their URLs land on
   `/stats`.
-
-## Phase 6 — Table cleanup
-
-Legacy: superseded/duplicate DB tables surfaced while auditing `players` vs
-`newplayers`; a fuller schema audit may turn up more.
-
-1. Retire the legacy `players` table — either port the six frozen 2003–2008
-   history pages that still query it directly (`2003Season/leaders.php`,
-   `2003Season/protectioncost2004.php`, `2004Season/protectioncost2005.php`,
-   `2005Season/protectioncost.php`, `2006Season/protectioncost2007.php`,
-   `2008Season/protectioncost.php`) over to `newplayers`, or confirm they're
-   frozen archives safe to leave pointed at the old table, before dropping it
-2. Delete `symfony-app/public/images/players/playerstats.php` — an orphaned
-   leftover from the images move (`0ad1441`) that still queries `players`
-   directly; its functionality is already covered by `StatsController` /
-   `StatsRepository`, but it's a live `.php` file sitting in the public
-   docroot
-3. Audit the rest of the schema for other legacy-vs-current table pairs
-   before the final decommission phase locks in the final schema
+- Table cleanup (Phase 6 complete, 2026-07-12,
+  `specs/2026-07-12-table-cleanup/`): dropped the three superseded legacy
+  tables plus two scratch tables. `activations` → the 2005/2006 boxscore
+  pages rewritten to the tall `revisedactivations` join (byte-identical
+  output). `players` → the six frozen 2003–2008 history pages ported to
+  `newplayers` (also un-broke them: MySQL 5+ join-precedence and PHP 8
+  undefined-variable rot had all six returning 500s), orphaned
+  `public/images/players/playerstats.php` deleted. `injuries` (2010–2019,
+  73,482 rows) **merged into** `newinjuries` (status letters → words,
+  `details` widened to varchar(50)) before the drop — 130,457 rows total,
+  per-status counts verified. `tmp_players`/`tmp_scan` dropped. Dead
+  `App\Entity\{Activation,Injury}` + `App\Enum\InjuryStatusEnum` deleted.
+  Full-schema keep/drop audit in that spec's `audit.md`; the rename back
+  to canonical short names is deferred to Phase 7.
 
 ## Phase 7 — Reclaim canonical table names
 
