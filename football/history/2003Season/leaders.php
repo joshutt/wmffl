@@ -1,16 +1,17 @@
 <?php
-require_once "base/conn.php";
+require_once "utils/start.php";
 
-$sql = "SELECT  t.name, p.position, sum(ps.active) as 'totpts' ";
-$sql .= "FROM playerscores ps, players p, roster r, team t, weekmap w ";
-$sql .= "WHERE ps.playerid=p.playerid and r.playerid=p.playerid ";
+$sql = "SELECT  t.name, a.pos as 'position', sum(ps.active) as 'totpts' ";
+$sql .= "FROM playerscores ps, revisedactivations a, roster r, team t, weekmap w ";
+$sql .= "WHERE a.season=ps.season and a.week=ps.week and a.playerid=ps.playerid ";
+$sql .= "and r.playerid=ps.playerid ";
 $sql .= "and r.teamid=t.teamid and r.dateon <= w.activationdue ";
 $sql .= "and (r.dateoff is null or r.dateoff > w.activationdue) ";
 $sql .= "and w.season=2003 and ps.season=w.season and ps.week=w.week ";
 $sql .= "and ps.week<=14 ";
 $sql .= "and ps.active is not null ";
-$sql .= "GROUP BY t.name, p.position ";
-$sql .= "ORDER BY p.position, 'totpts' DESC ";
+$sql .= "GROUP BY t.name, a.pos ";
+$sql .= "ORDER BY a.pos, 'totpts' DESC ";
 
 $dateQuery = "SELECT max(week) FROM playerscores where season=2003";
 
@@ -50,17 +51,17 @@ while ($rank = mysqli_fetch_array($results)) {
 	print "<TR><TH COLSPAN=2 ALIGN=Center>".$rank["position"]."</TH></TR>";
 	print "<TR><TD>".$rank["name"]."</TD><TD>".$rank["totpts"]."</TD></TR>";
     if ($rank["position"] == "DB" || $rank["position"] == "LB" || $rank["position"] == "DL") {
-        $def[$rank["name"]] += $rank["totpts"];
+        $def[$rank["name"]] = ($def[$rank["name"]] ?? 0) + $rank["totpts"];
     } else {
-        $off[$rank["name"]] += $rank["totpts"];
+        $off[$rank["name"]] = ($off[$rank["name"]] ?? 0) + $rank["totpts"];
     }
 	for ($i=1; $i<10; $i++) {
         $rank = mysqli_fetch_array($results);
 		print "<TR><TD>".$rank["name"]."</TD><TD>".$rank["totpts"]."</TD></TR>";
         if ($rank["position"] == "DB" || $rank["position"] == "LB" || $rank["position"] == "DL") {
-            $def[$rank["name"]] += $rank["totpts"];
+            $def[$rank["name"]] = ($def[$rank["name"]] ?? 0) + $rank["totpts"];
         } else {
-            $off[$rank["name"]] += $rank["totpts"];
+            $off[$rank["name"]] = ($off[$rank["name"]] ?? 0) + $rank["totpts"];
         }
 	}
 	print "</TABLE></TD>";
@@ -73,7 +74,7 @@ print "<TD><TABLE>";
 print "<TR><TH COLSPAN=2 ALIGN=Center>Offense</TH></TR>";
 foreach ($off as $team=>$score) {
     print "<TR><TD>$team</TD><TD>$score</TD></TR>";
-    $totpts[$team] = $score + $def[$team];
+    $totpts[$team] = $score + ($def[$team] ?? 0);
 }
 print "</TABLE></TD>";
 print "<TD><TABLE>";

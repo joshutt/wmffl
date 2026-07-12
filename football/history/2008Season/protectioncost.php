@@ -1,17 +1,20 @@
 <?php
 require_once "utils/start.php";
 $query = "SELECT p.firstname, p.lastname, pc.years, MAX(pos.cost)-MIN(pos.cost) as 'Extra', t.name ";
-$query .= "FROM players p, protectioncost pc, positioncost pos ";
+$query .= "FROM newplayers p ";
+$query .= "JOIN protectioncost pc ON pc.playerid=p.playerid AND pc.season=2008 ";
+$query .= "JOIN positioncost pos ON pos.position=p.pos AND pos.years<=pc.years ";
 $query .= "LEFT JOIN roster r ON r.playerid=p.playerid AND r.dateoff is null ";
 $query .= "LEFT JOIN team t on r.teamid=t.teamid ";
-$query .= "WHERE p.playerid=pc.playerid and pc.season=2008 ";
-$query .= "and p.position=pos.position and pos.years<=pc.years ";
 $query .= "GROUP BY p.playerid, pos.position ";
 $query .= "ORDER BY t.name, Extra desc, pc.years desc";
 
 $result = mysqli_query($conn, $query);
 $count = mysqli_num_rows($result);
+$page = array();
+$countall = array();
 while ($aLine = mysqli_fetch_array($result)) {
+	if (!isset($page[$aLine['name']])) { $page[$aLine['name']] = ""; $countall[$aLine['name']] = 0; }
 	$page[$aLine['name']] .= "<TR><TD>".$aLine['firstname']." ".$aLine['lastname'];
 	$page[$aLine['name']] .= "</TD><TD ALIGN=Center>".$aLine['years']."</TD>";
 	$page[$aLine['name']] .= "<TD ALIGN=Center>+".$aLine['Extra']."</TD></TR>";
@@ -90,7 +93,7 @@ $teamName = '';
 ?>
 <TR><TH COLSPAN=3>Not on a Roster</TH></TR>
 <TR><TH>Player Name</TH><TH>Years Protected</TH><TH>Extra Cost</TH></TR>
-<?php print $page['']; ?>
+<?php print $page[''] ?? ''; ?>
 <TR><TD>&nbsp;</TD></TR>
 
 </TABLE>
