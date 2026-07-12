@@ -19,7 +19,11 @@ use Doctrine\Migrations\AbstractMigration;
  *
  * Conversions on the way in:
  * - `newinjuries.details` widened varchar(32) -> varchar(50) to match
- *   the old column (8,963 old rows exceed 32 chars);
+ *   the old column (8,963 old rows exceed 32 chars). The old column
+ *   carried an explicit `CHARACTER SET latin1`; the MODIFY drops that
+ *   so the column follows the table's utf8mb4 default — a lossless
+ *   conversion (all existing values are ASCII, verified), and it
+ *   un-special-cases the one latin1 column in the table;
  * - status letters mapped to the word vocabulary used by the live
  *   table and InjuredReserveService::IR_STATUSES:
  *   P->Probable, Q->Questionable, D->Doubtful, O->Out, I->IR,

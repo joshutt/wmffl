@@ -121,7 +121,12 @@ Confirm removed:
 - [x] Sections 1–6 pass.
 - [x] `specs/roadmap.md` updated (Phase 6 → Done with summary; Phase 7
       rename follow-up already recorded).
-- [ ] Code-review pass (`/code-review`) and findings addressed.
+- [x] Code-review pass done inline (the 8 finder agents all died on a
+      session limit, as in Phase 4/5): two findings, both addressed —
+      `NewInjury.details` mapping updated 32→50 to match the widened
+      column, and the `details` latin1→utf8mb4 charset normalization
+      (side effect of the MODIFY) verified lossless and documented in
+      the migration docblock.
 - [x] Migrations executed on the dev DB in version order
       (`Version20260712000000` activations → `010000` players →
       `020000` injuries merge → `030000` tmp tables); groups are

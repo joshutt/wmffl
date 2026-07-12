@@ -27,7 +27,7 @@ class NewInjury
     #[ORM\Column(name: 'status', length: 15)]
     private ?string $status = null;
 
-    #[ORM\Column(name: 'details', length: 32, nullable: true)]
+    #[ORM\Column(name: 'details', length: 50, nullable: true)]
     private ?string $details = null;
 
     #[ORM\Column(name: 'expectedReturn', type: Types::DATE_MUTABLE, nullable: true)]
