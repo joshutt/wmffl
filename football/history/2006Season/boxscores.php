@@ -121,7 +121,7 @@ $query = <<<EOD
 select t.name, p.pos as 'position', p.lastname, p.firstname, nr.nflteamid as 'NFLteam', n.status,
 p.flmid as 'statid', s.*, if (r.dateon is null, 1, 0) as 'illegal', ps.pts
 from newplayers p
-join activations a on p.playerid in (a.HC, a.QB, a.RB1, a.RB2, a.WR1, a.WR2, a.TE, a.K, a.OL, a.DL1, a.DL2, a.LB1, a.LB2, a.DB1, a.DB2)
+join revisedactivations a on a.playerid = p.playerid
 join weekmap w on w.season=a.season and w.week=a.week
 join teamnames t on t.teamid=a.teamid and t.season=w.season
 left join nflrosters nr
