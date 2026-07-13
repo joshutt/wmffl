@@ -29,8 +29,22 @@ class Offer
     #[ORM\Column(name: 'Date', type: Types::DATETIME_MUTABLE)]
     private ?\DateTime $date = null;
 
+    /**
+     * Legacy quirk: the LastOfferID column stores the id of the TEAM that
+     * made the most recent offer (it drives whose turn it is), not an
+     * offer id. The accessors are named for what it actually holds.
+     */
     #[ORM\Column(name: 'LastOfferID', type: 'integer')]
-    private ?int $lastOfferId = 0;
+    private ?int $lastOfferTeamId = 0;
+
+    /**
+     * Amend/counter creates a new offer row; this links it back to the
+     * offer it replaced so comment history can follow the negotiation.
+     * Legacy rows stay NULL.
+     */
+    #[ORM\ManyToOne(targetEntity: self::class)]
+    #[ORM\JoinColumn(name: 'PrevOfferID', referencedColumnName: 'OfferID', nullable: true)]
+    private ?Offer $prevOffer = null;
 
     public function getId(): ?int
     {
@@ -81,14 +95,25 @@ class Offer
         return $this;
     }
 
-    public function getLastOfferId(): ?int
+    public function getLastOfferTeamId(): ?int
     {
-        return $this->lastOfferId;
+        return $this->lastOfferTeamId;
     }
 
-    public function setLastOfferId(int $lastOfferId): static
+    public function setLastOfferTeamId(int $lastOfferTeamId): static
     {
-        $this->lastOfferId = $lastOfferId;
+        $this->lastOfferTeamId = $lastOfferTeamId;
+        return $this;
+    }
+
+    public function getPrevOffer(): ?Offer
+    {
+        return $this->prevOffer;
+    }
+
+    public function setPrevOffer(?Offer $prevOffer): static
+    {
+        $this->prevOffer = $prevOffer;
         return $this;
     }
 }

@@ -1,0 +1,80 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Admin - Trade Offers{% endblock %}
+
+{% block admin_content %}
+<h2 class="mt-2">Trade Offers</h2>
+
+<form method="GET" action="{{ path('admin_trades') }}" class="form-inline mb-3">
+    <label class="mr-2" for="status">Status:</label>
+    <select class="form-control mr-2" name="status" id="status">
+        <option value="">All</option>
+        {% for status in statuses %}
+            <option value="{{ status }}" {{ statusFilter == status ? 'selected' }}>{{ status }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-wmffl">Filter</button>
+</form>
+
+{% if offers is empty %}
+    <p>No trade offers found.</p>
+{% endif %}
+
+{% for offer in offers %}
+    <div class="card mb-3">
+        <div class="card-header">
+            <b>#{{ offer.offerId }}</b>
+            {{ offer.teamAName }} &harr; {{ offer.teamBName }}
+            <span class="badge badge-secondary">{{ offer.status }}</span>
+            <span class="float-right">{{ offer.date|date('n/j/Y g:ia') }}</span>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% for teamId, side in offer.terms %}
+                    <div class="col-md-6">
+                        <b>{{ teamId == offer.teamAId ? offer.teamAName : offer.teamBName }} give up:</b>
+                        <ul>
+                            {% for player in side.players %}
+                                <li>{{ player.name }} ({{ player.pos }}-{{ player.nflteam }})</li>
+                            {% endfor %}
+                            {% for pick in side.picks %}
+                                <li>{{ pick.season }} Round {{ pick.round }} Pick ({{ pick.orgTeamName }}'s)</li>
+                            {% endfor %}
+                            {% for point in side.points %}
+                                <li>{{ point.points }} Transaction Point{{ point.points > 1 ? 's' }} in {{ point.season }}</li>
+                            {% endfor %}
+                            {% if side.players is empty and side.picks is empty and side.points is empty %}
+                                <li class="text-muted">nothing</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {% if offer.comments is not empty %}
+                <b>Comments:</b>
+                <ul class="list-unstyled ml-3">
+                    {% for comment in offer.comments %}
+                        <li class="mb-1">
+                            <b>{{ comment.teamName }}</b>
+                            <small class="text-muted">({{ comment.actionLabel }}, {{ comment.date|date('n/j/Y g:ia') }})</small>:
+                            {{ comment.comment }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            {% if offer.status == 'Pending' %}
+                <form action="{{ path('admin_trades_void', {id: offer.offerId}) }}" method="POST" class="form-inline">
+                    <input type="hidden" name="_token" value="{{ csrf_token(constant('App\\Controller\\Admin\\AdminTradeController::CSRF_TOKEN_ID')) }}"/>
+                    <input type="text" class="form-control mr-2 w-50" name="reason" placeholder="Reason for voiding"/>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-wmffl"
+                                onclick="return confirm('Void offer #{{ offer.offerId }}?');">Void Offer</button>
+                    </div>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}
+{% endblock %}

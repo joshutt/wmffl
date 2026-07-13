@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ action }} Trade Offer{% endblock %}
+
+{% block content %}
+<h1 class="text-center">{{ action }} Trade Offer</h1>
+<hr size="1"/>
+
+{% include 'transactions/_transmenu.html.twig' %}
+
+<div class="container text-center">
+    <h3>{{ question }}</h3>
+
+    <p>{{ mySentence }}<br/>{{ otherSentence }}</p>
+
+    <form action="{{ path('trades_respond', {id: offerId}) }}" method="POST">
+        <input type="hidden" name="_token" value="{{ csrf_token(constant('App\\Controller\\TradeController::CSRF_TOKEN_ID')) }}"/>
+        <input type="hidden" name="action" value="{{ action }}"/>
+        <div class="form-group text-left">
+            <label for="comments">Additional Comments:</label>
+            <textarea class="form-control" name="comments" id="comments" cols="60" rows="8"></textarea>
+        </div>
+        <button type="submit" name="select" value="Yes" class="btn btn-wmffl m-1">Yes</button>
+        <button type="submit" name="select" value="No" class="btn btn-wmffl m-1">No</button>
+    </form>
+</div>
+{% endblock %}

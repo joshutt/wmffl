@@ -63,6 +63,24 @@ class LegacyTransactionRedirectControllerTest extends TestCase
         $this->assertSame(['transactions_history', []], $controller->redirectedTo);
     }
 
+    public function testRetiredTradesUrlsLandOnTheTradeScreen(): void
+    {
+        $controller = $this->makeController();
+        $response = $controller->trades();
+
+        $this->assertSame(301, $response->getStatusCode());
+        $this->assertSame(['trades_screen', []], $controller->redirectedTo);
+    }
+
+    public function testTransmenuLandsOnTheTransactionsHub(): void
+    {
+        $controller = $this->makeController();
+        $response = $controller->transmenu();
+
+        $this->assertSame(301, $response->getStatusCode());
+        $this->assertSame(['transactions_history', []], $controller->redirectedTo);
+    }
+
     private function makeController(): LegacyTransactionRedirectController
     {
         return new class extends LegacyTransactionRedirectController {

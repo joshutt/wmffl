@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Trades{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Trade Screen</h1>
+<hr size="1"/>
+
+{% include 'transactions/_transmenu.html.twig' %}
+
+{% if not loggedIn %}
+    <div class="text-center font-weight-bold h4">You must be logged in to use this feature</div>
+{% else %}
+    <div class="container">
+        <p>Any outstanding trade offers will be listed below. If the most recent action
+            on the trade is an offer by you, then you will have the option of withdrawing
+            the trade or amending the terms of the trade. If the most recent action was
+            an offer to you, by the other team, then you have the option of accepting the
+            trade as is, rejecting the trade completely or making a counteroffer.</p>
+
+        <p>You may make a new trade offer by selecting the team from the "Offer New
+            Trade" section below.</p>
+
+        <h3 class="text-center">Pending Trade Offers</h3>
+
+        {% if offers is empty %}
+            <p class="text-center">You have no pending trade offers.</p>
+        {% endif %}
+
+        {% for offer in offers %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-4"><b>{{ offer.otherTeamName }}</b></div>
+                        <div class="col-md-4"><b>Offered:</b> {{ offer.date|date('n/j/Y') }}</div>
+                        <div class="col-md-4"><b>Expires:</b> {{ offer.expires|date('n/j/Y') }}</div>
+                    </div>
+                    <div><b>Status:</b> {{ offer.statusLine }}</div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            You Would Receive:
+                            <ul>
+                                {% for player in offer.youReceive.players %}
+                                    <li>{{ player.name }} ({{ player.pos }}-{{ player.nflteam }})</li>
+                                {% endfor %}
+                                {% for pick in offer.youReceive.picks %}
+                                    <li>{{ pick.season }} Round {{ pick.round }} Pick ({{ pick.orgTeamName }}'s)</li>
+                                {% endfor %}
+                                {% for point in offer.youReceive.points %}
+                                    <li>{{ point.points }} Transaction Point{{ point.points > 1 ? 's' }} in {{ point.season }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            They Would Receive:
+                            <ul>
+                                {% for player in offer.theyReceive.players %}
+                                    <li>{{ player.name }} ({{ player.pos }}-{{ player.nflteam }})</li>
+                                {% endfor %}
+                                {% for pick in offer.theyReceive.picks %}
+                                    <li>{{ pick.season }} Round {{ pick.round }} Pick ({{ pick.orgTeamName }}'s)</li>
+                                {% endfor %}
+                                {% for point in offer.theyReceive.points %}
+                                    <li>{{ point.points }} Transaction Point{{ point.points > 1 ? 's' }} in {{ point.season }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+
+                    {% if offer.comments is not empty %}
+                        <hr/>
+                        <b>Comments:</b>
+                        <ul class="list-unstyled ml-3">
+                            {% for comment in offer.comments %}
+                                <li class="mb-1">
+                                    <b>{{ comment.teamName }}</b>
+                                    <small class="text-muted">({{ comment.actionLabel }}, {{ comment.date|date('n/j/Y g:ia') }})</small>:
+                                    {{ comment.comment }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    {# Action targets are the fixed public URLs served by the
+                       offer-builder and respond controllers #}
+                    <div class="text-center">
+                        {% if offer.isMyMove %}
+                            <a class="btn btn-wmffl m-1" href="/trades/respond/{{ offer.offerId }}?action=Accept">Accept</a>
+                            <a class="btn btn-wmffl m-1" href="/trades/respond/{{ offer.offerId }}?action=Reject">Reject</a>
+                            <a class="btn btn-wmffl m-1" href="/trades/offer?offerid={{ offer.offerId }}">Counter</a>
+                        {% else %}
+                            <a class="btn btn-wmffl m-1" href="/trades/respond/{{ offer.offerId }}?action=Withdraw">Withdraw</a>
+                            <a class="btn btn-wmffl m-1" href="/trades/offer?offerid={{ offer.offerId }}">Amend</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        <h3 class="text-center">Offer New Trade</h3>
+        <form action="/trades/offer" method="GET">
+            <div class="text-center">
+                Offer Trade To:
+                <select name="to">
+                    {% for team in teams %}
+                        <option value="{{ team.teamid }}">{{ team.name }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-wmffl m-1">Make Offer</button>
+            </div>
+        </form>
+    </div>
+{% endif %}
+{% endblock %}

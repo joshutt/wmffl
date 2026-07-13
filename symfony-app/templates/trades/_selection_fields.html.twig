@@ -1,0 +1,18 @@
+{# Hidden round-trip of the offer terms (confirmoffer.php pattern):
+   CSRF token, the offer being amended/countered (0 = new), the other
+   team, and every selection from the builder. #}
+<input type="hidden" name="_token" value="{{ csrf_token(constant('App\\Controller\\TradeController::CSRF_TOKEN_ID')) }}"/>
+<input type="hidden" name="offerid" value="{{ offerId }}"/>
+<input type="hidden" name="to" value="{{ otherTeamId }}"/>
+{% for prefix in ['you', 'they'] %}
+    {% set side = selections[prefix] %}
+    {% for playerId in side.players %}
+        <input type="hidden" name="{{ prefix }}_players[]" value="{{ playerId }}"/>
+    {% endfor %}
+    {% for pickId in side.picks %}
+        <input type="hidden" name="{{ prefix }}_picks[]" value="{{ pickId }}"/>
+    {% endfor %}
+    {% for season, amount in side.points %}
+        <input type="hidden" name="{{ prefix }}_points[{{ season }}]" value="{{ amount }}"/>
+    {% endfor %}
+{% endfor %}
