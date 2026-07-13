@@ -50,6 +50,29 @@ class TradeOfferRepository
         return $offers;
     }
 
+    /**
+     * Offers for the admin oversight page, newest first, optionally
+     * filtered by stored status. Terms included; read-time expiry
+     * applies to the returned status as everywhere else.
+     */
+    public function findOffers(?string $status = null, int $limit = 50): array
+    {
+        $sql = 'SELECT OfferID FROM offer';
+        $params = [];
+        if ($status !== null && $status !== '') {
+            $sql .= ' WHERE Status = :status';
+            $params['status'] = $status;
+        }
+        $sql .= ' ORDER BY Date DESC, OfferID DESC LIMIT ' . max(1, $limit);
+
+        $offers = [];
+        foreach ($this->connection->fetchAllAssociative($sql, $params) as $row) {
+            $offers[] = $this->findOffer((int) $row['OfferID']);
+        }
+
+        return $offers;
+    }
+
     public function findOffer(int $offerId): ?array
     {
         $row = $this->connection->fetchAssociative(
