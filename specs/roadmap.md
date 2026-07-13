@@ -84,6 +84,25 @@ should be small enough to land as its own PR.
   `App\Entity\{Activation,Injury}` + `App\Enum\InjuryStatusEnum` deleted.
   Full-schema keep/drop audit in that spec's `audit.md`; the rename back
   to canonical short names is deferred to Phase 7.
+- Trades (Phase 8 complete, 2026-07-13, `specs/2026-07-13-trades/` —
+  note Phase 7 table renames were SKIPPED and remain pending; this phase
+  works against the current names): `TradeController` (`/trades` screen,
+  `/trades/offer` builder shared by new/amend/counter with owned-pick and
+  points-balance pickers, `/trades/offer/confirm` preview→submit,
+  `/trades/respond/{id}` accept/reject/withdraw), `TradeOfferRepository`
+  (read-time 7-day expiry, LastOfferID team-id quirk isolated,
+  transactional `saveOffer`), `TradeValidationService` (replaces
+  `checkambigous` and the unfinished ambiguous-pick flow),
+  `TradeExecutionService` (accept re-validation + the whole execution in
+  ONE transaction; auto-reject of stale offers), `TradeMailer`
+  (offered/accepted/rejected/voided, symfony/mailer, `null://` in dev).
+  New: stored trade comments (`offercomments` table +
+  `offer.PrevOfferID` chain, migration Version20260713000000) shown as
+  negotiation history on `/trades` and `/admin/trades`; commissioner
+  oversight (`AdminTradeController` — status filter, void with reason +
+  email); withdrawals now write `Withdrawn` (legacy wrote `Reject`).
+  `football/transactions/` deleted entirely (trades/ was its last
+  content) with 301s; transmenu partial points at `/trades`.
 
 ## Phase 7 — Reclaim canonical table names
 
@@ -111,15 +130,6 @@ replacements back to those canonical short names.
    the same maintenance window, ideally off-season; do not edit
    already-executed migrations (e.g. `Version20260118000000.php`
    mentions these names in comments only)
-
-## Phase 8 — Trades
-
-Legacy: `football/transactions/trades/` (~1,800 lines: `tradescreen.php`,
-`edittrade.php`, offer/confirm/process flow, email notifications)
-
-1. Trade list / trade screen (read-only views)
-2. Offer → confirm → process workflow (writes + email) — the riskiest
-   write path in the app; migrate one step at a time
 
 ## Phase 9 — History (remaining)
 

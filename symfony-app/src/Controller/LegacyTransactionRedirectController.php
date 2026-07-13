@@ -11,8 +11,6 @@ use Symfony\Component\Routing\Attribute\Route;
  * 301 redirects from the retired football/transactions/ URLs to the
  * Symfony routes (pattern: LegacyTeamRedirectController from Phase 3).
  * The .php aliases cover archival history pages and old bookmarks.
- * trades/ is untouched — it still runs via the LegacyBridge until
- * Phase 6.
  */
 class LegacyTransactionRedirectController extends AbstractController
 {
@@ -95,6 +93,28 @@ class LegacyTransactionRedirectController extends AbstractController
     public function saveProtections(): Response
     {
         return $this->redirectToRoute('transactions_protections', [], Response::HTTP_MOVED_PERMANENTLY);
+    }
+
+    /**
+     * The whole retired trades flow lands on the trade screen:
+     * tradescreen, edittrade, confirmoffer, processconfirm, processTrade,
+     * finalprocess, tradeinvalid, ambigouspick and friends. GET|POST so
+     * stale legacy forms redirect instead of 405ing. (No index.php alias
+     * needed — the front controller strips it and the bare directory URL
+     * matches the empty path.)
+     */
+    #[Route('/transactions/trades/{path}', name: 'legacy_trades', requirements: ['path' => '.*'], defaults: ['path' => ''], methods: ['GET', 'POST'])]
+    public function trades(): Response
+    {
+        return $this->redirectToRoute('trades_screen', [], Response::HTTP_MOVED_PERMANENTLY);
+    }
+
+    /** The shared button bar was an include, but old links exist */
+    #[Route('/transactions/transmenu', name: 'legacy_transmenu')]
+    #[Route('/transactions/transmenu.php', name: 'legacy_transmenu_php')]
+    public function transmenu(): Response
+    {
+        return $this->redirectToRoute('transactions_history', [], Response::HTTP_MOVED_PERMANENTLY);
     }
 
     /**
