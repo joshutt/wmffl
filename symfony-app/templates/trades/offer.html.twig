@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Trade Offer{% endblock %}
+
+{% block content %}
+<h1 class="text-center">{{ offerId ? 'Edit Offer' : 'New Trade Offer' }}</h1>
+<hr size="1"/>
+
+{% include 'transactions/_transmenu.html.twig' %}
+
+<div class="container">
+    <p>Select the players, draft picks, and transaction points each side gives up.
+        Draft picks are the picks each team actually owns; points show the remaining
+        balance for each season. When the terms are ready press "Confirm Offer" to
+        review the trade before it is submitted, or "Cancel" to discard it.</p>
+
+    {% if errors is not empty %}
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                {% for error in errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <form action="/trades/offer/confirm" method="POST">
+        <input type="hidden" name="_token" value="{{ csrf_token(constant('App\\Controller\\TradeController::CSRF_TOKEN_ID')) }}"/>
+        <input type="hidden" name="offerid" value="{{ offerId }}"/>
+        <input type="hidden" name="to" value="{{ otherTeamId }}"/>
+
+        <div class="row">
+            {% for prefix, sideLabel in {'you': 'You Give Up', 'they': (otherTeamName ~ ' Give Up')} %}
+                {% set side = prefix == 'you' ? you : they %}
+                {% set selected = prefix == 'you' ? selections.you : selections.they %}
+                <div class="col-md-6">
+                    <h4>{{ sideLabel }}</h4>
+
+                    <b>Players:</b>
+                    <div class="mb-3">
+                        {% for player in side.roster %}
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"
+                                       name="{{ prefix }}_players[]" value="{{ player.playerid }}"
+                                       id="{{ prefix }}_player_{{ player.playerid }}"
+                                       {{ player.playerid in selected.players ? 'checked' }}/>
+                                <label class="form-check-label" for="{{ prefix }}_player_{{ player.playerid }}">
+                                    {{ player.name }} ({{ player.pos }}-{{ player.nflteam }})
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <b>Draft Picks:</b>
+                    <div class="mb-3">
+                        {% for pick in side.picks %}
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"
+                                       name="{{ prefix }}_picks[]" value="{{ pick.id }}"
+                                       id="{{ prefix }}_pick_{{ pick.id }}"
+                                       {{ pick.id in selected.picks ? 'checked' }}/>
+                                <label class="form-check-label" for="{{ prefix }}_pick_{{ pick.id }}">
+                                    {{ pick.season }} Round {{ pick.round }} ({{ pick.orgTeamName }}'s pick)
+                                </label>
+                            </div>
+                        {% else %}
+                            <div class="text-muted">No tradeable draft picks</div>
+                        {% endfor %}
+                    </div>
+
+                    <b>Transaction Points:</b>
+                    <table class="table table-sm w-auto">
+                        <tr><th>Season</th><th>Points</th><th>Remaining</th></tr>
+                        {% for season, remaining in side.points %}
+                            <tr>
+                                <td>{{ season }}</td>
+                                <td>
+                                    <input type="number" min="0" max="{{ remaining }}" size="3"
+                                           name="{{ prefix }}_points[{{ season }}]"
+                                           value="{{ selected.points[season] ?? 0 }}"/>
+                                </td>
+                                <td>{{ remaining }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="text-center">
+            <button type="submit" name="confirm" value="1" class="btn btn-wmffl m-1">Confirm Offer</button>
+            <a class="btn btn-wmffl m-1" href="{{ path('trades_screen') }}">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -5,8 +5,12 @@ namespace App\Tests\Controller;
 use App\Controller\TradeController;
 use App\Repository\TradeOfferRepository;
 use App\Service\AuthenticationService;
+use App\Service\SeasonWeekService;
+use App\Service\TradeValidationService;
 use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 #[AllowMockObjectsWithoutExpectations]
@@ -102,6 +106,99 @@ class TradeControllerTest extends TestCase
         );
     }
 
+    // ---- GET/POST /trades/offer (builder) ----
+
+    public function testBuilderAnonymousIsBouncedToTheTradeScreen(): void
+    {
+        $controller = $this->makeController($this->repoWithOffers([]), loggedIn: false);
+        $controller->offerBuilder(Request::create('/trades/offer?to=5'));
+
+        $this->assertSame(['trades_screen', []], $controller->redirectedTo);
+    }
+
+    public function testNewOfferBuilderRendersBothSidesEmptySelections(): void
+    {
+        $repo = $this->builderRepo();
+
+        $controller = $this->makeController($repo, loggedIn: true, teamNum: 2);
+        $controller->offerBuilder(Request::create('/trades/offer?to=5'));
+
+        $this->assertSame('trades/offer.html.twig', $controller->renderedView);
+        $params = $controller->renderedParams;
+        $this->assertSame(0, $params['offerId']);
+        $this->assertSame('Rhinos', $params['otherTeamName']);
+        $this->assertSame([], $params['errors']);
+        $this->assertSame(['players' => [], 'picks' => [], 'points' => []], $params['selections']['you']);
+        $this->assertSame('Al Kaline', $params['you']['roster'][0]['name']);
+        $this->assertSame('Bo Jackson', $params['they']['roster'][0]['name']);
+        $this->assertSame(9, $params['you']['picks'][0]['id']);
+        $this->assertSame(12, $params['you']['points'][2026]);
+    }
+
+    public function testOfferingATradeToYourselfIsRefused(): void
+    {
+        $controller = $this->makeController($this->builderRepo(), loggedIn: true, teamNum: 2);
+        $controller->offerBuilder(Request::create('/trades/offer?to=2'));
+
+        $this->assertSame(['trades_screen', []], $controller->redirectedTo);
+    }
+
+    public function testAmendPreselectsTheExistingTerms(): void
+    {
+        $offer = $this->offer(lastOfferTeamId: 2);
+        $offer['terms'][2]['picks'] = [
+            ['season' => 2027, 'round' => 1, 'orgTeamId' => 2, 'orgTeamName' => 'Mustangs'],
+        ];
+        $offer['terms'][5]['points'] = [['season' => 2026, 'points' => 4]];
+        $repo = $this->builderRepo(findOffer: $offer);
+
+        $controller = $this->makeController($repo, loggedIn: true, teamNum: 2);
+        $controller->offerBuilder(Request::create('/trades/offer?offerid=100'));
+
+        $selections = $controller->renderedParams['selections'];
+        $this->assertSame([50], $selections['you']['players']);
+        $this->assertSame([9], $selections['you']['picks'], 'stored pick matched to owned draftpicks row');
+        $this->assertSame([60], $selections['they']['players']);
+        $this->assertSame([2026 => 4], $selections['they']['points']);
+    }
+
+    public function testBuilderRefusesAnOfferMyTeamIsNotPartTo(): void
+    {
+        $offer = $this->offer();
+        $repo = $this->builderRepo(findOffer: $offer);
+
+        $controller = $this->makeController($repo, loggedIn: true, teamNum: 9);
+        $controller->offerBuilder(Request::create('/trades/offer?offerid=100'));
+
+        $this->assertSame(['trades_screen', []], $controller->redirectedTo);
+    }
+
+    public function testBuilderRefusesASettledOffer(): void
+    {
+        $repo = $this->builderRepo(findOffer: $this->offer(status: 'Accept'));
+
+        $controller = $this->makeController($repo, loggedIn: true, teamNum: 2);
+        $controller->offerBuilder(Request::create('/trades/offer?offerid=100'));
+
+        $this->assertSame(['trades_screen', []], $controller->redirectedTo);
+    }
+
+    public function testPostReRendersWithTheSubmittedSelections(): void
+    {
+        $controller = $this->makeController($this->builderRepo(), loggedIn: true, teamNum: 2);
+        $controller->offerBuilder(Request::create('/trades/offer', 'POST', [
+            'to' => '5',
+            'you_players' => ['50'],
+            'they_players' => ['60'],
+            'you_points' => ['2026' => '5', '2027' => '0'],
+        ]));
+
+        $selections = $controller->renderedParams['selections'];
+        $this->assertSame([50], $selections['you']['players']);
+        $this->assertSame([60], $selections['they']['players']);
+        $this->assertSame([2026 => 5], $selections['you']['points'], 'zero amounts dropped');
+    }
+
     // ---- helpers ----
 
     private function offer(
@@ -146,6 +243,28 @@ class TradeControllerTest extends TestCase
         return $repo;
     }
 
+    /** Repo stub with builder data for teams 2 (you) and 5 (they). */
+    private function builderRepo(?array $findOffer = null): TradeOfferRepository
+    {
+        $repo = $this->createMock(TradeOfferRepository::class);
+        $repo->method('findOffer')->willReturn($findOffer);
+        $repo->method('getTeamName')->willReturnCallback(
+            static fn (int $teamId) => [2 => 'Mustangs', 5 => 'Rhinos'][$teamId] ?? null
+        );
+        $repo->method('getTradeableRoster')->willReturnCallback(static fn (int $teamId) => match ($teamId) {
+            2 => [['playerid' => 50, 'name' => 'Al Kaline', 'pos' => 'WR', 'nflteam' => 'DET']],
+            5 => [['playerid' => 60, 'name' => 'Bo Jackson', 'pos' => 'RB', 'nflteam' => 'LV']],
+            default => [],
+        });
+        $repo->method('getOwnedFuturePicks')->willReturnCallback(static fn (int $teamId) => match ($teamId) {
+            2 => [['id' => 9, 'season' => 2027, 'round' => 1, 'orgTeamId' => 2, 'orgTeamName' => 'Mustangs']],
+            default => [],
+        });
+        $repo->method('getPointsBalances')->willReturn([2026 => 12, 2027 => 30]);
+
+        return $repo;
+    }
+
     private function makeController(
         TradeOfferRepository $repo,
         bool $loggedIn,
@@ -155,15 +274,28 @@ class TradeControllerTest extends TestCase
         $auth->method('isLoggedIn')->willReturn($loggedIn);
         $auth->method('getTeamNumber')->willReturn($teamNum);
 
-        return new class($repo, $auth) extends TradeController {
+        $seasonWeek = $this->createStub(SeasonWeekService::class);
+        $seasonWeek->method('getCurrentSeason')->willReturn(2026);
+        $seasonWeek->method('getCurrentWeek')->willReturn(5);
+
+        $validation = new TradeValidationService($repo, $seasonWeek);
+
+        return new class($repo, $auth, $seasonWeek, $validation) extends TradeController {
             public ?string $renderedView = null;
             public ?array $renderedParams = null;
+            public ?array $redirectedTo = null;
 
             protected function render(string $view, array $parameters = [], ?Response $response = null): Response
             {
                 $this->renderedView = $view;
                 $this->renderedParams = $parameters;
                 return $response ?? new Response();
+            }
+
+            protected function redirectToRoute(string $route, array $parameters = [], int $status = 302): RedirectResponse
+            {
+                $this->redirectedTo = [$route, $parameters];
+                return new RedirectResponse('/stub', $status);
             }
         };
     }
