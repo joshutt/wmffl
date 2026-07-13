@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Trade Offer Submitted{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Offer Submitted</h1>
+<hr size="1"/>
+
+{% include 'transactions/_transmenu.html.twig' %}
+
+<div class="container">
+    <p>The following offer terms have been submitted:</p>
+
+    <p class="text-center">{{ sentence }}</p>
+
+    <p>This trade will become official when the other team agrees to these terms.
+        Either team may amend or withdraw this offer at any time prior to its
+        approval. The offer will automatically become void in seven days if no
+        further action is taken by either party.</p>
+
+    <p>Return to the <a href="{{ path('trades_screen') }}">trade screen</a>.</p>
+</div>
+{% endblock %}

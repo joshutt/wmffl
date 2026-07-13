@@ -305,6 +305,100 @@ class TradeOfferRepository
         return $balances;
     }
 
+    // ---- writes ----
+
+    /**
+     * Persist a new offer in one transaction: the offer row (the acting
+     * team is always TeamA and LastOfferID on the new row, as legacy
+     * saveOffer did), its term rows (OrgTeam always recorded on picks),
+     * and the comment row when non-empty. An amend/counter first marks
+     * the predecessor Modified and links the chain via PrevOfferID.
+     *
+     * @param array<int, array{players: array, picks: array, points: array}> $terms
+     *        validated terms keyed by giving team id (TradeValidationService shape)
+     * @return int the new offer's id
+     */
+    public function saveOffer(
+        int $actingTeamId,
+        int $otherTeamId,
+        array $terms,
+        ?int $prevOfferId,
+        string $comment,
+        string $commentAction
+    ): int {
+        return $this->connection->transactional(function (Connection $conn) use (
+            $actingTeamId, $otherTeamId, $terms, $prevOfferId, $comment, $commentAction
+        ) {
+            if ($prevOfferId !== null) {
+                $conn->executeStatement(
+                    "UPDATE offer SET Status = 'Modified' WHERE OfferID = :prevOfferId",
+                    ['prevOfferId' => $prevOfferId]
+                );
+            }
+
+            $conn->executeStatement(
+                "INSERT INTO offer (TeamAID, TeamBID, Status, Date, LastOfferID, PrevOfferID)
+                 VALUES (:actingTeamId, :otherTeamId, 'Pending', now(), :actingTeamId, :prevOfferId)",
+                ['actingTeamId' => $actingTeamId, 'otherTeamId' => $otherTeamId, 'prevOfferId' => $prevOfferId]
+            );
+            $offerId = (int) $conn->lastInsertId();
+
+            foreach ($terms as $teamFromId => $side) {
+                foreach ($side['players'] as $player) {
+                    $conn->executeStatement(
+                        'INSERT INTO offeredplayers (OfferID, TeamFromID, PlayerID)
+                         VALUES (:offerId, :teamFromId, :playerId)',
+                        ['offerId' => $offerId, 'teamFromId' => $teamFromId, 'playerId' => $player['playerid']]
+                    );
+                }
+                foreach ($side['picks'] as $pick) {
+                    $conn->executeStatement(
+                        'INSERT INTO offeredpicks (OfferID, TeamFromID, Season, Round, OrgTeam)
+                         VALUES (:offerId, :teamFromId, :season, :round, :orgTeam)',
+                        [
+                            'offerId' => $offerId, 'teamFromId' => $teamFromId,
+                            'season' => $pick['season'], 'round' => $pick['round'],
+                            'orgTeam' => $pick['orgTeamId'],
+                        ]
+                    );
+                }
+                foreach ($side['points'] as $point) {
+                    $conn->executeStatement(
+                        'INSERT INTO offeredpoints (OfferID, TeamFromID, Season, Points)
+                         VALUES (:offerId, :teamFromId, :season, :points)',
+                        [
+                            'offerId' => $offerId, 'teamFromId' => $teamFromId,
+                            'season' => $point['season'], 'points' => $point['points'],
+                        ]
+                    );
+                }
+            }
+
+            $this->insertComment($conn, $offerId, $actingTeamId, $commentAction, $comment);
+
+            return $offerId;
+        });
+    }
+
+    /** Store a non-empty trade comment (no-op on blank input). */
+    public function addComment(int $offerId, int $teamId, string $action, string $comment): void
+    {
+        $this->insertComment($this->connection, $offerId, $teamId, $action, $comment);
+    }
+
+    private function insertComment(Connection $conn, int $offerId, int $teamId, string $action, string $comment): void
+    {
+        if (trim($comment) === '') {
+            return;
+        }
+
+        $conn->executeStatement(
+            'INSERT INTO offercomments (OfferID, TeamID, Action, Date, Comment)
+             VALUES (:offerId, :teamId, :action, now(), :comment)',
+            ['offerId' => $offerId, 'teamId' => $teamId, 'action' => $action, 'comment' => trim($comment)]
+        );
+    }
+
     /**
      * Active users' email addresses for a set of teams.
      *

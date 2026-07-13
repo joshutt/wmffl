@@ -6,6 +6,7 @@ use App\Enum\OfferCommentActionEnum;
 use App\Repository\TradeOfferRepository;
 use App\Service\AuthenticationService;
 use App\Service\SeasonWeekService;
+use App\Service\TradeMailer;
 use App\Service\TradeValidationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,7 +29,8 @@ class TradeController extends AbstractController
         private readonly TradeOfferRepository $offers,
         private readonly AuthenticationService $auth,
         private readonly SeasonWeekService $seasonWeek,
-        private readonly TradeValidationService $validation
+        private readonly TradeValidationService $validation,
+        private readonly TradeMailer $mailer
     ) {
     }
 
@@ -106,6 +108,86 @@ class TradeController extends AbstractController
     }
 
     private const EMPTY_SIDE = ['players' => [], 'picks' => [], 'points' => []];
+
+    /**
+     * Preview-then-submit, ported from confirmoffer.php /
+     * processconfirm.php. Arrival from the builder (confirm) validates
+     * and shows the preview; Make Offer (offer) re-validates, persists
+     * the offer with its comment, and sends the notification; Cancel
+     * discards. Terms round-trip through hidden fields.
+     */
+    #[Route('/trades/offer/confirm', name: 'trades_offer_confirm', methods: ['POST'])]
+    public function offerConfirm(Request $request): Response
+    {
+        if (!$this->auth->isLoggedIn()) {
+            return $this->redirectToRoute('trades_screen');
+        }
+        if (!$this->isCsrfTokenValid(self::CSRF_TOKEN_ID, (string) $request->getPayload()->get('_token'))) {
+            throw $this->createAccessDeniedException('Invalid CSRF token');
+        }
+        if ($request->getPayload()->has('cancel')) {
+            return $this->redirectToRoute('trades_screen');
+        }
+
+        $context = $this->resolveBuilderContext($request);
+        if ($context === null) {
+            return $this->redirectToRoute('trades_screen');
+        }
+
+        $selections = $this->parseSelections($request);
+        $result = $this->validation->validate(
+            $context['teamId'],
+            $context['otherTeamId'],
+            $selections['you'],
+            $selections['they']
+        );
+        if ($result['errors'] !== []) {
+            return $this->renderBuilder($context, $selections, $result['errors']);
+        }
+
+        $myTeamName = (string) $this->offers->getTeamName($context['teamId']);
+        $offerShape = [
+            'teamAId' => $context['teamId'],
+            'teamAName' => $myTeamName,
+            'teamBId' => $context['otherTeamId'],
+            'teamBName' => $context['otherTeamName'],
+            'terms' => $result['terms'],
+        ];
+        $sentence = $this->mailer->termsSentence($offerShape, $context['teamId'], 'offer');
+
+        if (!$request->getPayload()->has('offer')) {
+            // Preview step
+            return $this->render('trades/confirm.html.twig', [
+                'offerId' => $context['offer']['offerId'] ?? 0,
+                'otherTeamId' => $context['otherTeamId'],
+                'sentence' => $sentence,
+                'selections' => $selections,
+            ]);
+        }
+
+        // Make Offer: an amend (my offer) or counter (their offer) chains
+        // to the predecessor; a fresh offer starts a new chain
+        $prevOffer = $context['offer'];
+        $commentAction = match (true) {
+            $prevOffer === null => OfferCommentActionEnum::Offered,
+            $prevOffer['lastOfferTeamId'] === $context['teamId'] => OfferCommentActionEnum::Amended,
+            default => OfferCommentActionEnum::Countered,
+        };
+        $comments = (string) $request->getPayload()->get('comments', '');
+
+        $offerId = $this->offers->saveOffer(
+            $context['teamId'],
+            $context['otherTeamId'],
+            $result['terms'],
+            $prevOffer['offerId'] ?? null,
+            $comments,
+            $commentAction->value
+        );
+
+        $this->mailer->sendOfferEmail($this->offers->findOffer($offerId), $context['teamId'], $comments);
+
+        return $this->render('trades/submitted.html.twig', ['sentence' => $sentence]);
+    }
 
     /**
      * Who is trading with whom, from ?offerid= (amend/counter, guarded:

@@ -250,7 +250,115 @@ class TradeOfferRepositoryTest extends TestCase
         );
     }
 
+    // ---- saveOffer ----
+
+    public function testSaveOfferWritesOfferTermsAndCommentInOrder(): void
+    {
+        $statements = [];
+        $conn = $this->writeConnection($statements);
+        $repo = new TradeOfferRepository($conn);
+
+        $terms = [
+            2 => [
+                'players' => [['playerid' => 50, 'name' => 'Al Kaline', 'pos' => 'WR', 'nflteam' => 'DET']],
+                'picks' => [['id' => 9, 'season' => 2027, 'round' => 1, 'orgTeamId' => 7, 'orgTeamName' => 'Third Team']],
+                'points' => [['season' => 2026, 'points' => 5]],
+            ],
+            5 => [
+                'players' => [['playerid' => 60, 'name' => 'Bo Jackson', 'pos' => 'RB', 'nflteam' => 'LV']],
+                'picks' => [],
+                'points' => [],
+            ],
+        ];
+
+        $offerId = $repo->saveOffer(2, 5, $terms, null, 'Deal?', 'offered');
+
+        $this->assertSame(123, $offerId);
+        $sqls = array_column($statements, 'sql');
+
+        $this->assertStringContainsString('INSERT INTO offer ', $sqls[0]);
+        $this->assertSame(2, $statements[0]['params']['actingTeamId']);
+        $this->assertSame(5, $statements[0]['params']['otherTeamId']);
+        $this->assertNull($statements[0]['params']['prevOfferId']);
+
+        $this->assertStringContainsString('INSERT INTO offeredplayers', $sqls[1]);
+        $this->assertSame(['offerId' => 123, 'teamFromId' => 2, 'playerId' => 50], $statements[1]['params']);
+
+        $this->assertStringContainsString('INSERT INTO offeredpicks', $sqls[2]);
+        $this->assertSame(7, $statements[2]['params']['orgTeam'], 'original owner always recorded');
+
+        $this->assertStringContainsString('INSERT INTO offeredpoints', $sqls[3]);
+        $this->assertSame(5, $statements[3]['params']['points']);
+
+        $this->assertStringContainsString('INSERT INTO offeredplayers', $sqls[4]);
+        $this->assertSame(5, $statements[4]['params']['teamFromId']);
+
+        $this->assertStringContainsString('INSERT INTO offercomments', $sqls[5]);
+        $this->assertSame('offered', $statements[5]['params']['action']);
+        $this->assertSame('Deal?', $statements[5]['params']['comment']);
+    }
+
+    public function testAmendMarksPredecessorModifiedAndLinksTheChain(): void
+    {
+        $statements = [];
+        $conn = $this->writeConnection($statements);
+        $repo = new TradeOfferRepository($conn);
+
+        $repo->saveOffer(2, 5, [], 100, '', 'amended');
+
+        $sqls = array_column($statements, 'sql');
+        $this->assertStringContainsString("SET Status = 'Modified'", $sqls[0]);
+        $this->assertSame(100, $statements[0]['params']['prevOfferId']);
+        $this->assertStringContainsString('INSERT INTO offer ', $sqls[1]);
+        $this->assertSame(100, $statements[1]['params']['prevOfferId']);
+    }
+
+    public function testEmptyCommentStoresNoCommentRow(): void
+    {
+        $statements = [];
+        $conn = $this->writeConnection($statements);
+        $repo = new TradeOfferRepository($conn);
+
+        $repo->saveOffer(2, 5, [], null, "  \n ", 'offered');
+
+        foreach (array_column($statements, 'sql') as $sql) {
+            $this->assertStringNotContainsString('offercomments', $sql);
+        }
+    }
+
+    public function testAddCommentStoresTrimmedTextAndSkipsBlanks(): void
+    {
+        $statements = [];
+        $conn = $this->writeConnection($statements);
+        $repo = new TradeOfferRepository($conn);
+
+        $repo->addComment(100, 5, 'rejected', "  No thanks \n");
+        $repo->addComment(100, 5, 'rejected', '   ');
+
+        $this->assertCount(1, $statements);
+        $this->assertSame('No thanks', $statements[0]['params']['comment']);
+        $this->assertSame('rejected', $statements[0]['params']['action']);
+    }
+
     // ---- helpers ----
+
+    /** Connection whose transactional() runs inline, recording statements. */
+    private function writeConnection(array &$statements): Connection
+    {
+        $conn = $this->createMock(Connection::class);
+        $conn->method('transactional')->willReturnCallback(
+            static fn (callable $callback) => $callback($conn)
+        );
+        $conn->method('executeStatement')->willReturnCallback(
+            function (string $sql, array $params = []) use (&$statements) {
+                $statements[] = ['sql' => $sql, 'params' => $params];
+                return 1;
+            }
+        );
+        $conn->method('lastInsertId')->willReturn(123);
+
+        return $conn;
+    }
 
     private function offerRow(
         string $date = '-1 day',

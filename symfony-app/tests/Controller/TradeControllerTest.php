@@ -6,7 +6,9 @@ use App\Controller\TradeController;
 use App\Repository\TradeOfferRepository;
 use App\Service\AuthenticationService;
 use App\Service\SeasonWeekService;
+use App\Service\TradeMailer;
 use App\Service\TradeValidationService;
+use Symfony\Component\Mailer\MailerInterface;
 use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -199,6 +201,120 @@ class TradeControllerTest extends TestCase
         $this->assertSame([2026 => 5], $selections['you']['points'], 'zero amounts dropped');
     }
 
+    // ---- POST /trades/offer/confirm ----
+
+    public function testConfirmInvalidCsrfIsDenied(): void
+    {
+        $controller = $this->makeController($this->builderRepo(), loggedIn: true, teamNum: 2, csrfValid: false);
+
+        $this->expectException(\Symfony\Component\Security\Core\Exception\AccessDeniedException::class);
+        $controller->offerConfirm(Request::create('/trades/offer/confirm', 'POST', ['_token' => 'bad']));
+    }
+
+    public function testConfirmCancelPersistsNothing(): void
+    {
+        $repo = $this->builderRepo();
+        $repo->expects($this->never())->method('saveOffer');
+
+        $controller = $this->makeController($repo, loggedIn: true, teamNum: 2);
+        $controller->offerConfirm(Request::create('/trades/offer/confirm', 'POST', [
+            '_token' => 'ok', 'cancel' => '1', 'to' => '5', 'you_players' => ['50'],
+        ]));
+
+        $this->assertSame(['trades_screen', []], $controller->redirectedTo);
+    }
+
+    public function testConfirmShowsThePreviewWithSentenceAndSelections(): void
+    {
+        $repo = $this->builderRepo();
+        $repo->expects($this->never())->method('saveOffer');
+
+        $controller = $this->makeController($repo, loggedIn: true, teamNum: 2);
+        $controller->offerConfirm(Request::create('/trades/offer/confirm', 'POST', [
+            '_token' => 'ok', 'confirm' => '1', 'to' => '5',
+            'you_players' => ['50'], 'they_players' => ['60'],
+        ]));
+
+        $this->assertSame('trades/confirm.html.twig', $controller->renderedView);
+        $params = $controller->renderedParams;
+        $this->assertStringContainsString('Al Kaline', $params['sentence']);
+        $this->assertStringContainsString('in exchange for Bo Jackson', $params['sentence']);
+        $this->assertSame([50], $params['selections']['you']['players']);
+    }
+
+    public function testConfirmValidationFailureReRendersTheBuilderInline(): void
+    {
+        $repo = $this->builderRepo();
+        $repo->expects($this->never())->method('saveOffer');
+
+        $controller = $this->makeController($repo, loggedIn: true, teamNum: 2);
+        $controller->offerConfirm(Request::create('/trades/offer/confirm', 'POST', [
+            '_token' => 'ok', 'confirm' => '1', 'to' => '5', 'you_players' => ['999'],
+        ]));
+
+        $this->assertSame('trades/offer.html.twig', $controller->renderedView);
+        $this->assertNotEmpty($controller->renderedParams['errors']);
+        $this->assertSame([999], $controller->renderedParams['selections']['you']['players'], 'selections preserved');
+    }
+
+    public function testMakeOfferPersistsAsOfferedAndSendsTheEmail(): void
+    {
+        // findOffer is only reached after the save (email assembly): no
+        // offerid on a fresh offer, so it can carry the new offer's shape
+        $newOffer = $this->offer(offerId: 123);
+        $repo = $this->builderRepo(findOffer: $newOffer);
+        $repo->expects($this->once())->method('saveOffer')
+            ->with(2, 5, $this->anything(), null, 'Take it', 'offered')
+            ->willReturn(123);
+
+        $mailer = $this->createMock(TradeMailer::class);
+        $mailer->method('termsSentence')->willReturn('SENTENCE');
+        $mailer->expects($this->once())->method('sendOfferEmail')->with($newOffer, 2, 'Take it');
+
+        $controller = $this->makeController($repo, loggedIn: true, teamNum: 2, mailer: $mailer);
+        $controller->offerConfirm(Request::create('/trades/offer/confirm', 'POST', [
+            '_token' => 'ok', 'offer' => '1', 'to' => '5',
+            'you_players' => ['50'], 'comments' => 'Take it',
+        ]));
+
+        $this->assertSame('trades/submitted.html.twig', $controller->renderedView);
+    }
+
+    public function testMakeOfferOnMyOwnPendingOfferIsAnAmend(): void
+    {
+        // I (team 2) made the last offer; re-submitting is an amendment
+        $offer = $this->offer(lastOfferTeamId: 2);
+        $repo = $this->builderRepo(findOffer: $offer);
+        $repo->expects($this->once())->method('saveOffer')
+            ->with(2, 5, $this->anything(), 100, '', 'amended')
+            ->willReturn(124);
+
+        $controller = $this->makeController($repo, loggedIn: true, teamNum: 2);
+        $controller->offerConfirm(Request::create('/trades/offer/confirm', 'POST', [
+            '_token' => 'ok', 'offer' => '1', 'offerid' => '100', 'you_players' => ['50'],
+        ]));
+
+        $this->assertSame('trades/submitted.html.twig', $controller->renderedView);
+    }
+
+    public function testMakeOfferOnTheirPendingOfferIsACounter(): void
+    {
+        // They (team 5) made the last offer; my new terms are a counter
+        $offer = $this->offer(lastOfferTeamId: 5);
+        $repo = $this->builderRepo(findOffer: $offer);
+        $repo->expects($this->once())->method('saveOffer')
+            ->with(2, 5, $this->anything(), 100, 'How about this', 'countered')
+            ->willReturn(124);
+
+        $controller = $this->makeController($repo, loggedIn: true, teamNum: 2);
+        $controller->offerConfirm(Request::create('/trades/offer/confirm', 'POST', [
+            '_token' => 'ok', 'offer' => '1', 'offerid' => '100',
+            'you_players' => ['50'], 'comments' => 'How about this',
+        ]));
+
+        $this->assertSame('trades/submitted.html.twig', $controller->renderedView);
+    }
+
     // ---- helpers ----
 
     private function offer(
@@ -268,7 +384,9 @@ class TradeControllerTest extends TestCase
     private function makeController(
         TradeOfferRepository $repo,
         bool $loggedIn,
-        ?int $teamNum = null
+        ?int $teamNum = null,
+        ?TradeMailer $mailer = null,
+        bool $csrfValid = true
     ): TradeController {
         $auth = $this->createStub(AuthenticationService::class);
         $auth->method('isLoggedIn')->willReturn($loggedIn);
@@ -279,11 +397,19 @@ class TradeControllerTest extends TestCase
         $seasonWeek->method('getCurrentWeek')->willReturn(5);
 
         $validation = new TradeValidationService($repo, $seasonWeek);
+        // A real mailer renders real sentences; the stub transport and
+        // recipient-less repo keep it inert
+        $mailer ??= new TradeMailer($this->createStub(MailerInterface::class), $repo);
 
-        return new class($repo, $auth, $seasonWeek, $validation) extends TradeController {
+        return new class($repo, $auth, $seasonWeek, $validation, $mailer, $csrfValid) extends TradeController {
             public ?string $renderedView = null;
             public ?array $renderedParams = null;
             public ?array $redirectedTo = null;
+
+            public function __construct($repo, $auth, $seasonWeek, $validation, $mailer, private readonly bool $csrfValid)
+            {
+                parent::__construct($repo, $auth, $seasonWeek, $validation, $mailer);
+            }
 
             protected function render(string $view, array $parameters = [], ?Response $response = null): Response
             {
@@ -296,6 +422,11 @@ class TradeControllerTest extends TestCase
             {
                 $this->redirectedTo = [$route, $parameters];
                 return new RedirectResponse('/stub', $status);
+            }
+
+            protected function isCsrfTokenValid(string $id, #[\SensitiveParameter] ?string $token): bool
+            {
+                return $this->csrfValid;
             }
         };
     }
