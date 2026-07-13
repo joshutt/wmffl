@@ -95,6 +95,18 @@ class TradeMailer
     }
 
     /**
+     * "{Team} receive {the other side's terms}" — the respond page's
+     * per-team summary (legacy processTrade.php).
+     */
+    public function receiveSentence(array $offer, int $receivingTeamId): string
+    {
+        $givingTeamId = $this->otherTeamId($offer, $receivingTeamId);
+
+        return $this->teamName($offer, $receivingTeamId) . ' receive '
+            . self::printList($this->termItems($offer['terms'][$givingTeamId]));
+    }
+
+    /**
      * One side's terms as phrases (legacy nicePrint on Player/Pick/Points).
      *
      * @param array{players: array, picks: array, points: array} $side

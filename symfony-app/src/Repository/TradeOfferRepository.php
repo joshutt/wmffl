@@ -380,6 +380,15 @@ class TradeOfferRepository
         });
     }
 
+    /** Settle an offer: 'Reject', 'Withdrawn' (new — legacy wrote Reject for both). */
+    public function setStatus(int $offerId, string $status): void
+    {
+        $this->connection->executeStatement(
+            'UPDATE offer SET Status = :status WHERE OfferID = :offerId',
+            ['status' => $status, 'offerId' => $offerId]
+        );
+    }
+
     /** Store a non-empty trade comment (no-op on blank input). */
     public function addComment(int $offerId, int $teamId, string $action, string $comment): void
     {

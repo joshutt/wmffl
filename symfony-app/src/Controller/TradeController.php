@@ -6,6 +6,7 @@ use App\Enum\OfferCommentActionEnum;
 use App\Repository\TradeOfferRepository;
 use App\Service\AuthenticationService;
 use App\Service\SeasonWeekService;
+use App\Service\TradeExecutionService;
 use App\Service\TradeMailer;
 use App\Service\TradeValidationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,7 +31,8 @@ class TradeController extends AbstractController
         private readonly AuthenticationService $auth,
         private readonly SeasonWeekService $seasonWeek,
         private readonly TradeValidationService $validation,
-        private readonly TradeMailer $mailer
+        private readonly TradeMailer $mailer,
+        private readonly TradeExecutionService $execution
     ) {
     }
 
@@ -321,6 +323,96 @@ class TradeController extends AbstractController
                 'points' => $this->offers->getPointsBalances($context['otherTeamId'], $fromSeason, $toSeason),
             ],
         ]);
+    }
+
+    /**
+     * Accept/Reject/Withdraw, ported from processTrade.php (confirmation
+     * page) + finalprocess.php (the action). Counter/Amend never come
+     * here — they go straight to the builder.
+     *
+     * Guards: only a team in the offer may act (403 otherwise); only the
+     * non-last-offer team may Accept/Reject; only the last-offer team may
+     * Withdraw; settled or expired offers refuse every action.
+     */
+    #[Route('/trades/respond/{id}', name: 'trades_respond', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
+    public function respond(int $id, Request $request): Response
+    {
+        if (!$this->auth->isLoggedIn()) {
+            return $this->redirectToRoute('trades_screen');
+        }
+
+        $teamId = (int) $this->auth->getTeamNumber();
+        $action = (string) ($request->isMethod('POST')
+            ? $request->getPayload()->get('action')
+            : $request->query->get('action'));
+
+        $offer = $this->offers->findOffer($id);
+        if ($offer === null || !in_array($action, ['Accept', 'Reject', 'Withdraw'], true)) {
+            return $this->redirectToRoute('trades_screen');
+        }
+        if (!in_array($teamId, [$offer['teamAId'], $offer['teamBId']], true)) {
+            throw $this->createAccessDeniedException('Not a party to this trade offer');
+        }
+        if ($offer['status'] !== 'Pending') {
+            return $this->redirectToRoute('trades_screen');
+        }
+        $isMyMove = $this->offers->isTeamsMove($offer, $teamId);
+        if (($action === 'Withdraw') === $isMyMove) {
+            // Accept/Reject need the other side's offer; Withdraw needs mine
+            throw $this->createAccessDeniedException('It is not your move for this action');
+        }
+
+        if (!$request->isMethod('POST')) {
+            return $this->render('trades/respond.html.twig', [
+                'offerId' => $id,
+                'action' => $action,
+                'question' => sprintf('Are you sure you would like to %s this offer?', strtolower($action)),
+                'mySentence' => $this->mailer->receiveSentence($offer, $teamId),
+                'otherSentence' => $this->mailer->receiveSentence(
+                    $offer,
+                    $offer['teamAId'] === $teamId ? $offer['teamBId'] : $offer['teamAId']
+                ),
+            ]);
+        }
+
+        if (!$this->isCsrfTokenValid(self::CSRF_TOKEN_ID, (string) $request->getPayload()->get('_token'))) {
+            throw $this->createAccessDeniedException('Invalid CSRF token');
+        }
+        if ($request->getPayload()->get('select') !== 'Yes') {
+            return $this->redirectToRoute('trades_screen');
+        }
+
+        $comments = (string) $request->getPayload()->get('comments', '');
+
+        if ($action === 'Reject' || $action === 'Withdraw') {
+            $this->offers->setStatus($id, $action === 'Reject' ? 'Reject' : 'Withdrawn');
+            $this->offers->addComment(
+                $id,
+                $teamId,
+                $action === 'Reject'
+                    ? OfferCommentActionEnum::Rejected->value
+                    : OfferCommentActionEnum::Withdrawn->value,
+                $comments
+            );
+            $this->mailer->sendRejectedEmail($offer, $teamId, $comments);
+
+            return $this->redirectToRoute('trades_screen');
+        }
+
+        // Accept: re-validate against current rosters/picks/points; a
+        // stale offer is auto-rejected with the explanation page
+        // (legacy tradeinvalid.php behavior)
+        $errors = $this->execution->validateAcceptance($offer);
+        if ($errors !== []) {
+            $this->offers->setStatus($id, 'Reject');
+
+            return $this->render('trades/invalid.html.twig', ['errors' => $errors]);
+        }
+
+        $this->execution->execute($offer, $teamId, $comments);
+        $this->mailer->sendAcceptedEmail($offer, $teamId, $comments);
+
+        return $this->redirectToRoute('trades_screen');
     }
 
     /** Comment history across the amendment chain with display labels. */

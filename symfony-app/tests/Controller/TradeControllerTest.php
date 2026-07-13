@@ -6,9 +6,11 @@ use App\Controller\TradeController;
 use App\Repository\TradeOfferRepository;
 use App\Service\AuthenticationService;
 use App\Service\SeasonWeekService;
+use App\Service\TradeExecutionService;
 use App\Service\TradeMailer;
 use App\Service\TradeValidationService;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -207,7 +209,7 @@ class TradeControllerTest extends TestCase
     {
         $controller = $this->makeController($this->builderRepo(), loggedIn: true, teamNum: 2, csrfValid: false);
 
-        $this->expectException(\Symfony\Component\Security\Core\Exception\AccessDeniedException::class);
+        $this->expectException(AccessDeniedException::class);
         $controller->offerConfirm(Request::create('/trades/offer/confirm', 'POST', ['_token' => 'bad']));
     }
 
@@ -315,6 +317,179 @@ class TradeControllerTest extends TestCase
         $this->assertSame('trades/submitted.html.twig', $controller->renderedView);
     }
 
+    // ---- GET/POST /trades/respond/{id} ----
+
+    public function testRespondConfirmationPageRendersQuestionAndSentences(): void
+    {
+        // Team 5 last offered; team 2 may Accept
+        $repo = $this->builderRepo(findOffer: $this->offer(lastOfferTeamId: 5));
+
+        $controller = $this->makeController($repo, loggedIn: true, teamNum: 2);
+        $controller->respond(100, Request::create('/trades/respond/100?action=Accept'));
+
+        $this->assertSame('trades/respond.html.twig', $controller->renderedView);
+        $params = $controller->renderedParams;
+        $this->assertSame('Are you sure you would like to accept this offer?', $params['question']);
+        $this->assertStringContainsString('Mustangs receive Bo Jackson', $params['mySentence']);
+        $this->assertStringContainsString('Rhinos receive Al Kaline', $params['otherSentence']);
+    }
+
+    public function testThirdTeamIsDeniedOutright(): void
+    {
+        $repo = $this->builderRepo(findOffer: $this->offer());
+
+        $controller = $this->makeController($repo, loggedIn: true, teamNum: 9);
+
+        $this->expectException(AccessDeniedException::class);
+        $controller->respond(100, Request::create('/trades/respond/100?action=Accept'));
+    }
+
+    public function testLastOfferTeamCannotAccept(): void
+    {
+        // Team 2 made the last offer and now tries to accept it itself
+        $repo = $this->builderRepo(findOffer: $this->offer(lastOfferTeamId: 2));
+
+        $controller = $this->makeController($repo, loggedIn: true, teamNum: 2);
+
+        $this->expectException(AccessDeniedException::class);
+        $controller->respond(100, Request::create('/trades/respond/100?action=Accept'));
+    }
+
+    public function testNonLastOfferTeamCannotWithdraw(): void
+    {
+        $repo = $this->builderRepo(findOffer: $this->offer(lastOfferTeamId: 5));
+
+        $controller = $this->makeController($repo, loggedIn: true, teamNum: 2);
+
+        $this->expectException(AccessDeniedException::class);
+        $controller->respond(100, Request::create('/trades/respond/100?action=Withdraw'));
+    }
+
+    public function testSettledOfferRefusesAllActions(): void
+    {
+        $repo = $this->builderRepo(findOffer: $this->offer(status: 'Accept', lastOfferTeamId: 5));
+        $repo->expects($this->never())->method('setStatus');
+
+        $controller = $this->makeController($repo, loggedIn: true, teamNum: 2);
+        $controller->respond(100, Request::create('/trades/respond/100?action=Accept'));
+
+        $this->assertSame(['trades_screen', []], $controller->redirectedTo);
+    }
+
+    public function testExpiredOfferRefusesAllActions(): void
+    {
+        $repo = $this->builderRepo(findOffer: $this->offer(status: 'Expired', lastOfferTeamId: 5));
+
+        $controller = $this->makeController($repo, loggedIn: true, teamNum: 2);
+        $controller->respond(100, Request::create('/trades/respond/100?action=Accept'));
+
+        $this->assertSame(['trades_screen', []], $controller->redirectedTo);
+    }
+
+    public function testAnsweringNoChangesNothing(): void
+    {
+        $repo = $this->builderRepo(findOffer: $this->offer(lastOfferTeamId: 5));
+        $repo->expects($this->never())->method('setStatus');
+        $repo->expects($this->never())->method('addComment');
+
+        $controller = $this->makeController($repo, loggedIn: true, teamNum: 2);
+        $controller->respond(100, Request::create('/trades/respond/100', 'POST', [
+            '_token' => 'ok', 'action' => 'Reject', 'select' => 'No',
+        ]));
+
+        $this->assertSame(['trades_screen', []], $controller->redirectedTo);
+    }
+
+    public function testRespondInvalidCsrfIsDenied(): void
+    {
+        $repo = $this->builderRepo(findOffer: $this->offer(lastOfferTeamId: 5));
+
+        $controller = $this->makeController($repo, loggedIn: true, teamNum: 2, csrfValid: false);
+
+        $this->expectException(AccessDeniedException::class);
+        $controller->respond(100, Request::create('/trades/respond/100', 'POST', [
+            '_token' => 'bad', 'action' => 'Reject', 'select' => 'Yes',
+        ]));
+    }
+
+    public function testRejectWritesRejectStoresCommentAndEmails(): void
+    {
+        $offer = $this->offer(lastOfferTeamId: 5);
+        $repo = $this->builderRepo(findOffer: $offer);
+        $repo->expects($this->once())->method('setStatus')->with(100, 'Reject');
+        $repo->expects($this->once())->method('addComment')->with(100, 2, 'rejected', 'No thanks');
+
+        $mailer = $this->createMock(TradeMailer::class);
+        $mailer->expects($this->once())->method('sendRejectedEmail')->with($offer, 2, 'No thanks');
+
+        $controller = $this->makeController($repo, loggedIn: true, teamNum: 2, mailer: $mailer);
+        $controller->respond(100, Request::create('/trades/respond/100', 'POST', [
+            '_token' => 'ok', 'action' => 'Reject', 'select' => 'Yes', 'comments' => 'No thanks',
+        ]));
+
+        $this->assertSame(['trades_screen', []], $controller->redirectedTo);
+    }
+
+    public function testWithdrawWritesWithdrawnNotReject(): void
+    {
+        $offer = $this->offer(lastOfferTeamId: 2);
+        $repo = $this->builderRepo(findOffer: $offer);
+        $repo->expects($this->once())->method('setStatus')->with(100, 'Withdrawn');
+        $repo->expects($this->once())->method('addComment')->with(100, 2, 'withdrawn', 'Changed my mind');
+
+        $mailer = $this->createMock(TradeMailer::class);
+        $mailer->expects($this->once())->method('sendRejectedEmail');
+
+        $controller = $this->makeController($repo, loggedIn: true, teamNum: 2, mailer: $mailer);
+        $controller->respond(100, Request::create('/trades/respond/100', 'POST', [
+            '_token' => 'ok', 'action' => 'Withdraw', 'select' => 'Yes', 'comments' => 'Changed my mind',
+        ]));
+
+        $this->assertSame(['trades_screen', []], $controller->redirectedTo);
+    }
+
+    public function testAcceptExecutesTheTradeAndEmailsAfterwards(): void
+    {
+        $offer = $this->offer(lastOfferTeamId: 5);
+        $repo = $this->builderRepo(findOffer: $offer);
+
+        $execution = $this->createMock(TradeExecutionService::class);
+        $execution->method('validateAcceptance')->willReturn([]);
+        $execution->expects($this->once())->method('execute')->with($offer, 2, 'Great trade');
+
+        $mailer = $this->createMock(TradeMailer::class);
+        $mailer->expects($this->once())->method('sendAcceptedEmail')->with($offer, 2, 'Great trade');
+
+        $controller = $this->makeController($repo, loggedIn: true, teamNum: 2, mailer: $mailer, execution: $execution);
+        $controller->respond(100, Request::create('/trades/respond/100', 'POST', [
+            '_token' => 'ok', 'action' => 'Accept', 'select' => 'Yes', 'comments' => 'Great trade',
+        ]));
+
+        $this->assertSame(['trades_screen', []], $controller->redirectedTo);
+    }
+
+    public function testStaleAcceptAutoRejectsWithTheExplanationPage(): void
+    {
+        $offer = $this->offer(lastOfferTeamId: 5);
+        $repo = $this->builderRepo(findOffer: $offer);
+        $repo->expects($this->once())->method('setStatus')->with(100, 'Reject');
+
+        $execution = $this->createMock(TradeExecutionService::class);
+        $execution->method('validateAcceptance')->willReturn(['Al Kaline is no longer on the Mustangs roster.']);
+        $execution->expects($this->never())->method('execute');
+
+        $mailer = $this->createMock(TradeMailer::class);
+        $mailer->expects($this->never())->method('sendAcceptedEmail');
+
+        $controller = $this->makeController($repo, loggedIn: true, teamNum: 2, mailer: $mailer, execution: $execution);
+        $controller->respond(100, Request::create('/trades/respond/100', 'POST', [
+            '_token' => 'ok', 'action' => 'Accept', 'select' => 'Yes',
+        ]));
+
+        $this->assertSame('trades/invalid.html.twig', $controller->renderedView);
+        $this->assertCount(1, $controller->renderedParams['errors']);
+    }
+
     // ---- helpers ----
 
     private function offer(
@@ -364,6 +539,9 @@ class TradeControllerTest extends TestCase
     {
         $repo = $this->createMock(TradeOfferRepository::class);
         $repo->method('findOffer')->willReturn($findOffer);
+        $repo->method('isTeamsMove')->willReturnCallback(
+            static fn (array $offer, int $teamId) => $offer['lastOfferTeamId'] !== $teamId
+        );
         $repo->method('getTeamName')->willReturnCallback(
             static fn (int $teamId) => [2 => 'Mustangs', 5 => 'Rhinos'][$teamId] ?? null
         );
@@ -386,7 +564,8 @@ class TradeControllerTest extends TestCase
         bool $loggedIn,
         ?int $teamNum = null,
         ?TradeMailer $mailer = null,
-        bool $csrfValid = true
+        bool $csrfValid = true,
+        ?TradeExecutionService $execution = null
     ): TradeController {
         $auth = $this->createStub(AuthenticationService::class);
         $auth->method('isLoggedIn')->willReturn($loggedIn);
@@ -400,15 +579,16 @@ class TradeControllerTest extends TestCase
         // A real mailer renders real sentences; the stub transport and
         // recipient-less repo keep it inert
         $mailer ??= new TradeMailer($this->createStub(MailerInterface::class), $repo);
+        $execution ??= $this->createStub(TradeExecutionService::class);
 
-        return new class($repo, $auth, $seasonWeek, $validation, $mailer, $csrfValid) extends TradeController {
+        return new class($repo, $auth, $seasonWeek, $validation, $mailer, $execution, $csrfValid) extends TradeController {
             public ?string $renderedView = null;
             public ?array $renderedParams = null;
             public ?array $redirectedTo = null;
 
-            public function __construct($repo, $auth, $seasonWeek, $validation, $mailer, private readonly bool $csrfValid)
+            public function __construct($repo, $auth, $seasonWeek, $validation, $mailer, $execution, private readonly bool $csrfValid)
             {
-                parent::__construct($repo, $auth, $seasonWeek, $validation, $mailer);
+                parent::__construct($repo, $auth, $seasonWeek, $validation, $mailer, $execution);
             }
 
             protected function render(string $view, array $parameters = [], ?Response $response = null): Response

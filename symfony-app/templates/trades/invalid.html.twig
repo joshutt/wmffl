@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Invalid Trade{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Invalid Trade</h1>
+<hr size="1"/>
+
+{% include 'transactions/_transmenu.html.twig' %}
+
+<div class="container">
+    <p>The trade could no longer be honored as offered and has been cancelled:</p>
+
+    <ul>
+        {% for error in errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+
+    <p>This usually means a player was traded or dropped, a draft pick changed
+        hands, or transaction points were spent since the offer was made.</p>
+
+    <p>Return to the <a href="{{ path('trades_screen') }}">trade screen</a>.</p>
+</div>
+{% endblock %}
