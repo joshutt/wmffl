@@ -46,7 +46,7 @@ class WeekByWeekService
     private function baseQuery(string $where): string
     {
         return "select p.playerid, p.firstname, p.lastname, p.pos, ps.season, ps.week, ps.pts, t.abbrev, p.team as nfl
-                from newplayers p
+                from players p
                 left join roster r on p.playerid=r.playerid and r.dateoff is null
                 left join teamnames t on r.teamid=t.teamid and t.season = :season
                 left join playerscores ps on p.playerid=ps.playerid and ps.season = :season

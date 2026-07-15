@@ -17,6 +17,25 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `activations`
+--
+
+DROP TABLE IF EXISTS `activations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `activations` (
+  `season` year(4) NOT NULL DEFAULT 0000,
+  `week` int(11) NOT NULL DEFAULT 0,
+  `teamid` int(11) NOT NULL DEFAULT 0,
+  `pos` enum('HC','QB','RB','WR','TE','K','OL','DL','LB','DB') DEFAULT NULL,
+  `playerid` int(11) NOT NULL DEFAULT 0,
+  KEY `season` (`season`,`week`,`teamid`),
+  KEY `revisedactivations_teamid_index` (`teamid`),
+  KEY `revisedactivations_season_week_playerid_index` (`season`,`week`,`playerid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `articles`
 --
 
@@ -354,6 +373,30 @@ CREATE TABLE `images` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `injuries`
+--
+
+DROP TABLE IF EXISTS `injuries`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `injuries` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `playerid` int(11) NOT NULL,
+  `season` int(11) NOT NULL,
+  `week` int(11) NOT NULL,
+  `status` varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `details` varchar(50) DEFAULT NULL,
+  `expectedReturn` date DEFAULT NULL,
+  `version` varchar(5) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `updated` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `newinjuries_season_week_playerid_uindex` (`season`,`week`,`playerid`),
+  KEY `newinjuries_playerid_index` (`playerid`),
+  CONSTRAINT `FK_injuries_players` FOREIGN KEY (`playerid`) REFERENCES `players` (`playerid`)
+) ENGINE=InnoDB AUTO_INCREMENT=733975 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `ir`
 --
 
@@ -369,8 +412,8 @@ CREATE TABLE `ir` (
   `covid` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `ir_playerid_dateon_index` (`playerid`,`dateon`),
-  CONSTRAINT `ir_newplayers_playerid_fk` FOREIGN KEY (`playerid`) REFERENCES `newplayers` (`playerid`)
-) ENGINE=InnoDB AUTO_INCREMENT=310 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  CONSTRAINT `ir_players_playerid_fk` FOREIGN KEY (`playerid`) REFERENCES `players` (`playerid`)
+) ENGINE=InnoDB AUTO_INCREMENT=311 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -393,63 +436,6 @@ CREATE TABLE `issues` (
   PRIMARY KEY (`IssueID`),
   KEY `IssueID` (`IssueID`,`IssueNum`)
 ) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `newinjuries`
---
-
-DROP TABLE IF EXISTS `newinjuries`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE `newinjuries` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `playerid` int(11) NOT NULL,
-  `season` int(11) NOT NULL,
-  `week` int(11) NOT NULL,
-  `status` varchar(15) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `details` varchar(50) DEFAULT NULL,
-  `expectedReturn` date DEFAULT NULL,
-  `version` varchar(5) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `updated` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `newinjuries_season_week_playerid_uindex` (`season`,`week`,`playerid`),
-  KEY `newinjuries_playerid_index` (`playerid`),
-  CONSTRAINT `FK_newinjuries_newplayers` FOREIGN KEY (`playerid`) REFERENCES `newplayers` (`playerid`)
-) ENGINE=InnoDB AUTO_INCREMENT=733974 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `newplayers`
---
-
-DROP TABLE IF EXISTS `newplayers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE `newplayers` (
-  `playerid` int(11) NOT NULL AUTO_INCREMENT,
-  `flmid` int(11) NOT NULL DEFAULT 0,
-  `lastname` varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT '',
-  `firstname` varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `pos` enum('HC','QB','RB','WR','TE','K','OL','DL','LB','DB') CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `team` char(3) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `number` int(11) DEFAULT NULL,
-  `retired` year(4) DEFAULT NULL,
-  `height` int(11) DEFAULT NULL,
-  `weight` int(11) DEFAULT NULL,
-  `dob` date DEFAULT NULL,
-  `draftTeam` char(3) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  `draftYear` year(4) DEFAULT NULL,
-  `draftRound` int(11) DEFAULT NULL,
-  `draftPick` int(11) DEFAULT NULL,
-  `active` tinyint(1) NOT NULL DEFAULT 0,
-  `usePos` tinyint(4) NOT NULL DEFAULT 1,
-  `nflid` int(11) DEFAULT NULL,
-  `nfldb_id` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
-  PRIMARY KEY (`playerid`),
-  UNIQUE KEY `flmid` (`flmid`),
-  UNIQUE KEY `unique_nfldb_id` (`nfldb_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15799 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -566,8 +552,28 @@ CREATE TABLE `offer` (
   `Status` enum('Accept','Reject','Pending','Withdrawn','Expired','Modified') DEFAULT 'Pending',
   `Date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `LastOfferID` int(11) NOT NULL DEFAULT 0,
+  `PrevOfferID` int(11) DEFAULT NULL,
   PRIMARY KEY (`OfferID`)
-) ENGINE=InnoDB AUTO_INCREMENT=726 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=735 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `offercomments`
+--
+
+DROP TABLE IF EXISTS `offercomments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `offercomments` (
+  `CommentID` int(11) NOT NULL AUTO_INCREMENT,
+  `OfferID` int(11) NOT NULL,
+  `TeamID` int(11) NOT NULL,
+  `Action` enum('offered','amended','countered','accepted','rejected','withdrawn','voided') NOT NULL,
+  `Date` datetime NOT NULL,
+  `Comment` text NOT NULL,
+  PRIMARY KEY (`CommentID`),
+  KEY `OfferID_idx` (`OfferID`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -670,6 +676,39 @@ CREATE TABLE `playeroverride` (
   PRIMARY KEY (`playerid`,`teamid`,`season`),
   KEY `season` (`season`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `players`
+--
+
+DROP TABLE IF EXISTS `players`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `players` (
+  `playerid` int(11) NOT NULL AUTO_INCREMENT,
+  `flmid` int(11) NOT NULL DEFAULT 0,
+  `lastname` varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT '',
+  `firstname` varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `pos` enum('HC','QB','RB','WR','TE','K','OL','DL','LB','DB') CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `team` char(3) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `number` int(11) DEFAULT NULL,
+  `retired` year(4) DEFAULT NULL,
+  `height` int(11) DEFAULT NULL,
+  `weight` int(11) DEFAULT NULL,
+  `dob` date DEFAULT NULL,
+  `draftTeam` char(3) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `draftYear` year(4) DEFAULT NULL,
+  `draftRound` int(11) DEFAULT NULL,
+  `draftPick` int(11) DEFAULT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT 0,
+  `usePos` tinyint(4) NOT NULL DEFAULT 1,
+  `nflid` int(11) DEFAULT NULL,
+  `nfldb_id` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  PRIMARY KEY (`playerid`),
+  UNIQUE KEY `flmid` (`flmid`),
+  UNIQUE KEY `unique_nfldb_id` (`nfldb_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15799 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -794,25 +833,6 @@ CREATE TABLE `rankedvote` (
   `teamid` int(11) NOT NULL DEFAULT 0,
   `rank` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`issueid`,`choice`,`teamid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `revisedactivations`
---
-
-DROP TABLE IF EXISTS `revisedactivations`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE `revisedactivations` (
-  `season` year(4) NOT NULL DEFAULT 0000,
-  `week` int(11) NOT NULL DEFAULT 0,
-  `teamid` int(11) NOT NULL DEFAULT 0,
-  `pos` enum('HC','QB','RB','WR','TE','K','OL','DL','LB','DB') DEFAULT NULL,
-  `playerid` int(11) NOT NULL DEFAULT 0,
-  KEY `season` (`season`,`week`,`teamid`),
-  KEY `revisedactivations_teamid_index` (`teamid`),
-  KEY `revisedactivations_season_week_playerid_index` (`season`,`week`,`playerid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1016,7 +1036,7 @@ CREATE TABLE `trade` (
   `TradeGroup` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`TradeID`),
   UNIQUE KEY `TradeID` (`TradeID`)
-) ENGINE=InnoDB AUTO_INCREMENT=577 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=582 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1034,7 +1054,7 @@ CREATE TABLE `transactions` (
   `Date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`TransactionID`),
   KEY `transactions_Date_index` (`Date`)
-) ENGINE=InnoDB AUTO_INCREMENT=14186 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14192 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1211,4 +1231,4 @@ CREATE TABLE `years` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed
+-- Dump completed on 2026-07-14 20:56:59

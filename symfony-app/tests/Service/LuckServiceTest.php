@@ -57,7 +57,7 @@ class LuckServiceTest extends TestCase
     {
         $conn = $this->createMock(Connection::class);
         $conn->method('fetchAllAssociative')->willReturnCallback(function (string $sql) {
-            if (str_contains($sql, 'revisedactivations')) {
+            if (str_contains($sql, 'activations')) {
                 // A dominates B on potential
                 return [
                     ['name' => 'A', 'week' => 1, 'off' => 50, 'def' => 30],

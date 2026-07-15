@@ -123,12 +123,12 @@ class TeamRepository
                     MAX(pocos.cost) AS cost,
                     TIMESTAMPDIFF(YEAR, p.dob, now()) AS age,
                     IFNULL(ps.pts, 0) AS pts, ir.current AS ir
-             FROM newplayers p
+             FROM players p
              JOIN roster r ON p.playerid = r.playerid AND r.dateoff IS NULL
              JOIN team t ON r.teamid = t.teamid
              JOIN weekmap wm ON wm.StartDate <= now() AND wm.EndDate >= now()
              LEFT JOIN nflbyes b ON p.team = b.nflteam AND b.season = wm.season
-             LEFT JOIN newinjuries i ON i.playerid = p.playerid AND i.season = wm.season AND i.week = wm.week
+             LEFT JOIN injuries i ON i.playerid = p.playerid AND i.season = wm.season AND i.week = wm.week
              LEFT JOIN ir ON p.playerid = ir.playerid AND ir.dateoff IS NULL
              LEFT JOIN protectioncost pc ON p.playerid = pc.playerid
                     AND pc.season = IF(wm.week <= 1, wm.season, wm.season + 1)
@@ -479,7 +479,7 @@ class TeamRepository
         return $this->connection->fetchAllAssociative(
             "SELECT CONCAT(p.firstname, ' ', p.lastname) AS name, p.playerid,
                     p.pos, p.team, t.Name AS teamname
-             FROM newplayers p, roster r, team t
+             FROM players p, roster r, team t
              WHERE p.playerid = r.playerid AND r.teamid = t.TeamID AND r.dateoff IS NULL
                AND t.TeamID IN (:a, :b)
              ORDER BY t.Name, p.pos, p.lastname",

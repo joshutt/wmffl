@@ -59,7 +59,7 @@ class TransactionRepository
                     COALESCE(r.nflteamid, '') as nflteam, m.teamid, DATE_FORMAT(t.date, '%Y-%m-%d') as rawdate, p.playerid
              FROM transactions t
              JOIN teamnames m on t.teamid=m.teamid
-             JOIN newplayers p on p.playerid=t.playerid
+             JOIN players p on p.playerid=t.playerid
              LEFT JOIN nflrosters r on p.playerid=r.playerid AND r.dateon<=t.Date and (r.dateoff >= t.date or r.dateoff is null)
              WHERE m.season = :season
              AND t.date BETWEEN :start AND :end
@@ -82,7 +82,7 @@ class TransactionRepository
              join teamnames tm1 on t1.teamfromid=tm1.teamid
              left join team tm2 on t2.teamfromid=tm2.teamid
              join weekmap wm on tm1.season=wm.season
-             left join newplayers p on p.playerid=t1.playerid
+             left join players p on p.playerid=t1.playerid
              where (t1.TeamFromid = :teamId or t1.TeamToid = :teamId)
              and t1.date = :date
              and :date between wm.startDate and wm.enddate
@@ -107,7 +107,7 @@ class TransactionRepository
     {
         return $this->connection->fetchAllAssociative(
             'select p.firstname, p.lastname, p.pos, p.team
-             from waiverpicks wp join newplayers p on wp.playerid=p.playerid
+             from waiverpicks wp join players p on wp.playerid=p.playerid
              where wp.season = :season and wp.week = :week and wp.teamid = :teamId
              order by wp.priority',
             ['season' => $season, 'week' => $week, 'teamId' => $teamId]
@@ -119,7 +119,7 @@ class TransactionRepository
     {
         return $this->connection->fetchAllAssociative(
             'select wa.pick, tn.name, p.firstname, p.lastname, p.pos, p.team
-             from waiveraward wa, teamnames tn, newplayers p
+             from waiveraward wa, teamnames tn, players p
              where wa.season = :season and wa.week = :week and wa.teamid=tn.teamid
              and wa.playerid=p.playerid and tn.season=wa.season
              order by wa.pick',
@@ -138,7 +138,7 @@ class TransactionRepository
         return $this->connection->fetchAllAssociative(
             "select t.name, t.abbrev, CONCAT(p.firstname, ' ', p.lastname) as player,
                     p.pos, r.nflteamid, pro.cost
-             FROM newplayers p
+             FROM players p
              LEFT JOIN nflrosters r on p.playerid=r.playerid and r.dateon <= concat(:season, '-08-15')
                   and (r.dateoff is null or r.dateoff >= concat(:season, '-08-15'))
              JOIN protections pro on p.playerid=pro.playerid

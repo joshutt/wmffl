@@ -26,7 +26,7 @@ class AdminHeadCoachController extends AbstractAdminController
         $coaches = $em->getConnection()->fetchAllAssociative(<<<SQL
             SELECT p.playerid, CONCAT(p.firstname, ' ', p.lastname) AS name,
                    p.team AS nflTeam, t.name AS wmfflTeam
-            FROM newplayers p
+            FROM players p
             LEFT JOIN roster r ON p.playerid = r.playerid AND r.dateoff IS NULL
             LEFT JOIN team t ON r.teamid = t.teamid
             WHERE p.pos = 'HC'
@@ -72,7 +72,7 @@ class AdminHeadCoachController extends AbstractAdminController
             "INSERT INTO transactions (teamid, playerid, method, Date)
              SELECT r.teamid, p.playerid, 'Fire', :now
              FROM roster r
-             JOIN newplayers p ON r.playerid = p.playerid AND r.dateoff IS NULL
+             JOIN players p ON r.playerid = p.playerid AND r.dateoff IS NULL
              WHERE p.pos = 'HC' AND r.teamid = :teamId",
             ['now' => $now, 'teamId' => $teamId]
         );
@@ -87,7 +87,7 @@ class AdminHeadCoachController extends AbstractAdminController
         // Close existing HC roster entry
         $conn->executeStatement(
             "UPDATE roster r
-             JOIN newplayers p ON r.playerid = p.playerid AND r.dateoff IS NULL
+             JOIN players p ON r.playerid = p.playerid AND r.dateoff IS NULL
              SET r.dateoff = :now
              WHERE p.pos = 'HC' AND r.teamid = :teamId",
             ['now' => $now, 'teamId' => $teamId]

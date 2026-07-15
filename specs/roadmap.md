@@ -85,8 +85,7 @@ should be small enough to land as its own PR.
   Full-schema keep/drop audit in that spec's `audit.md`; the rename back
   to canonical short names is deferred to Phase 7.
 - Trades (Phase 8 complete, 2026-07-13, `specs/2026-07-13-trades/` —
-  note Phase 7 table renames were SKIPPED and remain pending; this phase
-  works against the current names): `TradeController` (`/trades` screen,
+  built against the pre-Phase-7 table names, since swept): `TradeController` (`/trades` screen,
   `/trades/offer` builder shared by new/amend/counter with owned-pick and
   points-balance pickers, `/trades/offer/confirm` preview→submit,
   `/trades/respond/{id}` accept/reject/withdraw), `TradeOfferRepository`
@@ -103,33 +102,19 @@ should be small enough to land as its own PR.
   email); withdrawals now write `Withdrawn` (legacy wrote `Reject`).
   `football/transactions/` deleted entirely (trades/ was its last
   content) with 301s; transmenu partial points at `/trades`.
-
-## Phase 7 — Reclaim canonical table names
-
-Follow-up to Phase 6 (`table-cleanup` branch/PR), deliberately deferred out
-of that PR to keep it small (decided 2026-07-12, see
-`specs/2026-07-12-table-cleanup/plan.md`). Phase 6 drops the superseded
-`activations`/`players`/`injuries` tables; this phase renames their
-replacements back to those canonical short names.
-
-1. `RENAME TABLE revisedactivations TO activations` — update ~27 files
-   (`football/activate/`, `football/history/common/` + per-season leaders,
-   `scripts/` livescore/logscores/updateactivations, `symfony-app`
-   services/controllers/tests); rename `App\Entity\RevisedActivation` →
-   `App\Entity\Activation`
-2. `RENAME TABLE newplayers TO players` — update ~64 files (17
-   `symfony-app` src files, legacy `football/` incl. per-season history
-   pages, `scripts/`); `App\Entity\Player`'s `#[ORM\Table]` name changes;
-   rename the FK constraints (`FK_newinjuries_newplayers`,
-   `ir_newplayers_playerid_fk`) in the same migration
-3. `RENAME TABLE newinjuries TO injuries` — update 6 files; rename
-   `App\Entity\NewInjury` → `App\Entity\Injury` (the name freed by
-   Phase 6's drop)
-4. Regenerate `scripts/database/schema.sql` from the final schema
-5. One rename per commit, DB rename + code sweep deploying together in
-   the same maintenance window, ideally off-season; do not edit
-   already-executed migrations (e.g. `Version20260118000000.php`
-   mentions these names in comments only)
+- Table renames (Phase 7 complete, 2026-07-14,
+  `specs/2026-07-14-table-renames/` — deferred from Phase 6, landed
+  after Phase 8): reclaimed the canonical names freed by Phase 6's
+  drops. One combined migration (`Version20260714000000`) renames
+  `revisedactivations`→`activations`, `newplayers`→`players`,
+  `newinjuries`→`injuries` atomically and re-creates the two FK
+  constraints as `FK_injuries_players` / `ir_players_playerid_fk`;
+  code swept one table per commit (31/75/9 files across `symfony-app`,
+  `football/`, `scripts/` incl. the Python injury feeds).
+  `App\Entity\RevisedActivation`→`Activation`,
+  `App\Entity\NewInjury`→`Injury`; `schema.sql` regenerated. Index
+  names still carry old-name prefixes (cosmetic, out of scope).
+  Deploy: migration + code together in one maintenance window.
 
 ## Phase 9 — History (remaining)
 
@@ -182,9 +167,9 @@ two different experiences.
    gameid route, current-week to the live scoreboard; update the three
    deep-linking entry points. The rest of `football/activate/` (lineup
    submission flow) stays for Phase 11
-6. Depends on Phase 7 table renames (final `activations`/`players`/
-   `injuries` names); data coverage varies by era — degrade gracefully for
-   seasons missing stat lines
+6. Phase 7 table renames are done (final `activations`/`players`/
+   `injuries` names in place); data coverage varies by era — degrade
+   gracefully for seasons missing stat lines
 
 ## Phase 11 — Remaining odds and ends
 

@@ -11,8 +11,8 @@ $season = isset($_REQUEST['season']) ? (int)$_REQUEST['season'] : $thisSeason;
 // It sums up all points a team achieved from players in a specific slot (e.g., QB, RB1, WR1)
 $sql = 'SELECT t.name AS team_name, ra.pos AS position_slot, SUM(ps.active) AS total_points
         FROM playerscores ps
-        JOIN newplayers p ON ps.playerid = p.playerid
-        JOIN revisedactivations ra ON ra.playerid = ps.playerid AND ps.season = ra.season AND ps.week = ra.week
+        JOIN players p ON ps.playerid = p.playerid
+        JOIN activations ra ON ra.playerid = ps.playerid AND ps.season = ra.season AND ps.week = ra.week
         JOIN teamnames t ON ra.teamid = t.teamid AND ps.season = t.season
         WHERE ps.season = ? AND ps.week <= 14 AND ps.active IS NOT NULL
         GROUP BY t.name, ra.pos
@@ -50,7 +50,7 @@ if ($dateStmt) {
 $leadersByPosition = [];
 while ($row = mysqli_fetch_assoc($results)) {
     $positionSlot = htmlspecialchars($row['position_slot'], ENT_QUOTES, 'UTF-8');
-    // team_name can be null if a teamid in revisedactivations doesn't map to teamnames for that season
+    // team_name can be null if a teamid in activations doesn't map to teamnames for that season
     $teamName = isset($row['team_name']) ? htmlspecialchars($row['team_name'], ENT_QUOTES, 'UTF-8') : 'Unknown Team';
     $totalPoints = (int)$row['total_points'];
 

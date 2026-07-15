@@ -75,12 +75,12 @@ if ($activeMessage != "") {
     exit();
 }
 
-$deleteSql = "DELETE FROM revisedactivations WHERE season=$season AND week=$week AND teamid=$teamnum";
+$deleteSql = "DELETE FROM activations WHERE season=$season AND week=$week AND teamid=$teamnum";
 // $deleteGPs = "DELETE FROM gameplan WHERE season=$season AND week=$week AND teamid=$teamnum";
 
 $posArray = array('HC', 'QB', 'RB', 'WR', 'TE', 'K', 'OL', 'DL', 'LB', 'DB');
 $first = true;
-$insertSql = "INSERT INTO revisedactivations (season, week, teamid, pos, playerid) VALUES ";
+$insertSql = "INSERT INTO activations (season, week, teamid, pos, playerid) VALUES ";
 foreach ($_REQUEST as $key => $value) {
     if (array_search($key, $posArray) !== false) {
         foreach ($value as $item) {

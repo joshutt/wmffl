@@ -18,7 +18,7 @@ if (isset($_REQUEST["playerid"])) {
 $sql = <<<EOD
 
 SELECT p.playerid, p.lastname, p.firstname, p.pos, p.team, p.number, p.height, p.weight, p.dob
-FROM newplayers p
+FROM players p
 JOIN nflrosters r on p.playerid=r.playerid and r.dateoff is null
 WHERE p.active=1 and p.usePos=1 $where
 ORDER BY p.playerid

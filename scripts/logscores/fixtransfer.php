@@ -23,7 +23,7 @@ print $week;
 print "\n";
 
 $sql = 'select p.playerid, p.pos, s.season, s.* ';
-$sql .= 'from newplayers p ';
+$sql .= 'from players p ';
 $sql .= 'join stats s on s.statid=p.flmid ';
 $sql .= 'left join playerscores ps on ps.playerid=p.playerid and ps.season=s.season and ps.week=s.week ';
 $sql .= "where s.season=$currentSeason and s.week=$week";
@@ -60,8 +60,8 @@ mysqli_query($conn, $bigquery);
 
 $querySQL = <<<EOD
     SELECT p.playerid
-    FROM newplayers p
-    JOIN revisedactivations a ON a.playerid=p.playerid
+    FROM players p
+    JOIN activations a ON a.playerid=p.playerid
     WHERE a.season=$currentSeason and a.week=$week
 EOD;
 

@@ -34,12 +34,12 @@ class RosterMoveService
     public function searchPlayers(array $criteria): array
     {
         $select = "s.name as teamname, p.lastname, p.firstname, p.pos, p.team, p.playerid";
-        $onTeam = "SELECT $select FROM newplayers p, roster r, team s
+        $onTeam = "SELECT $select FROM players p, roster r, team s
                    WHERE p.playerid=r.playerid AND r.teamid=s.teamid AND r.dateoff IS NULL ";
         $neverOnTeam = "SELECT 'Available' as teamname, p.lastname, p.firstname, p.pos, p.team, p.playerid
-                        FROM newplayers p LEFT JOIN roster r ON p.playerid = r.playerid WHERE r.dateon IS NULL ";
+                        FROM players p LEFT JOIN roster r ON p.playerid = r.playerid WHERE r.dateon IS NULL ";
         $noLongerOnTeam = "SELECT 'Available' as teamname, p.lastname, p.firstname, p.pos, p.team, p.playerid
-                           FROM newplayers p, roster r WHERE p.playerid = r.playerid ";
+                           FROM players p, roster r WHERE p.playerid = r.playerid ";
         $noLongerGroup = 'GROUP BY p.playerid HAVING COUNT(r.dateon) = COUNT(r.dateoff) ';
 
         $where = 'AND p.active=1 AND p.usePos=1 ';
@@ -126,7 +126,7 @@ class RosterMoveService
     {
         return $this->connection->fetchAllAssociative(
             'SELECT w.playerid, p.lastname, p.firstname, p.team, p.pos, w.priority
-             FROM waiverpicks w, newplayers p
+             FROM waiverpicks w, players p
              WHERE w.playerid=p.playerid AND teamid = :teamId
              AND season = :season AND week = :week
              ORDER BY w.priority',
@@ -163,7 +163,7 @@ class RosterMoveService
         }
 
         return $this->connection->fetchAllAssociative(
-            'SELECT playerid, lastname, firstname, team, pos FROM newplayers WHERE playerid in (:ids)',
+            'SELECT playerid, lastname, firstname, team, pos FROM players WHERE playerid in (:ids)',
             ['ids' => array_map('intval', $playerIds)],
             ['ids' => ArrayParameterType::INTEGER]
         );
@@ -175,7 +175,7 @@ class RosterMoveService
         return $this->connection->fetchAllAssociative(
             "select p.playerid, p.lastname, p.firstname, p.team, p.pos,
                     if(ir.id is null, '', 'IR') as ir
-             from newplayers p
+             from players p
              join roster r on p.playerid = r.playerid and r.dateoff is null
              join team t on r.teamid = t.teamid
              left join ir on p.playerid=ir.playerid and ir.dateoff is null
@@ -198,7 +198,7 @@ class RosterMoveService
                     sum(if(ir.id is null, 0, 1)) as irplayers,
                     sum(if(ir.id is null, 1, 0)) as activeplayers,
                     t.totalpts - t.protectionpts - t.transpts as ptsleft
-             from newplayers p
+             from players p
              join roster r on r.PlayerID=p.playerid and r.DateOff is null
              join transpoints t on r.TeamID=t.TeamID
              left join ir on p.playerid = ir.playerid and ir.dateoff is null
@@ -285,7 +285,7 @@ class RosterMoveService
         $picks = array_map('intval', $picks);
         foreach ($picks as $playerId) {
             $taken = $this->connection->fetchAssociative(
-                'SELECT r.playerid, p.lastname, p.firstname FROM roster r, newplayers p
+                'SELECT r.playerid, p.lastname, p.firstname FROM roster r, players p
                  WHERE r.DateOff is null and r.playerid=p.playerid and r.Playerid = :playerId',
                 ['playerId' => $playerId]
             );

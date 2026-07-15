@@ -23,7 +23,7 @@ select tn.teamid, tn.name, count(illegal.playerid) as 'illegal', coalesce(bye.pl
 from teamnames tn
 left join ((select tn.teamid, tn.name, wm.Season, wm.week, ra.playerid, 'Not on WMFFL team' as reason
             from teamnames tn
-                     JOIN revisedactivations ra on tn.season = ra.season and tn.teamid = ra.teamid
+                     JOIN activations ra on tn.season = ra.season and tn.teamid = ra.teamid
                      join weekmap wm on ra.season = wm.season and ra.week = wm.week
                      LEFT JOIN roster r on ra.teamid = r.teamid and ra.playerid = r.playerid and r.dateon < wm.ActivationDue
                 and (r.dateoff is null or r.dateoff > wm.ActivationDue)
@@ -34,7 +34,7 @@ left join ((select tn.teamid, tn.name, wm.Season, wm.week, ra.playerid, 'Not on 
            UNION
            (select tn.teamid, tn.name, wm.Season, wm.week, ra.playerid, 'Not on NFL team' as reason
             from teamnames tn
-                     JOIN revisedactivations ra on tn.season = ra.season and tn.teamid = ra.teamid
+                     JOIN activations ra on tn.season = ra.season and tn.teamid = ra.teamid
                      join weekmap wm on ra.season = wm.season and ra.week = wm.week
                      LEFT JOIN nflrosters nr on nr.playerid = ra.playerid and nr.dateon < wm.ActivationDue
                 and (nr.dateoff is null or nr.dateoff > wm.ActivationDue)
@@ -45,7 +45,7 @@ left join ((select tn.teamid, tn.name, wm.Season, wm.week, ra.playerid, 'Not on 
            UNION
            (select tn.teamid, tn.name, wm.Season, wm.week, ra.playerid, 'On IR' as reason
             from teamnames tn
-                     JOIN revisedactivations ra on tn.season = ra.season and tn.teamid = ra.teamid
+                     JOIN activations ra on tn.season = ra.season and tn.teamid = ra.teamid
                      JOIN weekmap wm on ra.season = wm.season and ra.week = wm.week
                      JOIN ir on ir.playerid = ra.playerid and ir.dateon <= wm.ActivationDue and
                                 (ir.dateoff is null or ir.dateoff > wm.ActivationDue)
@@ -54,7 +54,7 @@ left join ((select tn.teamid, tn.name, wm.Season, wm.week, ra.playerid, 'Not on 
               and ra.pos != 'HC')) as illegal on tn.teamid=illegal.teamid
 LEFT JOIN (select tn.teamid, tn.name, count(*) as players
            from teamnames tn
-                    JOIN revisedactivations ra on tn.season=ra.season and tn.teamid=ra.teamid
+                    JOIN activations ra on tn.season=ra.season and tn.teamid=ra.teamid
                     join weekmap wm on ra.season=wm.season and ra.week=wm.week
                     LEFT JOIN nflrosters nr on nr.playerid=ra.playerid and nr.dateon < wm.ActivationDue
                and (nr.dateoff is null or nr.dateoff > wm.ActivationDue)

@@ -8,7 +8,7 @@ require_once 'utils/start.php';
 $sql = <<<EOD
 
 SELECT p.firstname, p.lastname, p.pos, ps.season, ps.week, ps.active, r.TeamID, nr.nflteamid, tn.name as 'teamname', tn.abbrev
-FROM newplayers p
+FROM players p
 JOIN playerscores ps ON p.playerid=ps.playerid
 JOIN weekmap wm ON ps.season=wm.Season and ps.week=wm.Week
 LEFT JOIN roster r on p.playerid=r.PlayerID and r.DateOn<wm.ActivationDue

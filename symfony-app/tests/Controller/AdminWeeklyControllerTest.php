@@ -138,7 +138,7 @@ class AdminWeeklyControllerTest extends TestCase
             ->method('fetchAllAssociative')
             ->with(
                 $this->logicalAnd(
-                    $this->stringContains('revisedactivations'),
+                    $this->stringContains('activations'),
                     $this->stringContains('a.week = :week')
                 ),
                 $this->equalTo(['season' => 2023, 'week' => 11])

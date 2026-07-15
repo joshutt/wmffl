@@ -21,7 +21,7 @@ where p1.season = @season
 # select pc1.playerid, @season+1, max(posc2.years)-1
 # from protectioncost pc1
 # left join protectioncost pc2 on pc1.playerid=pc2.playerid and pc1.season=pc2.season-1
-# join newplayers p on pc1.playerid=p.playerid
+# join players p on pc1.playerid=p.playerid
 # join positioncost posc on p.pos=posc.position and posc.years<=pc1.years and posc.endSeason is null
 # join positioncost posc2 on p.pos=posc2.position and posc.cost-1 = posc2.cost and posc2.endSeason is null
 # where pc1.season=@season and pc2.playerid is null
@@ -32,7 +32,7 @@ where p1.season = @season
 -- Get rid of head coaches
 delete pc
 from protectioncost pc,
-     newplayers p
+     players p
 where pc.playerid = p.playerid
   and p.pos = 'HC';
 

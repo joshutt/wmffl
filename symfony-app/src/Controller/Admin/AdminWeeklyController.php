@@ -43,10 +43,10 @@ class AdminWeeklyController extends AbstractAdminController
                    CONCAT(p.firstname, ' ', p.lastname) AS name,
                    tn.abbrev,
                    a.week
-            FROM revisedactivations a
+            FROM activations a
             JOIN playerscores ps ON a.week = ps.week AND a.season = ps.season AND a.playerid = ps.playerid
             JOIN schedule s ON s.season = a.season AND s.week = a.week AND a.teamid IN (s.teama, s.teamb)
-            JOIN newplayers p ON p.playerid = a.playerid
+            JOIN players p ON p.playerid = a.playerid
             JOIN teamnames tn ON tn.teamid = a.teamid AND tn.season = a.season
             WHERE a.season = :season AND a.week = :week
             ORDER BY s.gameid, a.pos, a.teamid

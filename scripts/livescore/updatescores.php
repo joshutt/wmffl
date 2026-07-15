@@ -13,8 +13,8 @@ function generateSelect($thisTeamID, $currentSeason, $currentWeek): string
     return <<<EOD
         SELECT p.pos, p.lastname, p.firstname, r.teamid, g.kickoff, g.secRemain, p.flmid, s.*, 
         if (r.dateon is null and p.pos<>'HC', 1, 0) as 'illegal', gp1.side as 'Me', gp2.side as 'Them', wm.ActivationDue
-        FROM newplayers p
-        JOIN revisedactivations a ON p.playerid=a.playerid
+        FROM players p
+        JOIN activations a ON p.playerid=a.playerid
 	JOIN weekmap wm ON a.season=wm.season AND a.week=wm.week
         LEFT JOIN roster r ON p.playerid=r.playerid AND (r.dateoff is null OR r.dateoff >= wm.activationdue) AND r.teamid=a.teamid
         LEFT JOIN nflrosters nr ON nr.playerid=p.playerid AND nr.dateoff is null
