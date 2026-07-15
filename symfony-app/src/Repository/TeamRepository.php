@@ -128,7 +128,7 @@ class TeamRepository
              JOIN team t ON r.teamid = t.teamid
              JOIN weekmap wm ON wm.StartDate <= now() AND wm.EndDate >= now()
              LEFT JOIN nflbyes b ON p.team = b.nflteam AND b.season = wm.season
-             LEFT JOIN newinjuries i ON i.playerid = p.playerid AND i.season = wm.season AND i.week = wm.week
+             LEFT JOIN injuries i ON i.playerid = p.playerid AND i.season = wm.season AND i.week = wm.week
              LEFT JOIN ir ON p.playerid = ir.playerid AND ir.dateoff IS NULL
              LEFT JOIN protectioncost pc ON p.playerid = pc.playerid
                     AND pc.season = IF(wm.week <= 1, wm.season, wm.season + 1)

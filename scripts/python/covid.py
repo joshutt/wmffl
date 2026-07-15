@@ -10,7 +10,7 @@ def main():
                     + "from players p " \
                     + "join roster r on p.playerid=r.PlayerID and r.DateOff is null " \
                     + "join weekmap wm on now() between wm.StartDate and wm.EndDate " \
-                    + "join newinjuries i on p.playerid = i.playerid and i.week=wm.week and i.season=wm.season " \
+                    + "join injuries i on p.playerid = i.playerid and i.week=wm.week and i.season=wm.season " \
                     + "left join ir on p.playerid=ir.playerid and ir.dateoff is null " \
                     + "where (i.status='COVID-IR'  or (i.status='Holdout' and i.details='Opt Out')) " \
                     + "and ir.id is null"
@@ -25,7 +25,7 @@ def main():
                    + "from players p " \
                    + "join ir on p.playerid = ir.playerid and ir.dateoff is null " \
                    + "join weekmap wm on now() between wm.StartDate and wm.EndDate " \
-                   + "left join newinjuries i on p.playerid = i.playerid and i.week=wm.week and i.season=wm.Season " \
+                   + "left join injuries i on p.playerid = i.playerid and i.week=wm.week and i.season=wm.Season " \
                    + "left join roster r on p.playerid=r.PlayerID and r.dateoff is null " \
                    + "where ir.covid=1 and (i.status is null or i.status not in ('COVID-IR', 'Holdout'))"
     update_covid = "UPDATE ir SET dateoff=now(), current=0 WHERE dateoff is null and playerid=%s"

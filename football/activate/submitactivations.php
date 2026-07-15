@@ -78,7 +78,7 @@ JOIN roster r ON p.playerid=r.playerid AND r.dateoff is null
 LEFT JOIN nflrosters n ON n.playerid=r.playerid and n.dateoff is null
 LEFT JOIN activations a ON a.season=$season AND a.week=$week AND p.playerid=a.playerid AND a.teamid=r.teamid
 LEFT JOIN nflgames g ON g.season=$season AND g.week=$week AND n.nflteamid in (g.homeTeam, g.roadTeam)
-LEFT JOIN newinjuries i ON i.playerid=r.playerid and i.season=g.season AND i.week=g.week
+LEFT JOIN injuries i ON i.playerid=r.playerid and i.season=g.season AND i.week=g.week
 LEFT JOIN ir on ir.playerid=p.playerid and ir.dateoff is null
 WHERE r.teamid=$teamid 
 ORDER BY p.pos, p.lastname

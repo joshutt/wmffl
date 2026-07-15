@@ -30,7 +30,7 @@ class InjuredReserveService
              from players p
              join weekmap wm on now() between wm.StartDate and wm.EndDate
              join roster r on p.playerid=r.PlayerID and r.dateoff is null
-             join newinjuries inj on p.playerid = inj.playerid and inj.season=wm.Season and inj.week=wm.Week
+             join injuries inj on p.playerid = inj.playerid and inj.season=wm.Season and inj.week=wm.Week
              left join ir on p.playerid = ir.playerid and ir.dateoff is null
              where r.teamid = :teamId and ir.id is null and inj.status in (:statuses)",
             ['teamId' => $teamId, 'statuses' => self::IR_STATUSES],
@@ -48,7 +48,7 @@ class InjuredReserveService
              join weekmap wm on now() between wm.StartDate and wm.EndDate
              join roster r on p.playerid=r.PlayerID and r.DateOff is null
              join ir on ir.playerid=p.playerid and ir.dateoff is null
-             left join newinjuries n on p.playerid = n.playerid and wm.Season=n.season and wm.week=n.week
+             left join injuries n on p.playerid = n.playerid and wm.Season=n.season and wm.week=n.week
              where r.TeamID = :teamId",
             ['teamId' => $teamId]
         );
@@ -67,7 +67,7 @@ class InjuredReserveService
              join roster r on p.playerid=r.PlayerID and r.DateOff is null
              join weekmap wm on now() between wm.StartDate and wm.EndDate
              left join ir on p.playerid=ir.playerid and ir.dateoff is null
-             left join newinjuries inj on p.playerid=inj.playerid and wm.Season=inj.season and wm.week=inj.week
+             left join injuries inj on p.playerid=inj.playerid and wm.Season=inj.season and wm.week=inj.week
              where p.playerid = :playerId and r.teamid = :teamId and ir.id is null
              and inj.status in (:statuses)',
             ['playerId' => $playerId, 'teamId' => $teamId, 'statuses' => self::IR_STATUSES],
