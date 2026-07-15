@@ -76,7 +76,7 @@ g.homeTeam, g.roadTeam, p.playerid, i.status, i.details, ir.current as 'ir'
 FROM newplayers p
 JOIN roster r ON p.playerid=r.playerid AND r.dateoff is null
 LEFT JOIN nflrosters n ON n.playerid=r.playerid and n.dateoff is null
-LEFT JOIN revisedactivations a ON a.season=$season AND a.week=$week AND p.playerid=a.playerid AND a.teamid=r.teamid
+LEFT JOIN activations a ON a.season=$season AND a.week=$week AND p.playerid=a.playerid AND a.teamid=r.teamid
 LEFT JOIN nflgames g ON g.season=$season AND g.week=$week AND n.nflteamid in (g.homeTeam, g.roadTeam)
 LEFT JOIN newinjuries i ON i.playerid=r.playerid and i.season=g.season AND i.week=g.week
 LEFT JOIN ir on ir.playerid=p.playerid and ir.dateoff is null
@@ -105,7 +105,7 @@ FROM newplayers p
 LEFT JOIN roster r on p.playerid=r.playerid and r.dateoff is null
 LEFT JOIN nflrosters n ON n.playerid=p.playerid and n.dateoff is null
 LEFT JOIN nflgames g ON g.season=$season AND g.week=$week AND n.nflteamid in (g.homeTeam, g.roadTeam)
-LEFT JOIN revisedactivations a ON a.season=g.season AND a.week=g.week and p.playerid=a.playerid
+LEFT JOIN activations a ON a.season=g.season AND a.week=g.week and p.playerid=a.playerid
 WHERE p.pos='HC' AND r.playerid is null AND n.playerid is not null and g.kickoff>DATE_ADD(now(), INTERVAL 30 MINUTE)
 AND (a.playerid is null or a.teamid=$teamid)
 ORDER BY p.lastname

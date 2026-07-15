@@ -50,7 +50,7 @@ mysqli_query($conn, $bigquery) or die('Error: ' . mysqli_error($conn));
 $querySql = <<<EOD
     UPDATE playerscores ps
     JOIN newplayers p ON ps.playerid=p.playerid
-    JOIN revisedactivations a ON p.playerid=a.playerid AND a.season=ps.season AND a.week=ps.week
+    JOIN activations a ON p.playerid=a.playerid AND a.season=ps.season AND a.week=ps.week
     SET ps.active=ps.pts
     WHERE ps.season=$currentSeason AND ps.week=$week
 EOD;

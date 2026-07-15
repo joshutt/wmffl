@@ -147,7 +147,7 @@ class AdminMvpControllerTest extends TestCase
 
         $conn->expects($this->once())
             ->method('fetchAllAssociative')
-            ->with($this->stringContains('revisedactivations'), $this->equalTo(['season' => 2023, 'week' => 11]))
+            ->with($this->stringContains('activations'), $this->equalTo(['season' => 2023, 'week' => 11]))
             ->willReturn([]);
 
         $controller->index($auth, $seasonWeek, $em, $scoring, 2023, 11);

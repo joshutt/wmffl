@@ -23,7 +23,7 @@ UNIX_TIMESTAMP()-UNIX_TIMESTAMP(g.kickoff) as 'remain', s.gameid, g.homeTeam, g.
 i.status, i.details, CONVERT_TZ(wm.ActivationDue, 'SYSTEM', 'GMT') as 'ActivationDue', ir.current as 'ir'
 from teamnames tn
 join schedule s on tn.teamid in (s.teama, s.teamb) and tn.season=s.season
-left join revisedactivations a on a.season=s.season and a.week=s.week and a.teamid in (s.TeamA, s.TeamB) and tn.teamid=a.teamid
+left join activations a on a.season=s.season and a.week=s.week and a.teamid in (s.TeamA, s.TeamB) and tn.teamid=a.teamid
 left join newplayers p on a.playerid=p.playerid 
 join weekmap wm on s.season=wm.season and s.week=wm.week 
 left join newinjuries i on i.playerid=p.playerid and i.season=wm.season and i.week=wm.week 

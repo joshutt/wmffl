@@ -2,7 +2,7 @@
 require_once "utils/start.php";
 
 $sql = "SELECT  t.name, a.pos as 'position', sum(ps.active) as 'totpts' ";
-$sql .= "FROM playerscores ps, revisedactivations a, roster r, team t, weekmap w ";
+$sql .= "FROM playerscores ps, activations a, roster r, team t, weekmap w ";
 $sql .= "WHERE a.season=ps.season and a.week=ps.week and a.playerid=ps.playerid ";
 $sql .= "and r.playerid=ps.playerid ";
 $sql .= "and r.teamid=t.teamid and r.dateon <= w.activationdue ";

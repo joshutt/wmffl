@@ -21,11 +21,11 @@ $oldWeek = $currentWeek - 1;
 $season = $currentSeason;
 
 $theQuery = <<<EOD
-insert into revisedactivations
+insert into activations
 select season, week+1, teamid, pos, playerid
-from revisedactivations
+from activations
 where season=$season and week=$oldWeek and teamid not in
-(select distinct teamid from revisedactivations
+(select distinct teamid from activations
 where season=$season and week=$currentWeek)
 EOD;
 #print $theQuery;

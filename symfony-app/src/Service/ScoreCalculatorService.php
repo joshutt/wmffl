@@ -57,7 +57,7 @@ class ScoreCalculatorService
             'SELECT p.pos, r.teamid, g.kickoff, g.secRemain, s.*,
              IF(r.dateon IS NULL AND p.pos <> \'HC\', 1, 0) AS illegal
              FROM newplayers p
-             JOIN revisedactivations a ON p.playerid = a.playerid
+             JOIN activations a ON p.playerid = a.playerid
              JOIN weekmap wm ON a.season = wm.season AND a.week = wm.week
              LEFT JOIN roster r ON p.playerid = r.playerid
                AND (r.dateoff IS NULL OR r.dateoff >= wm.activationdue)

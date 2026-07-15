@@ -3,7 +3,7 @@ CREATE TEMPORARY TABLE countedIR
 select ir.playerid, ir.dateon
 from ir
          join weekmap wm on now() BETWEEN wm.StartDate and wm.EndDate
-         LEFT JOIN revisedactivations a on a.playerid = ir.playerid and a.season = wm.season and a.week = wm.week
+         LEFT JOIN activations a on a.playerid = ir.playerid and a.season = wm.season and a.week = wm.week
 where (ir.dateoff is null
     or ir.dateoff > DATE(DATE_SUB(wm.ActivationDue, INTERVAL 1 DAY)))
   and a.playerid is null;

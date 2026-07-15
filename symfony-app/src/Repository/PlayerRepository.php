@@ -125,13 +125,13 @@ class PlayerRepository extends ServiceEntityRepository
             'SELECT r.TeamID AS team_id, r.DateOn AS date_on, r.DateOff AS date_off,
                     GROUP_CONCAT(DISTINCT tn.name ORDER BY tn.season SEPARATOR \'/\') AS team_name,
                     (SELECT COUNT(*)
-                     FROM revisedactivations a
+                     FROM activations a
                      WHERE a.teamid = r.TeamID
                        AND a.playerid = r.PlayerID
                        AND a.season BETWEEN YEAR(r.DateOn) AND YEAR(COALESCE(r.DateOff, NOW()))
                     ) AS games_activated,
                     (SELECT COALESCE(SUM(ps.pts), 0)
-                     FROM revisedactivations a
+                     FROM activations a
                      JOIN playerscores ps ON ps.playerid = r.PlayerID AND ps.season = a.season AND ps.week = a.week
                      WHERE a.teamid = r.TeamID
                        AND a.playerid = r.PlayerID
@@ -184,7 +184,7 @@ class PlayerRepository extends ServiceEntityRepository
              JOIN stats s ON s.statid = np.flmid
              JOIN playerscores ps ON ps.playerid = np.playerid
                   AND ps.season = s.Season AND ps.week = s.week
-             LEFT JOIN revisedactivations ra ON ra.playerid = np.playerid
+             LEFT JOIN activations ra ON ra.playerid = np.playerid
                   AND ra.season = s.Season AND ra.week = s.week
              WHERE np.playerid = :pid
              GROUP BY s.Season

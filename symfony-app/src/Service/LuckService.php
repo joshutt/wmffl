@@ -54,7 +54,7 @@ class LuckService
             "select t.name, ps.week,
              sum(if(p.pos in ('HC', 'QB', 'RB', 'WR', 'TE', 'K', 'OL'), ps.active, 0)) as off,
              sum(if(p.pos in ('DL', 'LB', 'DB'), ps.active, 0)) as def
-             from revisedactivations a
+             from activations a
              JOIN playerscores ps ON a.season=ps.season and a.week=ps.week and a.playerid=ps.playerid
              JOIN newplayers p ON p.playerid=ps.playerid
              JOIN teamnames t ON a.teamid=t.teamid and a.season=t.season

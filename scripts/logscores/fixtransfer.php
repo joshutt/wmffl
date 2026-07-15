@@ -61,7 +61,7 @@ mysqli_query($conn, $bigquery);
 $querySQL = <<<EOD
     SELECT p.playerid
     FROM newplayers p
-    JOIN revisedactivations a ON a.playerid=p.playerid
+    JOIN activations a ON a.playerid=p.playerid
     WHERE a.season=$currentSeason and a.week=$week
 EOD;
 

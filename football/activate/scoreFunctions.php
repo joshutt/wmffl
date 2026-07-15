@@ -57,7 +57,7 @@ r.teamid as 'teamcheck2', n.secRemain, gp1.side as 'GPMe', gp2.side as 'GPThem',
 from newplayers p
 JOIN weekmap wm
 LEFT JOIN roster r on p.playerid=r.playerid and r.dateon<wm.activationDue and (r.dateoff is null or r.dateoff >= wm.activationDue)
-LEFT JOIN revisedactivations a on a.season=wm.season and a.week=wm.week and a.playerid=p.playerid
+LEFT JOIN activations a on a.season=wm.season and a.week=wm.week and a.playerid=p.playerid
 left join stats s on s.season=wm.season and s.week=wm.week and s.statid=p.flmid
 left join nflrosters nr on p.playerid=nr.playerid and nr.dateon <= wm.activationdue and (nr.dateoff is null or nr.dateoff >= wm.activationdue)
 left join nflgames n on n.week=wm.week and n.season=wm.season and nr.nflteamid in (n.hometeam, n.roadteam)

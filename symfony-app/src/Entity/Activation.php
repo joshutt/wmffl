@@ -6,8 +6,8 @@ use App\Enum\PosEnum;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-#[ORM\Table(name: 'revisedactivations')]
-class RevisedActivation
+#[ORM\Table(name: 'activations')]
+class Activation
 {
     #[ORM\Id]
     #[ORM\Column(name: 'season', type: 'integer')]
