@@ -57,7 +57,7 @@ class ProtectionsService
                     if (pc.years is null, 0, pc.years) as years,
                     max(pos.cost) as cost,
                     if (pro.cost is null, 0, 1) as protected
-             from newplayers p
+             from players p
              join roster r on p.playerid=r.playerid and r.dateoff is null
              join positioncost pos on p.pos=pos.position and pos.startSeason <= :season and pos.endSeason is null
              left join protectioncost pc on p.playerid=pc.playerid and pc.season = :season
@@ -111,7 +111,7 @@ class ProtectionsService
 
         $costs = $this->connection->fetchFirstColumn(
             "select max(pos.cost) as cost
-             from newplayers p
+             from players p
              join roster r on p.playerid=r.playerid and r.dateoff is null
              join positioncost pos on pos.position=p.pos
              left join protectioncost pc on p.playerid=pc.playerid and pc.season = :season
@@ -141,7 +141,7 @@ class ProtectionsService
             $conn->executeStatement(
                 "INSERT INTO protections (teamid, playerid, season, cost)
                  select r.teamid, p.playerid, :season, max(pos.cost) as cost
-                 from newplayers p
+                 from players p
                  join roster r on p.playerid=r.playerid and r.dateoff is null
                  join positioncost pos on pos.position=p.pos
                  left join protectioncost pc on p.playerid=pc.playerid and pc.season = :season
@@ -165,7 +165,7 @@ class ProtectionsService
     {
         return $this->connection->fetchAllAssociative(
             "select CONCAT(p.firstname, ' ', p.lastname) as player, p.pos, p.team, pro.cost
-             from newplayers p, protections pro
+             from players p, protections pro
              where p.playerid=pro.playerid
              and pro.season = :season and pro.teamid = :teamId
              order by p.pos, p.lastname",

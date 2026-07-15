@@ -73,7 +73,7 @@ $sql = <<<EOD
 
 SELECT CONCAT(p.firstname, ' ', p.lastname) as 'name', p.pos, n.nflteamid, a.playerid as 'activeId', g.kickoff, 
 g.homeTeam, g.roadTeam, p.playerid, i.status, i.details, ir.current as 'ir'
-FROM newplayers p
+FROM players p
 JOIN roster r ON p.playerid=r.playerid AND r.dateoff is null
 LEFT JOIN nflrosters n ON n.playerid=r.playerid and n.dateoff is null
 LEFT JOIN activations a ON a.season=$season AND a.week=$week AND p.playerid=a.playerid AND a.teamid=r.teamid
@@ -90,7 +90,7 @@ EOD;
 $noActivateSql = <<<EOD
 
 SELECT CONCAT(p.firstname, ' ', p.lastname) as 'name', p.pos, p.playerid
-FROM newplayers p
+FROM players p
 JOIN roster r1 ON p.playerid=r1.playerid AND r1.dateoff is null
 JOIN roster r2 ON p.playerid=r2.playerid
 JOIN weekmap w ON w.season=$season AND w.week=14 AND r2.dateoff>w.ActivationDue
@@ -101,7 +101,7 @@ EOD;
 
 $actingHCsql = <<<EOD
 SELECT CONCAT(p.firstname, ' ', p.lastname) as 'name', p.pos, n.nflteamid, a.playerid as 'activeId', CONVERT_TZ(g.kickoff, 'SYSTEM', 'GMT') as 'kickoff', g.homeTeam, g.roadTeam, p.playerid
-FROM newplayers p
+FROM players p
 LEFT JOIN roster r on p.playerid=r.playerid and r.dateoff is null
 LEFT JOIN nflrosters n ON n.playerid=p.playerid and n.dateoff is null
 LEFT JOIN nflgames g ON g.season=$season AND g.week=$week AND n.nflteamid in (g.homeTeam, g.roadTeam)
@@ -117,7 +117,7 @@ SELECT CONCAT(p.firstname, ' ', p.lastname) as 'name', p.pos, p.playerid, n.nflt
 FROM schedule s
   JOIN weekmap wm on s.Season=wm.Season and s.Week=wm.Week
   JOIN roster r on r.dateoff is null and r.TeamID = if(s.TeamA=$teamid, s.teamb, s.TeamA)
-  JOIN newplayers p ON r.PlayerID=p.playerid
+  JOIN players p ON r.PlayerID=p.playerid
   LEFT JOIN nflrosters n ON n.playerid=p.playerid and n.dateoff is null
 WHERE s.Season=$season and s.Week=$week and (s.TeamA=$teamid or s.TeamB=$teamid)
 ORDER BY p.pos, p.lastname, p.firstname

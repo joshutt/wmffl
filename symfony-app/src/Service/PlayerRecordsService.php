@@ -81,7 +81,7 @@ class PlayerRecordsService
      */
     public function getRecords(int $season): array
     {
-        return $this->buildRecords($season, self::GAME_THRESHOLDS, self::SEASON_THRESHOLDS, 'newplayers', 'pos');
+        return $this->buildRecords($season, self::GAME_THRESHOLDS, self::SEASON_THRESHOLDS, 'players', 'pos');
     }
 
     /** The 2005 snapshot page, against the retired `players` table */

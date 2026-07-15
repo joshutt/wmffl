@@ -8,7 +8,7 @@ require_once 'utils/start.php';
 $sql = <<<EOD
 
 select p.firstname, p.lastname, p.pos, ps.season, sum(ps.active) as 'active'
-FROM newplayers p
+FROM players p
 JOIn playerscores ps on p.playerid=ps.playerid
 WHERE ps.active is not null and p.pos='%s'
 GROUP BY p.playerid, ps.season

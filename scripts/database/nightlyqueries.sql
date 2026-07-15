@@ -4,9 +4,9 @@ WHERE date < DATE_SUB(CURRENT_DATE, INTERVAL 7 DAY)
 AND status='Pending';
 
 -- Inactivate players not on rosters for over a year
-UPDATE newplayers p
+UPDATE players p
 JOIN ( SELECT p.playerid, max(r2.dateon) as 'laston', max(r2.dateoff) as 'lastoff'
-    FROM newplayers p
+    FROM players p
     LEFT JOIN nflrosters r on p.playerid=r.playerid and r.dateoff is null
     JOIN nflrosters r2 ON p.playerid=r2.playerid and r2.dateoff is not null
     WHERE r.playerid is null and p.active=1

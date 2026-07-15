@@ -8,7 +8,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PlayerRepository::class)]
-#[ORM\Table(name: 'newplayers')]
+#[ORM\Table(name: 'players')]
 class Player
 {
     #[ORM\Id]

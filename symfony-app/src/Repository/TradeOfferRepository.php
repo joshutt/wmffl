@@ -135,7 +135,7 @@ class TradeOfferRepository
             "SELECT op.TeamFromID, p.playerid,
                     CONCAT(p.firstname, ' ', p.lastname) AS name, p.pos, p.team
              FROM offeredplayers op
-             JOIN newplayers p ON p.playerid = op.PlayerID
+             JOIN players p ON p.playerid = op.PlayerID
              WHERE op.OfferID = :offerId
              ORDER BY p.pos, p.lastname",
             ['offerId' => $offerId]
@@ -269,7 +269,7 @@ class TradeOfferRepository
             'nflteam' => $row['team'],
         ], $this->connection->fetchAllAssociative(
             "SELECT p.playerid, CONCAT(p.firstname, ' ', p.lastname) AS name, p.pos, p.team
-             FROM newplayers p
+             FROM players p
              JOIN roster r ON r.playerid = p.playerid AND r.dateoff IS NULL
              WHERE r.teamid = :teamId AND p.pos <> 'HC'
              ORDER BY p.pos, p.lastname",

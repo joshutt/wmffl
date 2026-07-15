@@ -1,7 +1,7 @@
 <?php
 require_once "utils/start.php";
 $query = "SELECT p.firstname, p.lastname, pc.years, CEILING(if(p.pos in ('QB', 'RB', 'WR', 'TE'), pc.years, pc.years/2)) as 'Extra', t.name, p.pos ";
-$query .= "FROM newplayers p ";
+$query .= "FROM players p ";
 $query .= "JOIN protectioncost pc ON p.playerid=pc.playerid ";
 $query .= "LEFT JOIN roster r ON r.playerid=p.playerid AND r.dateoff is null ";
 $query .= "LEFT JOIN team t on r.teamid=t.teamid ";

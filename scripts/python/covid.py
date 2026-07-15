@@ -7,7 +7,7 @@ def main():
 
     # Get players on roster and covid list - Eligible list
     covid_players = "select p.playerid, r.teamid " \
-                    + "from newplayers p " \
+                    + "from players p " \
                     + "join roster r on p.playerid=r.PlayerID and r.DateOff is null " \
                     + "join weekmap wm on now() between wm.StartDate and wm.EndDate " \
                     + "join newinjuries i on p.playerid = i.playerid and i.week=wm.week and i.season=wm.season " \
@@ -22,7 +22,7 @@ def main():
 
     # Get players that need to be removed from covid list
     covid_remove = "select p.playerid, r.TeamID " \
-                   + "from newplayers p " \
+                   + "from players p " \
                    + "join ir on p.playerid = ir.playerid and ir.dateoff is null " \
                    + "join weekmap wm on now() between wm.StartDate and wm.EndDate " \
                    + "left join newinjuries i on p.playerid = i.playerid and i.week=wm.week and i.season=wm.Season " \

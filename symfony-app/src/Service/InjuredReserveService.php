@@ -27,7 +27,7 @@ class InjuredReserveService
         return $this->connection->fetchAllAssociative(
             "select p.playerid, p.firstname, p.lastname, p.pos, inj.status, inj.details,
                     DATE_FORMAT(inj.expectedReturn, '%m-%d-%Y') as expreturn
-             from newplayers p
+             from players p
              join weekmap wm on now() between wm.StartDate and wm.EndDate
              join roster r on p.playerid=r.PlayerID and r.dateoff is null
              join newinjuries inj on p.playerid = inj.playerid and inj.season=wm.Season and inj.week=wm.Week
@@ -44,7 +44,7 @@ class InjuredReserveService
             "select p.playerid, p.firstname, p.lastname, p.pos,
                     DATE_FORMAT(ir.dateon, '%m-%d-%Y') as dateon, n.details,
                     DATE_FORMAT(n.expectedReturn, '%m-%d-%Y') as expreturn
-             from newplayers p
+             from players p
              join weekmap wm on now() between wm.StartDate and wm.EndDate
              join roster r on p.playerid=r.PlayerID and r.DateOff is null
              join ir on ir.playerid=p.playerid and ir.dateoff is null
@@ -63,7 +63,7 @@ class InjuredReserveService
         $rows = $this->connection->executeStatement(
             'insert into ir (playerid, current, dateon)
              select p.playerid, 1, now()
-             from newplayers p
+             from players p
              join roster r on p.playerid=r.PlayerID and r.DateOff is null
              join weekmap wm on now() between wm.StartDate and wm.EndDate
              left join ir on p.playerid=ir.playerid and ir.dateoff is null
@@ -85,7 +85,7 @@ class InjuredReserveService
     public function removePlayerFromIr(int $teamId, int $playerId): bool
     {
         $rows = $this->connection->executeStatement(
-            'update newplayers p
+            'update players p
              join roster r on p.playerid=r.PlayerID and r.DateOff is null
              join weekmap wm on now() between wm.StartDate and wm.EndDate
              left join ir on p.playerid=ir.playerid and ir.dateoff is null

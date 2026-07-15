@@ -56,7 +56,7 @@ class StatsRepository
         $rows = $this->connection->fetchAllAssociative(
             "SELECT t.name, p.pos, sum(ps.active) as totpts
              FROM playerscores ps
-                 JOIN newplayers p ON ps.playerid=p.playerid
+                 JOIN players p ON ps.playerid=p.playerid
                  JOIN roster r ON r.PlayerID=p.playerid
                  JOIN teamnames t ON r.teamid=t.teamid and ps.season=t.season
                  JOIN weekmap w ON r.dateon <= w.activationdue and (r.dateoff is null or r.dateoff > w.activationdue)
@@ -140,7 +140,7 @@ class StatsRepository
              $statSelect
              round(sum(ps.pts)/sum(if(s.played>0,1,0)), 2) as ppg
              FROM playerscores ps
-             JOIN newplayers p ON ps.playerid=p.playerid
+             JOIN players p ON ps.playerid=p.playerid
              JOIN stats s ON s.statid=p.flmid AND s.season=ps.season AND s.week=ps.week
              LEFT JOIN roster r ON r.playerid=p.playerid AND r.dateoff is null
              LEFT JOIN team t ON t.teamid=r.teamid
@@ -166,13 +166,13 @@ class StatsRepository
     /**
      * Every active player's weekly scores for the season
      * (playerlist.php; its query referenced columns dropped from
-     * newplayers — status/position — so the port keys off active/pos).
+     * players — status/position — so the port keys off active/pos).
      */
     public function getActivePlayerScores(int $season): array
     {
         return $this->connection->fetchAllAssociative(
             'SELECT p.lastname, p.firstname, p.pos, p.team, ps.week, ps.pts
-             FROM playerscores ps, newplayers p
+             FROM playerscores ps, players p
              WHERE ps.season = :season AND ps.playerid = p.playerid AND p.active=1
              ORDER BY ps.week, p.pos, ps.pts DESC, p.lastname, p.firstname',
             ['season' => $season]

@@ -18,7 +18,7 @@ include 'base/scoring.php';
 //$week = $currentWeek - 1;
 $week = $currentWeek;
 
-$sql = 'select p.playerid, p.pos, s.season, s.* from newplayers p, stats s ';
+$sql = 'select p.playerid, p.pos, s.season, s.* from players p, stats s ';
 
 $bigquery = 'insert into playerscores (playerid, season, week, pts) ';
 $bigquery .= 'values ';
@@ -49,7 +49,7 @@ mysqli_query($conn, $bigquery) or die('Error: ' . mysqli_error($conn));
 
 $querySql = <<<EOD
     UPDATE playerscores ps
-    JOIN newplayers p ON ps.playerid=p.playerid
+    JOIN players p ON ps.playerid=p.playerid
     JOIN activations a ON p.playerid=a.playerid AND a.season=ps.season AND a.week=ps.week
     SET ps.active=ps.pts
     WHERE ps.season=$currentSeason AND ps.week=$week

@@ -74,7 +74,7 @@ class PowerRatingService
             'select wm.week, t.name, p.firstname, p.lastname, p.pos, ps.pts, ps.active
              from roster r
              join weekmap wm on r.DateOn <= wm.ActivationDue and (r.DateOff is null or r.DateOff >= wm.ActivationDue)
-             join newplayers p on r.PlayerID=p.playerid
+             join players p on r.PlayerID=p.playerid
              join teamnames t on r.TeamID=t.teamid and wm.Season=t.season
              join playerscores ps on ps.playerid=p.playerid and ps.season=wm.Season and ps.week=wm.Week
              where wm.Season = :season and wm.EndDate < now()

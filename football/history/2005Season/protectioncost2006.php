@@ -1,7 +1,7 @@
 <?php
 require_once "utils/connect.php";
 $query = "SELECT p.firstname, p.lastname, pc.years, MAX(pos.cost)-MIN(pos.cost) as 'Extra', t.name
-FROM newplayers p
+FROM players p
  JOIN protectioncost pc on p.playerid=pc.playerid
  JOIN positioncost pos ON p.pos=pos.position and pos.years<=pc.years
 LEFT JOIN roster r ON r.playerid=p.playerid AND r.dateon <= '2006-08-25' and (r.dateoff is null or r.DateOff > '2006-09-01')

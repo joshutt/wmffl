@@ -54,7 +54,7 @@ function generateReserves($thisTeamID, $currentSeason, $currentWeek)
 select p.pos, p.lastname, p.firstname, nr.nflteamid as 'team', n.kickoff as 'kickoff', n.secRemain, n.complete, p.flmid, s.*, 
 if ((r.dateon is null and p.pos<>'HC') or (p.playerid=2637 and wm.season=2018 and wm.week=14), 1, 0) as 'illegal', a.pos as 'startPos', a.teamid as 'teamcheck1', 
 r.teamid as 'teamcheck2', n.secRemain, gp1.side as 'GPMe', gp2.side as 'GPThem', CONVERT_TZ(wm.ActivationDue, 'SYSTEM', '+0:00') as 'ActivationDue'
-from newplayers p
+from players p
 JOIN weekmap wm
 LEFT JOIN roster r on p.playerid=r.playerid and r.dateon<wm.activationDue and (r.dateoff is null or r.dateoff >= wm.activationDue)
 LEFT JOIN activations a on a.season=wm.season and a.week=wm.week and a.playerid=p.playerid

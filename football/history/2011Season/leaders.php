@@ -5,7 +5,7 @@ $thisSeason=2011;
 
 $sql = "select t.name, ra.pos, sum(ps.active) as 'totpts'
 from playerscores ps
-JOIN newplayers p ON ps.playerid=p.playerid
+JOIN players p ON ps.playerid=p.playerid
 JOIN activations ra on ra.playerid=ps.playerid and ps.season=ra.season and ps.week=ra.week
 JOIN teamnames t ON ra.teamid=t.teamid and ps.season=t.season
 WHERE ps.season=$thisSeason

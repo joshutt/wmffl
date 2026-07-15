@@ -32,7 +32,7 @@ function insertNew(Player $player) {
     global $conn;
     $firstName = mysqli_real_escape_string($conn, $player->firstName);
     $lastName = mysqli_real_escape_string($conn, $player->lastName);
-    $baseQuery = "INSERT INTO newplayers (flmid, lastname, firstname, pos, team";
+    $baseQuery = "INSERT INTO players (flmid, lastname, firstname, pos, team";
     $baseValues = "{$player->statId}, '$lastName', '$firstName', '{$player->pos}', '{$player->team}'";
     
     if ($player->number != 0) {
@@ -79,7 +79,7 @@ function insertNew(Player $player) {
  */
 function updateExisting(Player $player) {
     global $conn;
-    $baseQuery = "UPDATE newplayers ";
+    $baseQuery = "UPDATE players ";
 
     $firstName = mysqli_real_escape_string($conn, $player->firstName);
     $lastName = mysqli_real_escape_string($conn, $player->lastName);
@@ -123,7 +123,7 @@ function updateExisting(Player $player) {
     $result = mysqli_query($conn, $finalQuery) or die("Unable to update [{$player->statId}] - " . mysqli_error($conn));
     $numRows = mysqli_affected_rows($conn);
     
-    $idQuery = "SELECT playerid FROM newplayers WHERE flmid={$player->statId}";
+    $idQuery = "SELECT playerid FROM players WHERE flmid={$player->statId}";
     $result2 = mysqli_query($conn, $idQuery) or die("Unable to get ral id [{$player->statId}] - " . mysqli_error($conn));
     $resultArray = mysqli_fetch_array($result2);
     $player->id = $resultArray[0];
@@ -223,7 +223,7 @@ function startDBRosterEntry($playerid, $team) {
 
 function getPlayerByStatId($statId) {
     global $conn;
-    static $query = "SELECT * FROM newplayers WHERE flmid=%d";
+    static $query = "SELECT * FROM players WHERE flmid=%d";
 
     $result = mysqli_query($conn, sprintf($query, $statId)) or die("Error doing select on [$statId] - " . mysqli_error($conn));
     $resultArray = mysqli_fetch_array($result);
@@ -240,7 +240,7 @@ function getPlayerByStatId($statId) {
 
 function checkForStatId($statId) {
     global $conn;
-    static $query = "SELECT count(*) FROM newplayers WHERE flmid=%d";
+    static $query = "SELECT count(*) FROM players WHERE flmid=%d";
 
     $result = mysqli_query($conn, sprintf($query, $statId)) or die("Error doing count on [$statId] - " . mysqli_error($conn));
     $num = mysqli_fetch_array($result);

@@ -51,24 +51,24 @@ class PlayerRepository extends ServiceEntityRepository
         );
     }
 
-    /** @return string[] distinct NFL abbreviations present in newplayers */
+    /** @return string[] distinct NFL abbreviations present in players */
     public function getDistinctNflTeams(): array
     {
         return $this->getEntityManager()->getConnection()->fetchFirstColumn(
-            "SELECT DISTINCT team FROM newplayers WHERE team IS NOT NULL AND team <> '' ORDER BY team"
+            "SELECT DISTINCT team FROM players WHERE team IS NOT NULL AND team <> '' ORDER BY team"
         );
     }
 
-    /** @return string[] distinct positions present in newplayers */
+    /** @return string[] distinct positions present in players */
     public function getDistinctPositions(): array
     {
         return $this->getEntityManager()->getConnection()->fetchFirstColumn(
-            "SELECT DISTINCT pos FROM newplayers WHERE pos IS NOT NULL AND pos <> '' ORDER BY pos"
+            "SELECT DISTINCT pos FROM players WHERE pos IS NOT NULL AND pos <> '' ORDER BY pos"
         );
     }
 
     private const SEARCH_FROM =
-        ' FROM newplayers np
+        ' FROM players np
          LEFT JOIN roster r ON r.PlayerID = np.playerid AND r.DateOff IS NULL
          LEFT JOIN team t ON t.TeamID = r.TeamID';
 
@@ -180,7 +180,7 @@ class PlayerRepository extends ServiceEntityRepository
                     COUNT(s.week)      AS weeks_played,
                     SUM(ps.pts)        AS total_pts,
                     SUM(CASE WHEN ra.playerid IS NOT NULL THEN ps.pts ELSE 0 END) AS active_pts
-             FROM newplayers np
+             FROM players np
              JOIN stats s ON s.statid = np.flmid
              JOIN playerscores ps ON ps.playerid = np.playerid
                   AND ps.season = s.Season AND ps.week = s.week

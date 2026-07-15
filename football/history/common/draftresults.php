@@ -24,7 +24,7 @@ $sql = <<<EOD
 SELECT d.round, d.pick, t.name as 'team', p.firstname, p.lastname, p.pos, r.nflteamid
 FROM draftpicks d
 JOIN teamnames t ON d.teamid=t.teamid and t.season=d.season
-JOIN newplayers p on d.playerid=p.playerid
+JOIN players p on d.playerid=p.playerid
 LEFT JOIN nflrosters r on r.playerid=p.playerid and dateon <= $dateSet
 and (dateoff is null or dateoff >= $dateSet)
 WHERE d.season=$season

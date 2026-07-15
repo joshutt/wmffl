@@ -11,7 +11,7 @@ $season = isset($_REQUEST['season']) ? (int)$_REQUEST['season'] : $thisSeason;
 // It sums up all points a team achieved from players in a specific slot (e.g., QB, RB1, WR1)
 $sql = 'SELECT t.name AS team_name, ra.pos AS position_slot, SUM(ps.active) AS total_points
         FROM playerscores ps
-        JOIN newplayers p ON ps.playerid = p.playerid
+        JOIN players p ON ps.playerid = p.playerid
         JOIN activations ra ON ra.playerid = ps.playerid AND ps.season = ra.season AND ps.week = ra.week
         JOIN teamnames t ON ra.teamid = t.teamid AND ps.season = t.season
         WHERE ps.season = ? AND ps.week <= 14 AND ps.active IS NOT NULL

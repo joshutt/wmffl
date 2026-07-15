@@ -9,7 +9,7 @@ if (isset($_GET['id'])) {
 $sql = <<<EOD
 
 SELECT p.pos, p.playerid, CONCAT(p.firstName, ' ', p.lastName) as 'playername', t.name as 'teamname', t.abbrev, t.teamid, r.dateon
-FROM newplayers p
+FROM players p
 JOIN roster r ON r.playerid=p.playerid and r.dateoff is null
 JOIN teamnames t ON r.teamid=t.teamid
 WHERE t.season=$currentSeason

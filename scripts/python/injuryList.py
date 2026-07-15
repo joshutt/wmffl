@@ -37,7 +37,7 @@ def main():
     week = json_response['injuries']['week']
     injuries = json_response['injuries']['injury']
 
-    select_string = "SELECT playerid FROM newplayers WHERE flmid=%s"
+    select_string = "SELECT playerid FROM players WHERE flmid=%s"
     insert_string = "REPLACE INTO newinjuries " + \
                     "(playerid, season, week, status, details, expectedReturn, version, updated) " + \
                     "VALUES (%s, %s, %s, %s, %s, %s, %s, FROM_UNIXTIME(%s))"

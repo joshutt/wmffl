@@ -287,7 +287,7 @@ class PlayerRepositoryTest extends TestCase
     {
         $conn = $this->createMock(Connection::class);
         $conn->expects($this->once())->method('fetchFirstColumn')
-            ->with($this->stringContains('SELECT DISTINCT team FROM newplayers'))
+            ->with($this->stringContains('SELECT DISTINCT team FROM players'))
             ->willReturn(['GB', 'SEA']);
 
         $repo = $this->makeRepo($conn);
@@ -299,7 +299,7 @@ class PlayerRepositoryTest extends TestCase
     {
         $conn = $this->createMock(Connection::class);
         $conn->expects($this->once())->method('fetchFirstColumn')
-            ->with($this->stringContains('SELECT DISTINCT pos FROM newplayers'))
+            ->with($this->stringContains('SELECT DISTINCT pos FROM players'))
             ->willReturn(['K', 'QB']);
 
         $repo = $this->makeRepo($conn);
