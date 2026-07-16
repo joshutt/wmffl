@@ -399,6 +399,63 @@ class TeamRepository
     }
 
     /**
+     * The all-time records page's game splits: label-keyed extra WHERE
+     * clauses. Whitelist — the split key is caller-supplied, the SQL
+     * fragment never is.
+     */
+    public const RECORD_SPLITS = [
+        'overall'      => '',
+        'regular'      => 'AND s.postseason = 0',
+        'postseason'   => 'AND s.postseason = 1',
+        'playoffs'     => 'AND s.playoffs = 1',
+        'championship' => 'AND s.championship = 1',
+        'toilet'       => 'AND s.postseason = 1 AND s.playoffs = 0',
+    ];
+
+    /**
+     * Every franchise's games/wins/losses/ties across all seasons before
+     * $beforeSeason for one of the RECORD_SPLITS, with win percentage
+     * (ties count half) — ported from legacy alltimerecords.php
+     * getRecList(). Sorted by pct, then games, then wins, descending;
+     * inactive franchises are flagged (the page renders them italic).
+     */
+    public function getAllTimeRecords(int $beforeSeason, string $split): array
+    {
+        if (!array_key_exists($split, self::RECORD_SPLITS)) {
+            throw new \InvalidArgumentException("Unknown record split: $split");
+        }
+        $where = self::RECORD_SPLITS[$split];
+
+        $rows = $this->connection->fetchAllAssociative(
+            "SELECT t.teamid, t.name, t.active, COUNT(s.gameid) AS games,
+                    SUM(IF(t.teamid = s.TeamA, IF(s.scorea > s.scoreb, 1, 0), IF(s.scoreb > s.scorea, 1, 0))) AS wins,
+                    SUM(IF(t.teamid = s.TeamA, IF(s.scorea < s.scoreb, 1, 0), IF(s.scoreb < s.scorea, 1, 0))) AS losses,
+                    SUM(IF(s.scorea = s.scoreb, 1, 0)) AS ties
+             FROM team t, schedule s
+             WHERE t.teamid IN (s.TeamA, s.TeamB) AND s.season < :season $where
+             GROUP BY t.teamid",
+            ['season' => $beforeSeason]
+        );
+
+        foreach ($rows as &$row) {
+            $row['active'] = (bool) $row['active'];
+            $row['games'] = (int) $row['games'];
+            $row['wins'] = (int) $row['wins'];
+            $row['losses'] = (int) $row['losses'];
+            $row['ties'] = (int) $row['ties'];
+            $row['pct'] = ($row['wins'] + $row['ties'] / 2.0) / $row['games'];
+        }
+        unset($row);
+
+        // teamid desc as the final tiebreak reproduces legacy's exact
+        // tie order (stable ascending usort + array_reverse)
+        usort($rows, fn($a, $b) => [$b['pct'], $b['games'], $b['wins'], $b['teamid']]
+            <=> [$a['pct'], $a['games'], $a['wins'], $a['teamid']]);
+
+        return $rows;
+    }
+
+    /**
      * Every division title, grouped by division column for the past
      * champions page. Each row carries the era-correct division name
      * (Blue → Burgundy etc. via the division start/end years) and the

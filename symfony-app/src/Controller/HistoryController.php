@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\DraftPickRepository;
 use App\Repository\TeamRepository;
+use App\Service\SeasonWeekService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -140,6 +141,32 @@ class HistoryController extends AbstractController
             'byTeam'         => $byTeam,
             'byPos'          => $byPos,
             'positionLabels' => self::POSITION_LABELS,
+        ]);
+    }
+
+    /** The six record tables of the all-time records page, in legacy order. */
+    private const RECORD_TABLES = [
+        'overall'      => ['title' => 'Overall Records', 'ties' => true],
+        'regular'      => ['title' => 'Regular Season Records', 'ties' => true],
+        'postseason'   => ['title' => 'Post-Season Records', 'ties' => false],
+        'playoffs'     => ['title' => 'Playoff Records', 'ties' => false],
+        'championship' => ['title' => 'Championship Game Records', 'ties' => false],
+        'toilet'       => ['title' => 'Toilet Bowl Game Records', 'ties' => false],
+    ];
+
+    #[Route('/history/alltimerecords', name: 'history_alltimerecords')]
+    public function alltimerecords(TeamRepository $teams, SeasonWeekService $seasonWeek): Response
+    {
+        $season = $seasonWeek->getCurrentSeason();
+
+        $tables = [];
+        foreach (self::RECORD_TABLES as $split => $meta) {
+            $tables[] = $meta + ['rows' => $teams->getAllTimeRecords($season, $split)];
+        }
+
+        return $this->render('history/alltimerecords.html.twig', [
+            'tables'        => $tables,
+            'throughSeason' => $season - 1,
         ]);
     }
 }

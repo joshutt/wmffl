@@ -551,6 +551,33 @@ class TeamRepositoryTest extends TestCase
         $this->makeRepo($conn)->getToiletBowlGames();
     }
 
+    // ---- getAllTimeRecords ----
+
+    public function testGetAllTimeRecordsSortsByPctGamesWinsThenTeamidDesc(): void
+    {
+        $conn = $this->createMock(Connection::class);
+        $conn->method('fetchAllAssociative')->willReturn([
+            ['teamid' => 2, 'name' => 'A', 'active' => 1, 'games' => 4, 'wins' => 4, 'losses' => 0, 'ties' => 0],
+            ['teamid' => 6, 'name' => 'B', 'active' => 1, 'games' => 4, 'wins' => 4, 'losses' => 0, 'ties' => 0],
+            ['teamid' => 3, 'name' => 'C', 'active' => 0, 'games' => 10, 'wins' => 5, 'losses' => 5, 'ties' => 0],
+            ['teamid' => 4, 'name' => 'D', 'active' => 1, 'games' => 8, 'wins' => 3, 'losses' => 3, 'ties' => 2],
+        ]);
+
+        $rows = $this->makeRepo($conn)->getAllTimeRecords(2026, 'toilet');
+
+        // full ties break by teamid desc (legacy usort+array_reverse order)
+        $this->assertSame(['B', 'A', 'C', 'D'], array_column($rows, 'name'));
+        // ties count half a win: (3 + 2/2) / 8
+        $this->assertSame(0.5, $rows[3]['pct']);
+        $this->assertFalse($rows[2]['active']);
+    }
+
+    public function testGetAllTimeRecordsRejectsUnknownSplit(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->makeRepo($this->createMock(Connection::class))->getAllTimeRecords(2026, 'x; DROP TABLE');
+    }
+
     // ---- winPercentage ----
 
     public function testWinPercentageCountsTiesAsHalfWins(): void

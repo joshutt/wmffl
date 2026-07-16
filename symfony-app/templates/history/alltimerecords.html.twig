@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}WMFFL All-Time Records{% endblock %}
+
+{% block javascripts %}
+    <script src="/base/vendor/js/jquery.tablesorter.min.js"></script>
+    <script src="/base/js/table.base.js"></script>
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center">All-Time Win Loss Records</h1>
+<h5 class="text-center">Through {{ throughSeason }} Season</h5>
+<hr class="border"/>
+
+<div class="container">
+    {% for table in tables %}
+        <div class="card m-4">
+            <div class="card-header">
+                <div class="text-center font-weight-bold h3">{{ table.title }}</div>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped table-hover table-sm text-center tablesorter">
+                    <thead>
+                    <tr>
+                        <th scope="col" class="text-left">Team</th>
+                        <th scope="col">Games</th>
+                        <th scope="col">Wins</th>
+                        <th scope="col">Losses</th>
+                        {% if table.ties %}<th scope="col">Ties</th>{% endif %}
+                        <th scope="col">PCT</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in table.rows %}
+                        <tr>
+                            <td class="text-left">{% if not row.active %}<i>{{ row.name }}</i>{% else %}{{ row.name }}{% endif %}</td>
+                            <td>{% if not row.active %}<i>{{ row.games }}</i>{% else %}{{ row.games }}{% endif %}</td>
+                            <td>{% if not row.active %}<i>{{ row.wins }}</i>{% else %}{{ row.wins }}{% endif %}</td>
+                            <td>{% if not row.active %}<i>{{ row.losses }}</i>{% else %}{{ row.losses }}{% endif %}</td>
+                            {% if table.ties %}
+                                <td>{% if not row.active %}<i>{{ row.ties }}</i>{% else %}{{ row.ties }}{% endif %}</td>
+                            {% endif %}
+                            <td>{% if not row.active %}<i>{{ row.pct|number_format(3) }}</i>{% else %}{{ row.pct|number_format(3) }}{% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
