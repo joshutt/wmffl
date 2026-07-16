@@ -116,15 +116,58 @@ should be small enough to land as its own PR.
   names still carry old-name prefixes (cosmetic, out of scope).
   Deploy: migration + code together in one maintenance window.
 
-## Phase 9 — History (remaining)
+## Phase 9a — History (non-season-specific)
 
-Legacy: `football/history/` (`pastchamps.php`, `pastdrafts.php`,
-`alltimerecords.php`, `recordseason.php`, `recordsweek.php`,
-per-season pages)
+Legacy: `football/history/` top-level files only — `index.php`,
+`pastchamps.php`, `pastdrafts.php`, `alltimerecords.php`,
+`recordseason.php`, `recordsweek.php`, `teammoney.php` (the dynamic,
+`?season=`-parameterized version — distinct from the frozen
+`{year}Season/teammoney.php`/`money.php` snapshots, which are Phase
+9b). None of the `{year}Season(.php|/)` per-season content is in
+scope here.
 
-1. All-time records / past champions / past drafts
-2. Per-season pages — likely a single generic Symfony route/template driven
-   by data, replacing the 30+ individual `{year}Season.php` files
+Full design in `specs/2026-07-16-history-phase9a/plan.md`. Summary:
+
+1. `HistoryController`: `/history` nav hub (its 35 season links keep
+   pointing at the still-legacy per-season pages until 9b), plus
+   `pastchamps`/`pastdrafts` (hardcoded tables, verbatim ports),
+   `alltimerecords` (DB-driven team W/L splits — all-time/regular/
+   post-season/playoff/championship/toilet-bowl), `recordseason`/
+   `recordsweek` (DB-driven per-position leaderboards + hardcoded
+   pre-2003 supplemental records)
+2. `TeamMoneyController` + `TeamMoneyService` (ports
+   `common/moneyUtil.php`): per-team ledger (dues, late fees,
+   illegal-lineup/bye-week charges, payouts), reusing the same
+   `Paid`/`SeasonFlag` entities `AdminMoneyController` already edits
+3. `paststreaks.php` dropped outright — hidden from nav today, data
+   frozen at 2015, nothing else references it
+4. `football/history/` top-level files deleted with 301s
+   (`LegacyHistoryRedirectController`, `.php` aliases for archival
+   links); `football/history/` itself stays for Phase 9b's content
+
+## Phase 9b — History (per-season)
+
+Legacy: `football/history/{year}Season.php` (1992–2017, frozen flat
+pages) and `football/history/{year}Season/` (1992–2026, directories —
+old ones mostly redirect to the flat file above but hold real
+subpages; 2018+ have no flat-file counterpart)
+
+Scope recorded, design deferred until 9a lands. `/history/{season}Season/standings`
+(`history_season_standings`) already covers per-season standings, so
+the remaining surface is: the season hub/index pages themselves (each
+with hardcoded playoff-result blurbs — champion, runner-up, scores),
+`schedule`, `draftresults`, `draftdate`, `draftorder`,
+`protectioncost`, `seasonposition`, the frozen `teammoney`/`money`
+snapshots, and the old-season-only one-offs (`awards`, `newsletters`,
+`breakdown`, `championpreview`, `playoffexplain`/`preview`/`scenewk*`,
+`summary*.inc`, `weeklyscores`, `weeksummary`). Boxscores
+(`{year}Season/boxscores.php`, 2005/2006 only) are explicitly **not**
+in scope — that's Phase 10.
+
+1. Design a data model for the per-season hub content (champion,
+   runner-up, playoff scores) currently hardcoded per file
+2. A single generic Symfony route/template driven by that data,
+   replacing the 30+ individual season files and directories
 
 ## Phase 10 — Boxscores redesign
 
