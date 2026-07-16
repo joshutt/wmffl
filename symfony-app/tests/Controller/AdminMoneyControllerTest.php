@@ -7,6 +7,7 @@ use App\Entity\Paid;
 use App\Entity\SeasonFlag;
 use App\Service\AuthenticationService;
 use App\Service\SeasonWeekService;
+use App\Service\TitleSyncService;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -234,7 +235,7 @@ class AdminMoneyControllerTest extends TestCase
     {
         [$controller, $auth, $seasonWeek, $em] = $this->makeController(commissioner: false);
 
-        $response = $controller->processFlags(new Request(), $auth, $em);
+        $response = $controller->processFlags(new Request(), $auth, $em, $this->createMock(TitleSyncService::class));
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertSame('/', $response->getTargetUrl());
@@ -245,7 +246,7 @@ class AdminMoneyControllerTest extends TestCase
         [$controller, $auth, $seasonWeek, $em] = $this->makeController(commissioner: true);
 
         $request = new Request(request: ['season' => '2025', 'flag-5' => 'W']);
-        $response = $controller->processFlags($request, $auth, $em);
+        $response = $controller->processFlags($request, $auth, $em, $this->createMock(TitleSyncService::class));
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertSame('/admin_money_flags', $response->getTargetUrl());
@@ -259,7 +260,7 @@ class AdminMoneyControllerTest extends TestCase
         $request = new Request(request: ['season' => '2025', 'flag-99' => 'W']);
 
         // Should not throw even when find() returns null
-        $response = $controller->processFlags($request, $auth, $em);
+        $response = $controller->processFlags($request, $auth, $em, $this->createMock(TitleSyncService::class));
         $this->assertInstanceOf(RedirectResponse::class, $response);
     }
 
@@ -273,7 +274,7 @@ class AdminMoneyControllerTest extends TestCase
         $em->expects($this->exactly(2))->method('flush');
 
         $request = new Request(request: ['season' => '2025', 'flag-1' => 'W', 'flag-2' => 'L']);
-        $controller->processFlags($request, $auth, $em);
+        $controller->processFlags($request, $auth, $em, $this->createMock(TitleSyncService::class));
     }
 
     public function testProcessFlagsUpdatesChangedFlags(): void
@@ -285,7 +286,7 @@ class AdminMoneyControllerTest extends TestCase
         $flag->expects($this->once())->method('setFlags')->with('L');
 
         $request = new Request(request: ['season' => '2025', 'flag-5' => 'L']);
-        $controller->processFlags($request, $auth, $em);
+        $controller->processFlags($request, $auth, $em, $this->createMock(TitleSyncService::class));
     }
 
     public function testProcessFlagsSetsDivisionWinner(): void
@@ -297,7 +298,19 @@ class AdminMoneyControllerTest extends TestCase
         $flag->expects($this->once())->method('setDivisionWinner')->with(true);
 
         $request = new Request(request: ['season' => '2025', 'flag-5' => 'W', 'div-5' => '1']);
-        $controller->processFlags($request, $auth, $em);
+        $controller->processFlags($request, $auth, $em, $this->createMock(TitleSyncService::class));
+    }
+
+    public function testProcessFlagsSyncsTitlesForThePostedSeason(): void
+    {
+        [$controller, $auth, $seasonWeek, $em] = $this->makeController(commissioner: true);
+        $em->method('find')->willReturn($this->makeSeasonFlag());
+
+        $titleSync = $this->createMock(TitleSyncService::class);
+        $titleSync->expects($this->once())->method('syncSeason')->with(2025);
+
+        $request = new Request(request: ['season' => '2025', 'flag-5' => 'W']);
+        $controller->processFlags($request, $auth, $em, $titleSync);
     }
 
     // ---- Helpers ----
