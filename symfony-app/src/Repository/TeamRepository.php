@@ -388,6 +388,17 @@ class TeamRepository
     }
 
     /**
+     * Current name of every franchise, keyed by team id — renamed teams
+     * show today's name (the past-drafts summaries group by franchise).
+     *
+     * @return array<int, string>
+     */
+    public function getCurrentTeamNames(): array
+    {
+        return $this->connection->fetchAllKeyValue('SELECT TeamID, Name FROM team');
+    }
+
+    /**
      * Every division title, grouped by division column for the past
      * champions page. Each row carries the era-correct division name
      * (Blue → Burgundy etc. via the division start/end years) and the

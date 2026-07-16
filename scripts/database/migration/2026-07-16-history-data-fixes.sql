@@ -9,6 +9,12 @@
 UPDATE titles SET teamid = 7
 WHERE season = 2022 AND type = 'Division' AND teamid = 8;
 
+-- draftpicks: the 2006 #1 overall was made by Go Balls Deep (teamid 8,
+-- per 2006Season/draftsummary.txt and the legacy pastdrafts page), not
+-- Gallic Warriors. orgTeam (the original slot holder) is untouched.
+UPDATE draftpicks SET teamid = 8
+WHERE Season = 2006 AND Round = 1 AND Pick = 1 AND teamid = 9;
+
 -- schedule: three championship games carried placeholder/garbled scores.
 -- Winner sides were already correct, so W/L records never suffered.
 -- 2009 Championship XVIII: Norsemen 60 - MeggaMen 44 (OT)

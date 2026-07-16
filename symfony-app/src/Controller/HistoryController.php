@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\DraftPickRepository;
 use App\Repository\TeamRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -81,6 +82,64 @@ class HistoryController extends AbstractController
             'championships'  => $teams->getChampionshipGames(),
             'toiletBowls'    => $teams->getToiletBowlGames(),
             'mvps'           => self::CHAMPIONSHIP_MVPS,
+        ]);
+    }
+
+    /**
+     * #1 overall picks whose drafts predate the recorded selections in
+     * draftpicks (playerid is NULL before 2006), verbatim from the
+     * legacy hardcoded table. teamid identifies the franchise so the
+     * by-team summary can group renamed teams (Warriors → ZEN → … →
+     * today's name) the way the legacy summary did by hand.
+     */
+    private const STATIC_NUMBER_ONE_PICKS = [
+        ['season' => 1992, 'teamid' => 3, 'team' => 'Legions of Byron', 'player' => 'Barry Sanders', 'pos' => 'RB', 'nflteam' => 'DET'],
+        ['season' => 1993, 'teamid' => 2, 'team' => 'Slayers', 'player' => 'Sterling Sharpe', 'pos' => 'WR', 'nflteam' => 'GB'],
+        ['season' => 1994, 'teamid' => 3, 'team' => 'Norsemen', 'player' => 'Seattle QB', 'pos' => 'QB', 'nflteam' => 'SEA'],
+        ['season' => 1995, 'teamid' => 8, 'team' => 'Warriors', 'player' => 'Dallas QB', 'pos' => 'QB', 'nflteam' => 'DAL'],
+        ['season' => 1996, 'teamid' => 6, 'team' => 'Renegades', 'player' => 'Lawrence Philips', 'pos' => 'RB', 'nflteam' => 'STL'],
+        ['season' => 1997, 'teamid' => 9, 'team' => 'Iradicators', 'player' => 'Emmitt Smith', 'pos' => 'RB', 'nflteam' => 'DAL'],
+        ['season' => 1998, 'teamid' => 10, 'team' => 'Barbarians', 'player' => 'Corey Dillion', 'pos' => 'RB', 'nflteam' => 'CIN'],
+        ['season' => 1999, 'teamid' => 1, 'team' => 'Archers Who Say Ni', 'player' => 'Terrell Owens', 'pos' => 'WR', 'nflteam' => 'SF'],
+        ['season' => 2000, 'teamid' => 4, 'team' => 'Hempaholics', 'player' => 'Albert Connell', 'pos' => 'WR', 'nflteam' => 'WAS'],
+        ['season' => 2001, 'teamid' => 8, 'team' => 'ZEN', 'player' => 'Michael Bennett', 'pos' => 'RB', 'nflteam' => 'MIN'],
+        ['season' => 2002, 'teamid' => 10, 'team' => 'Barbarians', 'player' => 'Rich Gannon', 'pos' => 'QB', 'nflteam' => 'OAK'],
+        ['season' => 2003, 'teamid' => 6, 'team' => 'Crusaders', 'player' => 'Edgerrin James', 'pos' => 'RB', 'nflteam' => 'IND'],
+        ['season' => 2004, 'teamid' => 10, 'team' => 'Whiskey Tango', 'player' => 'Derrick Mason', 'pos' => 'WR', 'nflteam' => 'TEN'],
+        ['season' => 2005, 'teamid' => 4, 'team' => 'Lindbergh Baby Casserole', 'player' => 'Brian Westbrook', 'pos' => 'RB', 'nflteam' => 'PHI'],
+    ];
+
+    /** Position labels for the picks-by-position summary, per the legacy table. */
+    private const POSITION_LABELS = [
+        'RB' => 'Runningback', 'WR' => 'Wide Receivers', 'QB' => 'Quarterbacks',
+        'TE' => 'Tight Ends', 'K' => 'Kickers', 'HC' => 'Head Coaches',
+        'OL' => 'Offensive Lines', 'DL' => 'Defensive Linemen',
+        'LB' => 'Linebackers', 'DB' => 'Defensive Backs',
+    ];
+
+    #[Route('/history/pastdrafts', name: 'history_pastdrafts')]
+    public function pastdrafts(DraftPickRepository $draftPicks, TeamRepository $teams): Response
+    {
+        $picks = array_merge(self::STATIC_NUMBER_ONE_PICKS, $draftPicks->getNumberOnePicks());
+        $currentNames = $teams->getCurrentTeamNames();
+
+        $byTeam = [];
+        $byPos = [];
+        foreach ($picks as $pick) {
+            $byTeam[$pick['teamid']]['seasons'][] = $pick['season'];
+            $byTeam[$pick['teamid']]['name'] = $currentNames[$pick['teamid']] ?? $pick['team'];
+            $byPos[$pick['pos']][] = $pick['season'];
+        }
+
+        // most picks first; earliest first pick breaks ties
+        uasort($byTeam, fn($a, $b) => [count($b['seasons']), $a['seasons'][0]] <=> [count($a['seasons']), $b['seasons'][0]]);
+        uasort($byPos, fn($a, $b) => count($b) <=> count($a));
+
+        return $this->render('history/pastdrafts.html.twig', [
+            'picks'          => $picks,
+            'byTeam'         => $byTeam,
+            'byPos'          => $byPos,
+            'positionLabels' => self::POSITION_LABELS,
         ]);
     }
 }
