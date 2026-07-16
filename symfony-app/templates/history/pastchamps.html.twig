@@ -7,22 +7,26 @@
 <hr size="1">
 
 <div class="container">
-    <div class="row align-items-end">
-        {% for rows in divisionTitles %}
-            <div class="col-md-4">
-                <b>{{ rows[0].division }} Champions</b>
-                <table class="table table-sm">
-                    <tr><td width="33%"><b>Year</b></td><td><b>Winner</b></td></tr>
-                    {% for row in rows %}
-                        {% if not loop.first and row.division != rows[loop.index0 - 1].division %}
-                            <tr><th colspan="2">{{ row.division }}</th></tr>
-                        {% endif %}
-                        <tr><td>{{ row.season }}</td><td>{{ row.name }}</td></tr>
+    <b>Division Champions</b>
+    <table class="table table-sm" width="100%">
+        {% for row in divisionRows %}
+            {% if row.type == 'header' %}
+                <tr>
+                    <th></th>
+                    {% for divId in divisionIds %}
+                        <th>{{ row.cells[divId] ?? '' }}</th>
                     {% endfor %}
-                </table>
-            </div>
+                </tr>
+            {% else %}
+                <tr>
+                    <td>{{ row.season }}</td>
+                    {% for divId in divisionIds %}
+                        <td>{{ row.winners[divId] }}</td>
+                    {% endfor %}
+                </tr>
+            {% endif %}
         {% endfor %}
-    </div>
+    </table>
 </div>
 
 <br>

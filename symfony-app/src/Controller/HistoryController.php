@@ -80,12 +80,65 @@ class HistoryController extends AbstractController
     #[Route('/history/pastchamps', name: 'history_pastchamps')]
     public function pastchamps(TeamRepository $teams): Response
     {
+        $divisionTitles = $teams->getDivisionTitles();
+
         return $this->render('history/pastchamps.html.twig', [
-            'divisionTitles' => $teams->getDivisionTitles(),
-            'championships'  => $teams->getChampionshipGames(),
-            'toiletBowls'    => $teams->getToiletBowlGames(),
-            'mvps'           => self::CHAMPIONSHIP_MVPS,
+            'divisionIds'   => array_keys($divisionTitles),
+            'divisionRows'  => $this->buildDivisionGrid($divisionTitles),
+            'championships' => $teams->getChampionshipGames(),
+            'toiletBowls'   => $teams->getToiletBowlGames(),
+            'mvps'          => self::CHAMPIONSHIP_MVPS,
         ]);
+    }
+
+    /**
+     * Pivot the per-division title lists into one season-per-row grid
+     * so the division columns always line up year for year — the
+     * legacy page relied on bottom-aligned side-by-side tables with
+     * matching row counts, which drifts the moment any season lacks a
+     * row. Emits a header row whenever a division's era name changes
+     * (Blue → Burgundy, Gold appears, White appears), like the legacy
+     * mid-table rename headers.
+     *
+     * @return array<array{type: 'header'|'season', cells?: array, season?: int, winners?: array}>
+     */
+    private function buildDivisionGrid(array $byDivision): array
+    {
+        $divisionIds = array_keys($byDivision);
+
+        $winners = [];
+        $eras = [];
+        foreach ($byDivision as $divId => $titleRows) {
+            foreach ($titleRows as $row) {
+                $winners[$row['season']][$divId] = $row['name'];
+                $eras[$row['season']][$divId] = $row['division'];
+            }
+        }
+        ksort($winners);
+
+        $rows = [];
+        $currentEra = array_fill_keys($divisionIds, null);
+        foreach ($winners as $season => $seasonWinners) {
+            $headerCells = [];
+            foreach ($divisionIds as $divId) {
+                $era = $eras[$season][$divId] ?? null;
+                if ($era !== null && $era !== $currentEra[$divId]) {
+                    $headerCells[$divId] = $era;
+                    $currentEra[$divId] = $era;
+                }
+            }
+            if ($headerCells) {
+                $rows[] = ['type' => 'header', 'cells' => $headerCells];
+            }
+
+            $rows[] = [
+                'type'    => 'season',
+                'season'  => $season,
+                'winners' => array_map(fn($divId) => $seasonWinners[$divId] ?? '', array_combine($divisionIds, $divisionIds)),
+            ];
+        }
+
+        return $rows;
     }
 
     /**
