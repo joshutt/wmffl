@@ -388,6 +388,75 @@ class TeamRepository
     }
 
     /**
+     * Every division title, grouped by division column for the past
+     * champions page. Each row carries the era-correct division name
+     * (Blue → Burgundy etc. via the division start/end years) and the
+     * season-correct team name. The pre-division 1992 season (division
+     * era named "League") is excluded — it only appears in the League
+     * Champions table, as on the legacy page.
+     *
+     * @return array<int, array<array{season: int, name: string, division: string}>> keyed by divisionid
+     */
+    public function getDivisionTitles(): array
+    {
+        $rows = $this->connection->fetchAllAssociative(
+            "SELECT tn.divisionId AS divisionid, t.season, tn.name, d.Name AS division
+             FROM titles t
+             JOIN teamnames tn ON tn.teamid = t.teamid AND tn.season = t.season
+             JOIN division d ON d.DivisionID = tn.divisionId
+                  AND t.season BETWEEN d.startYear AND d.endYear
+             WHERE t.type = 'Division' AND d.Name <> 'League'
+             ORDER BY tn.divisionId, t.season"
+        );
+
+        $byDivision = [];
+        foreach ($rows as $row) {
+            $byDivision[(int) $row['divisionid']][] = [
+                'season'   => (int) $row['season'],
+                'name'     => $row['name'],
+                'division' => $row['division'],
+            ];
+        }
+
+        return $byDivision;
+    }
+
+    /**
+     * Championship games in season order: winner/loser with scores and
+     * the overtime flag, team names season-correct. Unplayed games
+     * (null scores) are skipped.
+     */
+    public function getChampionshipGames(): array
+    {
+        return $this->postseasonGames('s.championship = 1');
+    }
+
+    /** Toilet bowl games, same shape as getChampionshipGames(). */
+    public function getToiletBowlGames(): array
+    {
+        return $this->postseasonGames(
+            's.postseason = 1 AND s.playoffs = 0 AND s.championship = 0'
+        );
+    }
+
+    private function postseasonGames(string $where): array
+    {
+        return $this->connection->fetchAllAssociative(
+            "SELECT s.Season AS season,
+                    IF(s.scorea >= s.scoreb, ta.name, tb.name) AS winner,
+                    GREATEST(s.scorea, s.scoreb) AS winnerScore,
+                    IF(s.scorea >= s.scoreb, tb.name, ta.name) AS loser,
+                    LEAST(s.scorea, s.scoreb) AS loserScore,
+                    s.overtime
+             FROM schedule s
+             JOIN teamnames ta ON ta.teamid = s.TeamA AND ta.season = s.Season
+             JOIN teamnames tb ON tb.teamid = s.TeamB AND tb.season = s.Season
+             WHERE $where AND s.scorea IS NOT NULL AND s.scoreb IS NOT NULL
+             ORDER BY s.Season"
+        );
+    }
+
+    /**
      * The team's names as season ranges (legacy dataRetrieval.php
      * getPastNames run-length encoding). `end` of 0 means current.
      *
