@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Single Season Records{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="/base/css/history.css">
+{% endblock %}
+
+{% block content %}
+<h1 class="full">Single Season Records</h1>
+
+<div class="row">
+    {% for pos, rows in cards %}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ pos }}</h5>
+                <table class="card-text table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Season</th>
+                        <th scope="col">Pts</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in rows %}
+                        <tr class="{{ row.season == currentSeason ? 'currentSeason' : 'oSeason' }}" scope="row">
+                            <td>{{ row.rank }}</td>
+                            <td>{{ row.name }}</td>
+                            <td>{{ row.season }}</td>
+                            <td>{{ row.pts }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

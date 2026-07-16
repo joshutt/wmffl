@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Repository\DraftPickRepository;
+use App\Repository\PlayerRepository;
 use App\Repository\TeamRepository;
+use App\Service\PlayerRecordsService;
 use App\Service\SeasonWeekService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -167,6 +169,48 @@ class HistoryController extends AbstractController
         return $this->render('history/alltimerecords.html.twig', [
             'tables'        => $tables,
             'throughSeason' => $season - 1,
+        ]);
+    }
+
+    #[Route('/history/recordseason', name: 'history_recordseason')]
+    public function recordseason(
+        PlayerRepository $players,
+        PlayerRecordsService $records,
+        SeasonWeekService $seasonWeek
+    ): Response {
+        $cards = [];
+        foreach (PlayerRecordsService::SUPPLEMENTAL_SEASON_RECORDS as $pos => $extras) {
+            $cards[$pos] = $records->mergeRankedList(
+                $players->getSeasonRecords($pos),
+                $extras,
+                true // recordseason.php stops the list at the supplemental cutoff
+            );
+        }
+
+        return $this->render('history/recordseason.html.twig', [
+            'cards'         => $cards,
+            'currentSeason' => $seasonWeek->getCurrentSeason(),
+        ]);
+    }
+
+    #[Route('/history/recordsweek', name: 'history_recordsweek')]
+    public function recordsweek(
+        PlayerRepository $players,
+        PlayerRecordsService $records,
+        SeasonWeekService $seasonWeek
+    ): Response {
+        $cards = [];
+        foreach (PlayerRecordsService::SUPPLEMENTAL_GAME_RECORDS as $pos => $extras) {
+            $cards[$pos] = $records->mergeRankedList(
+                $players->getWeekRecords($pos),
+                $extras,
+                false // recordsweek.php still prints the DB row at the cutoff
+            );
+        }
+
+        return $this->render('history/recordsweek.html.twig', [
+            'cards'         => $cards,
+            'currentSeason' => $seasonWeek->getCurrentSeason(),
         ]);
     }
 }

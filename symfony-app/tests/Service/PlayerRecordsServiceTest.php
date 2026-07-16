@@ -87,4 +87,68 @@ class PlayerRecordsServiceTest extends TestCase
 
         $this->assertSame(['Al'], array_column($records, 'name'));
     }
+
+    // ---- mergeRankedList ----
+
+    /** @return array<array{name: string, pts: int}> */
+    private static function players(int ...$pts): array
+    {
+        return array_map(fn($i, $p) => ['name' => "P$i", 'pts' => $p], array_keys($pts), $pts);
+    }
+
+    public function testMergeInterleavesSupplementalsAheadOfLowerScores(): void
+    {
+        $merged = $this->service->mergeRankedList(
+            self::players(50, 30, 10, 5),
+            [['name' => 'X', 'pts' => 40], ['name' => 'Y', 'pts' => 20]],
+            true
+        );
+
+        $this->assertSame(
+            [['P0', 1], ['X', 2], ['P1', 3], ['Y', 4], ['P2', 5], ['P3', 6]],
+            array_map(fn($r) => [$r['name'], $r['rank']], $merged)
+        );
+    }
+
+    public function testMergeSupplementalTieGoesFirst(): void
+    {
+        // legacy: extras print while extra.pts >= player.pts, so a tied
+        // supplemental precedes the DB row
+        $merged = $this->service->mergeRankedList(
+            self::players(30),
+            [['name' => 'X', 'pts' => 30]],
+            false
+        );
+
+        $this->assertSame(['X', 'P0'], array_column($merged, 'name'));
+    }
+
+    public function testMergeKeepsRowsTyingTheTenthScore(): void
+    {
+        $merged = $this->service->mergeRankedList(
+            self::players(50, 48, 46, 44, 42, 40, 38, 36, 34, 32, 32, 32, 30),
+            [],
+            true
+        );
+
+        // three rows tie the 10th score; the first sub-32 row ends the list
+        $this->assertCount(12, $merged);
+        $this->assertSame(32, end($merged)['pts']);
+    }
+
+    public function testMergeCutoffVariantsDivergeWhenSupplementalLandsPastTen(): void
+    {
+        // the supplemental becomes the 11th printed row while the 10th
+        // DB row (lower-scored) is current: recordseason stops the list
+        // without printing the DB row, recordsweek still prints it
+        $players = self::players(50, 48, 46, 44, 42, 40, 38, 36, 34, 20);
+        $extras = [['name' => 'X', 'pts' => 30]];
+
+        $season = $this->service->mergeRankedList($players, $extras, true);
+        $week = $this->service->mergeRankedList($players, $extras, false);
+
+        $this->assertSame('X', end($season)['name']);
+        $this->assertSame('P9', end($week)['name']);
+        $this->assertCount(count($season) + 1, $week);
+    }
 }

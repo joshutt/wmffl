@@ -71,9 +71,167 @@ class PlayerRecordsService
 
     public const LASTPLAYER_SEASON = 2005;
 
+    /**
+     * Pre-2003 single-season records that predate the playerscores data,
+     * carried verbatim from legacy recordseason.php ($qbList etc.).
+     * These are the same historical dataset the SEASON_THRESHOLDS above
+     * reduce to bare numbers — kept side by side so the two copies
+     * can't silently drift. Rank 1 first within each position.
+     */
+    public const SUPPLEMENTAL_SEASON_RECORDS = [
+        'HC' => [],
+        'QB' => [['name' => 'Steve Young', 'season' => 1994, 'pts' => 287]],
+        'RB' => [
+            ['name' => 'Emmitt Smith', 'season' => 1995, 'pts' => 262],
+            ['name' => 'Terrell Davis', 'season' => 1998, 'pts' => 241],
+            ['name' => 'Edgerrin James', 'season' => 2000, 'pts' => 216],
+            ['name' => 'Marshall Faulk', 'season' => 2000, 'pts' => 209],
+            ['name' => 'Barry Sanders', 'season' => 1997, 'pts' => 203],
+        ],
+        'WR' => [
+            ['name' => 'Cris Carter', 'season' => 1995, 'pts' => 192],
+            ['name' => 'Marvin Harrison', 'season' => 2001, 'pts' => 192],
+            ['name' => 'Herman Moore', 'season' => 1995, 'pts' => 181],
+            ['name' => 'Jerry Rice', 'season' => 1995, 'pts' => 175],
+            ['name' => 'Terrell Owens', 'season' => 2001, 'pts' => 175],
+            ['name' => 'Jerry Rice', 'season' => 1993, 'pts' => 173],
+            ['name' => 'Marvin Harrison', 'season' => 1999, 'pts' => 173],
+        ],
+        'TE' => [
+            ['name' => 'Tony Gonzalez', 'season' => 2000, 'pts' => 133],
+            ['name' => 'Ben Coates', 'season' => 1994, 'pts' => 112],
+        ],
+        'K' => [['name' => 'Sebastian Janikowski', 'season' => 2002, 'pts' => 138]],
+        'OL' => [
+            ['name' => 'Pittsburgh Steelers', 'season' => 2001, 'pts' => 151],
+            ['name' => 'Pittsburgh Steelers', 'season' => 1997, 'pts' => 147],
+            ['name' => 'Denver Broncos', 'season' => 1998, 'pts' => 146],
+        ],
+        'DL' => [
+            ['name' => 'Michael Strahan', 'season' => 2001, 'pts' => 125],
+            ['name' => 'Jason Taylor', 'season' => 2002, 'pts' => 103],
+            ['name' => 'John Abraham', 'season' => 2001, 'pts' => 99],
+        ],
+        'LB' => [
+            ['name' => 'Ray Lewis', 'season' => 1999, 'pts' => 159],
+            ['name' => 'Derrick Brooks', 'season' => 2002, 'pts' => 159],
+            ['name' => 'Brian Urlacher', 'season' => 2001, 'pts' => 148],
+            ['name' => 'Jeremiah Trotter', 'season' => 2001, 'pts' => 135],
+            ['name' => 'Ray Lewis', 'season' => 1997, 'pts' => 131],
+            ['name' => 'Junior Seau', 'season' => 1994, 'pts' => 124],
+            ['name' => 'Brian Urlacher', 'season' => 2002, 'pts' => 124],
+            ['name' => 'London Fletcher', 'season' => 2001, 'pts' => 123],
+        ],
+        'DB' => [
+            ['name' => 'Rodney Harrison', 'season' => 1997, 'pts' => 146],
+            ['name' => 'Rodney Harrison', 'season' => 2000, 'pts' => 123],
+            ['name' => 'Sammy Knight', 'season' => 2002, 'pts' => 122],
+        ],
+    ];
+
+    /**
+     * Pre-2003 single-week records, carried verbatim from legacy
+     * recordsweek.php. Same relationship to GAME_THRESHOLDS as above.
+     */
+    public const SUPPLEMENTAL_GAME_RECORDS = [
+        'QB' => [],
+        'RB' => [['name' => 'Mike Anderson', 'season' => 2000, 'week' => 14, 'pts' => 41, 'nfl' => 'DEN', 'team' => 'MM']],
+        'WR' => [
+            ['name' => 'Jimmy Smith', 'season' => 2000, 'week' => 2, 'pts' => 52, 'nfl' => 'JAC', 'team' => 'ZEN'],
+            ['name' => 'Jerry Rice', 'season' => 1994, 'week' => 12, 'pts' => 40, 'nfl' => 'SF', 'team' => 'NOR'],
+            ['name' => 'Sterling Sharpe', 'season' => 1993, 'week' => 8, 'pts' => 39, 'nfl' => 'GB', 'team' => 'SLA'],
+            ['name' => 'Jerry Rice', 'season' => 1993, 'week' => 11, 'pts' => 39, 'nfl' => 'SF', 'team' => 'BAR'],
+        ],
+        'TE' => [
+            ['name' => 'Shannon Sharpe', 'season' => 1996, 'week' => 6, 'pts' => 36, 'nfl' => 'DEN', 'team' => 'BAR'],
+            ['name' => 'Ben Coates', 'season' => 1994, 'week' => 1, 'pts' => 26, 'nfl' => 'NE', 'team' => 'WAR'],
+        ],
+        'K' => [
+            ['name' => 'Gary Anderson', 'season' => 1998, 'week' => 15, 'pts' => 23, 'nfl' => 'MIN', 'team' => 'WER'],
+            ['name' => 'Jeff Wilkins', 'season' => 2000, 'week' => 5, 'pts' => 23, 'nfl' => 'STL', 'team' => 'NOR'],
+        ],
+        'OL' => [
+            ['name' => 'St. Louis Rams', 'season' => 2001, 'week' => 9, 'pts' => 33, 'nfl' => 'STL', 'team' => 'HEM'],
+            ['name' => 'San Francisco 49ers', 'season' => 1998, 'week' => 15, 'pts' => 29, 'nfl' => 'SF', 'team' => 'WER'],
+        ],
+        'DL' => [
+            ['name' => 'Tony Brackens', 'season' => 1999, 'week' => 12, 'pts' => 26, 'nfl' => 'JAC', 'team' => 'CRU'],
+            ['name' => 'Michael Strahan', 'season' => 1998, 'week' => 1, 'pts' => 23, 'nfl' => 'NYG', 'team' => 'WER'],
+            ['name' => 'Chris Doleman', 'season' => 1996, 'week' => 12, 'pts' => 22, 'nfl' => 'SF', 'team' => 'FS'],
+        ],
+        'LB' => [
+            ['name' => 'Ken Norton', 'season' => 1995, 'week' => 8, 'pts' => 44, 'nfl' => 'SF', 'team' => 'IRA'],
+            ['name' => 'Brian Urlacher', 'season' => 2001, 'week' => 4, 'pts' => 30, 'nfl' => 'CHI', 'team' => 'HEM'],
+            ['name' => 'Donnie Edwards', 'season' => 1999, 'week' => 15, 'pts' => 29, 'nfl' => 'KC', 'team' => 'BAR'],
+        ],
+        'DB' => [
+            ['name' => 'Darren Woodson', 'season' => 1995, 'week' => 5, 'pts' => 29, 'nfl' => 'DAL', 'team' => 'IRA'],
+            ['name' => 'Ronde Barber', 'season' => 2001, 'week' => 15, 'pts' => 28, 'nfl' => 'TB', 'team' => 'ZEN'],
+        ],
+    ];
+
     public function __construct(
         private Connection $connection
     ) {
+    }
+
+    /**
+     * Interleave a position's supplemental pre-2003 records into its
+     * DB-derived top-30 and apply the legacy top-10-plus-ties cutoff —
+     * a faithful port of printRankList() from recordseason.php /
+     * recordsweek.php, including its quirks: the displayed rank keeps
+     * counting through interleaved rows, and rows keep printing past
+     * ten while they tie the tenth score.
+     *
+     * The two legacy pages diverge in one edge case: when a
+     * supplemental row lands at the cutoff, recordseason.php stops the
+     * whole list (`break 2`) while recordsweek.php only stops
+     * interleaving and still prints the current DB row.
+     * $stopListAtSupplementalCutoff selects the variant.
+     *
+     * @param array<array{pts: int}> $players DB rows, best first
+     * @param array<array{pts: int}> $extras supplemental rows, best first
+     * @return array<int, array> rows with 'rank' added
+     */
+    public function mergeRankedList(array $players, array $extras, bool $stopListAtSupplementalCutoff): array
+    {
+        $out = [];
+        $count = 0;
+        $limitScore = 0;
+        $extraCount = 0;
+
+        foreach ($players as $player) {
+            $count++;
+            if ($count == 10) {
+                $limitScore = $player['pts'];
+            } elseif ($count > 10 && $player['pts'] < $limitScore) {
+                break;
+            }
+
+            while (isset($extras[$extraCount]) && $extras[$extraCount]['pts'] >= $player['pts']) {
+                $out[] = ['rank' => $count] + $extras[$extraCount];
+                $extraCount++;
+                $count++;
+
+                if ($count >= 10) {
+                    $limitScore = $extras[$extraCount - 1]['pts'];
+                    if ($player['pts'] < $limitScore) {
+                        if ($stopListAtSupplementalCutoff) {
+                            if ($count != 10) {
+                                return $out; // legacy `break 2`
+                            }
+                            // count == 10: recordseason.php keeps interleaving
+                        } else {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            $out[] = ['rank' => $count] + $player;
+        }
+
+        return $out;
     }
 
     /**
