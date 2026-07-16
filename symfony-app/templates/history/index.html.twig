@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}WMFFL History{% endblock %}
+
+{% block content %}
+<h1 class="text-center">League History</h1>
+<hr size="1">
+<br>
+
+<div class="container-fluid">
+    <ul class="nav nav-pills nav-fill col m-2 p-1">
+        <li class="nav-item m-2"><a class="nav-link" href="/history/pastchamps">Past Champions</a></li>
+        <li class="nav-item m-2"><a class="nav-link" href="/history/pastdrafts">Past #1 Draft Picks</a></li>
+        <li class="nav-item m-2"><a class="nav-link" href="/history/alltimerecords">All-Time Records</a></li>
+        <li class="nav-item m-2"><a class="nav-link" href="/history/recordsweek">Player Single Week Records</a></li>
+        <li class="nav-item m-2"><a class="nav-link" href="/history/recordseason">Player Single Season Records</a></li>
+        <li class="nav-item m-2"><a class="nav-link" href="/history/teammoney">Team Accounts</a></li>
+        {% for season in firstSeason..lastSeason %}
+            {% if season <= lastFlatSeason %}
+                <li class="nav-item m-2"><a class="nav-link" href="/history/{{ season }}Season.php">{{ season }} Season</a></li>
+            {% else %}
+                <li class="nav-item m-2"><a class="nav-link" href="/history/{{ season }}Season/">{{ season }} Season</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>
+
+<br>
+{% endblock %}
