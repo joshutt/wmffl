@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{# Legacy moneyUtil.php format(): zero renders '-', debt in red parens #}
+{% macro money(value) %}
+    {%- if value == 0 -%}
+        -
+    {%- elseif value < 0 -%}
+        <span class="debt">(${{ (-value)|number_format(2) }})</span>
+    {%- else -%}
+        ${{ value|number_format(2) }}
+    {%- endif -%}
+{% endmacro %}
+
+{% macro count(value) %}
+    {%- if value == 0 -%}-{%- else -%}{{ value }}{%- endif -%}
+{% endmacro %}
+
+{% import _self as fmt %}
+
+{% block title %}{{ season }} WMFFL Financial Statements{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="/base/css/money.css">
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Team Finances</h1>
+<h5 class="text-center">Updated {{ lastUpdate }}</h5>
+
+<p>
+    {% include 'stats/_statbar.html.twig' %}
+</p>
+
+<div class="center">
+    {% if owed %}
+        <h2 class="text-center">
+            <a class="btn btn-wmffl" href="https://paypal.me/JoshUtterback/{{ owed|number_format(2, '.', '') }}">Pay Now</a>
+        </h2>
+    {% endif %}
+
+    <table class="report table table-striped table-hover">
+        <tr class="titleRow">
+            <th>Team</th>
+            <th>Previous</th>
+            <th>Paid</th>
+            <th>Late Fees</th>
+            <th>Illegal<br/>Lineup</th>
+            <th>Bye Week<br/>Activation</th>
+            <th>Extra<br/>Transactions</th>
+            <th>Wins</th>
+            <th>Playoffs</th>
+            <th>Balance</th>
+            <th>{{ showNextSeasonFee ? season + 1 : season }} Fee</th>
+        </tr>
+        {% for team in teams %}
+            <tr class="{{ team.deliquent ? 'table-danger' : '' }}">
+                <td class="name padded">{{ team.name }}</td>
+                <td class="padded">{{ fmt.money(team.previous) }}</td>
+                <td class="padded">{{ fmt.money(team.paid) }}</td>
+                <td class="padded">{{ fmt.money(team.lateFee) }}</td>
+                <td class="padded">{{ fmt.count(team.illegal) }}</td>
+                <td class="padded">{{ fmt.count(team.byeWeek) }}</td>
+                <td class="padded">{{ fmt.count(team.overage) }}</td>
+                <td class="padded">{{ fmt.count(team.wins) }} x {{ fmt.money(payouts.perWin) }}</td>
+                <td class="padded">
+                    {%- if team.playoffLines is empty -%}
+                        -
+                    {%- else -%}
+                        {%- for line in team.playoffLines -%}
+                            {{ line.label }} - {{ fmt.money(line.amount) }}{% if not loop.last %}<br/>{% endif %}
+                        {%- endfor -%}
+                    {%- endif -%}
+                </td>
+                <td class="padded">{{ fmt.money(team.balance) }}</td>
+                <td class="padded">{{ fmt.money(team.stillOwe) }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {% if season >= 2025 %}
+        {% set prevLink = path('history_teammoney', {season: season - 1}) %}
+    {% else %}
+        {% set prevLink = '/history/' ~ (season - 1) ~ 'Season/teammoney' %}
+    {% endif %}
+    <p>Previous column is based on <a href="{{ prevLink }}">{{ season - 1 }} results</a></p>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="border border-secondary rounded p-4">
+                    <div class="font-weight-bold">Payouts</div>
+                    Total Pot: {{ fmt.money(payouts.totalPot) }}<br/>
+                    Per Win: {{ fmt.money(payouts.perWin) }}<br/>
+                    Division Title: {{ fmt.money(payouts.divisionWin) }}<br/>
+                    Playoff Appearance: {{ fmt.money(payouts.playoffApp) }}<br/>
+                    Finalist: {{ fmt.money(payouts.champApp) }}<br/>
+                    Champion: {{ fmt.money(payouts.champWin) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

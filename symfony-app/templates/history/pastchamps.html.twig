@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}WMFFL Past Champions{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Past Champions of the WMFFL</h1>
+<hr size="1">
+
+<div class="container">
+    <b>Division Champions</b>
+    <table class="table table-sm" width="100%">
+        {% for row in divisionRows %}
+            {% if row.type == 'header' %}
+                <tr>
+                    <th></th>
+                    {% for divId in divisionIds %}
+                        <th>{{ row.cells[divId] ?? '' }}</th>
+                    {% endfor %}
+                </tr>
+            {% else %}
+                <tr>
+                    <td>{{ row.season }}</td>
+                    {% for divId in divisionIds %}
+                        <td>{{ row.winners[divId] }}</td>
+                    {% endfor %}
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+</div>
+
+<br>
+
+<div class="container">
+    <b>League Champions</b>
+    <table class="table table-sm" width="100%">
+        <tr><td><b>Year</b></td><td><b>Winner</b></td><td><b>Score</b></td><td><b>Loser</b></td><td><b>Score</b></td><td><b>MVP</b></td></tr>
+        {% for game in championships %}
+            <tr>
+                <td>{{ game.season }}</td>
+                <td>{{ game.winner }}</td>
+                <td>{{ game.winnerScore }}</td>
+                <td>{{ game.loser }}</td>
+                <td>{{ game.loserScore }}{% if game.overtime %} (OT){% endif %}</td>
+                <td>{{ mvps[game.season] ?? '' }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<br>
+
+<div class="container">
+    <b>Toilet Bowl Games</b>
+    <table class="table table-sm" width="100%">
+        <tr><td><b>Year</b></td><td><b>Winner</b></td><td><b>Score</b></td><td><b>Loser</b></td><td><b>Score</b></td></tr>
+        {% for game in toiletBowls %}
+            <tr>
+                <td>{{ game.season }}</td>
+                <td>{{ game.winner }}</td>
+                <td>{{ game.winnerScore }}</td>
+                <td>{{ game.loser }}</td>
+                <td>{{ game.loserScore }}{% if game.overtime %} (OT){% endif %}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

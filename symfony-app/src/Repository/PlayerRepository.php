@@ -147,6 +147,71 @@ class PlayerRepository extends ServiceEntityRepository
         );
     }
 
+    /**
+     * All-time best single seasons for a position: summed activated
+     * points per player-season, top 30 (legacy recordseason.php query,
+     * position bound instead of sprintf'd).
+     *
+     * @return array<array{name: string, season: int, pts: int}>
+     */
+    public function getSeasonRecords(string $pos): array
+    {
+        $rows = $this->getEntityManager()->getConnection()->fetchAllAssociative(
+            "SELECT CONCAT(p.firstname, ' ', p.lastname) AS name,
+                    ps.season, SUM(ps.active) AS pts
+             FROM players p
+             JOIN playerscores ps ON p.playerid = ps.playerid
+             WHERE ps.active IS NOT NULL AND p.pos = :pos
+             GROUP BY p.playerid, ps.season
+             ORDER BY SUM(ps.active) DESC, ps.season, p.playerid
+             LIMIT 30",
+            ['pos' => $pos]
+        );
+
+        foreach ($rows as &$row) {
+            $row['season'] = (int) $row['season'];
+            $row['pts'] = (int) $row['pts'];
+        }
+
+        return $rows;
+    }
+
+    /**
+     * All-time best single weeks for a position, with the player's NFL
+     * team and WMFFL team (abbrev) as of that week — the as-of joins
+     * from legacy recordsweek.php, position bound.
+     *
+     * @return array<array{name: string, season: int, week: int, pts: int, nfl: ?string, team: ?string}>
+     */
+    public function getWeekRecords(string $pos): array
+    {
+        $rows = $this->getEntityManager()->getConnection()->fetchAllAssociative(
+            "SELECT CONCAT(p.firstname, ' ', p.lastname) AS name,
+                    ps.season, ps.week, ps.active AS pts,
+                    nr.nflteamid AS nfl, tn.abbrev AS team
+             FROM players p
+             JOIN playerscores ps ON p.playerid = ps.playerid
+             JOIN weekmap wm ON ps.season = wm.Season AND ps.week = wm.Week
+             LEFT JOIN roster r ON p.playerid = r.PlayerID AND r.DateOn < wm.ActivationDue
+                  AND (r.DateOff > wm.ActivationDue OR r.DateOff IS NULL)
+             LEFT JOIN teamnames tn ON tn.season = wm.Season AND tn.teamid = r.TeamID
+             LEFT JOIN nflrosters nr ON p.playerid = nr.playerid AND nr.dateon <= wm.ActivationDue
+                  AND (nr.dateoff IS NULL OR nr.dateoff >= wm.ActivationDue)
+             WHERE ps.active IS NOT NULL AND p.pos = :pos
+             ORDER BY ps.active DESC, wm.season, wm.week DESC
+             LIMIT 30",
+            ['pos' => $pos]
+        );
+
+        foreach ($rows as &$row) {
+            $row['season'] = (int) $row['season'];
+            $row['week'] = (int) $row['week'];
+            $row['pts'] = (int) $row['pts'];
+        }
+
+        return $rows;
+    }
+
     public function getStatsBySeason(int $playerId): array
     {
         return $this->getEntityManager()->getConnection()->fetchAllAssociative(

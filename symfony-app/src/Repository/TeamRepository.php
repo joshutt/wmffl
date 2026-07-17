@@ -388,6 +388,143 @@ class TeamRepository
     }
 
     /**
+     * Current name of every franchise, keyed by team id — renamed teams
+     * show today's name (the past-drafts summaries group by franchise).
+     *
+     * @return array<int, string>
+     */
+    public function getCurrentTeamNames(): array
+    {
+        return $this->connection->fetchAllKeyValue('SELECT TeamID, Name FROM team');
+    }
+
+    /**
+     * The all-time records page's game splits: label-keyed extra WHERE
+     * clauses. Whitelist — the split key is caller-supplied, the SQL
+     * fragment never is.
+     */
+    public const RECORD_SPLITS = [
+        'overall'      => '',
+        'regular'      => 'AND s.postseason = 0',
+        'postseason'   => 'AND s.postseason = 1',
+        'playoffs'     => 'AND s.playoffs = 1',
+        'championship' => 'AND s.championship = 1',
+        'toilet'       => 'AND s.postseason = 1 AND s.playoffs = 0',
+    ];
+
+    /**
+     * Every franchise's games/wins/losses/ties across all seasons before
+     * $beforeSeason for one of the RECORD_SPLITS, with win percentage
+     * (ties count half) — ported from legacy alltimerecords.php
+     * getRecList(). Sorted by pct, then games, then wins, descending;
+     * inactive franchises are flagged (the page renders them italic).
+     */
+    public function getAllTimeRecords(int $beforeSeason, string $split): array
+    {
+        if (!array_key_exists($split, self::RECORD_SPLITS)) {
+            throw new \InvalidArgumentException("Unknown record split: $split");
+        }
+        $where = self::RECORD_SPLITS[$split];
+
+        $rows = $this->connection->fetchAllAssociative(
+            "SELECT t.teamid, t.name, t.active, COUNT(s.gameid) AS games,
+                    SUM(IF(t.teamid = s.TeamA, IF(s.scorea > s.scoreb, 1, 0), IF(s.scoreb > s.scorea, 1, 0))) AS wins,
+                    SUM(IF(t.teamid = s.TeamA, IF(s.scorea < s.scoreb, 1, 0), IF(s.scoreb < s.scorea, 1, 0))) AS losses,
+                    SUM(IF(s.scorea = s.scoreb, 1, 0)) AS ties
+             FROM team t, schedule s
+             WHERE t.teamid IN (s.TeamA, s.TeamB) AND s.season < :season $where
+             GROUP BY t.teamid",
+            ['season' => $beforeSeason]
+        );
+
+        foreach ($rows as &$row) {
+            $row['active'] = (bool) $row['active'];
+            $row['games'] = (int) $row['games'];
+            $row['wins'] = (int) $row['wins'];
+            $row['losses'] = (int) $row['losses'];
+            $row['ties'] = (int) $row['ties'];
+            $row['pct'] = ($row['wins'] + $row['ties'] / 2.0) / $row['games'];
+        }
+        unset($row);
+
+        // teamid desc as the final tiebreak reproduces legacy's exact
+        // tie order (stable ascending usort + array_reverse)
+        usort($rows, fn($a, $b) => [$b['pct'], $b['games'], $b['wins'], $b['teamid']]
+            <=> [$a['pct'], $a['games'], $a['wins'], $a['teamid']]);
+
+        return $rows;
+    }
+
+    /**
+     * Every division title, grouped by division column for the past
+     * champions page. Each row carries the era-correct division name
+     * (Blue → Burgundy etc. via the division start/end years) and the
+     * season-correct team name. The pre-division 1992 season (division
+     * era named "League") is excluded — it only appears in the League
+     * Champions table, as on the legacy page.
+     *
+     * @return array<int, array<array{season: int, name: string, division: string}>> keyed by divisionid
+     */
+    public function getDivisionTitles(): array
+    {
+        $rows = $this->connection->fetchAllAssociative(
+            "SELECT tn.divisionId AS divisionid, t.season, tn.name, d.Name AS division
+             FROM titles t
+             JOIN teamnames tn ON tn.teamid = t.teamid AND tn.season = t.season
+             JOIN division d ON d.DivisionID = tn.divisionId
+                  AND t.season BETWEEN d.startYear AND d.endYear
+             WHERE t.type = 'Division' AND d.Name <> 'League'
+             ORDER BY tn.divisionId, t.season"
+        );
+
+        $byDivision = [];
+        foreach ($rows as $row) {
+            $byDivision[(int) $row['divisionid']][] = [
+                'season'   => (int) $row['season'],
+                'name'     => $row['name'],
+                'division' => $row['division'],
+            ];
+        }
+
+        return $byDivision;
+    }
+
+    /**
+     * Championship games in season order: winner/loser with scores and
+     * the overtime flag, team names season-correct. Unplayed games
+     * (null scores) are skipped.
+     */
+    public function getChampionshipGames(): array
+    {
+        return $this->postseasonGames('s.championship = 1');
+    }
+
+    /** Toilet bowl games, same shape as getChampionshipGames(). */
+    public function getToiletBowlGames(): array
+    {
+        return $this->postseasonGames(
+            's.postseason = 1 AND s.playoffs = 0 AND s.championship = 0'
+        );
+    }
+
+    private function postseasonGames(string $where): array
+    {
+        return $this->connection->fetchAllAssociative(
+            "SELECT s.Season AS season,
+                    IF(s.scorea >= s.scoreb, ta.name, tb.name) AS winner,
+                    GREATEST(s.scorea, s.scoreb) AS winnerScore,
+                    IF(s.scorea >= s.scoreb, tb.name, ta.name) AS loser,
+                    LEAST(s.scorea, s.scoreb) AS loserScore,
+                    s.overtime
+             FROM schedule s
+             JOIN teamnames ta ON ta.teamid = s.TeamA AND ta.season = s.Season
+             JOIN teamnames tb ON tb.teamid = s.TeamB AND tb.season = s.Season
+             WHERE $where AND s.scorea IS NOT NULL AND s.scoreb IS NOT NULL
+             ORDER BY s.Season"
+        );
+    }
+
+    /**
      * The team's names as season ranges (legacy dataRetrieval.php
      * getPastNames run-length encoding). `end` of 0 means current.
      *

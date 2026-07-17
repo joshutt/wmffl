@@ -493,6 +493,91 @@ class TeamRepositoryTest extends TestCase
         $this->makeRepo($conn)->getRostersForComparison(2, 4);
     }
 
+    // ---- getDivisionTitles ----
+
+    public function testGetDivisionTitlesGroupsByDivisionWithEraNames(): void
+    {
+        $conn = $this->createMock(Connection::class);
+        $conn->expects($this->once())->method('fetchAllAssociative')
+            ->with($this->logicalAnd(
+                // season-correct team name: teamnames joined on BOTH teamid and season
+                $this->stringContains('tn.teamid = t.teamid AND tn.season = t.season'),
+                // era-correct division name
+                $this->stringContains('t.season BETWEEN d.startYear AND d.endYear'),
+                // the pre-division 1992 "League" era stays out
+                $this->stringContains("d.Name <> 'League'")
+            ))
+            ->willReturn([
+                ['divisionid' => 1, 'season' => 2002, 'name' => 'Illuminati', 'division' => 'Blue Division'],
+                ['divisionid' => 1, 'season' => 2003, 'name' => 'War Eagles', 'division' => 'Burgundy Division'],
+                ['divisionid' => 3, 'season' => 2010, 'name' => 'MeggaMen', 'division' => 'White Division'],
+            ]);
+
+        $titles = $this->makeRepo($conn)->getDivisionTitles();
+
+        $this->assertSame([1, 3], array_keys($titles));
+        $this->assertCount(2, $titles[1]);
+        $this->assertSame('Blue Division', $titles[1][0]['division']);
+        $this->assertSame('Burgundy Division', $titles[1][1]['division']);
+        $this->assertSame(['season' => 2010, 'name' => 'MeggaMen', 'division' => 'White Division'], $titles[3][0]);
+    }
+
+    // ---- getChampionshipGames / getToiletBowlGames ----
+
+    public function testChampionshipGamesQuerySelectsWinnerSideAndSkipsUnplayed(): void
+    {
+        $conn = $this->createMock(Connection::class);
+        $conn->expects($this->once())->method('fetchAllAssociative')
+            ->with($this->logicalAnd(
+                $this->stringContains('s.championship = 1'),
+                $this->stringContains('IF(s.scorea >= s.scoreb, ta.name, tb.name) AS winner'),
+                $this->stringContains('s.scorea IS NOT NULL'),
+                // season-correct names for both sides
+                $this->stringContains('ta.teamid = s.TeamA AND ta.season = s.Season'),
+                $this->stringContains('tb.teamid = s.TeamB AND tb.season = s.Season')
+            ))
+            ->willReturn([]);
+
+        $this->makeRepo($conn)->getChampionshipGames();
+    }
+
+    public function testToiletBowlGamesExcludePlayoffsAndChampionship(): void
+    {
+        $conn = $this->createMock(Connection::class);
+        $conn->expects($this->once())->method('fetchAllAssociative')
+            ->with($this->stringContains('s.postseason = 1 AND s.playoffs = 0 AND s.championship = 0'))
+            ->willReturn([]);
+
+        $this->makeRepo($conn)->getToiletBowlGames();
+    }
+
+    // ---- getAllTimeRecords ----
+
+    public function testGetAllTimeRecordsSortsByPctGamesWinsThenTeamidDesc(): void
+    {
+        $conn = $this->createMock(Connection::class);
+        $conn->method('fetchAllAssociative')->willReturn([
+            ['teamid' => 2, 'name' => 'A', 'active' => 1, 'games' => 4, 'wins' => 4, 'losses' => 0, 'ties' => 0],
+            ['teamid' => 6, 'name' => 'B', 'active' => 1, 'games' => 4, 'wins' => 4, 'losses' => 0, 'ties' => 0],
+            ['teamid' => 3, 'name' => 'C', 'active' => 0, 'games' => 10, 'wins' => 5, 'losses' => 5, 'ties' => 0],
+            ['teamid' => 4, 'name' => 'D', 'active' => 1, 'games' => 8, 'wins' => 3, 'losses' => 3, 'ties' => 2],
+        ]);
+
+        $rows = $this->makeRepo($conn)->getAllTimeRecords(2026, 'toilet');
+
+        // full ties break by teamid desc (legacy usort+array_reverse order)
+        $this->assertSame(['B', 'A', 'C', 'D'], array_column($rows, 'name'));
+        // ties count half a win: (3 + 2/2) / 8
+        $this->assertSame(0.5, $rows[3]['pct']);
+        $this->assertFalse($rows[2]['active']);
+    }
+
+    public function testGetAllTimeRecordsRejectsUnknownSplit(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->makeRepo($this->createMock(Connection::class))->getAllTimeRecords(2026, 'x; DROP TABLE');
+    }
+
     // ---- winPercentage ----
 
     public function testWinPercentageCountsTiesAsHalfWins(): void

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}WMFFL Past Draft Picks{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Past #1 Draft Picks of the WMFFL</h1>
+<hr size="1">
+
+<div class="container">
+    <table class="table table-sm" width="100%">
+        <tr><td class="text-center" colspan="5"><b>Previous #1 Picks</b></td></tr>
+        {% for pick in picks %}
+            <tr>
+                <td>{{ pick.season }}</td>
+                <td>{{ pick.team }}</td>
+                <td>{{ pick.player }}</td>
+                <td>{{ pick.pos }}</td>
+                <td>{{ pick.nflteam }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <table class="table table-sm" width="100%">
+        <tr><td colspan="3"><b>#1 picks by team</b></td></tr>
+        {% for team in byTeam %}
+            <tr>
+                <td>{{ team.name }}</td>
+                <td>{{ team.seasons|length }}</td>
+                <td>({{ team.seasons|join(', ') }})</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <table class="table table-sm" width="100%">
+        <tr><td colspan="3"><b>#1 picks by position</b></td></tr>
+        {% for pos, seasons in byPos %}
+            <tr>
+                <td>{{ positionLabels[pos] ?? pos }}</td>
+                <td>{{ seasons|length }}</td>
+                <td>({{ seasons|join(', ') }})</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

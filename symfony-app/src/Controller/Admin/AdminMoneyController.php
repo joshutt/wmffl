@@ -6,6 +6,7 @@ use App\Entity\Paid;
 use App\Entity\SeasonFlag;
 use App\Service\AuthenticationService;
 use App\Service\SeasonWeekService;
+use App\Service\TitleSyncService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -112,7 +113,8 @@ class AdminMoneyController extends AbstractAdminController
     public function processFlags(
         Request $request,
         AuthenticationService $auth,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        TitleSyncService $titleSync
     ): RedirectResponse {
         if (!$auth->isCommissioner()) {
             return new RedirectResponse('/');
@@ -167,6 +169,9 @@ class AdminMoneyController extends AbstractAdminController
             }
             $em->flush();
         }
+
+        // Keep titles (past-champions page) in step with the flags
+        $titleSync->syncSeason($season);
 
         return $this->redirectToRoute('admin_money_flags', ['season' => $season]);
     }
