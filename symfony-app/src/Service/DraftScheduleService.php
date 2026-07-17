@@ -59,6 +59,78 @@ class DraftScheduleService
     }
 
     /**
+     * More "No" answers than a member is allowed
+     * (ported verbatim from processdraftdate.php: > 4 rejects).
+     *
+     * @param array<string, string> $attendByDate 'Y-m-d' => 'Y'|'N'
+     */
+    public function exceedsNoVoteLimit(array $attendByDate): bool
+    {
+        return count(array_filter($attendByDate, fn($v) => $v === 'N')) > self::MAX_NO_VOTES;
+    }
+
+    /**
+     * The member's own schedule rows for the season's window,
+     * date ascending: [['date' => 'Y-m-d', 'attend' => 'Y'|'N'], ...].
+     *
+     * @return array<array{date: string, attend: string}>
+     */
+    public function memberDates(int $userId, int $season): array
+    {
+        return array_map(
+            fn($row) => ['date' => $row['Date'], 'attend' => $row['Attend']],
+            $this->em->getConnection()->fetchAllAssociative(
+                'SELECT Date, Attend FROM draftdate WHERE UserID = :userId AND Date BETWEEN :start AND :end ORDER BY Date',
+                ['userId' => $userId, 'start' => self::windowStart($season), 'end' => self::windowEnd($season)]
+            )
+        );
+    }
+
+    /**
+     * Record a member's Y/N answers, the legacy processdraftdate.php
+     * flow: more than MAX_NO_VOTES "No" answers rejects the whole
+     * submission (nothing saved, returns false); otherwise each of the
+     * member's rows is updated and their draftvote row is stamped
+     * lastUpdate = now(). Unknown dates (nothing scheduled for them)
+     * update no rows, as in the legacy UPDATE-by-key.
+     *
+     * @param array<string, string> $attendByDate 'Y-m-d' => 'Y'|'N'
+     */
+    public function submitVotes(int $userId, int $season, array $attendByDate): bool
+    {
+        foreach ($attendByDate as $date => $attend) {
+            if (!in_array($attend, ['Y', 'N'], true) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', (string) $date)) {
+                throw new \InvalidArgumentException('Malformed vote submission');
+            }
+        }
+
+        if ($this->exceedsNoVoteLimit($attendByDate)) {
+            return false;
+        }
+
+        $conn = $this->em->getConnection();
+        $conn->beginTransaction();
+        try {
+            foreach ($attendByDate as $date => $attend) {
+                $conn->executeStatement(
+                    'UPDATE draftdate SET Attend = :attend WHERE UserID = :userId AND Date = :date',
+                    ['attend' => $attend, 'userId' => $userId, 'date' => $date]
+                );
+            }
+            $conn->executeStatement(
+                'UPDATE draftvote SET lastUpdate = NOW() WHERE userid = :userId AND season = :season',
+                ['userId' => $userId, 'season' => $season]
+            );
+            $conn->commit();
+        } catch (\Throwable $e) {
+            $conn->rollBack();
+            throw $e;
+        }
+
+        return true;
+    }
+
+    /**
      * The distinct dates already scheduled for the season (any user's
      * draftdate rows in the window), 'Y-m-d' ascending.
      *

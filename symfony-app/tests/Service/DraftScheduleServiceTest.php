@@ -180,6 +180,67 @@ class DraftScheduleServiceTest extends TestCase
         $this->assertSame(['2026-08-08'], $plan['deleteDates']);
     }
 
+    // ---- vote submission ----
+
+    public function testExactlyFourNoVotesIsAllowed(): void
+    {
+        $this->assertFalse($this->service->exceedsNoVoteLimit([
+            '2026-08-01' => 'N',
+            '2026-08-02' => 'N',
+            '2026-08-08' => 'N',
+            '2026-08-09' => 'N',
+            '2026-08-15' => 'Y',
+        ]));
+    }
+
+    public function testFiveNoVotesExceedsTheLimit(): void
+    {
+        $this->assertTrue($this->service->exceedsNoVoteLimit([
+            '2026-08-01' => 'N',
+            '2026-08-02' => 'N',
+            '2026-08-08' => 'N',
+            '2026-08-09' => 'N',
+            '2026-08-15' => 'N',
+        ]));
+    }
+
+    public function testAllYesVotesIsAllowed(): void
+    {
+        $this->assertFalse($this->service->exceedsNoVoteLimit([
+            '2026-08-01' => 'Y',
+            '2026-08-02' => 'Y',
+        ]));
+    }
+
+    public function testSubmitVotesRejectsOverLimitWithoutTouchingTheDatabase(): void
+    {
+        // The stubbed EntityManager has no working connection — reaching
+        // for it would blow up, so a false return proves nothing ran
+        $result = $this->service->submitVotes(6, 2026, [
+            '2026-08-01' => 'N',
+            '2026-08-02' => 'N',
+            '2026-08-08' => 'N',
+            '2026-08-09' => 'N',
+            '2026-08-12' => 'N',
+        ]);
+
+        $this->assertFalse($result);
+    }
+
+    public function testSubmitVotesRejectsMalformedValues(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        $this->service->submitVotes(6, 2026, ['2026-08-01' => 'MAYBE']);
+    }
+
+    public function testSubmitVotesRejectsMalformedDates(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        $this->service->submitVotes(6, 2026, ['0801; DROP TABLE draftdate' => 'Y']);
+    }
+
     // ---- applySchedule window guard ----
 
     public function testApplyScheduleRejectsDateOutsideSeasonWindow(): void
