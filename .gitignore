@@ -139,4 +139,4 @@ football/transactions/livedraft/check.log
 /plans/
 
 # Security review notes — kept out of the repo; stored separately
-/specs/backlog/securityreview.md
+/specs/backlog/securityreview*.md
