@@ -143,7 +143,9 @@ should be small enough to land as its own PR.
   2006 #1-pick franchise) — **run on prod at deploy, then re-save the
   2024/2025 admin flags pages**.
 
-## Phase 10 — Dynamic quicklinks
+## Phase 10 — Dynamic quicklinks & draft date scheduling
+
+### Part A: Dynamic quicklinks
 
 Legacy: `football/quicklinks.php` — a static three-item list with the
 season number hardcoded and re-edited by hand each year. Ported as-is
@@ -169,6 +171,45 @@ edits each season.
 4. Seed the three existing links (Draft Order, Protection Costs,
    Finances) as data via migration so the homepage doesn't go blank on
    deploy; `football/quicklinks.php` retired
+
+### Part B: Draft date scheduling
+
+Legacy: `football/history/{year}Season/draftdate.php` (member-facing —
+lists that season's candidate dates for the logged-in owner's team,
+radio Y/N per date, max 4 "No" votes) + `history/common/processdraftdate.php`
+(updates `draftdate.attend` per date/user and stamps
+`draftvote.lastUpdate = now()`). One frozen copy per season back to 2000;
+never previously touched by the migration. `draftdate`
+(`App\Entity\DraftDate` — userid/date/attend) and `draftvote`
+(`App\Entity\DraftVote` — userid/season/lastUpdate) entities already
+exist and are read by `AdminDraftDatesController` (`/admin/draftdates/{season}`,
+tallies yes/no per date and lists owners with `lastUpdate IS NULL`) —
+that page currently only *reads* rows; nothing today creates them, so
+each season's rows have been inserted by hand.
+
+Scope: member-facing vote form (replacing the 25+ per-season legacy
+files) plus, on the **existing** Draft Dates admin tool, a schedule
+builder that generates the rows the vote form and the existing tally
+view depend on.
+
+1. Admin schedule builder, added to `AdminDraftDatesController`/
+   `admin/draftdates/index.html.twig`: pick a first and last possible
+   date, then a calendar of that range to check/uncheck individual
+   candidate dates — default-checked: every Saturday and Sunday in the
+   range. On submit: for every active owner (`owners` for that season)
+   create one `DraftVote` (`lastUpdate = null`) and, for each
+   owner × selected date, one `DraftDate` (`attend = 'Y'`) — matches the
+   legacy default-yes-until-you-say-no model
+2. Member-facing vote page (new route, e.g. `/draftdate`, replacing the
+   per-season legacy files): list the current season's `DraftDate` rows
+   for the logged-in user's `DraftDate` between the schedule's date
+   bounds, Y/N radio per date, submit rule ported from
+   `processdraftdate.php` (**at most 4 "No" votes**) — update the
+   user's `DraftDate.attend` rows and stamp `DraftVote.lastUpdate = now()`
+3. Delete `football/history/{year}Season/draftdate.php` (all seasons),
+   `history/common/processdraftdate.php`, and the 16 per-season
+   `history/{year}Season/processdraftdate.php` copies (2002–2017) that
+   bypass the common one — no redirect needed
 
 ## Phase 11 — History (per-season)
 
