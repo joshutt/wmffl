@@ -4,6 +4,7 @@ namespace App\Tests\Controller;
 
 use App\Controller\HomeController;
 use App\Repository\ArticleRepository;
+use App\Repository\QuickLinkRepository;
 use App\Repository\ScoresRepository;
 use App\Repository\StandingsRepository;
 use App\Service\SeasonWeekService;
@@ -24,7 +25,7 @@ class HomeControllerTest extends TestCase
         $controller->index(...$deps);
 
         $this->assertSame('home/index.html.twig', $controller->renderedView);
-        foreach (['articles', 'scores', 'teams', 'posts', 'season'] as $key) {
+        foreach (['articles', 'scores', 'teams', 'posts', 'season', 'quicklinks'] as $key) {
             $this->assertArrayHasKey($key, $controller->renderedParams);
         }
     }
@@ -96,6 +97,9 @@ class HomeControllerTest extends TestCase
         $calculator = $this->createStub(StandingsCalculatorService::class);
         $calculator->method('buildTeamArray')->willReturn([]);
 
+        $quickLinks = $this->createMock(QuickLinkRepository::class);
+        $quickLinks->method('findVisible')->willReturn([]);
+
         $query = $this->createMock(Query::class);
         $query->method('setMaxResults')->willReturnSelf();
         $query->method('getResult')->willReturn([]);
@@ -103,6 +107,6 @@ class HomeControllerTest extends TestCase
         $em = $this->createStub(EntityManagerInterface::class);
         $em->method('createQuery')->willReturn($query);
 
-        return [$controller, [$seasonWeek, $articles, $scores, $standings, $calculator, $em]];
+        return [$controller, [$seasonWeek, $articles, $scores, $standings, $calculator, $quickLinks, $em]];
     }
 }

@@ -67,9 +67,11 @@
         <div class="card m-1 mb-2">
             {{ include('home/_trashtalk.html.twig') }}
         </div>
+        {% if quicklinks is not empty %}
         <div class="card m-1">
             {{ include('home/_quicklinks.html.twig') }}
         </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
