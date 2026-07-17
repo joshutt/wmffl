@@ -1,5 +1,26 @@
 # Phase 10 — Dynamic quicklinks & draft date scheduling: Validation
 
+**VALIDATION PASS 2026-07-17 — all gates green.** Suite: 672 tests,
+2048 assertions, OK (with `--coverage-clover coverage.xml`). Every
+manual step below was run against `php -S` + dev DB with fake member
+and commissioner sessions: quicklinks CRUD round-trip incl. expired/
+windowed/deactivated/deleted links and the all-hidden empty state;
+builder fresh generation (12 ballots, 60 rows), re-run merge (dropped
+Aug 2, added Aug 15, preserved a cast "No" + lastUpdate — re-opened
+calendar pre-checks the existing schedule, not the Sat/Sun default);
+vote page round-trip (2-No accepted + stamp, 5-No rejected with DB
+unchanged, bad CSRF 403, logged-out message, no-schedule empty state);
+legacy draftdate URLs are LegacyBridge misses (500, acceptable — no
+redirects per roadmap); migration down/up verified reversible and
+draftdate/draftvote untouched. Synthetic 2026 test rows were removed
+after the pass — generate the real 2026 schedule via the builder.
+
+One deliberate refinement over the roadmap text: when a schedule
+already exists in the picked range, the builder calendar pre-checks
+the existing dates instead of the Sat/Sun default, so re-opening the
+builder can't silently mark midweek dates for deletion. Fresh seasons
+get the Sat/Sun default as specified.
+
 The phase is done and mergeable when everything below passes. Merge bar
 (decision #4 in `requirements.md`): unit tests + manual fake-session E2E;
 no functional test suite.
