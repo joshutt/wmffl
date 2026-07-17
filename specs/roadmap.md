@@ -143,7 +143,34 @@ should be small enough to land as its own PR.
   2006 #1-pick franchise) — **run on prod at deploy, then re-save the
   2024/2025 admin flags pages**.
 
-## Phase 9b — History (per-season)
+## Phase 10 — Dynamic quicklinks
+
+Legacy: `football/quicklinks.php` — a static three-item list with the
+season number hardcoded and re-edited by hand each year. Ported as-is
+(still static, same hardcoded list) to
+`symfony-app/templates/home/_quicklinks.html.twig`, rendered by
+`HomeController`.
+
+Scope: replace the static list with an admin-managed set of links, each
+with a date window controlling when it appears on the homepage (e.g.
+"Draft Order" only matters pre-draft, "Protection Costs" only during the
+protection window; "Finances" is evergreen) — no more manual template
+edits each season.
+
+1. New entity `QuickLink` (label, url, start date nullable, end date
+   nullable, active flag, sort order) + migration + repository method
+   (`findVisible()` — active AND today within `[start, end]`, with
+   either bound nullable/open-ended)
+2. `HomeController` / `_quicklinks.html.twig` reads from the repository
+   instead of the hardcoded list; empty-state handled gracefully (no
+   links currently visible)
+3. Admin CRUD (`AdminQuickLinkController`, `/admin/quicklinks`) — list,
+   add, edit, delete/deactivate
+4. Seed the three existing links (Draft Order, Protection Costs,
+   Finances) as data via migration so the homepage doesn't go blank on
+   deploy; `football/quicklinks.php` retired
+
+## Phase 11 — History (per-season)
 
 Legacy: `football/history/{year}Season.php` (1992–2017, frozen flat
 pages) and `football/history/{year}Season/` (1992–2026, directories —
@@ -160,14 +187,14 @@ snapshots, and the old-season-only one-offs (`awards`, `newsletters`,
 `breakdown`, `championpreview`, `playoffexplain`/`preview`/`scenewk*`,
 `summary*.inc`, `weeklyscores`, `weeksummary`). Boxscores
 (`{year}Season/boxscores.php`, 2005/2006 only) are explicitly **not**
-in scope — that's Phase 10.
+in scope — that's Phase 12.
 
 1. Design a data model for the per-season hub content (champion,
    runner-up, playoff scores) currently hardcoded per file
 2. A single generic Symfony route/template driven by that data,
    replacing the 30+ individual season files and directories
 
-## Phase 10 — Boxscores redesign
+## Phase 12 — Boxscores redesign
 
 Legacy: the live box score page is `football/activate/currentscore.php`
 (+ `scoreFunctions.php`, `base/scoring.php`) — addressed by
@@ -192,7 +219,7 @@ two different experiences.
    final-result only
 2. Live scoreboard (separate route, e.g. `/scoreboard`): the in-progress
    current-week experience — live scoring, time remaining, reserves —
-   ported from `currentscore.php` as its own page. Phase 10 ports it
+   ported from `currentscore.php` as its own page. Phase 12 ports it
    as-is to establish the split; its own redesign (auto-refresh, richer
    game-day experience) is deferred to the Unscheduled section
 3. Week scoreboard on the box score page: the other games from the same
@@ -207,23 +234,23 @@ two different experiences.
    game state: completed `teamid`+`season`+`week` combos map to the
    gameid route, current-week to the live scoreboard; update the three
    deep-linking entry points. The rest of `football/activate/` (lineup
-   submission flow) stays for Phase 11
+   submission flow) stays for Phase 13
 6. Phase 7 table renames are done (final `activations`/`players`/
    `injuries` names in place); data coverage varies by era — degrade
    gracefully for seasons missing stat lines
 
-## Phase 11 — Remaining odds and ends
+## Phase 13 — Remaining odds and ends
 
-Legacy: `login/`, `activate/`, `forum/`, `rules/`, `quicklinks.php`,
-`info.php`, `scores.php`
+Legacy: `login/`, `activate/`, `forum/`, `rules/`, `info.php`,
+`scores.php`
 
 1. Auth (login/activate) — highest risk, do last and carefully
-2. Static/low-traffic pages (rules, info, quicklinks, forum)
+2. Static/low-traffic pages (rules, info, forum)
 3. Scores
 
 ## Unscheduled — Live scoreboard redesign
 
-Phase 10 splits the live scoreboard out of `currentscore.php` onto its own
+Phase 12 splits the live scoreboard out of `currentscore.php` onto its own
 route as a faithful port. Its actual redesign — a richer game-day
 experience (auto-refresh/streaming scores, in-progress stat lines,
 whatever else game day wants) — happens here, decoupled from the
