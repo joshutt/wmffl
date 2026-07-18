@@ -3,6 +3,7 @@
 namespace App\Tests\Service;
 
 use App\Service\LuckService;
+use App\Service\SeasonRuleService;
 use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
@@ -12,7 +13,7 @@ class LuckServiceTest extends TestCase
 {
     public function testPotentialRecordsPlayEveryTeamEveryWeek(): void
     {
-        $service = new LuckService($this->createStub(Connection::class));
+        $service = new LuckService($this->createStub(Connection::class), $this->createStub(SeasonRuleService::class));
 
         [$records, $maxWeek] = $service->computePotentialRecords([
             ['name' => 'A', 'week' => 1, 'off' => 50, 'def' => 20],
@@ -29,7 +30,7 @@ class LuckServiceTest extends TestCase
 
     public function testEqualMarginsTie(): void
     {
-        $service = new LuckService($this->createStub(Connection::class));
+        $service = new LuckService($this->createStub(Connection::class), $this->createStub(SeasonRuleService::class));
 
         [$records] = $service->computePotentialRecords([
             ['name' => 'A', 'week' => 1, 'off' => 40, 'def' => 20],
@@ -42,7 +43,7 @@ class LuckServiceTest extends TestCase
 
     public function testActualRecordsTallyGameResults(): void
     {
-        $service = new LuckService($this->createStub(Connection::class));
+        $service = new LuckService($this->createStub(Connection::class), $this->createStub(SeasonRuleService::class));
 
         $records = $service->computeActualRecords([
             ['name' => 'A', 'week' => 1, 'ptsfor' => 80, 'ptsag' => 70],
@@ -71,7 +72,7 @@ class LuckServiceTest extends TestCase
             ];
         });
 
-        $result = (new LuckService($conn))->getLuckRatings(2025);
+        $result = (new LuckService($conn, $this->createStub(SeasonRuleService::class)))->getLuckRatings(2025);
 
         // A: potential 1.000, actual 0.000 -> -100; B: the mirror image
         $this->assertSame(['B' => 100.0, 'A' => -100.0], $result['luck']);

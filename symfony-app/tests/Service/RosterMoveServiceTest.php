@@ -3,6 +3,7 @@
 namespace App\Tests\Service;
 
 use App\Service\RosterMoveService;
+use App\Service\SeasonRuleService;
 use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
@@ -199,7 +200,7 @@ class RosterMoveServiceTest extends TestCase
             }
         );
 
-        (new RosterMoveService($conn))->searchPlayers([
+        (new RosterMoveService($conn, $this->seasonRuleStub()))->searchPlayers([
             'last' => "O'Neal", 'first' => 'Sh', 'position' => 'DL',
             'team' => 'SEA', 'available' => 'available', 'order' => 'position',
         ]);
@@ -223,7 +224,7 @@ class RosterMoveServiceTest extends TestCase
             }
         );
 
-        (new RosterMoveService($conn))->searchPlayers([
+        (new RosterMoveService($conn, $this->seasonRuleStub()))->searchPlayers([
             'last' => '', 'first' => '', 'position' => '',
             'team' => 'RET', 'available' => 'taken', 'order' => 'bogus',
         ]);
@@ -298,6 +299,13 @@ class RosterMoveServiceTest extends TestCase
             }
         );
 
-        return new RosterMoveService($conn);
+        return new RosterMoveService($conn, $this->seasonRuleStub());
+    }
+
+    private function seasonRuleStub(): SeasonRuleService
+    {
+        $stub = $this->createStub(SeasonRuleService::class);
+        $stub->method('getMaxActivePlayers')->willReturn(25);
+        return $stub;
     }
 }

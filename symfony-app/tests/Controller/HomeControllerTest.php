@@ -7,6 +7,7 @@ use App\Repository\ArticleRepository;
 use App\Repository\QuickLinkRepository;
 use App\Repository\ScoresRepository;
 use App\Repository\StandingsRepository;
+use App\Service\SeasonRuleService;
 use App\Service\SeasonWeekService;
 use App\Service\StandingsCalculatorService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -33,7 +34,7 @@ class HomeControllerTest extends TestCase
     public function testIndexUsesCurrentSeasonDuringSeason(): void
     {
         [$controller, $deps] = $this->makeController(week: 5);
-        [, , $scores, $standings] = $deps;
+        [, , , $scores, $standings] = $deps;
         $scores->expects($this->once())->method('getLatestWeekScores')->with(2025);
         $standings->expects($this->once())->method('getCurrentStandings')->with(2025, 5);
 
@@ -45,7 +46,7 @@ class HomeControllerTest extends TestCase
     public function testIndexFallsBackToPreviousSeasonInOffSeason(): void
     {
         [$controller, $deps] = $this->makeController(week: 0);
-        [, , $scores, $standings] = $deps;
+        [, , , $scores, $standings] = $deps;
         $scores->expects($this->once())->method('getLatestWeekScores')->with(2024);
         $standings->expects($this->once())->method('getCurrentStandings')->with(2024, 16);
 
@@ -58,7 +59,7 @@ class HomeControllerTest extends TestCase
     public function testIndexShowsFourArticles(): void
     {
         [$controller, $deps] = $this->makeController(week: 5);
-        [, $articles] = $deps;
+        [, , $articles] = $deps;
         $articles->expects($this->once())->method('findActivePage')->with(4)->willReturn([]);
 
         $controller->index(...$deps);
@@ -84,6 +85,9 @@ class HomeControllerTest extends TestCase
         $seasonWeek->method('getCurrentSeason')->willReturn(2025);
         $seasonWeek->method('getCurrentWeek')->willReturn($week);
 
+        $seasonRules = $this->createStub(SeasonRuleService::class);
+        $seasonRules->method('getRegularSeasonWeeks')->willReturn(14);
+
         $articles = $this->createMock(ArticleRepository::class);
         $articles->method('findActivePage')->willReturn([]);
 
@@ -107,6 +111,6 @@ class HomeControllerTest extends TestCase
         $em = $this->createStub(EntityManagerInterface::class);
         $em->method('createQuery')->willReturn($query);
 
-        return [$controller, [$seasonWeek, $articles, $scores, $standings, $calculator, $quickLinks, $em]];
+        return [$controller, [$seasonWeek, $seasonRules, $articles, $scores, $standings, $calculator, $quickLinks, $em]];
     }
 }

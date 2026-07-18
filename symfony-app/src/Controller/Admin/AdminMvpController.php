@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Service\AuthenticationService;
 use App\Service\MvpScoringService;
+use App\Service\SeasonRuleService;
 use App\Service\SeasonWeekService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +17,7 @@ class AdminMvpController extends AbstractAdminController
     public function index(
         AuthenticationService $auth,
         SeasonWeekService $seasonWeek,
+        SeasonRuleService $seasonRules,
         EntityManagerInterface $em,
         MvpScoringService $scoring,
         ?int $season = null,
@@ -48,10 +50,10 @@ class AdminMvpController extends AbstractAdminController
             JOIN schedule s ON s.season = a.season AND s.week = a.week AND a.teamid IN (s.teama, s.teamb)
             JOIN players p ON p.playerid = a.playerid
             JOIN teamnames tn ON tn.teamid = a.teamid AND tn.season = a.season
-            WHERE a.season = :season AND a.week <= :week AND a.week <= 14
+            WHERE a.season = :season AND a.week <= :week AND a.week <= :regWeeks
             ORDER BY s.gameid, a.pos, a.teamid
             SQL,
-            ['season' => $season, 'week' => $week]
+            ['season' => $season, 'week' => $week, 'regWeeks' => $seasonRules->getRegularSeasonWeeks($season)]
         );
 
         $allPlayers = $scoring->rankPlayers($rows);

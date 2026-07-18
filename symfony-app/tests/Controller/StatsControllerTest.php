@@ -4,6 +4,7 @@ namespace App\Tests\Controller;
 
 use App\Controller\StatsController;
 use App\Repository\StatsRepository;
+use App\Service\SeasonRuleService;
 use App\Service\SeasonWeekService;
 use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
@@ -183,7 +184,10 @@ class StatsControllerTest extends TestCase
         $seasonWeek->method('getCurrentSeason')->willReturn($season);
         $seasonWeek->method('getCurrentWeek')->willReturn($week);
 
-        return new class($repo, $seasonWeek) extends StatsController {
+        $seasonRules = $this->createStub(SeasonRuleService::class);
+        $seasonRules->method('getRegularSeasonWeeks')->willReturn(14);
+
+        return new class($repo, $seasonWeek, $seasonRules) extends StatsController {
             public ?string $renderedView = null;
             public ?array $renderedParams = null;
 

@@ -5,6 +5,7 @@ namespace App\Tests\Controller;
 use App\Controller\Admin\AdminMvpController;
 use App\Service\AuthenticationService;
 use App\Service\MvpScoringService;
+use App\Service\SeasonRuleService;
 use App\Service\SeasonWeekService;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,7 +23,7 @@ class AdminMvpControllerTest extends TestCase
     {
         [$controller, $auth, $seasonWeek, $em, $scoring] = $this->makeController(commissioner: false);
 
-        $response = $controller->index($auth, $seasonWeek, $em, $scoring);
+        $response = $controller->index($auth, $seasonWeek, $this->seasonRules(), $em, $scoring);
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertSame('/', $response->getTargetUrl());
@@ -32,7 +33,7 @@ class AdminMvpControllerTest extends TestCase
     {
         [$controller, $auth, $seasonWeek, $em, $scoring] = $this->makeController(commissioner: true);
 
-        $controller->index($auth, $seasonWeek, $em, $scoring);
+        $controller->index($auth, $seasonWeek, $this->seasonRules(), $em, $scoring);
 
         $this->assertSame('admin/mvp/index.html.twig', $controller->renderedView);
     }
@@ -43,7 +44,7 @@ class AdminMvpControllerTest extends TestCase
         $seasonWeek->method('getCurrentWeek')->willReturn(6);
         $seasonWeek->method('getCurrentSeason')->willReturn(2025);
 
-        $controller->index($auth, $seasonWeek, $em, $scoring);
+        $controller->index($auth, $seasonWeek, $this->seasonRules(), $em, $scoring);
 
         $this->assertSame(2025, $controller->renderedParams['season']);
         $this->assertSame(5, $controller->renderedParams['week']);
@@ -55,7 +56,7 @@ class AdminMvpControllerTest extends TestCase
         $seasonWeek->method('getCurrentWeek')->willReturn(1);
         $seasonWeek->method('getCurrentSeason')->willReturn(2025);
 
-        $controller->index($auth, $seasonWeek, $em, $scoring);
+        $controller->index($auth, $seasonWeek, $this->seasonRules(), $em, $scoring);
 
         $this->assertSame(1, $controller->renderedParams['week']);
     }
@@ -67,7 +68,7 @@ class AdminMvpControllerTest extends TestCase
         $seasonWeek->method('getPreviousWeekSeason')->willReturn(2024);
         $seasonWeek->method('getPreviousWeek')->willReturn(16);
 
-        $controller->index($auth, $seasonWeek, $em, $scoring);
+        $controller->index($auth, $seasonWeek, $this->seasonRules(), $em, $scoring);
 
         $this->assertSame(2024, $controller->renderedParams['season']);
         $this->assertSame(16, $controller->renderedParams['week']);
@@ -79,7 +80,7 @@ class AdminMvpControllerTest extends TestCase
     {
         [$controller, $auth, $seasonWeek, $em, $scoring] = $this->makeController(commissioner: false);
 
-        $response = $controller->index($auth, $seasonWeek, $em, $scoring, 2024, 8);
+        $response = $controller->index($auth, $seasonWeek, $this->seasonRules(), $em, $scoring, 2024, 8);
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertSame('/', $response->getTargetUrl());
@@ -89,7 +90,7 @@ class AdminMvpControllerTest extends TestCase
     {
         [$controller, $auth, $seasonWeek, $em, $scoring] = $this->makeController(commissioner: true);
 
-        $controller->index($auth, $seasonWeek, $em, $scoring, 2023, 10);
+        $controller->index($auth, $seasonWeek, $this->seasonRules(), $em, $scoring, 2023, 10);
 
         $this->assertSame(2023, $controller->renderedParams['season']);
         $this->assertSame(10, $controller->renderedParams['week']);
@@ -99,7 +100,7 @@ class AdminMvpControllerTest extends TestCase
     {
         [$controller, $auth, $seasonWeek, $em, $scoring] = $this->makeController(commissioner: true);
 
-        $controller->index($auth, $seasonWeek, $em, $scoring, 2024, 8);
+        $controller->index($auth, $seasonWeek, $this->seasonRules(), $em, $scoring, 2024, 8);
 
         $this->assertArrayHasKey('overall', $controller->renderedParams);
         $this->assertArrayHasKey('defense', $controller->renderedParams);
@@ -115,7 +116,7 @@ class AdminMvpControllerTest extends TestCase
 
         [$controller, $auth, $seasonWeek, $em, $scoring] = $this->makeController(commissioner: true, scoringResult: $players);
 
-        $controller->index($auth, $seasonWeek, $em, $scoring, 2024, 8);
+        $controller->index($auth, $seasonWeek, $this->seasonRules(), $em, $scoring, 2024, 8);
 
         $this->assertCount(10, $controller->renderedParams['overall']);
     }
@@ -132,7 +133,7 @@ class AdminMvpControllerTest extends TestCase
 
         [$controller, $auth, $seasonWeek, $em, $scoring] = $this->makeController(commissioner: true, scoringResult: $players);
 
-        $controller->index($auth, $seasonWeek, $em, $scoring, 2024, 8);
+        $controller->index($auth, $seasonWeek, $this->seasonRules(), $em, $scoring, 2024, 8);
 
         $defensePosValues = array_column($controller->renderedParams['defense'], 'pos');
         foreach ($defensePosValues as $pos) {
@@ -147,10 +148,10 @@ class AdminMvpControllerTest extends TestCase
 
         $conn->expects($this->once())
             ->method('fetchAllAssociative')
-            ->with($this->stringContains('activations'), $this->equalTo(['season' => 2023, 'week' => 11]))
+            ->with($this->stringContains('activations'), $this->equalTo(['season' => 2023, 'week' => 11, 'regWeeks' => 14]))
             ->willReturn([]);
 
-        $controller->index($auth, $seasonWeek, $em, $scoring, 2023, 11);
+        $controller->index($auth, $seasonWeek, $this->seasonRules(), $em, $scoring, 2023, 11);
     }
 
     // ---- Helpers ----
@@ -189,5 +190,12 @@ class AdminMvpControllerTest extends TestCase
         $scoring->method('rankPlayers')->willReturn($scoringResult);
 
         return [$controller, $auth, $seasonWeek, $em, $scoring, $conn];
+    }
+
+    private function seasonRules(): SeasonRuleService
+    {
+        $stub = $this->createStub(SeasonRuleService::class);
+        $stub->method('getRegularSeasonWeeks')->willReturn(14);
+        return $stub;
     }
 }

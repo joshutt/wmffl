@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\SeasonRuleService;
 use App\Service\SeasonWeekService;
 use App\Repository\StandingsRepository;
 use App\Service\StandingsCalculatorService;
@@ -14,6 +15,7 @@ class StandingsController extends AbstractController
     #[Route('/standings', name: 'standings')]
     public function index(
         SeasonWeekService $seasonWeekService,
+        SeasonRuleService $seasonRules,
         StandingsRepository $standingsRepository,
         StandingsCalculatorService $calculatorService
     ): Response {
@@ -28,8 +30,9 @@ class StandingsController extends AbstractController
         }
 
         // Fetch data via repository
-        $teamData = $standingsRepository->getCurrentStandings($season, $week);
-        $gameData = $standingsRepository->getTeamGames($season, $week);
+        $regWeeks = $seasonRules->getRegularSeasonWeeks($season);
+        $teamData = $standingsRepository->getCurrentStandings($season, $week, $regWeeks);
+        $gameData = $standingsRepository->getTeamGames($season, $week, $regWeeks);
 
         // Build and sort WMFFL\Team objects via service
         $teamArray = $calculatorService->buildTeamArray($teamData, $gameData);

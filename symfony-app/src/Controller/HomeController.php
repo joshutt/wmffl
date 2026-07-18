@@ -6,6 +6,7 @@ use App\Repository\ArticleRepository;
 use App\Repository\QuickLinkRepository;
 use App\Repository\ScoresRepository;
 use App\Repository\StandingsRepository;
+use App\Service\SeasonRuleService;
 use App\Service\SeasonWeekService;
 use App\Service\StandingsCalculatorService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,6 +24,7 @@ class HomeController extends AbstractController
     #[Route('/', name: 'home')]
     public function index(
         SeasonWeekService $seasonWeekService,
+        SeasonRuleService $seasonRules,
         ArticleRepository $articleRepository,
         ScoresRepository $scoresRepository,
         StandingsRepository $standingsRepository,
@@ -45,8 +47,9 @@ class HomeController extends AbstractController
             $standingsWeek = 16;
             $standingsSeason = $standingsSeason - 1;
         }
-        $teamData = $standingsRepository->getCurrentStandings($standingsSeason, $standingsWeek);
-        $gameData = $standingsRepository->getTeamGames($standingsSeason, $standingsWeek);
+        $regWeeks = $seasonRules->getRegularSeasonWeeks($standingsSeason);
+        $teamData = $standingsRepository->getCurrentStandings($standingsSeason, $standingsWeek, $regWeeks);
+        $gameData = $standingsRepository->getTeamGames($standingsSeason, $standingsWeek, $regWeeks);
         $teamArray = $calculatorService->buildTeamArray($teamData, $gameData);
         $calculatorService->sortTeams($teamArray);
 

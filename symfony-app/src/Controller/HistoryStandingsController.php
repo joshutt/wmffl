@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\StandingsRepository;
+use App\Service\SeasonRuleService;
 use App\Service\SeasonWeekService;
 use App\Service\StandingsCalculatorService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,6 +13,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HistoryStandingsController extends AbstractController
 {
+    public function __construct(
+        private readonly SeasonRuleService $seasonRules
+    ) {
+    }
+
     #[Route('/history/standings', name: 'history_standings_current')]
     public function current(
         SeasonWeekService $seasonWeekService,
@@ -60,9 +66,10 @@ class HistoryStandingsController extends AbstractController
         int $season,
         int $week
     ): Response {
+        $regWeeks = $this->seasonRules->getRegularSeasonWeeks($season);
         $teams = $calculatorService->buildTeamArray(
-            $standingsRepository->getCurrentStandings($season, $week),
-            $standingsRepository->getTeamGames($season, $week)
+            $standingsRepository->getCurrentStandings($season, $week, $regWeeks),
+            $standingsRepository->getTeamGames($season, $week, $regWeeks)
         );
         $calculatorService->sortTeams($teams);
 
