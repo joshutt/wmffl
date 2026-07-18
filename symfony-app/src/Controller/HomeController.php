@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\ArticleRepository;
+use App\Repository\QuickLinkRepository;
 use App\Repository\ScoresRepository;
 use App\Repository\StandingsRepository;
 use App\Service\SeasonWeekService;
@@ -26,6 +27,7 @@ class HomeController extends AbstractController
         ScoresRepository $scoresRepository,
         StandingsRepository $standingsRepository,
         StandingsCalculatorService $calculatorService,
+        QuickLinkRepository $quickLinkRepository,
         EntityManagerInterface $em
     ): Response {
         $currentSeason = $seasonWeekService->getCurrentSeason();
@@ -59,6 +61,7 @@ class HomeController extends AbstractController
             'teams' => $teamArray,
             'posts' => $posts,
             'season' => $currentSeason,
+            'quicklinks' => $quickLinkRepository->findVisible(),
         ]);
     }
 }

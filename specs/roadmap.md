@@ -142,74 +142,28 @@ should be small enough to land as its own PR.
   (2022 White Division title teamid, 2009–2011 championship scores,
   2006 #1-pick franchise) — **run on prod at deploy, then re-save the
   2024/2025 admin flags pages**.
-
-## Phase 10 — Dynamic quicklinks & draft date scheduling
-
-### Part A: Dynamic quicklinks
-
-Legacy: `football/quicklinks.php` — a static three-item list with the
-season number hardcoded and re-edited by hand each year. Ported as-is
-(still static, same hardcoded list) to
-`symfony-app/templates/home/_quicklinks.html.twig`, rendered by
-`HomeController`.
-
-Scope: replace the static list with an admin-managed set of links, each
-with a date window controlling when it appears on the homepage (e.g.
-"Draft Order" only matters pre-draft, "Protection Costs" only during the
-protection window; "Finances" is evergreen) — no more manual template
-edits each season.
-
-1. New entity `QuickLink` (label, url, start date nullable, end date
-   nullable, active flag, sort order) + migration + repository method
-   (`findVisible()` — active AND today within `[start, end]`, with
-   either bound nullable/open-ended)
-2. `HomeController` / `_quicklinks.html.twig` reads from the repository
-   instead of the hardcoded list; empty-state handled gracefully (no
-   links currently visible)
-3. Admin CRUD (`AdminQuickLinkController`, `/admin/quicklinks`) — list,
-   add, edit, delete/deactivate
-4. Seed the three existing links (Draft Order, Protection Costs,
-   Finances) as data via migration so the homepage doesn't go blank on
-   deploy; `football/quicklinks.php` retired
-
-### Part B: Draft date scheduling
-
-Legacy: `football/history/{year}Season/draftdate.php` (member-facing —
-lists that season's candidate dates for the logged-in owner's team,
-radio Y/N per date, max 4 "No" votes) + `history/common/processdraftdate.php`
-(updates `draftdate.attend` per date/user and stamps
-`draftvote.lastUpdate = now()`). One frozen copy per season back to 2000;
-never previously touched by the migration. `draftdate`
-(`App\Entity\DraftDate` — userid/date/attend) and `draftvote`
-(`App\Entity\DraftVote` — userid/season/lastUpdate) entities already
-exist and are read by `AdminDraftDatesController` (`/admin/draftdates/{season}`,
-tallies yes/no per date and lists owners with `lastUpdate IS NULL`) —
-that page currently only *reads* rows; nothing today creates them, so
-each season's rows have been inserted by hand.
-
-Scope: member-facing vote form (replacing the 25+ per-season legacy
-files) plus, on the **existing** Draft Dates admin tool, a schedule
-builder that generates the rows the vote form and the existing tally
-view depend on.
-
-1. Admin schedule builder, added to `AdminDraftDatesController`/
-   `admin/draftdates/index.html.twig`: pick a first and last possible
-   date, then a calendar of that range to check/uncheck individual
-   candidate dates — default-checked: every Saturday and Sunday in the
-   range. On submit: for every active owner (`owners` for that season)
-   create one `DraftVote` (`lastUpdate = null`) and, for each
-   owner × selected date, one `DraftDate` (`attend = 'Y'`) — matches the
-   legacy default-yes-until-you-say-no model
-2. Member-facing vote page (new route, e.g. `/draftdate`, replacing the
-   per-season legacy files): list the current season's `DraftDate` rows
-   for the logged-in user's `DraftDate` between the schedule's date
-   bounds, Y/N radio per date, submit rule ported from
-   `processdraftdate.php` (**at most 4 "No" votes**) — update the
-   user's `DraftDate.attend` rows and stamp `DraftVote.lastUpdate = now()`
-3. Delete `football/history/{year}Season/draftdate.php` (all seasons),
-   `history/common/processdraftdate.php`, and the 16 per-season
-   `history/{year}Season/processdraftdate.php` copies (2002–2017) that
-   bypass the common one — no redirect needed
+- Dynamic quicklinks & draft date scheduling (Phase 10 complete,
+  2026-07-17, `specs/2026-07-17-quicklinks-draftdates/`). Part A:
+  `QuickLink` entity + `quicklinks` table (label, url, nullable
+  inclusive start/end window, active, sort order; migration
+  Version20260717000000 seeds the three former static links — literal
+  season URLs, the admin edits seasonal ones yearly),
+  `QuickLinkRepository::findVisible()`, homepage widget now DB-driven
+  with the whole card hidden when nothing is visible, admin CRUD
+  (`AdminQuickLinkController`, `/admin/quicklinks` — list with
+  visible-today indicator, add/edit, activate/deactivate, delete);
+  `football/quicklinks.php` deleted. Part B: `DraftScheduleService` —
+  admin schedule builder on `/admin/draftdates` (range picker →
+  checkbox calendar, Sat/Sun default-checked on fresh seasons,
+  existing dates pre-checked on re-runs; merge keeps every cast vote
+  and `lastUpdate`, fills in new owners, deletes deselected dates; a
+  season's schedule = draftdate rows in its July 1 – Oct 1 window) and
+  member vote page `/draftdate` (`DraftDateController` — default-Yes
+  radios, max-4-"No" rule ported from `processdraftdate.php`, valid
+  submit stamps `draftvote.lastUpdate`). All 26 per-season
+  `draftdate.php`, `common/processdraftdate.php`, and the 16
+  per-season `processdraftdate.php` copies deleted, no redirects
+  (only archival newsletter links pointed at them).
 
 ## Phase 11 — History (per-season)
 

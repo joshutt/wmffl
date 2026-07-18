@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Determine Draft Date{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Draft Date Open {{ season }}</h1>
+<hr size="1"/>
+
+{% if not loggedIn %}
+<p class="text-center font-weight-bold">You must be logged in to use this feature</p>
+{% elseif dates is empty %}
+<p class="text-center">No draft dates are up for a vote yet — check back once the
+candidate dates for {{ season }} have been posted.</p>
+{% else %}
+
+{% if error %}
+<div class="container">
+    <div class="alert alert-danger col-md-6" role="alert">Your draft request has NOT been recorded!!!</div>
+    <div class="panel">You may select at most {{ maxNo }} dates you can not attend.
+        If there are truly more than {{ maxNo }} dates you can't make it, then pick
+        the {{ maxNo }} that you are least likely to be able to attend (in person
+        or remotely).</div>
+</div>
+{% elseif success %}
+<div class="container">
+    <div class="alert alert-success col-md-6" role="alert">Your draft request has been recorded.</div>
+    <div class="panel">If your situation changes you may update your availability
+        at any time until the draft date is announced. After that time you will
+        need to contact Josh.</div>
+</div>
+{% else %}
+<div class="container px-2">
+    <p>Please fill out the form below, letting us know when you can <strong>NOT</strong>
+    make the draft. You are limited to selecting {{ maxNo }} dates you cannot
+    attend. The draft date will be announced once everyone has voted.</p>
+</div>
+{% endif %}
+
+<form method="post">
+    <input type="hidden" name="_token" value="{{ csrf_token('draftdate') }}"/>
+    <div class="container">
+        <div class="row m-1">
+            <div class="col-4 col-md-2"><h5>Can Attend?</h5></div>
+            <div class="col-6 col-md-4"><h5>Date</h5></div>
+        </div>
+
+        {% for row in dates %}
+        <div class="row m-1">
+            <div class="col-4 col-md-2">
+                <div class="form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input"
+                               name="attend[{{ row.date }}]" value="Y"
+                               {% if row.attend == 'Y' %}checked{% endif %}/>Yes
+                    </label>
+                </div>
+                <div class="form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input"
+                               name="attend[{{ row.date }}]" value="N"
+                               {% if row.attend == 'N' %}checked{% endif %}/>No
+                    </label>
+                </div>
+            </div>
+            <div class="col-6 col-md-4">{{ row.date|date('l, F jS') }}</div>
+        </div>
+        {% endfor %}
+
+        <div class="row">
+            <div class="col-4 mt-2 ml-3 text-center">
+                <button type="submit" class="btn-wmffl mx-auto">Submit</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endif %}
+{% endblock %}

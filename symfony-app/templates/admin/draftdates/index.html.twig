@@ -38,4 +38,48 @@
     {% endfor %}
 </ul>
 {% endif %}
+
+<hr>
+<h4>Schedule Builder</h4>
+<p class="text-muted">Pick the range of possible dates, then check the
+candidate dates to put up for a vote. Every owner gets a default "Yes"
+for each date; votes already cast are kept. <strong>Unchecking an
+already-scheduled date removes it — and its votes — for everyone.</strong></p>
+
+<form method="get" class="form-inline mb-3">
+    <label class="mr-2" for="first">First possible date</label>
+    <input type="date" class="form-control mr-3" id="first" name="first"
+           min="{{ windowStart }}" max="{{ windowEnd }}"
+           value="{{ app.request.query.get('first') }}" required>
+    <label class="mr-2" for="last">Last possible date</label>
+    <input type="date" class="form-control mr-3" id="last" name="last"
+           min="{{ windowStart }}" max="{{ windowEnd }}"
+           value="{{ app.request.query.get('last') }}" required>
+    <button type="submit" class="btn btn-wmffl">Show Dates</button>
+</form>
+
+{% if candidates is not null %}
+<form method="post" action="{{ path('admin_draftdates_schedule', {season: season}) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('admin_draftdates') }}"/>
+    <div class="row">
+        {% for candidate in candidates %}
+        <div class="col-md-3 col-sm-4 col-6">
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="dates[]"
+                       id="date-{{ candidate.date|date('Y-m-d') }}"
+                       value="{{ candidate.date|date('Y-m-d') }}"
+                       {% if candidate.checked %}checked{% endif %}>
+                <label class="form-check-label{% if candidate.date|date('N') >= 6 %} font-weight-bold{% endif %}"
+                       for="date-{{ candidate.date|date('Y-m-d') }}">
+                    {{ candidate.date|date('D, M j') }}
+                </label>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="text-center my-2">
+        <button type="submit" class="btn btn-wmffl">Save Schedule</button>
+    </div>
+</form>
+{% endif %}
 {% endblock %}

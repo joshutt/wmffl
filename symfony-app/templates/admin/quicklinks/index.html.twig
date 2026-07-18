@@ -1,0 +1,62 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Admin - Quicklinks{% endblock %}
+
+{% block admin_content %}
+<h2 class="mt-2">Homepage Quicklinks</h2>
+
+<p class="text-muted">Links shown in the "Other Links" box on the homepage.
+A link appears when it is active and today falls inside its date window
+(blank dates are open-ended). Update seasonal URLs each year.</p>
+
+<table class="table table-sm table-striped table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>Order</th>
+            <th>Label</th>
+            <th>URL</th>
+            <th>Window</th>
+            <th>Active</th>
+            <th>Visible Today</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for link in links %}
+        <tr>
+            <td>{{ link.sortOrder }}</td>
+            <td>{{ link.label }}</td>
+            <td><a href="{{ link.url }}">{{ link.url }}</a></td>
+            <td>
+                {% if link.startDate or link.endDate %}
+                {{ link.startDate ? link.startDate|date('Y-m-d') : '…' }} –
+                {{ link.endDate ? link.endDate|date('Y-m-d') : '…' }}
+                {% else %}
+                always
+                {% endif %}
+            </td>
+            <td>{{ link.active ? 'Yes' : 'No' }}</td>
+            <td>{% if link.isVisibleOn(today) %}<span class="text-success">Yes</span>{% else %}<span class="text-muted">No</span>{% endif %}</td>
+            <td class="text-nowrap">
+                <a class="btn btn-sm btn-wmffl" href="{{ path('admin_quicklinks_edit', {id: link.id}) }}">Edit</a>
+                <form class="d-inline" method="post" action="{{ path('admin_quicklinks_toggle', {id: link.id}) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('admin_quicklink') }}"/>
+                    <button type="submit" class="btn btn-sm btn-wmffl">{{ link.active ? 'Deactivate' : 'Activate' }}</button>
+                </form>
+                <form class="d-inline" method="post" action="{{ path('admin_quicklinks_delete', {id: link.id}) }}"
+                      onsubmit="return confirm('Delete &quot;{{ link.label|e('js') }}&quot;?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('admin_quicklink') }}"/>
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="7">No quicklinks defined.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="text-center my-2">
+    <a class="btn btn-wmffl" href="{{ path('admin_quicklinks_new') }}">Add Link</a>
+</div>
+{% endblock %}
