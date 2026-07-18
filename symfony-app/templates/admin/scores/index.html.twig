@@ -5,6 +5,14 @@
 {% block admin_content %}
 <h2 class="mt-2">Reprocess Scores</h2>
 
+<div class="alert alert-warning mt-3">
+    Reprocessing a <strong>past</strong> week overwrites its stored scores
+    using the scoring rules configured for that season
+    (<a href="{{ path('admin_seasons') }}">Season Rules</a>). Historical
+    scores were computed under the rules in force at the time &mdash;
+    verify the season's rules before recalculating it.
+</div>
+
 {% if results is not null %}
     <div class="alert {% if results|length > 0 %}alert-success{% else %}alert-warning{% endif %} mt-3">
         {% if results|length > 0 %}

@@ -1,0 +1,267 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Admin - Season {{ season.season }} Rules{% endblock %}
+
+{% block admin_content %}
+<h2 class="mt-2">Season {{ season.season }} Rules
+    {% if season.verified %}
+    <span class="badge badge-success">verified</span>
+    {% else %}
+    <span class="badge badge-warning">unconfirmed</span>
+    {% endif %}
+</h2>
+
+<form method="post" action="{{ path('admin_seasons_save', {season: season.season}) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('admin_seasons') }}"/>
+
+    <fieldset class="border rounded p-3 mb-3">
+        <legend class="h5">Structure</legend>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="regularSeasonWeeks">Regular-season weeks</label>
+                <input type="number" min="1" class="form-control" id="regularSeasonWeeks"
+                       name="regularSeasonWeeks" value="{{ season.regularSeasonWeeks }}">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="totalWeeks">Total weeks (incl. playoffs)</label>
+                <input type="number" min="1" class="form-control" id="totalWeeks"
+                       name="totalWeeks" value="{{ season.totalWeeks }}">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="maxActivePlayers">Max active players</label>
+                <input type="number" min="1" class="form-control" id="maxActivePlayers"
+                       name="maxActivePlayers" value="{{ season.maxActivePlayers }}">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="numOfGames">Regular-season games</label>
+                <input type="number" min="1" class="form-control" id="numOfGames"
+                       name="numOfGames" value="{{ season.numOfGames }}">
+                <small class="form-text text-muted">Used for the per-win payout split</small>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset class="border rounded p-3 mb-3">
+        <legend class="h5">Finances</legend>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="entryFee">Entry fee ($)</label>
+                <input type="number" step="0.01" class="form-control" id="entryFee"
+                       name="entryFee" value="{{ season.entryFee }}">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="illegalActivationFine">Illegal activation fine ($)</label>
+                <input type="number" step="0.01" class="form-control" id="illegalActivationFine"
+                       name="illegalActivationFine" value="{{ season.illegalActivationFine }}">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="byeWeekActivationFine">Bye-week activation fine ($)</label>
+                <input type="number" step="0.01" class="form-control" id="byeWeekActivationFine"
+                       name="byeWeekActivationFine" value="{{ season.byeWeekActivationFine }}">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="extraTransactionFine">Extra transaction fine ($)</label>
+                <input type="number" step="0.01" class="form-control" id="extraTransactionFine"
+                       name="extraTransactionFine" value="{{ season.extraTransactionFine }}">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                <label for="winPercent">Wins share</label>
+                <input type="number" step="any" class="form-control" id="winPercent"
+                       name="winPercent" value="{{ season.winPercent }}">
+                <small class="form-text text-muted">Of the total pot</small>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="postPercent">Playoff pot share</label>
+                <input type="number" step="any" class="form-control" id="postPercent"
+                       name="postPercent" value="{{ season.postPercent }}">
+                <small class="form-text text-muted">Of the total pot</small>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="divPercent">Division title</label>
+                <input type="number" step="any" class="form-control" id="divPercent"
+                       name="divPercent" value="{{ season.divPercent }}">
+                <small class="form-text text-muted">Of the playoff pot</small>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="playoffPercent">Playoff berth</label>
+                <input type="number" step="any" class="form-control" id="playoffPercent"
+                       name="playoffPercent" value="{{ season.playoffPercent }}">
+                <small class="form-text text-muted">Of the playoff pot</small>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="finalPercent">Finalist (cumulative)</label>
+                <input type="number" step="any" class="form-control" id="finalPercent"
+                       name="finalPercent" value="{{ season.finalPercent }}">
+                <small class="form-text text-muted">Pays finalist &minus; berth</small>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="champPercent">Champion (cumulative)</label>
+                <input type="number" step="any" class="form-control" id="champPercent"
+                       name="champPercent" value="{{ season.champPercent }}">
+                <small class="form-text text-muted">Pays champion &minus; finalist</small>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset class="border rounded p-3 mb-3">
+        <legend class="h5">Scoring</legend>
+        <p class="text-muted mb-2">
+            Leave a value blank to mean the category was not awarded that
+            season. Tier tables are JSON: penalty tiers are
+            <code>[[max, points], ...]</code> pairs (a null max matches
+            everything above); the sacks-allowed table lists the points for
+            0, 1, 2, ... sacks in order.
+        </p>
+        <div class="form-group col-md-3 px-0">
+            <label for="scoringStrategy">Scoring strategy</label>
+            <input type="text" class="form-control" id="scoringStrategy" maxlength="32"
+                   name="scoringStrategy" value="{{ season.scoringStrategy }}">
+            <small class="form-text text-muted">Leave as "standard" unless a
+                season's formulas differed in shape, not just values</small>
+        </div>
+        {% for groupKey, defs in groups %}
+        {% if defs is not empty %}
+        <h6 class="mt-3">{{ groupLabels[groupKey] }}</h6>
+        <div class="form-row">
+            {% for key, def in defs %}
+            <div class="form-group col-md-3">
+                <label for="rule_{{ key }}" class="text-capitalize">{{ def.label }}</label>
+                {% if def.type == 'int' %}
+                <input type="number" step="1" class="form-control" id="rule_{{ key }}"
+                       name="rule_{{ key }}"
+                       value="{{ values[key] is null ? '' : values[key] }}">
+                {% else %}
+                <input type="text" class="form-control" id="rule_{{ key }}"
+                       name="rule_{{ key }}"
+                       value="{{ values[key] is null ? '' : values[key]|json_encode }}">
+                {% endif %}
+                {% if def.help is defined %}
+                <small class="form-text text-muted">{{ def.help }}</small>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endfor %}
+    </fieldset>
+
+    <fieldset class="border rounded p-3 mb-3">
+        <legend class="h5">Protections</legend>
+
+        <h6>Team points budgets ({{ season.season }})</h6>
+        {% if transpoints is empty %}
+        <p class="text-muted">No transaction-point rows exist for this season yet.</p>
+        {% else %}
+        <table class="table table-sm table-striped col-md-8">
+            <thead>
+                <tr>
+                    <th>Team</th>
+                    <th class="text-right">Protection pts used</th>
+                    <th class="text-right">Transaction pts used</th>
+                    <th class="text-right" style="width: 8rem">Total budget</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tp in transpoints %}
+                <tr>
+                    <td>{{ tp.name }}</td>
+                    <td class="text-right">{{ tp.ProtectionPts }}</td>
+                    <td class="text-right">{{ tp.TransPts }}</td>
+                    <td>
+                        <input type="number" step="1" class="form-control form-control-sm text-right"
+                               name="totalPts[{{ tp.teamid }}]" value="{{ tp.TotalPts }}">
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+
+        <h6 class="mt-3">Protection costs in effect for {{ season.season }}</h6>
+        <p class="text-muted mb-2">
+            A cost row covers a range of seasons - changing a cost here
+            changes every season in the row's range. To change a cost
+            starting this season, use "start a new cost" below instead.
+        </p>
+        <table class="table table-sm table-striped col-md-8">
+            <thead>
+                <tr>
+                    <th>Position</th>
+                    <th class="text-right">Years protected</th>
+                    <th>Seasons</th>
+                    <th class="text-right" style="width: 8rem">Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pc in positionCosts %}
+                <tr>
+                    <td>{{ pc.position }}</td>
+                    <td class="text-right">{{ pc.years }}</td>
+                    <td>{{ pc.startSeason }}&ndash;{{ pc.endSeason ?: 'now' }}</td>
+                    <td>
+                        <input type="number" step="1" class="form-control form-control-sm text-right"
+                               name="positionCost[{{ pc.position }}|{{ pc.years }}|{{ pc.startSeason }}]"
+                               value="{{ pc.cost }}">
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </fieldset>
+
+    <fieldset class="border rounded p-3 mb-3">
+        <legend class="h5">Notes</legend>
+        <div class="form-group">
+            <textarea class="form-control" name="notes" rows="3"
+                      placeholder="What changed this season, sources, open questions...">{{ season.notes }}</textarea>
+        </div>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="verified" name="verified" value="1"
+                   {% if season.verified %}checked{% endif %}>
+            <label class="form-check-label" for="verified">
+                Rules verified - this season's values are confirmed correct
+            </label>
+        </div>
+    </fieldset>
+
+    <div class="text-center my-3">
+        <button type="submit" class="btn btn-wmffl">Save Season {{ season.season }}</button>
+        <a class="btn btn-wmffl" href="{{ path('admin_seasons') }}">Back to Seasons</a>
+    </div>
+</form>
+
+<fieldset class="border rounded p-3 mb-3">
+    <legend class="h5">Start a new protection cost in {{ season.season }}</legend>
+    <form method="post" action="{{ path('admin_seasons_addcost', {season: season.season}) }}">
+        <input type="hidden" name="_token" value="{{ csrf_token('admin_seasons') }}"/>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="pc_position">Position</label>
+                <input type="text" class="form-control" id="pc_position" name="position" maxlength="2"
+                       placeholder="QB">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="pc_years">Years protected</label>
+                <input type="number" min="0" class="form-control" id="pc_years" name="years" value="0">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="pc_cost">Cost</label>
+                <input type="number" step="1" class="form-control" id="pc_cost" name="cost">
+            </div>
+            <div class="form-group col-md-3">
+                <label>&nbsp;</label>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-wmffl">Add Cost</button>
+                </div>
+            </div>
+        </div>
+        <small class="form-text text-muted">
+            Closes the currently effective row for that position/years at
+            {{ season.season - 1 }} and starts an open-ended row at
+            {{ season.season }}.
+        </small>
+    </form>
+</fieldset>
+{% endblock %}
