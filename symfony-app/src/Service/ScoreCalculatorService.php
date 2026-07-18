@@ -2,14 +2,20 @@
 
 namespace App\Service;
 
+use App\Model\ScoringRules;
 use Doctrine\DBAL\Connection;
 
 class ScoreCalculatorService
 {
-    public function __construct(private readonly Connection $conn) {}
+    public function __construct(
+        private readonly Connection $conn,
+        private readonly SeasonRuleService $seasonRules,
+        private readonly PlayerScorerService $scorer,
+    ) {}
 
     public function recalculateWeek(int $season, int $week): array
     {
+        $rules = $this->seasonRules->getScoringRules($season);
         $games = $this->conn->fetchAllAssociative(
             'SELECT s.teama, s.teamb, ta.name AS teamaName, tb.name AS teambName
              FROM schedule s
@@ -21,8 +27,8 @@ class ScoreCalculatorService
 
         $results = [];
         foreach ($games as $game) {
-            $aPts = $this->scoreTeam($game['teama'], $season, $week);
-            $bPts = $this->scoreTeam($game['teamb'], $season, $week);
+            $aPts = $this->scoreTeam($game['teama'], $season, $week, $rules);
+            $bPts = $this->scoreTeam($game['teamb'], $season, $week, $rules);
 
             $aFinal = max(0, $aPts['off'] - $bPts['def'] - $aPts['penalty']);
             $bFinal = max(0, $bPts['off'] - $aPts['def'] - $bPts['penalty']);
@@ -51,7 +57,7 @@ class ScoreCalculatorService
         return $results;
     }
 
-    private function scoreTeam(int $teamId, int $season, int $week): array
+    private function scoreTeam(int $teamId, int $season, int $week, ScoringRules $rules): array
     {
         $rows = $this->conn->fetchAllAssociative(
             'SELECT p.pos, r.teamid, g.kickoff, g.secRemain, s.*,
@@ -74,27 +80,19 @@ class ScoreCalculatorService
         $def = 0;
         $penalty = 0;
 
+        $illegalPenalty = $rules->int('illegal_lineup_penalty');
         foreach ($rows as $row) {
             if ($row['illegal']) {
-                $penalty += 2;
+                $penalty += $illegalPenalty;
                 continue;
             }
 
             if ($row['kickoff'] === null && $row['pos'] !== 'HC') {
-                $penalty += 2;
+                $penalty += $illegalPenalty;
                 continue;
             }
 
-            $pts = match ($row['pos']) {
-                'HC'        => $this->scoreHC($row),
-                'QB'        => $this->scoreQB($row),
-                'RB', 'WR' => $this->scoreOffense($row),
-                'TE'        => $this->scoreTE($row),
-                'K'         => $this->scoreK($row),
-                'OL'        => $this->scoreOL($row),
-                'DL', 'LB', 'DB' => $this->scoreDefense($row),
-                default     => 0,
-            };
+            $pts = $this->scorer->total($row['pos'], $row, $rules);
 
             if (in_array($row['pos'], ['DL', 'LB', 'DB'], true)) {
                 $def += $pts;
@@ -104,129 +102,5 @@ class ScoreCalculatorService
         }
 
         return ['off' => $off, 'def' => $def, 'penalty' => $penalty];
-    }
-
-    private function scoreHC(array $row): int
-    {
-        $pts = 0;
-        if ($row['played'] > 0) {
-            if ($row['ptdiff'] == 0) {
-                $pts = 1;
-            } elseif ($row['ptdiff'] > 0) {
-                $pts = 3 + (int) floor($row['ptdiff'] / 10);
-            }
-
-            $penalties = $row['penalties'];
-            $pts += match (true) {
-                $penalties <= 3  =>  3,
-                $penalties <= 6  =>  2,
-                $penalties <= 8  =>  1,
-                $penalties <= 10 =>  0,
-                $penalties <= 12 => -1,
-                $penalties <= 14 => -2,
-                default          => -3,
-            };
-        }
-        return $pts;
-    }
-
-    private function scoreQB(array $row): int
-    {
-        $pts = -($row['fum'] + $row['intthrow']) * 2;
-        if ($row['yards'] >= 200) {
-            $pts += (int) floor(($row['yards'] - 175) / 25);
-        }
-        $pts += $row['tds'] * 6;
-        $pts += $row['2pt'] * 2;
-        return $pts;
-    }
-
-    private function scoreOffense(array $row): int
-    {
-        $pts = -$row['fum'] * 2;
-        if ($row['yards'] >= 70) {
-            $pts += (int) floor(($row['yards'] - 60) / 10);
-        }
-        if ($row['rec'] >= 5) {
-            $pts += $row['rec'] - 4;
-        }
-        $pts += $row['tds'] * 6;
-        $pts += $row['2pt'] * 2;
-        $pts += $row['specTD'] * 12;
-        return $pts;
-    }
-
-    private function scoreTE(array $row): int
-    {
-        $pts = $this->scoreOffense($row);
-        if ($row['rec'] >= 2 && $row['rec'] <= 6) {
-            $pts += 1;
-        }
-        if ($row['rec'] == 4) {
-            $pts += 1;
-        }
-        if ($row['rec'] > 12) {
-            $pts += $row['rec'] - 12;
-        }
-        return $pts;
-    }
-
-    private function scoreK(array $row): int
-    {
-        $pts  = $row['XP'];
-        $pts -= $row['MissXP'];
-        $pts += $row['2pt'] * 2;
-        $pts += $row['FG30'] * 3;
-        $pts += $row['FG40'] * 4;
-        $pts += $row['FG50'] * 5;
-        $pts += $row['FG60'] * 7;
-        $pts -= $row['MissFG30'];
-        $pts += $row['specTD'] * 12;
-        return $pts;
-    }
-
-    private function scoreOL(array $row): int
-    {
-        $pts = $row['tds'];
-        if ($row['yards'] >= 100) {
-            $pts += (int) floor($row['yards'] / 10 - 9);
-        }
-        if ($row['played']) {
-            $pts += match (true) {
-                $row['sacks'] === 0 =>  5,
-                $row['sacks'] === 1 =>  2,
-                $row['sacks'] === 2 =>  1,
-                $row['sacks'] === 5 => -1,
-                $row['sacks'] === 6 => -2,
-                $row['sacks'] === 7 => -5,
-                $row['sacks'] >= 8  => -($row['sacks'] - 6) * 5,
-                default             =>  0,
-            };
-        }
-        return $pts;
-    }
-
-    private function scoreDefense(array $row): int
-    {
-        $pts  = $row['tackles'];
-        $pts += (int) floor($row['sacks'] * 2);
-        if ($row['sacks'] >= 3) {
-            $pts += (int) floor($row['sacks'] - 2);
-        }
-        $pts += $row['intcatch'] * 4;
-        $pts += $row['passdefend'];
-        $pts += $row['fumrec'] * 2;
-        $pts += $row['forcefum'] * 3;
-        if ($row['returnyards'] > 0) {
-            $pts += (int) floor($row['returnyards'] / 20);
-        }
-        $pts += $row['tds'] * 9;
-        $pts += $row['2pt'] * 2;
-        $pts += $row['specTD'] * 12;
-        $pts += $row['Safety'] * 6;
-        $pts += $row['blockpunt'] * 3;
-        $pts += $row['blockxp'] * 3;
-        $pts += $row['blockfg'] * 3;
-        return $pts;
     }
 }
