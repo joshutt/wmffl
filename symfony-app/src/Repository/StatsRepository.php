@@ -51,7 +51,7 @@ class StatsRepository
      * Team points by position (leaders.php): one row per team with a
      * column per position plus offense/defense/total sums.
      */
-    public function getLeaders(int $season): array
+    public function getLeaders(int $season, int $regularSeasonWeeks = 14): array
     {
         $rows = $this->connection->fetchAllAssociative(
             "SELECT t.name, p.pos, sum(ps.active) as totpts
@@ -61,11 +61,11 @@ class StatsRepository
                  JOIN teamnames t ON r.teamid=t.teamid and ps.season=t.season
                  JOIN weekmap w ON r.dateon <= w.activationdue and (r.dateoff is null or r.dateoff > w.activationdue)
              WHERE w.season = :season and ps.season=w.season and ps.week=w.week
-             and ps.week<=14
+             and ps.week <= :regWeeks
              and ps.active is not null
              GROUP BY t.name, p.pos
              ORDER BY t.name, p.pos",
-            ['season' => $season]
+            ['season' => $season, 'regWeeks' => $regularSeasonWeeks]
         );
 
         $teams = [];

@@ -21,7 +21,7 @@ class StandingsRepository
      *
      * @return array Array of team standings data
      */
-    public function getCurrentStandings(int $season, int $week): array
+    public function getCurrentStandings(int $season, int $week, int $regularSeasonWeeks = 14): array
     {
         $query = <<<EOD
 SELECT tn.name as 'team', d.name as 'division', t.teamid as 'teamid',
@@ -46,7 +46,7 @@ JOIN team t2 ON t2.teamid in (s.teama, s.teamb) and t2.teamid<>t.teamid
 JOIN weekmap wm ON wm.season=s.season and wm.week=s.week and (DATE(wm.endDate) <= DATE(DATE_ADD(now(), INTERVAL -5 HOUR)) or wm.week=1)
 WHERE YEAR(s.season) = :season
 AND s.week <= :week
-AND s.week<=14
+AND s.week <= :regWeeks
 GROUP BY d.name, tn.name
 
 EOD;
@@ -54,6 +54,7 @@ EOD;
         return $this->connection->fetchAllAssociative($query, [
             'season' => $season,
             'week' => $week,
+            'regWeeks' => $regularSeasonWeeks,
         ]);
     }
 
@@ -63,7 +64,7 @@ EOD;
      *
      * @return array Array of game results
      */
-    public function getTeamGames(int $season, int $week): array
+    public function getTeamGames(int $season, int $week, int $regularSeasonWeeks = 14): array
     {
         $query = <<<EOD
 SELECT t.teamid as 'teamid', t2.teamid as 'oppid', if(t.teamid=s.teama, s.scorea, s.scoreb) as 'ptsfor',
@@ -77,12 +78,13 @@ JOIN teamnames tn2 ON t2.teamid=tn2.teamid and tn2.season=s.season
 JOIN weekmap wm ON wm.season=s.season and wm.week=s.week and DATE(wm.enddate)<=DATE(DATE_ADD(now(), INTERVAL -5 HOUR))
 WHERE YEAR(s.season) = :season
 AND s.week <= :week
-AND s.week<=14
+AND s.week <= :regWeeks
 EOD;
 
         return $this->connection->fetchAllAssociative($query, [
             'season' => $season,
             'week' => $week,
+            'regWeeks' => $regularSeasonWeeks,
         ]);
     }
 }

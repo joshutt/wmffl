@@ -8,6 +8,7 @@ use App\Service\InjuryReportService;
 use App\Service\LuckService;
 use App\Service\PlayerRecordsService;
 use App\Service\PowerRatingService;
+use App\Service\SeasonRuleService;
 use App\Service\SeasonWeekService;
 use App\Service\WeekByWeekService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,7 +29,8 @@ class StatsController extends AbstractController
 {
     public function __construct(
         private readonly StatsRepository $stats,
-        private readonly SeasonWeekService $seasonWeek
+        private readonly SeasonWeekService $seasonWeek,
+        private readonly SeasonRuleService $seasonRules
     ) {
     }
 
@@ -43,7 +45,7 @@ class StatsController extends AbstractController
     {
         $season = $this->requestedSeason($request);
         $titles = array_merge(['Team'], StatsRepository::POSITIONS, ['Offense', 'Defense', 'Total Pts']);
-        $rows = array_map('array_values', $this->stats->getLeaders($season));
+        $rows = array_map('array_values', $this->stats->getLeaders($season, $this->seasonRules->getRegularSeasonWeeks($season)));
 
         return match ($this->requestedFormat($request)) {
             'csv' => $this->csvResponse($titles, $rows, 'leaders.csv'),

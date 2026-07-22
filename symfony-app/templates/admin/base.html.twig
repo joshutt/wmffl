@@ -50,6 +50,10 @@
                class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') starts with 'admin_quicklinks' %} active{% endif %}">
                 Quicklinks
             </a>
+            <a href="{{ path('admin_seasons') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') starts with 'admin_seasons' %} active{% endif %}">
+                Season Rules
+            </a>
             <a href="{{ path('admin_scores') }}"
                class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') starts with 'admin_scores' %} active{% endif %}">
                 Reprocess Scores

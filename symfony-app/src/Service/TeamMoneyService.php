@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Paid;
+use App\Model\FinanceRules;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -16,22 +17,10 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class TeamMoneyService
 {
-    // Legacy magic numbers (teammoney.php:44-54)
-    private const ILLEGAL_ACTIVATION_FINE = 5;
-    private const BYE_WEEK_ACTIVATION_FINE = 1;
-    private const EXTRA_TRANSACTION_FINE = 1;
-    private const NUM_OF_GAMES = 84;
-    private const ENTRY_FEE = 75;
-    private const WIN_PERCENT = 0.25;
-    private const POST_PERCENT = 0.5;
-    private const DIV_PERCENT = 0.05;
-    private const PLAYOFF_PERCENT = 0.05;
-    private const FINAL_PERCENT = 0.25;
-    private const CHAMP_PERCENT = 0.50;
-
     public function __construct(
         private Connection $connection,
-        private EntityManagerInterface $em
+        private EntityManagerInterface $em,
+        private SeasonRuleService $seasonRules
     ) {
     }
 
@@ -65,9 +54,10 @@ class TeamMoneyService
         return $this->computeLedger(
             $paidRows,
             $this->getExtraCharges($season),
-            $this->getWins($season),
+            $this->getWins($season, $this->seasonRules->getRegularSeasonWeeks($season)),
             $this->getSeasonFlags($season),
-            $showNextSeasonFee
+            $showNextSeasonFee,
+            $this->seasonRules->getFinanceRules($season)
         ) + ['lastUpdate' => $this->getLastUpdate()];
     }
 
@@ -80,17 +70,18 @@ class TeamMoneyService
         array $fines,
         array $wins,
         array $flags,
-        bool $showNextSeasonFee
+        bool $showNextSeasonFee,
+        FinanceRules $rules = new FinanceRules()
     ): array {
         $teams = [];
         $fullNeg = 0;
         foreach ($paidRows as $p) {
             $id = $p['teamid'];
             $f = $fines[$id] ?? ['name' => $p['teamName'], 'illegal' => 0, 'byeWeek' => 0, 'Remaining' => 0];
-            $overage = $f['Remaining'] < 0 ? -$f['Remaining'] * self::EXTRA_TRANSACTION_FINE : 0;
+            $overage = $f['Remaining'] < 0 ? -$f['Remaining'] * $rules->extraTransactionFine : 0;
 
-            $neg = $p['lateFee'] + $f['illegal'] * self::ILLEGAL_ACTIVATION_FINE
-                + $f['byeWeek'] * self::BYE_WEEK_ACTIVATION_FINE + $overage;
+            $neg = $p['lateFee'] + $f['illegal'] * $rules->illegalActivationFine
+                + $f['byeWeek'] * $rules->byeWeekActivationFine + $overage;
             $fullNeg += $neg;
 
             $teamFlags = $flags[$id] ?? [];
@@ -118,16 +109,16 @@ class TeamMoneyService
         }
 
         // Pot and payout rates (legacy teammoney.php:102-109)
-        $totalPot = self::ENTRY_FEE * count($teams) + $fullNeg;
-        $perWin = round($totalPot * self::WIN_PERCENT / self::NUM_OF_GAMES, 2);
-        $playoffPot = $totalPot * self::POST_PERCENT;
+        $totalPot = $rules->entryFee * count($teams) + $fullNeg;
+        $perWin = round($totalPot * $rules->winPercent / $rules->numOfGames, 2);
+        $playoffPot = $totalPot * $rules->postPercent;
         $payouts = [
             'totalPot'    => $totalPot,
             'perWin'      => $perWin,
-            'divisionWin' => round($playoffPot * self::DIV_PERCENT, 2),
-            'playoffApp'  => round($playoffPot * self::PLAYOFF_PERCENT, 2),
-            'champApp'    => round($playoffPot * (self::FINAL_PERCENT - self::PLAYOFF_PERCENT), 2),
-            'champWin'    => round($playoffPot * (self::CHAMP_PERCENT - self::FINAL_PERCENT), 2),
+            'divisionWin' => round($playoffPot * $rules->divPercent, 2),
+            'playoffApp'  => round($playoffPot * $rules->playoffPercent, 2),
+            'champApp'    => round($playoffPot * ($rules->finalPercent - $rules->playoffPercent), 2),
+            'champWin'    => round($playoffPot * ($rules->champPercent - $rules->finalPercent), 2),
         ];
 
         $amtOwed = [];
@@ -159,7 +150,7 @@ class TeamMoneyService
             $t['playoffLines'] = $playoffLines;
 
             if ($showNextSeasonFee) {
-                $owe = $t['balance'] - self::ENTRY_FEE;
+                $owe = $t['balance'] - $rules->entryFee;
                 $t['stillOwe'] = $owe < 0 ? -$owe : 0;
             } else {
                 $t['stillOwe'] = $t['deliquent'] ? -$t['balance'] : 0;
@@ -240,18 +231,25 @@ SQL;
     }
 
     /** Regular-season W/L/T per team (moneyUtil.php getWins). */
-    private function getWins(int $season): array
+    private function getWins(int $season, int $regularSeasonWeeks): array
     {
-        return $this->byTeamId(
+        $rows = $this->connection->fetchAllAssociative(
             "select t.teamid, sum(if(tw.Result='W', 1, 0)) as 'wins',
                     sum(if(tw.Result='L', 1, 0)) as 'losses',
                     sum(if(tw.Result='T', 1, 0)) as 'ties'
              from team t
              join team_wins tw on t.teamid=tw.Team
-             where tw.season=:season and tw.week <= 14
+             where tw.season=:season and tw.week <= :regWeeks
              group by t.teamid",
-            $season
+            ['season' => $season, 'regWeeks' => $regularSeasonWeeks]
         );
+
+        $byId = [];
+        foreach ($rows as $row) {
+            $byId[(int) $row['teamid']] = $row;
+        }
+
+        return $byId;
     }
 
     /** season_flags rows keyed by teamid (moneyUtil.php getSeasonFlags). */

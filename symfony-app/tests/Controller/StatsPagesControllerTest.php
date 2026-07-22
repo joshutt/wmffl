@@ -9,6 +9,7 @@ use App\Service\InjuryReportService;
 use App\Service\LuckService;
 use App\Service\PlayerRecordsService;
 use App\Service\PowerRatingService;
+use App\Service\SeasonRuleService;
 use App\Service\SeasonWeekService;
 use App\Service\WeekByWeekService;
 use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
@@ -172,7 +173,10 @@ class StatsPagesControllerTest extends TestCase
         $seasonWeek->method('getCurrentSeason')->willReturn($season);
         $seasonWeek->method('getCurrentWeek')->willReturn($week);
 
-        return new class($repo, $seasonWeek) extends StatsController {
+        $seasonRules = $this->createStub(SeasonRuleService::class);
+        $seasonRules->method('getRegularSeasonWeeks')->willReturn(14);
+
+        return new class($repo, $seasonWeek, $seasonRules) extends StatsController {
             public ?string $renderedView = null;
             public ?array $renderedParams = null;
 

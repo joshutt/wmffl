@@ -164,6 +164,29 @@ should be small enough to land as its own PR.
   `draftdate.php`, `common/processdraftdate.php`, and the 16
   per-season `processdraftdate.php` copies deleted, no redirects
   (only archival newsletter links pointed at them).
+- Season Rules foundation (pre-Phase-11/12, 2026-07-18,
+  `specs/2026-07-18-season-rules/`). Per-season league rules moved
+  from hardcoded constants to a `seasons` table (`Season` entity):
+  typed structure/finance columns + `scoring_rules` JSON +
+  `scoring_strategy` seam, seeded 1992–2026 with current rules and
+  the known FG60=10-through-2023 delta (migration
+  Version20260718000000). `ScoringRuleRegistry` defines every scoring
+  parameter once (drives DTOs, the admin form and scorer labels);
+  `SeasonRuleService` (cached, missing-row-safe) feeds
+  `PlayerScorerService` — the single scoring engine, emitting labeled
+  `ScoreLine[]` for Phase 12 box scores, golden-tested equivalent to
+  legacy `scoring.php` over all 451k stat rows (and fixing the old
+  Symfony recalc's OL strict-compare bug). ScoreCalculatorService,
+  TeamMoneyService (constants deleted), the six `week<=14` hardcodes
+  and the 25/26 roster limits are all season-driven. Admin
+  `/admin/seasons`: list/edit every season (scoring form generated
+  from the registry, blank = not awarded), per-team transpoints
+  budgets, effective positioncost rows + start-a-new-cost flow,
+  notes/verified workflow, clone-latest button; reprocess page warns
+  before overwriting historical scores. Historical rule backfill is
+  Josh's ongoing task via that UI. Known pre-existing limitation:
+  recalculating old weeks mis-penalizes players who changed NFL teams
+  (current-roster join) — reprocess remains a current-week tool.
 
 ## Phase 11 — History (per-season)
 

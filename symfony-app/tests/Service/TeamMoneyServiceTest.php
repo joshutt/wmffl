@@ -2,6 +2,7 @@
 
 namespace App\Tests\Service;
 
+use App\Service\SeasonRuleService;
 use App\Service\TeamMoneyService;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,7 +18,8 @@ class TeamMoneyServiceTest extends TestCase
     {
         $this->service = new TeamMoneyService(
             $this->createStub(Connection::class),
-            $this->createStub(EntityManagerInterface::class)
+            $this->createStub(EntityManagerInterface::class),
+            $this->createStub(SeasonRuleService::class)
         );
     }
 
@@ -56,7 +58,7 @@ class TeamMoneyServiceTest extends TestCase
         );
 
         $team = $ledger['teams'][6];
-        $this->assertSame(3, $team['overage']);
+        $this->assertSame(3.0, (float) $team['overage']);
         $this->assertSame(24.0, (float) $team['negative']);
         // pot picks up the fines: 75 + 24
         $this->assertSame(99.0, (float) $ledger['payouts']['totalPot']);

@@ -13,7 +13,8 @@ use Doctrine\DBAL\Connection;
 class LuckService
 {
     public function __construct(
-        private Connection $connection
+        private Connection $connection,
+        private SeasonRuleService $seasonRules
     ) {
     }
 
@@ -59,10 +60,10 @@ class LuckService
              JOIN players p ON p.playerid=ps.playerid
              JOIN teamnames t ON a.teamid=t.teamid and a.season=t.season
              where a.season = :season
-             and a.week<=14
+             and a.week <= :regWeeks
              group by t.teamid, ps.week
              order by ps.week, t.name",
-            ['season' => $season]
+            ['season' => $season, 'regWeeks' => $this->seasonRules->getRegularSeasonWeeks($season)]
         );
     }
 
@@ -112,12 +113,12 @@ class LuckService
              if (t1.teamid=s.teamb, s.scorea, s.scoreb) as ptsag
              from team t1, team t2, schedule s, teamnames tn1
              where s.season = :season and s.week <= :week
-             and s.week<=14
+             and s.week <= :regWeeks
              and t1.teamid in (s.teama, s.teamb)
              and t2.teamid in (s.teama, s.teamb) and t1.teamid<>t2.teamid
              and tn1.teamid=t1.teamid and tn1.season=s.season
              order by s.week, tn1.name",
-            ['season' => $season, 'week' => $week]
+            ['season' => $season, 'week' => $week, 'regWeeks' => $this->seasonRules->getRegularSeasonWeeks($season)]
         );
     }
 

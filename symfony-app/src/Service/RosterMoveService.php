@@ -18,12 +18,22 @@ use Doctrine\DBAL\Connection;
  */
 class RosterMoveService
 {
-    public const MAX_ACTIVE_PLAYERS = 25;
-    public const TOTAL_ROSTER = 26;
-
     public function __construct(
-        private Connection $connection
+        private Connection $connection,
+        private SeasonRuleService $seasonRules
     ) {
+    }
+
+    /** The season's active-roster limit (was a hardcoded 25). */
+    public function getMaxActivePlayers(int $season): int
+    {
+        return $this->seasonRules->getMaxActivePlayers($season);
+    }
+
+    /** Total roster limit: one IR slot above the active limit (legacy 25/26). */
+    public function getTotalRoster(int $season): int
+    {
+        return $this->getMaxActivePlayers($season) + 1;
     }
 
     // ---- player search (list.php) ----
@@ -262,10 +272,10 @@ class RosterMoveService
         $resultingActive = $counts['active'] - $activeDrops + count($picks);
         $resultingTotal = $counts['total'] - count($drops) + count($picks);
 
-        if ($resultingActive > self::MAX_ACTIVE_PLAYERS) {
+        if ($resultingActive > $this->getMaxActivePlayers($season)) {
             $errors[] = "That would give you $resultingActive players on your roster!!  You must drop someone!!";
         }
-        if ($resultingTotal > self::TOTAL_ROSTER) {
+        if ($resultingTotal > $this->getTotalRoster($season)) {
             $errors[] = "That would give you $resultingTotal players, including IR!  You must drop someone!";
         }
 

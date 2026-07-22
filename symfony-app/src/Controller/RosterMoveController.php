@@ -181,16 +181,17 @@ class RosterMoveController extends AbstractController
         }
 
         $counts = $this->rosterMoves->getTeamCounts($teamId, $context['season']);
+        $maxPlayers = $this->rosterMoves->getMaxActivePlayers($context['season']);
 
         return $this->render('transactions/confirm.html.twig', [
             'loggedIn' => true,
             'errors' => $errors,
             'counts' => $counts,
             'availableSlots' => min(
-                RosterMoveService::TOTAL_ROSTER - $counts['total'],
-                RosterMoveService::MAX_ACTIVE_PLAYERS - $counts['active']
+                $this->rosterMoves->getTotalRoster($context['season']) - $counts['total'],
+                $maxPlayers - $counts['active']
             ),
-            'maxPlayers' => RosterMoveService::MAX_ACTIVE_PLAYERS,
+            'maxPlayers' => $maxPlayers,
             'pickups' => $pickups,
             'existingPicks' => $existingPicks,
             'waiverCount' => count($existingPicks) + $newWaiverCount,
