@@ -188,6 +188,41 @@ should be small enough to land as its own PR.
   recalculating old weeks mis-penalizes players who changed NFL teams
   (current-roster join) — reprocess remains a current-week tool.
 
+## Phase 10.5 — Logging infrastructure (Monolog)
+
+Current state (found 2026-07-23 debugging a prod-only 500 on the
+`/admin/money` paid-status tool): there is no Monolog anywhere in
+`symfony-app` — no `symfony/monolog-bundle` dependency, no
+`config/packages/monolog.yaml`, no exception listener. The only thing
+writing to `logs/wmffl.log` is a bare `ini_set('error_log', ...)` in
+`football/front_controller.php` and `symfony-app/src/LegacyBridge.php`,
+and `LegacyBridge` only runs when the Symfony kernel 404s and falls
+back to legacy (`symfony-app/public/index.php`'s
+`$response->isNotFound()` branch) — so any error in a genuine
+Symfony-routed controller (like `AdminMoneyController`) never reaches
+that file, in dev or prod. Fatal errors there currently rely on
+whatever the box's PHP/webserver `error_log` ini default happens to be,
+with no visibility from inside the repo.
+
+1. Add `symfony/monolog-bundle`, `config/packages/monolog.yaml` with a
+   `when@prod` block writing to a real app log path (e.g.
+   `var/log/prod.log` or keep `logs/wmffl.log` for continuity — decide
+   once, document it) at `error` level minimum, independent of
+   `APP_DEBUG`/`APP_ENV` request path
+2. Make sure it captures both Symfony-native routes and the
+   legacy-fallback path — either by leaving `LegacyBridge`'s `error_log`
+   ini_set in place as a secondary channel for raw legacy `error_log()`
+   calls (`ImageProcessor.php`, `bootstrap.php`, etc.), or by routing
+   those through the same Monolog handler if feasible
+3. Broaden narrow `catch (\Exception $e)` blocks that swallow errors
+   without logging them (e.g. `AdminMoneyController::recordChange`) to
+   also catch/log `\Throwable`, so a `\TypeError` doesn't disappear as
+   a blank 500 with nothing in any log
+4. Verify on prod specifically: confirm the configured log path is
+   writable by the web server user and actually receives an entry for
+   a forced error, since this phase exists because prod logging was
+   silently broken
+
 ## Phase 11 — History (per-season)
 
 Legacy: `football/history/{year}Season.php` (1992–2017, frozen flat
@@ -265,6 +300,43 @@ Legacy: `login/`, `activate/`, `forum/`, `rules/`, `info.php`,
 1. Auth (login/activate) — highest risk, do last and carefully
 2. Static/low-traffic pages (rules, info, forum)
 3. Scores
+
+## Phase 14 — Scripts: legacy → Symfony console commands
+
+Legacy: `/scripts/` — standalone PHP invoked directly (`php scripts/foo.php`,
+presumably via cron), each pulling in `base.php` (raw `mysqli_connect`
+against `conf/wmffl.conf`, `$_REQUEST` splatted into local vars via
+`foreach ($_REQUEST as $key => $val) { $$key = $val; }`, current
+season/week re-derived by hand from `weekmap`). In scope: the scripts
+that run on a schedule against prod data — `resolvewaivers.php`,
+`updateactivations.php`, `logscores/fixtransfer.php`,
+`logscores/transferscores.php`, `livescore/updatescores.php`,
+`imports/games.php`. Out of scope: one-off/offline data-backfill
+tools (`imports/newsletter_activations.py`,
+`imports/newsletter_playerscores.py`, the `insert_*_draftpicks.sql`
+scripts, `python/` injury/covid feeds) — no framework benefit to
+porting something run once and discarded.
+
+1. One `App\Command\*` class per in-scope script (`symfony-app/src/Command/`),
+   e.g. `app:waivers:resolve`, `app:activations:advance-week`,
+   `app:scores:transfer` / `app:scores:fix-transfer`,
+   `app:livescore:fetch` — real `InputArgument`/`InputOption` instead of
+   the `$_REQUEST` splat, `Command::SUCCESS`/`FAILURE` instead of
+   `print "Success: ..."` / `die()`
+2. Constructor-inject `Doctrine\DBAL\Connection` / existing
+   repositories instead of `base.php`'s manual `mysqli_connect` +
+   `parse_ini_file('wmffl.conf')` — removes one of the two
+   credential stores this class of script currently needs
+   (`conf/wmffl.conf` vs `symfony-app/.env.local`, kept in sync by hand)
+3. Where a script's SQL re-derives a rule that now lives in a service
+   from an earlier phase (e.g. `updateactivations.php`'s roster
+   carryover vs. `SeasonRuleService`'s roster limits), call the
+   service instead of duplicating the query
+4. Re-point cron at `php symfony-app/bin/console app:...`; consider
+   `symfony/scheduler` (`#[AsPeriodicTask]`/`#[AsCronTask]`) only if
+   in-app visibility/retries are wanted over plain cron
+5. Add `CommandTester`-based tests per command — none of the legacy
+   scripts have any test coverage today
 
 ## Unscheduled — Live scoreboard redesign
 

@@ -31,7 +31,7 @@ function toggleChange(event) {
     const inputElement = event.target;
     const newValue = inputElement.checked;
     console.log("Send "+inputElement.id+ " a new value of "+newValue);
-    $.post("recordChange", {
+    $.post("/admin/money/recordChange", {
         field: inputElement.id,
         val: newValue,
         _token: window.moneyCsrfToken
@@ -45,7 +45,7 @@ function sendChange(event) {
     const newValue = inputElement.value;
     console.log(inputElement);
     console.log("Send "+inputElement.id+ " a new value of "+newValue);
-    $.post("recordChange", {
+    $.post("/admin/money/recordChange", {
         field: inputElement.id,
         val: newValue,
         _token: window.moneyCsrfToken

@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/admin/money')]
 class AdminMoneyController extends AbstractAdminController
 {
-    #[Route('/updatePaid/{season}', name: 'admin_money_paid', defaults: ['season' => null])]
+    #[Route('/updatePaid/{season}', name: 'admin_money_paid', requirements: ['season' => '\d+'], defaults: ['season' => null])]
     public function updatePaid(
         AuthenticationService $auth,
         SeasonWeekService $seasonWeek,
@@ -88,7 +88,7 @@ class AdminMoneyController extends AbstractAdminController
         }
     }
 
-    #[Route('/updateFlags/{season}', name: 'admin_money_flags', defaults: ['season' => null])]
+    #[Route('/updateFlags/{season}', name: 'admin_money_flags', requirements: ['season' => '\d+'], defaults: ['season' => null])]
     public function updateFlags(
         AuthenticationService $auth,
         SeasonWeekService $seasonWeek,

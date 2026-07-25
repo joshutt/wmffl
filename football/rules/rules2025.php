@@ -20,7 +20,6 @@ include 'base/menu.php';
     <BR>
     Section 4: <A HREF="#XI">Financial Situations</A>; <A HREF="#XII">Changing Rules</A><BR>
 
-    <!--
     <HR size="1">
     <P>Rules added or changed that will take effect for the 2025 season are indicated in <B>Bold</B>.</P>
     <ul>
@@ -30,7 +29,6 @@ include 'base/menu.php';
             </ul>
         </li>
     </ul>
-    -->
 
     <HR size="1">
 
@@ -358,7 +356,7 @@ include 'base/menu.php';
                                         <li>Made 40-49 yards = 4 pts</li>
                                         <li>Made 50-59 yards = 5 pts</li>
                                         <li id="V.B.5.b.iv">Made 60+ yards = 7 pts</li>
-                                        <li class="" id="V.B.5.b.v">Missed = -1 pt</li>
+                                        <li class="newrule" id="V.B.5.b.v">Missed = -1 pt</li>
                                     </OL>
                             </OL>
                         <LI>Offensive Line
