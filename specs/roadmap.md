@@ -223,6 +223,44 @@ with no visibility from inside the repo.
    a forced error, since this phase exists because prod logging was
    silently broken
 
+## Phase 10.6 — Rule proposals: `issues` table redesign
+
+Current state (found 2026-07-25 comparing `football/rules/proposals{year}.php`
+against the `issues` table): `issues` (`IssueID, IssueNum, IssueName
+varchar(40), Sponsor int, Description tinytext, Season, Deadline, StartDate,
+Result varchar(10)`) backs the ballot/voting flow but was never rich enough
+to reproduce what the legacy pages actually display. `Sponsor` is a single
+int and can't hold co-sponsors (e.g. "Tom Marsh and Josh Utterback",
+"Tom Marsh and Mike Atlas"); `Description` is a short paraphrase, not the
+full rationale prose shown on the page; there's no column at all for the
+proposed rule-change text (today only a hand-written `<blockquote><i>`
+block, sometimes multi-level); `Result` is a free `varchar(10)` with
+inconsistent historical values (`PASS`/`Passed`/`REJECT`/`REJECTED`/a stray
+typo). This phase is forward-looking only — no historical proposal data
+migration.
+
+1. Migration: widen `IssueName` to `varchar(120)`; add `Rationale text`
+   (full prose, alongside the existing short `Description`); add
+   `RuleChangeText text` (markdown); replace `Result varchar(10)` with
+   `Status enum('Open','Passed','Rejected','Withdrawn')`; drop `Sponsor int`
+2. New `issue_sponsors` table (`IssueID` FK, `UserID` FK, `SortOrder`)
+   replacing the single `Sponsor` column — supports any number of
+   co-sponsors, ordered for display
+3. `league/commonmark` to render `RuleChangeText` (and `Rationale` if it
+   also ends up markdown) to HTML — `html_input => escape` since proposal
+   authors aren't admin-only; small service + Twig filter
+   (`|markdown_to_html|raw`)
+4. `ballot` table stays as-is structurally (vote tallies stay derived via
+   `GROUP BY Vote`, not duplicated into `Status`), but currently has no FK
+   constraints at all (`PRIMARY KEY (IssueID, TeamID)` only) — add
+   `FK_ballot_issue` (`IssueID` → `issues.IssueID`) and `FK_ballot_team`
+   (`TeamID` → `team.TeamID`)
+5. Explicitly out of scope: cross-reference/supersession links between
+   issues, and role-label sponsors (e.g. "Commissioner")
+6. The actual Symfony controller/templates for submitting and displaying
+   proposals are Phase 13's `rules` item — this phase is data-layer prep
+   for that work, not a UI port
+
 ## Phase 11 — History (per-season)
 
 Legacy: `football/history/{year}Season.php` (1992–2017, frozen flat
