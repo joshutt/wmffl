@@ -174,7 +174,7 @@ should be small enough to land as its own PR.
   parameter once (drives DTOs, the admin form and scorer labels);
   `SeasonRuleService` (cached, missing-row-safe) feeds
   `PlayerScorerService` — the single scoring engine, emitting labeled
-  `ScoreLine[]` for Phase 12 box scores, golden-tested equivalent to
+  `ScoreLine[]` for Phase 13 box scores, golden-tested equivalent to
   legacy `scoring.php` over all 451k stat rows (and fixing the old
   Symfony recalc's OL strict-compare bug). ScoreCalculatorService,
   TeamMoneyService (constants deleted), the six `week<=14` hardcodes
@@ -258,10 +258,58 @@ migration.
 5. Explicitly out of scope: cross-reference/supersession links between
    issues, and role-label sponsors (e.g. "Commissioner")
 6. The actual Symfony controller/templates for submitting and displaying
-   proposals are Phase 13's `rules` item — this phase is data-layer prep
+   proposals are Phase 14's `rules` item — this phase is data-layer prep
    for that work, not a UI port
 
-## Phase 11 — History (per-season)
+## Phase 11 — Activations UI modernization
+
+Legacy: `football/activate/submitactivations.php`, `processActivations.php`,
+`currentactivations.php`, `activations.php`/`index.php`,
+`activationButtons.php` — the weekly lineup-submission flow (set who's
+starting/reserve, see every team's current lineup for the week).
+Explicitly **not** in scope: `currentscore.php`/`scoreFunctions.php`, the
+live/historical box-score rendering that also lives in this directory —
+that's Phase 13's Boxscores redesign; this phase only touches the
+"set your lineup" and "see everyone's current lineup" pages.
+
+1. Read side: port the roster/opponent/injury/lock query
+   (`submitactivations.php`'s main JOIN plus its `noActivateSql`/
+   `opponentRoster`/`actingHCsql` companions) into a repository/service.
+   Keep the `activations` table (canonical name since Phase 7) and the
+   position-limit rules (1 HC, 1 QB, 1–2 RB, 2–3 WR, 1–2 TE with
+   RB+WR+TE=5, 1 K, 1 OL, 2 DL, 2 LB, 2 DB) as a single canonical
+   definition rather than duplicated validation logic.
+2. Submit flow: controller + form handling to replace
+   `submitactivations.php`/`processActivations.php` — same lock
+   semantics (5 minutes before kickoff per player, the "joined team
+   after the week-14 activation deadline" quirk) and the acting-HC
+   special case (free-agent HC pickup when a team has none rostered).
+3. **Fix the SQL-injection surface**: `processActivations.php` builds
+   `INSERT INTO activations (...) VALUES ($season, $week, $teamnum,
+   '$key', $item)` by interpolating `$_REQUEST` values directly with no
+   validation or binding — bind parameters, same fix pattern as Phase
+   3's `teams/compare`.
+4. Current-activations view: port `currentactivations.php`'s
+   per-team lineup cards (shown on `/activations` and after submit) to
+   a repository + controller.
+5. Mobile-friendly redesign of that view and the submit form: replace
+   the fixed 2-column desktop card grid with a layout that reflows to
+   one column on narrow viewports, and use larger tap targets for the
+   starter/reserve checkboxes and the HC picker instead of the current
+   cramped inline controls; follow the `btn-wmffl` button convention
+   used elsewhere in member/admin pages.
+6. Retire dead code found along the way: `info.php` (phpinfo dump, same
+   class of dead page as Phase 5's `info.php`), `submitthanks.php`
+   (orphaned — `processActivations.php` redirects to `activations.php`,
+   not this page), and the already-commented-out `gameplan`/`myGP`/
+   `oppGP` remnants in `submitactivations.php` and
+   `processActivations.php`.
+7. `football/activate/` deleted for everything covered here, with 301s
+   (`LegacyActivationRedirectController`) from `activations.php`,
+   `submitactivations.php`, `processActivations.php`; `currentscore.php`
+   and `scoreFunctions.php` stay on the LegacyBridge until Phase 13.
+
+## Phase 12 — History (per-season)
 
 Legacy: `football/history/{year}Season.php` (1992–2017, frozen flat
 pages) and `football/history/{year}Season/` (1992–2026, directories —
@@ -278,14 +326,14 @@ snapshots, and the old-season-only one-offs (`awards`, `newsletters`,
 `breakdown`, `championpreview`, `playoffexplain`/`preview`/`scenewk*`,
 `summary*.inc`, `weeklyscores`, `weeksummary`). Boxscores
 (`{year}Season/boxscores.php`, 2005/2006 only) are explicitly **not**
-in scope — that's Phase 12.
+in scope — that's Phase 13.
 
 1. Design a data model for the per-season hub content (champion,
    runner-up, playoff scores) currently hardcoded per file
 2. A single generic Symfony route/template driven by that data,
    replacing the 30+ individual season files and directories
 
-## Phase 12 — Boxscores redesign
+## Phase 13 — Boxscores redesign
 
 Legacy: the live box score page is `football/activate/currentscore.php`
 (+ `scoreFunctions.php`, `base/scoring.php`) — addressed by
@@ -310,7 +358,7 @@ two different experiences.
    final-result only
 2. Live scoreboard (separate route, e.g. `/scoreboard`): the in-progress
    current-week experience — live scoring, time remaining, reserves —
-   ported from `currentscore.php` as its own page. Phase 12 ports it
+   ported from `currentscore.php` as its own page. Phase 13 ports it
    as-is to establish the split; its own redesign (auto-refresh, richer
    game-day experience) is deferred to the Unscheduled section
 3. Week scoreboard on the box score page: the other games from the same
@@ -325,21 +373,20 @@ two different experiences.
    game state: completed `teamid`+`season`+`week` combos map to the
    gameid route, current-week to the live scoreboard; update the three
    deep-linking entry points. The rest of `football/activate/` (lineup
-   submission flow) stays for Phase 13
+   submission flow) was carved out separately as Phase 11
 6. Phase 7 table renames are done (final `activations`/`players`/
    `injuries` names in place); data coverage varies by era — degrade
    gracefully for seasons missing stat lines
 
-## Phase 13 — Remaining odds and ends
+## Phase 14 — Remaining odds and ends
 
-Legacy: `login/`, `activate/`, `forum/`, `rules/`, `info.php`,
-`scores.php`
+Legacy: `login/`, `forum/`, `rules/`, `info.php`, `scores.php`
 
-1. Auth (login/activate) — highest risk, do last and carefully
+1. Auth (login) — highest risk, do last and carefully
 2. Static/low-traffic pages (rules, info, forum)
 3. Scores
 
-## Phase 14 — Scripts: legacy → Symfony console commands
+## Phase 15 — Scripts: legacy → Symfony console commands
 
 Legacy: `/scripts/` — standalone PHP invoked directly (`php scripts/foo.php`,
 presumably via cron), each pulling in `base.php` (raw `mysqli_connect`
@@ -378,7 +425,7 @@ porting something run once and discarded.
 
 ## Unscheduled — Live scoreboard redesign
 
-Phase 12 splits the live scoreboard out of `currentscore.php` onto its own
+Phase 13 splits the live scoreboard out of `currentscore.php` onto its own
 route as a faithful port. Its actual redesign — a richer game-day
 experience (auto-refresh/streaming scores, in-progress stat lines,
 whatever else game day wants) — happens here, decoupled from the
