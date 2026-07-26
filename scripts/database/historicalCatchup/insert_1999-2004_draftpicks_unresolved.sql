@@ -1,0 +1,127 @@
+-- Draft picks from the 1999-2004 seasons that could NOT be turned into
+-- draftpicks rows, because the source page doesn't name a real player to
+-- look up in the players table. There is nothing to run here - this file
+-- is a reference list, not a set of INSERT statements.
+--
+-- Two kinds of entries show up below:
+--
+--  * Streaming placeholders ("<city> TEAM QB", "<city> KICKER",
+--    "<city> OFFENSE"/"Off <city>") - these seasons let teams draft a
+--    weekly-streamed NFL team's QB/kicker/defense as a roster slot instead
+--    of a specific player, so there is no individual to match in players.
+--  * "(NONE)"/"(None)" - the source explicitly records the team not
+--    using that pick.
+--
+-- If any of these should actually become draftpicks rows (e.g. by adding
+-- placeholder rows with playerid NULL, or a synthetic "team defense"
+-- player), Josh will need to decide how - the sibling insert_<season>_
+-- draftpicks.sql files only cover the picks with a real matched playerid.
+
+-- ==== 1999 (from football/history/1999Season/draftpicks.php) ====
+--   Round 2, Pick 6: Green Wave - QB 'BUFFALO TEAM QB' (BUF)
+--   Round 3, Pick 1: Archers Who Say Ni - QB 'ATLANTA TEAM QB' (ATL)
+--   Round 3, Pick 5: Barbarians - Off 'TAMPA BAY OFFENSE' (TB)
+--   Round 5, Pick 3: Green Wave - K 'BUFFALO KICKER' (BUF)
+--   Round 6, Pick 1: Crusaders - QB 'INDIANAPOLIS TEAM' (QBIND)
+--   Round 6, Pick 3: Green Wave - Off 'DALLAS OFFENSE' (DAL)
+--   Round 7, Pick 6: Norsemen - QB 'ARIZONA TEAM QB' (ARI)
+--   Round 9, Pick 2: Archers Who Say Ni - K 'TENNESSEE KICKER' (TEN)
+--   Round 11, Pick 5: Hempaholics - K 'ATLANTA KICKER' (ATL)
+--   Round 11, Pick 7: Crusaders - Off 'NY JETS OFFENSE' (NYJ)
+--   Round 11, Pick 8: Werewolves - QB 'MIAMI TEAM QB' (MIA)
+--   Round 12, Pick 3: ZEN - QB 'SEATTLE TEAM QB' (SEA)
+--   Round 12, Pick 6: Norsemen - Off 'TENNESSEE OFFENSE' (TEN)
+--   Round 13, Pick 4: Hempaholics - Off 'ATLANTA OFFENSE' (ATL)
+--   Round 13, Pick 5: Norsemen - K 'NY JETS KICKER' (NYJ)
+--   Round 13, Pick 6: ZEN - K 'DALLAS KICKER' (DAL)
+--   Round 13, Pick 8: Green Wave - ? '(NONE)' (---)
+--   Round 14, Pick 1: Werewolves - Off 'BUFFALO OFFENSE' (BUF)
+--   Round 14, Pick 3: Barbarians - QB 'WASHINGTON TEAM QB' (WAS)
+--   Round 14, Pick 4: Hempaholics - QB 'DALLAS TEAM QB' (DAL)
+--   Round 14, Pick 6: ZEN - Off 'NEW ORLEANS OFFENSE' (NO)
+--   Round 14, Pick 8: Green Wave - ? '(NONE)' (---)
+--   Round 15, Pick 2: Crusaders - K 'JACKSONVILLE KICKER' (JAX)
+--   Round 15, Pick 5: Norsemen - ? '(NONE)' (---)
+--   Round 15, Pick 8: Green Wave - ? '(NONE)' (---)
+--   Round 16, Pick 1: Werewolves - ? '(NONE)' (---)
+--   Round 16, Pick 2: Crusaders - ? '(NONE)' (---)
+--   Round 16, Pick 3: Barbarians - K 'KANSAS CITY KICKER' (KC)
+--   Round 16, Pick 4: Hempaholics - ? '(NONE)' (---)
+--   Round 16, Pick 5: Norsemen - ? '(NONE)' (---)
+--   Round 16, Pick 6: ZEN - ? '(NONE)' (---)
+--   Round 16, Pick 7: Archers Who Say Ni - ? '(NONE)' (---)
+--   Round 16, Pick 8: Green Wave - ? '(NONE)' (---)
+
+-- ==== 2000 (from football/history/2000Season/draftpicks.php) ====
+--   Round 1, Pick 5: MeggaMen (Expansion Team 2) - QB 'OAKLAND TEAM QB' (OAK)
+--   Round 1, Pick 10: Norsemen - K 'ST. LOUIS KICKER' (STL)
+--   Round 1, Pick 12: MeggaMen (Expansion Team 2) - K 'OAKLAND KICKER' (OAK)
+--   Round 2, Pick 10: Norsemen - QB 'BUFFALO TEAM QB' (BUF)
+--   Round 3, Pick 6: Green Wave - QB 'JACKSONVILLE TEAM' (QBJAX)
+--   Round 3, Pick 12: MeggaMen (Expansion Team 2) - Off 'KANSAS CITY OFFENSE' (KC)
+--   Round 4, Pick 1: Crusaders - Off 'INDIANAPOLIS' (OFFENSEIND)
+--   Round 5, Pick 6: MeggaMen (Expansion Team 2) - Off 'ST. LOUIS OFFENSE' (STL)
+--   Round 5, Pick 7: Barbarians - QB 'SEATTLE TEAM QB' (SEA)
+--   Round 6, Pick 4: Crusaders - QB 'NY JETS TEAM QB' (NYJ)
+--   Round 7, Pick 5: Freezer Burn - QB 'DALLAS TEAM QB' (DAL)
+--   Round 7, Pick 9: Norsemen - Off 'PITTSBURGH OFFENSE' (PIT)
+--   Round 8, Pick 2: Green Wave - K 'BALTIMORE KICKER' (BAL)
+--   Round 8, Pick 3: Barbarians - K 'WASHINGTON KICKER' (WAS)
+--   Round 8, Pick 6: Hempaholics - K 'SAN DIEGO KICKER' (SD)
+--   Round 9, Pick 3: Barbarians - Off 'NY JETS OFFENSE' (NYJ)
+--   Round 9, Pick 5: Freezer Burn - Off 'MINNESOTA OFFENSE' (MIN)
+--   Round 9, Pick 6: Hempaholics - QB 'DENVER TEAM QB' (DEN)
+--   Round 10, Pick 1: ZEN - QB 'NY GIANTS TEAM QB' (NYG)
+--   Round 10, Pick 3: Crusaders - K 'GREEN BAY KICKER' (GB)
+--   Round 10, Pick 6: Freezer Burn - K 'NEW ENGLAND KICKER' (NE)
+--   Round 10, Pick 8: Barbarians - ? '(None)' (---)
+--   Round 10, Pick 9: Green Wave - Off 'CINCINNATI OFFENSE' (CIN)
+--   Round 11, Pick 4: Werewolves - QB 'BALTIMORE TEAM QB' (BAL)
+--   Round 11, Pick 8: Barbarians - ? '(None)' (---)
+--   Round 11, Pick 10: Archers Who Say Ni - QB 'NEW ORLEANS TEAM QB' (NO)
+--   Round 12, Pick 1: ZEN - K 'DETROIT KICKER' (DET)
+--   Round 12, Pick 8: Barbarians - ? '(None)' (---)
+--   Round 12, Pick 10: Archers Who Say Ni - Off 'NEW ORLEANS OFFENSE' (NO)
+
+-- ==== 2001 (from football/history/2001Season/draftpicks.php) ====
+--   Round 1, Pick 4: Norsemen - QB 'OAKLAND TEAM QB' (OAK)
+--   Round 2, Pick 4: Norsemen - QB 'BUFFALO TEAM QB' (BUF)
+--   Round 2, Pick 7: Barbarians - QB 'NY GIANTS TEAM QB' (NYG)
+--   Round 3, Pick 2: Green Wave - QB 'JACKSONVILLE TEAM' (QBJAX)
+--   Round 3, Pick 4: Norsemen - K 'GREEN BAY KICKER' (GB)
+--   Round 5, Pick 2: Hempaholics - QB 'GREEN BAY TEAM QB' (GB)
+--   Round 5, Pick 10: Freezer Burn - QB 'TAMPA BAY TEAM QB' (TB)
+--   Round 6, Pick 5: ZEN - QB 'NY JETS TEAM QB' (NYJ)
+--   Round 6, Pick 7: Norsemen - K 'DENVER KICKER' (DEN)
+--   Round 7, Pick 2: Freezer Burn - Off 'PITTSBURGH OFFENSE' (PIT)
+--   Round 7, Pick 9: Norsemen - Off 'CINCINNATI OFFENSE' (CIN)
+--   Round 8, Pick 1: Barbarians - K 'CAROLINA KICKER' (CAR)
+--   Round 8, Pick 7: ZEN - QB 'SEATTLE TEAM QB' (SEA)
+--   Round 9, Pick 5: Crusaders - QB 'BALTIMORE TEAM QB' (BAL)
+--   Round 10, Pick 1: Hempaholics - QB 'TENNESSEE TEAM QB' (TEN)
+--   Round 10, Pick 2: Norsemen - Off 'TENNESSEE OFFENSE' (TEN)
+--   Round 10, Pick 5: MeggaMen - QB 'NEW ENGLAND TEAM QB' (NE)
+--   Round 10, Pick 8: Werewolves - QB 'ATLANTA TEAM QB' (ATL)
+--   Round 11, Pick 5: MeggaMen - Off 'TAMPA BAY OFFENSE' (TB)
+--   Round 12, Pick 1: Hempaholics - Off 'ST. LOUIS OFFENSE' (STL)
+--   Round 12, Pick 4: War Eagles - QB 'MIAMI TEAM QB' (MIA)
+
+-- ==== 2002 (from football/history/2002Season/draftpicks.php) ====
+--   Round 9, Pick 5: Norsemen - Off 'Ny Jets' (NYJ)
+--   Round 9, Pick 6: War Eagles - Off 'St. Louis' (STL)
+--   Round 9, Pick 9: Illuminati - Off 'Indianapolis' (IND)
+--   Round 12, Pick 4: Green Wave - Off 'Green Bay' (GB)
+
+-- ==== 2003 (from football/history/2003Season/draftsummary.txt) ====
+--   Round 10, Pick 4: War Eagles - Off 'San Fran' (SF)
+--   Round 10, Pick 6: Freezer Burn - Off 'Philadelphia' (PHI)
+
+-- ==== 2004 (from football/history/2004Season/draftsummary.txt) ====
+--   Round 10, Pick 1: Gallic Warriors - Off 'Baltimore' (BAL)
+--   Round 10, Pick 2: Rednecks - Off 'Green Bay' (GB)
+--   Round 10, Pick 8: Crusaders - Off 'Carolina' (CAR)
+--   Round 10, Pick 10: Bug Stompers - Off 'Minnesota' (MIN)
+--   Round 11, Pick 3: MeggaMen - Off 'Denver' (DEN)
+--   Round 11, Pick 7: Sacks on the Beach - Off 'New Orleans' (NO)
+--   Round 12, Pick 9: Illuminati - Off 'Indianapolis' (IND)
+
