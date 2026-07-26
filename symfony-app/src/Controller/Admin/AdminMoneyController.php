@@ -8,6 +8,7 @@ use App\Service\AuthenticationService;
 use App\Service\SeasonWeekService;
 use App\Service\TitleSyncService;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,7 +43,8 @@ class AdminMoneyController extends AbstractAdminController
     public function recordChange(
         Request $request,
         AuthenticationService $auth,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        LoggerInterface $logger
     ): JsonResponse {
         if (!$auth->isCommissioner()) {
             return new JsonResponse(['error' => 'Unauthorized'], Response::HTTP_FORBIDDEN);
@@ -83,7 +85,8 @@ class AdminMoneyController extends AbstractAdminController
             $em->flush();
 
             return new JsonResponse(['ok' => true]);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
+            $logger->error('AdminMoneyController::recordChange failed', ['exception' => $e]);
             return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }

@@ -187,41 +187,23 @@ should be small enough to land as its own PR.
   Josh's ongoing task via that UI. Known pre-existing limitation:
   recalculating old weeks mis-penalizes players who changed NFL teams
   (current-roster join) — reprocess remains a current-week tool.
-
-## Phase 10.5 — Logging infrastructure (Monolog)
-
-Current state (found 2026-07-23 debugging a prod-only 500 on the
-`/admin/money` paid-status tool): there is no Monolog anywhere in
-`symfony-app` — no `symfony/monolog-bundle` dependency, no
-`config/packages/monolog.yaml`, no exception listener. The only thing
-writing to `logs/wmffl.log` is a bare `ini_set('error_log', ...)` in
-`football/front_controller.php` and `symfony-app/src/LegacyBridge.php`,
-and `LegacyBridge` only runs when the Symfony kernel 404s and falls
-back to legacy (`symfony-app/public/index.php`'s
-`$response->isNotFound()` branch) — so any error in a genuine
-Symfony-routed controller (like `AdminMoneyController`) never reaches
-that file, in dev or prod. Fatal errors there currently rely on
-whatever the box's PHP/webserver `error_log` ini default happens to be,
-with no visibility from inside the repo.
-
-1. Add `symfony/monolog-bundle`, `config/packages/monolog.yaml` with a
-   `when@prod` block writing to a real app log path (e.g.
-   `var/log/prod.log` or keep `logs/wmffl.log` for continuity — decide
-   once, document it) at `error` level minimum, independent of
-   `APP_DEBUG`/`APP_ENV` request path
-2. Make sure it captures both Symfony-native routes and the
-   legacy-fallback path — either by leaving `LegacyBridge`'s `error_log`
-   ini_set in place as a secondary channel for raw legacy `error_log()`
-   calls (`ImageProcessor.php`, `bootstrap.php`, etc.), or by routing
-   those through the same Monolog handler if feasible
-3. Broaden narrow `catch (\Exception $e)` blocks that swallow errors
-   without logging them (e.g. `AdminMoneyController::recordChange`) to
-   also catch/log `\Throwable`, so a `\TypeError` doesn't disappear as
-   a blank 500 with nothing in any log
-4. Verify on prod specifically: confirm the configured log path is
-   writable by the web server user and actually receives an entry for
-   a forced error, since this phase exists because prod logging was
-   silently broken
+- Logging infrastructure (Phase 10.5 complete, 2026-07-26,
+  `specs/2026-07-26-logging-infrastructure/`): `symfony/monolog-bundle`
+  added; `config/packages/monolog.yaml` `when@prod` handler is
+  `rotating_file` at `logs/wmffl.log` (Monolog derives its own dated
+  filenames, e.g. `logs/wmffl-2026-07-26.log`), `max_files: 14`,
+  `error` level minimum, active regardless of `APP_DEBUG`. Legacy
+  `error_log()` writers (`front_controller.php`, `LegacyBridge.php`)
+  deliberately left untouched — separate, unrotated channel into the
+  literal `logs/wmffl.log`, same as before, just no longer sharing a
+  filename with Monolog's dated output (accepted tradeoff, not
+  revisited unless `/football/` log volume becomes a problem before
+  the Final phase deletes it). `AdminMoneyController::recordChange`'s
+  swallowing `catch (\Exception $e)` broadened to `catch (\Throwable
+  $e)`, now logs before returning the error response. Verified locally
+  via a forced error producing a new dated file without touching the
+  legacy file; prod write-access/rotation verification is Josh's
+  post-deploy step.
 
 ## Phase 10.6 — Rule proposals: `issues` table redesign
 
