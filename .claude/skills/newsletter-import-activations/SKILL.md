@@ -33,22 +33,33 @@ Instead it resolves against `players` directly, disambiguated with:
   not city: a newsletter may print a since-relocated team's old city
   ("St. Louis Offense" for the Rams); `CITY_MASCOTS` in the script maps
   the printed city to the stable mascot.
-- **A Kicker-id heuristic**: `Kicker_id = OL_id - 1` holds with zero
-  exceptions across every team where both ids are independently
-  confirmed by real activations history (checked all 19 teams that had
-  both). Many teams' Kicker-unit was replaced by real individual
-  kickers early and so never appears in 2001+ activations at all - when
-  that happens, this script still infers the id from the team's known
-  OL id and flags it as inferred (not directly confirmed) so Josh can
-  spot-check. There is no equivalent reliable heuristic for QB units;
-  those are flagged `UNRESOLVED` with every playerid ever created under
-  that mascot listed as a hint, for `--map`.
+- **Confirmed Team QB/Kicker flmid bands** (Josh, 2026-07-26): every
+  Team QB unit row has `flmid` 651-682, every Team Kicker unit row has
+  `flmid` 701-732 (one row per NFL team in each band). `UNIT_FLMID_RANGES`
+  in the script uses this directly whenever the unit was never itself
+  activated post-2001 (common: a team switched to a real individually-
+  scored starter early, so the fake unit row has zero real-activation
+  history to match against via `unit_ref`). This is authoritative, not
+  inferred - it fully replaced the old "flag QB as UNRESOLVED, no
+  heuristic exists" behavior. The older `Kicker_id = OL_id - 1` inference
+  (holds with zero exceptions across every team independently confirmed)
+  is kept as a second-line fallback in case `flmid` is ever missing.
 - **Cross-position fallback**: a newsletter's slot heading (e.g. `DL`)
   doesn't have to match a player's default `pos` in the `players` table
-  (e.g. `LB`) - this was common for DL/LB tweeners in older lineups. If
-  the strict same-position search comes up empty, the script retries
-  across all positions and flags the mismatch as a note, not a hard
-  anomaly.
+  (e.g. `LB`) - this was common for DL/LB tweeners in older lineups. The
+  widen-to-all-positions retry fires whenever the same-position candidate
+  pool doesn't contain the right first name too, not only when that pool
+  is empty outright - a same-position, same-lastname pool with the wrong
+  first name (e.g. 11 unrelated DL "Taylor"s when the real match is a DL
+  slot filed under DB in `players`) used to silently resolve to the wrong
+  player via "matched on last name only"; fixed 2026-07-26.
+- **Abbreviation aliasing**: newsletters print the common/AP team
+  abbreviation, which can differ from what's stored in `nflrosters` -
+  e.g. Jacksonville is `JAX` in newsletters but `JAC` in `nflrosters`.
+  `ABBREV_ALIASES` in the script normalizes before comparing; add to it
+  if a new season surfaces another mismatch (symptom: an nflrosters-
+  narrowable ambiguous case reports "no abbrev/date to narrow" instead
+  of actually narrowing).
 
 ## The 1993-era layout
 
@@ -131,7 +142,7 @@ real data limitation, not a parser gap; flag and move on.
 
    ```sql
    -- players.tsv
-   SELECT playerid, pos, lastname, firstname FROM players;
+   SELECT playerid, flmid, pos, lastname, firstname FROM players;
 
    -- nflrosters.tsv
    SELECT playerid, nflteamid, dateon, IFNULL(dateoff,'9999-12-31') FROM nflrosters;
