@@ -23,11 +23,15 @@ not `symfony-app/var/log/`.
 
 ## Decisions (confirmed with Josh 2026-07-26)
 
-1. **Log path: keep `logs/wmffl.log`.** Monolog's prod handler writes to the
-   same file the legacy `ini_set('error_log', ...)` channel already uses.
-   One file to tail/grep during an incident, no new path to remember mid-fire.
-   This is a deliberate deviation from the Symfony-idiomatic
-   `var/log/prod.log` default.
+1. **Log path: `logs/` directory, Monolog gets its own rotating filename.**
+   Originally decided as "keep the literal `logs/wmffl.log`" for a single
+   shared file; superseded by decision #4 once rotation entered scope —
+   Monolog's `rotating_file` handler can't rotate a static path in place,
+   only its own dated filenames, so Monolog writes to
+   `logs/wmffl-{date}.log` (see #4) while the legacy channel keeps the
+   literal `logs/wmffl.log`. Both still live in the same `logs/` directory
+   (not `symfony-app/var/log/`), which remains a deliberate deviation from
+   the Symfony-idiomatic default — just not the same *file* anymore.
 2. **Legacy channel stays separate — no bridging.** The existing
    `ini_set('error_log', ...)` calls in `front_controller.php` and
    `LegacyBridge.php` are left untouched. Monolog is purely additive,
@@ -42,62 +46,55 @@ not `symfony-app/var/log/`.
    `symfony-app/src/Controller/Admin/AdminMoneyController.php:86`). A
    repo-wide audit of other narrow catches is explicitly out of scope; do
    it as a separate follow-up if warranted.
-4. **Log rotation: daily, 14-day retention, via system `logrotate` on the
-   shared literal file.** `logs/wmffl.log` is currently 4.8MB and
-   unrotated. Monolog's own `rotating_file` handler was considered and
-   rejected here: it rotates by writing to *its own* date-suffixed
-   filenames (`wmffl-{date}.log`), not by rotating the literal
-   `logs/wmffl.log` path in place — since the legacy `error_log()` calls
-   in `front_controller.php`/`LegacyBridge.php` are staying on that exact
-   literal path (decision #2), a Monolog-managed rotating filename would
-   silently fork the two channels into different files and defeat
-   decision #1 ("one file to tail"). Instead: a system `logrotate` config
-   (`daily`, `rotate 14`) targets `logs/wmffl.log` directly, so both the
-   Monolog stream handler and the legacy `error_log()` writes keep
-   landing in the same literal path day-to-day, and logrotate rotates
-   the whole file — both channels' entries together — once every 24h,
-   pruning anything past 14 rotations.
-   - Refinement over plain `copytruncate`: since both writers are
-     per-request PHP processes (PHP-FPM/mod_php, no long-lived daemon
-     holding the file open), a standard rotate+`create` cycle (rename old
-     file, create a fresh empty one) is safe and avoids `copytruncate`'s
-     small window where lines written between the copy and the truncate
-     are lost. `copytruncate` is only needed when a long-running process
-     keeps an fd open across rotation, which doesn't apply here.
-   - Installing the logrotate config into `/etc/logrotate.d/` requires
-     root and is outside anything the app itself can do — see Scope.
+4. **Log rotation: daily, 14-day retention, via Monolog's own
+   `rotating_file` handler — no external `logrotate`/system-level step.**
+   Confirmed against the Symfony MonologBundle docs (2026-07-26): the
+   `rotating_file` handler type self-manages rotation with `max_files`
+   for retention and `filename_format`/`date_format` for the daily
+   filename (defaults to `{filename}-{date}` / `Y-m-d`, e.g.
+   `wmffl-2026-07-26.log`), purely in-app — no cron, no root install, no
+   `deploy/logrotate.d/` file.
+   - Tradeoff accepted explicitly (Josh, 2026-07-26): this only rotates
+     Monolog's own entries. The legacy `error_log()` calls in
+     `front_controller.php`/`LegacyBridge.php` keep writing to the
+     literal `logs/wmffl.log`, unrotated, growing forever, in a
+     **separate physical file** from Monolog's dated ones — same
+     behavior as today for that channel, just no longer sharing a
+     filename with the new Monolog output. An incident that spans both
+     legacy and Symfony-native errors means checking two files instead
+     of one.
+   - This supersedes the earlier system-`logrotate`-on-shared-file
+     approach (rejected: required a root-installed config outside the
+     app, which Josh doesn't want to maintain).
 
 ## Scope
 
 In scope:
 - Add `symfony/monolog-bundle` to `symfony-app/composer.json`
 - `symfony-app/config/packages/monolog.yaml` with a `when@prod` block at
-  `error` level minimum, writing to `logs/wmffl.log` via a plain `stream`
-  handler (not `rotating_file` — see decision #4), independent of
-  `APP_DEBUG`/`APP_ENV` request path (i.e. don't gate it behind debug mode)
+  `error` level minimum, `type: rotating_file`, `path: logs/wmffl.log`
+  (Monolog derives its own dated filename from this base — see decision
+  #4), `max_files: 14`, independent of `APP_DEBUG`/`APP_ENV` request path
+  (i.e. don't gate it behind debug mode)
 - Broaden `AdminMoneyController::recordChange`'s `catch (\Exception $e)` to
   `catch (\Throwable $e)` and log it via the injected/autowired logger
   instead of silently swallowing
-- A `logrotate` config file committed to the repo (e.g.
-  `deploy/logrotate.d/wmffl`) targeting `logs/wmffl.log`: `daily`,
-  `rotate 14`, `missingok`, `notifempty`, `create` (correct perms/owner
-  for the web server user), `dateext`. Documented as a manual one-time
-  install step (`cp`/symlink into `/etc/logrotate.d/` — requires root,
-  can't be automated from within the app or a Symfony console command)
-- Verification on prod: confirm the web server user can write to
-  `logs/wmffl.log`, that a forced error actually produces an entry, and
-  that logrotate's config is accepted (`logrotate -d` dry-run) and
-  actually rotates the file (`logrotate -f` forced test run)
+- Verification on prod: confirm the web server user can write to the
+  `logs/` directory, that a forced error actually produces a new dated
+  file, and that a second forced error on a later date rotates correctly
+  (or verify via `max_files`/pruning behavior directly)
 
 Out of scope:
 - Routing legacy `error_log()` calls through Monolog (decision #2 above)
 - Any catch-block audit beyond `AdminMoneyController`
 - Dev/test environment logging changes beyond whatever Monolog's default
   recipe config provides out of the box
-- Compressing rotated logs (`compress`/`delaycompress`) — not requested;
-  add later if disk usage becomes a concern
+- Any system-level `logrotate` config — rejected per decision #4
+- Compressing rotated logs — Monolog's `rotating_file` handler doesn't
+  compress; not requested, add later if disk usage becomes a concern
 - Any change to how/where legacy `error_log()` calls target their path —
-  they keep pointing at the literal `logs/wmffl.log`, same as today
+  they keep pointing at the literal `logs/wmffl.log`, same as today,
+  and stay unrotated (decision #4 tradeoff)
 
 ## Context
 
