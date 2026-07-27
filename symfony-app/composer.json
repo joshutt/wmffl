@@ -19,6 +19,7 @@
         "symfony/framework-bundle": "7.4.*",
         "symfony/html-sanitizer": "7.4.*",
         "symfony/mailer": "7.4.*",
+        "symfony/monolog-bundle": "^4.0",
         "symfony/runtime": "7.4.*",
         "symfony/security-csrf": "7.4.*",
         "symfony/twig-bundle": "7.4.*",

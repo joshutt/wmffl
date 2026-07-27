@@ -13,6 +13,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -84,7 +86,7 @@ class AdminMoneyControllerTest extends TestCase
     {
         [$controller, $auth, , $em] = $this->makeController(commissioner: false);
 
-        $response = $controller->recordChange(new Request(), $auth, $em);
+        $response = $controller->recordChange(new Request(), $auth, $em, new NullLogger());
 
         $this->assertInstanceOf(JsonResponse::class, $response);
         $this->assertSame(Response::HTTP_FORBIDDEN, $response->getStatusCode());
@@ -96,7 +98,7 @@ class AdminMoneyControllerTest extends TestCase
         $em->method('find')->willReturn($this->createStub(Paid::class));
 
         $request = new Request(request: ['field' => 'paid-1', 'val' => 'true']);
-        $response = $controller->recordChange($request, $auth, $em);
+        $response = $controller->recordChange($request, $auth, $em, new NullLogger());
 
         $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
         $this->assertSame(['ok' => true], json_decode($response->getContent(), true));
@@ -110,7 +112,7 @@ class AdminMoneyControllerTest extends TestCase
         $em->method('find')->willReturn($paid);
 
         $request = new Request(request: ['field' => 'paid-1', 'val' => 'true']);
-        $controller->recordChange($request, $auth, $em);
+        $controller->recordChange($request, $auth, $em, new NullLogger());
     }
 
     public function testRecordChangeSetsLateFeeField(): void
@@ -121,7 +123,7 @@ class AdminMoneyControllerTest extends TestCase
         $em->method('find')->willReturn($paid);
 
         $request = new Request(request: ['field' => 'late-1', 'val' => '9.99']);
-        $controller->recordChange($request, $auth, $em);
+        $controller->recordChange($request, $auth, $em, new NullLogger());
     }
 
     public function testRecordChangeSetsAmtPaidField(): void
@@ -132,7 +134,7 @@ class AdminMoneyControllerTest extends TestCase
         $em->method('find')->willReturn($paid);
 
         $request = new Request(request: ['field' => 'amt-1', 'val' => '75.00']);
-        $controller->recordChange($request, $auth, $em);
+        $controller->recordChange($request, $auth, $em, new NullLogger());
     }
 
     public function testRecordChangeFlushesOnSuccess(): void
@@ -142,7 +144,7 @@ class AdminMoneyControllerTest extends TestCase
         $em->expects($this->once())->method('flush');
 
         $request = new Request(request: ['field' => 'paid-1', 'val' => 'true']);
-        $controller->recordChange($request, $auth, $em);
+        $controller->recordChange($request, $auth, $em, new NullLogger());
     }
 
     public function testRecordChangeReturnsErrorOnException(): void
@@ -150,8 +152,28 @@ class AdminMoneyControllerTest extends TestCase
         [$controller, $auth, $seasonWeek, $em] = $this->makeController(commissioner: true);
         $em->method('find')->willThrowException(new \RuntimeException('DB error'));
 
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects($this->once())->method('error');
+
         $request = new Request(request: ['field' => 'paid-1', 'val' => 'true']);
-        $response = $controller->recordChange($request, $auth, $em);
+        $response = $controller->recordChange($request, $auth, $em, $logger);
+
+        $this->assertSame(Response::HTTP_INTERNAL_SERVER_ERROR, $response->getStatusCode());
+        $data = json_decode($response->getContent(), true);
+        $this->assertArrayHasKey('error', $data);
+    }
+
+    public function testRecordChangeLogsAndReturnsErrorOnThrowable(): void
+    {
+        [$controller, $auth, $seasonWeek, $em] = $this->makeController(commissioner: true);
+        $em->method('find')->willThrowException(new \TypeError('bad type'));
+
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects($this->once())->method('error')
+            ->with($this->stringContains('recordChange'), $this->arrayHasKey('exception'));
+
+        $request = new Request(request: ['field' => 'paid-1', 'val' => 'true']);
+        $response = $controller->recordChange($request, $auth, $em, $logger);
 
         $this->assertSame(Response::HTTP_INTERNAL_SERVER_ERROR, $response->getStatusCode());
         $data = json_decode($response->getContent(), true);
@@ -164,7 +186,7 @@ class AdminMoneyControllerTest extends TestCase
         $em->expects($this->never())->method('find');
 
         $request = new Request(request: ['field' => 'bogus', 'val' => 'true']);
-        $response = $controller->recordChange($request, $auth, $em);
+        $response = $controller->recordChange($request, $auth, $em, new NullLogger());
 
         $this->assertSame(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
     }
@@ -176,7 +198,7 @@ class AdminMoneyControllerTest extends TestCase
         $em->expects($this->never())->method('flush');
 
         $request = new Request(request: ['field' => 'paid-999', 'val' => 'true']);
-        $response = $controller->recordChange($request, $auth, $em);
+        $response = $controller->recordChange($request, $auth, $em, new NullLogger());
 
         $this->assertSame(Response::HTTP_NOT_FOUND, $response->getStatusCode());
     }

@@ -65,6 +65,7 @@ class HistoryController extends AbstractController
         2022 => 'TJ Hockenson',
         2023 => 'Derrick Henry',
         2024 => 'Indianapolis OL',
+        2025 => 'George Pickens',
     ];
 
     #[Route('/history', name: 'history_index')]

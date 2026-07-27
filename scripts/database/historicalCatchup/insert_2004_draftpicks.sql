@@ -1,0 +1,140 @@
+-- 2004 WMFFL draft picks, transcribed from football/history/2004Season/draftsummary.txt.
+--
+-- Only season/round/pick/teamid/playerid are populated (id is auto-increment,
+-- orgTeam and pickTime are left for Josh to fill in as needed).
+-- Player ids were matched by lastname/firstname against the players table;
+-- picks that were streaming placeholders ("team QB", "team kicker", "team
+-- offense") or explicitly "(NONE)" in the source have no real player and are
+-- listed instead in insert_1999-2004_draftpicks_unresolved.sql, not here.
+
+INSERT INTO draftpicks (Season, Round, Pick, teamid, playerid) VALUES
+-- Round 1
+(2004, 1, 1, 10, 1356),  -- Whiskey Tango: WR Mason,Derrick (TEN)
+(2004, 1, 2, 8, 1159),  -- Rednecks: RB Jones,Thomas (CHI)
+(2004, 1, 3, 7, 5475),  -- MeggaMen: RB Jones,Kevin (DET)
+(2004, 1, 4, 1, 1991),  -- Bug Stompers: WR Smith,Steve (CAR)  [manually resolved - see note below]
+(2004, 1, 5, 3, 5487),  -- Norsemen: RB Jones,Julius (DAL)
+(2004, 1, 6, 2, 667),  -- Werewolves: RB Faulk,Marshall (STL)
+(2004, 1, 7, 4, 5453),  -- Illuminati: TE Winslow,Kellen (CLE)
+(2004, 1, 8, 6, 5179),  -- Crusaders: RB Griffin,Quentin (DEN)
+(2004, 1, 9, 4, 5452),  -- Illuminati: DB Taylor,Sean (WAS)
+(2004, 1, 10, 9, 1346),  -- Gallic Warriors: RB Martin,Curtis (NYJ)
+-- Round 2
+(2004, 2, 1, 9, 1046),  -- Gallic Warriors: WR Jackson,Darrell (SEA)
+(2004, 2, 2, 8, 5450),  -- Rednecks: WR Fitzgerald,Larry (ARI)
+(2004, 2, 3, 7, 367),  -- MeggaMen: WR Chambers,Chris (MIA)
+(2004, 2, 4, 10, 5469),  -- Whiskey Tango: RB Jackson,Steven (STL)
+(2004, 2, 5, 3, 5476),  -- Norsemen: WR Woods,Rashaun (SF)
+(2004, 2, 6, 4, 2645),  -- Illuminati: QB Green,Trent (KC)
+(2004, 2, 7, 5, 278),  -- Sacks on the Beach: WR Bruce,Isaac (STL)
+(2004, 2, 8, 6, 1800),  -- Crusaders: WR Robinson,Koren (SEA)
+(2004, 2, 9, 4, 5454),  -- Illuminati: WR Williams,Roy (DET)
+(2004, 2, 10, 1, 2027),  -- Bug Stompers: RB Staley,Duce (PIT)
+-- Round 3
+(2004, 3, 1, 9, 1548),  -- Gallic Warriors: WR Moulds,Eric (BUF)
+(2004, 3, 2, 4, 5185),  -- Illuminati: RB Suggs,Lee (CLE)
+(2004, 3, 3, 7, 2802),  -- MeggaMen: RB Foster,De'shaun (CAR)
+(2004, 3, 4, 10, 2601),  -- Whiskey Tango: QB Bulger,Marc (STL)
+(2004, 3, 5, 3, 2167),  -- Norsemen: WR Toomer,Amani (NYG)
+(2004, 3, 6, 2, 2194),  -- Werewolves: LB Urlacher,Brian (CHI)
+(2004, 3, 7, 5, 5112),  -- Sacks on the Beach: LB Barnett,Nick (GB)
+(2004, 3, 8, 6, 2934),  -- Crusaders: LB Thornton,David (IND)
+(2004, 3, 9, 4, 2252),  -- Illuminati: LB Washington,Marcus (WAS)
+(2004, 3, 10, 1, 5),  -- Bug Stompers: DL Abraham,John (NYJ)
+-- Round 4
+(2004, 4, 1, 1, 53),  -- Bug Stompers: DB Archuleta,Adam (STL)
+(2004, 4, 2, 8, 3043),  -- Rednecks: K Vanderjagt,Mike (IND)
+(2004, 4, 3, 7, 303),  -- MeggaMen: WR Burress,Plaxico (PIT)
+(2004, 4, 4, 10, 5449),  -- Whiskey Tango: QB Manning,Eli (NYG)
+(2004, 4, 5, 3, 2272),  -- Norsemen: DB Wesley,Greg (KC)
+(2004, 4, 6, 2, 1774),  -- Werewolves: DL Rice,Simeon (TB)
+(2004, 4, 7, 5, 2698),  -- Sacks on the Beach: QB Pennington,Chad (NYJ)
+(2004, 4, 8, 6, 3060),  -- Crusaders: DB Russell,Brian (MIN)
+(2004, 4, 9, 4, 2967),  -- Illuminati: QB Harrington,Joey (DET)
+(2004, 4, 10, 1, 612),  -- Bug Stompers: RB Dunn,Warrick (ATL)
+-- Round 5
+(2004, 5, 1, 9, 2872),  -- Gallic Warriors: TE McMichael,Randy (MIA)
+(2004, 5, 2, 8, 1641),  -- Rednecks: DB Parrish,Tony (SF)
+(2004, 5, 3, 7, 2504),  -- MeggaMen: DB Harper,Nick (IND)
+(2004, 5, 4, 10, 5456),  -- Whiskey Tango: WR Williams,Reggie (JAX)
+(2004, 5, 5, 6, 5094),  -- Crusaders: QB Leftwich,Byron (JAX)
+(2004, 5, 6, 2, 1668),  -- Werewolves: LB Peterson,Mike (JAX)
+(2004, 5, 7, 5, 2817),  -- Sacks on the Beach: DL Grant,Charles (NO)
+(2004, 5, 8, 6, 1173),  -- Crusaders: DL Kalu,Ndukwe (PHI)
+(2004, 5, 9, 4, 2787),  -- Illuminati: RB Duckett,T.J. (ATL)
+(2004, 5, 10, 1, 5459),  -- Bug Stompers: LB Vilma,Jonathan (NYJ)
+-- Round 6
+(2004, 6, 1, 9, 5122),  -- Gallic Warriors: DB Hamlin,Ken (SEA)
+(2004, 6, 2, 8, 240),  -- Rednecks: LB Brooks,Derrick (TB)
+(2004, 6, 3, 7, 5339),  -- MeggaMen: TE Gates,Antonio (SD)
+(2004, 6, 4, 10, 1710),  -- Whiskey Tango: WR Porter,Jerry (OAK)
+(2004, 6, 5, 3, 5140),  -- Norsemen: TE Smith,L.J. (PHI)
+(2004, 6, 6, 2, 5471),  -- Werewolves: RB Perry,Chris (CIN)
+(2004, 6, 7, 5, 5107),  -- Sacks on the Beach: RB McGahee,Willis (BUF)
+(2004, 6, 8, 6, 2310),  -- Crusaders: DB Williams,Aeneas (STL)
+(2004, 6, 9, 4, 280),  -- Illuminati: LB Bruschi,Tedy (NE)
+(2004, 6, 10, 1, 5496),  -- Bug Stompers: RB Jones,Greg (JAX)
+-- Round 7
+(2004, 7, 1, 9, 1973),  -- Gallic Warriors: WR Smith,Jimmy (JAX)
+(2004, 7, 2, 8, 2938),  -- Rednecks: WR Walker,Javon (GB)
+(2004, 7, 3, 7, 2636),  -- MeggaMen: QB Garcia,Jeff (CLE)
+(2004, 7, 4, 10, 2889),  -- Whiskey Tango: DL Peppers,Julius (CAR)
+(2004, 7, 5, 3, 1180),  -- Norsemen: DL Kearse,Jevon (PHI)
+(2004, 7, 6, 2, 1197),  -- Werewolves: DL Kerney,Patrick (ATL)
+(2004, 7, 7, 7, 5095),  -- MeggaMen: DL Williams,Kevin (MIN)
+(2004, 7, 8, 6, 2245),  -- Crusaders: WR Warrick,Peter (CIN)
+(2004, 7, 9, 4, 1377),  -- Illuminati: WR McCareins,Justin (NYJ)
+(2004, 7, 10, 1, 1989),  -- Bug Stompers: WR Smith,Rod (DEN)
+-- Round 8
+(2004, 8, 1, 9, 2961),  -- Gallic Warriors: QB Carr,David (HOU)
+(2004, 8, 2, 8, 1905),  -- Rednecks: DL Seymour,Richard (NE)
+(2004, 8, 3, 7, 2922),  -- MeggaMen: WR Stallworth,Donte' (NO)
+(2004, 8, 4, 10, 5141),  -- Whiskey Tango: DB Kiel,Terrance (SD)
+(2004, 8, 5, 3, 5465),  -- Norsemen: DL Udeze,Kenechi (MIN)
+(2004, 8, 6, 2, 5117),  -- Werewolves: DB Tillman,Charles (CHI)
+(2004, 8, 7, 5, 2807),  -- Sacks on the Beach: LB Fujita,Scott (KC)
+(2004, 8, 8, 6, 862),  -- Crusaders: RB Hambrick,Troy (OAK)
+(2004, 8, 9, 4, 546),  -- Illuminati: RB Dayne,Ron (NYG)
+(2004, 8, 10, 1, 2635),  -- Bug Stompers: QB Gannon,Rich (OAK)
+-- Round 9
+(2004, 9, 1, 9, 3039),  -- Gallic Warriors: K Stover,Matt (BAL)
+(2004, 9, 2, 8, 1722),  -- Rednecks: WR Price,Peerless (ATL)
+(2004, 9, 3, 7, 474),  -- MeggaMen: LB Cowart,Sam (NYJ)
+(2004, 9, 4, 10, 5137),  -- Whiskey Tango: DB Doss,Michael (IND)
+(2004, 9, 5, 3, 588),  -- Norsemen: LB Draft,Chris (ATL)
+(2004, 9, 6, 2, 716),  -- Werewolves: TE Franks,Bubba (GB)
+(2004, 9, 7, 5, 2857),  -- Sacks on the Beach: WR Lelie,Ashley (DEN)
+(2004, 9, 8, 6, 25),  -- Crusaders: TE Alexander,Stephen (DET)
+(2004, 9, 9, 4, 1986),  -- Illuminati: DL Smith,Robaire (HOU)
+(2004, 9, 10, 1, 1531),  -- Bug Stompers: LB Morgan,Dan (CAR)
+-- Round 10
+(2004, 10, 3, 7, 3026),  -- MeggaMen: K Longwell,Ryan (GB)
+(2004, 10, 4, 10, 2372),  -- Whiskey Tango: DL Wistrom,Grant (SEA)
+(2004, 10, 5, 3, 115),  -- Norsemen: LB Barton,Eric (NYJ)
+(2004, 10, 6, 2, 3044),  -- Werewolves: K Vinatieri,Adam (NE)
+(2004, 10, 7, 5, 101),  -- Sacks on the Beach: DB Barber,Ronde (TB)
+(2004, 10, 9, 4, 5096),  -- Illuminati: LB Suggs,Terrell (BAL)
+-- Round 11
+(2004, 11, 1, 9, 754),  -- Gallic Warriors: RB George,Eddie (DAL)
+(2004, 11, 2, 8, 5485),  -- Rednecks: RB Bell,Tatum (DEN)
+(2004, 11, 4, 10, 2827),  -- Whiskey Tango: LB Harris,Napoleon (OAK)
+(2004, 11, 5, 3, 1113),  -- Norsemen: WR Johnson,Keyshawn (DAL)
+(2004, 11, 6, 2, 1930),  -- Werewolves: LB Simmons,Anthony (SEA)
+(2004, 11, 8, 6, 1138),  -- Crusaders: LB Jones,Dhani (PHI)
+(2004, 11, 9, 4, 5455),  -- Illuminati: DB Hall,Deangelo (ATL)
+(2004, 11, 10, 1, 2812),  -- Bug Stompers: WR Givens,David (NE)
+-- Round 12
+(2004, 12, 1, 9, 2859),  -- Gallic Warriors: DB Lewis,Michael (PHI)
+(2004, 12, 2, 8, 5088),  -- Rednecks: QB Palmer,Carson (CIN)
+(2004, 12, 3, 7, 2262),  -- MeggaMen: WR Wayne,Reggie (IND)
+(2004, 12, 4, 10, 5560),  -- Whiskey Tango: RB Cobbs,Cedric (NE)
+(2004, 12, 5, 3, 913),  -- Norsemen: LB Hartwell,Edgerton (BAL)
+(2004, 12, 6, 2, 5134),  -- Werewolves: DB Scott,Bryan (ATL)
+(2004, 12, 7, 5, 751),  -- Sacks on the Beach: DL Gbaja-Biamila,Kabeer (GB)
+(2004, 12, 8, 6, 3001),  -- Crusaders: K Elam,Jason (DEN)
+(2004, 12, 10, 1, 1874);  -- Bug Stompers: DL Schobel,Aaron (BUF)
+
+-- Manually resolved ambiguous names (multiple players table matches for the
+-- same last/first name; resolved using the NFL team on the pick line, the
+-- player's real draft era, and/or retirement year):
+--   Smith,Steve (WR, CAR) -> playerid 1991, Steve Smith Sr, Carolina Panthers, drafted 2001 (not playerid 8108, a different Steve Smith who didn't enter the NFL until 2007)
