@@ -80,15 +80,14 @@ class ScoreCalculatorService
         $def = 0;
         $penalty = 0;
 
-        $illegalPenalty = $rules->int('illegal_lineup_penalty');
         foreach ($rows as $row) {
             if ($row['illegal']) {
-                $penalty += $illegalPenalty;
+                $penalty += $rules->int('illegal_lineup_penalty');
                 continue;
             }
 
             if ($row['kickoff'] === null && $row['pos'] !== 'HC') {
-                $penalty += $illegalPenalty;
+                $penalty += $rules->int('bye_week_lineup_penalty');
                 continue;
             }
 

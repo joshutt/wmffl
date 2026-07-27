@@ -32,6 +32,16 @@ class SeasonRuleServiceTest extends TestCase
         $this->assertSame(9, $rules->int('def_td'));
     }
 
+    public function testIllegalAndByeWeekPenaltiesAreIndependentlyConfigurable(): void
+    {
+        $row = (new Season())->setSeason(2023)->setScoringRules(['bye_week_lineup_penalty' => 1]);
+        $rules = $this->serviceReturning($row)->getScoringRules(2023);
+
+        $this->assertSame(1, $rules->int('bye_week_lineup_penalty'));
+        // illegal_lineup_penalty wasn't overridden, so it keeps the registry default
+        $this->assertSame(2, $rules->int('illegal_lineup_penalty'));
+    }
+
     public function testUnknownStoredKeysAreIgnored(): void
     {
         $row = (new Season())->setSeason(2020)->setScoringRules(['retired_key' => 99]);

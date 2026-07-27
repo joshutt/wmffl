@@ -31,7 +31,8 @@ final class ScoringRuleRegistry
 
     private const DEFINITIONS = [
         // General
-        'illegal_lineup_penalty' => ['group' => 'general', 'type' => 'int', 'default' => 2, 'label' => 'illegal activation penalty', 'help' => 'Team points deducted per illegal or non-playing activation'],
+        'illegal_lineup_penalty' => ['group' => 'general', 'type' => 'int', 'default' => 2, 'label' => 'illegal activation penalty', 'help' => 'Team points deducted per activation not on the roster'],
+        'bye_week_lineup_penalty' => ['group' => 'general', 'type' => 'int', 'default' => 2, 'label' => 'bye-week activation penalty', 'help' => 'Team points deducted per activation on an NFL bye week'],
         'spec_td'                => ['group' => 'general', 'type' => 'int', 'default' => 12, 'label' => 'special team touchdowns'],
         'two_pt'                 => ['group' => 'general', 'type' => 'int', 'default' => 2, 'label' => '2-pt conversions'],
 
