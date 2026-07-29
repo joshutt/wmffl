@@ -63,6 +63,14 @@ class Season
     #[ORM\Column(name: 'champ_percent', type: 'decimal', precision: 5, scale: 4, options: ['default' => '0.5000'])]
     private string $champPercent = '0.5000';
 
+    // Ballot: per-season rule-proposal pass/fail thresholds (were the
+    // hardcoded .67/.51 constants in legacy ballotcount.php).
+    #[ORM\Column(name: 'proposal_pass_threshold', type: 'decimal', precision: 5, scale: 4, options: ['default' => '0.5100'])]
+    private string $proposalPassThreshold = '0.5100';
+
+    #[ORM\Column(name: 'proposal_fail_threshold', type: 'decimal', precision: 5, scale: 4, options: ['default' => '0.5100'])]
+    private string $proposalFailThreshold = '0.5100';
+
     // Scoring
     #[ORM\Column(name: 'scoring_strategy', length: 32, options: ['default' => 'standard'])]
     private string $scoringStrategy = 'standard';
@@ -240,6 +248,28 @@ class Season
     public function setChampPercent(float $percent): static
     {
         $this->champPercent = number_format($percent, 4, '.', '');
+        return $this;
+    }
+
+    public function getProposalPassThreshold(): float
+    {
+        return (float) $this->proposalPassThreshold;
+    }
+
+    public function setProposalPassThreshold(float $threshold): static
+    {
+        $this->proposalPassThreshold = number_format($threshold, 4, '.', '');
+        return $this;
+    }
+
+    public function getProposalFailThreshold(): float
+    {
+        return (float) $this->proposalFailThreshold;
+    }
+
+    public function setProposalFailThreshold(float $threshold): static
+    {
+        $this->proposalFailThreshold = number_format($threshold, 4, '.', '');
         return $this;
     }
 

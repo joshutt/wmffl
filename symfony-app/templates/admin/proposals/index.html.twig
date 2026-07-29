@@ -1,0 +1,143 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Admin - Proposals{% endblock %}
+
+{% block admin_content %}
+<div class="d-flex justify-content-between align-items-center mt-2">
+    <h2>Rule Proposals
+        {% if pendingCount > 0 %}
+            <span class="badge badge-warning">{{ pendingCount }} pending</span>
+        {% endif %}
+    </h2>
+    <div class="text-center">
+        <a href="{{ path('admin_proposals_new') }}" class="btn btn-wmffl">New Proposal</a>
+    </div>
+</div>
+
+{% for season, issues in bySeason %}
+<h5 class="mt-4">{{ season }}</h5>
+<table class="table table-bordered table-sm table-hover align-middle">
+    <thead class="thead-dark">
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Sponsors</th>
+            <th>Status</th>
+            <th>Published</th>
+            <th>Ballot</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for issue in issues %}
+        <tr {% if not issue.published %}class="table-warning"{% endif %}>
+            <td>{{ issue.issueNum ?: '—' }}</td>
+            <td>{{ issue.issueName }}</td>
+            <td>
+                {%- for sponsor in issue.sponsors -%}
+                    {{ sponsor.user ? sponsor.user.name : '' }}{{ not loop.last ? ', ' : '' }}
+                {%- else -%}
+                    <span class="text-muted">—</span>
+                {%- endfor -%}
+            </td>
+            <td>{{ issue.status.label }}</td>
+            <td>
+                {% if issue.published %}
+                    <span class="badge badge-success">Published</span>
+                {% else %}
+                    <span class="badge badge-secondary">Pending</span>
+                {% endif %}
+            </td>
+            <td>
+                {%- if issue.status.value in ['Passed', 'Rejected'] and ballotTally[issue.id] is defined -%}
+                    {%- set t = ballotTally[issue.id] -%}
+                    <span title="For-Against-Abstain-No Vote">{{ t.for }}-{{ t.against }}-{{ t.abstain }}-{{ t.novote }}</span>
+                {%- elseif onBallot[issue.id] is defined -%}
+                    On ballot
+                {%- else -%}
+                    —
+                {%- endif -%}
+            </td>
+            <td class="text-nowrap">
+                <a href="{{ path('admin_proposals_edit', {id: issue.id}) }}" class="btn btn-sm btn-wmffl">Edit</a>
+                {% if not issue.published %}
+                <form method="post" action="{{ path('admin_proposals_approve', {id: issue.id}) }}" class="d-inline">
+                    <input type="hidden" name="_token" value="{{ csrf_token('admin_proposals') }}"/>
+                    <button type="submit" class="btn btn-sm btn-success">Approve</button>
+                </form>
+                {% elseif onBallot[issue.id] is not defined %}
+                <button type="button" class="btn btn-sm btn-outline-secondary"
+                        data-ballot-url="{{ path('admin_proposals_putonballot', {id: issue.id}) }}"
+                        data-issue-name="{{ issue.issueName }}"
+                        onclick="openBallotModal(this)">Put on Ballot</button>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <p class="text-muted mt-4">No proposals yet.</p>
+{% endfor %}
+
+{# ---- Put on Ballot modal ---- #}
+<div class="modal fade" id="ballotModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" id="ballotForm">
+                <input type="hidden" name="_token" value="{{ csrf_token('admin_proposals') }}"/>
+                <div class="modal-header">
+                    <h5 class="modal-title">Put on Ballot — <span id="ballotIssueName"></span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <input type="date" name="startDate" id="ballotStartDate" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Deadline (optional)</label>
+                        <input type="date" name="deadline" class="form-control">
+                    </div>
+                    <div class="mb-2">
+                        <div class="d-flex mb-1">
+                            <button type="button" class="btn btn-sm btn-outline-secondary mr-2" onclick="setAllTeams(true)">Select All</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="setAllTeams(false)">Deselect All</button>
+                        </div>
+                        <div style="max-height: 260px; overflow-y: auto; border: 1px solid #dee2e6; border-radius: 4px; padding: 8px;">
+                            {% for team in teams %}
+                            <div class="form-check">
+                                <input class="form-check-input team-check" type="checkbox"
+                                       name="teams[]" value="{{ team.id }}" id="team_{{ team.id }}" checked>
+                                <label class="form-check-label" for="team_{{ team.id }}">{{ team.name }}</label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-wmffl">Put on Ballot</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function openBallotModal(btn) {
+    document.getElementById('ballotForm').action = btn.dataset.ballotUrl;
+    document.getElementById('ballotIssueName').textContent = btn.dataset.issueName;
+    document.getElementById('ballotStartDate').value = new Date().toISOString().slice(0, 10);
+    document.querySelectorAll('.team-check').forEach(cb => cb.checked = true);
+    $('#ballotModal').modal('show');
+}
+function setAllTeams(checked) {
+    document.querySelectorAll('.team-check').forEach(cb => cb.checked = checked);
+}
+</script>
+{% endblock %}

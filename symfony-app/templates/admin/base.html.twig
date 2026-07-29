@@ -58,6 +58,10 @@
                class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') starts with 'admin_scores' %} active{% endif %}">
                 Reprocess Scores
             </a>
+            <a href="{{ path('admin_proposals') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') starts with 'admin_proposals' %} active{% endif %}">
+                Proposals
+            </a>
             <a href="{{ path('admin_ballot') }}"
                class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') starts with 'admin_ballot' %} active{% endif %}">
                 Vote Results

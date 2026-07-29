@@ -106,6 +106,24 @@
     </fieldset>
 
     <fieldset class="border rounded p-3 mb-3">
+        <legend class="h5">Rule Proposals (Ballot)</legend>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="proposalPassThreshold">Pass threshold</label>
+                <input type="number" step="any" min="0" max="1" class="form-control" id="proposalPassThreshold"
+                       name="proposalPassThreshold" value="{{ season.proposalPassThreshold }}">
+                <small class="form-text text-muted">Fraction of non-abstaining votes to pass (e.g. 0.51)</small>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="proposalFailThreshold">Fail threshold</label>
+                <input type="number" step="any" min="0" max="1" class="form-control" id="proposalFailThreshold"
+                       name="proposalFailThreshold" value="{{ season.proposalFailThreshold }}">
+                <small class="form-text text-muted">Fraction of non-abstaining rejections to fail</small>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset class="border rounded p-3 mb-3">
         <legend class="h5">Scoring</legend>
         <p class="text-muted mb-2">
             Leave a value blank to mean the category was not awarded that

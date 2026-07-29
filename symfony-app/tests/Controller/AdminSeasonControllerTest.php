@@ -67,11 +67,15 @@ class AdminSeasonControllerTest extends TestCase
             'scoringStrategy' => 'standard',
             'notes' => 'FG60 was 10 through 2023',
             'verified' => '1',
+            'proposalPassThreshold' => '0.67',
+            'proposalFailThreshold' => '0.51',
             'totalPts' => ['6' => '60'],
         ]), $this->auth(true), $repo, $this->em(), $conn);
 
         $this->assertSame(10, $season->getScoringRules()['k_fg60']);
         $this->assertSame(9, $season->getScoringRules()['def_td']);
+        $this->assertSame(0.67, $season->getProposalPassThreshold());
+        $this->assertSame(0.51, $season->getProposalFailThreshold());
         // Unposted categories are stored as null (not awarded)
         $this->assertNull($season->getScoringRules()['hc_tie']);
         $this->assertSame(50.0, $season->getEntryFee());

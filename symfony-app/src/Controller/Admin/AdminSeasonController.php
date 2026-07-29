@@ -148,6 +148,10 @@ class AdminSeasonController extends AbstractAdminController
         $row->setFinalPercent((float) $post->get('finalPercent', 0.25));
         $row->setChampPercent((float) $post->get('champPercent', 0.5));
 
+        // Ballot thresholds
+        $row->setProposalPassThreshold((float) $post->get('proposalPassThreshold', 0.51));
+        $row->setProposalFailThreshold((float) $post->get('proposalFailThreshold', 0.51));
+
         // Scoring: one input per registry key; blank = category not awarded
         $rules = [];
         foreach (ScoringRuleRegistry::definitions() as $key => $def) {

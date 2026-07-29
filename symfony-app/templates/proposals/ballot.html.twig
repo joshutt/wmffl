@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ballot - WMFFL{% endblock %}
+
+{% block content %}
+<div class="cat text-center">BALLOT</div>
+<div class="container pb-4">
+
+    {% if not isLoggedIn %}
+        <p class="mt-3 text-center"><b>You must be logged in to cast your votes.</b></p>
+    {% elseif items is empty %}
+        <p class="mt-3">There are no open issues for you to vote on right now. See the
+            <a href="{{ path('proposals_list') }}">proposals list</a>.</p>
+    {% else %}
+        <p class="mt-3">For each ballot item below, select your vote and press
+            <b>Vote</b>. You may change your vote any time before the ballot closes.
+            To review the issues, see the
+            <a href="{{ path('proposals_list') }}">proposals page</a>.</p>
+
+        <form action="{{ path('ballot_cast') }}" method="post">
+            <input type="hidden" name="_token" value="{{ csrf_token('ballot_cast') }}"/>
+
+            {% for item in items %}
+            {% set issue = item.issue %}
+            <div class="card m-3 p-2 bg-light">
+                <div class="card-header">
+                    <b>Proposal {{ issue.issueNum ?: issue.season }} - {{ issue.issueName }}</b>
+                </div>
+                <div class="card-body">
+                    {% if issue.description %}<p>{{ issue.description }}</p>{% endif %}
+                    <p><i>
+                        {%- if item.currentVote -%}
+                            Your current vote is to {{ item.currentLabel }} this proposal
+                        {%- else -%}
+                            You have not voted on this proposal
+                        {%- endif -%}
+                    </i></p>
+                    <p>
+                        <input type="radio" name="{{ issue.id }}" value="Accept"
+                               {% if item.currentVote == 'Accept' %}checked{% endif %}>
+                        {{ item.labels.accept }}
+                    </p>
+                    <p>
+                        <input type="radio" name="{{ issue.id }}" value="Reject"
+                               {% if item.currentVote == 'Reject' %}checked{% endif %}>
+                        {{ item.labels.reject }}
+                    </p>
+                    <p>
+                        <input type="radio" name="{{ issue.id }}" value="Abstain"
+                               {% if item.currentVote == 'Abstain' %}checked{% endif %}>
+                        {{ item.labels.abstain }}
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-wmffl">Vote</button>
+            </div>
+        </form>
+    {% endif %}
+</div>
+{% endblock %}
