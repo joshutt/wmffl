@@ -164,7 +164,7 @@ should be small enough to land as its own PR.
   `draftdate.php`, `common/processdraftdate.php`, and the 16
   per-season `processdraftdate.php` copies deleted, no redirects
   (only archival newsletter links pointed at them).
-- Season Rules foundation (pre-Phase-11/12, 2026-07-18,
+- Season Rules foundation (pre-Phase-14/15, 2026-07-18,
   `specs/2026-07-18-season-rules/`). Per-season league rules moved
   from hardcoded constants to a `seasons` table (`Season` entity):
   typed structure/finance columns + `scoring_rules` JSON +
@@ -174,7 +174,7 @@ should be small enough to land as its own PR.
   parameter once (drives DTOs, the admin form and scorer labels);
   `SeasonRuleService` (cached, missing-row-safe) feeds
   `PlayerScorerService` — the single scoring engine, emitting labeled
-  `ScoreLine[]` for Phase 13 box scores, golden-tested equivalent to
+  `ScoreLine[]` for Phase 16 box scores, golden-tested equivalent to
   legacy `scoring.php` over all 451k stat rows (and fixing the old
   Symfony recalc's OL strict-compare bug). ScoreCalculatorService,
   TeamMoneyService (constants deleted), the six `week<=14` hardcodes
@@ -204,46 +204,210 @@ should be small enough to land as its own PR.
   via a forced error producing a new dated file without touching the
   legacy file; prod write-access/rotation verification is Josh's
   post-deploy step.
+- Rule proposals (Phase 10.6 complete, 2026-07-27,
+  `specs/2026-07-27-rule-proposals-issues/`, PR #54): `issues` redesigned
+  and the full member/admin/ballot UI built. The original plan was
+  data-layer-only prep for the Phase 17 `rules` item; the delivered scope
+  went further, replacing the hand-written `proposals{year}.php` pages
+  outright. Migration `Version20260727020000`: widened `IssueName`, added
+  `Rationale`/`RuleChangeText`/`Published` + a `Status` enum
+  (Open/Passed/Rejected/Withdrawn, backfilled from the legacy `Result`),
+  dropped legacy `Sponsor`/`Result`; new `issue_sponsors` ordered
+  co-sponsor join; `seasons` proposal pass/fail thresholds (.67 pre-2022,
+  .51 from 2022); `ballot` FK integrity. Member: `/rules/proposals`
+  season-by-season list (CommonMark-rendered), `/rules/proposals/submit`
+  (pending issue + commissioner email), `/rules/ballot` voting with
+  per-season thresholds (injection-safe writes). Admin: `/admin/proposals`
+  CRUD/approve/withdraw/put-on-ballot with in-place co-sponsor
+  reconciliation (fixes an `IssueSponsor` identity-collision on edit) and a
+  For-Against-Abstain-NoVote tally column for decided proposals;
+  `AdminBallotController` reduced to a read-only tally; season-threshold
+  editing on `/admin/seasons`. `MarkdownService` (CommonMark,
+  `html_input => escape`) + `markdown_to_html` Twig filter;
+  `ProposalPageParser` preserves `<br>` line breaks and `&nbsp;`
+  indentation and strips block-spanning italics. Historical backfill:
+  `app:backfill-proposals` parses the archived pages into idempotent SQL
+  (38 inserts / 149 enriched / 0 unresolved / 0 conflicts); the 27
+  `proposals{year}.php` pages moved to `archive/proposals/` (the command's
+  default input); legacy `propose*`/`ballot*` stubs deleted and
+  301-redirected (`LegacyRulesRedirectController`). Deploy: run migration
+  `Version20260727020000`, then apply
+  `scripts/database/migration/2026-07-27-issues-backfill.sql` (regenerate
+  per-env recommended), then confirm `MAILER_DSN` in prod `.env.local`.
 
-## Phase 10.6 — Rule proposals: `issues` table redesign
+## Phase 11 — Small fixes
 
-Current state (found 2026-07-25 comparing `football/rules/proposals{year}.php`
-against the `issues` table): `issues` (`IssueID, IssueNum, IssueName
-varchar(40), Sponsor int, Description tinytext, Season, Deadline, StartDate,
-Result varchar(10)`) backs the ballot/voting flow but was never rich enough
-to reproduce what the legacy pages actually display. `Sponsor` is a single
-int and can't hold co-sponsors (e.g. "Tom Marsh and Josh Utterback",
-"Tom Marsh and Mike Atlas"); `Description` is a short paraphrase, not the
-full rationale prose shown on the page; there's no column at all for the
-proposed rule-change text (today only a hand-written `<blockquote><i>`
-block, sometimes multi-level); `Result` is a free `varchar(10)` with
-inconsistent historical values (`PASS`/`Passed`/`REJECT`/`REJECTED`/a stray
-typo). This phase is forward-looking only — no historical proposal data
-migration.
+A catch-all phase for small, self-contained fixes and polish that don't
+warrant their own feature phase. Batched here so each can land as a small
+PR (or a few together) rather than blocking on a larger effort.
 
-1. Migration: widen `IssueName` to `varchar(120)`; add `Rationale text`
-   (full prose, alongside the existing short `Description`); add
-   `RuleChangeText text` (markdown); replace `Result varchar(10)` with
-   `Status enum('Open','Passed','Rejected','Withdrawn')`; drop `Sponsor int`
-2. New `issue_sponsors` table (`IssueID` FK, `UserID` FK, `SortOrder`)
-   replacing the single `Sponsor` column — supports any number of
-   co-sponsors, ordered for display
-3. `league/commonmark` to render `RuleChangeText` (and `Rationale` if it
-   also ends up markdown) to HTML — `html_input => escape` since proposal
-   authors aren't admin-only; small service + Twig filter
-   (`|markdown_to_html|raw`)
-4. `ballot` table stays as-is structurally (vote tallies stay derived via
-   `GROUP BY Vote`, not duplicated into `Status`), but currently has no FK
-   constraints at all (`PRIMARY KEY (IssueID, TeamID)` only) — add
-   `FK_ballot_issue` (`IssueID` → `issues.IssueID`) and `FK_ballot_team`
-   (`TeamID` → `team.TeamID`)
-5. Explicitly out of scope: cross-reference/supersession links between
-   issues, and role-label sponsors (e.g. "Commissioner")
-6. The actual Symfony controller/templates for submitting and displaying
-   proposals are Phase 14's `rules` item — this phase is data-layer prep
-   for that work, not a UI port
+1. **Proposal Markdown authoring — line breaks and indentation.** New
+   proposals typed into the admin/member Markdown fields (`Rationale`,
+   `RuleChangeText`) swallow single newlines and drop leading-space
+   indentation, so they don't match the imported historical proposals
+   (whose stored Markdown carries hard breaks and `&nbsp;` runs). Fix
+   `MarkdownService` so authored text renders the way it's typed:
+   - set the CommonMark renderer option `soft_break => "<br>\n"` so every
+     newline becomes a line break (a lone `\n` is otherwise a soft break
+     the browser collapses to a space);
+   - normalize leading whitespace to `&nbsp;` before rendering (each space
+     → one `&nbsp;`, tab → four) so typed indentation survives — CommonMark
+     decodes `&nbsp;` to U+00A0, which isn't collapsed, and this also
+     sidesteps the 4-leading-space indented-code-block trap.
+   Update the submit-form live-preview JS to match the server rendering,
+   add tests, and confirm the imported 2025.1 content still renders
+   identically. Blast radius is just the two proposal fields —
+   `MarkdownService` renders nothing else.
 
-## Phase 11 — Activations UI modernization
+2. **Proposal vs. ballot field visibility.** The two views currently show
+   the same fields; they should be split so each shows only what's
+   relevant to its purpose:
+   - Proposals page (`templates/proposals/list.html.twig`): show
+     `Rationale`, not `Description` (the short description) — drop the
+     `{% if issue.description %}<p>{{ issue.description }}</p>{% endif %}`
+     block, keep the `rationale` and `ruleChangeText` blocks as-is.
+   - Ballot page (`templates/proposals/ballot.html.twig`): show only
+     `Description` (the short description) — drop `Rationale` and
+     `RuleChangeText` entirely from the ballot card (ballot currently
+     already omits rationale/rule-change-text, so only confirm this and
+     leave `issue.description` as the sole summary shown per item).
+
+3. **Article cards — comment count indicator.** The article card partial
+   (`templates/article/_card.html.twig`, used by `article/list.html.twig`
+   and `home/index.html.twig`) shows title/date/author only, no hint of
+   discussion activity. `Comment` (`src/Entity/Comment.php`) has a plain
+   `article_id` int column, not a Doctrine relation, and there's no
+   existing count lookup — add one:
+   - add a `countByArticle(int $articleId)` (or a batch
+     `countByArticleIds(array $ids)` to avoid N+1 across a page of cards)
+     to `CommentRepository`, counting only `active` comments;
+   - thread the count(s) through `ArticleController::list` and
+     `HomeController` into the `_card.html.twig` include (card currently
+     receives just `article`; extend the include context, e.g.
+     `{article: a, commentCount: counts[a.id]}`);
+   - show a small comment-count badge/icon on the card (e.g. "💬 12" or a
+     Bootstrap badge), matching existing card styling.
+
+4. **Login form alongside "must be logged in" messages.** A global login
+   modal (`#loginModal`, `templates/base.html.twig:88-117`) already exists
+   on every page and is opened by a navbar "Log In" button
+   (`base.html.twig:83`), but the following gated pages show a plain
+   logged-out message with no way to log in right there — the user has to
+   notice and click the separate navbar button:
+   - `templates/transactions/protections_saved.html.twig:12`
+   - `templates/transactions/protections.html.twig:10`
+   - `templates/transactions/ir.html.twig:16`
+   - `templates/transactions/list.html.twig:12`
+   - `templates/transactions/confirm.html.twig:11`
+   - `templates/draftdate/index.html.twig:10`
+   - `templates/proposals/ballot.html.twig:10`
+   - `templates/proposals/submit.html.twig:17`
+   - `templates/trades/index.html.twig:12`
+   - `templates/article/publish.html.twig:16`
+   Add a "Log In" button next to each message that opens the existing
+   modal (`data-toggle="modal" data-target="#loginModal"`, same as the
+   navbar button) rather than duplicating the form — since the wording and
+   markup are near-identical across all ten, factor them into one shared
+   Twig partial (e.g. `_login_required.html.twig`) taking the message text,
+   and swap each site to include it. Also check
+   `ArticleController::addComment` (`src/Controller/ArticleController.php:83`),
+   which flashes "You must be logged in to comment" — the redirect target
+   still has the navbar modal available, but confirm the flash is rendered
+   somewhere with a visible trigger, or add one.
+
+## Phase 12 — Admin tooling
+
+Two self-contained admin-only tools, split out of Phase 11 since they're
+scoped work in their own right rather than one-line polish.
+
+1. **Quicklinks admin — drag-and-drop ordering.** The admin quicklinks
+   index (`templates/admin/quicklinks/index.html.twig`) lists links with a
+   plain `Order` column; reordering today means opening each link's edit
+   form and hand-editing the `sortOrder` number input
+   (`templates/admin/quicklinks/edit.html.twig`) until the list order
+   changes — tedious and error-prone with more than a couple of links.
+   Replace with drag-and-drop reordering on the index page:
+   - make the table rows draggable (e.g. SortableJS, consistent with any
+     drag-and-drop library already used elsewhere in the admin UI, or a
+     small vanilla HTML5 drag-and-drop handler if none exists);
+   - on drop, POST the new ordering to a new route (e.g.
+     `admin_quicklinks_reorder`) that accepts an ordered list of link IDs
+     and rewrites `sortOrder` sequentially in `AdminQuickLinkController`;
+   - keep the manual `sortOrder` field on the edit form as a fallback (or
+     drop it if drag-and-drop fully replaces it — decide during
+     implementation), but the index page becomes the primary way to
+     reorder.
+
+2. **Admin config editor.** `App\Entity\Config` / `ConfigRepository`
+   (`symfony-app/src/Entity/Config.php`) map the existing `config` table
+   (flat `key` varchar PK / `value` varchar, 54 rows today) but nothing in
+   the Symfony app reads or writes it yet — it's untouched scaffolding.
+   Build a generic admin CRUD tool for it, following the
+   `AdminQuickLinkController` pattern (`src/Controller/Admin/AdminQuickLinkController.php`,
+   `templates/admin/quicklinks/`):
+   - `AdminConfigController` under `/admin/config`: index (table of all
+     key/value pairs, `requireCommissioner` gate like other admin
+     controllers), edit (change a value), new (add a key), delete;
+   - note the table currently mixes true settings (`draft.hangout.url`,
+     `draft.clock.*`, `protections.deadline`, `draft.start`) with
+     per-team/per-user runtime state written by the draft flow
+     (`draft.login.<userid>`, `draft.team.<teamid>`,
+     `draft.order.team.<teamid>`, `draft.order.word.<teamid>`) — the tool
+     itself doesn't need to distinguish these (plain generic editor is
+     fine), but don't build any caching/eager-load assumption that treats
+     the table as small/static, since the draft-state rows churn.
+
+## Phase 13 — Symfony-appropriate error handling
+
+Legacy fallback (`symfony-app/public/index.php`, `LegacyBridge.php`) currently
+makes error behavior inconsistent and, in one common case, actively worse than
+either side alone. `index.php` decides whether to fall back to legacy purely
+by checking `$response->isNotFound()` (status 404) — it can't tell a genuinely
+unrouted URL apart from a deliberate `$this->createNotFoundException(...)`
+thrown by a matched Symfony controller (there are ~20 of these today, e.g.
+`TeamController.php:131,178`, `PlayerProfileController.php:56`,
+`ArticleController.php`, `AdminSeasonController.php`,
+`AdminProposalController.php`). Both land in `LegacyBridge`, which then tries
+to map the URL to a file under `/football/`; when the route is Symfony-only
+(a bad id, not a legacy page), `LegacyBridge::getLegacyScript()` throws
+`"Unhandled legacy mapping for ..."` (`LegacyBridge.php:104`) — an uncaught
+exception raised *after* the Symfony kernel has already finished handling the
+request, so it bypasses Symfony's exception handling, the branded error page,
+and Monolog entirely. Recorded as a known site-wide gotcha since the Articles
+migration; this phase fixes it instead of carrying it to the Final phase.
+
+1. **Stop routing controller-thrown 404s into LegacyBridge.** Only a request
+   where Symfony's router itself found no matching route should ever reach
+   `LegacyBridge` — a 404 thrown from inside a matched controller
+   (`createNotFoundException` on a bad id) should render Symfony's own 404
+   response directly. Distinguish the two in `public/index.php` (e.g. check
+   whether the request carries a matched `_route` attribute) rather than
+   branching on status code alone.
+2. **Custom branded error templates.** Add
+   `templates/bundles/TwigBundle/Exception/error.html.twig` (plus
+   `error404.html.twig`, `error403.html.twig` as needed) so genuine 404s,
+   403s (`createAccessDeniedException` in `TradeController.php`,
+   `RosterMoveController.php`), and 500s get a page matching site styling
+   instead of Symfony's generic default — currently shown as-is since no
+   override exists.
+3. **Close the prod logging gap for 4xx.** `config/packages/monolog.yaml`'s
+   `when@prod` `main` handler floors at `level: error`; Symfony logs most
+   4xx client errors below that, so real 401/403/404s are invisible in
+   `logs/wmffl.log` today. Decide what's worth capturing (e.g. a lower floor
+   or a dedicated 4xx channel) without letting routine bot/crawler noise
+   flood the file.
+4. **Harden the legacy `require` in `LegacyBridge::handleRequest`.** Wrap
+   `require $legacyScriptFilename;` (`LegacyBridge.php:158`) so a fatal error
+   or uncaught exception from legacy code gets logged through Monolog (not
+   just the unrotated `error_log()` channel) and shown the same branded
+   error page as case 2, rather than a raw, unstyled PHP error dump at
+   whatever status code PHP happens to send.
+5. Add tests covering: a bad-id 404 on a real route renders the branded 404
+   directly (no `LegacyBridge` mapping attempt), a truly unrouted legacy URL
+   still falls through and serves correctly, and a forced legacy fatal error
+   is captured by Monolog.
+
+## Phase 14 — Activations UI modernization
 
 Legacy: `football/activate/submitactivations.php`, `processActivations.php`,
 `currentactivations.php`, `activations.php`/`index.php`,
@@ -251,7 +415,7 @@ Legacy: `football/activate/submitactivations.php`, `processActivations.php`,
 starting/reserve, see every team's current lineup for the week).
 Explicitly **not** in scope: `currentscore.php`/`scoreFunctions.php`, the
 live/historical box-score rendering that also lives in this directory —
-that's Phase 13's Boxscores redesign; this phase only touches the
+that's Phase 16's Boxscores redesign; this phase only touches the
 "set your lineup" and "see everyone's current lineup" pages.
 
 1. Read side: port the roster/opponent/injury/lock query
@@ -289,9 +453,9 @@ that's Phase 13's Boxscores redesign; this phase only touches the
 7. `football/activate/` deleted for everything covered here, with 301s
    (`LegacyActivationRedirectController`) from `activations.php`,
    `submitactivations.php`, `processActivations.php`; `currentscore.php`
-   and `scoreFunctions.php` stay on the LegacyBridge until Phase 13.
+   and `scoreFunctions.php` stay on the LegacyBridge until Phase 16.
 
-## Phase 12 — History (per-season)
+## Phase 15 — History (per-season)
 
 Legacy: `football/history/{year}Season.php` (1992–2017, frozen flat
 pages) and `football/history/{year}Season/` (1992–2026, directories —
@@ -308,14 +472,14 @@ snapshots, and the old-season-only one-offs (`awards`, `newsletters`,
 `breakdown`, `championpreview`, `playoffexplain`/`preview`/`scenewk*`,
 `summary*.inc`, `weeklyscores`, `weeksummary`). Boxscores
 (`{year}Season/boxscores.php`, 2005/2006 only) are explicitly **not**
-in scope — that's Phase 13.
+in scope — that's Phase 16.
 
 1. Design a data model for the per-season hub content (champion,
    runner-up, playoff scores) currently hardcoded per file
 2. A single generic Symfony route/template driven by that data,
    replacing the 30+ individual season files and directories
 
-## Phase 13 — Boxscores redesign
+## Phase 16 — Boxscores redesign
 
 Legacy: the live box score page is `football/activate/currentscore.php`
 (+ `scoreFunctions.php`, `base/scoring.php`) — addressed by
@@ -340,7 +504,7 @@ two different experiences.
    final-result only
 2. Live scoreboard (separate route, e.g. `/scoreboard`): the in-progress
    current-week experience — live scoring, time remaining, reserves —
-   ported from `currentscore.php` as its own page. Phase 13 ports it
+   ported from `currentscore.php` as its own page. Phase 16 ports it
    as-is to establish the split; its own redesign (auto-refresh, richer
    game-day experience) is deferred to the Unscheduled section
 3. Week scoreboard on the box score page: the other games from the same
@@ -355,12 +519,12 @@ two different experiences.
    game state: completed `teamid`+`season`+`week` combos map to the
    gameid route, current-week to the live scoreboard; update the three
    deep-linking entry points. The rest of `football/activate/` (lineup
-   submission flow) was carved out separately as Phase 11
+   submission flow) was carved out separately as Phase 14
 6. Phase 7 table renames are done (final `activations`/`players`/
    `injuries` names in place); data coverage varies by era — degrade
    gracefully for seasons missing stat lines
 
-## Phase 14 — Remaining odds and ends
+## Phase 17 — Remaining odds and ends
 
 Legacy: `login/`, `forum/`, `rules/`, `info.php`, `scores.php`
 
@@ -368,7 +532,7 @@ Legacy: `login/`, `forum/`, `rules/`, `info.php`, `scores.php`
 2. Static/low-traffic pages (rules, info, forum)
 3. Scores
 
-## Phase 15 — Scripts: legacy → Symfony console commands
+## Phase 18 — Scripts: legacy → Symfony console commands
 
 Legacy: `/scripts/` — standalone PHP invoked directly (`php scripts/foo.php`,
 presumably via cron), each pulling in `base.php` (raw `mysqli_connect`
@@ -407,7 +571,7 @@ porting something run once and discarded.
 
 ## Unscheduled — Live scoreboard redesign
 
-Phase 13 splits the live scoreboard out of `currentscore.php` onto its own
+Phase 16 splits the live scoreboard out of `currentscore.php` onto its own
 route as a faithful port. Its actual redesign — a richer game-day
 experience (auto-refresh/streaming scores, in-progress stat lines,
 whatever else game day wants) — happens here, decoupled from the
