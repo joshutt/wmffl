@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Submit a Rule Proposal - WMFFL{% endblock %}
+
+{% block content %}
+<div class="cat text-center">SUBMIT A RULE PROPOSAL</div>
+<div class="container pb-4">
+
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger mt-3">{{ message }}</div>
+    {% endfor %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success mt-3">{{ message }}</div>
+    {% endfor %}
+
+    {% if not isLoggedIn %}
+        <p class="mt-3">You must be logged in to submit rule proposals.</p>
+    {% else %}
+        <p class="mt-3">Propose a rule change year round. Your submission is sent to the
+            commissioner for review before it appears on the proposals list and ballot.
+            The <b>rationale</b> and <b>rule change</b> fields accept
+            <a href="https://commonmark.org/help/" target="_blank" rel="noopener">Markdown</a>.</p>
+
+        <form action="{{ path('proposals_submit') }}" method="post" id="proposalForm">
+            <input type="hidden" name="_token" value="{{ csrf_token('proposal_submit') }}"/>
+
+            <div class="mb-3">
+                <label for="name" class="form-label"><b>Proposal Name</b></label>
+                <input type="text" class="form-control" id="name" name="name"
+                       maxlength="120" value="{{ form.name }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label"><b>Short Description</b></label>
+                <textarea class="form-control" id="description" name="description"
+                          rows="3">{{ form.description }}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="rationale" class="form-label"><b>Rationale</b> (Markdown)</label>
+                <textarea class="form-control" id="rationale" name="rationale"
+                          rows="5" oninput="renderPreview()">{{ form.rationale }}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="ruleChange" class="form-label"><b>Proposed Rule Change</b> (Markdown)</label>
+                <textarea class="form-control" id="ruleChange" name="ruleChange"
+                          rows="5" oninput="renderPreview()">{{ form.ruleChange }}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label"><b>Preview</b></label>
+                <div id="preview" class="border rounded p-2 bg-light" style="min-height: 3rem;"></div>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-wmffl">Submit Proposal</button>
+            </div>
+        </form>
+
+        {# A lightweight client-side Markdown preview (bold/italic/links/
+           blockquotes/lists). The server re-renders authoritatively with
+           CommonMark and HTML escaping on display. #}
+        <script>
+        function escapeHtml(s) {
+            return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+        function miniMarkdown(src) {
+            var out = escapeHtml(src);
+            out = out.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+            out = out.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+            out = out.replace(/\[([^\]]+)\]\((https?:[^)]+)\)/g, '<a href="$2">$1</a>');
+            var lines = out.split('\n').map(function (l) {
+                if (/^\s*&gt;\s?/.test(l)) return '<blockquote>' + l.replace(/^\s*&gt;\s?/, '') + '</blockquote>';
+                if (/^\s*\d+\.\s+/.test(l)) return '<li>' + l.replace(/^\s*\d+\.\s+/, '') + '</li>';
+                if (/^\s*[-*]\s+/.test(l)) return '<li>' + l.replace(/^\s*[-*]\s+/, '') + '</li>';
+                return l ? '<p>' + l + '</p>' : '';
+            });
+            return lines.join('');
+        }
+        function renderPreview() {
+            var r = document.getElementById('rationale').value;
+            var c = document.getElementById('ruleChange').value;
+            var html = miniMarkdown(r);
+            if (c.trim()) html += '<blockquote class="font-italic">' + miniMarkdown(c) + '</blockquote>';
+            document.getElementById('preview').innerHTML = html;
+        }
+        renderPreview();
+        </script>
+    {% endif %}
+</div>
+{% endblock %}

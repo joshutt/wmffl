@@ -76,4 +76,20 @@ class SeasonRuleService
     {
         return $this->getSeason($season)->getMaxActivePlayers();
     }
+
+    /**
+     * The ballot pass threshold (fraction of non-abstaining votes needed
+     * to pass) for the given season. Legacy hardcoded .67; the league
+     * lowered it to .51 in 2022.
+     */
+    public function getProposalPassThreshold(int $season): float
+    {
+        return $this->getSeason($season)->getProposalPassThreshold();
+    }
+
+    /** The ballot fail threshold for the given season (legacy .51). */
+    public function getProposalFailThreshold(int $season): float
+    {
+        return $this->getSeason($season)->getProposalFailThreshold();
+    }
 }

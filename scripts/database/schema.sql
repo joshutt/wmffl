@@ -70,7 +70,10 @@ CREATE TABLE `ballot` (
   `IssueID` int(11) NOT NULL DEFAULT 0,
   `Result` tinyint(4) DEFAULT NULL,
   `Vote` enum('Accept','Reject','Abstain','No Vote') DEFAULT 'No Vote',
-  PRIMARY KEY (`IssueID`,`TeamID`)
+  PRIMARY KEY (`IssueID`,`TeamID`),
+  KEY `FK_ballot_team` (`TeamID`),
+  CONSTRAINT `FK_ballot_issue` FOREIGN KEY (`IssueID`) REFERENCES `issues` (`IssueID`),
+  CONSTRAINT `FK_ballot_team` FOREIGN KEY (`TeamID`) REFERENCES `team` (`TeamID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -225,7 +228,7 @@ CREATE TABLE `draftpicks` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `Season` (`Season`,`Round`,`Pick`),
   UNIQUE KEY `Season_2` (`Season`,`playerid`)
-) ENGINE=InnoDB AUTO_INCREMENT=4297 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5167 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -417,6 +420,24 @@ CREATE TABLE `ir` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `issue_sponsors`
+--
+
+DROP TABLE IF EXISTS `issue_sponsors`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `issue_sponsors` (
+  `IssueID` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL,
+  `SortOrder` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`IssueID`,`UserID`),
+  KEY `IDX_issue_sponsors_user` (`UserID`),
+  CONSTRAINT `FK_issue_sponsors_issue` FOREIGN KEY (`IssueID`) REFERENCES `issues` (`IssueID`) ON DELETE CASCADE,
+  CONSTRAINT `FK_issue_sponsors_user` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `issues`
 --
 
@@ -426,16 +447,18 @@ DROP TABLE IF EXISTS `issues`;
 CREATE TABLE `issues` (
   `IssueID` int(11) NOT NULL AUTO_INCREMENT,
   `IssueNum` varchar(10) NOT NULL DEFAULT '',
-  `IssueName` varchar(40) NOT NULL,
-  `Sponsor` int(11) NOT NULL DEFAULT 0,
+  `IssueName` varchar(120) NOT NULL,
   `Description` tinytext DEFAULT NULL,
   `Season` year(4) NOT NULL DEFAULT 0000,
   `Deadline` date DEFAULT NULL,
   `StartDate` date DEFAULT NULL,
-  `Result` varchar(10) DEFAULT NULL,
+  `Rationale` text DEFAULT NULL,
+  `RuleChangeText` text DEFAULT NULL,
+  `Published` tinyint(1) NOT NULL DEFAULT 0,
+  `Status` enum('Open','Passed','Rejected','Withdrawn') NOT NULL DEFAULT 'Open',
   PRIMARY KEY (`IssueID`),
   KEY `IssueID` (`IssueID`,`IssueNum`)
-) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=176 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -821,6 +844,25 @@ CREATE TABLE `protections` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `quicklinks`
+--
+
+DROP TABLE IF EXISTS `quicklinks`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `quicklinks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `label` varchar(100) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT 1,
+  `sort_order` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `rankedvote`
 --
 
@@ -900,6 +942,39 @@ CREATE TABLE `season_flags` (
   KEY `season_flags_team_TeamID_fk` (`teamid`),
   CONSTRAINT `season_flags_team_TeamID_fk` FOREIGN KEY (`teamid`) REFERENCES `team` (`TeamID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `seasons`
+--
+
+DROP TABLE IF EXISTS `seasons`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `seasons` (
+  `season` int(11) NOT NULL,
+  `regular_season_weeks` int(11) NOT NULL DEFAULT 14,
+  `total_weeks` int(11) NOT NULL DEFAULT 16,
+  `max_active_players` int(11) NOT NULL DEFAULT 25,
+  `num_of_games` int(11) NOT NULL DEFAULT 84,
+  `entry_fee` decimal(6,2) NOT NULL DEFAULT 75.00,
+  `illegal_activation_fine` decimal(5,2) NOT NULL DEFAULT 5.00,
+  `bye_week_activation_fine` decimal(5,2) NOT NULL DEFAULT 1.00,
+  `extra_transaction_fine` decimal(5,2) NOT NULL DEFAULT 1.00,
+  `win_percent` decimal(5,4) NOT NULL DEFAULT 0.2500,
+  `post_percent` decimal(5,4) NOT NULL DEFAULT 0.5000,
+  `div_percent` decimal(5,4) NOT NULL DEFAULT 0.0500,
+  `playoff_percent` decimal(5,4) NOT NULL DEFAULT 0.0500,
+  `final_percent` decimal(5,4) NOT NULL DEFAULT 0.2500,
+  `champ_percent` decimal(5,4) NOT NULL DEFAULT 0.5000,
+  `scoring_strategy` varchar(32) NOT NULL DEFAULT 'standard',
+  `scoring_rules` longtext NOT NULL,
+  `verified` tinyint(1) NOT NULL DEFAULT 0,
+  `notes` text DEFAULT NULL,
+  `proposal_pass_threshold` decimal(5,4) NOT NULL DEFAULT 0.5100,
+  `proposal_fail_threshold` decimal(5,4) NOT NULL DEFAULT 0.5100,
+  PRIMARY KEY (`season`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1231,4 +1306,4 @@ CREATE TABLE `years` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-07-14 20:56:59
+-- Dump completed

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votes Cast - WMFFL{% endblock %}
+
+{% block content %}
+<div class="cat text-center">VOTES CAST</div>
+<div class="container pb-4">
+    <p class="mt-3">Your votes were received. Below is a record of how you voted.
+        You may change your vote any time before the ballot closes on the
+        <a href="{{ path('ballot') }}">Ballot</a>.</p>
+
+    {% if cast is empty %}
+        <p class="text-muted">No votes were recorded.</p>
+    {% else %}
+        <ul>
+            {% for entry in cast %}
+                <li>{{ entry.num }} - {{ entry.name }} - {{ entry.label }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+{% endblock %}
