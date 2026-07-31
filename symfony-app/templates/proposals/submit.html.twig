@@ -65,8 +65,18 @@
         function escapeHtml(s) {
             return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
         }
+        function preserveIndentation(s) {
+            return s.split('\n').map(function (l) {
+                return l.replace(/^[ \t]+/, function (leading) {
+                    return leading.split('').map(function (ch) {
+                        return ch === '\t' ? '&nbsp;&nbsp;&nbsp;&nbsp;' : '&nbsp;';
+                    }).join('');
+                });
+            }).join('\n');
+        }
         function miniMarkdown(src) {
             var out = escapeHtml(src);
+            out = preserveIndentation(out);
             out = out.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
             out = out.replace(/\*([^*]+)\*/g, '<em>$1</em>');
             out = out.replace(/\[([^\]]+)\]\((https?:[^)]+)\)/g, '<a href="$2">$1</a>');
