@@ -91,6 +91,34 @@ class AdminQuickLinkController extends AbstractAdminController
         return $this->render('admin/quicklinks/edit.html.twig', ['link' => $link]);
     }
 
+    #[Route('/reorder', name: 'admin_quicklinks_reorder', methods: ['POST'])]
+    public function reorder(
+        Request $request,
+        AuthenticationService $auth,
+        QuickLinkRepository $quickLinks,
+        EntityManagerInterface $em
+    ): Response {
+        if ($redirect = $this->requireCommissioner($auth)) {
+            return $redirect;
+        }
+        $this->assertCsrfToken($request, 'admin_quicklink');
+
+        $byId = [];
+        foreach ($quickLinks->findAllOrdered() as $link) {
+            $byId[$link->getId()] = $link;
+        }
+
+        $order = 1;
+        foreach ($request->getPayload()->all('ids') as $id) {
+            if (isset($byId[(int) $id])) {
+                $byId[(int) $id]->setSortOrder($order++);
+            }
+        }
+        $em->flush();
+
+        return new Response('', 204);
+    }
+
     #[Route('/{id}/toggle', name: 'admin_quicklinks_toggle', requirements: ['id' => '\d+'], methods: ['POST'])]
     public function toggle(
         int $id,
@@ -175,7 +203,6 @@ class AdminQuickLinkController extends AbstractAdminController
         $link->setStartDate($startDate);
         $link->setEndDate($endDate);
         $link->setActive($request->request->getBoolean('active'));
-        $link->setSortOrder((int) $request->request->get('sortOrder', 0));
 
         return true;
     }

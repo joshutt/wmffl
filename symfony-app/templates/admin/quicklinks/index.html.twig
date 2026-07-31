@@ -2,17 +2,23 @@
 
 {% block title %}Admin - Quicklinks{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+{% endblock %}
+
 {% block admin_content %}
 <h2 class="mt-2">Homepage Quicklinks</h2>
 
 <p class="text-muted">Links shown in the "Other Links" box on the homepage.
 A link appears when it is active and today falls inside its date window
-(blank dates are open-ended). Update seasonal URLs each year.</p>
+(blank dates are open-ended). Update seasonal URLs each year. Drag rows by
+the <strong>::</strong> handle to reorder.</p>
 
 <table class="table table-sm table-striped table-bordered">
     <thead class="thead-dark">
         <tr>
-            <th>Order</th>
+            <th></th>
             <th>Label</th>
             <th>URL</th>
             <th>Window</th>
@@ -21,10 +27,11 @@ A link appears when it is active and today falls inside its date window
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="quicklinks-body" data-reorder-url="{{ path('admin_quicklinks_reorder') }}"
+           data-csrf-token="{{ csrf_token('admin_quicklink') }}">
         {% for link in links %}
-        <tr>
-            <td>{{ link.sortOrder }}</td>
+        <tr data-id="{{ link.id }}">
+            <td class="text-muted" style="cursor: grab;">::</td>
             <td>{{ link.label }}</td>
             <td><a href="{{ link.url }}">{{ link.url }}</a></td>
             <td>
@@ -59,4 +66,29 @@ A link appears when it is active and today falls inside its date window
 <div class="text-center my-2">
     <a class="btn btn-wmffl" href="{{ path('admin_quicklinks_new') }}">Add Link</a>
 </div>
+
+<script>
+    (function () {
+        var body = document.getElementById('quicklinks-body');
+        if (!body || typeof Sortable === 'undefined') {
+            return;
+        }
+        Sortable.create(body, {
+            handle: 'td:first-child',
+            animation: 150,
+            onEnd: function () {
+                var ids = Array.prototype.map.call(body.querySelectorAll('tr[data-id]'), function (row) {
+                    return row.dataset.id;
+                });
+                fetch(body.dataset.reorderUrl, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({_token: body.dataset.csrfToken, ids: ids})
+                }).catch(function () {
+                    alert('Could not save the new order — reload and try again.');
+                });
+            }
+        });
+    })();
+</script>
 {% endblock %}

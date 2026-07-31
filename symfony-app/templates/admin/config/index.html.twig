@@ -1,0 +1,45 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Admin - Config{% endblock %}
+
+{% block admin_content %}
+<h2 class="mt-2">Config</h2>
+
+<p class="text-muted">Raw key/value rows from the <code>config</code> table.
+This includes real settings (e.g. <code>protections.deadline</code>) as well
+as per-team/per-user draft-runtime state written by the draft flow
+(<code>draft.login.*</code>, <code>draft.team.*</code>, ...) — edit with
+care.</p>
+
+<table class="table table-sm table-striped table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>Key</th>
+            <th>Value</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for config in configs %}
+        <tr>
+            <td>{{ config.name }}</td>
+            <td>{{ config.value }}</td>
+            <td class="text-nowrap">
+                <a class="btn btn-sm btn-wmffl" href="{{ path('admin_config_edit', {key: config.name}) }}">Edit</a>
+                <form class="d-inline" method="post" action="{{ path('admin_config_delete', {key: config.name}) }}"
+                      onsubmit="return confirm('Delete &quot;{{ config.name|e('js') }}&quot;?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('admin_config') }}"/>
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="3">No config rows.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="text-center my-2">
+    <a class="btn btn-wmffl" href="{{ path('admin_config_new') }}">Add Key</a>
+</div>
+{% endblock %}

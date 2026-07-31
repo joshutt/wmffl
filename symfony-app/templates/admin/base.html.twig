@@ -78,6 +78,10 @@
                class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') starts with 'admin_trades' %} active{% endif %}">
                 Trades
             </a>
+            <a href="{{ path('admin_config') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') starts with 'admin_config' %} active{% endif %}">
+                Config
+            </a>
         </div>
     </div>
     <div class="col-md-10">
