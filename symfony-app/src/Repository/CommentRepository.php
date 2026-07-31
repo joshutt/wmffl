@@ -76,4 +76,31 @@ class CommentRepository
             'SELECT c, u FROM App\Entity\Comment c LEFT JOIN c.author u ORDER BY c.dateCreated DESC'
         )->setMaxResults($limit)->setFirstResult($offset)->getResult();
     }
+
+    /**
+     * Active comment counts for a set of articles, keyed by article id.
+     * Articles with no active comments are absent from the result (caller
+     * treats a missing key as 0).
+     *
+     * @param int[] $articleIds
+     * @return array<int,int>
+     */
+    public function countByArticleIds(array $articleIds): array
+    {
+        if ($articleIds === []) {
+            return [];
+        }
+
+        $rows = $this->em->createQuery(
+            'SELECT c.articleId AS articleId, COUNT(c.id) AS cnt FROM App\Entity\Comment c
+             WHERE c.articleId IN (:ids) AND c.active = 1 GROUP BY c.articleId'
+        )->setParameter('ids', $articleIds)->getResult();
+
+        $counts = [];
+        foreach ($rows as $row) {
+            $counts[(int) $row['articleId']] = (int) $row['cnt'];
+        }
+
+        return $counts;
+    }
 }

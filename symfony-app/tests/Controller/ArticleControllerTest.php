@@ -140,7 +140,7 @@ class ArticleControllerTest extends TestCase
             ->willReturn([]);
 
         $request = new Request(query: ['page' => '2']);
-        $controller->list($request, $articles, $this->makeAuth(true));
+        $controller->list($request, $articles, $this->makeComments(), $this->makeAuth(true));
 
         $this->assertSame('article/list.html.twig', $controller->renderedView);
         $this->assertSame(2, $controller->renderedParams['page']);
@@ -156,10 +156,28 @@ class ArticleControllerTest extends TestCase
             ->willReturn([]);
 
         $request = new Request(query: ['page' => '-3']);
-        $controller->list($request, $articles, $this->makeAuth(false));
+        $controller->list($request, $articles, $this->makeComments(), $this->makeAuth(false));
 
         $this->assertSame(0, $controller->renderedParams['page']);
         $this->assertFalse($controller->renderedParams['isLoggedIn']);
+    }
+
+    public function testListPassesCommentCountsToTemplate(): void
+    {
+        $controller = $this->makeController();
+        $article1 = $this->makeArticle(1);
+        $article2 = $this->makeArticle(2);
+        $articles = $this->createStub(ArticleRepository::class);
+        $articles->method('findActivePage')->willReturn([$article1, $article2]);
+
+        $comments = $this->createMock(CommentRepository::class);
+        $comments->expects($this->once())->method('countByArticleIds')
+            ->with([1, 2])
+            ->willReturn([1 => 3]);
+
+        $controller->list(new Request(), $articles, $comments, $this->makeAuth(true));
+
+        $this->assertSame([1 => 3], $controller->renderedParams['counts']);
     }
 
     // ---- POST /article/{id}/comment ----
@@ -483,6 +501,7 @@ class ArticleControllerTest extends TestCase
         $comments = $this->createStub(CommentRepository::class);
         $comments->method('find')->willReturn($found);
         $comments->method('findThreadByArticle')->willReturn([]);
+        $comments->method('countByArticleIds')->willReturn([]);
         return $comments;
     }
 

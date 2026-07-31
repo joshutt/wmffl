@@ -51,12 +51,15 @@ class ArticleController extends AbstractController
     public function list(
         Request $request,
         ArticleRepository $articles,
+        CommentRepository $comments,
         AuthenticationService $auth
     ): Response {
         $page = max(0, $request->query->getInt('page'));
+        $pageArticles = $articles->findActivePage(self::PER_PAGE, $page);
 
         return $this->render('article/list.html.twig', [
-            'articles' => $articles->findActivePage(self::PER_PAGE, $page),
+            'articles' => $pageArticles,
+            'counts' => $comments->countByArticleIds(array_map(static fn ($a) => $a->getId(), $pageArticles)),
             'page' => $page,
             'isLoggedIn' => $auth->isLoggedIn(),
         ]);

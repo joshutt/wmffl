@@ -60,10 +60,6 @@
                     </span>
                 </p>
 
-                {% if issue.description %}
-                    <p>{{ issue.description }}</p>
-                {% endif %}
-
                 {% if issue.rationale %}
                     <div class="proposal-rationale">{{ issue.rationale|markdown_to_html|raw }}</div>
                 {% endif %}

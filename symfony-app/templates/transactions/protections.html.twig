@@ -7,7 +7,7 @@
 <hr size="1"/>
 
 {% if not loggedIn %}
-    <div class="text-center font-weight-bold">You must be logged in to submit protections</div>
+    {{ include('_login_required.html.twig', {message: 'You must be logged in to submit protections'}) }}
 {% else %}
     <div class="container">
         <p>

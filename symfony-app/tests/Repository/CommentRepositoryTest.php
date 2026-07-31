@@ -126,6 +126,52 @@ class CommentRepositoryTest extends TestCase
         $repo->findPageForAdmin(51, 100);
     }
 
+    // ---- countByArticleIds ----
+
+    public function testCountByArticleIdsMapsRowsByArticleId(): void
+    {
+        $query = $this->createMock(Query::class);
+        $query->expects($this->once())->method('setParameter')
+            ->with('ids', [10, 20])
+            ->willReturnSelf();
+        $query->method('getResult')->willReturn([
+            ['articleId' => '10', 'cnt' => '3'],
+        ]);
+
+        $em = $this->createMock(EntityManagerInterface::class);
+        $em->expects($this->once())->method('createQuery')
+            ->with($this->stringContains('WHERE c.articleId IN (:ids) AND c.active = 1 GROUP BY c.articleId'))
+            ->willReturn($query);
+
+        $repo = new CommentRepository($em);
+
+        $this->assertSame([10 => 3], $repo->countByArticleIds([10, 20]));
+    }
+
+    public function testCountByArticleIdsOmitsArticlesWithNoActiveComments(): void
+    {
+        $query = $this->createMock(Query::class);
+        $query->method('setParameter')->willReturnSelf();
+        $query->method('getResult')->willReturn([]);
+
+        $em = $this->createMock(EntityManagerInterface::class);
+        $em->method('createQuery')->willReturn($query);
+
+        $repo = new CommentRepository($em);
+
+        $this->assertSame([], $repo->countByArticleIds([30]));
+    }
+
+    public function testCountByArticleIdsShortCircuitsOnEmptyInput(): void
+    {
+        $em = $this->createMock(EntityManagerInterface::class);
+        $em->expects($this->never())->method('createQuery');
+
+        $repo = new CommentRepository($em);
+
+        $this->assertSame([], $repo->countByArticleIds([]));
+    }
+
     // ---- Helpers ----
 
     private function makeComment(int $id, ?Comment $parent = null): Comment

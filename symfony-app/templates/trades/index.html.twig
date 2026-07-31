@@ -9,7 +9,7 @@
 {% include 'transactions/_transmenu.html.twig' %}
 
 {% if not loggedIn %}
-    <div class="text-center font-weight-bold h4">You must be logged in to use this feature</div>
+    {{ include('_login_required.html.twig', {message: 'You must be logged in to use this feature'}) }}
 {% else %}
     <div class="container">
         <p>Any outstanding trade offers will be listed below. If the most recent action

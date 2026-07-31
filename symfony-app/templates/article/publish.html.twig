@@ -13,7 +13,7 @@
     <h1 class="full">Publish Article</h1>
 
     {% if not isLoggedIn %}
-        <div class="text-center font-weight-bold h4">You must be logged in to use this feature</div>
+        {{ include('_login_required.html.twig', {message: 'You must be logged in to use this feature'}) }}
     {% else %}
         {% for message in app.flashes('error') %}
             <div class="alert alert-danger" role="alert">{{ message }}</div>

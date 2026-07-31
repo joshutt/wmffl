@@ -4,6 +4,7 @@ namespace App\Tests\Controller;
 
 use App\Controller\HomeController;
 use App\Repository\ArticleRepository;
+use App\Repository\CommentRepository;
 use App\Repository\QuickLinkRepository;
 use App\Repository\ScoresRepository;
 use App\Repository\StandingsRepository;
@@ -34,7 +35,7 @@ class HomeControllerTest extends TestCase
     public function testIndexUsesCurrentSeasonDuringSeason(): void
     {
         [$controller, $deps] = $this->makeController(week: 5);
-        [, , , $scores, $standings] = $deps;
+        [, , , , $scores, $standings] = $deps;
         $scores->expects($this->once())->method('getLatestWeekScores')->with(2025);
         $standings->expects($this->once())->method('getCurrentStandings')->with(2025, 5);
 
@@ -46,7 +47,7 @@ class HomeControllerTest extends TestCase
     public function testIndexFallsBackToPreviousSeasonInOffSeason(): void
     {
         [$controller, $deps] = $this->makeController(week: 0);
-        [, , , $scores, $standings] = $deps;
+        [, , , , $scores, $standings] = $deps;
         $scores->expects($this->once())->method('getLatestWeekScores')->with(2024);
         $standings->expects($this->once())->method('getCurrentStandings')->with(2024, 16);
 
@@ -63,6 +64,20 @@ class HomeControllerTest extends TestCase
         $articles->expects($this->once())->method('findActivePage')->with(4)->willReturn([]);
 
         $controller->index(...$deps);
+    }
+
+    public function testIndexPassesCommentCountsToTemplate(): void
+    {
+        [$controller, $deps] = $this->makeController(week: 5);
+        [, , $articles, $comments] = $deps;
+        $articles->method('findActivePage')->willReturn([]);
+        $comments->expects($this->once())->method('countByArticleIds')
+            ->with([])
+            ->willReturn([]);
+
+        $controller->index(...$deps);
+
+        $this->assertArrayHasKey('counts', $controller->renderedParams);
     }
 
     // ---- Helpers ----
@@ -91,6 +106,9 @@ class HomeControllerTest extends TestCase
         $articles = $this->createMock(ArticleRepository::class);
         $articles->method('findActivePage')->willReturn([]);
 
+        $comments = $this->createMock(CommentRepository::class);
+        $comments->method('countByArticleIds')->willReturn([]);
+
         $scores = $this->createMock(ScoresRepository::class);
         $scores->method('getLatestWeekScores')->willReturn(null);
 
@@ -111,6 +129,6 @@ class HomeControllerTest extends TestCase
         $em = $this->createStub(EntityManagerInterface::class);
         $em->method('createQuery')->willReturn($query);
 
-        return [$controller, [$seasonWeek, $seasonRules, $articles, $scores, $standings, $calculator, $quickLinks, $em]];
+        return [$controller, [$seasonWeek, $seasonRules, $articles, $comments, $scores, $standings, $calculator, $quickLinks, $em]];
     }
 }
