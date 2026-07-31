@@ -234,6 +234,20 @@ should be small enough to land as its own PR.
   `Version20260727020000`, then apply
   `scripts/database/migration/2026-07-27-issues-backfill.sql` (regenerate
   per-env recommended), then confirm `MAILER_DSN` in prod `.env.local`.
+- Proposals formatting fixes (Phase 11 items 1-2 complete, 2026-07-31,
+  `specs/2026-07-31-proposals-formatting/`, branch
+  `phase11-proposals-formatting`): `MarkdownService` now sets CommonMark's
+  `soft_break => "<br>\n"` and normalizes leading whitespace to `&nbsp;`
+  before rendering, so a member/admin typing directly into the
+  `Rationale`/`RuleChangeText` fields gets line breaks and indentation
+  that match the imported (Phase 10.6) content instead of having single
+  newlines collapsed; submit-form live-preview JS updated to match.
+  `templates/proposals/list.html.twig` now shows `Rationale` instead of
+  the short `Description`; `ballot.html.twig` confirmed already
+  `Description`-only. New `MarkdownServiceTest` cases +
+  `tests/Template/ProposalTemplateTest.php`; 793 tests green. Items 3
+  (article comment-count badge) and 4 (login-modal buttons) remain open
+  below.
 
 ## Phase 11 — Small fixes
 
@@ -241,36 +255,13 @@ A catch-all phase for small, self-contained fixes and polish that don't
 warrant their own feature phase. Batched here so each can land as a small
 PR (or a few together) rather than blocking on a larger effort.
 
-1. **Proposal Markdown authoring — line breaks and indentation.** New
-   proposals typed into the admin/member Markdown fields (`Rationale`,
-   `RuleChangeText`) swallow single newlines and drop leading-space
-   indentation, so they don't match the imported historical proposals
-   (whose stored Markdown carries hard breaks and `&nbsp;` runs). Fix
-   `MarkdownService` so authored text renders the way it's typed:
-   - set the CommonMark renderer option `soft_break => "<br>\n"` so every
-     newline becomes a line break (a lone `\n` is otherwise a soft break
-     the browser collapses to a space);
-   - normalize leading whitespace to `&nbsp;` before rendering (each space
-     → one `&nbsp;`, tab → four) so typed indentation survives — CommonMark
-     decodes `&nbsp;` to U+00A0, which isn't collapsed, and this also
-     sidesteps the 4-leading-space indented-code-block trap.
-   Update the submit-form live-preview JS to match the server rendering,
-   add tests, and confirm the imported 2025.1 content still renders
-   identically. Blast radius is just the two proposal fields —
-   `MarkdownService` renders nothing else.
+1. ~~**Proposal Markdown authoring — line breaks and indentation.**~~
+   **Complete 2026-07-31** — see the `Done` entry above
+   (`specs/2026-07-31-proposals-formatting/`).
 
-2. **Proposal vs. ballot field visibility.** The two views currently show
-   the same fields; they should be split so each shows only what's
-   relevant to its purpose:
-   - Proposals page (`templates/proposals/list.html.twig`): show
-     `Rationale`, not `Description` (the short description) — drop the
-     `{% if issue.description %}<p>{{ issue.description }}</p>{% endif %}`
-     block, keep the `rationale` and `ruleChangeText` blocks as-is.
-   - Ballot page (`templates/proposals/ballot.html.twig`): show only
-     `Description` (the short description) — drop `Rationale` and
-     `RuleChangeText` entirely from the ballot card (ballot currently
-     already omits rationale/rule-change-text, so only confirm this and
-     leave `issue.description` as the sole summary shown per item).
+2. ~~**Proposal vs. ballot field visibility.**~~
+   **Complete 2026-07-31** — see the `Done` entry above
+   (`specs/2026-07-31-proposals-formatting/`).
 
 3. **Article cards — comment count indicator.** The article card partial
    (`templates/article/_card.html.twig`, used by `article/list.html.twig`
