@@ -263,6 +263,31 @@ should be small enough to land as its own PR.
   `ArticleCardTemplateTest` + `LoginRequiredTemplateTest` (real Twig
   renders, not mocked) pin the actual badge/button markup; 812 tests
   green. Phase 11 complete.
+- Admin tooling (Phase 12 complete, 2026-07-31,
+  `specs/2026-07-31-admin-tooling/`, branch `phase12-admin-tooling`):
+  `AdminQuickLinkController::reorder()` (`POST /admin/quicklinks/reorder`)
+  rewrites `sortOrder` sequentially from a client-posted ordered id list;
+  the admin index (`templates/admin/quicklinks/index.html.twig`) gets
+  SortableJS-powered drag-and-drop rows (SortableJS pulled in via CDN,
+  matching the existing jQuery/Bootstrap CDN-include pattern rather than
+  adding a build pipeline); the manual `sortOrder` field is removed from
+  the edit form — the index's drag-and-drop is now the only way to
+  reorder. New `AdminConfigController` (`/admin/config` index/new/edit/
+  delete) gives the previously-untouched `App\Entity\Config`/
+  `ConfigRepository` scaffolding (the `config` table, ~54 rows mixing real
+  settings with per-team/per-user draft-runtime state) a generic key/value
+  CRUD, deliberately with no special-casing between the two kinds of row
+  per the roadmap's original scope; nav entry added to
+  `templates/admin/base.html.twig`. A validation-failure Twig bug was
+  caught and fixed along the way: `admin/config/edit.html.twig` originally
+  read `config.value` unconditionally, which threw on the `new` form's
+  failure-path re-render (`config` is `null` there) and would have
+  silently dropped the user's typed input — fixed by passing plain
+  `key`/`value`/`isEdit` scalars to the template instead of the entity.
+  832 tests green; manually verified end-to-end (drag-reorder persistence
+  + homepage widget ordering, CSRF/non-commissioner rejection, config CRUD
+  round-trip incl. a dotted key) against `php -S -t public public/index.php`
+  with a fake commissioner session. Not yet PR'd.
 
 ## Phase 11 — Small fixes (complete)
 
@@ -278,12 +303,14 @@ four items complete 2026-07-31 — see the `Done` entries above
 3. ~~**Article cards — comment count indicator.**~~
 4. ~~**Login form alongside "must be logged in" messages.**~~
 
-## Phase 12 — Admin tooling
+## Phase 12 — Admin tooling (complete)
 
 Two self-contained admin-only tools, split out of Phase 11 since they're
-scoped work in their own right rather than one-line polish.
+scoped work in their own right rather than one-line polish. Both complete
+2026-07-31 — see the `Done` entry above
+(`specs/2026-07-31-admin-tooling/`).
 
-1. **Quicklinks admin — drag-and-drop ordering.** The admin quicklinks
+1. ~~**Quicklinks admin — drag-and-drop ordering.**~~ The admin quicklinks
    index (`templates/admin/quicklinks/index.html.twig`) lists links with a
    plain `Order` column; reordering today means opening each link's edit
    form and hand-editing the `sortOrder` number input
@@ -301,7 +328,7 @@ scoped work in their own right rather than one-line polish.
      implementation), but the index page becomes the primary way to
      reorder.
 
-2. **Admin config editor.** `App\Entity\Config` / `ConfigRepository`
+2. ~~**Admin config editor.**~~ `App\Entity\Config` / `ConfigRepository`
    (`symfony-app/src/Entity/Config.php`) map the existing `config` table
    (flat `key` varchar PK / `value` varchar, 54 rows today) but nothing in
    the Symfony app reads or writes it yet — it's untouched scaffolding.
