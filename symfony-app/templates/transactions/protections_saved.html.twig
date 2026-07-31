@@ -8,9 +8,7 @@
 
 <div class="container">
     {% if error == 'not_logged_in' %}
-        <div class="alert alert-secondary" role="alert">
-            You must be logged in to save protections.
-        </div>
+        {{ include('_login_required.html.twig', {message: 'You must be logged in to save protections.'}) }}
     {% elseif error == 'deadline' %}
         <div class="alert alert-secondary" role="alert">
             The deadline for changing protections has passed. Nothing was saved.

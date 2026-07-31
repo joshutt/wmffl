@@ -8,7 +8,7 @@
     <hr size="1"/>
 
     {% if not loggedIn %}
-        <div class="text-center font-weight-bold">You must be logged in to perform transactions</div>
+        {{ include('_login_required.html.twig', {message: 'You must be logged in to perform transactions'}) }}
     {% else %}
         <div class="hidden">
             <p>Step 4: Check your available roster room and transaction points. You will not

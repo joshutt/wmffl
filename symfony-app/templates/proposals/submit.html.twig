@@ -14,7 +14,7 @@
     {% endfor %}
 
     {% if not isLoggedIn %}
-        <p class="mt-3">You must be logged in to submit rule proposals.</p>
+        {{ include('_login_required.html.twig', {message: 'You must be logged in to submit rule proposals.'}) }}
     {% else %}
         <p class="mt-3">Propose a rule change year round. Your submission is sent to the
             commissioner for review before it appears on the proposals list and ballot.

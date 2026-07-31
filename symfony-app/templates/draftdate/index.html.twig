@@ -7,7 +7,7 @@
 <hr size="1"/>
 
 {% if not loggedIn %}
-<p class="text-center font-weight-bold">You must be logged in to use this feature</p>
+{{ include('_login_required.html.twig', {message: 'You must be logged in to use this feature'}) }}
 {% elseif dates is empty %}
 <p class="text-center">No draft dates are up for a vote yet — check back once the
 candidate dates for {{ season }} have been posted.</p>

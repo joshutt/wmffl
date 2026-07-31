@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\ArticleRepository;
+use App\Repository\CommentRepository;
 use App\Repository\QuickLinkRepository;
 use App\Repository\ScoresRepository;
 use App\Repository\StandingsRepository;
@@ -26,6 +27,7 @@ class HomeController extends AbstractController
         SeasonWeekService $seasonWeekService,
         SeasonRuleService $seasonRules,
         ArticleRepository $articleRepository,
+        CommentRepository $commentRepository,
         ScoresRepository $scoresRepository,
         StandingsRepository $standingsRepository,
         StandingsCalculatorService $calculatorService,
@@ -58,8 +60,11 @@ class HomeController extends AbstractController
             'SELECT f FROM App\Entity\Forum f ORDER BY f.createTime DESC'
         )->setMaxResults(6)->getResult();
 
+        $articles = $articleRepository->findActivePage(4);
+
         return $this->render('home/index.html.twig', [
-            'articles' => $articleRepository->findActivePage(4),
+            'articles' => $articles,
+            'counts' => $commentRepository->countByArticleIds(array_map(static fn ($a) => $a->getId(), $articles)),
             'scores' => $scores,
             'teams' => $teamArray,
             'posts' => $posts,
