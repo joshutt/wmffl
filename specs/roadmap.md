@@ -245,66 +245,38 @@ should be small enough to land as its own PR.
   `templates/proposals/list.html.twig` now shows `Rationale` instead of
   the short `Description`; `ballot.html.twig` confirmed already
   `Description`-only. New `MarkdownServiceTest` cases +
-  `tests/Template/ProposalTemplateTest.php`; 793 tests green. Items 3
-  (article comment-count badge) and 4 (login-modal buttons) remain open
-  below.
+  `tests/Template/ProposalTemplateTest.php`; 793 tests green.
+- Article comment-count badges + login-modal buttons (Phase 11 items 3-4
+  complete, 2026-07-31, `specs/2026-07-31-comments-login-polish/`, branch
+  `phase11-proposals-formatting`, PR #55): `CommentRepository::countByArticleIds()`
+  batch-counts active comments per article, wired through
+  `ArticleController::list`/`HomeController::index` into a `counts` map that
+  `article/_card.html.twig` reads via Twig's inherited include context —
+  every card always shows a `💬 N` badge, including 0. New shared
+  `templates/_login_required.html.twig` partial (message + a `btn-wmffl`
+  button opening the existing navbar `#loginModal`) swapped into all ten
+  gated "must be logged in" pages (transactions
+  protections/ir/list/confirm, draftdate, proposals ballot/submit, trades,
+  article publish); `ArticleController::addComment`'s logged-out flash
+  confirmed sufficient as-is (renders on a page where the navbar's login
+  button is already visible), no code change there. New
+  `ArticleCardTemplateTest` + `LoginRequiredTemplateTest` (real Twig
+  renders, not mocked) pin the actual badge/button markup; 812 tests
+  green. Phase 11 complete.
 
-## Phase 11 — Small fixes
+## Phase 11 — Small fixes (complete)
 
 A catch-all phase for small, self-contained fixes and polish that don't
-warrant their own feature phase. Batched here so each can land as a small
-PR (or a few together) rather than blocking on a larger effort.
+warrant their own feature phase. Batched here so each could land as a
+small PR (or a few together) rather than blocking on a larger effort. All
+four items complete 2026-07-31 — see the `Done` entries above
+(`specs/2026-07-31-proposals-formatting/`,
+`specs/2026-07-31-comments-login-polish/`).
 
 1. ~~**Proposal Markdown authoring — line breaks and indentation.**~~
-   **Complete 2026-07-31** — see the `Done` entry above
-   (`specs/2026-07-31-proposals-formatting/`).
-
 2. ~~**Proposal vs. ballot field visibility.**~~
-   **Complete 2026-07-31** — see the `Done` entry above
-   (`specs/2026-07-31-proposals-formatting/`).
-
-3. **Article cards — comment count indicator.** The article card partial
-   (`templates/article/_card.html.twig`, used by `article/list.html.twig`
-   and `home/index.html.twig`) shows title/date/author only, no hint of
-   discussion activity. `Comment` (`src/Entity/Comment.php`) has a plain
-   `article_id` int column, not a Doctrine relation, and there's no
-   existing count lookup — add one:
-   - add a `countByArticle(int $articleId)` (or a batch
-     `countByArticleIds(array $ids)` to avoid N+1 across a page of cards)
-     to `CommentRepository`, counting only `active` comments;
-   - thread the count(s) through `ArticleController::list` and
-     `HomeController` into the `_card.html.twig` include (card currently
-     receives just `article`; extend the include context, e.g.
-     `{article: a, commentCount: counts[a.id]}`);
-   - show a small comment-count badge/icon on the card (e.g. "💬 12" or a
-     Bootstrap badge), matching existing card styling.
-
-4. **Login form alongside "must be logged in" messages.** A global login
-   modal (`#loginModal`, `templates/base.html.twig:88-117`) already exists
-   on every page and is opened by a navbar "Log In" button
-   (`base.html.twig:83`), but the following gated pages show a plain
-   logged-out message with no way to log in right there — the user has to
-   notice and click the separate navbar button:
-   - `templates/transactions/protections_saved.html.twig:12`
-   - `templates/transactions/protections.html.twig:10`
-   - `templates/transactions/ir.html.twig:16`
-   - `templates/transactions/list.html.twig:12`
-   - `templates/transactions/confirm.html.twig:11`
-   - `templates/draftdate/index.html.twig:10`
-   - `templates/proposals/ballot.html.twig:10`
-   - `templates/proposals/submit.html.twig:17`
-   - `templates/trades/index.html.twig:12`
-   - `templates/article/publish.html.twig:16`
-   Add a "Log In" button next to each message that opens the existing
-   modal (`data-toggle="modal" data-target="#loginModal"`, same as the
-   navbar button) rather than duplicating the form — since the wording and
-   markup are near-identical across all ten, factor them into one shared
-   Twig partial (e.g. `_login_required.html.twig`) taking the message text,
-   and swap each site to include it. Also check
-   `ArticleController::addComment` (`src/Controller/ArticleController.php:83`),
-   which flashes "You must be logged in to comment" — the redirect target
-   still has the navbar modal available, but confirm the flash is rendered
-   somewhere with a visible trigger, or add one.
+3. ~~**Article cards — comment count indicator.**~~
+4. ~~**Login form alongside "must be logged in" messages.**~~
 
 ## Phase 12 — Admin tooling
 
