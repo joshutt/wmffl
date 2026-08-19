@@ -35,7 +35,7 @@ when@prod:
             main:
                 type: rotating_file
                 path: "%kernel.project_dir%/../logs/wmffl.log"
-                level: error
+                level: warning
                 max_files: 14
                 channels: ["!deprecation"]
             console:

@@ -43,8 +43,15 @@ $kernel = new Kernel($_SERVER['APP_ENV'], (bool) $_SERVER['APP_DEBUG']);
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
 
-if (false === $response->isNotFound()) {
-    // Symfony successfully handled the route.
+if (null !== $request->attributes->get('_route')) {
+    // Symfony's router matched a controller for this request. Whatever
+    // that controller (or Symfony's own exception handling) produced —
+    // 200, a deliberate 404/403 via createNotFoundException()/
+    // createAccessDeniedException(), or a 500 — is the response, full
+    // stop. Only a request the router couldn't match at all falls back
+    // to legacy; a matched route's own 404 must never be handed to
+    // LegacyBridge, which would otherwise try (and typically fail) to
+    // map it to a file under /football/.
     $response->send();
 } else {
     LegacyBridge::handleRequest($request, $response, $kernel->getContainer(), __DIR__);

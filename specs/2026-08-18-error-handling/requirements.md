@@ -138,3 +138,26 @@ and, in one common case, actively worse than either side alone (see
   `symfony/browser-kit` and `symfony/css-selector` are present in
   `composer.json` (`symfony/test-pack` usually bundles these); add if
   missing.
+
+**Found during implementation, not anticipated above:**
+- Kernel-booting tests need `tests/bootstrap.php` to load `.env*` (nothing
+  before this phase booted the kernel, so nothing needed it) — see the
+  comment in `tests/bootstrap.php` and `phpunit.xml`'s `bootstrap` attribute.
+- Kernel-booting tests run under PHP's CLI SAPI, which makes Symfony's
+  `error_renderer` service resolve to `CliErrorRenderer` (plain-text dump)
+  instead of the HTML/Twig one unless `kernel.runtime_mode.web` is forced
+  — `phpunit.xml` sets `APP_RUNTIME_MODE=web=1` for this. Test-suite-only,
+  no effect on real `dev`/`prod` traffic.
+- Every real matched-route 404 in this app reads from the DB before it can
+  404 (`SeasonWeekService` et al.), which would make `ErrorPagesTest.php`
+  depend on a provisioned `wmffl_test` database. Sidestepped with two
+  dedicated fixture routes (`tests/Fixtures/Controller/
+  ErrorFixtureController.php`, wired only `when@test` in
+  `config/routes.yaml`) that throw the target exceptions directly — see
+  `validation.md`'s Automated section.
+- `LegacyBridge`'s own branded-404 (unmappable-path case) always renders
+  the branded template regardless of `kernel.debug`, since it calls
+  `LegacyErrorPageService::renderErrorPage()` directly rather than going
+  through Symfony's `TwigErrorRenderer` — an intentional asymmetry with
+  the Symfony-routed 404/403/500 case (decision 3), not a bug. See
+  `validation.md` manual E2E #7.

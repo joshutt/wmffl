@@ -3,7 +3,8 @@
 // src/LegacyBridge.php
 namespace App;
 
-use Exception;
+use App\Exception\LegacyRouteNotFoundException;
+use App\Service\LegacyErrorPageService;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +23,8 @@ class LegacyBridge
      * to verify your logic, hence this is public static.
      * @param Request $request
      * @return string
-     * @throws Exception
+     * @throws LegacyRouteNotFoundException if the path has no Symfony route
+     *         and doesn't map to a real file under /football/ either
      */
     public static function getLegacyScript(Request $request): string
     {
@@ -101,7 +103,7 @@ class LegacyBridge
             chdir(dirname($path));
             return $path;
         } else {
-            throw new Exception("Unhandled legacy mapping for $requestPathInfo");
+            throw new LegacyRouteNotFoundException("Unhandled legacy mapping for $requestPathInfo");
         }
 
 
@@ -116,16 +118,25 @@ class LegacyBridge
 //        }
 
         // ... etc.
-
-//        throw new \Exception("Unhandled legacy mapping for $requestPathInfo");
     }
 
-    /**
-     * @throws Exception
-     */
     public static function handleRequest(Request $request, Response $response, ContainerInterface $container, string $publicDirectory): void
     {
-        $legacyScriptFilename = LegacyBridge::getLegacyScript($request);
+        $errorPages = $container->get(LegacyErrorPageService::class);
+
+        try {
+            $legacyScriptFilename = LegacyBridge::getLegacyScript($request);
+        } catch (LegacyRouteNotFoundException $e) {
+            // Symfony's router had no route, and this path doesn't map to a
+            // real file under /football/ either — a genuine dead end. Log
+            // it and render the branded 404 instead of letting the
+            // exception escape uncaught (it would, since the Symfony
+            // kernel has already finished handling this request by the
+            // time we get here).
+            $errorPages->logNotFound($e->getMessage());
+            self::respond($errorPages, 404);
+            return;
+        }
 
         // Make the Symfony entity manager available to the legacy script's scope.
         // This variable will be accessible by the required file below.
@@ -155,6 +166,85 @@ class LegacyBridge
         $_SERVER['SCRIPT_NAME'] = $p;
         $_SERVER['SCRIPT_FILENAME'] = $legacyScriptFilename;
 
-        require $legacyScriptFilename;
+        // Guard against a legacy fatal (or uncaught exception) producing a
+        // raw, unstyled PHP error dump instead of a logged, branded 500.
+        // Two layers, because PHP doesn't route every kind of failure
+        // through normal exception handling:
+        //  - try/catch below covers Throwables — modern PHP turns most
+        //    fatal-class errors (TypeError, ParseError in an included
+        //    file, etc.) into catchable Error objects.
+        //  - the shutdown function covers what's left: true fatals
+        //    (out-of-memory, execution timeout) that PHP never throws as
+        //    an object at all.
+        // $errorHandled prevents the shutdown function from double-firing
+        // when the catch block below already logged and rendered — it
+        // still runs at request end either way, so it has to check first.
+        $errorHandled = false;
+
+        register_shutdown_function(static function () use ($errorPages, $legacyScriptFilename, &$errorHandled): void {
+            if ($errorHandled) {
+                return;
+            }
+
+            $error = error_get_last();
+            if (!self::isFatalErrorType($error)) {
+                // Not a fatal (could be a stray warning/notice from a
+                // successful request) — nothing to do.
+                return;
+            }
+
+            $errorPages->logFatal(sprintf(
+                'Legacy fatal error in %s: %s in %s on line %d',
+                $legacyScriptFilename,
+                $error['message'],
+                $error['file'],
+                $error['line'],
+            ));
+            self::respond($errorPages, 500);
+        });
+
+        try {
+            require $legacyScriptFilename;
+        } catch (\Throwable $e) {
+            $errorHandled = true;
+            $errorPages->logFatal(sprintf('Uncaught %s in legacy script %s', get_class($e), $legacyScriptFilename), $e);
+            self::respond($errorPages, 500);
+        }
+    }
+
+    /**
+     * Whether an error_get_last()-shaped array represents one of PHP's
+     * true fatal error types — the ones that never surface as a catchable
+     * \Throwable and so can only be observed here, in a shutdown function.
+     * A plain static method, not inlined in the shutdown closure, so this
+     * decision is unit-testable without needing to trigger a real fatal.
+     *
+     * @param array{type: int, message: string, file: string, line: int}|null $error
+     */
+    public static function isFatalErrorType(?array $error): bool
+    {
+        if ($error === null) {
+            return false;
+        }
+
+        $fatalTypes = [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR, E_RECOVERABLE_ERROR];
+        return in_array($error['type'], $fatalTypes, true);
+    }
+
+    /**
+     * Emit the branded error page for the given status, unless the legacy
+     * script already sent output (headers or otherwise) before failing —
+     * in that case there's a partial response on the wire already and
+     * layering another full HTML page on top of it would just corrupt it,
+     * so we settle for having logged the failure.
+     */
+    private static function respond(LegacyErrorPageService $errorPages, int $statusCode): void
+    {
+        if (headers_sent()) {
+            return;
+        }
+
+        http_response_code($statusCode);
+        echo $errorPages->renderErrorPage($statusCode);
     }
 }

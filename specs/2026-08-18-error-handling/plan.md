@@ -101,6 +101,21 @@ and decisions, `validation.md` for the merge bar.
    test by default, but check for interaction with the fake-session
    pattern other tests may rely on).
 
+**As implemented:** the "matched-route 404" and "unrouted URL" cases landed
+in `tests/Controller/ErrorPagesTest.php` (`WebTestCase`), using two new
+fixture-only routes rather than a real feature route, to avoid depending on
+a provisioned `wmffl_test` database (see `requirements.md`'s "found during
+implementation" note). The "unmappable path" and "legacy script throws"
+cases — which live in `LegacyBridge`, entirely outside the kernel's
+request-handling boundary that `WebTestCase` operates within — landed as
+direct static-method tests in `tests/LegacyBridgeTest.php` instead. The
+real-fatal/shutdown-function case stayed manual-E2E-only, as anticipated;
+its type-filtering logic is unit-tested via the extracted
+`isFatalErrorType()` predicate. Two pieces of test infra needed adding
+that weren't anticipated: `tests/bootstrap.php` (dotenv loading) and
+`APP_RUNTIME_MODE=web=1` in `phpunit.xml` (forces the HTML error renderer
+under PHPUnit's CLI SAPI) — see both files' comments.
+
 ## 7. Final pass
 
 1. Run the full `validation.md` checklist (automated + manual E2E); fix
