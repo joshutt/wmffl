@@ -3,3 +3,13 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+when@test:
+    # Fixture routes for ErrorPagesTest (Phase 13) — a matched controller
+    # throwing 404/403 without needing a real feature or a provisioned
+    # wmffl_test database. See tests/Fixtures/Controller/.
+    test_fixture_controllers:
+        resource:
+            path: ../tests/Fixtures/Controller/
+            namespace: App\Tests\Fixtures\Controller
+        type: attribute

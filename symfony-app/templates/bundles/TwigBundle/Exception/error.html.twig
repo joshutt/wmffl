@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Something went wrong{% endblock %}
+
+{% block content %}
+<div class="text-center py-5">
+    <h1>Something went wrong</h1>
+    <p>Sorry, an unexpected error occurred. <a href="{{ path('home') }}">Return to the homepage</a>.</p>
+</div>
+{% endblock %}

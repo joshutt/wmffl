@@ -288,6 +288,34 @@ should be small enough to land as its own PR.
   + homepage widget ordering, CSRF/non-commissioner rejection, config CRUD
   round-trip incl. a dotted key) against `php -S -t public public/index.php`
   with a fake commissioner session. Not yet PR'd.
+- Symfony-appropriate error handling (Phase 13 complete, 2026-08-19,
+  `specs/2026-08-18-error-handling/`, branch `phase13-error-handling`):
+  `public/index.php` now falls back to `LegacyBridge` only when
+  `$request->attributes->get('_route')` is unset (a real router miss),
+  not merely on a 404 status — a matched controller's own
+  `createNotFoundException()`/`createAccessDeniedException()` now renders
+  Symfony's own response directly instead of `LegacyBridge` trying (and
+  failing) to map it to a `/football/` file. New branded
+  `error404`/`error403`/`error.html.twig` templates under
+  `templates/bundles/TwigBundle/Exception/`, matching site chrome.
+  `LegacyBridge::getLegacyScript()`'s "can't map this path" case now
+  throws a typed `LegacyRouteNotFoundException`, caught by
+  `handleRequest()` and rendered as the branded 404 (logged) instead of
+  escaping as an uncaught exception; the legacy `require` itself is now
+  wrapped in try/catch plus a `register_shutdown_function` fatal-type
+  guard, both paths logging via the new `LegacyErrorPageService` and
+  rendering the branded 500. Prod Monolog's `main` handler floor dropped
+  from `error` to `warning`, closing the previously-invisible 401/403/404
+  logging gap. First `WebTestCase`-based tests in the repo
+  (`tests/Controller/ErrorPagesTest.php`), needed two new pieces of test
+  infra (`tests/bootstrap.php` for dotenv loading;
+  `APP_RUNTIME_MODE=web=1` in `phpunit.xml`, since kernel-booting tests
+  run under CLI SAPI and Symfony's `error_renderer` otherwise picks the
+  plain-text `CliErrorRenderer` over the HTML one) plus two `when@test`
+  fixture routes to avoid needing a provisioned `wmffl_test` database.
+  848 tests green. Manual E2E checklist in `validation.md` not run
+  end-to-end this pass (see that file); Josh to confirm before merge. Not
+  yet PR'd.
 
 ## Phase 11 — Small fixes (complete)
 
@@ -347,7 +375,7 @@ scoped work in their own right rather than one-line polish. Both complete
      fine), but don't build any caching/eager-load assumption that treats
      the table as small/static, since the draft-state rows churn.
 
-## Phase 13 — Symfony-appropriate error handling
+## Phase 13 — Symfony-appropriate error handling (complete)
 
 Legacy fallback (`symfony-app/public/index.php`, `LegacyBridge.php`) currently
 makes error behavior inconsistent and, in one common case, actively worse than
