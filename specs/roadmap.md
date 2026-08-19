@@ -174,7 +174,7 @@ should be small enough to land as its own PR.
   parameter once (drives DTOs, the admin form and scorer labels);
   `SeasonRuleService` (cached, missing-row-safe) feeds
   `PlayerScorerService` — the single scoring engine, emitting labeled
-  `ScoreLine[]` for Phase 16 box scores, golden-tested equivalent to
+  `ScoreLine[]` for Phase 17 box scores, golden-tested equivalent to
   legacy `scoring.php` over all 451k stat rows (and fixing the old
   Symfony recalc's OL strict-compare bug). ScoreCalculatorService,
   TeamMoneyService (constants deleted), the six `week<=14` hardcodes
@@ -207,7 +207,7 @@ should be small enough to land as its own PR.
 - Rule proposals (Phase 10.6 complete, 2026-07-27,
   `specs/2026-07-27-rule-proposals-issues/`, PR #54): `issues` redesigned
   and the full member/admin/ballot UI built. The original plan was
-  data-layer-only prep for the Phase 17 `rules` item; the delivered scope
+  data-layer-only prep for the Phase 18 `rules` item; the delivered scope
   went further, replacing the hand-written `proposals{year}.php` pages
   outright. Migration `Version20260727020000`: widened `IssueName`, added
   `Rationale`/`RuleChangeText`/`Published` + a `Status` enum
@@ -425,7 +425,28 @@ migration; this phase fixes it instead of carrying it to the Final phase.
    still falls through and serves correctly, and a forced legacy fatal error
    is captured by Monolog.
 
-## Phase 14 — Activations UI modernization
+## Phase 14 — Admin user management
+
+Legacy has no dedicated user-management UI; users/owners are edited
+directly in the database. Add an admin tool covering both the `users`
+table and the `owners` team-assignment link.
+
+1. `AdminUserController` (`/admin/users`, `requireCommissioner` gate
+   like the other admin controllers): list/add/edit users — the
+   fields the `users` table actually carries (username, password
+   reset/hash, email, whatever else is on the table; check the schema
+   before committing to a field list rather than guessing)
+2. Assign a user to a team via the `owners` table from the same tool —
+   a per-user team picker (dropdown of `team`) that writes/updates the
+   owners row, rather than requiring a direct SQL edit
+3. Password handling: confirm what hashing/reset mechanism legacy auth
+   expects (this predates Phase 18's login-system migration) and match
+   it — don't invent a new scheme this phase doesn't own
+4. Reuse the `AdminConfigController`/`AdminQuickLinkController` CRUD
+   pattern (`src/Controller/Admin/`, `templates/admin/*/index.html.twig`)
+   for consistency with the rest of the admin section
+
+## Phase 15 — Activations UI modernization
 
 Legacy: `football/activate/submitactivations.php`, `processActivations.php`,
 `currentactivations.php`, `activations.php`/`index.php`,
@@ -433,7 +454,7 @@ Legacy: `football/activate/submitactivations.php`, `processActivations.php`,
 starting/reserve, see every team's current lineup for the week).
 Explicitly **not** in scope: `currentscore.php`/`scoreFunctions.php`, the
 live/historical box-score rendering that also lives in this directory —
-that's Phase 16's Boxscores redesign; this phase only touches the
+that's Phase 17's Boxscores redesign; this phase only touches the
 "set your lineup" and "see everyone's current lineup" pages.
 
 1. Read side: port the roster/opponent/injury/lock query
@@ -471,9 +492,9 @@ that's Phase 16's Boxscores redesign; this phase only touches the
 7. `football/activate/` deleted for everything covered here, with 301s
    (`LegacyActivationRedirectController`) from `activations.php`,
    `submitactivations.php`, `processActivations.php`; `currentscore.php`
-   and `scoreFunctions.php` stay on the LegacyBridge until Phase 16.
+   and `scoreFunctions.php` stay on the LegacyBridge until Phase 17.
 
-## Phase 15 — History (per-season)
+## Phase 16 — History (per-season)
 
 Legacy: `football/history/{year}Season.php` (1992–2017, frozen flat
 pages) and `football/history/{year}Season/` (1992–2026, directories —
@@ -490,14 +511,14 @@ snapshots, and the old-season-only one-offs (`awards`, `newsletters`,
 `breakdown`, `championpreview`, `playoffexplain`/`preview`/`scenewk*`,
 `summary*.inc`, `weeklyscores`, `weeksummary`). Boxscores
 (`{year}Season/boxscores.php`, 2005/2006 only) are explicitly **not**
-in scope — that's Phase 16.
+in scope — that's Phase 17.
 
 1. Design a data model for the per-season hub content (champion,
    runner-up, playoff scores) currently hardcoded per file
 2. A single generic Symfony route/template driven by that data,
    replacing the 30+ individual season files and directories
 
-## Phase 16 — Boxscores redesign
+## Phase 17 — Boxscores redesign
 
 Legacy: the live box score page is `football/activate/currentscore.php`
 (+ `scoreFunctions.php`, `base/scoring.php`) — addressed by
@@ -522,7 +543,7 @@ two different experiences.
    final-result only
 2. Live scoreboard (separate route, e.g. `/scoreboard`): the in-progress
    current-week experience — live scoring, time remaining, reserves —
-   ported from `currentscore.php` as its own page. Phase 16 ports it
+   ported from `currentscore.php` as its own page. Phase 17 ports it
    as-is to establish the split; its own redesign (auto-refresh, richer
    game-day experience) is deferred to the Unscheduled section
 3. Week scoreboard on the box score page: the other games from the same
@@ -537,20 +558,31 @@ two different experiences.
    game state: completed `teamid`+`season`+`week` combos map to the
    gameid route, current-week to the live scoreboard; update the three
    deep-linking entry points. The rest of `football/activate/` (lineup
-   submission flow) was carved out separately as Phase 14
+   submission flow) was carved out separately as Phase 15
 6. Phase 7 table renames are done (final `activations`/`players`/
    `injuries` names in place); data coverage varies by era — degrade
    gracefully for seasons missing stat lines
 
-## Phase 17 — Remaining odds and ends
+## Phase 18 — Remaining odds and ends
 
 Legacy: `login/`, `forum/`, `rules/`, `info.php`, `scores.php`
 
 1. Auth (login) — highest risk, do last and carefully
 2. Static/low-traffic pages (rules, info, forum)
 3. Scores
+4. Trade offer draft-pick selector (`trades/offer.html.twig`) — replace
+   the current checkbox list that spells out every tradeable pick with
+   a dropdown grouped by season; only show the originating team's name
+   (`orgTeamName`) on a pick when it differs from the team currently
+   holding it, not unconditionally
+5. Owner self-service head coach changes — `AdminHeadCoachController`
+   (`/admin/headcoach`) currently gates hire/fire behind
+   `requireCommissioner`; give owners a member-facing equivalent
+   scoped to their own team (reuse the existing Fire/Hire transaction
+   logging and roster open/close logic), leaving the admin page for
+   commissioner override across all teams
 
-## Phase 18 — Scripts: legacy → Symfony console commands
+## Phase 19 — Scripts: legacy → Symfony console commands
 
 Legacy: `/scripts/` — standalone PHP invoked directly (`php scripts/foo.php`,
 presumably via cron), each pulling in `base.php` (raw `mysqli_connect`
@@ -589,7 +621,7 @@ porting something run once and discarded.
 
 ## Unscheduled — Live scoreboard redesign
 
-Phase 16 splits the live scoreboard out of `currentscore.php` onto its own
+Phase 17 splits the live scoreboard out of `currentscore.php` onto its own
 route as a faithful port. Its actual redesign — a richer game-day
 experience (auto-refresh/streaming scores, in-progress stat lines,
 whatever else game day wants) — happens here, decoupled from the
