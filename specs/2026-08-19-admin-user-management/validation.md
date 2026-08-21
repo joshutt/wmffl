@@ -11,12 +11,17 @@
 ## Migration
 
 - `cd symfony-app && php bin/console doctrine:migrations:migrate` applies
-  cleanly against a dev DB copy; `doctrine:schema:update --dump-sql`
-  afterward shows no remaining diff for the `user` table.
-- Confirm the migration's `down()` actually reverses it (re-adds
-  `blogaddress`) — run migrate, then migrate down one step, then back up,
-  to prove it's not a one-way trip.
-- `scripts/database/schema.sql` regenerated/updated to match — no stale
+  cleanly against the dev DB (verified 2026-08-19). Note:
+  `doctrine:schema:update --dump-sql` is not usable as a diff check in
+  this repo — it errors pre-existing (`Unknown database type enum
+  requested`, unrelated to this change — the schema has raw `enum`
+  columns Doctrine's platform doesn't map) both before and after this
+  migration, so verify instead with `SHOW COLUMNS FROM user LIKE
+  'blogaddress'` (empty after migrating up).
+- Confirmed the migration's `down()` actually reverses it: migrated up,
+  down one step (column back in `SHOW COLUMNS`), then back up again
+  (column gone) — not a one-way trip.
+- `scripts/database/schema.sql` updated to match — no stale
   `blogaddress` column definition left behind for anyone diffing schema
   by hand.
 - **Deploy step, called out separately for Josh**: this migration must

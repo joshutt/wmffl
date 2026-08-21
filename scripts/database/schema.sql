@@ -1165,7 +1165,6 @@ CREATE TABLE `user` (
   `Email` varchar(75) NOT NULL DEFAULT '',
   `primaryowner` tinyint(1) NOT NULL DEFAULT 0,
   `lastlog` datetime DEFAULT NULL,
-  `blogaddress` varchar(75) DEFAULT NULL,
   `active` enum('Y','N') NOT NULL DEFAULT 'Y',
   `commish` tinyint(4) NOT NULL DEFAULT 0,
   PRIMARY KEY (`UserID`),

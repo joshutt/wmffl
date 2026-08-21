@@ -37,9 +37,6 @@ class User
     #[ORM\Column(name: 'lastlog', type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTime $lastLog = null;
 
-    #[ORM\Column(name: 'blogaddress', length: 75, nullable: true)]
-    private ?string $blogAddress = null;
-
     #[ORM\Column(name: 'active', enumType: ActiveEnum::class)]
     private ?ActiveEnum $active = ActiveEnum::Y;
 
@@ -125,17 +122,6 @@ class User
     public function setLastLog(?\DateTime $lastLog): static
     {
         $this->lastLog = $lastLog;
-        return $this;
-    }
-
-    public function getBlogAddress(): ?string
-    {
-        return $this->blogAddress;
-    }
-
-    public function setBlogAddress(?string $blogAddress): static
-    {
-        $this->blogAddress = $blogAddress;
         return $this;
     }
 
