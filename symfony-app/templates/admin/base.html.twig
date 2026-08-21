@@ -82,6 +82,10 @@
                class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') starts with 'admin_config' %} active{% endif %}">
                 Config
             </a>
+            <a href="{{ path('admin_users') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') starts with 'admin_users' %} active{% endif %}">
+                Users
+            </a>
         </div>
     </div>
     <div class="col-md-10">

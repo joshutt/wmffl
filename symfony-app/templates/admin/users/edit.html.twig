@@ -1,0 +1,63 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Admin - {{ isEdit ? 'Edit' : 'Add' }} User{% endblock %}
+
+{% block admin_content %}
+<h2 class="mt-2">{{ isEdit ? 'Edit User: ' ~ user.username : 'Add User' }}</h2>
+
+{% if not isEdit %}
+<p class="text-muted">No password is set here — the new user signs in for
+the first time via <a href="/login/forgotpassword.php">Forgot Password</a>,
+keyed off the username/email below.</p>
+{% endif %}
+
+<form method="post">
+    <input type="hidden" name="_token" value="{{ csrf_token('admin_user') }}"/>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" name="username" maxlength="20"
+                   value="{{ user.username }}" required>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" maxlength="50"
+                   value="{{ user.name }}">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" maxlength="75"
+                   value="{{ user.email }}" required>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="teamId">Team</label>
+            <select class="form-control" id="teamId" name="teamId">
+                <option value="">— Unassigned —</option>
+                {% for team in teams %}
+                <option value="{{ team.teamid }}"{% if user.team and user.team.id == team.teamid %} selected{% endif %}>{{ team.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+            <div class="form-check mt-4">
+                <input type="checkbox" class="form-check-input" id="active" name="active" value="1"
+                       {% if user.active and user.active.value == 'Y' %}checked{% endif %}>
+                <label class="form-check-label" for="active">Active</label>
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+            <div class="form-check mt-4">
+                <input type="checkbox" class="form-check-input" id="primaryOwner" name="primaryOwner" value="1"
+                       {% if user.primaryOwner %}checked{% endif %}>
+                <label class="form-check-label" for="primaryOwner">Primary Owner</label>
+            </div>
+        </div>
+    </div>
+    <div class="text-center my-2">
+        <button type="submit" class="btn btn-wmffl">Save</button>
+        <a class="btn btn-wmffl" href="{{ path('admin_users') }}">Cancel</a>
+    </div>
+</form>
+{% endblock %}

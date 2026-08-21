@@ -22,7 +22,11 @@ class Owner
     #[ORM\Column(name: 'season', type: 'integer')]
     private ?int $season = null;
 
-    #[ORM\Column(name: 'primary', type: 'smallint')]
+    // `primary` is a reserved word in MySQL/MariaDB - backticks force Doctrine
+    // to quote it, otherwise generated INSERT/UPDATE SQL is a syntax error
+    // (only surfaced now: Phase 14 is the first code path that ever writes
+    // an Owner row - prior code only read this table via raw SQL).
+    #[ORM\Column(name: '`primary`', type: 'smallint')]
     private ?int $primary = 1;
 
     public function getTeam(): ?Team
