@@ -4,7 +4,9 @@ namespace App\Tests\Controller;
 
 use App\Controller\Admin\AdminSeasonController;
 use App\Entity\Season;
+use App\Model\LineupRules;
 use App\Repository\SeasonRepository;
+use App\Service\LineupRuleRegistry;
 use App\Service\AuthenticationService;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -89,6 +91,96 @@ class AdminSeasonControllerTest extends TestCase
 
         $this->assertSame(['admin_seasons_edit', ['season' => 1998]], $controller->redirectedTo);
         $this->assertSame('success', $controller->flashed[0]);
+    }
+
+    public function testSaveRoundTripsTheLineupFieldset(): void
+    {
+        $season = $this->season(2026);
+        $repo = $this->createStub(SeasonRepository::class);
+        $repo->method('find')->willReturn($season);
+
+        $controller = $this->makeController(commissioner: true);
+        $controller->save(2026, Request::create('/admin/seasons/2026', 'POST', [
+            '_token' => 'ok',
+            'lineup' => [
+                'HC' => ['min' => 1, 'max' => 1],
+                'QB' => ['min' => 1, 'max' => 1],
+                'RB' => ['min' => 1, 'max' => 2],
+                'WR' => ['min' => 2, 'max' => 4],
+                'TE' => ['min' => 1, 'max' => 2],
+                'K' => ['min' => 1, 'max' => 1],
+                'OL' => ['min' => 1, 'max' => 1],
+                'DL' => ['min' => 2, 'max' => 2],
+                'LB' => ['min' => 2, 'max' => 2],
+                'DB' => ['min' => 2, 'max' => 2],
+                'flex_group' => ['RB', 'WR', 'TE'],
+                'flex_total' => '6',
+            ],
+        ]), $this->auth(true), $repo, $this->em(), $this->createStub(Connection::class));
+
+        $rules = $season->getLineupRules();
+        $this->assertSame(['min' => 2, 'max' => 4], $rules['WR']);
+        $this->assertSame(['RB', 'WR', 'TE'], $rules['flex_group']);
+        $this->assertSame(6, $rules['flex_total']);
+        $this->assertSame(['admin_seasons_edit', ['season' => 2026]], $controller->redirectedTo);
+
+        // And the value object the validator uses reflects the change
+        $this->assertSame(4, LineupRules::fromArray($rules)->max('WR'));
+        $this->assertSame([], LineupRules::fromArray($rules)->validate([
+            'HC' => 1, 'QB' => 1, 'RB' => 1, 'WR' => 4, 'TE' => 1,
+            'K' => 1, 'OL' => 1, 'DL' => 2, 'LB' => 2, 'DB' => 2,
+        ]));
+    }
+
+    public function testSaveRejectsAMaxBelowItsMin(): void
+    {
+        $season = $this->season(2026)->setLineupRules(['WR' => ['min' => 2, 'max' => 3]]);
+        $repo = $this->createStub(SeasonRepository::class);
+        $repo->method('find')->willReturn($season);
+
+        $em = $this->createMock(EntityManagerInterface::class);
+        $em->expects($this->never())->method('flush');
+
+        $controller = $this->makeController(commissioner: true);
+        $controller->save(2026, Request::create('/admin/seasons/2026', 'POST', [
+            '_token' => 'ok',
+            'lineup' => ['WR' => ['min' => '3', 'max' => '1']],
+        ]), $this->auth(true), $repo, $em, $this->createStub(Connection::class));
+
+        $this->assertSame('error', $controller->flashed[0]);
+        $this->assertSame(['WR' => ['min' => 2, 'max' => 3]], $season->getLineupRules());
+    }
+
+    /** A POST that never carried the fieldset must not blank the limits */
+    public function testSaveLeavesLineupRulesAloneWhenTheFieldsetIsAbsent(): void
+    {
+        $season = $this->season(2026)->setLineupRules(['WR' => ['min' => 2, 'max' => 3]]);
+        $repo = $this->createStub(SeasonRepository::class);
+        $repo->method('find')->willReturn($season);
+
+        $controller = $this->makeController(commissioner: true);
+        $controller->save(2026, Request::create('/admin/seasons/2026', 'POST', [
+            '_token' => 'ok',
+            'entryFee' => '75',
+        ]), $this->auth(true), $repo, $this->em(), $this->createStub(Connection::class));
+
+        $this->assertSame(['WR' => ['min' => 2, 'max' => 3]], $season->getLineupRules());
+    }
+
+    public function testEditPassesTheLineupRegistryAndCurrentValuesToTheForm(): void
+    {
+        $season = $this->season(2026)->setLineupRules(['WR' => ['min' => 2, 'max' => 4]]);
+        $repo = $this->createStub(SeasonRepository::class);
+        $repo->method('find')->willReturn($season);
+
+        $controller = $this->makeController(commissioner: true);
+        $controller->edit(2026, $this->auth(true), $repo, $this->createStub(Connection::class));
+
+        $this->assertSame(LineupRuleRegistry::definitions(), $controller->renderedParams['lineupDefs']);
+        $this->assertSame(['min' => 2, 'max' => 4], $controller->renderedParams['lineupValues']['WR']);
+        // Keys the season has no override for fall back to the registry
+        $this->assertSame(['min' => 2, 'max' => 2], $controller->renderedParams['lineupValues']['DL']);
+        $this->assertSame(5, $controller->renderedParams['lineupValues']['flex_total']);
     }
 
     public function testSaveRejectsANonNumericScoringValue(): void

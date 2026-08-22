@@ -1,0 +1,73 @@
+/*
+ * Lineup form: the drag-and-drop layer over the Starters / Reserves
+ * lists. Everything here is presentation for an enhancement - with
+ * JavaScript off the checkboxes still lay out and work, they just
+ * never get the grab cursor or the drop targets.
+ */
+
+.lineup-list {
+    /* An empty list still has to be a drop target */
+    min-height: 3.5rem;
+    border: 1px dashed transparent;
+    border-radius: .25rem;
+    transition: background-color .15s ease, border-color .15s ease;
+}
+
+/* Applied by the script while a row is in flight */
+.lineup-list.lineup-list-active {
+    border-color: #adb5bd;
+    background-color: rgba(0, 0, 0, .02);
+}
+
+.lineup-grip {
+    color: #adb5bd;
+    font-size: 1.1rem;
+    line-height: 1;
+    user-select: none;
+}
+
+/* Only rows the drag layer picked up advertise themselves as draggable */
+.lineup-draggable .lineup-grip {
+    cursor: grab;
+}
+
+.lineup-draggable .lineup-grip:active {
+    cursor: grabbing;
+}
+
+.lineup-row-locked .lineup-grip {
+    visibility: hidden;
+}
+
+/* SortableJS states */
+.lineup-ghost {
+    opacity: .4;
+    background-color: #e9ecef;
+}
+
+.lineup-chosen {
+    background-color: #fff3cd;
+}
+
+.lineup-drag {
+    /* The element that follows the pointer */
+    opacity: .95;
+    box-shadow: 0 .25rem .5rem rgba(0, 0, 0, .25);
+}
+
+.lineup-check {
+    width: 1.4rem;
+    height: 1.4rem;
+}
+
+/* Comfortable touch targets on a phone: a bigger grip and taller rows */
+@media (max-width: 575.98px) {
+    .lineup-grip {
+        font-size: 1.4rem;
+        padding: .35rem 0;
+    }
+
+    .lineup-row {
+        min-height: 3rem;
+    }
+}

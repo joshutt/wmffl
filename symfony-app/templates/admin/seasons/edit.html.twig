@@ -166,6 +166,59 @@
     </fieldset>
 
     <fieldset class="border rounded p-3 mb-3">
+        <legend class="h5">Lineup</legend>
+        <p class="text-muted mb-2">
+            How many players a team activates at each position. Where min
+            and max differ the extra slots come out of the flex total, so
+            the flex positions below must add up to exactly that number.
+        </p>
+        <div class="form-row">
+            {% for key, def in lineupDefs|filter(def => def.type == 'position') %}
+            <div class="form-group col-md-2">
+                <label>{{ def.label }} ({{ key }})</label>
+                <div class="form-row">
+                    <div class="col-6">
+                        <input type="number" min="0" step="1" class="form-control"
+                               aria-label="{{ def.label }} minimum"
+                               name="lineup[{{ key }}][min]" value="{{ lineupValues[key].min }}">
+                        <small class="form-text text-muted">min</small>
+                    </div>
+                    <div class="col-6">
+                        <input type="number" min="0" step="1" class="form-control"
+                               aria-label="{{ def.label }} maximum"
+                               name="lineup[{{ key }}][max]" value="{{ lineupValues[key].max }}">
+                        <small class="form-text text-muted">max</small>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>{{ lineupDefs.flex_group.label }}</label>
+                <div>
+                    {% for key, def in lineupDefs|filter(def => def.type == 'position') %}
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox" class="form-check-input" id="lineup_flex_{{ key }}"
+                               name="lineup[flex_group][]" value="{{ key }}"
+                               {% if key in lineupValues.flex_group %}checked{% endif %}>
+                        <label class="form-check-label" for="lineup_flex_{{ key }}">{{ key }}</label>
+                    </div>
+                    {% endfor %}
+                </div>
+                <small class="form-text text-muted">{{ lineupDefs.flex_group.help }}</small>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="lineup_flex_total">{{ lineupDefs.flex_total.label }}</label>
+                <input type="number" min="0" step="1" class="form-control" id="lineup_flex_total"
+                       name="lineup[flex_total]"
+                       value="{{ lineupValues.flex_total is null ? '' : lineupValues.flex_total }}">
+                <small class="form-text text-muted">{{ lineupDefs.flex_total.help }}</small>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset class="border rounded p-3 mb-3">
         <legend class="h5">Protections</legend>
 
         <h6>Team points budgets ({{ season.season }})</h6>

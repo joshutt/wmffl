@@ -1,0 +1,47 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Admin - Activations{% endblock %}
+
+{% block admin_content %}
+<h2 class="mt-2">Lineup Override</h2>
+
+<p class="text-muted">
+    Set any team's lineup for any week, including after kickoff.
+    "Become Team" cannot do that - the member form's locks still apply
+    to an impersonated owner. Position rules are still enforced here
+    unless you deliberately tick "save anyway".
+</p>
+
+<form method="get" action="{{ path('admin_activations') }}" class="form-inline mb-3">
+    <label class="mr-2" for="seasonPicker">Season</label>
+    <input type="number" class="form-control mr-2" id="seasonPicker" name="season" value="{{ season }}">
+    <button type="submit" class="btn btn-wmffl">Load</button>
+</form>
+
+{% if teams is empty %}
+<p class="text-muted">No teams are recorded for {{ season }}.</p>
+{% else %}
+<table class="table table-sm table-striped">
+    <thead>
+        <tr>
+            <th>Team</th>
+            <th>Week</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for team in teams %}
+        <tr>
+            <td class="align-middle">{{ team.name }}</td>
+            <td>
+                {% for w in weeks %}
+                <a class="badge badge-{{ w.week == week ? 'primary' : 'secondary' }} p-2 m-1"
+                   title="{{ w.weekname }}"
+                   href="{{ path('admin_activations_edit', {teamId: team.teamid, season: season, week: w.week}) }}">{{ w.week }}</a>
+                {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}

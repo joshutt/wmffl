@@ -1,0 +1,111 @@
+{#
+   The lineup rows, shared by the member submit form and the
+   commissioner override so the two cannot drift apart.
+
+   Expects: starters, reserves, allLock, actingHc, rules, admin.
+
+   Two interactions on one piece of markup: drag a player between the
+   Starters and Reserves lists, or tick his checkbox. The checkbox is
+   the source of truth in both cases and is what actually gets posted,
+   so with JavaScript off the form still works exactly as it always
+   has - the drag layer is added by /js/activations.js on top.
+
+   Each row is a Bootstrap grid row rather than a table cell, so it
+   reflows to a stacked, tappable layout on a phone.
+#}
+{% macro playerRow(player, allLock, starter) %}
+    {% set locked = player.lock or allLock %}
+    <div class="row align-items-center border-bottom py-2 mx-0 lineup-row{% if locked %} lineup-row-locked{% endif %}"
+         data-playerid="{{ player.playerid }}" data-pos="{{ player.pos }}"
+         data-sortname="{{ (player.lastname|default(player.name))|lower }}">
+        <div class="col-1 px-0 text-center lineup-grip" aria-hidden="true">{% if not locked %}⠿{% endif %}</div>
+        <div class="col-2 col-sm-1 px-1 text-center">
+            {% if locked %}
+                {% if starter %}
+                <input type="hidden" class="lineup-locked" data-pos="{{ player.pos }}"
+                       name="{{ player.pos }}[]" value="{{ player.playerid }}"/>
+                {% endif %}
+                <img src="/images/lock-clipart2.gif" height="16" width="16"
+                     alt="locked{% if player.postDeadline %} - acquired after the week 14 deadline{% endif %}"
+                     title="{% if player.postDeadline %}Acquired after the week 14 activation deadline{% else %}Locked - kickoff is less than five minutes away{% endif %}"/>
+            {% else %}
+                <input class="lineup-check" type="checkbox"
+                       id="activate_{{ player.playerid }}"
+                       name="{{ player.pos }}[]" value="{{ player.playerid }}"
+                       data-pos="{{ player.pos }}"{% if starter %} checked="checked"{% endif %}/>
+            {% endif %}
+        </div>
+        <div class="col-2 col-sm-1 px-1">
+            <label class="mb-0 font-weight-bold" for="activate_{{ player.playerid }}">{{ player.pos }}</label>
+        </div>
+        <div class="col-6 col-sm-4 px-1">
+            <label class="mb-0" for="activate_{{ player.playerid }}">{{ player.name }}</label>
+        </div>
+        <div class="col-3 offset-3 offset-sm-0 col-sm-2 px-1">{{ player.nfl }}</div>
+        <div class="col-5 col-sm-2 px-1">{{ player.opp }}</div>
+        <div class="col-2 col-sm-1 px-1">
+            {% if player.injuryLabel %}
+            <span class="PQDO" title="{{ player.injuryDetail }}">({{ player.injuryLabel }})</span>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% import _self as lineup %}
+
+<div id="lineup" data-lineup-rules="{{ rules.toJson|json_encode }}">
+
+    {# Shown only once the drag layer is live; without JS the checkboxes
+       are the whole story and this would be a lie. #}
+    <p class="text-muted text-center small lineup-hint d-none">
+        Drag a player between Starters and Reserves, or tick his box.
+        Both lists stay in position order.
+    </p>
+
+    <h4 class="text-center mt-3">Starters</h4>
+
+    <div class="lineup-list" id="lineup-starters" data-starters="1">
+        {% if actingHc %}
+        <div class="row align-items-center border-bottom py-2 mx-0 bg-light lineup-row-fixed">
+            <div class="col-1 px-0"></div>
+            <div class="col-2 col-sm-1 px-1 text-center">
+                <input class="lineup-check" type="checkbox"
+                       id="actHC" name="actHC" value="on" data-pos="HC"
+                       {% if actingHc.checked %}checked="checked"{% endif %}/>
+            </div>
+            <div class="col-2 col-sm-1 px-1"><label class="mb-0 font-weight-bold" for="actHC">HC</label></div>
+            <div class="col-7 col-sm-5 px-1">
+                <select class="form-control" name="actHCid" aria-label="Acting head coach">
+                    {% for hc in actingHc.options %}
+                    <option value="{{ hc.playerid }}"{% if hc.playerid == actingHc.selected %} selected{% endif %}>
+                        {{ hc.name }} - {{ hc.nfl }} {{ hc.opp }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-12 col-sm-4 px-1">
+                <small class="text-muted">Acting head coach - your own coach has no game this week.</small>
+            </div>
+        </div>
+        {% endif %}
+
+        {% for player in starters %}
+            {{ lineup.playerRow(player, allLock, true) }}
+        {% endfor %}
+    </div>
+    <p class="text-muted text-center my-2 lineup-empty" data-list="lineup-starters"
+       {% if starters is not empty or actingHc %}hidden{% endif %}>Nobody is activated yet.</p>
+
+    <h4 class="text-center mt-4">Reserves</h4>
+
+    <div class="lineup-list" id="lineup-reserves">
+        {% for player in reserves %}
+            {{ lineup.playerRow(player, allLock, false) }}
+        {% endfor %}
+    </div>
+    <p class="text-muted text-center my-2 lineup-empty" data-list="lineup-reserves"
+       {% if reserves is not empty %}hidden{% endif %}>Everyone on the roster is activated.</p>
+</div>
+
+{# Filled in by /js/activations.js; stays empty and harmless without JS. #}
+<div id="lineup-counters" class="my-3 text-center"></div>

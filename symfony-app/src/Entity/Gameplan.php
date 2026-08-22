@@ -5,6 +5,19 @@ namespace App\Entity;
 use App\Enum\GameplanSideEnum;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Gameplan is a retired feature: as of Phase 15 (2026-08) nothing in the
+ * application writes a gameplan row, and the activations pages that used
+ * to no longer mention it.
+ *
+ * This mapping is kept ON PURPOSE. The ~1,300 historical rows are league
+ * record, still rendered as the GP+/GP- markers on the box score
+ * (football/activate/scoreFunctions.php) and still joined by
+ * scripts/livescore/updatescores.php, and a later phase that surfaces
+ * gameplan history will want the entity already in place. It is not dead
+ * code awaiting a sweep - do not delete it, or App\Enum\GameplanSideEnum,
+ * without an explicit decision to drop the data too.
+ */
 #[ORM\Entity]
 #[ORM\Table(name: 'gameplan')]
 class Gameplan

@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Submit Activations{% endblock %}
+
+{% block stylesheets %}
+    {# ?v bumped whenever these change - Apache caches them hard,
+   same convention as core.css?v12 in base.html.twig #}
+    <link rel="stylesheet" type="text/css" href="/css/activations.css?v2">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+    <script src="/js/activations.js?v2" defer></script>
+{% endblock %}
+
+{% block content %}
+<h1 class="full">Activations</h1>
+
+{{ include('activations/_nav.html.twig') }}
+
+{% if not loggedIn %}
+    {{ include('_login_required.html.twig', {message: 'You must be logged in to submit activations'}) }}
+{% else %}
+
+    {% if errors is not empty %}
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            {% for error in errors %}<li>{{ error }}</li>{% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    {# Plain GET round trip - the legacy dropdown fired an onChange
+       handler at a script that has not existed for years, so changing
+       the week did nothing until you submitted. #}
+    <form method="get" action="{{ path('activations_submit') }}" class="form-inline justify-content-center mb-2">
+        <label class="mr-2" for="weekPicker">Week</label>
+        <select class="form-control mr-2" id="weekPicker" name="week">
+            {% for option in weeks %}
+            <option value="{{ option.week }}"{% if option.week == week %} selected{% endif %}>{{ option.weekname }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-wmffl">Go</button>
+    </form>
+
+    <form method="post" action="{{ path('activations_save') }}" name="activeForm">
+        <input type="hidden" name="_token" value="{{ csrf_token(constant('App\\Controller\\ActivationController::CSRF_TOKEN_ID')) }}"/>
+        <input type="hidden" name="season" value="{{ season }}"/>
+        <input type="hidden" name="week" value="{{ week }}"/>
+
+        {% if allLock %}
+        <div class="alert alert-warning">
+            Every game on your roster has kicked off - this week's lineup is locked.
+        </div>
+        {% endif %}
+
+        {{ include('activations/_lineup_form.html.twig') }}
+
+        <div class="text-center my-3">
+            <button type="submit" class="btn btn-wmffl" id="lineup-submit">Submit Activations</button>
+        </div>
+    </form>
+{% endif %}
+{% endblock %}

@@ -969,6 +969,7 @@ CREATE TABLE `seasons` (
   `champ_percent` decimal(5,4) NOT NULL DEFAULT 0.5000,
   `scoring_strategy` varchar(32) NOT NULL DEFAULT 'standard',
   `scoring_rules` longtext NOT NULL,
+  `lineup_rules` longtext NOT NULL,
   `verified` tinyint(1) NOT NULL DEFAULT 0,
   `notes` text DEFAULT NULL,
   `proposal_pass_threshold` decimal(5,4) NOT NULL DEFAULT 0.5100,

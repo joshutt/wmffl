@@ -6,6 +6,7 @@ use App\Entity\PositionCost;
 use App\Entity\Season;
 use App\Repository\SeasonRepository;
 use App\Service\AuthenticationService;
+use App\Service\LineupRuleRegistry;
 use App\Service\ScoringRuleRegistry;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -104,6 +105,8 @@ class AdminSeasonController extends AbstractAdminController
             'groups' => ScoringRuleRegistry::groups(),
             'groupLabels' => ScoringRuleRegistry::GROUPS,
             'values' => $row->getScoringRules() + ScoringRuleRegistry::defaults(),
+            'lineupDefs' => LineupRuleRegistry::definitions(),
+            'lineupValues' => $row->getLineupRules() + LineupRuleRegistry::defaults(),
             'transpoints' => $this->getTranspoints($connection, $season),
             'positionCosts' => $this->getEffectivePositionCosts($connection, $season),
         ]);
@@ -179,6 +182,19 @@ class AdminSeasonController extends AbstractAdminController
         }
         $row->setScoringRules($rules);
         $row->setScoringStrategy(trim((string) $post->get('scoringStrategy', 'standard')) ?: 'standard');
+
+        // Lineup: min/max per position plus the flex constraint. Only
+        // touched when the form actually carried the fieldset, so a
+        // partial POST cannot silently blank a season's limits.
+        if ($post->has('lineup')) {
+            $lineup = $this->parseLineupRules($post->all('lineup'));
+            if (is_string($lineup)) {
+                $this->addFlash('error', $lineup);
+
+                return $this->redirectToRoute('admin_seasons_edit', ['season' => $season]);
+            }
+            $row->setLineupRules($lineup);
+        }
 
         $row->setVerified($post->getBoolean('verified'));
         $notes = trim((string) $post->get('notes', ''));
@@ -273,6 +289,45 @@ class AdminSeasonController extends AbstractAdminController
         $this->addFlash('success', "New $position cost (protected $years years) effective $season");
 
         return $this->redirectToRoute('admin_seasons_edit', ['season' => $season]);
+    }
+
+    /**
+     * Turn the posted lineup fieldset into a lineup_rules map, or return
+     * the error message explaining why it cannot be saved.
+     *
+     * @return array<string, mixed>|string
+     */
+    private function parseLineupRules(array $posted): array|string
+    {
+        $rules = [];
+        foreach (LineupRuleRegistry::definitions() as $key => $def) {
+            if ($def['type'] === 'position') {
+                $min = trim((string) ($posted[$key]['min'] ?? ''));
+                $max = trim((string) ($posted[$key]['max'] ?? ''));
+                if (!is_numeric($min) || !is_numeric($max)) {
+                    return sprintf('%s needs a numeric min and max', $def['label']);
+                }
+                $min = max(0, (int) $min);
+                $max = max(0, (int) $max);
+                if ($max < $min) {
+                    return sprintf('%s max (%d) cannot be below its min (%d)', $def['label'], $max, $min);
+                }
+                $rules[$key] = ['min' => $min, 'max' => $max];
+            } elseif ($def['type'] === 'group') {
+                $rules[$key] = array_values(array_filter(
+                    (array) ($posted[$key] ?? []),
+                    fn ($pos) => is_string($pos) && LineupRuleRegistry::isPosition($pos)
+                ));
+            } else {
+                $raw = trim((string) ($posted[$key] ?? ''));
+                if ($raw !== '' && !is_numeric($raw)) {
+                    return sprintf('%s must be a number, or blank for no limit', $def['label']);
+                }
+                $rules[$key] = $raw === '' ? null : (int) $raw;
+            }
+        }
+
+        return $rules;
     }
 
     private function getTranspoints(Connection $connection, int $season): array

@@ -79,6 +79,11 @@ class Season
     #[ORM\Column(name: 'scoring_rules', type: 'json')]
     private array $scoringRules = [];
 
+    // Lineup
+    /** @var array<string, mixed> LineupRuleRegistry key => value map */
+    #[ORM\Column(name: 'lineup_rules', type: 'json')]
+    private array $lineupRules = [];
+
     // Workflow
     #[ORM\Column(name: 'verified', type: 'boolean', options: ['default' => false])]
     private bool $verified = false;
@@ -294,6 +299,19 @@ class Season
     public function setScoringRules(array $scoringRules): static
     {
         $this->scoringRules = $scoringRules;
+        return $this;
+    }
+
+    /** @return array<string, mixed> */
+    public function getLineupRules(): array
+    {
+        return $this->lineupRules;
+    }
+
+    /** @param array<string, mixed> $lineupRules */
+    public function setLineupRules(array $lineupRules): static
+    {
+        $this->lineupRules = $lineupRules;
         return $this;
     }
 
