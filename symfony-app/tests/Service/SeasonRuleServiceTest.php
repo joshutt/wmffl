@@ -60,6 +60,26 @@ class SeasonRuleServiceTest extends TestCase
         $this->assertTrue($rules->awards('def_tackle'));
     }
 
+    public function testLineupRulesMergeStoredOverridesOverRegistryDefaults(): void
+    {
+        $row = (new Season())->setSeason(2023)->setLineupRules(['WR' => ['min' => 2, 'max' => 4]]);
+        $rules = $this->serviceReturning($row)->getLineupRules(2023);
+
+        $this->assertSame(4, $rules->max('WR'));
+        // Everything not stored falls back to the registry default
+        $this->assertSame(2, $rules->max('RB'));
+        $this->assertSame(5, $rules->flexTotal());
+    }
+
+    public function testMissingRowSynthesizesDefaultLineupRules(): void
+    {
+        $rules = $this->serviceReturning(null)->getLineupRules(2030);
+
+        $this->assertSame(1, $rules->min('QB'));
+        $this->assertSame(3, $rules->max('WR'));
+        $this->assertSame(5, $rules->flexTotal());
+    }
+
     public function testMissingRowSynthesizesDefaultsWithoutFailing(): void
     {
         $service = $this->serviceReturning(null);
