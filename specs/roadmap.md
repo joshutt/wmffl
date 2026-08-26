@@ -505,11 +505,13 @@ Scope recorded, design deferred until 9a lands. `/history/{season}Season/standin
 (`history_season_standings`) already covers per-season standings, so
 the remaining surface is: the season hub/index pages themselves (each
 with hardcoded playoff-result blurbs — champion, runner-up, scores),
-`schedule`, `draftresults`, `draftdate`, `draftorder`,
+`draftresults`, `draftdate`, `draftorder`,
 `protectioncost`, `seasonposition`, the frozen `teammoney`/`money`
 snapshots, and the old-season-only one-offs (`awards`, `newsletters`,
 `breakdown`, `championpreview`, `playoffexplain`/`preview`/`scenewk*`,
-`summary*.inc`, `weeklyscores`, `weeksummary`). Boxscores
+`summary*.inc`, `weeklyscores`, `weeksummary`). `schedule` was carved out
+as Phase 16a (below), since it needs its own default-season resolution
+logic rather than a plain `{season}` route param. Boxscores
 (`{year}Season/boxscores.php`, 2005/2006 only) are explicitly **not**
 in scope — that's Phase 17.
 
@@ -517,6 +519,68 @@ in scope — that's Phase 17.
    runner-up, playoff scores) currently hardcoded per file
 2. A single generic Symfony route/template driven by that data,
    replacing the 30+ individual season files and directories
+
+## Phase 16a — Standalone schedule page
+
+Legacy: `football/history/common/schedule.php` (shared season-schedule +
+NFL-bye-week render, driven by `schedule` joined to
+`weekmap`/`teamnames`, plus `nflteams`/`nflgames` for byes) included by
+one thin per-year wrapper, `football/history/{year}Season/schedule.php`
+for 2000–2025 (each just hardcodes `$thisSeason` and includes the
+shared file). 1992–1999 instead have static hand-written HTML pages
+(`football/history/{year}Season/9Xschedule.php`, e.g. `92schedule.php`)
+with matchups typed directly into the markup, no query at all. Confirmed
+the DB already has what the shared query needs for those years too —
+`schedule` has full season rows for 1992–1999 (25–60 rows/season,
+`postseason=1` on the title game) and `weekmap` has matching week counts
+— so all 34 seasons (1992–2025) can be driven by one query/service; no
+backfill needed. One real gap: `weekmap.displayDate`/`enddate` are
+zero-dates (`0000-00-00`) for 1992–1999, so the "Sunday, September 7"
+date subheading `common/schedule.php` derives from those columns has
+nothing to compute from pre-2000 — the service must degrade to showing
+just the week/label (e.g. `weekmap.weekname`) when the date is the zero
+date, rather than assuming `displayDate` is always populated the way
+2000+ does. `nflgames` also has zero rows before 2000, so the bye-week
+list is naturally empty there — matches the static pages, which never
+showed byes either, so no special-casing needed for that part. Both
+main-nav "Schedule" links are hardcoded to the current year and need a
+manual edit every season — `symfony-app/templates/base.html.twig:74`
+and `football/base/menu.php:107` both point at
+`/history/2025Season/schedule` (the same class of staleness Phase 10
+fixed for quicklinks). Carved out of Phase 16's per-season scope since
+it needs its own default-season resolution rather than a plain
+`{season}` route param.
+
+1. Port `common/schedule.php`'s two queries (season matchups joined to
+   `weekmap`/`teamnames`, and the NFL bye-week query) into a
+   repository/service, with the zero-date guard above so 1992–1999 renders
+   using only `weekmap.weekname`/`label` instead of a blank or garbled date
+   line.
+2. New `ScheduleController` on its own route, `/schedule/{season?}`
+   (`season` optional int, `requirements: ['season' => '\d+']`): with no
+   `season` given, show the current season if `schedule` has any rows for
+   it, otherwise fall back to the previous season (a season's `schedule`
+   rows aren't populated until its matchups are set, so early in the year
+   the current season has none yet); an explicit `{season}` — including
+   any of 1992–1999 — always renders that season directly through the same
+   service, no fallback.
+3. Update both nav links (`base.html.twig`, `football/base/menu.php`) and
+   the handful of in-page season-hub links that point at either naming
+   pattern — `{year}Season/schedule[.php]` for 2000–2025 (e.g.
+   `history/2013Season.php:12`, `history/2016Season.php:12`,
+   `history/2001Season/lea010920.php:19`) and `{year}Season/9Xschedule.php`
+   for 1992–1999 (e.g. `history/1992Season.php:12`) — to the new route.
+4. Delete all 34 legacy pages: the 26 per-year DB-backed wrapper files
+   (2000–2025), `common/schedule.php`, and the 8 static hand-written pages
+   (1992–1999) they're being replaced by calls to the same service, with a
+   301 for archival links — `/history/{year}Season/schedule[.php]` to
+   `/schedule/{year}` for 2000–2025, `/history/{year}Season/9Xschedule.php`
+   to `/schedule/{year}` for 1992–1999 (`LegacyHistoryRedirectController`
+   or a small dedicated redirect controller).
+5. Spot-check a couple of the replaced 1992–1999 pages' final scores
+   against the new render (the static pages were hand-typed, so this is
+   also a chance to catch any transcription drift against what's actually
+   in `schedule` before the old pages are deleted).
 
 ## Phase 17 — Boxscores redesign
 
