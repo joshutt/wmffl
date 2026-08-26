@@ -131,14 +131,16 @@ class ActivationRepository
     }
 
     /**
-     * Weeks still open for submission, for the week picker.
+     * Weeks still open for submission, for the week picker. Week 0 is the
+     * off-season placeholder row weekmap carries between seasons - never
+     * a week a lineup can be set for, so it never makes this list.
      *
      * @return list<array{week: int, weekname: string}>
      */
     public function getWeekOptions(int $season): array
     {
         $rows = $this->connection->fetchAllAssociative(
-            'SELECT week, weekname FROM weekmap WHERE Season = :season AND EndDate > now() ORDER BY week',
+            'SELECT week, weekname FROM weekmap WHERE Season = :season AND week > 0 AND EndDate > now() ORDER BY week',
             ['season' => $season]
         );
 
@@ -211,14 +213,16 @@ class ActivationRepository
     /**
      * Every week a season has, open or closed, for the pickers that look
      * backwards as well as forwards (getWeekOptions only offers the ones
-     * still accepting submissions).
+     * still accepting submissions). Week 0 (off-season) is excluded here
+     * too - the admin override can reach back through every played week,
+     * but there is never a lineup to set or view for the off-season.
      *
      * @return list<array{week: int, weekname: string}>
      */
     public function getAllWeeks(int $season): array
     {
         $rows = $this->connection->fetchAllAssociative(
-            'SELECT week, weekname FROM weekmap WHERE Season = :season ORDER BY week',
+            'SELECT week, weekname FROM weekmap WHERE Season = :season AND week > 0 ORDER BY week',
             ['season' => $season]
         );
 

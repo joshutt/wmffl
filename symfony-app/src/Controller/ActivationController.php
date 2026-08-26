@@ -64,6 +64,10 @@ class ActivationController extends AbstractController
         $week = $request->query->has('week')
             ? $request->query->getInt('week')
             : $this->seasonWeek->getCurrentWeek();
+        // Week 0 is the off-season placeholder - there is never a lineup
+        // to submit for it, so a current week of 0 (or a hand-edited
+        // ?week=0) lands on week 1 instead.
+        $week = max(1, $week);
         $teamId = (int) $this->auth->getTeamNumber();
 
         return $this->renderForm($season, $week, $teamId, null, []);
@@ -81,6 +85,13 @@ class ActivationController extends AbstractController
 
         $season = $this->seasonWeek->getCurrentSeason();
         $week = $request->request->getInt('week', $this->seasonWeek->getCurrentWeek());
+        if ($week < 1) {
+            // The form never renders week 0 as an option, so this only
+            // happens to a hand-crafted POST - nothing to save either way.
+            $this->addFlash('error', 'Activations cannot be submitted for the off-season.');
+
+            return $this->redirectToRoute('activations_submit');
+        }
         $teamId = (int) $this->auth->getTeamNumber();
 
         $submitted = self::readSelections($request, $this->activationService->getLineupRules($season)->positions());

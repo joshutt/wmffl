@@ -49,7 +49,9 @@ class AdminActivationController extends AbstractAdminController
 
         return $this->render('admin/activations/index.html.twig', [
             'season' => $season,
-            'week' => $this->seasonWeek->getCurrentWeek(),
+            // Week 0 is the off-season placeholder, never a real week to
+            // open a lineup for.
+            'week' => max(1, $this->seasonWeek->getCurrentWeek()),
             'teams' => $this->activations->getTeamOptions($season),
             'weeks' => $this->activations->getAllWeeks($season),
         ]);
@@ -60,6 +62,9 @@ class AdminActivationController extends AbstractAdminController
     {
         if ($redirect = $this->requireCommissioner($auth)) {
             return $redirect;
+        }
+        if ($week < 1) {
+            return $this->redirectToRoute('admin_activations', ['season' => $season]);
         }
 
         return $this->renderForm($teamId, $season, $week, null, []);
@@ -72,6 +77,13 @@ class AdminActivationController extends AbstractAdminController
             return $redirect;
         }
         $this->assertCsrfToken($request, self::CSRF_ID);
+        if ($week < 1) {
+            // Never reachable through the picker, which no longer offers
+            // week 0 - only a hand-crafted URL lands here.
+            $this->addFlash('error', 'Activations cannot be set for the off-season.');
+
+            return $this->redirectToRoute('admin_activations', ['season' => $season]);
+        }
 
         $allowIllegal = $request->request->getBoolean('allowIllegal');
         $submitted = ActivationController::readSelections(
