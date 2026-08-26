@@ -26,7 +26,10 @@ class Article
     #[ORM\Column(name: 'location', length: 50, nullable: true)]
     private ?string $location = null;
 
-    #[ORM\Column(name: 'articleText', type: Types::TEXT, nullable: true)]
+    // MEDIUMTEXT (16MB) rather than TEXT's default 64KB cap - the WYSIWYG
+    // editor can emit enough markup on a long, image-heavy article to
+    // exceed TEXT. See migration Version20260826000000.
+    #[ORM\Column(name: 'articleText', type: Types::TEXT, length: 16777215, nullable: true)]
     private ?string $text = null;
 
     #[ORM\Column(name: 'displayDate', type: Types::DATETIME_MUTABLE)]
