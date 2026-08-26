@@ -235,6 +235,11 @@
                 handle: '.lineup-grip',
                 // A locked player cannot change state, so he cannot move
                 filter: '.lineup-row-locked, .lineup-row-fixed',
+                // Without this, Sortable calls preventDefault() on the
+                // mousedown/touchstart that starts on a filtered row -
+                // which is also how the acting-HC checkbox and <select>
+                // get their clicks, so the dropdown would never open.
+                preventOnFilter: false,
                 animation: 150,
                 // On touch, wait a moment before starting a drag so that
                 // a swipe scrolls the page instead of picking up a player

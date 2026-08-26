@@ -66,6 +66,47 @@ class AdminActivationControllerTest extends TestCase
         $controller->save(6, 2025, 10, Request::create('/admin/activations/6/2025/10', 'POST', self::LEGAL), $this->auth(true));
     }
 
+    public function testTheIndexDefaultsAnOffSeasonCurrentWeekToWeekOne(): void
+    {
+        $service = $this->createMock(ActivationService::class);
+        $service->expects($this->never())->method('buildSubmitView');
+
+        $weeks = $this->createStub(SeasonWeekService::class);
+        $weeks->method('getCurrentSeason')->willReturn(2026);
+        $weeks->method('getCurrentWeek')->willReturn(0);
+
+        $controller = $this->makeController($service, weeks: $weeks);
+        $controller->index(Request::create('/admin/activations'), $this->auth(true));
+
+        $this->assertSame(1, $controller->renderedParams['week']);
+    }
+
+    public function testCannotOpenTheOverrideFormForWeekZero(): void
+    {
+        $service = $this->createMock(ActivationService::class);
+        $service->expects($this->never())->method('buildSubmitView');
+
+        $controller = $this->makeController($service);
+        $response = $controller->edit(6, 2025, 0, $this->auth(true));
+
+        $this->assertInstanceOf(RedirectResponse::class, $response);
+        $this->assertSame(['admin_activations', ['season' => 2025]], $controller->redirectedTo);
+    }
+
+    public function testCannotSaveForWeekZero(): void
+    {
+        $service = $this->createMock(ActivationService::class);
+        $service->expects($this->never())->method('save');
+
+        $controller = $this->makeController($service);
+        $response = $controller->save(6, 2025, 0,
+            Request::create('/admin/activations/6/2025/0', 'POST', self::LEGAL), $this->auth(true));
+
+        $this->assertInstanceOf(RedirectResponse::class, $response);
+        $this->assertSame(['admin_activations', ['season' => 2025]], $controller->redirectedTo);
+        $this->assertSame('error', $controller->flashed[0]);
+    }
+
     public function testTheOverrideFormIsBuiltWithLocksBypassed(): void
     {
         $service = $this->createMock(ActivationService::class);
@@ -155,15 +196,20 @@ class AdminActivationControllerTest extends TestCase
         return $auth;
     }
 
-    private function makeController(ActivationService $service, bool $csrfValid = true): AdminActivationController
-    {
+    private function makeController(
+        ActivationService $service,
+        bool $csrfValid = true,
+        ?SeasonWeekService $weeks = null
+    ): AdminActivationController {
         $repo = $this->createStub(ActivationRepository::class);
         $repo->method('getTeamOptions')->willReturn([['teamid' => 6, 'name' => 'Sixes']]);
         $repo->method('getAllWeeks')->willReturn([['week' => 1, 'weekname' => 'Week 1']]);
 
-        $weeks = $this->createStub(SeasonWeekService::class);
-        $weeks->method('getCurrentSeason')->willReturn(2026);
-        $weeks->method('getCurrentWeek')->willReturn(1);
+        if ($weeks === null) {
+            $weeks = $this->createStub(SeasonWeekService::class);
+            $weeks->method('getCurrentSeason')->willReturn(2026);
+            $weeks->method('getCurrentWeek')->willReturn(1);
+        }
 
         return new class($service, $repo, $weeks, $csrfValid) extends AdminActivationController {
             public ?string $renderedView = null;

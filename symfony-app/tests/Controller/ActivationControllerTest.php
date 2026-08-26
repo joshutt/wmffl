@@ -69,6 +69,47 @@ class ActivationControllerTest extends TestCase
             self::LEGAL + ['week' => '3', 'teamid' => '99', 'season' => '1999']));
     }
 
+    public function testAnOffSeasonCurrentWeekDefaultsTheFormToWeekOne(): void
+    {
+        $service = $this->createMock(ActivationService::class);
+        $service->method('getLineupRules')->willReturn(LineupRules::defaults());
+        $service->expects($this->once())->method('buildSubmitView')
+            ->with(2026, 1, 6, null)
+            ->willReturn(['starters' => [], 'reserves' => [], 'allLock' => false, 'actingHc' => null]);
+
+        $weeks = $this->createStub(SeasonWeekService::class);
+        $weeks->method('getCurrentSeason')->willReturn(2026);
+        $weeks->method('getCurrentWeek')->willReturn(0);
+
+        $controller = $this->makeController(service: $service, weeks: $weeks);
+        $controller->submit(Request::create('/activations/submit'));
+    }
+
+    public function testAHandCraftedWeekZeroQueryStillLandsOnWeekOne(): void
+    {
+        $service = $this->createMock(ActivationService::class);
+        $service->method('getLineupRules')->willReturn(LineupRules::defaults());
+        $service->expects($this->once())->method('buildSubmitView')
+            ->with(2026, 1, 6, null)
+            ->willReturn(['starters' => [], 'reserves' => [], 'allLock' => false, 'actingHc' => null]);
+
+        $controller = $this->makeController(service: $service);
+        $controller->submit(Request::create('/activations/submit', 'GET', ['week' => '0']));
+    }
+
+    public function testAPostForWeekZeroIsRejectedWithoutTouchingTheService(): void
+    {
+        $service = $this->createMock(ActivationService::class);
+        $service->expects($this->never())->method('save');
+
+        $controller = $this->makeController(service: $service);
+        $response = $controller->save(Request::create('/activations/submit', 'POST', self::LEGAL + ['week' => '0']));
+
+        $this->assertInstanceOf(RedirectResponse::class, $response);
+        $this->assertSame(['activations_submit', []], $controller->redirectedTo);
+        $this->assertSame('error', $controller->flashed[0]);
+    }
+
     public function testAValidLineupFlashesAndRedirectsToTheLineupView(): void
     {
         $service = $this->createStub(ActivationService::class);
@@ -217,7 +258,8 @@ class ActivationControllerTest extends TestCase
         bool $loggedIn = true,
         ?ActivationService $service = null,
         ?ActivationRepository $repo = null,
-        bool $csrfValid = true
+        bool $csrfValid = true,
+        ?SeasonWeekService $weeks = null
     ): ActivationController {
         $service ??= $this->defaultService();
 
@@ -225,9 +267,11 @@ class ActivationControllerTest extends TestCase
         $auth->method('isLoggedIn')->willReturn($loggedIn);
         $auth->method('getTeamNumber')->willReturn(6);
 
-        $weeks = $this->createStub(SeasonWeekService::class);
-        $weeks->method('getCurrentSeason')->willReturn(2026);
-        $weeks->method('getCurrentWeek')->willReturn(1);
+        if ($weeks === null) {
+            $weeks = $this->createStub(SeasonWeekService::class);
+            $weeks->method('getCurrentSeason')->willReturn(2026);
+            $weeks->method('getCurrentWeek')->willReturn(1);
+        }
 
         return new class($service, $repo ?? $this->createStub(ActivationRepository::class), $auth, $weeks, $csrfValid)
             extends ActivationController {

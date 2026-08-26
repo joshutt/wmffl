@@ -197,4 +197,26 @@ class ActivationRepositoryTest extends TestCase
         $this->assertStringContainsString('EndDate > now()', $sqls[0]);
         $this->assertStringNotContainsString('EndDate', $sqls[1]);
     }
+
+    /** Week 0 is the off-season placeholder row - never a week to pick. */
+    public function testWeekZeroIsExcludedFromBothPickers(): void
+    {
+        $sqls = [];
+        $conn = $this->createMock(Connection::class);
+        $conn->method('fetchAllAssociative')->willReturnCallback(
+            function (string $sql) use (&$sqls) {
+                $sqls[] = $sql;
+
+                return [];
+            }
+        );
+
+        $repo = new ActivationRepository($conn);
+        $repo->getWeekOptions(2025);
+        $repo->getAllWeeks(2025);
+
+        foreach ($sqls as $sql) {
+            $this->assertStringContainsString('week > 0', $sql);
+        }
+    }
 }
