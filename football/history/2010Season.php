@@ -9,7 +9,7 @@ include "base/menu.php";
 <TABLE ALIGN=CENTER WIDTH=100%>
 <tr>
 
-<td ALIGN=Left><A HREF="2010Season/schedule.php">
+<td ALIGN=Left><A HREF="/schedule/2010">
 <IMG SRC="/images/football.jpg" BORDER=0>Schedule</A></td>
 
 <td>
