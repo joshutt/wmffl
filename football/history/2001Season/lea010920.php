@@ -16,7 +16,7 @@ be played, the WMFFL will also play a full schedule.</P>
 
 <P>All games from week 2 will be played week 3 and all other games will
 be pushed back one week.  This means that the playoffs will begin December 22-23.
-The revised schedule is now <A HREF="\history\2001Season\schedule.php">available</A>.</P>
+The revised schedule is now <A HREF="/schedule/2001">available</A>.</P>
 
 <P>It should also be noted that due to these events and the moving of the
 baseball schedule, the Oakland Raiders and Dallas Cowboys have moved their

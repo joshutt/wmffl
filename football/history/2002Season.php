@@ -12,7 +12,7 @@
 <TR>
 
 
-<TD ALIGN=Left><A HREF="2002Season/schedule.php">
+<TD ALIGN=Left><A HREF="/schedule/2002">
 <IMG SRC="/images/football.jpg" BORDER=0>Schedule</A></TD>
 
 <TD>

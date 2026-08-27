@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ season }} Schedule - WMFFL{% endblock %}
+
+{% block content %}
+<div class="cat text-center">{{ season }} SCHEDULE</div>
+
+{% if weeks|length > 1 %}
+    <div class="text-center py-2">
+        {% for group in weeks %}<a href="#{{ group.anchor }}">{{ group.heading }}</a>{% if not loop.last %} | {% endif %}{% endfor %}
+    </div>
+{% endif %}
+
+<div class="container-fluid">
+    {% for group in weeks %}
+        <a id="{{ group.anchor }}"></a>
+        <h4 class="text-center mt-4">{{ group.heading }}</h4>
+        {% if group.dateLine %}<div class="text-center">{{ group.dateLine }}</div>{% endif %}
+        {% if group.byes %}<div class="text-center"><small>NFL Byes: {{ group.byes }}</small></div>{% endif %}
+        <table class="table table-sm w-auto mx-auto">
+            {% for game in group.games %}
+                <tr>
+                    <td class="text-right"><a href="{{ path('team_schedule', {id: game.winId, season: season}) }}">{{ game.winName }}</a></td>
+                    <td class="text-center">{% if game.showScores %}{{ game.winScore }}{% endif %}</td>
+                    <td class="text-center">{% if game.showScores %}&nbsp;{% else %}vs{% endif %}</td>
+                    <td class="text-center">{% if game.showScores %}{{ game.loseScore }}{% endif %}</td>
+                    <td><a href="{{ path('team_schedule', {id: game.loseId, season: season}) }}">{{ game.loseName }}</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endfor %}
+</div>
+{% endblock %}

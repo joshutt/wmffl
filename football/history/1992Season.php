@@ -9,7 +9,7 @@
 <HR size = "1">
 <BR>
 <TABLE ALIGN=CENTER WIDTH=100%>
-<TR><TD><A HREF="1992Season/92schedule.php">
+<TR><TD><A HREF="/schedule/1992">
 <IMG SRC="../images/football.jpg" BORDER=0>1992 Schedule</A></TD>
 <TD><A HREF="1992Season/92awards.php">
 <IMG SRC="../images/football.jpg" BORDER=0>1992 Awards</A></TD>
