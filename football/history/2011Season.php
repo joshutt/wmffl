@@ -22,7 +22,7 @@ include "base/menu.php";
 <IMG SRC="/images/football.jpg" BORDER=0>League Leaders</A>
 </td>
 
-<td ALIGN=Left><A HREF="2011Season/draftresults.php">
+<td ALIGN=Left><A HREF="/transactions/draftresults/2011">
 <IMG SRC="/images/football.jpg" BORDER=0>Draft Results</A></td>
 </tr>
 

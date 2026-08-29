@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ year }} Draft Results - WMFFL{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center">
+    <div>
+        {% if prevYear %}<a href="{{ path('transactions_draft_results', {year: prevYear}) }}" class="btn btn-wmffl">&laquo; {{ prevYear }}</a>{% endif %}
+    </div>
+    <h1 class="text-center mb-0">{{ year }} Draft Results</h1>
+    <div>
+        {% if nextYear %}<a href="{{ path('transactions_draft_results', {year: nextYear}) }}" class="btn btn-wmffl">{{ nextYear }} &raquo;</a>{% endif %}
+    </div>
+</div>
+
+<div class="container-fluid">
+    <form method="get" action="{{ path('transactions_draft_results', {year: year}) }}" class="form-inline justify-content-center my-3">
+        <label class="mx-2" for="round">Round</label>
+        <select class="form-control" id="round" name="round">
+            <option value="ALL">ALL</option>
+            {% for round in options.rounds %}
+                <option value="{{ round }}"{% if filters.round == round %} selected{% endif %}>{{ round }}</option>
+            {% endfor %}
+        </select>
+
+        <label class="mx-2" for="pick">Pick</label>
+        <select class="form-control" id="pick" name="pick">
+            <option value="ALL">ALL</option>
+            {% for pick in options.picks %}
+                <option value="{{ pick }}"{% if filters.pick == pick %} selected{% endif %}>{{ pick }}</option>
+            {% endfor %}
+        </select>
+
+        <label class="mx-2" for="team">Team</label>
+        <select class="form-control" id="team" name="team">
+            <option value="ALL">ALL</option>
+            {% for team in options.teams %}
+                <option value="{{ team.teamid }}"{% if filters.team == team.teamid %} selected{% endif %}>{{ team.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label class="mx-2" for="pos">Pos</label>
+        <select class="form-control" id="pos" name="pos">
+            <option value="ALL">ALL</option>
+            {% for pos in options.positions %}
+                <option value="{{ pos }}"{% if filters.pos == pos %} selected{% endif %}>{{ pos }}</option>
+            {% endfor %}
+        </select>
+
+        <label class="mx-2" for="nfl">NFL</label>
+        <select class="form-control" id="nfl" name="nfl">
+            <option value="ALL">ALL</option>
+            {% for nfl in options.nflTeams %}
+                <option value="{{ nfl }}"{% if filters.nfl == nfl %} selected{% endif %}>{{ nfl }}</option>
+            {% endfor %}
+        </select>
+
+        <div class="text-center mx-2">
+            <button type="submit" class="btn btn-wmffl">Submit</button>
+        </div>
+        {% if filters.round or filters.pick or filters.team or filters.pos or filters.nfl %}
+            <a class="mx-2" href="{{ path('transactions_draft_results', {year: year}) }}">Clear filters</a>
+        {% endif %}
+    </form>
+
+    {% if rows is empty %}
+        <p class="text-center text-muted">No picks match these filters.</p>
+    {% else %}
+        <p class="text-muted">{{ rows|length }} pick{{ rows|length != 1 ? 's' : '' }}</p>
+        <table class="table table-sm table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="round">Rd</th>
+                    <th class="pick">Pick</th>
+                    <th class="franchise">Franchise</th>
+                    <th class="selection">Selection</th>
+                    <th class="pos">Pos</th>
+                    <th class="nfl">NFL</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                <tr id="pick_{{ row.round }}_{{ row.pick }}">
+                    <td class="round">{{ row.round }}</td>
+                    <td class="pick">{{ row.pick ?? '—' }}</td>
+                    <td class="franchise">
+                        {{ row.team }}
+                        {% if row.fromFranchise %}<br><small class="text-muted">from {{ row.fromFranchise }}</small>{% endif %}
+                    </td>
+                    <td class="selection">{{ row.selection ?? '—' }}</td>
+                    <td class="pos">{{ row.pos ?? '—' }}</td>
+                    <td class="nfl">{{ row.nfl ?? '—' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
+{% endblock %}

@@ -18,7 +18,7 @@
 <A HREF="/transactions/transactions.php?year=2007"><IMG SRC="/images/football.jpg" BORDER=0>Transactions</A>
 </td>
 
-<td ALIGN=Left><A HREF="2007Season/draftresults.php">
+<td ALIGN=Left><A HREF="/transactions/draftresults/2007">
 <IMG SRC="/images/football.jpg" BORDER=0>Draft Results</A></td>
 </tr>
 

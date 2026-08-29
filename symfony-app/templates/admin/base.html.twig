@@ -70,6 +70,10 @@
                class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_draftdates' %} active{% endif %}">
                 Draft Dates
             </a>
+            <a href="{{ path('admin_draft_results') }}"
+               class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') starts with 'admin_draft_results' %} active{% endif %}">
+                Draft Results
+            </a>
             <a href="{{ path('admin_toomanplayers') }}"
                class="list-group-item list-group-item-action{% if app.request.attributes.get('_route') == 'admin_toomanplayers' %} active{% endif %}">
                 Too Many Players

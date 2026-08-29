@@ -1,0 +1,71 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Admin - Draft Results{% endblock %}
+
+{% block admin_content %}
+<h2 class="mt-2">Draft Results — {{ year }}</h2>
+<p class="text-muted">Set or clear a pick's selection. Pick ownership isn't editable here.</p>
+
+<table class="table table-sm table-striped table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>Rd</th>
+            <th>Pick</th>
+            <th>Franchise</th>
+            <th>Selection</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in rows %}
+        <tr>
+            <td>{{ row.round }}</td>
+            <td>{{ row.pick ?? '—' }}</td>
+            <td>{{ row.team }}{% if row.fromFranchise %}<br><small class="text-muted">from {{ row.fromFranchise }}</small>{% endif %}</td>
+            <td>{{ row.selection ?? '—' }}</td>
+            <td class="text-center">
+                <a class="btn btn-sm btn-wmffl" href="{{ path('admin_draft_results', {year: year, editPick: row.id}) }}">Edit</a>
+                {% if row.selection %}
+                <form method="post" action="{{ path('admin_draft_results_set', {year: year, id: row.id}) }}" class="d-inline">
+                    <input type="hidden" name="_token" value="{{ csrf_token('admin_draft_results') }}">
+                    <button type="submit" class="btn btn-sm btn-wmffl">Clear</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+
+        {% if editPickId == row.id %}
+        <tr>
+            <td colspan="5">
+                <form method="get" action="{{ path('admin_draft_results', {year: year}) }}" class="form-inline mb-2">
+                    <input type="hidden" name="editPick" value="{{ row.id }}">
+                    <label class="mr-2" for="q-{{ row.id }}">Player search</label>
+                    <input type="text" class="form-control mr-2" id="q-{{ row.id }}" name="q" value="{{ q }}" placeholder="First or last name">
+                    <button type="submit" class="btn btn-sm btn-wmffl">Search</button>
+                </form>
+
+                {% if searchResults is not null %}
+                    {% if searchResults is empty %}
+                    <p class="text-muted">No players match "{{ q }}".</p>
+                    {% else %}
+                    <ul class="list-unstyled">
+                        {% for player in searchResults %}
+                        <li>
+                            <form method="post" action="{{ path('admin_draft_results_set', {year: year, id: row.id}) }}" class="d-inline">
+                                <input type="hidden" name="_token" value="{{ csrf_token('admin_draft_results') }}">
+                                <input type="hidden" name="playerId" value="{{ player.id }}">
+                                <button type="submit" class="btn btn-sm btn-wmffl">Assign</button>
+                            </form>
+                            {{ player.firstname }} {{ player.lastname }} ({{ player.pos }}{% if player.nfl_team %}-{{ player.nfl_team }}{% endif %})
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                {% endif %}
+            </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
