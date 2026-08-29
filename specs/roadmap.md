@@ -316,6 +316,40 @@ should be small enough to land as its own PR.
   848 tests green. Manual E2E checklist in `validation.md` not run
   end-to-end this pass (see that file); Josh to confirm before merge. Not
   yet PR'd.
+- Admin user management (Phase 14 complete, 2026-08-21,
+  `specs/2026-08-19-admin-user-management/`, branch
+  `phase14-admin-user-management`, merged via PR #59): `AdminUserController`
+  (`/admin/users` index/new/edit) over the `user` table (singular) + team
+  assignment via `owners`, new `UserRepository`/`OwnerRepository`/
+  `UserTeamAssignmentService`. No password field anywhere (new users
+  self-serve via existing `login/forgotpassword.php`); `commish` never
+  exposed; `primaryOwner` is an editable checkbox. `user.blogaddress`
+  (confirmed dead) removed from the entity and dropped via migration
+  `Version20260819000000`. No delete route (legacy has no user-delete
+  concept). 869 tests green. Three real bugs found and fixed during
+  manual validation, none caught by the original test suite:
+  `UserTeamAssignmentService` calling `persist()` before `setTeam()` on a
+  composite-PK `Owner`; `App\Entity\Owner::$primary`'s column mapping
+  missing backtick-quoting around the MySQL reserved word `primary`;
+  `owners.primary` hardcoded to `1` and never synced on reassign/demote.
+- Standalone schedule page (Phase 16a complete, 2026-08-27,
+  `specs/2026-08-26-phase16a-schedule/`, branch `phase16a-schedule`,
+  merged via PR #61): `ScheduleController`/`ScheduleRepository`/
+  `ScheduleService` on `/schedule/{season?}`, all 34 legacy schedule files
+  deleted (`git rm`) plus 301 redirects (`LegacyScheduleRedirectController`
+  covering all three legacy URL shapes in one route), both main-nav
+  "Schedule" links updated to a plain `/schedule` href. 892 tests green;
+  full 1992–2025 manual sweep against dev DB, spot-checked against
+  archived static page content. Four real bugs found and fixed vs. the
+  spec's assumptions: `weekmap.displayDate` is DATETIME not DATE (zero
+  value `0000-00-00 00:00:00`, not the bare `0000-00-00` assumed);
+  `nflgames`-empty-season bye query had no season guard, so every one of
+  the 32 NFL teams showed as "on bye" for 1992–2007 seasons instead of an
+  empty list; postseason quick-jump anchors collided when two groups
+  shared a `weekmap.weekname` (e.g. "Playoffs"); relocated NFL franchises
+  (`OAK`→`LV`, `SD`→`LAC`, `STL`/`LA`→`LAR`) showed as perpetually on bye
+  in pre-move seasons since `nflteams` only stores the current code —
+  this last one caught by Josh on review, not the original validation pass.
 
 ## Phase 11 — Small fixes (complete)
 
@@ -425,7 +459,7 @@ migration; this phase fixes it instead of carrying it to the Final phase.
    still falls through and serves correctly, and a forced legacy fatal error
    is captured by Monolog.
 
-## Phase 14 — Admin user management
+## Phase 14 — Admin user management (complete)
 
 Legacy has no dedicated user-management UI; users/owners are edited
 directly in the database. Add an admin tool covering both the `users`
@@ -520,7 +554,7 @@ in scope — that's Phase 17.
 2. A single generic Symfony route/template driven by that data,
    replacing the 30+ individual season files and directories
 
-## Phase 16a — Standalone schedule page
+## Phase 16a — Standalone schedule page (complete)
 
 Legacy: `football/history/common/schedule.php` (shared season-schedule +
 NFL-bye-week render, driven by `schedule` joined to
