@@ -15,7 +15,7 @@ include 'base/menu.php';
         </li>
         <li class="nav-item col-6 col-md-4 col-lg-3 my-2"><a class="nav-link" href="/stats/leaders?season=2025">League
                 Leaders</a></li>
-        <li class="nav-item col-6 col-md-4 col-lg-3 my-2"><a class="nav-link" href="draftresults">Draft Results</a></li>
+        <li class="nav-item col-6 col-md-4 col-lg-3 my-2"><a class="nav-link" href="/transactions/draftresults/2025">Draft Results</a></li>
         <li class="nav-item col-6 col-md-4 col-lg-3 my-2"><a class="nav-link" href="#playoffs">Playoffs</a></li>
         <li class="nav-item col-6 col-md-4 col-lg-3 my-2"><a class="nav-link"
                                                              href="/transactions/transactions?year=2025">Transactions</a>
