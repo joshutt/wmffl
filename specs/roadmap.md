@@ -539,13 +539,15 @@ Scope recorded, design deferred until 9a lands. `/history/{season}Season/standin
 (`history_season_standings`) already covers per-season standings, so
 the remaining surface is: the season hub/index pages themselves (each
 with hardcoded playoff-result blurbs — champion, runner-up, scores),
-`draftresults`, `draftdate`, `draftorder`,
+`draftdate`, `draftorder`,
 `protectioncost`, `seasonposition`, the frozen `teammoney`/`money`
 snapshots, and the old-season-only one-offs (`awards`, `newsletters`,
 `breakdown`, `championpreview`, `playoffexplain`/`preview`/`scenewk*`,
 `summary*.inc`, `weeklyscores`, `weeksummary`). `schedule` was carved out
 as Phase 16a (below), since it needs its own default-season resolution
-logic rather than a plain `{season}` route param. Boxscores
+logic rather than a plain `{season}` route param, and `draftresults` was
+carved out as Phase 16b (below), since it belongs under `/transactions`
+rather than `/history`. Boxscores
 (`{year}Season/boxscores.php`, 2005/2006 only) are explicitly **not**
 in scope — that's Phase 17.
 
@@ -615,6 +617,63 @@ it needs its own default-season resolution rather than a plain
    against the new render (the static pages were hand-typed, so this is
    also a chance to catch any transcription drift against what's actually
    in `schedule` before the old pages are deleted).
+
+## Phase 16b — Draft results under Transactions
+
+Legacy: `football/history/common/draftresults.php` (shared draft-board
+render, driven by `draftpicks` joined to `teamnames`/`players`, plus an
+as-of `nflrosters` join for each pick's NFL team, with a round/pick/
+team/pos/NFL filter form posting back to itself) included by one thin
+per-year wrapper, `football/history/{year}Season/draftresults.php`, for
+2007–2025 (19 files). Carved out of Phase 16's per-season scope at
+Josh's request: draft results belong under Transactions, not History,
+and the new page's URL should carry the year on the path rather than
+living at a bare per-season hub route.
+
+`draftpicks` actually has real (non-null `playerid`) rows from season
+**2006** on — one year earlier than any legacy `draftresults` page ever
+existed for (`DraftPickRepository::getNumberOnePicks()`'s doc comment
+already notes "pre-2006 rows have the pick skeleton but playerid NULL",
+confirmed live: `season=2005` is 120 rows all-NULL `playerid`,
+`season=2006` on is real). The new route should cover 2006–current, not
+just replicate the legacy 2007–2025 range. Future seasons already have
+placeholder rows too — `draftpicks` currently goes up to `season=2029`
+with most `playerid`s NULL (the draft hasn't happened yet) — the service
+needs a sensible empty/partial-draft render for those rather than
+assuming every pick in range is filled.
+
+1. Port `common/draftresults.php`'s two queries (the pick list with its
+   round/pick/team/pos/NFL filters, and the two distinct-value lookups
+   that populate the filter dropdowns) into a repository/service —
+   `DraftPickRepository` already exists (`getNumberOnePicks()` for the
+   Phase 9a pastdrafts page) and is the natural home; bind the filter
+   values instead of the legacy file's direct `$_REQUEST`-into-SQL
+   interpolation (same fix pattern as Phase 3's `teams/compare` and
+   Phase 15's activations submit).
+2. New `DraftResultsController` on `/transactions/draftresults/{year?}`
+   (`year` optional int, `requirements: ['year' => '\d+']`): with no
+   `year` given, show the current season if it has any drafted (non-NULL
+   `playerid`) picks, otherwise fall back to the most recent season that
+   does; an explicit `{year}` — including 2006 — always renders that
+   season directly.
+3. Reuse the existing round/pick/team/pos/NFL filter UI, submitting via
+   GET query params on the same route rather than POST-to-self, so a
+   filtered view is a shareable/bookmarkable URL.
+4. Update every reference that still points at the legacy path: the
+   2007–2017 flat per-season pages' hub links
+   (`history/{year}Season.php`, e.g. `history/2008Season.php:25`), the
+   2018–2025 season-directory `index.php` nav links (e.g.
+   `history/2020Season/index.php:15`), and any link Phase 16's generic
+   season-hub template (once built) would otherwise have pointed at
+   `draftresults` under `/history/{year}Season/` — point it at
+   `/transactions/draftresults/{year}` instead.
+5. Delete `football/history/common/draftresults.php` and all 19 per-year
+   wrapper files, with a 301 from `/history/{year}Season/draftresults[.php]`
+   to `/transactions/draftresults/{year}` for every year that had a
+   legacy page (`LegacyTransactionRedirectController` or a small
+   dedicated redirect controller, following the Phase 16a precedent of
+   one regex-driven route covering all affected years rather than one
+   route per year).
 
 ## Phase 17 — Boxscores redesign
 
