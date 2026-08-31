@@ -597,7 +597,9 @@ in scope — that's Phase 17.
 1. Design a data model for the per-season hub content (champion,
    runner-up, playoff scores) currently hardcoded per file
 2. A single generic Symfony route/template driven by that data,
-   replacing the 30+ individual season files and directories
+   replacing the 30+ individual season files and directories, linking
+   `Draft Results` to `/transactions/draftresults/{year}` (Phase 16b) —
+   do not resurrect a history-local draft page
 
 ## Phase 16a — Standalone schedule page (complete)
 
