@@ -23,7 +23,8 @@ JS or Stimulus-style progressive enhancement rather than a SPA framework.
 
 ## Legacy stack (being phased out)
 
-- Procedural PHP in `/football/`, manual routing via `front_controller.php`
+- Procedural PHP in `/football/`, no router of its own — `LegacyBridge`
+  (Symfony side) resolves each request straight to the matching file
 - Direct `mysqli` connections (`football/base/conn.php`)
 - A separate legacy Doctrine EntityManager for entities under `src/orm/`,
   configured via `football/bootstrap.php` and `conf/db.ini`
