@@ -34,3 +34,12 @@ services:
 
     App\Service\LegacyErrorPageService:
         public: true
+
+    # Runs SET time_zone on every new DB connection, regardless of which
+    # Doctrine driver is resolved (pdo_mysql, mysqli, ...). See doctrine.yaml.
+    # DoctrineBundle autoconfigures the doctrine.middleware tag for any
+    # service implementing Middleware, so only the constructor arg is
+    # supplied here - an explicit tag would double-register it.
+    App\Doctrine\TimezoneMiddleware:
+        arguments:
+            $timezone: '%env(APP_TIMEZONE)%'
