@@ -31,11 +31,21 @@ class AdminDashboardController extends AbstractAdminController
 
         $activeTeams = $em->getRepository(Team::class)->findBy(['active' => true]);
 
+        // Timezone debug: confirms the DB session is actually picking up
+        // APP_TIMEZONE (doctrine.yaml) rather than the DB server's own
+        // system/global timezone. Remove once the prod timezone fix is
+        // confirmed.
+        $dbTime = $em->getConnection()->fetchAssociative(
+            'SELECT NOW() AS now, @@session.time_zone AS session_tz, '
+            .'@@global.time_zone AS global_tz, @@system_time_zone AS system_tz'
+        );
+
         return $this->render('admin/dashboard/index.html.twig', [
             'season'      => $seasonWeek->getCurrentSeason(),
             'weekName'    => $seasonWeek->getWeekName(),
             'users'       => $users,
             'teamCount'   => count($activeTeams),
+            'dbTime'      => $dbTime,
         ]);
     }
 }

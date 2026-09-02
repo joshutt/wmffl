@@ -14,6 +14,13 @@ require_once dirname(__DIR__).'/vendor/autoload.php';
 
 (new Dotenv())->bootEnv(dirname(__DIR__).'/.env');
 
+// PHP's own default timezone (used by date()/new DateTime() etc. that
+// aren't reading from the DB) is UTC unless set explicitly - php.ini's
+// date.timezone is left unset. Pin it to APP_TIMEZONE so PHP-side date
+// handling matches the DB session timezone set in doctrine.yaml,
+// regardless of the host server's own system timezone.
+date_default_timezone_set($_SERVER['APP_TIMEZONE'] ?? $_ENV['APP_TIMEZONE'] ?? 'America/New_York');
+
 /*
  * The kernel will always be available globally, allowing you to
  * access it from your existing application and through it the

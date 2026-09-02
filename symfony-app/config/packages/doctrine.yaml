@@ -2,6 +2,12 @@ doctrine:
   dbal:
     url: '%env(resolve:DATABASE_URL)%'
     charset: utf8mb4
+    # Force the MySQL session's time_zone to APP_TIMEZONE on every new
+    # connection (PDO::MYSQL_ATTR_INIT_COMMAND = 1002), so date/time
+    # comparisons like NOW() are consistent regardless of the DB server's
+    # own system timezone. See APP_TIMEZONE in .env.
+    options:
+      1002: "SET time_zone = '%env(APP_TIMEZONE)%'"
     default_table_options:
       charset: utf8mb4
       collate: utf8mb4_unicode_ci
