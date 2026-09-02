@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-include '../football/activate/scoreFunctions.php';
+include __DIR__ . '/../football/activate/scoreFunctions.php';
 
 class LiveGameTest extends TestCase
 {

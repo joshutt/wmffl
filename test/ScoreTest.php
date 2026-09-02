@@ -3,7 +3,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use PHPUnit\Framework\TestCase;
 
-include '../football/base/scoring.php';
+include __DIR__ . '/../football/base/scoring.php';
 
 class ScoreTest extends TestCase
 {

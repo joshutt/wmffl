@@ -1,15 +1,10 @@
 [DB_Values]
-dbName=[DBNAME]
-userName=[DBUSER]
+dbname=[DBNAME]
+username=[DBUSER]
 password=[DBPASSWORD]
 
 [Paths]
 libPath = [PATH_TO_LIBOBJ]
-scriptsPath = [PATH_TO_SCRIPTS_DIR]
-
-[DB_DataObject]
-database = mysql://[DBUSER]:[DBPASSWORD]@localhost/[DBNAME]
-schema_location   = [PATH_TO_DATAOBJECTS_SCHEMA_DIR]
-class_location    = [PATH_TO_DATAOBJECTS_CLASS_DIR]
-require_prefix    = DataObjects/
-class_prefix      = DataObjects_
+wwwPath = [PATH_TO_WWW_DIR]
+pyInjPath = [PATH_TO_INJURY_IMPORT_SCRIPTS_DIR]
+injEnvDir = [PATH_TO_PYTHON_VENV_DIR]

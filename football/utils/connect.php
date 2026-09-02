@@ -22,7 +22,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 // Establish database connections
-$conn = mysqli_connect('localhost', $ini['userName'], $ini['password'], $ini['dbName']);
+$conn = mysqli_connect('localhost', $ini['username'], $ini['password'], $ini['dbname']);
 
 // Determine the current season and current week, but not every time, use cachin
 //if (!isset($_SESSION["lastFetch"]) || time() > $lastFetch + 60 * 60) {

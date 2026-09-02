@@ -22,9 +22,9 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // establish Database connection information
-$conn = mysqli_connect('localhost', $ini['userName'], $ini['password'], $ini['dbName']);
-//$conn = new mysqli('localhost', $ini['userName'], $ini['password'], $ini['dbName']);
-//mysqli_select_db($conn, $ini["dbName"]);
+$conn = mysqli_connect('localhost', $ini['username'], $ini['password'], $ini['dbname']);
+//$conn = new mysqli('localhost', $ini['username'], $ini['password'], $ini['dbname']);
+//mysqli_select_db($conn, $ini["dbname"]);
 
 // Make sure timezone is correct
 //$tzQuery = "SET time_zone = 'America/New_York';";

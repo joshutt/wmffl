@@ -20,10 +20,10 @@ $config = ORMSetup::createAttributeMetadataConfiguration(
 // configure the database connection
 $connection = DriverManager::getConnection([
     'driver' => 'pdo_mysql',
-    'user' => $ini['userName'],
+    'user' => $ini['username'],
     'password' => $ini['password'],
     'host' => $ini['host'],
-    'dbname' => $ini['dbName']
+    'dbname' => $ini['dbname']
 //    'dbname' => 'wmffl'
 ], $config);
 
