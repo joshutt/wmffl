@@ -32,26 +32,12 @@
     </div>
 </div>
 
-{% if dbTime %}
-<div class="row mb-4">
-    <div class="col-12">
-        <div class="card text-center">
-            <div class="card-body">
-                <h5 class="card-title">DB Time Debug</h5>
-                <p class="card-text mb-0">
-                    NOW(): <strong>{{ dbTime.now }}</strong>
-                    &nbsp;|&nbsp;
-                    session tz: <strong>{{ dbTime.session_tz }}</strong>
-                    &nbsp;|&nbsp;
-                    global tz: <strong>{{ dbTime.global_tz }}</strong>
-                    &nbsp;|&nbsp;
-                    system tz: <strong>{{ dbTime.system_tz }}</strong>
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
-{% endif %}
+
+<p class="text-muted small mb-4">
+    Server time: {{ serverTime|date('Y-m-d g:i:s a') }} ({{ timezone }})
+    &nbsp;&middot;&nbsp;
+    PHP {{ phpVersion }}
+</p>
 
 <h4>Active Users ({{ users|length }})</h4>
 <table class="table table-sm table-striped">
