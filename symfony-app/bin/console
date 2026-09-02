@@ -15,6 +15,11 @@ if (!is_file(dirname(__DIR__).'/vendor/autoload_runtime.php')) {
 require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
 return function (array $context) {
+    // Keep PHP's default timezone consistent with the web entry point
+    // (public/index.php) and the DB session timezone (doctrine.yaml),
+    // regardless of the host server's own system timezone.
+    date_default_timezone_set($context['APP_TIMEZONE'] ?? 'America/New_York');
+
     $kernel = new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
 
     return new Application($kernel);
