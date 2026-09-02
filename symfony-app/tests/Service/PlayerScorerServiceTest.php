@@ -107,6 +107,19 @@ class PlayerScorerServiceTest extends TestCase
         $this->assertSame(21, $this->scorer->total('K', $row, $rules2023));
     }
 
+    public function testKickerOneOfEachFgTierAcross2025And2026Rules(): void
+    {
+        $row = $this->row(['FG30' => 1, 'FG40' => 1, 'FG50' => 1, 'FG60' => 1]);
+
+        // 2025: unchanged from the 2024+ defaults (3+4+5+7)
+        $rules2025 = ScoringRules::defaults();
+        $this->assertSame(19, $this->scorer->total('K', $row, $rules2025));
+
+        // 2026: field goals de-emphasized league-wide (2+2+4+6)
+        $rules2026 = ScoringRules::fromArray(['k_fg30' => 2, 'k_fg40' => 2, 'k_fg50' => 4, 'k_fg60' => 6]);
+        $this->assertSame(14, $this->scorer->total('K', $row, $rules2026));
+    }
+
     public function testOlYardsTouchdownsAndSackTier(): void
     {
         // TD 1 + floor((145-90)/10)=5 + 3 sacks tier 0
