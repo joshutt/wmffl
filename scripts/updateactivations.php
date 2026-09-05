@@ -1,7 +1,7 @@
 <?php
 include dirname(__FILE__)."/base.php";
 #$ini = parse_ini_file("wmffl.conf");
-#$conn = mysqli_connect('localhost', $ini['userName'], $ini['password'], $ini['dbName']);
+#$conn = mysqli_connect('localhost', $ini['username'], $ini['password'], $ini['dbname']);
 
 #$dateQuery = "SELECT w1.season, w1.week, w1.weekname, w2.weekname as 'previous' FROM weekmap w1, weekmap w2 ";
 #$dateQuery .= "WHERE now() BETWEEN w1.startDate and w1.endDate ";
