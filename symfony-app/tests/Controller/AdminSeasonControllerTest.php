@@ -62,6 +62,7 @@ class AdminSeasonControllerTest extends TestCase
             '_token' => 'ok',
             'entryFee' => '50',
             'regularSeasonWeeks' => '13',
+            'maxIrSlots' => '999',
             'rule_k_fg60' => '10',
             'rule_def_td' => '9',
             'scoringStrategy' => 'standard',
@@ -80,6 +81,7 @@ class AdminSeasonControllerTest extends TestCase
         $this->assertNull($season->getScoringRules()['hc_tie']);
         $this->assertSame(50.0, $season->getEntryFee());
         $this->assertSame(13, $season->getRegularSeasonWeeks());
+        $this->assertSame(999, $season->getMaxIrSlots());
         $this->assertTrue($season->isVerified());
         $this->assertSame('FG60 was 10 through 2023', $season->getNotes());
 
@@ -113,7 +115,7 @@ class AdminSeasonControllerTest extends TestCase
     public function testCloneCreatesTheNextSeasonUnverified(): void
     {
         $latest = $this->season(2026)->setVerified(true)->setEntryFee(80.0)
-            ->setScoringRules(['k_fg60' => 7])->setNotes('current');
+            ->setScoringRules(['k_fg60' => 7])->setNotes('current')->setMaxIrSlots(999);
         $repo = $this->createStub(SeasonRepository::class);
         $repo->method('findLatest')->willReturn($latest);
         $repo->method('find')->willReturn(null);
@@ -145,6 +147,7 @@ class AdminSeasonControllerTest extends TestCase
         $this->assertNull($persisted->getNotes());
         $this->assertSame(80.0, $persisted->getEntryFee());
         $this->assertSame(['k_fg60' => 7], $persisted->getScoringRules());
+        $this->assertSame(999, $persisted->getMaxIrSlots());
 
         $this->assertStringContainsString('INSERT INTO transpoints', $statements[0]['sql']);
         $this->assertSame(['next' => 2027, 'latest' => 2026], $statements[0]['params']);

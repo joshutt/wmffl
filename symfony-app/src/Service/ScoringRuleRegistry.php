@@ -57,6 +57,7 @@ final class ScoringRuleRegistry
         'off_rec_offset'         => ['group' => 'off', 'type' => 'int', 'default' => 4, 'label' => 'receptions offset', 'help' => 'Points = receptions - offset'],
         'off_td'                 => ['group' => 'off', 'type' => 'int', 'default' => 6, 'label' => 'touchdowns'],
         'off_fumble'             => ['group' => 'off', 'type' => 'int', 'default' => -2, 'label' => 'fumbles'],
+        'off_block'              => ['group' => 'off', 'type' => 'int', 'default' => null, 'label' => 'blocked kicks'],
 
         // TE reception bonuses (added on top of the RB/WR formula)
         'te_rec_bonus_min'       => ['group' => 'te', 'type' => 'int', 'default' => 2, 'label' => 'bonus from', 'help' => '+1 when receptions are within [from, to]'],

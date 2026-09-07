@@ -54,6 +54,7 @@ function scoreOffense($scoreArray) {
     $pts += $scoreArray['tds'] * 6;
     $pts += $scoreArray['2pt'] * 2;
     $pts += $scoreArray['specTD'] * 12;
+    $pts += ($scoreArray['blockpunt'] + $scoreArray['blockxp'] + $scoreArray['blockfg']) * 3;
     return $pts;
 }
 
@@ -107,10 +108,10 @@ function scoreK($scoreArray) {
 	$pts = $scoreArray['XP'];
 	$pts -= $scoreArray['MissXP'];
 	$pts += $scoreArray['2pt']*2;
-	$pts += $scoreArray['FG30']*3;
-	$pts += $scoreArray['FG40']*4;
-	$pts += $scoreArray['FG50']*5;
-	$pts += $scoreArray['FG60']*7;
+	$pts += $scoreArray['FG30']*2;
+	$pts += $scoreArray['FG40']*2;
+	$pts += $scoreArray['FG50']*4;
+	$pts += $scoreArray['FG60']*6;
 	$pts -= $scoreArray['MissFG30'];
     $pts += $scoreArray['specTD'] * 12;
 	return $pts;

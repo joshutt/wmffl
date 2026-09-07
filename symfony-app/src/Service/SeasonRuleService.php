@@ -77,6 +77,11 @@ class SeasonRuleService
         return $this->getSeason($season)->getMaxActivePlayers();
     }
 
+    public function getMaxIrSlots(int $season): int
+    {
+        return $this->getSeason($season)->getMaxIrSlots();
+    }
+
     /**
      * The ballot pass threshold (fraction of non-abstaining votes needed
      * to pass) for the given season. Legacy hardcoded .67; the league

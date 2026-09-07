@@ -30,10 +30,13 @@ class RosterMoveService
         return $this->seasonRules->getMaxActivePlayers($season);
     }
 
-    /** Total roster limit: one IR slot above the active limit (legacy 25/26). */
+    /**
+     * Total roster limit: the active limit plus the season's configurable
+     * IR slot count (was a hardcoded "+1"; see SeasonRuleService::getMaxIrSlots()).
+     */
     public function getTotalRoster(int $season): int
     {
-        return $this->getMaxActivePlayers($season) + 1;
+        return $this->getMaxActivePlayers($season) + $this->seasonRules->getMaxIrSlots($season);
     }
 
     // ---- player search (list.php) ----

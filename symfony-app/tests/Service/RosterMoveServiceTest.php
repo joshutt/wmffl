@@ -50,13 +50,46 @@ class RosterMoveServiceTest extends TestCase
 
     public function testExceedingThe26TotalRosterWithIrIsRejected(): void
     {
-        // 24 active + 2 IR: an add stays within the active limit but not the total
-        $service = $this->makeService(counts: ['total' => 26, 'irplayers' => 2, 'activeplayers' => 24, 'ptsleft' => 10]);
+        // 24 active + 2 IR, maxIrSlots=1: an add stays within the active
+        // limit (25) but not the total (25 + 1 = 26).
+        $service = $this->makeService(
+            counts: ['total' => 26, 'irplayers' => 2, 'activeplayers' => 24, 'ptsleft' => 10],
+            maxIrSlots: 1
+        );
 
         $errors = $service->executeMoves(2, picks: [50], drops: [], waiverPriorities: [], updateWaivers: false);
 
         $this->assertContains('That would give you 27 players, including IR!  You must drop someone!', $errors);
         $this->assertSame([], $this->statements);
+    }
+
+    public function testALargeMaxIrSlotsPermitsManyIrPlayers(): void
+    {
+        // 2026-style unlimited-IR season: 24 active + many IR players, an
+        // add stays within the active limit (25) and the total cap (25 +
+        // 999) is nowhere close to being hit.
+        $service = $this->makeService(
+            counts: ['total' => 40, 'irplayers' => 16, 'activeplayers' => 24, 'ptsleft' => 10],
+            maxIrSlots: 999
+        );
+
+        $errors = $service->executeMoves(2, picks: [50], drops: [], waiverPriorities: [], updateWaivers: false);
+
+        $this->assertSame([], $errors);
+    }
+
+    public function testTheActiveRosterLimitStillAppliesRegardlessOfMaxIrSlots(): void
+    {
+        // Active limit is unaffected by a large maxIrSlots: 25 active
+        // players is still full even when IR is effectively unlimited.
+        $service = $this->makeService(
+            counts: ['total' => 25, 'irplayers' => 0, 'activeplayers' => 25, 'ptsleft' => 10],
+            maxIrSlots: 999
+        );
+
+        $errors = $service->executeMoves(2, picks: [50], drops: [], waiverPriorities: [], updateWaivers: false);
+
+        $this->assertContains('That would give you 26 players on your roster!!  You must drop someone!!', $errors);
     }
 
     public function testDroppingWhilePickingKeepsTheRosterLegal(): void
@@ -257,7 +290,8 @@ class RosterMoveServiceTest extends TestCase
         ?array $counts = null,
         bool $paid = true,
         int $remain = 50,
-        array $takenPlayers = []
+        array $takenPlayers = [],
+        int $maxIrSlots = 1
     ): RosterMoveService {
         $this->statements = [];
         $counts ??= ['total' => 20, 'irplayers' => 1, 'activeplayers' => 19, 'ptsleft' => 30];
@@ -299,13 +333,14 @@ class RosterMoveServiceTest extends TestCase
             }
         );
 
-        return new RosterMoveService($conn, $this->seasonRuleStub());
+        return new RosterMoveService($conn, $this->seasonRuleStub($maxIrSlots));
     }
 
-    private function seasonRuleStub(): SeasonRuleService
+    private function seasonRuleStub(int $maxIrSlots = 1): SeasonRuleService
     {
         $stub = $this->createStub(SeasonRuleService::class);
         $stub->method('getMaxActivePlayers')->willReturn(25);
+        $stub->method('getMaxIrSlots')->willReturn($maxIrSlots);
         return $stub;
     }
 }
