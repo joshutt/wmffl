@@ -163,6 +163,49 @@ class PlayerScorerServiceTest extends TestCase
         ]));
     }
 
+    public function testOffenseBlockedKicksScoreWhenOffBlockIsAwarded(): void
+    {
+        $withOffBlock = ScoringRules::fromArray(['off_block' => 3]);
+        $row = $this->row(['yards' => 112, 'blockpunt' => 1, 'blockxp' => 1, 'blockfg' => 1]);
+
+        // floor((112-60)/10)=5 + 3 blocks * 3 = 14
+        $this->assertSame(14, $this->scorer->total('RB', $row, $withOffBlock));
+        $this->assertSame(14, $this->scorer->total('WR', $row, $withOffBlock));
+        $this->assertSame(14, $this->scorer->total('TE', $row, $withOffBlock));
+    }
+
+    public function testOffenseBlockedKicksScoreZeroByDefault(): void
+    {
+        // off_block defaults to null (not awarded) - every currently
+        // persisted historical season has no override for this key.
+        $row = $this->row(['yards' => 112, 'blockpunt' => 1, 'blockxp' => 1, 'blockfg' => 1]);
+
+        $this->assertSame(5, $this->scorer->total('RB', $row, $this->rules));
+        $labels = array_map(fn(ScoreLine $l) => $l->label, $this->scorer->score('RB', $row, $this->rules));
+        $this->assertNotContains('blocked kicks', $labels);
+    }
+
+    public function testHcQbKOlAreUnaffectedByBlockedKickStats(): void
+    {
+        $withOffBlock = ScoringRules::fromArray(['off_block' => 3]);
+        $blocks = ['blockpunt' => 1, 'blockxp' => 1, 'blockfg' => 1];
+
+        // tie (1) + <=3 penalties tier (3) = 4, unaffected by the block stats
+        $this->assertSame(4, $this->scorer->total('HC', $this->row(array_merge($blocks, ['played' => 1, 'ptdiff' => 0])), $withOffBlock));
+        $this->assertSame(0, $this->scorer->total('QB', $this->row($blocks), $withOffBlock));
+        $this->assertSame(0, $this->scorer->total('K', $this->row($blocks), $withOffBlock));
+        $this->assertSame(5, $this->scorer->total('OL', $this->row(array_merge($blocks, ['sacks' => 0.0])), $withOffBlock));
+    }
+
+    public function testDefenseBlockedKicksUnaffectedByOffBlockRule(): void
+    {
+        // def_block keeps working independently of the new off_block key
+        $withOffBlock = ScoringRules::fromArray(['off_block' => 3]);
+        $row = $this->row(['blockpunt' => 1, 'blockfg' => 1]);
+
+        $this->assertSame(6, $this->scorer->total('DL', $row, $withOffBlock));
+    }
+
     public function testNullRuleValueSuppressesTheCategory(): void
     {
         $noSpecTd = ScoringRules::fromArray(['spec_td' => null]);

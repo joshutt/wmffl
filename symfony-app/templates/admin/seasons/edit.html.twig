@@ -39,6 +39,14 @@
                 <small class="form-text text-muted">Used for the per-win payout split</small>
             </div>
         </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="maxIrSlots">Max IR slots (above active limit)</label>
+                <input type="number" min="0" class="form-control" id="maxIrSlots"
+                       name="maxIrSlots" value="{{ season.maxIrSlots }}">
+                <small class="form-text text-muted">0 = no IR allowed; set high for effectively unlimited</small>
+            </div>
+        </div>
     </fieldset>
 
     <fieldset class="border rounded p-3 mb-3">

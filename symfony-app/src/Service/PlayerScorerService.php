@@ -134,6 +134,11 @@ class PlayerScorerService
         $this->countLine($lines, $row, '2pt', '2-pt conversions', $rules, 'two_pt');
         $this->countLine($lines, $row, 'fum', 'fumbles', $rules, 'off_fumble');
 
+        $blocks = (int) ($this->num($row, 'blockpunt') + $this->num($row, 'blockxp') + $this->num($row, 'blockfg'));
+        if ($blocks > 0 && $rules->awards('off_block')) {
+            $lines[] = new ScoreLine('blocked kicks', $blocks * $rules->int('off_block'), $blocks);
+        }
+
         return $lines;
     }
 

@@ -134,6 +134,7 @@ class AdminSeasonController extends AbstractAdminController
         $row->setRegularSeasonWeeks(max(1, $post->getInt('regularSeasonWeeks', 14)));
         $row->setTotalWeeks(max(1, $post->getInt('totalWeeks', 16)));
         $row->setMaxActivePlayers(max(1, $post->getInt('maxActivePlayers', 25)));
+        $row->setMaxIrSlots(max(0, $post->getInt('maxIrSlots', 0)));
         $row->setNumOfGames(max(1, $post->getInt('numOfGames', 84)));
 
         // Finance

@@ -31,17 +31,17 @@ class ScoreTest extends TestCase
         $kScore = $baseKScore;
         $kScore['FG30'] = 1;
         $pts = scoreK($kScore);
-        $this->assertEquals(3, $pts, 'FG30 is worth 3 pt');
+        $this->assertEquals(2, $pts, 'FG30 is worth 2 pt (2026 rule change)');
 
         $kScore = $baseKScore;
         $kScore['FG40'] = 1;
         $pts = scoreK($kScore);
-        $this->assertEquals(4, $pts, 'FG40 is worth 4 pts');
+        $this->assertEquals(2, $pts, 'FG40 is worth 2 pts (2026 rule change)');
 
         $kScore = $baseKScore;
         $kScore['FG50'] = 1;
         $pts = scoreK($kScore);
-        $this->assertEquals(5, $pts, 'FG50 is worth 5 pt');
+        $this->assertEquals(4, $pts, 'FG50 is worth 4 pt (2026 rule change)');
 
         $kScore = $baseKScore;
         $kScore['MissFG30'] = 1;
@@ -56,7 +56,24 @@ class ScoreTest extends TestCase
         $kScore = $baseKScore;
         $kScore['FG60'] = 1;
         $pts = scoreK($kScore);
-        $this->assertEquals(7, $pts, 'FG60 is worth 7 pt');
+        $this->assertEquals(6, $pts, 'FG60 is worth 6 pt (2026 rule change)');
+    }
+
+    public function testOffenseBlockedKickScore()
+    {
+        $baseOffenseScore = [
+            'fum' => 0, 'yards' => 0, 'rec' => 0, 'tds' => 0, '2pt' => 0,
+            'specTD' => 0, 'blockpunt' => 0, 'blockxp' => 0, 'blockfg' => 0,
+        ];
+
+        // a blocked punt/XP/FG is worth 3 pts each, for general offense
+        // (RB/WR/TE) in addition to defense (2026 rule change)
+        $offenseScore = $baseOffenseScore;
+        $offenseScore['blockpunt'] = 1;
+        $offenseScore['blockxp'] = 1;
+        $offenseScore['blockfg'] = 1;
+        $pts = scoreOffense($offenseScore);
+        $this->assertEquals(9, $pts, 'Each blocked kick is worth 3 pts for offense');
     }
 
 }

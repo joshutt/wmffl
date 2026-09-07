@@ -29,6 +29,9 @@ class Season
     #[ORM\Column(name: 'max_active_players', type: 'integer', options: ['default' => 25])]
     private int $maxActivePlayers = 25;
 
+    #[ORM\Column(name: 'max_ir_slots', type: 'integer', options: ['default' => 0])]
+    private int $maxIrSlots = 0;
+
     #[ORM\Column(name: 'num_of_games', type: 'integer', options: ['default' => 84])]
     private int $numOfGames = 84;
 
@@ -127,6 +130,17 @@ class Season
     public function setMaxActivePlayers(int $maxActivePlayers): static
     {
         $this->maxActivePlayers = $maxActivePlayers;
+        return $this;
+    }
+
+    public function getMaxIrSlots(): int
+    {
+        return $this->maxIrSlots;
+    }
+
+    public function setMaxIrSlots(int $maxIrSlots): static
+    {
+        $this->maxIrSlots = $maxIrSlots;
         return $this;
     }
 
