@@ -42,7 +42,9 @@
                 <div class="row my-1">
                     <div class="col-3 col-sm-2 pr-0">{% if player.locked %}*{% endif %}{{ player.pos }}</div>
                     <div class="col-9 col-sm-4 text-left pl-0 pl-sm-3">{{ player.name }}</div>
-                    <div class="col-9 col-sm-4 offset-3 offset-sm-0">{{ player.opp }}</div>
+                    <div class="col-9 col-sm-4 offset-3 offset-sm-0">
+                        {{ player.opp }}{% if player.kickoff %} <span class="text-muted small">{{ player.kickoff }}</span>{% endif %}
+                    </div>
                     <div class="col-12 col-sm-2 pl-0 pl-sm-3">
                         {% if player.injuryLabel %}
                         <span class="PQDO" title="{{ player.injuryDetail }}">({{ player.injuryLabel }})</span>

@@ -236,6 +236,27 @@ class ActivationControllerTest extends TestCase
         $this->assertTrue($locked['RB']);
     }
 
+    public function testTheLineupViewShowsTheGamesKickoffTime(): void
+    {
+        $kickoff = new \DateTimeImmutable('2025-11-09 13:00:00', new \DateTimeZone('America/New_York'));
+        $repo = $this->createStub(ActivationRepository::class);
+        $repo->method('getCurrentActivations')->willReturn([
+            $this->row(10, 1, 'Alpha', 'QB', 'Ann', 'Arm', $kickoff->getTimestamp()),
+            $this->row(10, 1, 'Alpha', 'RB', 'Abe', 'Ash', null),
+        ]);
+        $repo->method('getAllWeeks')->willReturn([['week' => 1, 'weekname' => 'Week 1']]);
+
+        $controller = $this->makeController(repo: $repo);
+        $controller->index(Request::create('/activations'));
+
+        $players = $controller->renderedParams['matchups'][0]['teams'][0]['players'];
+        $kickoffs = array_column($players, 'kickoff', 'pos');
+        // Eastern, not whatever timezone the test runner happens to be in
+        $this->assertSame('Sun 1:00 PM', $kickoffs['QB']);
+        // No game (bye) means no kickoff to show
+        $this->assertNull($kickoffs['RB']);
+    }
+
     private function row(
         int $gameId,
         int $teamId,

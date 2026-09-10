@@ -169,6 +169,7 @@ class ActivationController extends AbstractController
                 'pos' => (string) $row['pos'],
                 'name' => trim((string) $row['firstname'] . ' ' . (string) $row['lastname']),
                 'opp' => self::currentOpponent($row),
+                'kickoff' => self::kickoffDisplay($row),
                 'locked' => $this->activationService->lockStateFor(
                     ['kickoffTs' => $row['kickoffTs'] === null ? null : (int) $row['kickoffTs']],
                     $now
@@ -200,6 +201,24 @@ class ActivationController extends AbstractController
         }
 
         return 'Bye';
+    }
+
+    /**
+     * "Sun 1:00 PM" next to the opponent string - null on a bye, where
+     * there's no game to show a time for. `kickoffTs` is a true UNIX
+     * epoch (computed by MySQL from the DB server's local kickoff
+     * datetime), so converting it to Eastern here is safe regardless of
+     * what timezone PHP itself is running in.
+     */
+    private static function kickoffDisplay(array $row): ?string
+    {
+        if ($row['kickoffTs'] === null) {
+            return null;
+        }
+
+        return (new \DateTimeImmutable('@' . $row['kickoffTs']))
+            ->setTimezone(new \DateTimeZone('America/New_York'))
+            ->format('D g:i A');
     }
 
     private static function injuryLabel(array $row): string
