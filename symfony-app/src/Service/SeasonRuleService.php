@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Season;
 use App\Model\FinanceRules;
+use App\Model\LineupRules;
 use App\Model\ScoringRules;
 use App\Repository\SeasonRepository;
 use Psr\Log\LoggerInterface;
@@ -33,7 +34,8 @@ class SeasonRuleService
                 $this->logger->warning('No seasons row for {season}; using default rules', ['season' => $season]);
                 $row = (new Season())
                     ->setSeason($season)
-                    ->setScoringRules(ScoringRuleRegistry::defaults());
+                    ->setScoringRules(ScoringRuleRegistry::defaults())
+                    ->setLineupRules(LineupRuleRegistry::defaults());
             }
             $this->cache[$season] = $row;
         }
@@ -46,6 +48,11 @@ class SeasonRuleService
         $row = $this->getSeason($season);
 
         return ScoringRules::fromArray($row->getScoringRules(), $row->getScoringStrategy());
+    }
+
+    public function getLineupRules(int $season): LineupRules
+    {
+        return LineupRules::fromArray($this->getSeason($season)->getLineupRules());
     }
 
     public function getFinanceRules(int $season): FinanceRules
