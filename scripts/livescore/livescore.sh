@@ -12,7 +12,7 @@ then
 fi
 touch $SCRIPT_DIR/tmpFile
 
-WEEK=`php $SCRIPT_DIR/getweek.php`
+WEEK=`php -q $SCRIPT_DIR/getweek.php`
 ZIPFILE="${DATA_DIR}/zip${WEEK}.zip"
 
 echo 
@@ -50,7 +50,7 @@ then
 fi
 
 echo "Unzipped File"
-python $SCRIPT_DIR/newcrack.py $DATA_DIR/indstats.nfl $WEEK > $DATA_DIR/out.sql
+python3 $SCRIPT_DIR/newcrack.py $DATA_DIR/indstats.nfl $WEEK > $DATA_DIR/out.sql
 retval=$?
 if [ "$retval" -eq "$FAILURE" ]
 then
@@ -64,7 +64,7 @@ echo "Parsed Stats"
 mysql --defaults-file=$DB_DEFAULTS < $DATA_DIR/out.sql
 
 echo "Read into Database"
-php $SCRIPT_DIR/updatescores.php
+php -q $SCRIPT_DIR/updatescores.php
 
 mv $SCRIPT_DIR/tmpupdate $FILE_DIR/update.inc
 

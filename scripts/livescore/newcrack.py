@@ -297,7 +297,8 @@ for x in range(1, 33):
     rushTD = 0
 
     # print "Still play: %s,  Complete: %s " % (thePlayers[x].stillPlay, thePlayers[x].complete)
-    if not hasattr(player, 'secRemain'):
+    # if not hasattr(player, 'secRemain'):
+    if player.secRemain is None:
         if player.stillPlay > 8 or thePlayers[x].complete:
             # if player.stillPlay == 10:
             player.secRemain = 0
