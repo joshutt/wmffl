@@ -350,6 +350,49 @@ should be small enough to land as its own PR.
   (`OAK`→`LV`, `SD`→`LAC`, `STL`/`LA`→`LAR`) showed as perpetually on bye
   in pre-move seasons since `nflteams` only stores the current code —
   this last one caught by Josh on review, not the original validation pass.
+- Activations UI modernization (Phase 15 complete, 2026-09-17,
+  `specs/2026-08-20-activations-ui/`, branch `phase15-activations-ui`,
+  PR #71 open): ported the member lineup-submission flow, current-
+  activations view, and a new commissioner override tool from
+  `football/activate/` to Symfony. `LineupRuleRegistry`/`LineupRules`
+  (mirroring `ScoringRuleRegistry`) make per-season position limits a
+  single canonical definition behind `seasons.lineup_rules` JSON
+  (migration `Version20260820000000`, seeded for all 35 seasons,
+  editable at `/admin/seasons`), consumed by the form, the server-side
+  validator, and the JS counters alike. Lock threshold unified at 5
+  minutes before kickoff (`UNIX_TIMESTAMP()` arithmetic in MySQL so the
+  EDT-stored `nflgames.kickoff` and UTC-running PHP never have to
+  agree); bye weeks never lock; post-week-14 acquisitions land in
+  Reserves and can't be activated; an acting-HC picker covers a
+  rostered-HC bye. Fixed the legacy SQL-injection surface in
+  `processActivations.php` (bound params, same pattern as Phase 3's
+  `teams/compare`) and a legacy `array_search()`-returns-0-is-falsy bug
+  that misfiled the first player at a position into Reserves. Drag-and-
+  drop (SortableJS) layered over checkboxes that remain the actual
+  posted state, so the form still works with JS off; both lists re-sort
+  into position order after every move. Admin override
+  (`/admin/activations`) bypasses kickoff locks and can force-save a
+  deliberately illegal lineup while still defaulting to the same
+  validation as the member form. `football/activate/` reduced to
+  `currentscore.php`/`scoreFunctions.php` (Phase 17's), the other eight
+  pages deleted with 301s (`LegacyActivationRedirectController`); dead
+  `info.php`/`submitthanks.php` and commented-out gameplan remnants
+  removed. Gameplan/GP (`myGP`/`oppGP`) fully disconnected from the new
+  code — the `gameplan` table, its rows, and the `Gameplan`
+  entity/enum are deliberately untouched and still queryable, per
+  [[gameplan-entities-kept]]. Suite 869→1078 tests (969 at initial
+  merge-gate validation, grown further since), all green; a fixup
+  commit found during Josh's manual validation fixed week-0 (off-season
+  `weekmap` placeholder) leaking into both submit flows and a
+  SortableJS `filter`/`preventOnFilter` bug that ate clicks on the
+  acting-HC controls of locked rows. Two validation-doc steps flagged
+  as unsatisfiable-as-written and accepted rather than fixed: step 34's
+  `GP+`/`GP-` markers on `currentscore.php` were already dead rendering
+  code before this phase (data intact, Phase 17's territory); step 30's
+  grep gate correctly matches the two `tests/` files that assert GP
+  concepts are absent. Deploy: migration `Version20260820000000` must
+  run on staging/prod. PR #71 open, mergeable, not yet merged — Josh's
+  call on timing.
 
 ## Phase 11 — Small fixes (complete)
 
@@ -480,7 +523,7 @@ table and the `owners` team-assignment link.
    pattern (`src/Controller/Admin/`, `templates/admin/*/index.html.twig`)
    for consistency with the rest of the admin section
 
-## Phase 15 — Activations UI modernization
+## Phase 15 — Activations UI modernization (complete)
 
 Legacy: `football/activate/submitactivations.php`, `processActivations.php`,
 `currentactivations.php`, `activations.php`/`index.php`,
