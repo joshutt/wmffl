@@ -18,7 +18,12 @@ include 'base/scoring.php';
 //$week = $currentWeek - 1;
 $week = $currentWeek;
 
-$sql = 'select p.playerid, p.pos, s.season, s.* from players p, stats s ';
+$sql = 'select p.playerid, p.pos, s.season, s.* ';
+$sql .= 'from players p ';
+$sql .= 'join stats s on s.statid=p.flmid ';
+$sql .= 'left join playerscores ps on ps.playerid=p.playerid and ps.season=s.season and ps.week=s.week ';
+$sql .= "where s.played=1 and s.season=$currentSeason and s.week=$week ";
+$sql .= 'and ps.playerid is null';
 
 $bigquery = 'insert into playerscores (playerid, season, week, pts) ';
 $bigquery .= 'values ';
@@ -43,8 +48,12 @@ while ($player = mysqli_fetch_array($results)) {
 
 }
 restore_error_handler();
-print $bigquery;
-mysqli_query($conn, $bigquery) or die('Error: ' . mysqli_error($conn));
+if ($first == 1) {
+    print "No new scores to insert\n";
+} else {
+    print $bigquery . "\n";
+    mysqli_query($conn, $bigquery) or die('Error: ' . mysqli_error($conn));
+}
 
 
 $querySql = <<<EOD
