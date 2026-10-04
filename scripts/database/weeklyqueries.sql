@@ -17,8 +17,7 @@ from team t
          join players p on r.PlayerID = p.playerid and p.pos != 'HC'
          left join countedIR ir on p.playerid = ir.playerid
 group by t.TeamID
-having count(p.playerid) > 26
-    or (count(p.playerid) - count(ir.playerid)) > 25;
+having (count(p.playerid) - count(ir.playerid)) > 25;
 
 -- Create Transaction records for cutting of excess players
 insert into transactions
