@@ -42,7 +42,9 @@
             <label class="mb-0" for="activate_{{ player.playerid }}">{{ player.name }}</label>
         </div>
         <div class="col-3 offset-3 offset-sm-0 col-sm-2 px-1">{{ player.nfl }}</div>
-        <div class="col-5 col-sm-2 px-1">{{ player.opp }}</div>
+        <div class="col-5 col-sm-2 px-1">
+            {{ player.opp }}{% if player.kickoffLabel %} <span class="text-muted small">{{ player.kickoffLabel }}</span>{% endif %}
+        </div>
         <div class="col-2 col-sm-1 px-1">
             {% if player.injuryLabel %}
             <span class="PQDO" title="{{ player.injuryDetail }}">({{ player.injuryLabel }})</span>
@@ -78,7 +80,7 @@
                 <select class="form-control" name="actHCid" aria-label="Acting head coach">
                     {% for hc in actingHc.options %}
                     <option value="{{ hc.playerid }}"{% if hc.playerid == actingHc.selected %} selected{% endif %}>
-                        {{ hc.name }} - {{ hc.nfl }} {{ hc.opp }}
+                        {{ hc.name }} - {{ hc.nfl }} {{ hc.opp }}{% if hc.kickoffLabel %} {{ hc.kickoffLabel }}{% endif %}
                     </option>
                     {% endfor %}
                 </select>

@@ -241,6 +241,22 @@ class ActivationRepository
         return self::INJURY_SHORT[$status] ?? '';
     }
 
+    /**
+     * "Sun 1:00 PM" in Eastern, null when there is no game. The epoch is
+     * computed by MySQL, so the conversion is independent of PHP's own
+     * default timezone.
+     */
+    public static function kickoffLabel(?int $kickoffTs): ?string
+    {
+        if ($kickoffTs === null) {
+            return null;
+        }
+
+        return (new \DateTimeImmutable('@' . $kickoffTs))
+            ->setTimezone(new \DateTimeZone('America/New_York'))
+            ->format('D g:i A');
+    }
+
     /** Normalize one roster/HC row into the shape the views and service use. */
     private function toPlayer(array $row): array
     {
@@ -261,6 +277,7 @@ class ActivationRepository
             'opp' => self::opponent($row),
             'kickoff' => $row['kickoff'] ?? null,
             'kickoffTs' => isset($row['kickoffTs']) ? (int) $row['kickoffTs'] : null,
+            'kickoffLabel' => self::kickoffLabel(isset($row['kickoffTs']) ? (int) $row['kickoffTs'] : null),
             'active' => ($row['activeId'] ?? null) !== null,
             'injuryLabel' => $ir ? 'IR' : $label,
             'injuryDetail' => $label === '' ? '' : $status . ': ' . (string) ($row['details'] ?? ''),
