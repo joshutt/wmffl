@@ -13,9 +13,10 @@ WMFFL is a fantasy football league management system undergoing migration from a
 The project consists of two applications:
 
 1. **Legacy PHP Application** (`/football/`)
-   - Traditional procedural PHP files with manual routing
+   - Traditional procedural PHP files, no central entry point of its own —
+     `LegacyBridge` resolves each request straight to the matching file
+     under `/football/` (the old `front_controller.php` is gone)
    - Uses mysqli for database connections
-   - Entry point: `football/index.php`, `football/front_controller.php`
    - Database connection via `football/base/conn.php`
    - Bootstrap file: `football/bootstrap.php` (sets up Doctrine EntityManager)
 
