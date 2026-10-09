@@ -212,13 +212,9 @@ class ActivationController extends AbstractController
      */
     private static function kickoffDisplay(array $row): ?string
     {
-        if ($row['kickoffTs'] === null) {
-            return null;
-        }
-
-        return (new \DateTimeImmutable('@' . $row['kickoffTs']))
-            ->setTimezone(new \DateTimeZone('America/New_York'))
-            ->format('D g:i A');
+        return ActivationRepository::kickoffLabel(
+            $row['kickoffTs'] === null ? null : (int) $row['kickoffTs']
+        );
     }
 
     private static function injuryLabel(array $row): string
