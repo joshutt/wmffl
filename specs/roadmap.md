@@ -287,7 +287,7 @@ should be small enough to land as its own PR.
   832 tests green; manually verified end-to-end (drag-reorder persistence
   + homepage widget ordering, CSRF/non-commissioner rejection, config CRUD
   round-trip incl. a dotted key) against `php -S -t public public/index.php`
-  with a fake commissioner session. Not yet PR'd.
+  with a fake commissioner session. Merged via PR #56.
 - Symfony-appropriate error handling (Phase 13 complete, 2026-08-19,
   `specs/2026-08-18-error-handling/`, branch `phase13-error-handling`):
   `public/index.php` now falls back to `LegacyBridge` only when
@@ -314,8 +314,7 @@ should be small enough to land as its own PR.
   plain-text `CliErrorRenderer` over the HTML one) plus two `when@test`
   fixture routes to avoid needing a provisioned `wmffl_test` database.
   848 tests green. Manual E2E checklist in `validation.md` not run
-  end-to-end this pass (see that file); Josh to confirm before merge. Not
-  yet PR'd.
+  end-to-end this pass (see that file). Merged via PR #58 (2026-08-18).
 - Admin user management (Phase 14 complete, 2026-08-21,
   `specs/2026-08-19-admin-user-management/`, branch
   `phase14-admin-user-management`, merged via PR #59): `AdminUserController`
@@ -352,7 +351,7 @@ should be small enough to land as its own PR.
   this last one caught by Josh on review, not the original validation pass.
 - Activations UI modernization (Phase 15 complete, 2026-09-17,
   `specs/2026-08-20-activations-ui/`, branch `phase15-activations-ui`,
-  PR #71 open): ported the member lineup-submission flow, current-
+  merged via PR #71): ported the member lineup-submission flow, current-
   activations view, and a new commissioner override tool from
   `football/activate/` to Symfony. `LineupRuleRegistry`/`LineupRules`
   (mirroring `ScoringRuleRegistry`) make per-season position limits a
@@ -391,8 +390,60 @@ should be small enough to land as its own PR.
   code before this phase (data intact, Phase 17's territory); step 30's
   grep gate correctly matches the two `tests/` files that assert GP
   concepts are absent. Deploy: migration `Version20260820000000` must
-  run on staging/prod. PR #71 open, mergeable, not yet merged — Josh's
-  call on timing.
+  run on staging/prod. Follow-up PR #74 added the kickoff date/time next
+  to each game on the submit-activations page (the activations view got
+  the same in PR #71).
+- Draft results under Transactions (Phase 16b complete, 2026-08-29,
+  `specs/2026-08-29-phase16b-draftresults/`, merged via PR #62, header
+  styling follow-up PR #63): `DraftResultsController` +
+  `DraftResultsService` (extending `DraftPickRepository`) on
+  `/transactions/draftresults/{year?}`, covering 2006–current (one year
+  earlier than any legacy page; seasons after the current one 404).
+  Round/pick/team/pos/NFL filters submit via GET so a filtered board is
+  a bookmarkable URL, bound parameters replace the legacy
+  `$_REQUEST`-into-SQL interpolation, and filter options are derived from
+  each season's data (12×10 / 12×12 / 16×12 draft shapes) instead of the
+  legacy hardcoded 1–12. Fixes the legacy OL/DL/LB/DB filters that never
+  worked (`<option name=...>` typo). New: "from <franchise>" provenance on
+  traded picks, prev/next-year links, partial/in-progress drafts render
+  cleanly (2006 is 37/120 picks, 2026 mid-draft). Minimal commissioner
+  tool `AdminDraftResultsController` (`/admin/draftresults/{year}`) to
+  set/clear the player on a pick (CSRF-protected, rejects a player
+  already drafted that season); pick *ownership* editing deliberately
+  not built. "Draft Results" button added to the transactions button
+  bar; all 19 legacy per-year wrappers plus `common/draftresults.php`
+  deleted, with one regex-driven 301 route
+  (`LegacyDraftResultsRedirectController`, GET and POST) covering
+  `/history/{2007–2025}Season/draftresults[.php]`; hub-page link sites
+  repointed.
+- 2026 rule changes (complete, 2026-09-07,
+  `specs/2026-09-07-rulechanges-2026/`, merged via PR #70):
+  IR limit removed — `seasons.max_ir_slots` (migration
+  `Version20260907000000`) replaces the hardcoded "+1" total-roster
+  ceiling in `RosterMoveService`/`RosterMoveController`; blocked-kick
+  offense scoring (`off_block`) added to the RB/WR/TE scoring rules in
+  `ScoringRuleRegistry`/`PlayerScorerService` (HC/QB/K/OL untouched);
+  legacy `scoreK()` FG values updated for 2026 with pre-2026
+  `scoring.php` frozen as `scoring2025.php`. 2025/2026 kicker-scoring
+  regression test added (PR #68). The per-season `off_block` and
+  `k_fg30–60` values for 2026 are set by Josh via `/admin/seasons`
+  after deploy; `football/rules/` pages are handled separately and
+  deliberately out of scope.
+- Platform hardening and maintenance (2026-08-26 → 2026-10-09, small
+  PRs outside the phase numbering): `articles.articleText` widened to
+  MEDIUMTEXT (migration `Version20260826000000`) and the article
+  HtmlSanitizer `max_input_length` raised (PR #60, #69); app and DB
+  session timezone pinned to Eastern via `APP_TIMEZONE` and a DBAL
+  middleware that also works for non-`pdo_mysql` drivers (PR #64, #65);
+  permanent system-info line on the admin dashboard (PR #66); legacy
+  `wmffl.conf` cleaned up — lowercase DB keys, dead sections dropped
+  (PR #67); `transferscores.php` memory exhaustion fixed and made
+  idempotent, weekly-cut query no longer roster-capped for unlimited IR
+  (PR #72); legacy header Standings link repointed at the season-
+  agnostic `/history/standings` (PR #73); unused `front_controller.php`,
+  `404.php`, `500.php` and `football/lib/` removed, `league/commonmark`
+  bumped to 2.10.3 for Dependabot alerts (PR #75; earlier Dependabot
+  rounds in PR #57 and #60).
 
 ## Phase 11 — Small fixes (complete)
 
@@ -571,14 +622,15 @@ that's Phase 17's Boxscores redesign; this phase only touches the
    `submitactivations.php`, `processActivations.php`; `currentscore.php`
    and `scoreFunctions.php` stay on the LegacyBridge until Phase 17.
 
-## Phase 16 — History (per-season)
+## Phase 16 — History (per-season) — next up
 
 Legacy: `football/history/{year}Season.php` (1992–2017, frozen flat
 pages) and `football/history/{year}Season/` (1992–2026, directories —
 old ones mostly redirect to the flat file above but hold real
 subpages; 2018+ have no flat-file counterpart)
 
-Scope recorded, design deferred until 9a lands. `/history/{season}Season/standings`
+Scope recorded; design still to do (its prerequisites 9a, 16a and 16b
+have all landed, so this is unblocked). `/history/{season}Season/standings`
 (`history_season_standings`) already covers per-season standings, so
 the remaining surface is: the season hub/index pages themselves (each
 with hardcoded playoff-result blurbs — champion, runner-up, scores),
@@ -663,7 +715,13 @@ it needs its own default-season resolution rather than a plain
    also a chance to catch any transcription drift against what's actually
    in `schedule` before the old pages are deleted).
 
-## Phase 16b — Draft results under Transactions
+## Phase 16b — Draft results under Transactions (complete)
+
+Complete 2026-08-29 — see the `Done` entry above
+(`specs/2026-08-29-phase16b-draftresults/`). The scope below is the
+original plan; the delivered version also added an admin pick-selection
+editor (`/admin/draftresults/{year}`), traded-pick provenance and prev/next
+year navigation, and covers 2006–current rather than 2007–2025.
 
 Legacy: `football/history/common/draftresults.php` (shared draft-board
 render, driven by `draftpicks` joined to `teamnames`/`players`, plus an
@@ -720,7 +778,11 @@ assuming every pick in range is filled.
    one regex-driven route covering all affected years rather than one
    route per year).
 
-## Phase 17 — Boxscores redesign
+## Phase 17 — Boxscores redesign — after Phase 16
+
+Unblocked: Phase 15 (lineup flow) and Phase 7 (table renames) are done,
+and `PlayerScorerService` already emits the labeled `ScoreLine[]` this
+phase's box score is meant to render.
 
 Legacy: the live box score page is `football/activate/currentscore.php`
 (+ `scoreFunctions.php`, `base/scoring.php`) — addressed by
@@ -768,6 +830,10 @@ two different experiences.
 ## Phase 18 — Remaining odds and ends
 
 Legacy: `login/`, `forum/`, `rules/`, `info.php`, `scores.php`
+(what's left of `football/` besides `history/`, `activate/` and
+`base/`). Proposal and ballot pages under `rules/` were already
+replaced in Phase 10.6; the rules pages themselves are maintained
+separately by Josh and are not touched by migration work.
 
 1. Auth (login) — highest risk, do last and carefully
 2. Static/low-traffic pages (rules, info, forum)

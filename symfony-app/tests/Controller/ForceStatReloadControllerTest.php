@@ -10,14 +10,14 @@ class ForceStatReloadControllerTest extends TestCase
 {
     public function testReturnsPlainTextResponse(): void
     {
-        $response = $this->makeController([])(projectDir: '/fake/project');
+        $response = $this->makeController([])(scriptsPath: '/fake/scripts');
 
         $this->assertSame('text/plain', $response->headers->get('Content-Type'));
     }
 
     public function testReturnsOk(): void
     {
-        $response = $this->makeController([])(projectDir: '/fake/project');
+        $response = $this->makeController([])(scriptsPath: '/fake/scripts');
 
         $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
     }
@@ -26,11 +26,29 @@ class ForceStatReloadControllerTest extends TestCase
     {
         $response = $this->makeController(
             ['Live Scores', 'Week: 5', 'Updated Scores']
-        )(projectDir: '/fake/project');
+        )(scriptsPath: '/fake/scripts');
 
         $this->assertStringContainsString('Live Scores', $response->getContent());
         $this->assertStringContainsString('Week: 5', $response->getContent());
         $this->assertStringContainsString('Updated Scores', $response->getContent());
+    }
+
+    public function testRunsLivescoreScriptFromGivenScriptsPath(): void
+    {
+        $controller = new class extends ForceStatReloadController {
+            public string $ran = '';
+
+            protected function execScript(string $script, array &$outArr): void
+            {
+                $this->ran = $script;
+            }
+
+            protected function appendLog(string $path, string $output): void {}
+        };
+
+        $controller(scriptsPath: '/opt/wmffl/scripts');
+
+        $this->assertStringStartsWith('/opt/wmffl/scripts/livescore/livescore.sh', $controller->ran);
     }
 
     // ---- Helpers ----
