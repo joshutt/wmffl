@@ -11,10 +11,8 @@ class ForceStatReloadController extends AbstractController
 {
     #[Route('/service/force-stat-reload', name: 'service_force_stat_reload', methods: ['GET'])]
     public function __invoke(
-        #[Autowire('%kernel.project_dir%')] string $projectDir
+        #[Autowire('%env(default:app.default_scripts_dir:SCRIPTS_DIR)%')] string $scriptsPath
     ): Response {
-        $scriptsPath = dirname($projectDir) . '/scripts';
-
         $outArr = [];
         $this->execScript("$scriptsPath/livescore/livescore.sh 2>&1", $outArr);
 
