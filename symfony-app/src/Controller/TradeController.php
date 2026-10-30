@@ -247,7 +247,7 @@ class TradeController extends AbstractController
         $payload = $request->getPayload();
         $side = static fn (string $prefix) => [
             'players' => array_map('intval', $payload->all($prefix . '_players')),
-            'picks' => array_map('intval', $payload->all($prefix . '_picks')),
+            'picks' => array_values(array_filter(array_map('intval', $payload->all($prefix . '_picks')))),
             'points' => array_filter(array_map('intval', $payload->all($prefix . '_points'))),
         ];
 
@@ -313,11 +313,13 @@ class TradeController extends AbstractController
             'errors' => $errors,
             'selections' => $selections,
             'you' => [
+                'teamId' => $context['teamId'],
                 'roster' => $this->offers->getTradeableRoster($context['teamId']),
                 'picks' => $this->offers->getOwnedFuturePicks($context['teamId'], $minPickSeason),
                 'points' => $this->offers->getPointsBalances($context['teamId'], $fromSeason, $toSeason),
             ],
             'they' => [
+                'teamId' => $context['otherTeamId'],
                 'roster' => $this->offers->getTradeableRoster($context['otherTeamId']),
                 'picks' => $this->offers->getOwnedFuturePicks($context['otherTeamId'], $minPickSeason),
                 'points' => $this->offers->getPointsBalances($context['otherTeamId'], $fromSeason, $toSeason),

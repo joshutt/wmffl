@@ -52,16 +52,31 @@
                     </div>
 
                     <b>Draft Picks:</b>
+                    {% set pickSeasons = [] %}
+                    {% for pick in side.picks %}
+                        {% if pick.season not in pickSeasons %}
+                            {% set pickSeasons = pickSeasons|merge([pick.season]) %}
+                        {% endif %}
+                    {% endfor %}
                     <div class="mb-3">
-                        {% for pick in side.picks %}
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox"
-                                       name="{{ prefix }}_picks[]" value="{{ pick.id }}"
-                                       id="{{ prefix }}_pick_{{ pick.id }}"
-                                       {{ pick.id in selected.picks ? 'checked' }}/>
-                                <label class="form-check-label" for="{{ prefix }}_pick_{{ pick.id }}">
-                                    {{ pick.season }} Round {{ pick.round }} ({{ pick.orgTeamName }}'s pick)
-                                </label>
+                        {% for season in pickSeasons %}
+                            {% set seasonPicks = side.picks|filter(p => p.season == season) %}
+                            {% set chosen = seasonPicks|filter(p => p.id in selected.picks) %}
+                            <div class="d-flex align-items-start mb-1 pick-season">
+                                <span class="me-2" style="min-width: 3.5em;">{{ season }}</span>
+                                <div class="pick-selects">
+                                    {% for current in chosen|merge([null]) %}
+                                        <select class="form-select form-select-sm mb-1 pick-select"
+                                                name="{{ prefix }}_picks[]">
+                                            <option value="">-- Select pick --</option>
+                                            {% for pick in seasonPicks %}
+                                                <option value="{{ pick.id }}" {{ current and current.id == pick.id ? 'selected' }}>
+                                                    Round {{ pick.round }}{{ pick.orgTeamId != side.teamId ? " (" ~ pick.orgTeamName ~ "'s pick)" }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    {% endfor %}
+                                </div>
                             </div>
                         {% else %}
                             <div class="text-muted">No tradeable draft picks</div>
@@ -75,7 +90,7 @@
                             <tr>
                                 <td>{{ season }}</td>
                                 <td>
-                                    <input type="number" min="0" max="{{ remaining }}" size="3"
+                                    <input type="number" min="0" max="{{ max(remaining, 0) }}" size="3"
                                            name="{{ prefix }}_points[{{ season }}]"
                                            value="{{ selected.points[season] ?? 0 }}"/>
                                 </td>
@@ -93,4 +108,28 @@
         </div>
     </form>
 </div>
+
+<script>
+// Each season keeps one empty pick dropdown at the end: choosing a pick adds
+// another so several picks from the same season can be offered; clearing a
+// non-final dropdown removes it.
+document.querySelectorAll('.pick-selects').forEach(function (group) {
+    group.addEventListener('change', function (event) {
+        var select = event.target;
+        if (!select.classList.contains('pick-select')) {
+            return;
+        }
+        var selects = group.querySelectorAll('.pick-select');
+        var isLast = select === selects[selects.length - 1];
+        if (select.value !== '' && isLast) {
+            var extra = select.cloneNode(true);
+            extra.value = '';
+            Array.prototype.forEach.call(extra.options, function (o) { o.selected = o.value === ''; });
+            group.appendChild(extra);
+        } else if (select.value === '' && !isLast) {
+            select.remove();
+        }
+    });
+});
+</script>
 {% endblock %}
