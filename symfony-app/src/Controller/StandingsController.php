@@ -42,6 +42,7 @@ class StandingsController extends AbstractController
             'teams' => $teamArray,
             'season' => $season,
             'week' => $week,
+            'flags' => $standingsRepository->getSeasonFlags($season),
         ]);
     }
 }

@@ -73,6 +73,11 @@ class HistoryStandingsController extends AbstractController
         );
         $calculatorService->sortTeams($teams);
 
-        return $this->render('history/standings.html.twig', compact('teams', 'season', 'week'));
+        return $this->render('history/standings.html.twig', [
+            'teams' => $teams,
+            'season' => $season,
+            'week' => $week,
+            'flags' => $standingsRepository->getSeasonFlags($season),
+        ]);
     }
 }
