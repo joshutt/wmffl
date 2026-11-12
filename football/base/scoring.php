@@ -290,19 +290,19 @@ function scoreString($score, $pos): string
             if ($tds > 0) {$returnString .= "^$tds 2-pt conversions^$pts";}
 
             $tds = $score['FG30'];
-            $pts = $tds * 3;
+            $pts = $tds * 2;
             if ($tds > 0) {$returnString .= "^$tds field goals (0-39 yards)^$pts";}
 
             $tds = $score['FG40'];
-            $pts = $tds * 4;
+            $pts = $tds * 2;
             if ($tds > 0) {$returnString .= "^$tds field goals (40-49 yards)^$pts";}
 
             $tds = $score['FG50'];
-            $pts = $tds * 5;
+            $pts = $tds * 4;
             if ($tds > 0) {$returnString .= "^$tds field goals (50-59 yards)^$pts";}
 
             $tds = $score['FG60'];
-            $pts = $tds * 7;
+            $pts = $tds * 6;
             if ($tds > 0) {$returnString .= "^$tds field goals (60+ yards)^$pts";}
 
             $tds = $score['MissFG30'];
