@@ -87,4 +87,27 @@ EOD;
             'regWeeks' => $regularSeasonWeeks,
         ]);
     }
+
+    /**
+     * Clinch/elimination flags (e, x, y, t) entered via the admin Season Flags page.
+     *
+     * @return array<int, string> flags keyed by teamid; teams without a flag are omitted
+     */
+    public function getSeasonFlags(int $season): array
+    {
+        $rows = $this->connection->fetchAllAssociative(
+            'SELECT teamid, flags FROM season_flags WHERE season = :season',
+            ['season' => $season]
+        );
+
+        $flags = [];
+        foreach ($rows as $row) {
+            $flag = trim((string) $row['flags']);
+            if ($flag !== '') {
+                $flags[(int) $row['teamid']] = $flag;
+            }
+        }
+
+        return $flags;
+    }
 }
