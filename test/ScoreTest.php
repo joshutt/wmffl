@@ -76,4 +76,42 @@ class ScoreTest extends TestCase
         $this->assertEquals(9, $pts, 'Each blocked kick is worth 3 pts for offense');
     }
 
+    public function testOLOnByeWithNoStatsRowScoresZero()
+    {
+        // A player on a bye has no stats row (LEFT JOIN), so every stat is null.
+        // scoreOL() must return an int 0, not null, or penalizePlayer() throws.
+        $byeScore = array_fill_keys(['tds', 'yards', 'played', 'sacks'], null);
+        $pts = scoreOL($byeScore);
+        $this->assertSame(0, $pts);
+    }
+
+    /**
+     * A player on a bye has no stats row (LEFT JOIN), so every stat column is
+     * null. Every position's scorer must return a number (never null), since
+     * the result is passed to penalizePlayer()'s int $pts parameter.
+     */
+    public function testAllPositionsScoreZeroWithNullStats()
+    {
+        $stats = array_fill_keys([
+            'played', 'ptdiff', 'penalties', 'fum', 'intthrow', 'yards', 'tds', '2pt',
+            'rec', 'specTD', 'blockpunt', 'blockxp', 'blockfg', 'sacks', 'XP', 'MissXP',
+            'FG30', 'FG40', 'FG50', 'FG60', 'MissFG30', 'tackles', 'intcatch',
+            'passdefend', 'fumrec', 'forcefum', 'returnyards', 'Safety',
+        ], null);
+
+        $scorers = [
+            'HC' => 'scoreHC', 'QB' => 'scoreQB', 'RB' => 'scoreOffense',
+            'WR' => 'scoreOffense', 'TE' => 'scoreTE', 'K' => 'scoreK',
+            'OL' => 'scoreOL', 'DL' => 'scoreDefense', 'LB' => 'scoreDefense',
+            'DB' => 'scoreDefense',
+        ];
+
+        foreach ($scorers as $pos => $fn) {
+            $pts = $fn($stats);
+            $this->assertNotNull($pts, "$pos scorer returned null for a bye-week player");
+            $this->assertEquals(0, $pts, "$pos should score 0 with no stats");
+            $this->assertSame('', scoreString($stats, $pos), "$pos scoreString should be empty");
+        }
+    }
+
 }

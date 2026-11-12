@@ -77,7 +77,7 @@ function scoreTE($scoreArray) {
 
 
 function scoreOL($scoreArray) {
-	$pts = $scoreArray['tds'];
+	$pts = (int) $scoreArray['tds'];
 	if ($scoreArray['yards'] >= 100) {
 		$pts += floor($scoreArray['yards']/10 - 9);
 	}
