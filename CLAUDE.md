@@ -51,6 +51,27 @@ Two separate Doctrine ORM setups exist:
    - Uses `DATABASE_URL` environment variable (set in `symfony-app/.env.local`)
    - CLI via: `symfony-app/bin/console doctrine:*`
 
+### Authentication
+
+Symfony Security is the only authenticator (`symfony-app/config/packages/security.yaml`):
+- Login is the navbar modal's AJAX `POST /login/login` (`App\Security\LoginAuthenticator`),
+  replying `Ok` or `err - <message>`; logout is `POST /login/logout` with a CSRF token.
+- Legacy URLs match the lowest-priority catch-all route `legacy_fallback`
+  (`LegacyFallbackController`), so the firewall (incl. remember-me) runs before
+  `public/index.php` hands the request to `LegacyBridge`, which forwards the kernel's cookies.
+- `App\Security\LegacySessionProjector` writes the legacy identity keys (`isin`, `teamnum`,
+  `usernum`, `user`, `fullname`, `commish`) into `$_SESSION` from the token on every request
+  (`LegacySessionSubscriber`). `App\Service\AuthenticationService` and legacy pages read those
+  keys — keep using the facade; never write the keys yourself except via `becomeTeam()`
+  (commissioner impersonation, marked with `impersonating`).
+- Identity globals are never taken from the request (`football/utils/setup.php` skips them).
+- Passwords: `auto` hasher; legacy unsalted MD5 is verified once and rehashed at next login.
+  A blank password can never log in. New passwords need 12+ characters (`PasswordPolicy`).
+- Email addresses live in `user_email` (several per user, one primary); change them only via
+  `App\Service\UserEmailService`.
+- Tests have no database: functional security tests (`tests/Functional/`) replace
+  `UserRepository` in the test container with an in-memory fake.
+
 ### Shared Code
 
 `/src/` directory contains shared classes used by both applications:

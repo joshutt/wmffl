@@ -14,6 +14,13 @@ Twig templates. No legacy PHP, no mysqli, no LegacyBridge.
 - **Templating:** Twig (`symfony/twig-bundle`)
 - **Entry point:** `symfony-app/public/index.php`
 - **Testing:** PHPUnit (`symfony-app/vendor/bin/phpunit tests/`)
+- **Auth:** Symfony Security (`symfony/security-bundle`) — one `main`
+  firewall with a custom login authenticator, `auto` password hasher
+  (legacy MD5 verified once via `migrate_from`, then rehashed), signature
+  remember-me cookies, login throttling (`symfony/rate-limiter`). Legacy
+  pages read identity from `$_SESSION` keys Symfony projects from the
+  token; legacy URLs reach the firewall through a lowest-priority
+  catch-all route before `LegacyBridge` runs them
 
 ## Frontend
 
@@ -37,7 +44,7 @@ migration.
 ## Database
 
 Single MySQL database, shared by both ORM setups during the migration:
-- Legacy credentials: `conf/db.ini`
+- Legacy credentials: `conf/wmffl.conf`
 - Symfony credentials: `symfony-app/.env.local` (`DATABASE_URL`)
 
 These must stay in sync until the legacy Doctrine setup is removed.
