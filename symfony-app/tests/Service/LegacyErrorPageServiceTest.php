@@ -2,7 +2,9 @@
 
 namespace App\Tests\Service;
 
+use App\EventSubscriber\LegacySessionSubscriber;
 use App\Service\LegacyErrorPageService;
+use Symfony\Component\HttpFoundation\Request;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Twig\Environment;
@@ -22,6 +24,21 @@ class LegacyErrorPageServiceTest extends TestCase
         $service = new LegacyErrorPageService($twig, $this->createMock(LoggerInterface::class));
 
         $this->assertSame('<html>404</html>', $service->renderErrorPage(404));
+    }
+
+    public function testRenderErrorPagePassesTheTokensMintedDuringTheKernelRun(): void
+    {
+        $request = new Request();
+        $request->attributes->set(LegacySessionSubscriber::LOGIN_CSRF_ATTRIBUTE, 'login-tok');
+        $request->attributes->set(LegacySessionSubscriber::LOGOUT_CSRF_ATTRIBUTE, 'logout-tok');
+
+        $twig = $this->createMock(Environment::class);
+        $twig->expects($this->once())
+            ->method('render')
+            ->with('bundles/TwigBundle/Exception/error404.html.twig', ['legacy_login_csrf' => 'login-tok', 'legacy_logout_csrf' => 'logout-tok'])
+            ->willReturn('ok');
+
+        (new LegacyErrorPageService($twig, $this->createStub(LoggerInterface::class)))->renderErrorPage(404, $request);
     }
 
     public function testRenderErrorPageUses403TemplateFor403(): void

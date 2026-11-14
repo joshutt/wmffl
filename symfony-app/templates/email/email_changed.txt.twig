@@ -1,0 +1,15 @@
+{% autoescape false %}
+{{ user.name ?: user.username }},
+
+The email addresses on your WMFFL account "{{ user.username }}" were just changed: {{ change }}.
+
+The account's addresses are now:
+{% for address in addresses %}
+  - {{ address }}
+{% endfor %}
+
+If you did not do this, use "Forgot Password?" on the login screen at https://wmffl.com to secure your account, and let the commissioner know.
+
+
+Webmaster WMFFL
+{% endautoescape %}

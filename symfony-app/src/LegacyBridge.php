@@ -124,6 +124,12 @@ class LegacyBridge
     {
         $errorPages = $container->get(LegacyErrorPageService::class);
 
+        // The kernel ran for this request (catch-all route) and its response
+        // is otherwise discarded, so pass on any cookies it set: a renewed
+        // remember-me cookie, the session cookie after a login/regeneration,
+        // or a cleared one.
+        self::forwardCookies($response);
+
         try {
             $legacyScriptFilename = LegacyBridge::getLegacyScript($request);
         } catch (LegacyRouteNotFoundException $e) {
@@ -134,7 +140,7 @@ class LegacyBridge
             // kernel has already finished handling this request by the
             // time we get here).
             $errorPages->logNotFound($e->getMessage());
-            self::respond($errorPages, 404);
+            self::respond($errorPages, 404, $request);
             return;
         }
 
@@ -159,6 +165,11 @@ class LegacyBridge
         $GLOBALS['fullname'] = $authService->getFullName();
         $GLOBALS['teamnum'] = $authService->getTeamNumber();
 
+        // CSRF tokens for the login/logout forms in base/menu.php - generated
+        // while the kernel had the session open (see LegacySessionSubscriber).
+        $GLOBALS['loginCsrfToken'] = (string) $request->attributes->get('_legacy_login_csrf', '');
+        $GLOBALS['logoutCsrfToken'] = (string) $request->attributes->get('_legacy_logout_csrf', '');
+
         // Possibly (re-)set some env vars (e.g. to handle forms
         // posting to PHP_SELF):
         $p = $request->getPathInfo();
@@ -181,7 +192,7 @@ class LegacyBridge
         // still runs at request end either way, so it has to check first.
         $errorHandled = false;
 
-        register_shutdown_function(static function () use ($errorPages, $legacyScriptFilename, &$errorHandled): void {
+        register_shutdown_function(static function () use ($errorPages, $legacyScriptFilename, $request, &$errorHandled): void {
             if ($errorHandled) {
                 return;
             }
@@ -200,7 +211,7 @@ class LegacyBridge
                 $error['file'],
                 $error['line'],
             ));
-            self::respond($errorPages, 500);
+            self::respond($errorPages, 500, $request);
         });
 
         try {
@@ -208,7 +219,22 @@ class LegacyBridge
         } catch (\Throwable $e) {
             $errorHandled = true;
             $errorPages->logFatal(sprintf('Uncaught %s in legacy script %s', get_class($e), $legacyScriptFilename), $e);
-            self::respond($errorPages, 500);
+            self::respond($errorPages, 500, $request);
+        }
+    }
+
+    /**
+     * Emit the kernel response's Set-Cookie headers natively - the legacy
+     * script's output, not that response, is what gets sent.
+     */
+    public static function forwardCookies(Response $response): void
+    {
+        if (headers_sent()) {
+            return;
+        }
+
+        foreach ($response->headers->getCookies() as $cookie) {
+            header('Set-Cookie: '.$cookie, false);
         }
     }
 
@@ -238,13 +264,13 @@ class LegacyBridge
      * layering another full HTML page on top of it would just corrupt it,
      * so we settle for having logged the failure.
      */
-    private static function respond(LegacyErrorPageService $errorPages, int $statusCode): void
+    private static function respond(LegacyErrorPageService $errorPages, int $statusCode, ?Request $request = null): void
     {
         if (headers_sent()) {
             return;
         }
 
         http_response_code($statusCode);
-        echo $errorPages->renderErrorPage($statusCode);
+        echo $errorPages->renderErrorPage($statusCode, $request);
     }
 }

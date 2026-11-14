@@ -1,0 +1,83 @@
+# Login & security upscale (Phase 18 item 1, specs/2026-11-14-login-upscale/).
+# Symfony Security is the only authenticator. Legacy pages under /football/
+# still read the six $_SESSION identity keys, which LegacySessionProjector
+# writes from the token on every request - legacy URLs reach this firewall
+# through the lowest-priority catch-all route (LegacyFallbackController).
+security:
+    password_hashers:
+        # Verify-only; existing unsalted MD5 hashes are rehashed with the
+        # modern hasher on each user's next successful login.
+        legacy_md5:
+            id: App\Security\LegacyMd5PasswordHasher
+        App\Entity\User:
+            algorithm: auto
+            migrate_from:
+                - legacy_md5
+
+    providers:
+        app_user_provider:
+            id: App\Security\UserProvider
+
+    firewalls:
+        dev:
+            # Ensure dev tools and static assets are always allowed
+            pattern: ^/(_profiler(/|$)|(_wdt|assets|build)/)
+            security: false
+        main:
+            lazy: true
+            provider: app_user_provider
+            user_checker: App\Security\UserChecker
+            custom_authenticators:
+                - App\Security\LoginAuthenticator
+            entry_point: App\Security\LoginEntryPoint
+            access_denied_handler: App\Security\AccessDeniedHandler
+
+            # 5 attempts per username+IP per 15 minutes (plus a looser
+            # per-IP cap Symfony adds on its own).
+            login_throttling:
+                max_attempts: 5
+                interval: '15 minutes'
+                cache_pool: cache.security_limiter
+
+            logout:
+                path: app_logout
+                target: /
+                enable_csrf: true
+                csrf_parameter: _csrf_token
+                csrf_token_id: logout
+
+            # Opt-in "Stay logged in" (_remember_me checkbox), 30 days.
+            # Signature cookies: no table, and any password change - including
+            # the silent MD5 upgrade, which happens before the cookie is
+            # signed - invalidates cookies issued earlier. The 30-day clock
+            # is restarted by Symfony on every cookie re-login and by
+            # RememberMeRenewalSubscriber at most once a day otherwise.
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 2592000
+                path: /
+                secure: auto
+                httponly: true
+                samesite: lax
+                remember_me_parameter: _remember_me
+                signature_properties: ['password']
+
+    # Only the *first* matching rule is applied. /admin also stays guarded by
+    # AdminAccessSubscriber/requireCommissioner(), which read the facade - so
+    # it remains blocked while a commissioner is impersonating a team.
+    access_control:
+        - { path: ^/admin, roles: ROLE_COMMISH }
+        - { path: ^/account, roles: ROLE_USER }
+
+when@test:
+    security:
+        password_hashers:
+            # Password hashers are resource-intensive by design to ensure security.
+            # In tests, it's safe to reduce their cost to improve performance.
+            App\Entity\User:
+                algorithm: auto
+                cost: 4 # Lowest possible value for bcrypt
+                time_cost: 3 # Lowest possible value for argon
+                memory_cost: 10 # Lowest possible value for argon
+                migrate_from:
+                    - legacy_md5

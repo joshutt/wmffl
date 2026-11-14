@@ -61,6 +61,19 @@ foreach ($_SESSION as $key => $value) {
 //    error_log("WHAR: [$key] [$value]");
 }
 
+// Identity comes from the session only (written by Symfony's
+// LegacySessionProjector). setup.php copies request variables into globals,
+// so without this ?isin=1&teamnum=2 could spoof a login.
+foreach (['isin', 'teamnum', 'usernum', 'user', 'fullname', 'commish'] as $identityKey) {
+    if (array_key_exists($identityKey, $_SESSION)) {
+        $$identityKey = $_SESSION[$identityKey];
+        $GLOBALS[$identityKey] = $_SESSION[$identityKey];
+    } else {
+        unset($$identityKey);
+        unset($GLOBALS[$identityKey]);
+    }
+}
+
 if (empty($isin)) {
     $isin = false;
 }

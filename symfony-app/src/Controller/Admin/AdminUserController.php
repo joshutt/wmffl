@@ -7,7 +7,10 @@ use App\Entity\User;
 use App\Enum\ActiveEnum;
 use App\Repository\TeamRepository;
 use App\Repository\UserRepository;
+use App\Exception\UserEmailException;
 use App\Service\AuthenticationService;
+use App\Service\PasswordResetService;
+use App\Service\UserEmailService;
 use App\Service\UserTeamAssignmentService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,12 +18,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 /**
- * Admin tool over the `user` table and team assignment (via `owners`) -
- * legacy has no UI for either, both are edited directly in the DB today
- * (Phase 14). Deliberately does not touch `commish` (site-admin flag,
- * highest privilege level, out of scope) or password (new users self-serve
- * their first password via the existing /login/forgotpassword.php flow -
- * no password field exists anywhere in this tool).
+ * Admin tool over the `user` table, its email addresses (`user_email`) and
+ * team assignment (via `owners`) - Phase 14, extended in Phase 18 item 1.
+ * Deliberately does not touch `commish` (site-admin flag, highest privilege
+ * level, out of scope). Never shows or sets a password: new users are
+ * created with a blank one (which can't log in) and emailed a set-password
+ * link; "Send set-password link" does the same for anyone, e.g. after
+ * reactivating them.
  */
 #[Route('/admin/users')]
 class AdminUserController extends AbstractAdminController
@@ -44,24 +48,29 @@ class AdminUserController extends AbstractAdminController
         UserRepository $users,
         TeamRepository $teams,
         UserTeamAssignmentService $teamAssignment,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        UserEmailService $emails,
+        PasswordResetService $resets
     ): Response {
         if ($redirect = $this->requireCommissioner($auth)) {
             return $redirect;
         }
 
         $user = new User();
-        // Column is NOT NULL with no usable default; the user sets a real
-        // password later via the existing /login/forgotpassword.php
-        // self-service flow (Phase 14 - no password field in this tool).
+        // A blank password can never log in; the new user chooses theirs via
+        // the set-password link emailed below.
         $user->setPassword('');
 
         if ($request->isMethod('POST')) {
             $this->assertCsrfToken($request, 'admin_user');
-            if ($this->applyForm($request, $user, $users, $em, $teamAssignment, null)) {
+            if ($this->applyForm($request, $user, $users, $em, $teamAssignment, $emails, null)) {
                 $em->persist($user);
                 $em->flush();
-                $this->addFlash('success', sprintf('"%s" added', $user->getUsername()));
+                $sent = $resets->sendLink($user, true);
+                $this->addFlash('success', sprintf(
+                    $sent ? '"%s" added and emailed a set-password link' : '"%s" added (no address, so no set-password link sent)',
+                    $user->getUsername()
+                ));
 
                 return $this->redirectToRoute('admin_users');
             }
@@ -82,7 +91,8 @@ class AdminUserController extends AbstractAdminController
         UserRepository $users,
         TeamRepository $teams,
         UserTeamAssignmentService $teamAssignment,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        UserEmailService $emails
     ): Response {
         if ($redirect = $this->requireCommissioner($auth)) {
             return $redirect;
@@ -95,7 +105,7 @@ class AdminUserController extends AbstractAdminController
 
         if ($request->isMethod('POST')) {
             $this->assertCsrfToken($request, 'admin_user');
-            if ($this->applyForm($request, $user, $users, $em, $teamAssignment, $id)) {
+            if ($this->applyForm($request, $user, $users, $em, $teamAssignment, $emails, $id)) {
                 $em->flush();
                 $this->addFlash('success', sprintf('"%s" updated', $user->getUsername()));
 
@@ -110,6 +120,33 @@ class AdminUserController extends AbstractAdminController
         ]);
     }
 
+    #[Route('/{id}/send-reset', name: 'admin_users_send_reset', requirements: ['id' => '\d+'], methods: ['POST'])]
+    public function sendReset(
+        int $id,
+        Request $request,
+        AuthenticationService $auth,
+        UserRepository $users,
+        PasswordResetService $resets
+    ): Response {
+        if ($redirect = $this->requireCommissioner($auth)) {
+            return $redirect;
+        }
+        $this->assertCsrfToken($request, 'admin_user_send_reset');
+
+        $user = $users->find($id);
+        if (!$user) {
+            throw $this->createNotFoundException("No user with id $id");
+        }
+
+        if ($resets->sendLink($user, false)) {
+            $this->addFlash('success', sprintf('Set-password link sent to %s', implode(', ', $user->getEmailAddresses())));
+        } else {
+            $this->addFlash('error', sprintf('"%s" has no email address to send a link to', $user->getUsername()));
+        }
+
+        return $this->redirectToRoute('admin_users');
+    }
+
     /**
      * Copy submitted fields onto the user, including the team-assignment
      * sync. Returns false (with an error flash) when validation fails,
@@ -122,14 +159,15 @@ class AdminUserController extends AbstractAdminController
         UserRepository $users,
         EntityManagerInterface $em,
         UserTeamAssignmentService $teamAssignment,
+        UserEmailService $emails,
         ?int $excludeId
     ): bool {
         $username = trim($request->request->get('username', ''));
-        $email    = trim($request->request->get('email', ''));
         $name     = trim($request->request->get('name', ''));
+        $active   = $request->request->getBoolean('active');
 
-        if ($username === '' || $email === '') {
-            $this->addFlash('error', 'Username and email are both required');
+        if ($username === '') {
+            $this->addFlash('error', 'Username is required');
 
             return false;
         }
@@ -152,10 +190,25 @@ class AdminUserController extends AbstractAdminController
             }
         }
 
+        // Validates before changing anything: 1-5 addresses for an active
+        // user (so activating one with none is refused), 0-5 for inactive.
+        $primaryIndex = $request->request->get('primaryEmail');
+        try {
+            $emails->replaceAll(
+                $user,
+                array_map('strval', $request->request->all('emails')),
+                $primaryIndex === null || $primaryIndex === '' ? null : (int) $primaryIndex,
+                $active
+            );
+        } catch (UserEmailException $e) {
+            $this->addFlash('error', $e->getMessage());
+
+            return false;
+        }
+
         $user->setUsername($username);
-        $user->setEmail($email);
         $user->setName($name === '' ? null : $name);
-        $user->setActive($request->request->getBoolean('active') ? ActiveEnum::Y : ActiveEnum::N);
+        $user->setActive($active ? ActiveEnum::Y : ActiveEnum::N);
         $user->setPrimaryOwner($request->request->getBoolean('primaryOwner'));
         $teamAssignment->assign($user, $team);
 

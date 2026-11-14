@@ -1,5 +1,6 @@
 <?php
 
+use App\Controller\LegacyFallbackController;
 use App\Kernel;
 use App\LegacyBridge;
 use Symfony\Component\Dotenv\Dotenv;
@@ -48,19 +49,24 @@ if ($trustedHosts = $_SERVER['TRUSTED_HOSTS'] ?? $_ENV['TRUSTED_HOSTS'] ?? false
 
 $kernel = new Kernel($_SERVER['APP_ENV'], (bool) $_SERVER['APP_DEBUG']);
 $request = Request::createFromGlobals();
+// Tell LegacyFallbackController it's running for the real front controller,
+// so its catch-all route hands legacy URLs back here instead of 404ing.
+$request->attributes->set(LegacyFallbackController::LEGACY_ATTRIBUTE, true);
 $response = $kernel->handle($request);
 
-if (null !== $request->attributes->get('_route')) {
-    // Symfony's router matched a controller for this request. Whatever
-    // that controller (or Symfony's own exception handling) produced —
-    // 200, a deliberate 404/403 via createNotFoundException()/
-    // createAccessDeniedException(), or a 500 — is the response, full
-    // stop. Only a request the router couldn't match at all falls back
-    // to legacy; a matched route's own 404 must never be handed to
-    // LegacyBridge, which would otherwise try (and typically fail) to
-    // map it to a file under /football/.
+if (LegacyFallbackController::ROUTE !== $request->attributes->get('_route')) {
+    // A real Symfony route matched this request. Whatever that controller
+    // (or Symfony's own exception handling) produced — 200, a deliberate
+    // 404/403 via createNotFoundException()/createAccessDeniedException(),
+    // or a 500 — is the response, full stop. A matched route's own 404 must
+    // never be handed to LegacyBridge, which would otherwise try (and
+    // typically fail) to map it to a file under /football/.
     $response->send();
 } else {
+    // Only the lowest-priority catch-all matched: this is a legacy URL. The
+    // kernel has still run the session, firewall (incl. remember-me) and
+    // the legacy session projection for it - LegacyBridge forwards the
+    // cookies that produced and then runs the legacy script.
     LegacyBridge::handleRequest($request, $response, $kernel->getContainer(), __DIR__);
 }
 

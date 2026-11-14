@@ -1,0 +1,27 @@
+framework:
+    rate_limiter:
+        # "Forgot password?" requests per username+IP (PasswordResetService).
+        # Over the limit, the request silently does nothing - the response
+        # is the same either way.
+        password_reset:
+            policy: sliding_window
+            limit: 3
+            interval: '1 hour'
+            cache_pool: cache.security_limiter
+
+    cache:
+        pools:
+            # Login throttling (security.yaml) and password_reset above.
+            cache.security_limiter:
+                adapter: cache.app
+
+when@test:
+    framework:
+        cache:
+            pools:
+                # Kept apart from cache.app so tests can clear it in setUp -
+                # repeated suite runs from 127.0.0.1 would otherwise trip the
+                # per-IP login limit. (Not an array pool: the test client
+                # resets those between requests, which would void throttling.)
+                cache.security_limiter:
+                    adapter: cache.adapter.filesystem

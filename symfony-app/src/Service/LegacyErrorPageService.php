@@ -2,7 +2,9 @@
 
 namespace App\Service;
 
+use App\EventSubscriber\LegacySessionSubscriber;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Twig\Environment;
 
 /**
@@ -21,7 +23,7 @@ class LegacyErrorPageService
     ) {
     }
 
-    public function renderErrorPage(int $statusCode): string
+    public function renderErrorPage(int $statusCode, ?Request $request = null): string
     {
         $template = match ($statusCode) {
             404 => 'bundles/TwigBundle/Exception/error404.html.twig',
@@ -29,7 +31,14 @@ class LegacyErrorPageService
             default => 'bundles/TwigBundle/Exception/error.html.twig',
         };
 
-        return $this->twig->render($template);
+        // LegacyBridge renders after the kernel has finished with the
+        // request, often after the legacy script started the PHP session
+        // natively - too late for Symfony to mint CSRF tokens. Use the ones
+        // LegacySessionSubscriber minted during the kernel's run instead.
+        return $this->twig->render($template, [
+            'legacy_login_csrf' => (string) $request?->attributes->get(LegacySessionSubscriber::LOGIN_CSRF_ATTRIBUTE, ''),
+            'legacy_logout_csrf' => (string) $request?->attributes->get(LegacySessionSubscriber::LOGOUT_CSRF_ATTRIBUTE, ''),
+        ]);
     }
 
     /**

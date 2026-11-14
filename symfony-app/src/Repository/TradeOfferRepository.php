@@ -444,10 +444,12 @@ class TradeOfferRepository
         }
 
         return array_map(static fn (array $row) => [
-            'email' => $row['Email'],
+            'email' => $row['email'],
             'teamId' => (int) $row['TeamID'],
         ], $this->connection->fetchAllAssociative(
-            "SELECT Email, TeamID FROM user WHERE TeamID IN (:teamIds) AND active = 'Y'",
+            // One row per address: every address on a user gets league mail.
+            "SELECT e.email, u.TeamID FROM user u JOIN user_email e ON e.user_id = u.UserID
+             WHERE u.TeamID IN (:teamIds) AND u.active = 'Y' ORDER BY u.UserID, e.id",
             ['teamIds' => array_map('intval', $teamIds)],
             ['teamIds' => ArrayParameterType::INTEGER]
         ));

@@ -22,6 +22,7 @@ class PlayerProfileTemplateTest extends TestCase
         // Non-strict variables so base.html.twig's app.* session lookups
         // resolve to null in the bare test environment.
         $this->twig = new Environment(new FilesystemLoader(__DIR__ . '/../../templates'));
+        TwigTestStubs::addCsrfToken($this->twig);
     }
 
     public function testFullProfileRendersBioRosterHistoryAndStats(): void
