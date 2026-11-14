@@ -17,6 +17,9 @@
         <server name="SYMFONY_PHPUNIT_REMOVE" value=""/>
         <server name="SYMFONY_PHPUNIT_VERSION" value="9"/>
         <server name="KERNEL_CLASS" value="App\Kernel"/>
+        <!-- Remember-me cookies are signed with kernel.secret; the test env
+             doesn't load .env.local, where the real one lives. -->
+        <server name="APP_SECRET" value="test-only-secret-not-used-anywhere-else"/>
 
         <!-- ###+ symfony/mailer ### -->
         <env name="MAILER_DSN" value="null://null"/>

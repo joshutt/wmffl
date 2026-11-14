@@ -6,9 +6,8 @@
 <h2 class="mt-2">{{ isEdit ? 'Edit User: ' ~ user.username : 'Add User' }}</h2>
 
 {% if not isEdit %}
-<p class="text-muted">No password is set here — the new user signs in for
-the first time via <a href="/login/forgotpassword.php">Forgot Password</a>,
-keyed off the username/email below.</p>
+<p class="text-muted">No password is set here — saving emails the new user a
+link to choose their own (it works once and expires in an hour).</p>
 {% endif %}
 
 <form method="post">
@@ -24,12 +23,30 @@ keyed off the username/email below.</p>
             <input type="text" class="form-control" id="name" name="name" maxlength="50"
                    value="{{ user.name }}">
         </div>
-        <div class="form-group col-md-4">
-            <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" name="email" maxlength="75"
-                   value="{{ user.email }}" required>
-        </div>
     </div>
+    <fieldset class="form-group">
+        <legend class="col-form-label pt-0">Email addresses <small class="text-muted">— all receive league mail; the
+            primary one is shown in lists. An active user needs at least one.</small></legend>
+        {% set addresses = user.emailAddresses %}
+        {% for i in 0..4 %}
+            {% set address = addresses[i] ?? '' %}
+            {% set isPrimary = address != '' ? address == user.primaryEmail : (user.primaryEmail is null and i == 0) %}
+            <div class="form-row align-items-center mb-1">
+                <div class="col-md-6">
+                    <input type="email" class="form-control form-control-sm" name="emails[{{ i }}]" maxlength="255"
+                           value="{{ address }}" aria-label="Email address {{ i + 1 }}">
+                </div>
+                <div class="col-auto">
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="primaryEmail{{ i }}" name="primaryEmail"
+                               value="{{ i }}" {{ isPrimary ? 'checked' }}>
+                        <label class="form-check-label" for="primaryEmail{{ i }}">Primary</label>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <small class="form-text text-muted">Clear a box to remove that address.</small>
+    </fieldset>
     <div class="form-row">
         <div class="form-group col-md-4">
             <label for="teamId">Team</label>

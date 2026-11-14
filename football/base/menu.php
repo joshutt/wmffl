@@ -3,6 +3,9 @@
  * @var $isin boolean
  * @var $fullname string
  * @var $teamnum int
+ * @var $commish bool
+ * @var $loginCsrfToken string  set by LegacyBridge
+ * @var $logoutCsrfToken string set by LegacyBridge
  */
 require_once 'utils/start.php';
 if (!isset($title)) {
@@ -113,7 +116,14 @@ if (!isset($title)) {
         <?php
         if ($isin) {
             ?>
-            <button class="btn btn-wmffl my-2 my-sm-0" data-toggle="modal" data-target="#profileModal"><?= $fullname ?></button>
+            <a class="btn btn-wmffl my-2 my-sm-0" href="/account" title="Your account"><?= htmlspecialchars((string) $fullname) ?></a>
+            <?php if (!empty($commish)) { ?>
+                <a class="btn btn-wmffl my-2 my-sm-0 ml-2" href="/admin">Commish</a>
+            <?php } ?>
+            <form class="form-inline form-signout my-2 my-sm-0 ml-2" method="post" action="/login/logout">
+                <input type="hidden" name="_csrf_token" value="<?= htmlspecialchars($GLOBALS['logoutCsrfToken'] ?? '') ?>">
+                <button type="submit" class="btn btn-wmffl">Log Out</button>
+            </form>
             <?php
         } else {
             ?>
@@ -146,6 +156,11 @@ if (!isset($title)) {
                         <label for="password" class="sr-only">Password</label>
                         <input type="password" name="password" class="form-control" placeholder="Password" required>
                     </div>
+                    <div class="form-check mt-3">
+                        <input type="checkbox" class="form-check-input" id="loginRememberMe" name="_remember_me" value="on">
+                        <label class="form-check-label" for="loginRememberMe">Stay logged in (30 days)</label>
+                    </div>
+                    <input type="hidden" name="_csrf_token" value="<?= htmlspecialchars($GLOBALS['loginCsrfToken'] ?? '') ?>">
                 </div>
             <div class="modal-footer">
                 <button type="button" onclick="submitContactForm();" class="btn btn-lg btn-wmffl btn-block">Log In</button>
@@ -156,37 +171,6 @@ if (!isset($title)) {
     </div>
 </div>
 
-
-<!-- Profile Modal -->
-<div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title mt-0" id="loginModalLabel">Profile <?= $fullname ?? '' ?></h1>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <a class="btn btn-lg btn-wmffl btn-block" href="/login/newpassword" role="button">Change Password</a>
-                </div>
-            <?php
-            if ($isin && $teamnum == 2) {
-                ?>
-                <div class="modal-body">
-                    <a class="btn btn-lg btn-wmffl btn-block" href="/admin" role="button">Commish</a>
-                </div>
-            <?php
-            }
-            ?>
-                <div class="modal-footer">
-                    <form class="form-signout" method="post" action="/login/logout">
-                        <button type="submit" class="btn btn-lg btn-wmffl btn-block">Log Out</button>
-                    </form>
-                </div>
-        </div>
-    </div>
-</div>
 
 <main role="main" class="fluid-container px-4 pb-1 mb-3">
     <div class="starter-template">

@@ -444,6 +444,28 @@ should be small enough to land as its own PR.
   `404.php`, `500.php` and `football/lib/` removed, `league/commonmark`
   bumped to 2.10.3 for Dependabot alerts (PR #75; earlier Dependabot
   rounds in PR #57 and #60).
+- Login & security upscale (Phase 18 item 1 complete, 2026-11-14,
+  `specs/2026-11-14-login-upscale/`, branch `login-upscale`): Symfony
+  Security is the only authenticator (`LoginAuthenticator` on the
+  modal's `POST /login/login`, same `Ok` / `err - …` reply; CSRF, 5
+  attempts per username+IP per 15 min, opt-in 30-day sliding "Stay
+  logged in" via signature cookies + `RememberMeRenewalSubscriber`).
+  MD5 hashes upgrade silently at next login (`LegacyMd5PasswordHasher`
+  under `migrate_from`, accepting both `md5(raw)` and the
+  `md5(escaped)` form legacy `login.php` produced); inactive users'
+  passwords blanked. A lowest-priority catch-all route
+  (`LegacyFallbackController`) runs the firewall for legacy URLs too,
+  and `LegacySessionProjector`/`LegacySessionSubscriber` write the six
+  legacy `$_SESSION` identity keys from the token on every request, so
+  `AuthenticationService` and legacy pages are unchanged
+  (impersonation honoured via an `impersonating` marker). Multiple
+  emails per user in `user_email` (one primary, rules in
+  `UserEmailService`); `/account` page (password change, email
+  management, notices); emailed single-use one-hour reset links
+  (`password_reset_token`); `/admin/users` gained the address list,
+  hash-status column and "send set-password link". Request-spoofing of
+  identity closed in `setup.php`/`start.php`/`connect.php`;
+  `football/login/` deleted. Migration `Version20261114000000`.
 
 ## Phase 11 — Small fixes (complete)
 
@@ -829,13 +851,14 @@ two different experiences.
 
 ## Phase 18 — Remaining odds and ends
 
-Legacy: `login/`, `forum/`, `rules/`, `info.php`, `scores.php`
+Legacy: ~~`login/`~~, `forum/`, `rules/`, `info.php`, `scores.php`
 (what's left of `football/` besides `history/`, `activate/` and
 `base/`). Proposal and ballot pages under `rules/` were already
 replaced in Phase 10.6; the rules pages themselves are maintained
 separately by Josh and are not touched by migration work.
 
-1. Auth (login) — highest risk, do last and carefully
+1. ~~Auth (login) — highest risk, do last and carefully~~ (complete,
+   see `Done`)
 2. Static/low-traffic pages (rules, info, forum)
 3. Scores
 4. Trade offer draft-pick selector (`trades/offer.html.twig`) — replace

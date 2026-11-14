@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Your Account{% endblock %}
+
+{% block content %}
+<h1 class="full">Your Account</h1>
+
+<div class="row justify-content-center m-2">
+    <div class="col-lg-8">
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger" role="alert">{{ message }}</div>
+        {% endfor %}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success" role="alert">{{ message }}</div>
+        {% endfor %}
+
+        <p>
+            Logged in as <strong>{{ user.username }}</strong>{% if user.name %} ({{ user.name }}){% endif %}{% if user.team %}, {{ user.team.name }}{% endif %}.
+            To change your username or display name, ask the commissioner.
+        </p>
+
+        <div class="text-center my-3">
+            {% if auth.isCommissioner %}
+                <a class="btn btn-wmffl" href="/admin">Commish</a>
+            {% endif %}
+            <form class="d-inline" method="post" action="/login/logout">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}">
+                <button type="submit" class="btn btn-wmffl">Log Out</button>
+            </form>
+        </div>
+
+        <h2 class="mt-4">Email addresses</h2>
+        <p class="text-muted">Every address gets all league mail and security notices; the primary one is shown in lists.
+            You can have up to {{ maxAddresses }}.</p>
+
+        <form method="post" action="{{ path('account_emails') }}">
+            <input type="hidden" name="_token" value="{{ csrf_token('account_emails') }}">
+            <table class="table table-sm table-bordered">
+                <thead class="thead-dark">
+                    <tr><th>Address</th><th class="text-center">Primary</th><th class="text-center">Remove</th></tr>
+                </thead>
+                <tbody>
+                    {% for email in user.emails %}
+                        <tr>
+                            <td><label for="primary{{ email.id }}" class="mb-0">{{ email.email }}</label></td>
+                            <td class="text-center">
+                                <input type="radio" id="primary{{ email.id }}" name="primary" value="{{ email.id }}" {{ email.primary ? 'checked' }} aria-label="Make {{ email.email }} primary">
+                            </td>
+                            <td class="text-center">
+                                <input type="checkbox" name="remove[]" value="{{ email.id }}" aria-label="Remove {{ email.email }}">
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr><td colspan="3">No addresses yet.</td></tr>
+                    {% endfor %}
+                    {% if user.emails|length < maxAddresses %}
+                        <tr>
+                            <td><input type="email" class="form-control form-control-sm" name="newEmail" maxlength="255" placeholder="Add an address" aria-label="New email address"></td>
+                            <td class="text-center">
+                                <input type="radio" name="primary" value="new" {{ user.emails is empty ? 'checked' }} aria-label="Make the new address primary">
+                            </td>
+                            <td></td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+            <div class="form-row align-items-end">
+                <div class="form-group col-md-6">
+                    <label for="emailCurrentPassword">Current password</label>
+                    <input type="password" class="form-control" id="emailCurrentPassword" name="currentPassword" autocomplete="current-password" required>
+                </div>
+                <div class="form-group col-md-6 text-center">
+                    <button type="submit" class="btn btn-wmffl">Save Email Changes</button>
+                </div>
+            </div>
+        </form>
+
+        <h2 class="mt-4">Change password</h2>
+        <form method="post" action="{{ path('account_password') }}">
+            <input type="hidden" name="_token" value="{{ csrf_token('account_password') }}">
+            <input type="text" name="username" value="{{ user.username }}" autocomplete="username" hidden>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="currentPassword">Current password</label>
+                    <input type="password" class="form-control" id="currentPassword" name="currentPassword" autocomplete="current-password" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="newPassword">New password</label>
+                    <input type="password" class="form-control" id="newPassword" name="newPassword" minlength="{{ minLength }}" autocomplete="new-password" required>
+                    <small class="form-text text-muted">At least {{ minLength }} characters.</small>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="confirmPassword">New password again</label>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" minlength="{{ minLength }}" autocomplete="new-password" required>
+                </div>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-wmffl">Change Password</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

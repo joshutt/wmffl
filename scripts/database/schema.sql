@@ -685,6 +685,27 @@ CREATE TABLE `paid` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `password_reset_token`
+--
+
+DROP TABLE IF EXISTS `password_reset_token`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `password_reset_token` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `token_hash` char(64) NOT NULL,
+  `expires_at` datetime NOT NULL,
+  `used_at` datetime DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uniq_password_reset_token_hash` (`token_hash`),
+  KEY `idx_password_reset_token_user` (`user_id`),
+  CONSTRAINT `fk_password_reset_token_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`UserID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `playeroverride`
 --
 
@@ -1161,9 +1182,8 @@ CREATE TABLE `user` (
   `UserID` int(11) NOT NULL AUTO_INCREMENT,
   `TeamID` int(11) DEFAULT NULL,
   `Username` varchar(20) NOT NULL DEFAULT '',
-  `Password` varchar(50) NOT NULL DEFAULT '',
+  `Password` varchar(255) NOT NULL DEFAULT '',
   `Name` varchar(50) DEFAULT NULL,
-  `Email` varchar(75) NOT NULL DEFAULT '',
   `primaryowner` tinyint(1) NOT NULL DEFAULT 0,
   `lastlog` datetime DEFAULT NULL,
   `active` enum('Y','N') NOT NULL DEFAULT 'Y',
@@ -1173,6 +1193,25 @@ CREATE TABLE `user` (
   KEY `FK_USER_TEAM` (`TeamID`),
   CONSTRAINT `FK_USER_TEAM` FOREIGN KEY (`TeamID`) REFERENCES `team` (`TeamID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `user_email`
+--
+
+DROP TABLE IF EXISTS `user_email`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_email` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `is_primary` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uniq_user_email_user_address` (`user_id`,`email`),
+  CONSTRAINT `fk_user_email_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`UserID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

@@ -2,16 +2,19 @@
 
 namespace App\Service;
 
+use App\Security\LegacySessionProjector;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
- * Service to manage authentication state from legacy session.
- * Replaces legacy globals $isin, $fullname, $teamnum
+ * Facade over the logged-in identity, used by controllers, templates (the
+ * `auth` Twig global) and tests. Replaces legacy globals $isin, $fullname,
+ * $teamnum.
  *
- * Reads directly from $_SESSION because the legacy login code sets variables
- * at the root session level, while Symfony's Session component stores its
- * own data under $_SESSION['_sf2_attributes']. Reading $_SESSION directly
- * ensures both Symfony controllers and legacy code share the same auth state.
+ * Symfony Security authenticates (Phase 18 item 1); LegacySessionProjector
+ * projects the result into six raw root-level $_SESSION keys on every
+ * request, and this reads those keys - the same ones legacy pages read - so
+ * Symfony and legacy share one view of who is logged in, including while a
+ * commissioner is impersonating a team (becomeTeam()).
  *
  * The session is started lazily to ensure $_SESSION is populated on
  * pure Symfony routes where legacy start.php has not run.
@@ -105,5 +108,8 @@ class AuthenticationService
         $_SESSION['user']     = $username;
         $_SESSION['message']  = '';
         unset($_SESSION['commish']);
+        // Tells LegacySessionSubscriber not to re-project the commissioner's
+        // own identity over this one; logout clears it.
+        $_SESSION[LegacySessionProjector::IMPERSONATING] = true;
     }
 }

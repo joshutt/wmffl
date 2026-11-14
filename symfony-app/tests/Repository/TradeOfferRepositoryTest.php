@@ -382,6 +382,35 @@ class TradeOfferRepositoryTest extends TestCase
      * Connection stub for findOffer(): fetchAssociative -> the offer row,
      * fetchAllAssociative -> players, picks, points in call order.
      */
+
+    public function testActiveUserEmailsReturnsEveryAddressFromUserEmail(): void
+    {
+        $conn = $this->createMock(Connection::class);
+        $conn->expects($this->once())->method('fetchAllAssociative')
+            ->with($this->callback(fn (string $sql) => str_contains($sql, 'JOIN user_email')
+                && str_contains($sql, "u.active = 'Y'") && !str_contains($sql, 'u.Email')))
+            ->willReturn([
+                ['email' => 'a1@example.com', 'TeamID' => '3'],
+                ['email' => 'a2@example.com', 'TeamID' => '3'],
+                ['email' => 'b@example.com', 'TeamID' => '5'],
+            ]);
+
+        $rows = (new TradeOfferRepository($conn))->getActiveUserEmails([3, 5]);
+
+        $this->assertSame([
+            ['email' => 'a1@example.com', 'teamId' => 3],
+            ['email' => 'a2@example.com', 'teamId' => 3],
+            ['email' => 'b@example.com', 'teamId' => 5],
+        ], $rows);
+    }
+
+    public function testActiveUserEmailsWithNoTeamsSkipsQuery(): void
+    {
+        $conn = $this->createMock(Connection::class);
+        $conn->expects($this->never())->method('fetchAllAssociative');
+
+        $this->assertSame([], (new TradeOfferRepository($conn))->getActiveUserEmails([]));
+    }
     private function makeRepository(
         array $offerRow,
         array $players = [],

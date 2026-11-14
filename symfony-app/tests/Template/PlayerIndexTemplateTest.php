@@ -21,6 +21,7 @@ class PlayerIndexTemplateTest extends TestCase
     protected function setUp(): void
     {
         $this->twig = new Environment(new FilesystemLoader(__DIR__ . '/../../templates'));
+        TwigTestStubs::addCsrfToken($this->twig);
 
         // path() that renders as /route_name?params, so link assertions can
         // check route + query string without a real router.

@@ -5,20 +5,23 @@
 {% block admin_content %}
 <h2 class="mt-2">Users</h2>
 
-<p class="text-muted">The <code>user</code> table and team assignment
-(<code>owners</code>). Passwords aren't managed here — a new user sets
-theirs the first time via <a href="/login/forgotpassword.php">Forgot
-Password</a>.</p>
+<p class="text-muted">The <code>user</code> table, email addresses and team
+assignment (<code>owners</code>). Passwords are never shown or set here — a
+new user is emailed a link to choose theirs, and "Send link" emails a fresh
+one (e.g. after reactivating someone). <em>Password</em> shows only whether a
+user is on a modern hash, still on the legacy one (upgraded at their next
+login), or has none (cannot log in).</p>
 
 <table class="table table-sm table-striped table-bordered">
     <thead class="thead-dark">
         <tr>
             <th>Username</th>
             <th>Name</th>
-            <th>Email</th>
+            <th>Primary Email</th>
             <th>Team</th>
             <th>Active</th>
             <th>Primary Owner</th>
+            <th>Password</th>
             <th></th>
         </tr>
     </thead>
@@ -27,16 +30,21 @@ Password</a>.</p>
         <tr>
             <td>{{ user.username }}</td>
             <td>{{ user.name }}</td>
-            <td>{{ user.email }}</td>
+            <td>{{ user.primaryEmail ?? '—' }}{% if user.emails|length > 1 %} <small class="text-muted">+{{ user.emails|length - 1 }}</small>{% endif %}</td>
             <td>{{ user.team ? user.team.name : '—' }}</td>
             <td>{{ user.active.value == 'Y' ? 'Yes' : 'No' }}</td>
             <td>{{ user.primaryOwner ? 'Yes' : 'No' }}</td>
+            <td>{{ {modern: 'Modern', legacy: 'Legacy', none: 'None'}[user.passwordHashStatus] }}</td>
             <td class="text-nowrap">
                 <a class="btn btn-sm btn-wmffl" href="{{ path('admin_users_edit', {id: user.id}) }}">Edit</a>
+                <form class="d-inline" method="post" action="{{ path('admin_users_send_reset', {id: user.id}) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('admin_user_send_reset') }}">
+                    <button type="submit" class="btn btn-sm btn-wmffl"{% if user.emails is empty %} disabled title="No email address"{% endif %}>Send link</button>
+                </form>
             </td>
         </tr>
         {% else %}
-        <tr><td colspan="7">No users.</td></tr>
+        <tr><td colspan="8">No users.</td></tr>
         {% endfor %}
     </tbody>
 </table>
